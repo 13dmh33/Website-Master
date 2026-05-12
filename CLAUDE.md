@@ -6,12 +6,23 @@ to home service contractors (plumbers, HVAC, electricians, roofers).
 
 Your goal: 47 clients/month at $400/site + $300–500/mo Nora voice agent upsell.
 
+## Build Status (as of 2026-05-12)
+- Scout: script live at scripts/scout.js — Outscraper API, $10/mo cap, auto_run toggle
+- Diagnoser: prompt ready at agents/diagnoser.md — script not yet built
+- Checker: prompt ready at agents/checker.md — script not yet built
+- Builder: prompt ready at agents/builder.md — script not yet built
+- Filmer: prompt ready at agents/filmer.md — script not yet built
+- Pitcher: prompt ready at agents/pitcher.md — script not yet built
+- Mobile: prompt ready at agents/mobile.md — script not yet built
+
 ## File System
 - /leads/       — raw leads from Scout (JSON files per city+date)
 - /queue/        — leads ready for processing (briefs from Diagnoser)
 - /mockups/      — Builder outputs (Lovable URLs + video links)
 - /messages/     — Pitcher outreach log (sent messages + reply status)
 - /logs/         — daily run logs
+- /config/       — agent config files (budget caps, toggles)
+- /scripts/      — runnable Node.js scripts for each agent
 
 ## Sub-Agents
 Load prompts from /agents/ folder:
@@ -30,6 +41,7 @@ Load prompts from /agents/ folder:
 - Only Builder gets top 5 priority leads per day — not all leads
 - Pitcher sends ONLY after Checker has approved the message
 - After website deal closes: flag lead for Nora pitch in 7 days
+- Scout runs in manual mode (auto_run: false) during testing — use --force flag
 
 ## Daily Run Order
 1. Scout → target city + trade (ask human at start of each session)
@@ -44,6 +56,22 @@ Load prompts from /agents/ folder:
 - Mobile agent sends Nora pitch message on due date
 - Bundle price: $350/mo (website hosting + Nora)
 - Standalone Nora: $399/mo
+
+## Cost Controls
+- Scout: $10/mo Outscraper cap (config/scout-config.json)
+- Claude API: ~$480/mo at full scale (47 clients)
+- Total estimated monthly cost at scale: ~$630
+
+## Environment Variables Needed
+```
+OUTSCRAPER_API_KEY=
+ANTHROPIC_API_KEY=
+RESEND_API_KEY=
+TWILIO_ACCOUNT_SID=
+TWILIO_AUTH_TOKEN=
+TWILIO_FROM_PHONE=
+CONTRACTOR_EMAIL=
+```
 
 ## Start Each Session
 Ask: "What city and trade should Scout target today?"

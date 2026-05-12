@@ -4,9 +4,11 @@
   "description": "Maps Agency — 7-agent outbound sales system for contractor websites",
   "private": true,
   "scripts": {
-    "scout": "node scripts/scout.js"
+    "scout": "node scripts/scout.js",
+    "diagnose": "node scripts/diagnoser.js"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.37.0",
     "dotenv": "^16.0.0"
   }
 }

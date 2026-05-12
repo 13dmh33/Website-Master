@@ -57,6 +57,30 @@ Examples: "24/7 emergency plumber serving South Denver for 12 years"
 **priority**
 Set true for top 5 leads by gap_score. Builder only works these 5.
 
+## How to Run
+
+```bash
+# Process all scouted leads (up to daily limit)
+node scripts/diagnoser.js --force
+
+# Process a smaller batch
+node scripts/diagnoser.js --limit 10 --force
+```
+
+## Controls in config/diagnoser-config.json
+```json
+{
+  "daily_limit": 30,       // Max leads to process per day
+  "monthly_cap": 5.00,     // Hard stop on Claude API spend per month
+  "auto_run": false,        // Toggle for scheduled vs manual mode
+  "model": "claude-haiku-4-5-20251001"  // Cheapest Claude model
+}
+```
+
+Estimated cost: ~$0.001 per lead brief (~$1.50/mo at 30 leads/day).
+Token rates are configurable in the `rates` object if pricing changes.
+
 ## Rules
 - Do not write to /leads/ or /mockups/
 - Do not contact anyone
+- Runs after Scout — requires at least one leads/*.json file to exist

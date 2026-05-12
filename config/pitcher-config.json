@@ -1,0 +1,12 @@
+{
+  "daily_limit": 30,
+  "auto_run": false,
+  "from_email": "outreach@yourdomain.com",
+  "from_name": "Your Name",
+  "current_month": "2026-05",
+  "today": "2026-05-12",
+  "sent_today": 0,
+  "sent_this_month": 0,
+  "total_sent": 0,
+  "last_run": null
+}

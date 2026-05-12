@@ -22,8 +22,8 @@ Solo AI agency system for selling websites + Nora voice agent bundles to home se
 - [x] `scripts/diagnoser.js` — Claude Haiku, prompt caching, daily limit + $5/mo cap
 - [x] `scripts/checker.js` — 5 evals (personalization, AI markers, buzzwords, structure, spammy openers) + Claude rewrite loop, $3/mo cap
 
-### In Progress
-- [ ] `scripts/pitcher.js` — email (Resend) + SMS (Twilio) outreach sender
+### Done (continued)
+- [x] `scripts/pitcher.js` — email (Resend) + SMS (Twilio), manual drafts for ig_dm/linkedin, --dry-run flag
 
 ### Not Started
 - [ ] `scripts/builder.js` — Lovable.dev mockup generation
@@ -59,7 +59,7 @@ Solo AI agency system for selling websites + Nora voice agent bundles to home se
   scout.js             — ✅ Live
   diagnoser.js         — ✅ Live
   checker.js           — ✅ Live (5 evals + rewrite loop)
-  pitcher.js           — 🔲 Building now
+  pitcher.js           — ✅ Live
 
 /leads/                — Raw leads from Scout
 /queue/                — Briefs from Diagnoser (checker_approved flag)
@@ -84,7 +84,7 @@ package.json           — npm scripts + dependencies
 | Checker | ✅ Live | 5 evals + Claude rewrite loop | Blocks/approves |
 | Builder | 🔲 Prompt only | Builds Lovable mockups | 5 sites |
 | Filmer | 🔲 Prompt only | Renders 10s vertical video | 5 videos |
-| Pitcher | 🔲 Building | Sends outreach by channel (email + SMS) | 30 messages |
+| Pitcher | ✅ Live | Sends outreach by channel (email + SMS + manual drafts) | 30 messages |
 | Mobile | 🔲 Prompt only | Books calls from replies | Real-time |
 
 ---
@@ -98,7 +98,7 @@ cp .env.local.example .env.local                                     # add your 
 node scripts/scout.js --city "Austin, TX" --trade plumber --force    # Step 1
 node scripts/diagnoser.js --force                                     # Step 2
 node scripts/checker.js --force                                       # Step 3
-# node scripts/pitcher.js --force                                     # Step 4 — coming next
+node scripts/pitcher.js --force                                       # Step 4
 ```
 
 Supported trades: `plumber`, `hvac`, `electrician`, `roofer`, `handyman`
@@ -112,6 +112,7 @@ Supported trades: `plumber`, `hvac`, `electrician`, `roofer`, `handyman`
 | scout.js | $10/mo (Outscraper) | config/scout-config.json |
 | diagnoser.js | $5/mo + 30/day (Claude) | config/diagnoser-config.json |
 | checker.js | $3/mo + 30/day (Claude rewrites only) | config/checker-config.json |
+| pitcher.js | 30/day send limit (no Claude cost) | config/pitcher-config.json |
 
 All scripts respect `auto_run: false` — require `--force` flag in manual/testing mode.
 

@@ -6,7 +6,8 @@
   "scripts": {
     "scout": "node scripts/scout.js",
     "diagnose": "node scripts/diagnoser.js",
-    "check": "node scripts/checker.js"
+    "check": "node scripts/checker.js",
+    "pitch": "node scripts/pitcher.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.37.0",

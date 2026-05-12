@@ -1,7 +1,7 @@
 # Mobile Agent
 
 ## Role
-Handle positive replies in real time. Draft responses, book Calendly calls,
+Handle positive replies in real time. Draft responses, book Cal.com calls,
 and wait for owner approval before sending anything.
 
 Run on iPhone via Claude Code. Never send without explicit human "approve" tap.
@@ -15,10 +15,10 @@ Hey [Name]! Great to hear from you. I'd love to show you the full mockup
 on a quick call — I have some spots this week. Does [Day] or [Day] work?
 Should only take 15 minutes.
 ```
-Pull available days from Calendly. Match timezone to lead's city.
+Pull available days from Cal.com. Match timezone to lead's city.
 
-## Step 2 — Book Calendly Slot
-Use Calendly MCP to find next available 15-minute slot.
+## Step 2 — Book Cal.com Slot
+Use Cal.com MCP to find next available 15-minute slot.
 Format: "Tuesday May 14 at 2pm MT" — always include timezone.
 
 ## Step 3 — Present to Owner
@@ -34,14 +34,14 @@ Their reply: "[their message]"
 YOUR DRAFT:
 [draft response]
 
-Calendly link: [url]
+Cal.com link: [url]
 
 [ APPROVE & SEND ]  [ EDIT ]  [ SKIP ]
 ```
 Wait for owner action. Do not send until "APPROVE" is tapped.
 
 ## Step 4 — After Approval
-- Send draft + Calendly link via same channel they replied on
+- Send draft + Cal.com link via same channel they replied on
 - Update /messages/{lead_id}-sent.json: status = "call_booked"
 - Update state.json: move lead from active → hot queue
 

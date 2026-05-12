@@ -28,7 +28,7 @@ Solo AI agency system for selling websites + Nora voice agent bundles to home se
 ### Not Started
 - [ ] `scripts/builder.js` — Lovable.dev mockup generation
 - [ ] `scripts/filmer.js` — Higgsfield/screenshot video rendering
-- [ ] `scripts/mobile.js` — reply handler + Calendly booking
+- [ ] `scripts/mobile.js` — reply handler + Cal.com booking
 - [ ] First live test run
 
 ### Known Issues / Future Tasks
@@ -48,7 +48,7 @@ Solo AI agency system for selling websites + Nora voice agent bundles to home se
   builder.md           — ✅ Lovable prompt template
   filmer.md            — ✅ Screenshot + video spec
   pitcher.md           — ✅ Multi-channel send logic
-  mobile.md            — ✅ Reply handler + Calendly flow
+  mobile.md            — ✅ Reply handler + Cal.com flow
 
 /config/
   scout-config.json    — ✅ $10/mo cap, auto_run toggle
@@ -128,4 +128,4 @@ All scripts respect `auto_run: false` — require `--force` flag in manual/testi
 | Twilio | Pitcher (SMS) | reuse from Nora Agent |
 | Lovable.dev | Builder | lovable.dev |
 | Higgsfield.ai | Filmer | Optional — Loom works as fallback |
-| Calendly | Mobile | calendly.com |
+| Cal.com | Mobile | cal.com |

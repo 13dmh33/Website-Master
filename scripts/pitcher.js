@@ -103,6 +103,23 @@ function saveConfig(config) {
   fs.writeFileSync(CONFIG_PATH, JSON.stringify(config, null, 2));
 }
 
+// ── STARTUP GUARDS ────────────────────────────────────────────────────────────
+
+function ensureDirs() {
+  fs.mkdirSync(MESSAGES_DIR, { recursive: true });
+  fs.mkdirSync(MOCKUPS_DIR,  { recursive: true });
+}
+
+function warnIfPlaceholder(config) {
+  if (
+    config.from_email === 'outreach@yourdomain.com' ||
+    config.from_name  === 'Your Name'
+  ) {
+    console.warn('⚠  WARNING: from_email or from_name in pitcher-config.json still set to placeholder.');
+    console.warn('   Update config/pitcher-config.json before sending real emails.\n');
+  }
+}
+
 // ── LOAD APPROVED BRIEFS ──────────────────────────────────────────────────────
 
 function loadApprovedBriefs() {
@@ -144,39 +161,47 @@ function getVideoUrl(leadId) {
   return url && url !== 'pending_manual' ? url : null;
 }
 
+// ── RETRY HELPER ─────────────────────────────────────────────────────────────
+
+function isRetryable(statusCode) {
+  return statusCode === 429 || statusCode >= 500;
+}
+
+function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
 // ── EMAIL SENDER (Resend) ─────────────────────────────────────────────────────
 
 function sendEmail(brief, config, videoUrl) {
-  return new Promise((resolve, reject) => {
-    const apiKey = process.env.RESEND_API_KEY;
-    if (!apiKey) return reject(new Error('RESEND_API_KEY not set in .env.local'));
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) return Promise.reject(new Error('RESEND_API_KEY not set in .env.local'));
 
-    const subject = `Quick question about ${brief.business_name}'s website`;
+  const subject = `Quick question about ${brief.business_name}'s website`;
 
-    const ps = videoUrl
-      ? `\n\nP.S. Built a quick mockup of what a new site could look like: ${videoUrl}`
-      : `\n\nP.S. I put together a quick mockup of what a new site could look like — happy to share it on a call.`;
+  const ps = videoUrl
+    ? `\n\nP.S. Built a quick mockup of what a new site could look like: ${videoUrl}`
+    : `\n\nP.S. I put together a quick mockup of what a new site could look like — happy to share it on a call.`;
 
-    const body = `${brief.final_message}${ps}`;
+  const body = `${brief.final_message}${ps}`;
 
-    const payload = JSON.stringify({
-      from: `${config.from_name} <${config.from_email}>`,
-      to:   [brief.email || `contact@example.com`],
-      subject,
-      text: body
-    });
+  const payload = JSON.stringify({
+    from: `${config.from_name} <${config.from_email}>`,
+    to:   [brief.email],
+    subject,
+    text: body
+  });
 
-    const options = {
-      hostname: 'api.resend.com',
-      path:     '/emails',
-      method:   'POST',
-      headers:  {
-        'Authorization': `Bearer ${apiKey}`,
-        'Content-Type':  'application/json',
-        'Content-Length': Buffer.byteLength(payload)
-      }
-    };
+  const options = {
+    hostname: 'api.resend.com',
+    path:     '/emails',
+    method:   'POST',
+    headers:  {
+      'Authorization': `Bearer ${apiKey}`,
+      'Content-Type':  'application/json',
+      'Content-Length': Buffer.byteLength(payload)
+    }
+  };
 
+  const attempt = () => new Promise((resolve, reject) => {
     const req = https.request(options, (res) => {
       let data = '';
       res.on('data', chunk => { data += chunk; });
@@ -186,54 +211,64 @@ function sendEmail(brief, config, videoUrl) {
           if (res.statusCode >= 200 && res.statusCode < 300) {
             resolve({ id: parsed.id, subject, body });
           } else {
-            reject(new Error(`Resend error ${res.statusCode}: ${data}`));
+            const err = new Error(`Resend error ${res.statusCode}: ${data}`);
+            err.statusCode = res.statusCode;
+            reject(err);
           }
         } catch (e) {
           reject(new Error(`Failed to parse Resend response: ${data}`));
         }
       });
     });
-
     req.on('error', reject);
     req.write(payload);
     req.end();
+  });
+
+  return attempt().catch(async (err) => {
+    if (isRetryable(err.statusCode)) {
+      console.warn(`  Resend ${err.statusCode} — retrying in 2s…`);
+      await delay(2000);
+      return attempt();
+    }
+    throw err;
   });
 }
 
 // ── SMS SENDER (Twilio) ───────────────────────────────────────────────────────
 
 function sendSms(brief, videoUrl) {
-  return new Promise((resolve, reject) => {
-    const sid   = process.env.TWILIO_ACCOUNT_SID;
-    const token = process.env.TWILIO_AUTH_TOKEN;
-    const from  = process.env.TWILIO_FROM_PHONE;
+  const sid   = process.env.TWILIO_ACCOUNT_SID;
+  const token = process.env.TWILIO_AUTH_TOKEN;
+  const from  = process.env.TWILIO_FROM_PHONE;
 
-    if (!sid || !token || !from) {
-      return reject(new Error('TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, or TWILIO_FROM_PHONE not set in .env.local'));
+  if (!sid || !token || !from) {
+    return Promise.reject(new Error('TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, or TWILIO_FROM_PHONE not set in .env.local'));
+  }
+
+  const body = videoUrl
+    ? `${brief.final_message}\n\nMockup: ${videoUrl}`
+    : brief.final_message;
+
+  const payload = new URLSearchParams({
+    From: from,
+    To:   brief.phone,
+    Body: body
+  }).toString();
+
+  const auth    = Buffer.from(`${sid}:${token}`).toString('base64');
+  const options = {
+    hostname: 'api.twilio.com',
+    path:     `/2010-04-01/Accounts/${sid}/Messages.json`,
+    method:   'POST',
+    headers:  {
+      'Authorization': `Basic ${auth}`,
+      'Content-Type':  'application/x-www-form-urlencoded',
+      'Content-Length': Buffer.byteLength(payload)
     }
+  };
 
-    const body = videoUrl
-      ? `${brief.final_message}\n\nMockup: ${videoUrl}`
-      : brief.final_message;
-
-    const payload = new URLSearchParams({
-      From: from,
-      To:   brief.phone,
-      Body: body
-    }).toString();
-
-    const auth    = Buffer.from(`${sid}:${token}`).toString('base64');
-    const options = {
-      hostname: 'api.twilio.com',
-      path:     `/2010-04-01/Accounts/${sid}/Messages.json`,
-      method:   'POST',
-      headers:  {
-        'Authorization': `Basic ${auth}`,
-        'Content-Type':  'application/x-www-form-urlencoded',
-        'Content-Length': Buffer.byteLength(payload)
-      }
-    };
-
+  const attempt = () => new Promise((resolve, reject) => {
     const req = https.request(options, (res) => {
       let data = '';
       res.on('data', chunk => { data += chunk; });
@@ -243,17 +278,27 @@ function sendSms(brief, videoUrl) {
           if (res.statusCode >= 200 && res.statusCode < 300) {
             resolve({ sid: parsed.sid, body });
           } else {
-            reject(new Error(`Twilio error ${res.statusCode}: ${data}`));
+            const err = new Error(`Twilio error ${res.statusCode}: ${data}`);
+            err.statusCode = res.statusCode;
+            reject(err);
           }
         } catch (e) {
           reject(new Error(`Failed to parse Twilio response: ${data}`));
         }
       });
     });
-
     req.on('error', reject);
     req.write(payload);
     req.end();
+  });
+
+  return attempt().catch(async (err) => {
+    if (isRetryable(err.statusCode)) {
+      console.warn(`  Twilio ${err.statusCode} — retrying in 2s…`);
+      await delay(2000);
+      return attempt();
+    }
+    throw err;
   });
 }
 
@@ -284,6 +329,7 @@ function logSend(brief, result, channel, videoUrl, status = 'sent') {
     trade:         brief.trade,
     city:          brief.city,
     phone:         brief.phone || null,
+    email:         brief.email || null,
     channel,
     sent_at:       new Date().toISOString(),
     subject:       result.subject || null,
@@ -300,14 +346,21 @@ function logSend(brief, result, channel, videoUrl, status = 'sent') {
 }
 
 function updateState(leadId, status) {
-  const state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
-  const entry = state.queue.find(l => l.lead_id === leadId);
-  if (entry) {
-    entry.status  = status;
-    entry.sent_at = new Date().toISOString();
+  try {
+    const state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+    const entry = state.queue.find(l => l.lead_id === leadId);
+    if (entry) {
+      entry.status  = status;
+      entry.sent_at = new Date().toISOString();
+    } else {
+      console.warn(`  state.json: no queue entry found for ${leadId} — skipping state update`);
+    }
+    state.daily_stats = state.daily_stats || {};
+    state.daily_stats.messages_sent = (state.daily_stats.messages_sent || 0) + 1;
+    fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
+  } catch (e) {
+    console.warn(`  Could not update state.json for ${leadId}: ${e.message}`);
   }
-  state.daily_stats.messages_sent = (state.daily_stats.messages_sent || 0) + 1;
-  fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
 }
 
 // ── MAIN ──────────────────────────────────────────────────────────────────────
@@ -316,8 +369,10 @@ async function main() {
   console.log(`\nPitcher starting${isDryRun ? ' [DRY RUN — nothing will be sent]' : ''}`);
   console.log('─'.repeat(50));
 
+  ensureDirs();
   const config = loadConfig();
   checkAutoRun(config);
+  warnIfPlaceholder(config);
   const effectiveLimit = checkLimits(config);
 
   const briefs = loadApprovedBriefs();

@@ -1,0 +1,12 @@
+{
+  "name": "website-master",
+  "version": "0.1.0",
+  "description": "Maps Agency — 7-agent outbound sales system for contractor websites",
+  "private": true,
+  "scripts": {
+    "scout": "node scripts/scout.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0"
+  }
+}

@@ -25,6 +25,11 @@ Solo AI agency system for selling websites + Nora voice agent bundles to home se
 - [ ] `scripts/diagnoser.js` — processes leads into briefs + cold messages
 - [ ] `scripts/checker.js` — quality-gates cold messages (4 evals + auto-rewrite)
 
+### Known Issues / Future Tasks
+- [ ] **Outscraper async responses** — Maps v3 API may return a task ID instead of direct results on some plans. Need to add polling logic (`GET /tasks/{id}`) to handle async responses. Current script works for sync responses only.
+- [ ] **`years_on_maps` enrichment** — Outscraper doesn't return this field. Currently `null` on all leads. The "5+ years on Maps" filter is unenforced until an enrichment step is added.
+- [ ] **Verify `cost_per_result`** — Default is `$0.001`. Check your actual Outscraper rate in your dashboard and update `config/scout-config.json` before relying on budget tracking.
+
 ### Not Started
 - [ ] `scripts/builder.js` — Lovable.dev mockup generation
 - [ ] `scripts/filmer.js` — Higgsfield/screenshot video rendering

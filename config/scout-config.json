@@ -1,5 +1,6 @@
 {
   "monthly_cap": 10.00,
+  "cost_per_result": 0.001,
   "current_month": "2026-05",
   "spent_this_month": 0.00,
   "total_runs": 0,

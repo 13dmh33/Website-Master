@@ -3,14 +3,21 @@
  * Scout — Google Maps lead finder via Outscraper
  *
  * Usage:
- *   node scripts/scout.js --city "Denver, CO" --trade plumber
- *   node scripts/scout.js --city "Austin, TX" --trade hvac --limit 20
+ *   node scripts/scout.js --city "Denver, CO" --trade plumber --force
+ *   node scripts/scout.js --city "Austin, TX" --trade hvac --limit 20 --force
  *
- * Reads:  config/scout-config.json  (budget tracking)
- * Writes: leads/{city}-{date}.json
+ * Reads:  config/scout-config.json  (budget + settings)
+ *         .env.local                (OUTSCRAPER_API_KEY)
+ * Writes: leads/{city}-{date}-{run}.json
  *         state.json (appends new lead IDs)
  *         config/scout-config.json (updates spend)
+ *
+ * Known limitation: Outscraper Maps v3 may return async task IDs instead of
+ * direct results on some plans. If you see empty results, check TODO below.
+ * TODO: Add polling support for async Outscraper task responses.
  */
+
+require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.local') });
 
 const fs = require('fs');
 const path = require('path');
@@ -22,10 +29,6 @@ const ROOT = path.join(__dirname, '..');
 const CONFIG_PATH = path.join(ROOT, 'config', 'scout-config.json');
 const STATE_PATH = path.join(ROOT, 'state.json');
 const LEADS_DIR = path.join(ROOT, 'leads');
-
-// Outscraper charges per result — verify your rate in your dashboard.
-// Default assumption: $0.001 per result (1000 results = $1.00)
-const COST_PER_RESULT = 0.001;
 
 // ── ARG PARSING ───────────────────────────────────────────────────────────────
 
@@ -40,7 +43,7 @@ const trade = get('--trade');
 const limitArg = parseInt(get('--limit') || '30', 10);
 
 if (!city || !trade) {
-  console.error('Usage: node scout.js --city "Denver, CO" --trade plumber');
+  console.error('Usage: node scout.js --city "Denver, CO" --trade plumber --force');
   process.exit(1);
 }
 
@@ -50,20 +53,24 @@ if (!VALID_TRADES.includes(trade.toLowerCase())) {
   process.exit(1);
 }
 
-// ── BUDGET CHECK ──────────────────────────────────────────────────────────────
+// ── CONFIG HELPERS ────────────────────────────────────────────────────────────
+
+function currentMonth() {
+  const now = new Date();
+  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+}
 
 function loadConfig() {
   if (!fs.existsSync(CONFIG_PATH)) {
     const defaults = {
       monthly_cap: 10.00,
+      cost_per_result: 0.001,
       current_month: currentMonth(),
       spent_this_month: 0.00,
       total_runs: 0,
       last_run: null,
       auto_run: false,
-      default_limit: 30,
-      default_city: 'Denver, CO',
-      default_trade: 'plumber'
+      default_limit: 30
     };
     fs.writeFileSync(CONFIG_PATH, JSON.stringify(defaults, null, 2));
     return defaults;
@@ -72,23 +79,18 @@ function loadConfig() {
 }
 
 function checkAutoRun(config) {
-  // --force flag bypasses the auto_run toggle (for manual on-demand runs)
   if (args.includes('--force')) return;
 
   if (!config.auto_run) {
     console.log('Scout is in manual mode (auto_run = false).');
-    console.log('Run with --force to execute now, or set auto_run = true in config/scout-config.json to enable scheduled runs.');
+    console.log('Run with --force to execute now, or set auto_run = true in config/scout-config.json.');
     process.exit(0);
   }
 }
 
-function currentMonth() {
-  const now = new Date();
-  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-}
+// ── BUDGET CHECK ──────────────────────────────────────────────────────────────
 
 function checkBudget(config, estimatedCost) {
-  // Reset spend counter if it's a new month
   if (config.current_month !== currentMonth()) {
     config.current_month = currentMonth();
     config.spent_this_month = 0;
@@ -98,18 +100,14 @@ function checkBudget(config, estimatedCost) {
   const remaining = config.monthly_cap - config.spent_this_month;
 
   if (remaining <= 0) {
-    console.error(
-      `BUDGET CAP REACHED: $${config.spent_this_month.toFixed(2)} spent of $${config.monthly_cap.toFixed(2)} cap this month.`
-    );
-    console.error('Scout is blocked until next month. Update config/scout-config.json to raise the cap.');
+    console.error(`BUDGET CAP REACHED: $${config.spent_this_month.toFixed(2)} of $${config.monthly_cap.toFixed(2)} used this month.`);
+    console.error('Scout is blocked until next month. Raise monthly_cap in config/scout-config.json to continue.');
     process.exit(1);
   }
 
   if (estimatedCost > remaining) {
-    const maxResults = Math.floor(remaining / COST_PER_RESULT);
-    console.warn(
-      `Budget warning: Only $${remaining.toFixed(2)} remaining. Reducing limit from ${limitArg} to ${maxResults} results.`
-    );
+    const maxResults = Math.floor(remaining / config.cost_per_result);
+    console.warn(`Budget warning: $${remaining.toFixed(2)} remaining. Reducing limit from ${limitArg} to ${maxResults} results.`);
     return maxResults;
   }
 
@@ -117,7 +115,7 @@ function checkBudget(config, estimatedCost) {
 }
 
 function updateSpend(config, resultsCount) {
-  const cost = resultsCount * COST_PER_RESULT;
+  const cost = resultsCount * config.cost_per_result;
   config.spent_this_month = parseFloat((config.spent_this_month + cost).toFixed(4));
   config.total_runs += 1;
   config.last_run = new Date().toISOString();
@@ -131,7 +129,7 @@ function callOutscraper(query, limit) {
   return new Promise((resolve, reject) => {
     const apiKey = process.env.OUTSCRAPER_API_KEY;
     if (!apiKey) {
-      reject(new Error('OUTSCRAPER_API_KEY not set in environment. Add it to .env.local'));
+      reject(new Error('OUTSCRAPER_API_KEY not set. Add it to .env.local'));
       return;
     }
 
@@ -147,9 +145,7 @@ function callOutscraper(query, limit) {
       hostname: 'api.app.outscraper.com',
       path: `/maps/search-v3?${params}`,
       method: 'GET',
-      headers: {
-        'X-API-KEY': apiKey
-      }
+      headers: { 'X-API-KEY': apiKey }
     };
 
     const req = https.request(options, (res) => {
@@ -158,6 +154,8 @@ function callOutscraper(query, limit) {
       res.on('end', () => {
         try {
           const parsed = JSON.parse(data);
+          // TODO: If parsed.id exists and parsed.data is empty, this is an async
+          // task response. Need to poll GET /tasks/{id} until status = 'Success'.
           if (parsed.status === 'Success' || parsed.data) {
             resolve(parsed.data || []);
           } else {
@@ -179,20 +177,16 @@ function callOutscraper(query, limit) {
 function scoreGap(result) {
   let score = 0;
 
-  // No website = big opportunity
   if (!result.site || result.site === '') score += 4;
 
-  // Review sweet spot: enough to be legit, not enough to be dominant
   const reviews = result.reviews || 0;
   if (reviews >= 10 && reviews <= 60) score += 3;
   else if (reviews > 60 && reviews <= 100) score += 1;
 
-  // High rating = quality business worth helping
   const rating = result.rating || 0;
   if (rating >= 4.5) score += 2;
   else if (rating >= 4.0) score += 1;
 
-  // Cap at 10
   return Math.min(score, 10);
 }
 
@@ -214,31 +208,48 @@ function slugify(str) {
 function filterAndFormat(results, tradeStr, cityStr) {
   return results
     .filter(r => {
-      // Must have reviews (real business)
       if (!r.reviews || r.reviews < 5) return false;
-      // Under 100 reviews
       if (r.reviews > 100) return false;
-      // Rating at or above 4.0
       if (!r.rating || r.rating < 4.0) return false;
       return true;
     })
     .map(r => ({
-      lead_id: `${slugify(r.name)}-${slugify(cityStr)}`,
+      lead_id: r.place_id || `${slugify(r.name)}-${slugify(cityStr)}`,
       business_name: r.name || '',
       trade: tradeStr,
       city: cityStr,
+      // NOTE: Outscraper does not return years_on_maps directly.
+      // This field is null until a future enrichment step adds it.
+      // The "5+ years on Maps" filter is not enforced at Scout time.
       years_on_maps: null,
       review_count: r.reviews || 0,
       rating: r.rating || 0,
       website: r.site || 'none',
       phone: r.phone || '',
       address: r.full_address || '',
+      place_id: r.place_id || null,
       gap_score: scoreGap(r),
       channel: channelForTrade(tradeStr),
       notes: '',
       scraped_at: new Date().toISOString()
     }))
     .sort((a, b) => b.gap_score - a.gap_score);
+}
+
+// ── FILENAME — no overwrites on same-day runs ─────────────────────────────────
+
+function buildFilename(cityStr) {
+  const dateStr = new Date().toISOString().split('T')[0];
+  const citySlug = slugify(cityStr);
+  const tradeSlug = slugify(trade);
+  const base = `${citySlug}-${tradeSlug}-${dateStr}`;
+
+  // Find next available run index (run1, run2, ...) so no file is overwritten
+  let index = 1;
+  while (fs.existsSync(path.join(LEADS_DIR, `${base}-run${index}.json`))) {
+    index++;
+  }
+  return `${base}-run${index}.json`;
 }
 
 // ── STATE UPDATE ──────────────────────────────────────────────────────────────
@@ -271,14 +282,16 @@ async function main() {
   console.log('─'.repeat(50));
 
   const config = loadConfig();
-
   checkAutoRun(config);
 
-  const estimatedCost = limitArg * COST_PER_RESULT;
+  const costPerResult = config.cost_per_result || 0.001;
+  const estimatedCost = limitArg * costPerResult;
   const effectiveLimit = checkBudget(config, estimatedCost);
 
-  console.log(`Budget: $${config.spent_this_month.toFixed(2)} / $${config.monthly_cap.toFixed(2)} used this month`);
-  console.log(`Fetching up to ${effectiveLimit} results (~$${(effectiveLimit * COST_PER_RESULT).toFixed(2)} estimated)...`);
+  console.log(`Budget:   $${config.spent_this_month.toFixed(2)} / $${config.monthly_cap.toFixed(2)} used this month`);
+  console.log(`Rate:     $${costPerResult} per result (set in config/scout-config.json)`);
+  console.log(`Fetching: up to ${effectiveLimit} results (~$${(effectiveLimit * costPerResult).toFixed(2)} estimated)`);
+  console.log('');
 
   let results;
   try {
@@ -288,29 +301,28 @@ async function main() {
     process.exit(1);
   }
 
-  const leads = filterAndFormat(results.flat ? results.flat() : results, trade, city);
+  const flat = results.flat ? results.flat() : results;
+  const leads = filterAndFormat(flat, trade, city);
 
   if (leads.length === 0) {
-    console.warn('No qualifying leads found. Try a different city or trade.');
+    console.warn('No qualifying leads found after filtering. Try a different city or trade.');
+    console.warn(`Raw results from Outscraper: ${flat.length}`);
     process.exit(0);
   }
 
-  // Save leads file
-  const dateStr = new Date().toISOString().split('T')[0];
-  const filename = `${slugify(city)}-${dateStr}.json`;
+  const filename = buildFilename(city);
   const outPath = path.join(LEADS_DIR, filename);
   fs.writeFileSync(outPath, JSON.stringify(leads, null, 2));
 
-  // Update budget and state
-  const actualCost = updateSpend(config, results.length || leads.length);
+  const actualCost = updateSpend(config, flat.length);
   const newCount = updateState(leads);
 
-  console.log(`\nDone.`);
-  console.log(`  Leads found:    ${leads.length}`);
-  console.log(`  New (not dupe): ${newCount}`);
-  console.log(`  Cost this run:  $${actualCost.toFixed(4)}`);
-  console.log(`  Monthly spend:  $${config.spent_this_month.toFixed(4)} / $${config.monthly_cap.toFixed(2)}`);
-  console.log(`  Saved to:       leads/${filename}`);
+  console.log(`Done.`);
+  console.log(`  Leads qualifying: ${leads.length} (of ${flat.length} raw)`);
+  console.log(`  New (not dupe):   ${newCount}`);
+  console.log(`  Cost this run:    $${actualCost.toFixed(4)}`);
+  console.log(`  Monthly spend:    $${config.spent_this_month.toFixed(4)} / $${config.monthly_cap.toFixed(2)}`);
+  console.log(`  Saved to:         leads/${filename}`);
   console.log('─'.repeat(50));
 }
 

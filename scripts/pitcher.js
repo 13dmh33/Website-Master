@@ -27,6 +27,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.loc
 const fs    = require('fs');
 const path  = require('path');
 const https = require('https');
+const { writeLog } = require('./logger');
 
 // ── PATHS ─────────────────────────────────────────────────────────────────────
 
@@ -451,6 +452,13 @@ async function main() {
 
   config.last_run = new Date().toISOString();
   saveConfig(config);
+
+  if (!isDryRun) {
+    writeLog('pitcher', [
+      `sent: ${sent}  manual_drafts: ${manual}  errors: ${errors}`,
+      `sent_today: ${config.sent_today} / ${config.daily_limit}  total_month: ${config.sent_this_month}`
+    ]);
+  }
 
   console.log('\n' + '─'.repeat(50));
   if (isDryRun) {

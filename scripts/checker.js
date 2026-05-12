@@ -25,6 +25,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.loc
 const fs        = require('fs');
 const path      = require('path');
 const Anthropic = require('@anthropic-ai/sdk');
+const { writeLog } = require('./logger');
 
 // ── PATHS ─────────────────────────────────────────────────────────────────────
 
@@ -442,6 +443,11 @@ async function main() {
 
   config.last_run = new Date().toISOString();
   saveConfig(config);
+
+  writeLog('checker', [
+    `approved: ${approved} (${rewritten} rewritten)  flagged: ${flagged}`,
+    `cost: $${totalCost.toFixed(5)}  monthly: $${config.spent_this_month.toFixed(4)} / $${config.monthly_cap.toFixed(2)}`
+  ]);
 
   console.log('\n' + '─'.repeat(50));
   console.log('Done.');

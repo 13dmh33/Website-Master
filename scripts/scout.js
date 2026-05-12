@@ -11,10 +11,7 @@
  * Writes: leads/{city}-{date}-{run}.json
  *         state.json (appends new lead IDs)
  *         config/scout-config.json (updates spend)
- *
- * Known limitation: Outscraper Maps v3 may return async task IDs instead of
- * direct results on some plans. If you see empty results, check TODO below.
- * TODO: Add polling support for async Outscraper task responses.
+ *         logs/{date}.log
  */
 
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.local') });
@@ -22,6 +19,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.loc
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
+const { writeLog } = require('./logger');
 
 // ── CONFIG ────────────────────────────────────────────────────────────────────
 
@@ -125,51 +123,96 @@ function updateSpend(config, resultsCount) {
 
 // ── OUTSCRAPER API ────────────────────────────────────────────────────────────
 
-function callOutscraper(query, limit) {
+// Some Outscraper plans return an async task ID instead of immediate results.
+// pollTask handles that case: retries GET /tasks/{id} every 2s up to 60s.
+function pollTask(taskId, apiKey) {
   return new Promise((resolve, reject) => {
-    const apiKey = process.env.OUTSCRAPER_API_KEY;
-    if (!apiKey) {
-      reject(new Error('OUTSCRAPER_API_KEY not set. Add it to .env.local'));
-      return;
+    const MAX_ATTEMPTS = 30;
+    let attempt = 0;
+
+    function poll() {
+      const options = {
+        hostname: 'api.app.outscraper.com',
+        path:     `/tasks/${taskId}`,
+        method:   'GET',
+        headers:  { 'X-API-KEY': apiKey }
+      };
+
+      const req = https.request(options, (res) => {
+        let data = '';
+        res.on('data', chunk => { data += chunk; });
+        res.on('end', () => {
+          try {
+            const parsed = JSON.parse(data);
+            if (parsed.status === 'Success' && parsed.data?.length > 0) {
+              console.log(' done');
+              return resolve(parsed.data);
+            }
+            if (parsed.status === 'Failure' || parsed.status === 'Error') {
+              return reject(new Error(`Outscraper task ${taskId} failed: ${parsed.status}`));
+            }
+            attempt++;
+            if (attempt >= MAX_ATTEMPTS) {
+              return reject(new Error(`Outscraper task timed out after ${MAX_ATTEMPTS * 2}s`));
+            }
+            process.stdout.write('.');
+            setTimeout(poll, 2000);
+          } catch (e) {
+            reject(new Error(`Failed to parse poll response: ${data}`));
+          }
+        });
+      });
+
+      req.on('error', reject);
+      req.end();
     }
 
-    const params = new URLSearchParams({
-      query: `${query} in ${city}`,
-      limit: String(limit),
-      language: 'en',
-      region: 'us',
-      fields: 'name,phone,site,full_address,rating,reviews,subtypes,place_id,latitude,longitude'
-    });
+    poll();
+  });
+}
 
-    const options = {
-      hostname: 'api.app.outscraper.com',
-      path: `/maps/search-v3?${params}`,
-      method: 'GET',
-      headers: { 'X-API-KEY': apiKey }
-    };
+async function callOutscraper(query, limit) {
+  const apiKey = process.env.OUTSCRAPER_API_KEY;
+  if (!apiKey) throw new Error('OUTSCRAPER_API_KEY not set. Add it to .env.local');
 
+  const params = new URLSearchParams({
+    query:    `${query} in ${city}`,
+    limit:    String(limit),
+    language: 'en',
+    region:   'us',
+    fields:   'name,phone,site,full_address,rating,reviews,subtypes,place_id,latitude,longitude'
+  });
+
+  const options = {
+    hostname: 'api.app.outscraper.com',
+    path:     `/maps/search-v3?${params}`,
+    method:   'GET',
+    headers:  { 'X-API-KEY': apiKey }
+  };
+
+  const raw = await new Promise((resolve, reject) => {
     const req = https.request(options, (res) => {
       let data = '';
       res.on('data', chunk => { data += chunk; });
       res.on('end', () => {
-        try {
-          const parsed = JSON.parse(data);
-          // TODO: If parsed.id exists and parsed.data is empty, this is an async
-          // task response. Need to poll GET /tasks/{id} until status = 'Success'.
-          if (parsed.status === 'Success' || parsed.data) {
-            resolve(parsed.data || []);
-          } else {
-            reject(new Error(`Outscraper error: ${JSON.stringify(parsed)}`));
-          }
-        } catch (e) {
-          reject(new Error(`Failed to parse Outscraper response: ${data}`));
-        }
+        try { resolve(JSON.parse(data)); }
+        catch (e) { reject(new Error(`Failed to parse Outscraper response: ${data}`)); }
       });
     });
-
     req.on('error', reject);
     req.end();
   });
+
+  // Sync response
+  if (raw.status === 'Success' && raw.data?.length > 0) return raw.data;
+
+  // Async task — poll until complete
+  if (raw.id) {
+    process.stdout.write(`  Async task (id: ${raw.id}) — polling`);
+    return pollTask(raw.id, apiKey);
+  }
+
+  throw new Error(`Outscraper error: ${JSON.stringify(raw)}`);
 }
 
 // ── LEAD FILTERING ────────────────────────────────────────────────────────────
@@ -297,6 +340,7 @@ async function main() {
   try {
     results = await callOutscraper(trade, effectiveLimit);
   } catch (err) {
+    writeLog('scout', [`ERROR: ${err.message}`, `city: ${city}`, `trade: ${trade}`]);
     console.error(`Outscraper call failed: ${err.message}`);
     process.exit(1);
   }
@@ -316,6 +360,13 @@ async function main() {
 
   const actualCost = updateSpend(config, flat.length);
   const newCount = updateState(leads);
+
+  writeLog('scout', [
+    `city: ${city}  trade: ${trade}`,
+    `raw: ${flat.length}  qualifying: ${leads.length}  new: ${newCount}`,
+    `cost: $${actualCost.toFixed(4)}  monthly: $${config.spent_this_month.toFixed(4)} / $${config.monthly_cap.toFixed(2)}`,
+    `file: leads/${filename}`
+  ]);
 
   console.log(`Done.`);
   console.log(`  Leads qualifying: ${leads.length} (of ${flat.length} raw)`);

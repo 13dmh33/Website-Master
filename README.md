@@ -32,7 +32,7 @@ Solo AI agency system for selling websites + Nora voice agent bundles to home se
 - [ ] First live test run
 
 ### Known Issues / Future Tasks
-- [ ] **Outscraper async responses** — Maps v3 API may return a task ID on some plans. Need polling logic. Current script works for sync responses only.
+- [x] **Outscraper async responses** — polling logic added. Scout now handles task IDs via `pollTask()` (2s interval, 60s timeout).
 - [ ] **`years_on_maps` enrichment** — field is `null` on all leads. "5+ years on Maps" filter unenforced until enrichment step added.
 - [ ] **Verify `cost_per_result`** — default is `$0.001`. Check actual Outscraper rate in dashboard and update `config/scout-config.json`.
 
@@ -56,10 +56,11 @@ Solo AI agency system for selling websites + Nora voice agent bundles to home se
   checker-config.json  — ✅ $3/mo cap, daily limit 30
 
 /scripts/
-  scout.js             — ✅ Live
+  scout.js             — ✅ Live (async task polling added)
   diagnoser.js         — ✅ Live
   checker.js           — ✅ Live (5 evals + rewrite loop)
   pitcher.js           — ✅ Live
+  logger.js            — ✅ Shared log writer (all scripts → logs/{date}.log)
 
 /leads/                — Raw leads from Scout
 /queue/                — Briefs from Diagnoser (checker_approved flag)

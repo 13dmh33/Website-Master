@@ -160,13 +160,53 @@ const BUZZWORDS = [
   "robust", "scalable", "ecosystem", "holistic"
 ];
 
+const SPAMMY_OPENERS = [
+  "i noticed your business",
+  "i came across your",
+  "i stumbled upon your",
+  "i'd love to help you grow",
+  "i'd love to help your business",
+  "are you looking to grow",
+  "are you looking to take your",
+  "i wanted to reach out",
+  "i'm reaching out because",
+  "i recently came across",
+  "i hope you don't mind",
+  "sorry to bother you",
+  "i know you're busy"
+];
+
+// Trade synonym map — natural language a message might use instead of the exact trade keyword
+const TRADE_SYNONYMS = {
+  plumber:     ['plumber', 'plumbing', 'pipe', 'drain', 'water heater', 'sewer'],
+  hvac:        ['hvac', 'air conditioning', 'heating', 'cooling', 'furnace', 'ac unit', 'heat pump', 'ductwork'],
+  electrician: ['electrician', 'electrical', 'wiring', 'electric', 'panel'],
+  roofer:      ['roofer', 'roofing', 'roof', 'shingles', 'gutters'],
+  handyman:    ['handyman', 'handymen', 'repairs', 'home repair', 'maintenance', 'fix']
+};
+
+// Fix 1: Trade synonym matching + Fix 5: separate name vs city signals
 function evalPersonalization(message, brief) {
   const msg = message.toLowerCase();
-  const nameWords = brief.business_name.toLowerCase().split(/\s+/).filter(w => w.length > 3);
-  const hasName  = nameWords.some(w => msg.includes(w));
-  const hasTrade = msg.includes(brief.trade.toLowerCase());
-  const cityWords = brief.city.toLowerCase().split(/[,\s]+/).filter(w => w.length > 3);
-  const hasLocal = cityWords.some(w => msg.includes(w));
+
+  // City words — used to detect local signal AND to exclude from name check
+  const cityWords = new Set(
+    brief.city.toLowerCase().split(/[,\s]+/).filter(w => w.length > 2)
+  );
+
+  // Name check: only words that are NOT also city words, and longer than 3 chars
+  const nameWords = brief.business_name
+    .toLowerCase()
+    .split(/\s+/)
+    .filter(w => w.length > 3 && !cityWords.has(w) && !['hvac', 'plumbing', 'electric', 'roofing'].includes(w));
+
+  const hasName  = nameWords.length > 0 && nameWords.some(w => msg.includes(w));
+
+  // Fix 1: check synonyms, not just exact trade keyword
+  const synonyms = TRADE_SYNONYMS[brief.trade.toLowerCase()] || [brief.trade.toLowerCase()];
+  const hasTrade = synonyms.some(s => msg.includes(s));
+
+  const hasLocal = [...cityWords].some(w => msg.includes(w));
 
   let score = 0;
   if (hasName)  score += 40;
@@ -192,19 +232,31 @@ function evalNoBuzzwords(message) {
   return { pass: found.length === 0, found };
 }
 
+// Fix 2: added minimum word count (20)
 function evalStructure(message) {
   const wordCount = message.trim().split(/\s+/).length;
   const endsWithQuestion = message.trim().endsWith('?');
-  // Count sentences before the final question
   const sentences = message.trim().split(/[.!?]+/).filter(s => s.trim().length > 0);
   const sentencesBeforeQuestion = endsWithQuestion ? sentences.length - 1 : sentences.length;
 
+  const tooShort = wordCount < 20;
+  const tooLong  = wordCount > 80;
+
   return {
-    pass: wordCount <= 80 && endsWithQuestion && sentencesBeforeQuestion <= 3,
+    pass: !tooShort && !tooLong && endsWithQuestion && sentencesBeforeQuestion <= 3,
     wordCount,
     endsWithQuestion,
-    sentencesBeforeQuestion
+    sentencesBeforeQuestion,
+    tooShort,
+    tooLong
   };
+}
+
+// Fix 3: spammy opener detection as Eval 5
+function evalNoSpammyOpeners(message) {
+  const msg = message.toLowerCase();
+  const found = SPAMMY_OPENERS.filter(o => msg.startsWith(o) || msg.includes(o));
+  return { pass: found.length === 0, found };
 }
 
 function runAllEvals(message, brief) {
@@ -212,18 +264,21 @@ function runAllEvals(message, brief) {
   const a = evalNoAIMarkers(message);
   const b = evalNoBuzzwords(message);
   const s = evalStructure(message);
+  const o = evalNoSpammyOpeners(message);
 
   return {
-    personalization: p,
-    no_ai_markers:   a,
-    no_buzzwords:    b,
-    structure:       s,
-    allPass: p.pass && a.pass && b.pass && s.pass,
+    personalization:    p,
+    no_ai_markers:      a,
+    no_buzzwords:       b,
+    structure:          s,
+    no_spammy_openers:  o,
+    allPass: p.pass && a.pass && b.pass && s.pass && o.pass,
     failures: [
       !p.pass && `personalization score ${p.score}/100 (need 75) — ${p.detail}`,
       !a.pass && `AI markers found: ${a.found.join(', ')}`,
       !b.pass && `buzzwords found: ${b.found.join(', ')}`,
-      !s.pass && `structure: ${s.wordCount} words, ends with ?:${s.endsWithQuestion}, sentences before question: ${s.sentencesBeforeQuestion}`
+      !s.pass && `structure: ${s.wordCount} words (need 20–80), ends with ?:${s.endsWithQuestion}, sentences before question: ${s.sentencesBeforeQuestion}`,
+      !o.pass && `spammy opener found: "${o.found[0]}"`
     ].filter(Boolean)
   };
 }
@@ -233,14 +288,15 @@ function runAllEvals(message, brief) {
 const REWRITE_SYSTEM = `You are an expert cold outreach copywriter. Rewrite the given cold message to fix the listed issues.
 
 Rules you MUST follow:
-- Under 80 words
+- Between 20 and 80 words
 - Ends with exactly one direct question (ends with "?")
 - No more than 3 sentences before the question
-- Must mention: business name, their trade, and a local signal (city or neighborhood)
+- Must mention: business name, their trade (or a natural synonym for it), and a local signal (city or neighborhood)
 - NO AI markers: "Certainly!", "As an AI", "I'd be happy to", "Great question", "Of course!", "Absolutely!", "I hope this message finds you well", "touch base", "circle back"
 - NO buzzwords: "game-changing", "cutting-edge", "seamlessly", "leverage", "synergy", "revolutionize", "disruptive", "innovative solution", "next-level", "empower", "transformative", "streamline"
+- NO spammy openers: "I noticed your business", "I came across your", "I'd love to help you grow", "I'm reaching out because", "Are you looking to grow", "I hope you don't mind"
 - Sound like a real person — conversational, direct, not salesy
-- Do NOT start with "Hi" or "Hello" followed by a comma — use their name directly if at all
+- Do NOT start with "Hi" or "Hello" followed by a comma
 
 Respond with ONLY the rewritten message. No explanation, no quotes, no markdown.`;
 
@@ -350,10 +406,11 @@ async function main() {
     brief.checker_flag     = evals.allPass ? '' : 'human_review';
     brief.rewrite_count    = rewriteCount;
     brief.checker_score    = {
-      personalization: evals.personalization.score,
-      no_ai_markers:   evals.no_ai_markers.pass,
-      no_buzzwords:    evals.no_buzzwords.pass,
-      structure:       evals.structure.pass
+      personalization:   evals.personalization.score,
+      no_ai_markers:     evals.no_ai_markers.pass,
+      no_buzzwords:      evals.no_buzzwords.pass,
+      structure:         evals.structure.pass,
+      no_spammy_openers: evals.no_spammy_openers.pass
     };
     brief.checked_at = new Date().toISOString();
 
@@ -370,7 +427,7 @@ async function main() {
         console.log(`${label} — ✓ approved (no rewrites)`);
       } else {
         rewritten++;
-        console.log(`${label} — ✓ approved after ${rewriteCount} rewrite(s)`);
+        console.log(`${label} — ✓ approved after ${rewriteCount} rewrite(s) ($${runCost.toFixed(5)})`);
       }
     } else {
       flagged++;

@@ -57,7 +57,7 @@ Solo AI agency system for selling websites + Nora voice agent bundles to home se
 /scripts/
   scout.js             — ✅ Live (Outscraper + cost controls)
   diagnoser.js         — ✅ Live (Claude Haiku + prompt caching + cost controls)
-  checker.js           — 🔲 Building next
+  checker.js           — ✅ Live (4 local evals + Claude rewrite loop)
 
 /leads/                — Raw leads from Scout (JSON per city+date)
 /queue/                — Processed briefs from Diagnoser
@@ -77,7 +77,7 @@ state.json             — Shared lead state across all agents
 |---|---|---|---|
 | Scout | ✅ Script ready | Finds leads on Google Maps via Outscraper | 30 leads |
 | Diagnoser | ✅ Script ready | Writes briefs + cold messages via Claude Haiku | 30 briefs |
-| Checker | 🔲 Prompt only | Quality-gates every message (4 evals) | Blocks/approves |
+| Checker | ✅ Script ready | 4 local evals + Claude rewrite if needed | Blocks/approves |
 | Builder | 🔲 Prompt only | Builds Lovable mockups | 5 sites |
 | Filmer | 🔲 Prompt only | Renders 10s vertical video | 5 videos |
 | Pitcher | 🔲 Prompt only | Sends outreach by channel | 30 messages |
@@ -97,8 +97,8 @@ node scripts/scout.js --city "Austin, TX" --trade plumber --force
 # Step 2 — Diagnoser: generate briefs + cold messages
 node scripts/diagnoser.js --force
 
-# Step 3 — Checker (coming next): quality-gate messages
-# node scripts/checker.js --force
+# Step 3 — Checker: quality-gate messages before sending
+node scripts/checker.js --force
 ```
 
 Supported trades: `plumber`, `hvac`, `electrician`, `roofer`, `handyman`

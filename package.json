@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "scout": "node scripts/scout.js",
-    "diagnose": "node scripts/diagnoser.js"
+    "diagnose": "node scripts/diagnoser.js",
+    "check": "node scripts/checker.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.37.0",

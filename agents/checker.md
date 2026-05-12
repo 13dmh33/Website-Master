@@ -50,3 +50,27 @@ Scan for: "game-changing", "cutting-edge", "seamlessly", "leverage",
 - Maximum 2 rewrite attempts
 - If still failing after 2 rewrites: set checker_approved = false, checker_flag = "human_review"
 - Never send a flagged message — Pitcher checks checker_approved before sending
+
+## How to Run
+
+```bash
+node scripts/checker.js --force
+node scripts/checker.js --limit 10 --force
+```
+
+## Controls in config/checker-config.json
+```json
+{
+  "daily_limit": 30,
+  "monthly_cap": 3.00,
+  "auto_run": false
+}
+```
+
+Evals 1–4 run locally with no API cost.
+Claude API only called when a rewrite is needed (~$0.0003/rewrite).
+
+## Finding Flagged Messages
+```bash
+grep -l '"checker_flag": "human_review"' queue/*.json
+```

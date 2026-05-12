@@ -1,0 +1,17 @@
+# Environment
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs (keep folder, ignore files)
+logs/*.log
+
+# Keep folder structure
+!leads/.gitkeep
+!queue/.gitkeep
+!mockups/.gitkeep
+!messages/.gitkeep
+!logs/.gitkeep

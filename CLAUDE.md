@@ -7,9 +7,13 @@ to home service contractors (plumbers, HVAC, electricians, roofers).
 Your goal: 47 clients/month at $400/site + $300–500/mo Nora voice agent upsell.
 
 ## Build Status (as of 2026-05-12)
-- Scout: script live at scripts/scout.js — Outscraper API, $10/mo cap, auto_run toggle
-- Diagnoser: prompt ready at agents/diagnoser.md — script not yet built
-- Checker: prompt ready at agents/checker.md — script not yet built
+- Scout: ✅ scripts/scout.js — Outscraper API, $10/mo cap, auto_run toggle
+- Diagnoser: ✅ scripts/diagnoser.js — Claude Haiku, prompt caching, $5/mo cap, daily limit
+- Checker: 🔲 prompt ready at agents/checker.md — script building now
+- Builder: 🔲 prompt ready at agents/builder.md
+- Filmer: 🔲 prompt ready at agents/filmer.md
+- Pitcher: 🔲 prompt ready at agents/pitcher.md
+- Mobile: 🔲 prompt ready at agents/mobile.md
 - Builder: prompt ready at agents/builder.md — script not yet built
 - Filmer: prompt ready at agents/filmer.md — script not yet built
 - Pitcher: prompt ready at agents/pitcher.md — script not yet built

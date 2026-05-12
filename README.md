@@ -22,7 +22,6 @@ Solo AI agency system for selling websites + Nora voice agent bundles to home se
 - [x] `config/scout-config.json` — $10/mo budget cap, auto_run toggle
 
 ### In Progress
-- [ ] `scripts/diagnoser.js` — processes leads into briefs + cold messages
 - [ ] `scripts/checker.js` — quality-gates cold messages (4 evals + auto-rewrite)
 
 ### Known Issues / Future Tasks
@@ -57,8 +56,8 @@ Solo AI agency system for selling websites + Nora voice agent bundles to home se
 
 /scripts/
   scout.js             — ✅ Live (Outscraper + cost controls)
-  diagnoser.js         — 🔲 Next to build
-  checker.js           — 🔲 Next to build
+  diagnoser.js         — ✅ Live (Claude Haiku + prompt caching + cost controls)
+  checker.js           — 🔲 Building next
 
 /leads/                — Raw leads from Scout (JSON per city+date)
 /queue/                — Processed briefs from Diagnoser
@@ -77,7 +76,7 @@ state.json             — Shared lead state across all agents
 | Agent | Status | Role | Daily Output |
 |---|---|---|---|
 | Scout | ✅ Script ready | Finds leads on Google Maps via Outscraper | 30 leads |
-| Diagnoser | 🔲 Prompt only | Writes briefs + cold messages | 30 briefs |
+| Diagnoser | ✅ Script ready | Writes briefs + cold messages via Claude Haiku | 30 briefs |
 | Checker | 🔲 Prompt only | Quality-gates every message (4 evals) | Blocks/approves |
 | Builder | 🔲 Prompt only | Builds Lovable mockups | 5 sites |
 | Filmer | 🔲 Prompt only | Renders 10s vertical video | 5 videos |
@@ -89,21 +88,23 @@ state.json             — Shared lead state across all agents
 ## Running Scout (Manual Mode)
 
 ```bash
-# Set your API key
-export OUTSCRAPER_API_KEY=your_key_here
+# First time setup
+npm install
 
-# Run Scout manually (--force bypasses auto_run toggle)
-# Works for any city and any supported trade
-node scripts/scout.js --city "Denver, CO" --trade plumber --force
-node scripts/scout.js --city "Austin, TX" --trade hvac --force
-node scripts/scout.js --city "Phoenix, AZ" --trade electrician --force
-node scripts/scout.js --city "Pittsburgh, PA" --trade roofer --force
-node scripts/scout.js --city "Nashville, TN" --trade handyman --force
+# Step 1 — Scout: find leads (any city, any trade)
+node scripts/scout.js --city "Austin, TX" --trade plumber --force
+
+# Step 2 — Diagnoser: generate briefs + cold messages
+node scripts/diagnoser.js --force
+
+# Step 3 — Checker (coming next): quality-gate messages
+# node scripts/checker.js --force
 ```
 
 Supported trades: `plumber`, `hvac`, `electrician`, `roofer`, `handyman`
 
-Output is written to `leads/{city-slug}-YYYY-MM-DD.json`
+Scout output: `leads/{city}-{trade}-{date}-run1.json`
+Diagnoser output: `queue/{lead_id}-brief.json`
 
 ## Cost Controls
 

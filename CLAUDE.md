@@ -9,7 +9,8 @@ Your goal: 47 clients/month at $400/site + $300–500/mo Nora voice agent upsell
 ## Build Status (as of 2026-05-12)
 - Scout: ✅ scripts/scout.js — Outscraper API, $10/mo cap, auto_run toggle
 - Diagnoser: ✅ scripts/diagnoser.js — Claude Haiku, prompt caching, $5/mo cap, daily limit
-- Checker: ✅ scripts/checker.js — 4 local evals + Claude rewrite loop, $3/mo cap
+- Checker: ✅ scripts/checker.js — 5 evals + Claude rewrite loop, $3/mo cap
+- Pitcher: 🔲 scripts/pitcher.js — building now (email via Resend, SMS via Twilio)
 - Builder: 🔲 prompt ready at agents/builder.md
 - Filmer: 🔲 prompt ready at agents/filmer.md
 - Pitcher: 🔲 prompt ready at agents/pitcher.md

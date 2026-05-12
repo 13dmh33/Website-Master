@@ -18,24 +18,23 @@ Solo AI agency system for selling websites + Nora voice agent bundles to home se
 - [x] `CLAUDE.md` — orchestrator config for Claude Code
 - [x] `state.json` — shared lead state schema
 - [x] All 7 agent system prompt files in `/agents/`
-- [x] `scripts/scout.js` — Outscraper API integration with cost controls
-- [x] `config/scout-config.json` — $10/mo budget cap, auto_run toggle
+- [x] `scripts/scout.js` — Outscraper API, $10/mo cap, auto_run toggle
+- [x] `scripts/diagnoser.js` — Claude Haiku, prompt caching, daily limit + $5/mo cap
+- [x] `scripts/checker.js` — 5 evals (personalization, AI markers, buzzwords, structure, spammy openers) + Claude rewrite loop, $3/mo cap
 
 ### In Progress
-- [ ] `scripts/checker.js` — quality-gates cold messages (4 evals + auto-rewrite)
-
-### Known Issues / Future Tasks
-- [ ] **Outscraper async responses** — Maps v3 API may return a task ID instead of direct results on some plans. Need to add polling logic (`GET /tasks/{id}`) to handle async responses. Current script works for sync responses only.
-- [ ] **`years_on_maps` enrichment** — Outscraper doesn't return this field. Currently `null` on all leads. The "5+ years on Maps" filter is unenforced until an enrichment step is added.
-- [ ] **Verify `cost_per_result`** — Default is `$0.001`. Check your actual Outscraper rate in your dashboard and update `config/scout-config.json` before relying on budget tracking.
+- [ ] `scripts/pitcher.js` — email (Resend) + SMS (Twilio) outreach sender
 
 ### Not Started
 - [ ] `scripts/builder.js` — Lovable.dev mockup generation
 - [ ] `scripts/filmer.js` — Higgsfield/screenshot video rendering
-- [ ] `scripts/pitcher.js` — multi-channel outreach sender
 - [ ] `scripts/mobile.js` — reply handler + Calendly booking
-- [ ] `.env.local` setup guide
-- [ ] First live test run (Denver plumbers)
+- [ ] First live test run
+
+### Known Issues / Future Tasks
+- [ ] **Outscraper async responses** — Maps v3 API may return a task ID on some plans. Need polling logic. Current script works for sync responses only.
+- [ ] **`years_on_maps` enrichment** — field is `null` on all leads. "5+ years on Maps" filter unenforced until enrichment step added.
+- [ ] **Verify `cost_per_result`** — default is `$0.001`. Check actual Outscraper rate in dashboard and update `config/scout-config.json`.
 
 ---
 
@@ -44,29 +43,34 @@ Solo AI agency system for selling websites + Nora voice agent bundles to home se
 ```
 /agents/               — System prompts for all 7 agents
   scout.md             — ✅ Outscraper integration docs
-  diagnoser.md         — ✅ Brief + message format
-  checker.md           — ✅ 4-eval quality gate
+  diagnoser.md         — ✅ Brief + message format + script usage
+  checker.md           — ✅ 5-eval quality gate + script usage
   builder.md           — ✅ Lovable prompt template
   filmer.md            — ✅ Screenshot + video spec
   pitcher.md           — ✅ Multi-channel send logic
   mobile.md            — ✅ Reply handler + Calendly flow
 
 /config/
-  scout-config.json    — ✅ Budget cap + auto_run toggle
+  scout-config.json    — ✅ $10/mo cap, auto_run toggle
+  diagnoser-config.json — ✅ $5/mo cap, daily limit 30
+  checker-config.json  — ✅ $3/mo cap, daily limit 30
 
 /scripts/
-  scout.js             — ✅ Live (Outscraper + cost controls)
-  diagnoser.js         — ✅ Live (Claude Haiku + prompt caching + cost controls)
-  checker.js           — ✅ Live (4 local evals + Claude rewrite loop)
+  scout.js             — ✅ Live
+  diagnoser.js         — ✅ Live
+  checker.js           — ✅ Live (5 evals + rewrite loop)
+  pitcher.js           — 🔲 Building now
 
-/leads/                — Raw leads from Scout (JSON per city+date)
-/queue/                — Processed briefs from Diagnoser
+/leads/                — Raw leads from Scout
+/queue/                — Briefs from Diagnoser (checker_approved flag)
 /mockups/              — Lovable URLs + video links
-/messages/             — Outreach log
+/messages/             — Outreach log from Pitcher
 /logs/                 — Daily run logs
 
-CLAUDE.md              — Orchestrator config (Claude Code reads at startup)
-state.json             — Shared lead state across all agents
+CLAUDE.md              — Orchestrator config
+state.json             — Shared lead state
+.env.local.example     — API key template
+package.json           — npm scripts + dependencies
 ```
 
 ---
@@ -75,71 +79,52 @@ state.json             — Shared lead state across all agents
 
 | Agent | Status | Role | Daily Output |
 |---|---|---|---|
-| Scout | ✅ Script ready | Finds leads on Google Maps via Outscraper | 30 leads |
-| Diagnoser | ✅ Script ready | Writes briefs + cold messages via Claude Haiku | 30 briefs |
-| Checker | ✅ Script ready | 4 local evals + Claude rewrite if needed | Blocks/approves |
+| Scout | ✅ Live | Finds leads on Google Maps via Outscraper | 30 leads |
+| Diagnoser | ✅ Live | Writes briefs + cold messages via Claude Haiku | 30 briefs |
+| Checker | ✅ Live | 5 evals + Claude rewrite loop | Blocks/approves |
 | Builder | 🔲 Prompt only | Builds Lovable mockups | 5 sites |
 | Filmer | 🔲 Prompt only | Renders 10s vertical video | 5 videos |
-| Pitcher | 🔲 Prompt only | Sends outreach by channel | 30 messages |
+| Pitcher | 🔲 Building | Sends outreach by channel (email + SMS) | 30 messages |
 | Mobile | 🔲 Prompt only | Books calls from replies | Real-time |
 
 ---
 
-## Running Scout (Manual Mode)
+## Pipeline (current)
 
 ```bash
-# First time setup
-npm install
+npm install                                                          # first time only
+cp .env.local.example .env.local                                     # add your keys
 
-# Step 1 — Scout: find leads (any city, any trade)
-node scripts/scout.js --city "Austin, TX" --trade plumber --force
-
-# Step 2 — Diagnoser: generate briefs + cold messages
-node scripts/diagnoser.js --force
-
-# Step 3 — Checker: quality-gate messages before sending
-node scripts/checker.js --force
+node scripts/scout.js --city "Austin, TX" --trade plumber --force    # Step 1
+node scripts/diagnoser.js --force                                     # Step 2
+node scripts/checker.js --force                                       # Step 3
+# node scripts/pitcher.js --force                                     # Step 4 — coming next
 ```
 
 Supported trades: `plumber`, `hvac`, `electrician`, `roofer`, `handyman`
 
-Scout output: `leads/{city}-{trade}-{date}-run1.json`
-Diagnoser output: `queue/{lead_id}-brief.json`
+---
 
-## Cost Controls
+## Cost Controls Per Script
 
-Edit `config/scout-config.json`:
+| Script | Cap | Tracking File |
+|---|---|---|
+| scout.js | $10/mo (Outscraper) | config/scout-config.json |
+| diagnoser.js | $5/mo + 30/day (Claude) | config/diagnoser-config.json |
+| checker.js | $3/mo + 30/day (Claude rewrites only) | config/checker-config.json |
 
-```json
-{
-  "monthly_cap": 10.00,    // Hard stop at $10/mo Outscraper spend
-  "auto_run": false,        // false = manual only, true = runs on schedule
-  "default_limit": 30       // Results per run
-}
-```
-
-- `auto_run: false` — Scout only runs when you explicitly call `--force`
-- `auto_run: true` — Scout runs normally without `--force` (for scheduled use)
-- Budget cap is hard — script exits if monthly spend would exceed cap
+All scripts respect `auto_run: false` — require `--force` flag in manual/testing mode.
 
 ---
 
-## Full Setup (when ready to go live)
-
-1. Install Claude Code: `npm install -g @anthropic-ai/claude-code`
-2. Clone: `git clone https://github.com/13dmh33/Website-Master`
-3. Copy `.env.local.example` to `.env.local` and fill in keys
-4. `cd Website-Master && claude` — Claude Code reads CLAUDE.md
-5. When prompted: enter target city and trade
-
 ## Required Accounts
 
-| Service | Used By | Status |
+| Service | Used By | Notes |
 |---|---|---|
-| Anthropic API | All agents (Claude) | Required |
-| Outscraper | Scout | Required — get key at outscraper.com |
-| Lovable.dev | Builder | Required |
-| Higgsfield.ai | Filmer | Optional (can use Loom manually) |
-| Resend or SendGrid | Pitcher (email) | Required |
-| Twilio | Pitcher (SMS) | Optional — reuse from Nora |
-| Calendly | Mobile | Required |
+| Anthropic API | Diagnoser, Checker | console.anthropic.com |
+| Outscraper | Scout | outscraper.com — verify cost_per_result in dashboard |
+| Resend | Pitcher (email) | resend.com |
+| Twilio | Pitcher (SMS) | reuse from Nora Agent |
+| Lovable.dev | Builder | lovable.dev |
+| Higgsfield.ai | Filmer | Optional — Loom works as fallback |
+| Calendly | Mobile | calendly.com |

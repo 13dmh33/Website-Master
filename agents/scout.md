@@ -1,47 +1,60 @@
 # Scout Agent
 
 ## Role
-Find 30 contractor leads per day in target cities who need a website.
+Find contractor leads in target cities who need a website.
+Uses Outscraper API to pull Google Maps data.
 
-## Target Criteria (ALL must match)
-- Category: plumber, HVAC, electrician, roofer, or handyman
-- Listed on Google Maps for 5+ years
-- Fewer than 100 reviews (sweet spot: 10–60)
-- Rating: 4.0 or higher
-- No website OR website last updated before 2016
+## How to Run
 
-## Output Format
-Write each lead as a JSON object to /leads/{city}-{YYYY-MM-DD}.json
+**Manual (on-demand):**
+```bash
+OUTSCRAPER_API_KEY=your_key node scripts/scout.js --city "Denver, CO" --trade plumber --force
+```
 
+**Enable auto-run (scheduled):**
+Set `auto_run: true` in `config/scout-config.json`
+Then run without `--force` — script will proceed automatically.
+
+**Disable auto-run (testing/paused):**
+Set `auto_run: false` in `config/scout-config.json`
+Running without `--force` will exit early with no API call made.
+
+## Controls in config/scout-config.json
 ```json
 {
-  "lead_id": "{business-name-slug}-{city}",
-  "business_name": "",
-  "trade": "",
-  "city": "",
-  "years_on_maps": 0,
-  "review_count": 0,
-  "rating": 0.0,
-  "website": "none | [url]",
-  "phone": "",
-  "address": "",
-  "gap_score": 0,
-  "notes": ""
+  "monthly_cap": 10.00,       // Hard stop when spend hits this
+  "auto_run": false,           // Toggle for scheduled vs manual mode
+  "default_limit": 30,         // Results per run
+  "default_city": "Denver, CO",
+  "default_trade": "plumber"
 }
 ```
 
-## Gap Score Guide (1–10)
-- 10: No website, 50+ reviews, 4.5+ rating, 10+ years on Maps
-- 7–9: Outdated website or good reviews but some gaps
-- 4–6: Has decent website but weak presence
-- 1–3: Already well-served online
+## Target Criteria (filtered automatically by script)
+- Fewer than 100 reviews
+- Rating 4.0 or higher
+- Sorted by gap_score descending
 
-## Rules
-- Collect exactly 30 leads per session
-- Write all leads to /leads/ — do not touch any other folder
-- Do not contact any business
-- Do not duplicate leads already in state.json
+## Gap Score
+- +4 if no website
+- +3 if reviews 10–60
+- +1 if reviews 61–100
+- +2 if rating 4.5+
+- +1 if rating 4.0–4.49
+- Max: 10
 
-## Data Sources
-Use SerpAPI or Outscraper to pull Google Maps results.
-If API unavailable, flag for manual collection and write partial results.
+## Output
+Writes to `/leads/{city}-{YYYY-MM-DD}.json`
+Updates `state.json` queue with new lead IDs
+Updates `config/scout-config.json` with spend
+
+## Channel Assignment (auto)
+- plumber / hvac → email
+- electrician / roofer → sms
+- handyman → ig_dm
+
+## Required Environment Variable
+```
+OUTSCRAPER_API_KEY=your_key_here
+```
+Add to `.env.local` (never commit this file).

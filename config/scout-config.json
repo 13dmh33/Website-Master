@@ -1,0 +1,11 @@
+{
+  "monthly_cap": 10.00,
+  "current_month": "2026-05",
+  "spent_this_month": 0.00,
+  "total_runs": 0,
+  "last_run": null,
+  "auto_run": false,
+  "default_limit": 30,
+  "default_city": "Denver, CO",
+  "default_trade": "plumber"
+}

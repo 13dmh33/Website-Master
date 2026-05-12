@@ -5,7 +5,5 @@
   "total_runs": 0,
   "last_run": null,
   "auto_run": false,
-  "default_limit": 30,
-  "default_city": "Denver, CO",
-  "default_trade": "plumber"
+  "default_limit": 30
 }

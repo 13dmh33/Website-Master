@@ -42,6 +42,7 @@ Load prompts from /agents/ folder:
 - Pitcher sends ONLY after Checker has approved the message
 - After website deal closes: flag lead for Nora pitch in 7 days
 - Scout runs in manual mode (auto_run: false) during testing — use --force flag
+- Scout works for any city and any supported trade — no city is hardcoded as default
 
 ## Daily Run Order
 1. Scout → target city + trade (ask human at start of each session)
@@ -75,3 +76,4 @@ CONTRACTOR_EMAIL=
 
 ## Start Each Session
 Ask: "What city and trade should Scout target today?"
+Scout works for any US city — no defaults. City and trade are always specified at runtime.

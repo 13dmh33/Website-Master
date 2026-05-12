@@ -84,21 +84,21 @@ state.json             — Shared lead state across all agents
 ## Running Scout (Manual Mode)
 
 ```bash
-# Install dependencies (first time only)
-cd Website-Master
-
 # Set your API key
 export OUTSCRAPER_API_KEY=your_key_here
 
 # Run Scout manually (--force bypasses auto_run toggle)
+# Works for any city and any supported trade
 node scripts/scout.js --city "Denver, CO" --trade plumber --force
-
-# Other trades
-node scripts/scout.js --city "Denver, CO" --trade hvac --force
-node scripts/scout.js --city "Austin, TX" --trade electrician --force
+node scripts/scout.js --city "Austin, TX" --trade hvac --force
+node scripts/scout.js --city "Phoenix, AZ" --trade electrician --force
+node scripts/scout.js --city "Pittsburgh, PA" --trade roofer --force
+node scripts/scout.js --city "Nashville, TN" --trade handyman --force
 ```
 
-Output is written to `leads/denver-co-YYYY-MM-DD.json`
+Supported trades: `plumber`, `hvac`, `electrician`, `roofer`, `handyman`
+
+Output is written to `leads/{city-slug}-YYYY-MM-DD.json`
 
 ## Cost Controls
 

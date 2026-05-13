@@ -7,7 +7,9 @@
     "scout": "node scripts/scout.js",
     "diagnose": "node scripts/diagnoser.js",
     "check": "node scripts/checker.js",
-    "pitch": "node scripts/pitcher.js"
+    "pitch": "node scripts/pitcher.js",
+    "build": "node scripts/builder.js",
+    "film": "node scripts/filmer.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.37.0",

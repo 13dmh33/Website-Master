@@ -39,3 +39,41 @@ Save Loom URL to /mockups/{lead_id}-video.txt with prefix "loom:"
 - Do not send the video anywhere — Pitcher handles delivery
 - Do not write to /queue/ or /leads/
 - If video generation fails, write "pending_manual" to the video file and continue
+
+---
+
+## Script: scripts/filmer.js
+
+### Usage
+```bash
+node scripts/filmer.js --force                                      # write video instructions
+node scripts/filmer.js --submit --lead {lead_id} --url loom:{url}  # record Loom URL
+```
+
+Higgsfield.ai requires invite access and is not integrated. The script:
+1. Reads `mockups/{lead_id}-v1.txt` for leads with a real Lovable URL
+2. Optionally captures a screenshot via ScreenshotOne (set `SCREENSHOTONE_API_KEY`)
+3. Writes `pending_manual` + Loom instructions to `mockups/{lead_id}-video.txt`
+
+Record the Loom walkthrough manually, then use `--submit` to store the URL.
+Pitcher reads `video.txt` and attaches the link to the outreach message.
+
+### Config: config/filmer-config.json
+```json
+{
+  "daily_limit": 5,
+  "auto_run": false,
+  "filmed_today": 0,
+  "total_filmed": 0
+}
+```
+
+### Optional environment variable
+```
+SCREENSHOTONE_API_KEY=    # enables mobile screenshot capture (screenshotone.com)
+```
+
+### Outputs
+- `mockups/{lead_id}-video.txt` — "pending_manual" instructions, or Loom URL after --submit
+- `mockups/{lead_id}-screenshot.txt` — ScreenshotOne URL (if API key set)
+- `state.json` — status: mockup_ready → film_pending or filmed

@@ -11,8 +11,8 @@ Your goal: 47 clients/month at $400/site + $300–500/mo Nora voice agent upsell
 - Diagnoser: ✅ scripts/diagnoser.js — Claude Haiku, prompt caching, $5/mo cap, daily limit
 - Checker: ✅ scripts/checker.js — 5 evals + Claude rewrite loop, $3/mo cap
 - Pitcher: ✅ scripts/pitcher.js — email (Resend), SMS (Twilio), manual drafts, --dry-run flag
-- Builder: 🔲 prompt ready at agents/builder.md — script not yet built
-- Filmer: 🔲 prompt ready at agents/filmer.md — script not yet built
+- Builder: ✅ scripts/builder.js — Lovable prompt generator, --submit to record URL, 5/day
+- Filmer: ✅ scripts/filmer.js — Loom instructions + ScreenshotOne, --submit to record URL, 5/day
 - Mobile: 🔲 prompt ready at agents/mobile.md — script not yet built
 
 ## File System

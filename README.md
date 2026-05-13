@@ -25,9 +25,11 @@ Solo AI agency system for selling websites + Nora voice agent bundles to home se
 ### Done (continued)
 - [x] `scripts/pitcher.js` — email (Resend) + SMS (Twilio), manual drafts for ig_dm/linkedin, --dry-run flag
 
+### Done (continued)
+- [x] `scripts/builder.js` — Lovable prompt generator (5/day), `--submit` to record URL
+- [x] `scripts/filmer.js` — Loom instructions + optional ScreenshotOne capture, `--submit` to record URL
+
 ### Not Started
-- [ ] `scripts/builder.js` — Lovable.dev mockup generation
-- [ ] `scripts/filmer.js` — Higgsfield/screenshot video rendering
 - [ ] `scripts/mobile.js` — reply handler + Cal.com booking
 - [ ] First live test run
 
@@ -83,8 +85,8 @@ package.json           — npm scripts + dependencies
 | Scout | ✅ Live | Finds leads on Google Maps via Outscraper | 30 leads |
 | Diagnoser | ✅ Live | Writes briefs + cold messages via Claude Haiku | 30 briefs |
 | Checker | ✅ Live | 5 evals + Claude rewrite loop | Blocks/approves |
-| Builder | 🔲 Prompt only | Builds Lovable mockups | 5 sites |
-| Filmer | 🔲 Prompt only | Renders 10s vertical video | 5 videos |
+| Builder | ✅ Live | Generates Lovable prompts + records URLs | 5 sites |
+| Filmer | ✅ Live | Loom instructions + ScreenshotOne capture | 5 videos |
 | Pitcher | ✅ Live | Sends outreach by channel (email + SMS + manual drafts) | 30 messages |
 | Mobile | 🔲 Prompt only | Books calls from replies | Real-time |
 
@@ -99,7 +101,14 @@ cp .env.local.example .env.local                                     # add your 
 node scripts/scout.js --city "Austin, TX" --trade plumber --force    # Step 1
 node scripts/diagnoser.js --force                                     # Step 2
 node scripts/checker.js --force                                       # Step 3
-node scripts/pitcher.js --force                                       # Step 4
+node scripts/builder.js --force                                       # Step 4a — generate Lovable prompts
+# → paste each into lovable.dev, copy deploy URL, then:
+node scripts/builder.js --submit --lead {id} --url {url}             # Step 4b — record URL
+node scripts/filmer.js --force                                        # Step 5a — write Loom instructions
+# → record Loom walkthrough, then:
+node scripts/filmer.js --submit --lead {id} --url loom:{url}         # Step 5b — record video URL
+node scripts/pitcher.js --dry-run --force                            # Step 6 — preview
+node scripts/pitcher.js --force                                       # Step 6 — send
 ```
 
 Supported trades: `plumber`, `hvac`, `electrician`, `roofer`, `handyman`
@@ -114,6 +123,8 @@ Supported trades: `plumber`, `hvac`, `electrician`, `roofer`, `handyman`
 | diagnoser.js | $5/mo + 30/day (Claude) | config/diagnoser-config.json |
 | checker.js | $3/mo + 30/day (Claude rewrites only) | config/checker-config.json |
 | pitcher.js | 30/day send limit (no Claude cost) | config/pitcher-config.json |
+| builder.js | 5/day mockup limit (no API cost) | config/builder-config.json |
+| filmer.js | 5/day limit (no API cost) | config/filmer-config.json |
 
 All scripts respect `auto_run: false` — require `--force` flag in manual/testing mode.
 

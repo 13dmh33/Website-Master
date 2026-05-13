@@ -50,3 +50,41 @@ Output: single-page HTML or Lovable deploy URL
 - Max 5 mockups per day
 - Do not write to /queue/ or /leads/
 - Save the Lovable URL exactly as returned — do not modify
+
+---
+
+## Script: scripts/builder.js
+
+### Usage
+```bash
+node scripts/builder.js --force                                    # generate prompts
+node scripts/builder.js --submit --lead {lead_id} --url {url}     # record Lovable URL
+```
+
+Lovable has no public API. The script generates a filled-in prompt for each priority lead
+and saves it to `mockups/{lead_id}-lovable-prompt.txt`. You paste it into lovable.dev,
+copy the deploy URL, then use `--submit` to record it.
+
+### State machine
+```
+checker_approved → (builder --force) → mockup_pending  (prompt saved, waiting for Lovable)
+mockup_pending   → (builder --submit) → mockup_ready   (URL saved to v1.txt)
+mockup_ready     → (filmer --force)   → film_pending   (video instructions written)
+film_pending     → (filmer --submit)  → filmed         (Loom URL saved to video.txt)
+filmed           → Pitcher attaches video URL to outreach message
+```
+
+### Config: config/builder-config.json
+```json
+{
+  "daily_limit": 5,
+  "auto_run": false,
+  "built_today": 0,
+  "total_built": 0
+}
+```
+
+### Outputs
+- `mockups/{lead_id}-lovable-prompt.txt` — paste into lovable.dev
+- `mockups/{lead_id}-v1.txt` — "prompt_ready" until --submit records the real URL
+- `state.json` — status: checked → mockup_pending or mockup_ready

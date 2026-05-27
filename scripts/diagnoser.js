@@ -310,6 +310,7 @@ async function main() {
         trade:         lead.trade,
         city:          lead.city,
         phone:         lead.phone,
+        email:         lead.email || '',
         website:       lead.website,
         review_count:  lead.review_count,
         rating:        lead.rating,

@@ -87,7 +87,8 @@ Set `auto_run: true` to enable scheduled runs. Otherwise `--force` is required.
 ### Environment Variables
 ```
 RESEND_API_KEY=          # required for email channel
-RESEND_FROM_EMAIL=       # overrides from_email in config (optional)
+FROM_EMAIL=              # sender address shown in From: header
+FROM_NAME=               # sender name shown in From: header
 TWILIO_ACCOUNT_SID=      # required for SMS channel
 TWILIO_AUTH_TOKEN=       # required for SMS channel
 TWILIO_FROM_PHONE=       # required for SMS channel (E.164 format)

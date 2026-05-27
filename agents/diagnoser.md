@@ -16,6 +16,8 @@ Write to /queue/{lead_id}-brief.json
   "business_name": "",
   "trade": "",
   "city": "",
+  "phone": "",
+  "email": "",
   "diagnosis": "",
   "hero_angle": "",
   "tone": "",

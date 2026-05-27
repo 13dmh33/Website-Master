@@ -29,14 +29,19 @@ Solo AI agency system for selling websites + Nora voice agent bundles to home se
 - [x] `scripts/builder.js` — Lovable prompt generator (5/day), `--submit` to record URL
 - [x] `scripts/filmer.js` — Loom instructions + optional ScreenshotOne capture, `--submit` to record URL
 
+### Done (continued)
+- [x] `scripts/mobile.js` — positive reply handler, weekday slot suggestions, owner approval gate, Nora upsell scheduler
+- [x] `run-daily.sh` — one-command daily pipeline runner with manual-step pauses
+
 ### Not Started
-- [ ] `scripts/mobile.js` — reply handler + Cal.com booking
 - [ ] First live test run
 
 ### Known Issues / Future Tasks
 - [x] **Outscraper async responses** — polling logic added. Scout now handles task IDs via `pollTask()` (2s interval, 60s timeout).
+- [x] **Email field missing** — Scout now captures `email` from Outscraper; Diagnoser passes it through to every brief.
 - [ ] **`years_on_maps` enrichment** — field is `null` on all leads. "5+ years on Maps" filter unenforced until enrichment step added.
 - [ ] **Verify `cost_per_result`** — default is `$0.001`. Check actual Outscraper rate in dashboard and update `config/scout-config.json`.
+- [ ] **Reply detection** — Pitcher logs replies but no automated inbound detection. Status must be set to "positive" manually to trigger Mobile agent.
 
 ---
 
@@ -58,11 +63,16 @@ Solo AI agency system for selling websites + Nora voice agent bundles to home se
   checker-config.json  — ✅ $3/mo cap, daily limit 30
 
 /scripts/
-  scout.js             — ✅ Live (async task polling added)
-  diagnoser.js         — ✅ Live
+  scout.js             — ✅ Live (async task polling, email field)
+  diagnoser.js         — ✅ Live (email passed through pipeline)
   checker.js           — ✅ Live (5 evals + rewrite loop)
   pitcher.js           — ✅ Live
+  builder.js           — ✅ Live
+  filmer.js            — ✅ Live
+  mobile.js            — ✅ Live (reply handler, approval gate, Nora upsell)
   logger.js            — ✅ Shared log writer (all scripts → logs/{date}.log)
+
+run-daily.sh           — ✅ One-command daily pipeline runner
 
 /leads/                — Raw leads from Scout
 /queue/                — Briefs from Diagnoser (checker_approved flag)
@@ -88,16 +98,22 @@ package.json           — npm scripts + dependencies
 | Builder | ✅ Live | Generates Lovable prompts + records URLs | 5 sites |
 | Filmer | ✅ Live | Loom instructions + ScreenshotOne capture | 5 videos |
 | Pitcher | ✅ Live | Sends outreach by channel (email + SMS + manual drafts) | 30 messages |
-| Mobile | 🔲 Prompt only | Books calls from replies | Real-time |
+| Mobile | ✅ Live | Books calls from replies + Nora upsell | Real-time |
 
 ---
 
 ## Pipeline (current)
 
+**Quick start (recommended):**
 ```bash
-npm install                                                          # first time only
-cp .env.local.example .env.local                                     # add your keys
+npm install                   # first time only
+cp .env.local.example .env.local  # fill in your API keys
+./run-daily.sh                # runs all 6 steps in order, pauses at manual steps
+./run-daily.sh --dry-run      # preview Pitcher output without sending
+```
 
+**Step by step (manual):**
+```bash
 node scripts/scout.js --city "Austin, TX" --trade plumber --force    # Step 1
 node scripts/diagnoser.js --force                                     # Step 2
 node scripts/checker.js --force                                       # Step 3
@@ -105,10 +121,14 @@ node scripts/builder.js --force                                       # Step 4a 
 # → paste each into lovable.dev, copy deploy URL, then:
 node scripts/builder.js --submit --lead {id} --url {url}             # Step 4b — record URL
 node scripts/filmer.js --force                                        # Step 5a — write Loom instructions
-# → record Loom walkthrough, then:
+# → record 60-sec Loom walkthrough, then:
 node scripts/filmer.js --submit --lead {id} --url loom:{url}         # Step 5b — record video URL
 node scripts/pitcher.js --dry-run --force                            # Step 6 — preview
 node scripts/pitcher.js --force                                       # Step 6 — send
+
+# When a positive reply comes in:
+# Set "status": "positive" in messages/{lead_id}-sent.json, then:
+node scripts/mobile.js                                               # Step 7 — book call
 ```
 
 Supported trades: `plumber`, `hvac`, `electrician`, `roofer`, `handyman`

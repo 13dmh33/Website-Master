@@ -53,3 +53,41 @@ Draft Nora pitch (see CLAUDE.md for template) and present to owner for approval.
 - NEVER send anything without explicit owner approval
 - If owner doesn't respond within 2 hours, send a push notification reminder
 - Log all actions to /logs/{date}.log
+
+---
+
+## Script: scripts/mobile.js
+
+### Usage
+```bash
+node scripts/mobile.js     # checks Nora pipeline + handles any positive replies
+npm run mobile             # same via npm
+```
+
+### To trigger Mobile for a reply
+When a lead replies positively, update their sent record manually:
+```bash
+# Edit messages/{lead_id}-sent.json — set:
+"status": "positive",
+"latest_reply": "their reply text here"
+```
+Then run `node scripts/mobile.js`. The script will present the draft and wait for your A/E/S input before sending anything.
+
+### Cal.com integration
+Set `CALCOM_LINK=https://cal.com/your-username/15min` in `.env.local`.
+The link is appended to every booking draft. Without it, the script uses
+3 suggested weekday slots (next 3 business days at 2pm).
+
+### Nora upsell
+Triggered automatically when `nora_pitch_due` matches today's date in `state.json`.
+To schedule a Nora pitch after a deal closes, add to `state.json nora_pipeline`:
+```json
+{ "lead_id": "abc123", "nora_pitch_due": "2026-06-03", "nora_pitched": false }
+```
+
+### Outputs
+- `messages/{lead_id}-sent.json` — status updated to "call_booked"
+- `messages/{lead_id}-reply-draft.txt` — manual draft (ig_dm/linkedin or missing contact)
+- `messages/{lead_id}-nora-draft.txt` — Nora pitch draft if manual channel
+- `state.json` — lead moved to status "hot" in queue
+- `logs/{date}.log` — all actions logged

@@ -6,14 +6,14 @@ to home service contractors (plumbers, HVAC, electricians, roofers).
 
 Your goal: 47 clients/month at $400/site + $300–500/mo Nora voice agent upsell.
 
-## Build Status (as of 2026-05-12)
+## Build Status (as of 2026-05-27)
 - Scout: ✅ scripts/scout.js — Outscraper API, $10/mo cap, auto_run toggle
-- Diagnoser: ✅ scripts/diagnoser.js — Claude Haiku, prompt caching, $5/mo cap, daily limit
+- Diagnoser: ✅ scripts/diagnoser.js — Claude Haiku, prompt caching, $5/mo cap, daily limit; email field passed through pipeline
 - Checker: ✅ scripts/checker.js — 5 evals + Claude rewrite loop, $3/mo cap
 - Pitcher: ✅ scripts/pitcher.js — email (Resend), SMS (Twilio), manual drafts, --dry-run flag
 - Builder: ✅ scripts/builder.js — Lovable prompt generator, --submit to record URL, 5/day
 - Filmer: ✅ scripts/filmer.js — Loom instructions + ScreenshotOne, --submit to record URL, 5/day
-- Mobile: 🔲 prompt ready at agents/mobile.md — script not yet built
+- Mobile: ✅ scripts/mobile.js — positive reply handler, weekday slot suggestions, owner approval gate, Nora upsell scheduler
 
 ## File System
 - /leads/       — raw leads from Scout (JSON files per city+date)
@@ -45,6 +45,9 @@ Load prompts from /agents/ folder:
 - Scout works for any city and any supported trade — no city is hardcoded as default
 
 ## Daily Run Order
+Shortcut: `./run-daily.sh` (or `npm run daily`) runs all steps in order with manual-step pauses.
+
+Manual order:
 1. Scout → target city + trade (ask human at start of each session)
 2. Diagnoser → process all new leads from /leads/
 3. Checker + Builder → top 5 priority leads only
@@ -68,10 +71,13 @@ Load prompts from /agents/ folder:
 OUTSCRAPER_API_KEY=
 ANTHROPIC_API_KEY=
 RESEND_API_KEY=
+FROM_EMAIL=
+FROM_NAME=
 TWILIO_ACCOUNT_SID=
 TWILIO_AUTH_TOKEN=
 TWILIO_FROM_PHONE=
 CONTRACTOR_EMAIL=
+CALCOM_LINK=         # optional — shown in Mobile booking drafts
 ```
 
 ## Start Each Session

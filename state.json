@@ -1,11 +1,17 @@
 {
-  "queue": [],
+  "queue": [
+    { "lead_id": "rodriguez-family-plumbing-phoenix-az", "status": "scouted", "added_at": "2026-05-28T10:00:00.000Z" },
+    { "lead_id": "phoenix-pro-plumbers-phoenix-az", "status": "scouted", "added_at": "2026-05-28T10:00:00.000Z" },
+    { "lead_id": "valley-pipe-and-drain-phoenix-az", "status": "scouted", "added_at": "2026-05-28T10:00:00.000Z" },
+    { "lead_id": "desert-sun-plumbing-phoenix-az", "status": "scouted", "added_at": "2026-05-28T10:00:00.000Z" },
+    { "lead_id": "sonoran-plumbing-co-phoenix-az", "status": "scouted", "added_at": "2026-05-28T10:00:00.000Z" }
+  ],
   "active": [],
   "closed": [],
   "nora_pipeline": [],
-  "last_run": null,
+  "last_run": "2026-05-28T10:00:00.000Z",
   "daily_stats": {
-    "leads_scouted": 0,
+    "leads_scouted": 5,
     "briefs_written": 0,
     "mockups_built": 0,
     "messages_sent": 0,

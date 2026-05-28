@@ -187,7 +187,7 @@ Rules:
   - professional = general contractors, remodelers
 - cold_message: max 80 words, mentions business name + trade + local signal, ends with one question, NO AI markers, NO buzzwords
 - gap_score: integer 1-10 (your own assessment — may differ slightly from the input score)
-- channel: email | sms | ig_dm | linkedin
+- channel: copy exactly from the input — do not change it
 
 AI markers to avoid: "Certainly!", "As an AI", "I'd be happy to", "Great question", "Of course!", "Absolutely!", "I hope this message finds you well", "touch base", "circle back"
 Buzzwords to avoid: "game-changing", "cutting-edge", "seamlessly", "leverage", "synergy", "revolutionize", "disruptive", "innovative solution", "next-level", "empower", "transformative", "streamline"
@@ -320,7 +320,7 @@ async function main() {
         cold_message:  brief.cold_message || '',
         gap_score:     brief.gap_score    || lead.gap_score,
         priority:      false,
-        channel:       brief.channel      || lead.channel,
+        channel:       lead.channel,
         checker_approved: false,
         diagnosed_at:  new Date().toISOString()
       };

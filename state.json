@@ -1,10 +1,45 @@
 {
   "queue": [
-    { "lead_id": "rodriguez-family-plumbing-phoenix-az", "status": "scouted", "added_at": "2026-05-28T10:00:00.000Z" },
-    { "lead_id": "phoenix-pro-plumbers-phoenix-az", "status": "scouted", "added_at": "2026-05-28T10:00:00.000Z" },
-    { "lead_id": "valley-pipe-and-drain-phoenix-az", "status": "scouted", "added_at": "2026-05-28T10:00:00.000Z" },
-    { "lead_id": "desert-sun-plumbing-phoenix-az", "status": "scouted", "added_at": "2026-05-28T10:00:00.000Z" },
-    { "lead_id": "sonoran-plumbing-co-phoenix-az", "status": "scouted", "added_at": "2026-05-28T10:00:00.000Z" }
+    {
+      "lead_id": "rodriguez-family-plumbing-phoenix-az",
+      "status": "mockup_pending",
+      "added_at": "2026-05-28T10:00:00.000Z",
+      "diagnosed_at": "2026-05-28T02:15:33.257Z",
+      "checked_at": "2026-05-28T02:16:02.375Z",
+      "built_at": "2026-05-28T02:16:08.991Z"
+    },
+    {
+      "lead_id": "phoenix-pro-plumbers-phoenix-az",
+      "status": "mockup_pending",
+      "added_at": "2026-05-28T10:00:00.000Z",
+      "diagnosed_at": "2026-05-28T02:15:36.374Z",
+      "checked_at": "2026-05-28T02:16:02.576Z",
+      "built_at": "2026-05-28T02:16:08.992Z"
+    },
+    {
+      "lead_id": "valley-pipe-and-drain-phoenix-az",
+      "status": "mockup_pending",
+      "added_at": "2026-05-28T10:00:00.000Z",
+      "diagnosed_at": "2026-05-28T02:15:39.312Z",
+      "checked_at": "2026-05-28T02:16:02.777Z",
+      "built_at": "2026-05-28T02:16:08.993Z"
+    },
+    {
+      "lead_id": "desert-sun-plumbing-phoenix-az",
+      "status": "mockup_pending",
+      "added_at": "2026-05-28T10:00:00.000Z",
+      "diagnosed_at": "2026-05-28T02:15:42.421Z",
+      "checked_at": "2026-05-28T02:16:02.978Z",
+      "built_at": "2026-05-28T02:16:08.993Z"
+    },
+    {
+      "lead_id": "sonoran-plumbing-co-phoenix-az",
+      "status": "mockup_pending",
+      "added_at": "2026-05-28T10:00:00.000Z",
+      "diagnosed_at": "2026-05-28T02:15:46.031Z",
+      "checked_at": "2026-05-28T02:16:04.841Z",
+      "built_at": "2026-05-28T02:16:08.994Z"
+    }
   ],
   "active": [],
   "closed": [],
@@ -12,8 +47,8 @@
   "last_run": "2026-05-28T10:00:00.000Z",
   "daily_stats": {
     "leads_scouted": 5,
-    "briefs_written": 0,
-    "mockups_built": 0,
+    "briefs_written": 5,
+    "mockups_built": 5,
     "messages_sent": 0,
     "replies_received": 0,
     "reply_rate": 0,

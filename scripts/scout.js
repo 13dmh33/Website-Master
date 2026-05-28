@@ -127,7 +127,7 @@ function updateSpend(config, resultsCount) {
 // pollTask handles that case: retries GET /tasks/{id} every 2s up to 60s.
 function pollTask(taskId, apiKey) {
   return new Promise((resolve, reject) => {
-    const MAX_ATTEMPTS = 30;
+    const MAX_ATTEMPTS = 90;
     let attempt = 0;
 
     function poll() {

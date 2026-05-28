@@ -33,15 +33,24 @@ Solo AI agency system for selling websites + Nora voice agent bundles to home se
 - [x] `scripts/mobile.js` — positive reply handler, weekday slot suggestions, owner approval gate, Nora upsell scheduler
 - [x] `run-daily.sh` — one-command daily pipeline runner with manual-step pauses
 
-### Not Started
-- [ ] First live test run
+### Done (continued)
+- [x] **First dry run** — full pipeline tested with 5 mock Phoenix plumber leads. All 5 briefs generated, all 5 checker-approved (1 rewrite), all 5 Lovable prompts built, Pitcher dry-run previewed. Total cost: $0.008.
+- [x] **Channel fix** — Diagnoser no longer overrides Scout's channel assignment. Scout is now authoritative.
+
+### Before First Live Send
+- [ ] Add `OUTSCRAPER_API_KEY` to `.env.local` — needed for real Scout runs
+- [ ] Add `RESEND_API_KEY`, `FROM_EMAIL`, `FROM_NAME` to `.env.local` — needed for email sends
+- [ ] Add `TWILIO_*` keys to `.env.local` — needed for SMS sends
+- [ ] Set business name / sender identity in `pitcher-config.json`
+- [ ] Pick a real city + trade for first live Scout run
 
 ### Known Issues / Future Tasks
-- [x] **Outscraper async responses** — polling logic added. Scout now handles task IDs via `pollTask()` (2s interval, 60s timeout).
-- [x] **Email field missing** — Scout now captures `email` from Outscraper; Diagnoser passes it through to every brief.
-- [ ] **`years_on_maps` enrichment** — field is `null` on all leads. "5+ years on Maps" filter unenforced until enrichment step added.
-- [ ] **Verify `cost_per_result`** — default is `$0.001`. Check actual Outscraper rate in dashboard and update `config/scout-config.json`.
-- [ ] **Reply detection** — Pitcher logs replies but no automated inbound detection. Status must be set to "positive" manually to trigger Mobile agent.
+- [x] **Outscraper async responses** — polling logic handled via `pollTask()`.
+- [x] **Email field missing** — fixed. Scout captures email, Diagnoser passes it through.
+- [x] **Channel override** — fixed. Scout assignment is now locked.
+- [ ] **`years_on_maps` enrichment** — field is always `null`. Filter unenforced.
+- [ ] **Verify `cost_per_result`** — default $0.001. Confirm in Outscraper dashboard.
+- [ ] **Reply detection** — no automated inbound monitoring. Must manually set `"status": "positive"` in messages JSON to trigger Mobile agent.
 
 ---
 

@@ -36,21 +36,30 @@ Solo AI agency system for selling websites + Nora voice agent bundles to home se
 ### Done (continued)
 - [x] **First dry run** — full pipeline tested with 5 mock Phoenix plumber leads. All 5 briefs generated, all 5 checker-approved (1 rewrite), all 5 Lovable prompts built, Pitcher dry-run previewed. Total cost: $0.008.
 - [x] **Channel fix** — Diagnoser no longer overrides Scout's channel assignment. Scout is now authoritative.
+- [x] **Outscraper polling fix** — Scout was polling wrong URL (`api.app.outscraper.com/tasks/`). Now correctly uses `results_location` from initial response (`api.outscraper.cloud/requests/`).
+- [x] **Scout runs locally** — Outscraper API is blocked from remote container (cloud IP restriction). Scout must be run on local machine; all other scripts run fine from container.
+- [x] **Lead filter expanded** — max reviews raised from 100 → 300 to capture more qualifying leads in larger cities.
+- [x] **First real Scout run** — Denver plumbers successfully pulled from Outscraper on local machine.
 
-### Before First Live Send
-- [ ] Add `OUTSCRAPER_API_KEY` to `.env.local` — needed for real Scout runs
-- [ ] Add `RESEND_API_KEY`, `FROM_EMAIL`, `FROM_NAME` to `.env.local` — needed for email sends
-- [ ] Add `TWILIO_*` keys to `.env.local` — needed for SMS sends
-- [ ] Set business name / sender identity in `pitcher-config.json`
-- [ ] Pick a real city + trade for first live Scout run
+### Next Actions (in order)
+1. [ ] **Push Denver leads** — run `git add leads/ state.json config/ && git commit -m "Scout: Denver plumbers" && git push origin claude/kind-hypatia-3YzM0` from local machine
+2. [ ] **Get business name** — needed for sender identity before going live
+3. [ ] **Get Resend API key** — resend.com, needed for email sends
+4. [ ] **Set `FROM_EMAIL` + `FROM_NAME`** — your sender email and name in `.env.local`
+5. [ ] **Run Diagnoser → Pitcher dry-run** on real Denver leads (done from this container after leads are pushed)
+6. [ ] **Get Twilio credentials** — for SMS channel (electricians, roofers)
+7. [ ] **First live send** — remove `--dry-run`, send to real leads
+8. [ ] **Set up Cal.com link** — add `CALCOM_LINK` to `.env.local` for Mobile booking drafts
+9. [ ] **Reply detection** — no automated inbound monitoring yet; must manually set `"status": "positive"` in messages JSON
 
-### Known Issues / Future Tasks
-- [x] **Outscraper async responses** — polling logic handled via `pollTask()`.
-- [x] **Email field missing** — fixed. Scout captures email, Diagnoser passes it through.
-- [x] **Channel override** — fixed. Scout assignment is now locked.
-- [ ] **`years_on_maps` enrichment** — field is always `null`. Filter unenforced.
+### Known Issues / Notes
+- [x] **Email field missing** — fixed. Scout captures email, Diagnoser passes through.
+- [x] **Channel override** — fixed. Scout assignment locked.
+- [x] **Outscraper polling** — fixed. Uses `results_location` URL.
+- [ ] **Scout must run locally** — remote container IP blocked by Outscraper. Document in onboarding.
+- [ ] **`years_on_maps` enrichment** — always `null`. Filter unenforced.
+- [ ] **Reply detection** — manual for now. Future: Twilio/Resend webhooks.
 - [ ] **Verify `cost_per_result`** — default $0.001. Confirm in Outscraper dashboard.
-- [ ] **Reply detection** — no automated inbound monitoring. Must manually set `"status": "positive"` in messages JSON to trigger Mobile agent.
 
 ---
 

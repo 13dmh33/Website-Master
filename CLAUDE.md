@@ -83,3 +83,17 @@ CALCOM_LINK=         # optional — shown in Mobile booking drafts
 ## Start Each Session
 Ask: "What city and trade should Scout target today?"
 Scout works for any US city — no defaults. City and trade are always specified at runtime.
+
+## Important: Scout Runs Locally
+The remote Claude Code container's outbound IP is blocked by Outscraper.
+Scout (scripts/scout.js) must be run on the owner's local machine.
+All other scripts (Diagnoser through Mobile) work fine from the container.
+
+Local Scout workflow:
+1. Run `node scripts/scout.js --city "..." --trade ... --force` on local machine
+2. Commit and push leads/ + state.json to the branch
+3. Continue rest of pipeline from Claude Code container
+
+## Lead Filter
+Scout filters: 5–300 reviews, rating 4.0+, sorted by gap_score desc.
+Max reviews raised to 300 to capture qualifying leads in larger cities.

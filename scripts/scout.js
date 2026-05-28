@@ -203,8 +203,6 @@ async function callOutscraper(query, limit) {
     req.end();
   });
 
-  console.log('  Outscraper raw response:', JSON.stringify(raw).substring(0, 300));
-
   // Sync response
   if (raw.status === 'Success' && raw.data?.length > 0) return raw.data;
 
@@ -254,7 +252,7 @@ function filterAndFormat(results, tradeStr, cityStr) {
   return results
     .filter(r => {
       if (!r.reviews || r.reviews < 5) return false;
-      if (r.reviews > 100) return false;
+      if (r.reviews > 300) return false;
       if (!r.rating || r.rating < 4.0) return false;
       return true;
     })

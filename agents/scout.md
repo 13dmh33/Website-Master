@@ -31,9 +31,13 @@ Running without `--force` will exit early with no API call made.
 ```
 
 ## Target Criteria (filtered automatically by script)
-- Fewer than 100 reviews
+- Between 5 and 300 reviews (raised from 100 — larger cities need wider range)
 - Rating 4.0 or higher
 - Sorted by gap_score descending
+
+## Important: Run Locally Only
+The Outscraper API is blocked from the remote Claude Code container (cloud IP restriction).
+Always run Scout from your local machine, then commit and push the leads file.
 
 ## Gap Score
 - +4 if no website

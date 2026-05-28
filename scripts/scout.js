@@ -203,6 +203,8 @@ async function callOutscraper(query, limit) {
     req.end();
   });
 
+  console.log('  Outscraper raw response:', JSON.stringify(raw).substring(0, 300));
+
   // Sync response
   if (raw.status === 'Success' && raw.data?.length > 0) return raw.data;
 

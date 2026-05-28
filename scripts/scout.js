@@ -123,17 +123,17 @@ function updateSpend(config, resultsCount) {
 
 // ── OUTSCRAPER API ────────────────────────────────────────────────────────────
 
-// Some Outscraper plans return an async task ID instead of immediate results.
-// pollTask handles that case: retries GET /tasks/{id} every 2s up to 60s.
-function pollTask(taskId, apiKey) {
+// Outscraper returns an async task. Poll the results_location URL until done.
+function pollTask(resultsUrl, apiKey) {
   return new Promise((resolve, reject) => {
     const MAX_ATTEMPTS = 90;
     let attempt = 0;
+    const parsed_url = new URL(resultsUrl);
 
     function poll() {
       const options = {
-        hostname: 'api.app.outscraper.com',
-        path:     `/tasks/${taskId}`,
+        hostname: parsed_url.hostname,
+        path:     parsed_url.pathname + parsed_url.search,
         method:   'GET',
         headers:  { 'X-API-KEY': apiKey }
       };
@@ -149,7 +149,7 @@ function pollTask(taskId, apiKey) {
               return resolve(parsed.data);
             }
             if (parsed.status === 'Failure' || parsed.status === 'Error') {
-              return reject(new Error(`Outscraper task ${taskId} failed: ${parsed.status}`));
+              return reject(new Error(`Outscraper task failed: ${parsed.status}`));
             }
             attempt++;
             if (attempt >= MAX_ATTEMPTS) {
@@ -208,10 +208,10 @@ async function callOutscraper(query, limit) {
   // Sync response
   if (raw.status === 'Success' && raw.data?.length > 0) return raw.data;
 
-  // Async task — poll until complete
-  if (raw.id) {
+  // Async task — poll results_location until complete
+  if (raw.id && raw.results_location) {
     process.stdout.write(`  Async task (id: ${raw.id}) — polling`);
-    return pollTask(raw.id, apiKey);
+    return pollTask(raw.results_location, apiKey);
   }
 
   throw new Error(`Outscraper error: ${JSON.stringify(raw)}`);

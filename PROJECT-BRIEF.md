@@ -161,12 +161,12 @@ scouted → diagnosed → checked → mockup_pending → mockup_ready → film_p
 
 | Item | Status | Notes |
 |---|---|---|
-| Twilio credentials | ❌ Missing | Account SID, Auth Token, From phone — needed for SMS channel |
-| Resend API key | ❌ Missing | Needed for email channel |
-| Domain verified in Resend | ❌ Missing | trevoadvisors.com must be verified before sending |
+| Twilio credentials | ✅ Configured | ACdb3cd77... / +17209027555 |
+| Resend API key | ❌ Missing | Needed for email channel (plumbers/HVAC) |
+| Domain verified in Resend | ❌ Missing | trevoadvisors.com must be verified before sending email |
 | Cal.com link | ❌ Optional | Add to `.env.local` for booking drafts |
 
-**Fastest path to first send:** Electricians/roofers → SMS channel → only needs Twilio, no email required.
+**Ready to send SMS now** — electricians/roofers via Twilio. Email channel needs Resend setup.
 
 ---
 
@@ -250,4 +250,4 @@ PROJECT-BRIEF.md — This file
 
 ---
 
-*Last updated: 2026-05-28*
+*Last updated: 2026-05-29 — Twilio configured, SMS channel ready to send*

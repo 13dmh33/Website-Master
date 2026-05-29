@@ -14,7 +14,7 @@ Your goal: 47 clients/month at $400/site + $300–500/mo Nora voice agent upsell
 - Builder: ✅ scripts/builder.js — Lovable prompt generator, --submit to record URL, 5/day
 - Filmer: ✅ scripts/filmer.js — Loom instructions + ScreenshotOne, --submit to record URL, 5/day
 - Mobile: 🔲 prompt ready at agents/mobile.md — script not yet built
-- Agency site: ✅ index.html — Trevo Advisors marketing page, deploying via GitHub Pages
+- Agency site: ✅ index.html — Trevo Advisors marketing page, live at https://13dmh33.github.io/Website-Master
 
 ## File System
 - /leads/       — raw leads from Scout (JSON files per city+date)

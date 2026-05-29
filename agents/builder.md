@@ -43,7 +43,13 @@ Output: single-page HTML or Lovable deploy URL
 - Electrician: #f39c12 (amber) + dark grey
 - Roofer: #7f8c8d (slate) + dark brown
 - Handyman: #27ae60 (green)
-- General Contractor: #2c3e50 (dark navy)
+- Default / General Contractor: #2E5B8A (Trevo Slate Blue)
+
+## Trevo Advisors Brand Colors (for agency materials, not contractor mockups)
+- Primary:    #2E5B8A Slate Blue — headers, CTAs, nav
+- Secondary:  #2E7D5B Growth Green — success signals
+- Background: #F8F7F3 Warm Cream — page/card fills
+- Accent:     #C8720E Amber — use sparingly, 1× per view
 
 ## Rules
 - Only process priority = true leads

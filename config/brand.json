@@ -1,0 +1,12 @@
+{
+  "agency_name": "Trevo Advisors",
+  "website": "trevoadvisors.com",
+  "contact_email": "dave@trevoadvisors.com",
+  "colors": {
+    "primary":    { "hex": "#2E5B8A", "name": "Slate Blue",   "usage": "headers, CTAs, nav" },
+    "secondary":  { "hex": "#2E7D5B", "name": "Growth Green", "usage": "success, growth signals" },
+    "background": { "hex": "#F8F7F3", "name": "Warm Cream",   "usage": "page and card fills" },
+    "accent":     { "hex": "#C8720E", "name": "Amber",        "usage": "sparingly, 1x per view" }
+  },
+  "notes": "Trade colors override primary for contractor mockups. Agency colors used for proposals, emails, and any Trevo-branded materials."
+}

@@ -4,7 +4,7 @@
 const fs       = require('fs');
 const path     = require('path');
 const https    = require('https');
-const readline = require('readline');
+
 require('dotenv').config({ path: path.resolve(__dirname, '../.env.local') });
 
 const ROOT         = path.resolve(__dirname, '..');
@@ -58,85 +58,62 @@ function loadBrief(leadId) {
   catch { return null; }
 }
 
-// ── NEXT AVAILABLE SLOTS (Cal.com fallback — 3 weekday slots starting tomorrow) ─
+// ── NEXT AVAILABLE SLOTS (spread across next 2 weeks, varied times) ─────────────
 
-function nextSlots(count = 3) {
+function nextSlots() {
   const DAYS   = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const TIMES  = ['10am', '2pm', '4pm'];
   const slots  = [];
   const d      = new Date();
   d.setDate(d.getDate() + 1);
+  let timeIdx  = 0;
 
-  while (slots.length < count) {
-    if (d.getDay() !== 0 && d.getDay() !== 6) {
-      slots.push(`${DAYS[d.getDay()]} ${MONTHS[d.getMonth()]} ${d.getDate()} at 2pm`);
+  // Pick one slot per week for 2 weeks — prefer Mon/Wed/Thu
+  const PREFERRED = [1, 3, 4]; // Mon, Wed, Thu
+  let week = 0;
+
+  while (slots.length < 4 && week < 14) {
+    if (PREFERRED.includes(d.getDay())) {
+      slots.push(`${DAYS[d.getDay()]} ${MONTHS[d.getMonth()]} ${d.getDate()} at ${TIMES[timeIdx % TIMES.length]}`);
+      timeIdx++;
+      d.setDate(d.getDate() + 2); // skip ahead to avoid back-to-back
+    } else {
+      d.setDate(d.getDate() + 1);
     }
-    d.setDate(d.getDate() + 1);
+    week++;
   }
   return slots;
 }
 
 // ── BUILD DRAFT RESPONSE ──────────────────────────────────────────────────────
 
-function buildDraft(record, slot1, slot2, calLink) {
+function buildDraft(record, slots, calLink) {
   const firstName = (record.business_name || '').split(/[\s,]/)[0];
-  const link      = calLink ? `\n\nOr grab a time here: ${calLink}` : '';
-  return `Hey ${firstName}! Great to hear from you. I'd love to show you the full mockup on a quick call — should only take 15 minutes.\n\nDoes ${slot1} or ${slot2} work for you?${link}`;
+  const link      = calLink ? `\n\nOr grab any time here: ${calLink}` : '';
+  const options   = slots.slice(0, 4).map((s, i) => `${i + 1}. ${s}`).join('\n');
+  return `Hey ${firstName}! Great to hear from you. I'd love to show you the full mockup on a quick call — should only take 15 minutes.\n\nHere are a few times over the next two weeks:\n${options}\n\nJust reply with a number or let me know what works better.${link}`;
 }
 
-// ── READLINE PROMPT ───────────────────────────────────────────────────────────
+// ── AUTO-SEND LOG ─────────────────────────────────────────────────────────────
 
-function ask(rl, question) {
-  return new Promise(resolve => rl.question(question, resolve));
-}
-
-// ── APPROVAL PROMPT ───────────────────────────────────────────────────────────
-
-async function promptApproval(record, draft, calLink) {
+function printSentSummary(record, draft, calLink) {
   const latestReply = record.replies?.slice(-1)[0]?.text
     || record.latest_reply
-    || '(check messages file for reply text)';
+    || '(see messages file)';
 
   console.log('\n' + '═'.repeat(56));
-  console.log('POSITIVE REPLY');
+  console.log('AUTO-SENT REPLY');
   console.log('─'.repeat(56));
   console.log(`Business : ${record.business_name}`);
-  console.log(`Trade    : ${record.trade}`);
-  console.log(`City     : ${record.city}`);
+  console.log(`Trade    : ${record.trade} | City: ${record.city}`);
   console.log(`Channel  : ${record.channel}`);
-  console.log(`Reply    : "${latestReply}"`);
+  console.log(`Their reply: "${latestReply}"`);
   console.log('─'.repeat(56));
-  console.log('YOUR DRAFT:\n');
+  console.log('SENT:\n');
   console.log(draft);
   if (calLink) console.log(`\nCal.com  : ${calLink}`);
-  console.log('\n─'.replace('\n', '') + '─'.repeat(55));
-  console.log('[ A ] Approve & Send   [ E ] Edit   [ S ] Skip');
   console.log('═'.repeat(56));
-
-  const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-
-  const choice = await ask(rl, 'Choice (A/E/S): ');
-  const ch     = choice.trim().toLowerCase();
-
-  if (ch === 's' || ch === 'skip') {
-    rl.close();
-    return { action: 'skip' };
-  }
-
-  if (ch === 'e' || ch === 'edit') {
-    console.log('Enter your edited message (press Enter twice when done):');
-    const lines = [];
-    for (;;) {
-      const line = await ask(rl, '');
-      if (line === '' && lines.length > 0 && lines[lines.length - 1] === '') break;
-      lines.push(line);
-    }
-    rl.close();
-    return { action: 'approve', message: lines.slice(0, -1).join('\n').trim() };
-  }
-
-  rl.close();
-  return { action: 'approve', message: draft };
 }
 
 // ── SEND HELPERS ──────────────────────────────────────────────────────────────
@@ -278,19 +255,7 @@ async function checkNoraPipeline() {
     console.log(`Channel  : ${record.channel}`);
     console.log('─'.repeat(56));
     console.log(pitch);
-    console.log('\n─'.replace('\n', '') + '─'.repeat(55));
-    console.log('[ A ] Approve & Send   [ S ] Skip');
     console.log('═'.repeat(56));
-
-    const rl     = readline.createInterface({ input: process.stdin, output: process.stdout });
-    const choice = await ask(rl, 'Choice (A/S): ');
-    rl.close();
-
-    if (choice.trim().toLowerCase() !== 'a') {
-      console.log(`  Skipped Nora pitch for ${record.business_name}`);
-      log(`Nora pitch skipped for ${record.business_name} (${entry.lead_id})`);
-      continue;
-    }
 
     try {
       const result = await sendReply(record, pitch);
@@ -336,15 +301,9 @@ async function main() {
   const calLink = process.env.CALCOM_LINK || null;
 
   for (const record of replies) {
-    const slots = nextSlots(3);
-    const draft = buildDraft(record, slots[0], slots[1], calLink);
-    const { action, message } = await promptApproval(record, draft, calLink);
-
-    if (action === 'skip') {
-      console.log(`  Skipped ${record.business_name}`);
-      log(`Skipped reply from ${record.business_name} (${record.lead_id})`);
-      continue;
-    }
+    const slots   = nextSlots();
+    const message = buildDraft(record, slots, calLink);
+    printSentSummary(record, message, calLink);
 
     try {
       const result = await sendReply(record, message);

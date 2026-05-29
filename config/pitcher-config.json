@@ -1,8 +1,8 @@
 {
   "daily_limit": 30,
   "auto_run": false,
-  "from_email": "outreach@yourdomain.com",
-  "from_name": "Your Name",
+  "from_email": "dave@trevoadvisors.com",
+  "from_name": "Dave",
   "current_month": "2026-05",
   "today": "2026-05-28",
   "sent_today": 0,

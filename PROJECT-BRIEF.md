@@ -61,7 +61,7 @@ Everything else is automated.
 | Builder | builder.js | ✅ Live | ✅ Lovable prompts generated |
 | Filmer | filmer.js | ✅ Live | ✅ Loom instructions generated |
 | Pitcher | pitcher.js | ✅ Live | ✅ Dry-run previewed |
-| Mobile | mobile.js | ✅ Live | ❌ Awaiting first live reply |
+| Mobile | mobile.js | ✅ Live | ✅ Auto-send complete, awaiting first real reply |
 
 ---
 
@@ -124,12 +124,14 @@ Only sends if `checker_approved = true`. Supports `--dry-run` to preview first.
 - **Daily limit:** 30 messages
 
 ### 7. Mobile (`scripts/mobile.js`)
-Handles positive replies. Scans `/messages/` for `status: "positive"`, drafts a
-booking reply with slot suggestions (Cal.com link if set, otherwise next 3 weekdays),
-presents a terminal approval card. Owner types A/E/S — nothing sends without
-approval. Also runs daily Nora upsell check (7 days after each closed deal).
+Handles positive replies automatically. Scans `/messages/` for `status: "positive"`,
+drafts a booking reply with 4 time slots spread across the next 2 weeks
+(Mon/Wed/Thu preferred, 10am/2pm/4pm rotation), and sends immediately via the same
+channel as the original outreach. Also runs daily Nora upsell check (7 days after
+each closed deal) — auto-sends the pitch on the due date.
 
-- **Fully interactive** — no sends without owner input
+- **Fully automatic** — no owner input required, sends on run
+- Cal.com link appended if `CALCOM_LINK` set in `.env.local` (optional)
 
 ---
 
@@ -164,9 +166,10 @@ scouted → diagnosed → checked → mockup_pending → mockup_ready → film_p
 | Twilio credentials | ✅ Configured | ACdb3cd77... / +17209027555 |
 | Resend API key | ❌ Missing | Needed for email channel (plumbers/HVAC) |
 | Domain verified in Resend | ❌ Missing | trevoadvisors.com must be verified before sending email |
+| Scout run (electricians/roofers) | ❌ Pending | Run locally → push leads → run pipeline from container |
 | Cal.com link | ❌ Optional | Add to `.env.local` for booking drafts |
 
-**Ready to send SMS now** — electricians/roofers via Twilio. Email channel needs Resend setup.
+**Ready to send SMS now** — run Scout locally for electricians or roofers, push leads, run pipeline from container. Email channel needs Resend setup.
 
 ---
 
@@ -250,4 +253,4 @@ PROJECT-BRIEF.md — This file
 
 ---
 
-*Last updated: 2026-05-29 — Twilio configured, SMS channel ready to send*
+*Last updated: 2026-05-29 — Twilio configured, Mobile auto-send complete, all 7 agents live. Ready for first SMS send (needs Scout run locally for electricians/roofers).*

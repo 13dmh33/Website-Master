@@ -30,7 +30,7 @@ Solo AI agency system for selling websites + Nora voice agent bundles to home se
 - [x] `scripts/filmer.js` — Loom instructions + optional ScreenshotOne capture, `--submit` to record URL
 
 ### Done (continued)
-- [x] `scripts/mobile.js` — positive reply handler, weekday slot suggestions, owner approval gate, Nora upsell scheduler
+- [x] `scripts/mobile.js` — positive reply handler, auto-sends booking with 4 slots across next 2 weeks, Nora upsell scheduler
 - [x] `run-daily.sh` — one-command daily pipeline runner with manual-step pauses
 
 ### Done (continued)
@@ -42,15 +42,13 @@ Solo AI agency system for selling websites + Nora voice agent bundles to home se
 - [x] **First real Scout run** — Denver plumbers successfully pulled from Outscraper on local machine.
 
 ### Next Actions (in order)
-1. [ ] **Push Denver leads** — run `git add leads/ state.json config/ && git commit -m "Scout: Denver plumbers" && git push origin claude/kind-hypatia-3YzM0` from local machine
-2. [ ] **Get business name** — needed for sender identity before going live
-3. [ ] **Get Resend API key** — resend.com, needed for email sends
-4. [ ] **Set `FROM_EMAIL` + `FROM_NAME`** — your sender email and name in `.env.local`
-5. [ ] **Run Diagnoser → Pitcher dry-run** on real Denver leads (done from this container after leads are pushed)
-6. [ ] **Get Twilio credentials** — for SMS channel (electricians, roofers)
-7. [ ] **First live send** — remove `--dry-run`, send to real leads
-8. [ ] **Set up Cal.com link** — add `CALCOM_LINK` to `.env.local` for Mobile booking drafts
-9. [ ] **Reply detection** — no automated inbound monitoring yet; must manually set `"status": "positive"` in messages JSON
+1. [ ] **Run Scout locally** — `node scripts/scout.js --city "Denver, CO" --trade electrician --force` (or roofer — SMS-first for first live send)
+2. [ ] **Push leads** — `git add leads/ state.json && git commit -m "Scout run" && git push origin claude/kind-hypatia-3YzM0`
+3. [ ] **Run full pipeline from container** — Diagnoser → Checker → Builder → Filmer → Pitcher dry-run
+4. [ ] **First live SMS send** — Twilio configured, electricians/roofers ready to go
+5. [ ] **Set up Resend + verify trevoadvisors.com** — needed for email channel (plumbers/HVAC)
+6. [ ] **Set up Cal.com link** — add `CALCOM_LINK` to `.env.local` for Mobile booking messages (optional)
+7. [ ] **Reply detection** — manual for now; set `"status": "positive"` in messages JSON when a lead replies, then run `node scripts/mobile.js`
 
 ### Known Issues / Notes
 - [x] **Email field missing** — fixed. Scout captures email, Diagnoser passes through.
@@ -87,7 +85,7 @@ Solo AI agency system for selling websites + Nora voice agent bundles to home se
   pitcher.js           — ✅ Live
   builder.js           — ✅ Live
   filmer.js            — ✅ Live
-  mobile.js            — ✅ Live (reply handler, approval gate, Nora upsell)
+  mobile.js            — ✅ Live (auto-send reply, 4 slots/2 weeks, Nora upsell)
   logger.js            — ✅ Shared log writer (all scripts → logs/{date}.log)
 
 run-daily.sh           — ✅ One-command daily pipeline runner
@@ -116,7 +114,7 @@ package.json           — npm scripts + dependencies
 | Builder | ✅ Live | Generates Lovable prompts + records URLs | 5 sites |
 | Filmer | ✅ Live | Loom instructions + ScreenshotOne capture | 5 videos |
 | Pitcher | ✅ Live | Sends outreach by channel (email + SMS + manual drafts) | 30 messages |
-| Mobile | ✅ Live | Books calls from replies + Nora upsell | Real-time |
+| Mobile | ✅ Live | Auto-sends booking reply + Nora upsell (no approval gate) | Real-time |
 
 ---
 

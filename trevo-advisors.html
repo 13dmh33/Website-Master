@@ -907,50 +907,220 @@
     }
 
     /* ============================================================
-       FINAL CTA
+       FINAL CTA + CONTACT FORM
     ============================================================ */
     .cta-final {
       background: var(--navy);
-      padding: 104px 24px;
-      text-align: center;
+      padding: 104px 24px 112px;
       position: relative;
       overflow: hidden;
     }
     .cta-final::before {
       content: '';
       position: absolute;
-      top: 50%;
-      left: 50%;
+      top: 40%;
+      left: 30%;
       transform: translate(-50%, -50%);
       width: 860px;
-      height: 440px;
+      height: 560px;
       background: radial-gradient(ellipse at center,
-        rgba(46, 189, 142, 0.15) 0%,
+        rgba(46, 189, 142, 0.14) 0%,
         transparent 65%);
       pointer-events: none;
     }
-    .cta-final-inner {
+    .cta-final-grid {
       position: relative;
       z-index: 1;
-      max-width: 580px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+      max-width: 1020px;
       margin: 0 auto;
     }
-    .cta-final-inner h2 {
-      font-size: clamp(28px, 4.5vw, 48px);
+    .cta-final-copy h2 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: clamp(28px, 4vw, 46px);
       color: #fff;
       line-height: 1.15;
       margin-bottom: 18px;
     }
-    .cta-final-inner p {
-      font-size: 17px;
-      color: rgba(255, 255, 255, 0.62);
-      line-height: 1.68;
-      margin-bottom: 40px;
+    .cta-final-copy p {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.60);
+      line-height: 1.72;
+      margin-bottom: 32px;
     }
-    .cta-final-guarantee {
-      margin-top: 18px;
-      font-size: 13px;
-      color: rgba(255, 255, 255, 0.38);
+    .cta-trust-items {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .cta-trust-items li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+    }
+    .cta-trust-items li::before {
+      content: '';
+      display: block;
+      min-width: 18px;
+      height: 18px;
+      background: url("data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='9' cy='9' r='9' fill='%232EBD8E' fill-opacity='0.22'/%3E%3Cpath d='M5.5 9L7.9 11.4L12.5 6.6' stroke='%232EBD8E' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
+    }
+
+    /* Contact form card */
+    .contact-form-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 36px 32px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.22);
+    }
+    .contact-form-card h3 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 6px;
+    }
+    .contact-form-subtitle {
+      font-size: 13.5px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-group label {
+      font-size: 12px;
+      font-weight: 600;
+      color: #374151;
+      letter-spacing: 0.04em;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: #1a1a2e;
+      background: #f8f9fc;
+      border: 1.5px solid rgba(44, 62, 107, 0.15);
+      border-radius: 8px;
+      padding: 11px 14px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      width: 100%;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: #9ca3af;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(46, 189, 142, 0.14);
+      background: #fff;
+    }
+    .form-group textarea {
+      resize: vertical;
+      min-height: 88px;
+    }
+    .select-wrap {
+      position: relative;
+    }
+    .select-wrap::after {
+      content: '';
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid #6B7280;
+      pointer-events: none;
+    }
+    .form-submit {
+      width: 100%;
+      padding: 14px;
+      background: var(--teal);
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      margin-top: 4px;
+    }
+    .form-submit:hover {
+      background: #25a87d;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 18px rgba(46, 189, 142, 0.38);
+    }
+    .form-submit:active { transform: translateY(0); }
+    .form-privacy {
+      font-size: 11.5px;
+      color: #9ca3af;
+      text-align: center;
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+
+    /* Success state */
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 16px 0;
+    }
+    .form-success-icon {
+      width: 60px;
+      height: 60px;
+      background: rgba(46, 189, 142, 0.12);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin: 0 auto 16px;
+    }
+    .form-success h4 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .form-success p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+      .cta-final-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+      .form-row { grid-template-columns: 1fr; }
     }
 
     /* ============================================================
@@ -1531,17 +1701,101 @@
   </section>
 
   <!-- ============================================================
-       FINAL CTA
+       FINAL CTA + CONTACT FORM
   ============================================================ -->
   <section class="cta-final" id="book">
-    <div class="cta-final-inner fade-in">
-      <span class="section-label" style="color: rgba(46,189,142,0.8);">Get started</span>
-      <h2>One call. Your site live in a week.</h2>
-      <p>
-        15 minutes is all it takes. We'll listen to your business, answer your questions, and tell you exactly what we'd build for you — no pressure, no pitch deck.
-      </p>
-      <a href="#" class="btn btn-teal btn-lg btn-pulse">Book a free 15-min call</a>
-      <p class="cta-final-guarantee">No contracts. No commitment. 30-day money-back guarantee.</p>
+    <div class="cta-final-grid">
+
+      <!-- Left: copy -->
+      <div class="cta-final-copy fade-in">
+        <span class="section-label" style="color: rgba(46,189,142,0.8);">Get started</span>
+        <h2>One call. Your site live in a week.</h2>
+        <p>
+          Tell us a bit about your business and we'll reach out to schedule your free 15-minute call. No pitch deck. No pressure. Just a straight conversation about what you need.
+        </p>
+        <ul class="cta-trust-items">
+          <li>Free 15-min call — no obligation</li>
+          <li>Site delivered in 3–5 business days</li>
+          <li>30-day money-back guarantee</li>
+          <li>No contracts, cancel anytime</li>
+        </ul>
+      </div>
+
+      <!-- Right: contact form -->
+      <div class="fade-in">
+        <div class="contact-form-card">
+          <h3>Let's talk about your business</h3>
+          <p class="contact-form-subtitle">We'll reach out within one business day to schedule your call.</p>
+
+          <form id="contactForm" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fname">First name</label>
+                <input type="text" id="fname" name="fname" placeholder="Mike" required>
+              </div>
+              <div class="form-group">
+                <label for="lname">Last name</label>
+                <input type="text" id="lname" name="lname" placeholder="Rivera" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone number</label>
+              <input type="tel" id="phone" name="phone" placeholder="(555) 000-0000" required>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" id="email" name="email" placeholder="mike@riversideplumbing.com" required>
+            </div>
+
+            <div class="form-group">
+              <label for="trade">Your trade</label>
+              <div class="select-wrap">
+                <select id="trade" name="trade" required>
+                  <option value="" disabled selected>Select your trade</option>
+                  <option>Plumbing</option>
+                  <option>HVAC</option>
+                  <option>Electrical</option>
+                  <option>Roofing</option>
+                  <option>Handyman / General</option>
+                  <option>Landscaping / Lawn care</option>
+                  <option>Painting</option>
+                  <option>Flooring</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="interest">What are you most interested in?</label>
+              <div class="select-wrap">
+                <select id="interest" name="interest">
+                  <option value="" disabled selected>Choose one</option>
+                  <option>Just a website ($100)</option>
+                  <option>Website + Nora AI agent (Growth plan)</option>
+                  <option>Not sure — want to learn more</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Anything else we should know? <span style="font-weight:400;color:#9ca3af;">(optional)</span></label>
+              <textarea id="message" name="message" placeholder="Current website URL, service area, how many calls you're missing…"></textarea>
+            </div>
+
+            <button type="submit" class="form-submit">Book my free call &rarr;</button>
+            <p class="form-privacy">We'll never share your info. Reach out once — no spam.</p>
+          </form>
+
+          <div class="form-success" id="formSuccess">
+            <div class="form-success-icon">&#10003;</div>
+            <h4>You're all set!</h4>
+            <p>We got your info and will reach out within one business day to schedule your 15-minute call.</p>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -1644,6 +1898,36 @@
         }
       });
     });
+
+    // Contact form submission
+    const contactForm = document.getElementById('contactForm');
+    const formSuccess = document.getElementById('formSuccess');
+
+    if (contactForm) {
+      contactForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        // Basic validation — highlight empty required fields
+        let valid = true;
+        contactForm.querySelectorAll('[required]').forEach(field => {
+          if (!field.value.trim()) {
+            field.style.borderColor = '#ef4444';
+            valid = false;
+            field.addEventListener('input', () => {
+              field.style.borderColor = '';
+            }, { once: true });
+          }
+        });
+        if (!valid) return;
+
+        // Swap form for success message
+        contactForm.style.display = 'none';
+        formSuccess.style.display = 'block';
+
+        // Scroll the card into view smoothly
+        formSuccess.closest('.contact-form-card').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      });
+    }
   </script>
 
 </body>

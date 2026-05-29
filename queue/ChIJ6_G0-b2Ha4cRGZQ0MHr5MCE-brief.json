@@ -1,0 +1,31 @@
+{
+  "lead_id": "ChIJ6_G0-b2Ha4cRGZQ0MHr5MCE",
+  "business_name": "Good Electric Service Company Inc",
+  "trade": "electrician",
+  "city": "Denver, CO",
+  "phone": "+1 303-455-5160",
+  "email": "",
+  "website": "none",
+  "review_count": 13,
+  "rating": 4.5,
+  "diagnosis": "No website presence despite 13 solid reviews (4.5★). Electricians with no site lose residential jobs to competitors with online credibility. Missing opportunity to convert local searches into calls.",
+  "hero_angle": "Proven track record with 13 quality reviews—time to let that reputation work harder online.",
+  "tone": "direct",
+  "cold_message": "Hey Good Electric Service Company Inc — 13 five-star reviews on Google is legit. But when someone in Denver, CO searches \"electrician near me\" tonight, they're booking whoever has a website. You're losing jobs to guys with half your reputation. Worth a quick fix? — Dave, Trevo Advisors",
+  "template_id": "s1",
+  "template_name": "The reputation gap",
+  "template_based": true,
+  "gap_score": 9,
+  "priority": false,
+  "channel": "sms",
+  "checker_approved": true,
+  "diagnosed_at": "2026-05-29T13:52:59.256Z",
+  "final_message": "Hey Good Electric Service Company Inc — 13 five-star reviews on Google is legit. But when someone in Denver, CO searches \"electrician near me\" tonight, they're booking whoever has a website. You're losing jobs to guys with half your reputation. Worth a quick fix? — Dave, Trevo Advisors",
+  "checker_flag": "",
+  "rewrite_count": 0,
+  "checker_score": {
+    "template_based": true,
+    "placeholders_filled": true
+  },
+  "checked_at": "2026-05-29T13:53:22.475Z"
+}

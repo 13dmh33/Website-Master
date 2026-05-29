@@ -1,0 +1,31 @@
+{
+  "lead_id": "ChIJ_eEJ879ZwokRuN-2rh05xMQ",
+  "business_name": "Local Plumbing Company - PlumbingBO",
+  "trade": "plumber",
+  "city": "Denver, CO",
+  "phone": "+1 315-228-9299",
+  "email": "",
+  "website": "none",
+  "review_count": 22,
+  "rating": 5,
+  "diagnosis": "Strong 5-star rating with 22 reviews, but zero web presence. No website means potential customers can't book online, see service areas, or learn about your work. You're leaving money on the table.",
+  "hero_angle": "Perfect reviews and local reputation—you just need a digital storefront to match your quality.",
+  "tone": "direct",
+  "cold_message": "Hi PlumbingBO—22 five-star reviews is impressive. But without a website, Denver homeowners searching for emergency plumbers can't find you. We build sites for plumbers that turn Google searches into calls and bookings. How many jobs do you think you're missing each month because you're not online?",
+  "gap_score": 9,
+  "priority": true,
+  "channel": "email",
+  "checker_approved": true,
+  "diagnosed_at": "2026-05-28T12:43:55.783Z",
+  "final_message": "Hi PlumbingBO—22 five-star reviews is impressive. But without a website, Denver homeowners searching for emergency plumbers can't find you. We build sites for plumbers that turn Google searches into calls and bookings. How many jobs do you think you're missing each month because you're not online?",
+  "checker_flag": "",
+  "rewrite_count": 0,
+  "checker_score": {
+    "personalization": 100,
+    "no_ai_markers": true,
+    "no_buzzwords": true,
+    "structure": true,
+    "no_spammy_openers": true
+  },
+  "checked_at": "2026-05-28T12:43:59.570Z"
+}

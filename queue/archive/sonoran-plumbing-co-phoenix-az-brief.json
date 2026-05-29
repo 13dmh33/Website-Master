@@ -1,0 +1,31 @@
+{
+  "lead_id": "sonoran-plumbing-co-phoenix-az",
+  "business_name": "Sonoran Plumbing Co.",
+  "trade": "plumber",
+  "city": "Phoenix, AZ",
+  "phone": "+16025550105",
+  "email": "",
+  "website": "http://sonoranplumbing.com",
+  "review_count": 55,
+  "rating": 4.2,
+  "diagnosis": "55 reviews with 4.2 rating shows solid work, but website appears dated. Missing email contact and no Google Maps presence noted. Likely losing calls to competitors with stronger online visibility in Phoenix's competitive plumbing market.",
+  "hero_angle": "Established plumbing shop with genuine customer trust—just needs their reputation working harder online.",
+  "tone": "direct",
+  "cold_message": "Hi there—Sonoran Plumbing Co. has solid reviews (55+) but your online presence isn't matching your actual work quality. In Phoenix, most homeowners find plumbers through search or Maps before calling. We help shops like yours get more calls from local jobs. Are you getting as many service requests as you'd like from your area?",
+  "gap_score": 6,
+  "priority": true,
+  "channel": "sms",
+  "checker_approved": true,
+  "diagnosed_at": "2026-05-28T02:15:46.031Z",
+  "final_message": "Sonoran Plumbing Co. has 55+ solid reviews, but Phoenix homeowners searching for plumbers on Maps aren't finding you first. We help shops like yours show up where customers are actually looking. Are you getting enough service calls from the area?",
+  "checker_flag": "",
+  "rewrite_count": 1,
+  "checker_score": {
+    "personalization": 100,
+    "no_ai_markers": true,
+    "no_buzzwords": true,
+    "structure": true,
+    "no_spammy_openers": true
+  },
+  "checked_at": "2026-05-28T02:16:04.841Z"
+}

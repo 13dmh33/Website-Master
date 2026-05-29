@@ -1,0 +1,31 @@
+{
+  "lead_id": "desert-sun-plumbing-phoenix-az",
+  "business_name": "Desert Sun Plumbing",
+  "trade": "plumber",
+  "city": "Phoenix, AZ",
+  "phone": "+16025550104",
+  "email": "",
+  "website": "http://desertsunplumbing.net",
+  "review_count": 67,
+  "rating": 4.5,
+  "diagnosis": "67 reviews show solid reputation, but website is outdated and non-mobile. Missing email contact makes booking harder. No visible local SEO presence. Losing potential customers to competitors with modern, responsive sites.",
+  "hero_angle": "Desert Sun Plumbing has 67 genuine reviews—that's social proof most plumbers in Phoenix don't have yet.",
+  "tone": "direct",
+  "cold_message": "Hey—found Desert Sun Plumbing in Phoenix. You've got 67 solid reviews, but your site isn't mobile-friendly and customers can't book online. Competitors with better websites are capturing calls you should be getting. How many service requests do you think you're missing each month because of this?",
+  "gap_score": 7,
+  "priority": true,
+  "channel": "sms",
+  "checker_approved": true,
+  "diagnosed_at": "2026-05-28T02:15:42.421Z",
+  "final_message": "Hey—found Desert Sun Plumbing in Phoenix. You've got 67 solid reviews, but your site isn't mobile-friendly and customers can't book online. Competitors with better websites are capturing calls you should be getting. How many service requests do you think you're missing each month because of this?",
+  "checker_flag": "",
+  "rewrite_count": 0,
+  "checker_score": {
+    "personalization": 100,
+    "no_ai_markers": true,
+    "no_buzzwords": true,
+    "structure": true,
+    "no_spammy_openers": true
+  },
+  "checked_at": "2026-05-28T02:16:02.978Z"
+}

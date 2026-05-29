@@ -1,0 +1,16 @@
+{
+  "email": {
+    "e1": { "sent": 0, "replies": 0 },
+    "e2": { "sent": 0, "replies": 0 },
+    "e3": { "sent": 0, "replies": 0 },
+    "e4": { "sent": 0, "replies": 0 },
+    "e5": { "sent": 0, "replies": 0 }
+  },
+  "sms": {
+    "s1": { "sent": 0, "replies": 0 },
+    "s2": { "sent": 0, "replies": 0 },
+    "s3": { "sent": 0, "replies": 0 },
+    "s4": { "sent": 0, "replies": 0 },
+    "s5": { "sent": 0, "replies": 0 }
+  }
+}

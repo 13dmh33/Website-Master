@@ -4,6 +4,7 @@
 const fs       = require('fs');
 const path     = require('path');
 const https    = require('https');
+const { recordReply } = require('./template-picker');
 
 require('dotenv').config({ path: path.resolve(__dirname, '../.env.local') });
 
@@ -315,9 +316,10 @@ async function main() {
       }
       log(`Reply sent to ${record.business_name} (${record.lead_id}) via ${result.method}`);
 
-      record.status     = 'call_booked';
-      record.booked_at  = new Date().toISOString();
+      record.status      = 'call_booked';
+      record.booked_at   = new Date().toISOString();
       record.booking_msg = message;
+      if (record.template_id) recordReply(record.channel, record.template_id);
       fs.writeFileSync(
         path.join(MESSAGES_DIR, `${record.lead_id}-sent.json`),
         JSON.stringify(record, null, 2)

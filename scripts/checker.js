@@ -376,8 +376,35 @@ async function main() {
 
     let message      = brief.cold_message;
     let rewriteCount = 0;
-    let evals        = runAllEvals(message, brief);
     let runCost      = 0;
+
+    // Template-based messages are pre-approved copy — only verify placeholders filled
+    if (brief.template_based) {
+      const hasUnfilled = /\[[A-Z]/.test(message);
+      brief.final_message    = message;
+      brief.checker_approved = !hasUnfilled;
+      brief.checker_flag     = hasUnfilled ? 'unfilled_placeholder' : '';
+      brief.rewrite_count    = 0;
+      brief.checker_score    = { template_based: true, placeholders_filled: !hasUnfilled };
+      brief.checked_at       = new Date().toISOString();
+      fs.writeFileSync(filePath, JSON.stringify(brief, null, 2));
+      updateState(brief.lead_id, brief.checker_approved ? 'checked' : 'flagged');
+      config.processed_today += 1;
+      config.total_processed += 1;
+      if (brief.checker_approved) {
+        approved++;
+        config.approved_total++;
+        console.log(`${label} — ✓ template approved (${brief.template_id})`);
+      } else {
+        flagged++;
+        config.flagged_total++;
+        console.log(`${label} — ✗ unfilled placeholder in template ${brief.template_id}`);
+      }
+      saveConfig(config);
+      continue;
+    }
+
+    let evals = runAllEvals(message, brief);
 
     // Rewrite loop — max 2 attempts
     while (!evals.allPass && rewriteCount < 2) {

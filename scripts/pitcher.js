@@ -33,7 +33,8 @@ const fs          = require('fs');
 const path        = require('path');
 const https       = require('https');
 const nodemailer  = require('nodemailer');
-const { writeLog } = require('./logger');
+const { writeLog }   = require('./logger');
+const { recordSent } = require('./template-picker');
 
 // ── PATHS ─────────────────────────────────────────────────────────────────────
 
@@ -331,6 +332,8 @@ function logSend(brief, result, channel, videoUrl, status = 'sent') {
     phone:         brief.phone || null,
     email:         brief.email || null,
     channel,
+    template_id:   brief.template_id   || null,
+    template_name: brief.template_name || null,
     sent_at:       new Date().toISOString(),
     subject:       result.subject || null,
     body:          result.body || brief.final_message,
@@ -410,12 +413,13 @@ async function main() {
         const result = await sendEmail(brief, config, videoUrl);
         logSend(brief, result, channel, videoUrl);
         updateState(brief.lead_id, 'sent');
+        if (brief.template_id) recordSent(channel, brief.template_id);
         config.sent_today++;
         config.sent_this_month++;
         config.total_sent++;
         saveConfig(config);
         sent++;
-        console.log(`${label} — ✓ sent via Zoho (id: ${result.id})`);
+        console.log(`${label} — ✓ sent via Zoho (id: ${result.id}${brief.template_id ? ', tmpl: ' + brief.template_id : ''})`);
 
       } else if (channel === 'sms') {
         if (!brief.phone) {
@@ -425,12 +429,13 @@ async function main() {
         const result = await sendSms(brief, videoUrl);
         logSend(brief, result, channel, videoUrl);
         updateState(brief.lead_id, 'sent');
+        if (brief.template_id) recordSent(channel, brief.template_id);
         config.sent_today++;
         config.sent_this_month++;
         config.total_sent++;
         saveConfig(config);
         sent++;
-        console.log(`${label} — ✓ sent (Twilio sid: ${result.sid})`);
+        console.log(`${label} — ✓ sent (Twilio sid: ${result.sid}${brief.template_id ? ', tmpl: ' + brief.template_id : ''})`);
 
       } else {
         // ig_dm or linkedin — write manual draft

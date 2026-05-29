@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Pitcher — sends approved cold messages via email (Resend) or SMS (Twilio)
+ * Pitcher — sends approved cold messages via email (Zoho SMTP) or SMS (Twilio)
  *
  * Usage:
  *   node scripts/pitcher.js --force
@@ -10,23 +10,29 @@
  * Reads:  queue/*-brief.json     (checker_approved = true, status != sent)
  *         mockups/*-video.txt    (video URL if available — attached to email)
  *         config/pitcher-config.json
- *         .env.local             (RESEND_API_KEY, TWILIO_*)
+ *         .env.local             (ZOHO_EMAIL, ZOHO_APP_PASSWORD, TWILIO_*)
  * Writes: messages/{lead_id}-sent.json
  *         state.json             (status: checked → sent)
  *         config/pitcher-config.json (daily count tracking)
  *
  * Channel routing (set by Diagnoser, verified here):
- *   email  → plumbers, HVAC  (via Resend)
+ *   email  → plumbers, HVAC  (via Zoho SMTP — dave@trevoadvisors.com)
  *   sms    → electricians, roofers  (via Twilio)
  *   ig_dm  → flagged as manual_send (no API — written to messages/ as draft)
  *   linkedin → flagged as manual_send
+ *
+ * Stagger: random delay between sends to avoid spam filters.
+ *   Email: email_stagger_min_s – email_stagger_max_s (default 120–300s)
+ *   SMS:   sms_stagger_min_s  – sms_stagger_max_s   (default 20–60s)
+ *   Configurable in config/pitcher-config.json
  */
 
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.local') });
 
-const fs    = require('fs');
-const path  = require('path');
-const https = require('https');
+const fs          = require('fs');
+const path        = require('path');
+const https       = require('https');
+const nodemailer  = require('nodemailer');
 const { writeLog } = require('./logger');
 
 // ── PATHS ─────────────────────────────────────────────────────────────────────
@@ -59,8 +65,12 @@ function loadConfig() {
     const defaults = {
       daily_limit: 30,
       auto_run: false,
-      from_email: process.env.RESEND_FROM_EMAIL || 'outreach@yourdomain.com',
-      from_name: 'Your Name',
+      from_email: 'dave@trevoadvisors.com',
+      from_name: 'Dave',
+      email_stagger_min_s: 120,
+      email_stagger_max_s: 300,
+      sms_stagger_min_s: 20,
+      sms_stagger_max_s: 60,
       current_month: currentMonth(),
       today: today(),
       sent_today: 0,
@@ -71,7 +81,13 @@ function loadConfig() {
     fs.writeFileSync(CONFIG_PATH, JSON.stringify(defaults, null, 2));
     return defaults;
   }
-  return JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
+  const cfg = JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
+  // backfill stagger defaults if missing
+  cfg.email_stagger_min_s = cfg.email_stagger_min_s ?? 120;
+  cfg.email_stagger_max_s = cfg.email_stagger_max_s ?? 300;
+  cfg.sms_stagger_min_s   = cfg.sms_stagger_min_s   ?? 20;
+  cfg.sms_stagger_max_s   = cfg.sms_stagger_max_s   ?? 60;
+  return cfg;
 }
 
 function checkAutoRun(config) {
@@ -111,13 +127,10 @@ function ensureDirs() {
   fs.mkdirSync(MOCKUPS_DIR,  { recursive: true });
 }
 
-function warnIfPlaceholder(config) {
-  if (
-    config.from_email === 'outreach@yourdomain.com' ||
-    config.from_name  === 'Your Name'
-  ) {
-    console.warn('⚠  WARNING: from_email or from_name in pitcher-config.json still set to placeholder.');
-    console.warn('   Update config/pitcher-config.json before sending real emails.\n');
+function warnIfMissingCreds() {
+  if (!process.env.ZOHO_EMAIL || !process.env.ZOHO_APP_PASSWORD) {
+    console.warn('⚠  WARNING: ZOHO_EMAIL or ZOHO_APP_PASSWORD not set in .env.local');
+    console.warn('   Email sends will fail. Set both before running live.\n');
   }
 }
 
@@ -170,70 +183,56 @@ function isRetryable(statusCode) {
 
 function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-// ── EMAIL SENDER (Resend) ─────────────────────────────────────────────────────
+// ── EMAIL SENDER (Zoho SMTP) ──────────────────────────────────────────────────
 
-function sendEmail(brief, config, videoUrl) {
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) return Promise.reject(new Error('RESEND_API_KEY not set in .env.local'));
+let _zohoTransport = null;
 
-  const subject = `Quick question about ${brief.business_name}'s website`;
+function getZohoTransport() {
+  if (_zohoTransport) return _zohoTransport;
+  const user = process.env.ZOHO_EMAIL;
+  const pass = process.env.ZOHO_APP_PASSWORD;
+  if (!user || !pass) throw new Error('ZOHO_EMAIL and ZOHO_APP_PASSWORD must be set in .env.local');
+  _zohoTransport = nodemailer.createTransport({
+    host:   'smtp.zoho.com',
+    port:   465,
+    secure: true,
+    auth:   { user, pass }
+  });
+  return _zohoTransport;
+}
 
-  const ps = videoUrl
+async function sendEmail(brief, config, videoUrl) {
+  const transport = getZohoTransport();
+  const subject   = `Quick question about ${brief.business_name}'s website`;
+  const ps        = videoUrl
     ? `\n\nP.S. Built a quick mockup of what a new site could look like: ${videoUrl}`
     : `\n\nP.S. I put together a quick mockup of what a new site could look like — happy to share it on a call.`;
+  const text = `${brief.final_message}${ps}`;
 
-  const body = `${brief.final_message}${ps}`;
-
-  const payload = JSON.stringify({
-    from: `${config.from_name} <${config.from_email}>`,
-    to:   [brief.email],
+  const info = await transport.sendMail({
+    from:    `${config.from_name} <${config.from_email}>`,
+    to:      brief.email,
     subject,
-    text: body
+    text
   });
 
-  const options = {
-    hostname: 'api.resend.com',
-    path:     '/emails',
-    method:   'POST',
-    headers:  {
-      'Authorization': `Bearer ${apiKey}`,
-      'Content-Type':  'application/json',
-      'Content-Length': Buffer.byteLength(payload)
-    }
-  };
+  return { id: info.messageId, subject, body: text };
+}
 
-  const attempt = () => new Promise((resolve, reject) => {
-    const req = https.request(options, (res) => {
-      let data = '';
-      res.on('data', chunk => { data += chunk; });
-      res.on('end', () => {
-        try {
-          const parsed = JSON.parse(data);
-          if (res.statusCode >= 200 && res.statusCode < 300) {
-            resolve({ id: parsed.id, subject, body });
-          } else {
-            const err = new Error(`Resend error ${res.statusCode}: ${data}`);
-            err.statusCode = res.statusCode;
-            reject(err);
-          }
-        } catch (e) {
-          reject(new Error(`Failed to parse Resend response: ${data}`));
-        }
-      });
-    });
-    req.on('error', reject);
-    req.write(payload);
-    req.end();
-  });
+// ── STAGGER DELAY ─────────────────────────────────────────────────────────────
 
-  return attempt().catch(async (err) => {
-    if (isRetryable(err.statusCode)) {
-      console.warn(`  Resend ${err.statusCode} — retrying in 2s…`);
-      await delay(2000);
-      return attempt();
-    }
-    throw err;
-  });
+async function staggerDelay(minS, maxS) {
+  const seconds = minS + Math.floor(Math.random() * (maxS - minS + 1));
+  const mins    = Math.floor(seconds / 60);
+  const secs    = seconds % 60;
+  const label   = mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
+  process.stdout.write(`  ⏱  Staggering ${label} before next send`);
+  const tick = Math.ceil(seconds / 20);
+  for (let i = 0; i < seconds; i += tick) {
+    await delay(Math.min(tick, seconds - i) * 1000);
+    process.stdout.write('.');
+  }
+  process.stdout.write('\n');
 }
 
 // ── SMS SENDER (Twilio) ───────────────────────────────────────────────────────
@@ -373,7 +372,7 @@ async function main() {
   ensureDirs();
   const config = loadConfig();
   checkAutoRun(config);
-  warnIfPlaceholder(config);
+  warnIfMissingCreds();
   const effectiveLimit = checkLimits(config);
 
   const briefs = loadApprovedBriefs();
@@ -416,7 +415,7 @@ async function main() {
         config.total_sent++;
         saveConfig(config);
         sent++;
-        console.log(`${label} — ✓ sent (Resend id: ${result.id})`);
+        console.log(`${label} — ✓ sent via Zoho (id: ${result.id})`);
 
       } else if (channel === 'sms') {
         if (!brief.phone) {
@@ -447,7 +446,13 @@ async function main() {
       errors++;
     }
 
-    if (i < toSend.length - 1) await new Promise(r => setTimeout(r, 500));
+    if (i < toSend.length - 1 && !isDryRun) {
+      const isEmail = (brief.channel || 'email') === 'email';
+      await staggerDelay(
+        isEmail ? config.email_stagger_min_s : config.sms_stagger_min_s,
+        isEmail ? config.email_stagger_max_s : config.sms_stagger_max_s
+      );
+    }
   }
 
   config.last_run = new Date().toISOString();

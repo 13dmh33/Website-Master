@@ -6,7 +6,7 @@ to home service contractors (plumbers, HVAC, electricians, roofers).
 
 Your goal: 47 clients/month at $400/site + $300–500/mo Nora voice agent upsell.
 
-## Build Status (as of 2026-05-12)
+## Build Status (as of 2026-05-29)
 - Scout: ✅ scripts/scout.js — Outscraper API, $10/mo cap, auto_run toggle
 - Diagnoser: ✅ scripts/diagnoser.js — Claude Haiku, prompt caching, $5/mo cap, daily limit
 - Checker: ✅ scripts/checker.js — 5 evals + Claude rewrite loop, $3/mo cap
@@ -14,6 +14,7 @@ Your goal: 47 clients/month at $400/site + $300–500/mo Nora voice agent upsell
 - Builder: ✅ scripts/builder.js — Lovable prompt generator, --submit to record URL, 5/day
 - Filmer: ✅ scripts/filmer.js — Loom instructions + ScreenshotOne, --submit to record URL, 5/day
 - Mobile: 🔲 prompt ready at agents/mobile.md — script not yet built
+- Agency site: ✅ index.html — Trevo Advisors marketing page, deploying via GitHub Pages
 
 ## File System
 - /leads/       — raw leads from Scout (JSON files per city+date)

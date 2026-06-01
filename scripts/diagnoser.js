@@ -304,8 +304,8 @@ async function main() {
       const cost = calcCost(usage, config.rates);
       recordAnthropic(cost, 'diagnoser', usage);
 
-      // Pick and fill a template for the outreach message
-      const channel  = lead.channel;
+      // Email-first: if lead has an email address, prefer email over trade-default channel
+      const channel = lead.email ? 'email' : lead.channel;
       const tmpl     = pickAndFill(channel, { ...lead, ...brief });
       const coldMsg  = tmpl?.message  || '';
       const tmplId   = tmpl?.template_id   || null;

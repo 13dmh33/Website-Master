@@ -7,10 +7,16 @@
   "email_stagger_max_s": 300,
   "sms_stagger_min_s": 20,
   "sms_stagger_max_s": 60,
-  "current_month": "2026-05",
-  "today": "2026-05-29",
+  "current_month": "2026-06",
+  "today": "2026-06-01",
   "sent_today": 0,
   "sent_this_month": 0,
   "total_sent": 0,
-  "last_run": "2026-05-29T21:48:14.715Z"
+  "email_sent_today": 0,
+  "email_sent_this_month": 0,
+  "email_total_sent": 0,
+  "sms_sent_today": 0,
+  "sms_sent_this_month": 0,
+  "sms_total_sent": 0,
+  "last_run": "2026-06-01T00:00:00.000Z"
 }

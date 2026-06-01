@@ -76,9 +76,11 @@ function buildReport() {
     byStatus[e.status] = (byStatus[e.status] || 0) + 1;
   }
 
-  // Monthly send counts
-  const smsSentMonth  = pitcherCfg.sent_this_month || 0;
-  const smsCostMonth  = smsSentMonth * TWILIO_PER_SMS_USD;
+  // Monthly send counts — per channel
+  const smsSentMonth    = pitcherCfg.sms_sent_this_month   || pitcherCfg.sent_this_month || 0;
+  const emailSentMonth  = pitcherCfg.email_sent_this_month || 0;
+  const totalSentMonth  = pitcherCfg.sent_this_month       || 0;
+  const smsCostMonth    = smsSentMonth * TWILIO_PER_SMS_USD;
 
   // Outscraper monthly spend (from scout config)
   const outscraperMonthCost = scoutCfg.spent_this_month || 0;
@@ -146,9 +148,11 @@ function buildReport() {
   // Send totals
   L.push('OUTREACH — MONTH TO DATE');
   L.push(sep);
-  L.push(`  SMS sent:        ${smsSentMonth}`);
+  L.push(`  Email sent:      ${emailSentMonth}  (via Zoho SMTP)`);
+  L.push(`  SMS sent:        ${smsSentMonth}  (via Twilio)`);
+  L.push(`  Total:           ${totalSentMonth}`);
   L.push(`  Daily limit:     ${pitcherCfg.daily_limit || 30}`);
-  L.push(`  Total ever:      ${pitcherCfg.total_sent || 0}`);
+  L.push(`  All-time total:  ${pitcherCfg.total_sent || 0}`);
   L.push('');
 
   // Template performance
@@ -179,6 +183,8 @@ function buildReport() {
   L.push(`COSTS — ${month} (MONTH TO DATE)`);
   L.push(sep);
   L.push(`  Anthropic API:   $${fmt(anthropicMonthCost)}  / $${anthropicCap.toFixed(2)} cap`);
+  if (emailSentMonth > 0)
+    L.push(`  Zoho Email:      $0.0000  (${emailSentMonth} msgs — flat subscription)`);
   L.push(`  Twilio SMS:      $${fmt(smsCostMonth)}  (${smsSentMonth} msgs × $${TWILIO_PER_SMS_USD})`);
   L.push(`  Outscraper:      $${fmt(outscraperMonthCost)}  / $${outscraperCap.toFixed(2)} cap`);
   L.push(`  ${'─'.repeat(28)}`);

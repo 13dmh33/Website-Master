@@ -33,9 +33,9 @@ const fs          = require('fs');
 const path        = require('path');
 const https       = require('https');
 const nodemailer  = require('nodemailer');
-const { writeLog }    = require('./logger');
-const { recordSent }  = require('./template-picker');
-const { recordTwilio } = require('./cost-tracker');
+const { writeLog }              = require('./logger');
+const { recordSent }            = require('./template-picker');
+const { recordTwilio, recordEmail } = require('./cost-tracker');
 
 // ── PATHS ─────────────────────────────────────────────────────────────────────
 
@@ -78,17 +78,29 @@ function loadConfig() {
       sent_today: 0,
       sent_this_month: 0,
       total_sent: 0,
+      email_sent_today: 0,
+      email_sent_this_month: 0,
+      email_total_sent: 0,
+      sms_sent_today: 0,
+      sms_sent_this_month: 0,
+      sms_total_sent: 0,
       last_run: null
     };
     fs.writeFileSync(CONFIG_PATH, JSON.stringify(defaults, null, 2));
     return defaults;
   }
   const cfg = JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
-  // backfill stagger defaults if missing
-  cfg.email_stagger_min_s = cfg.email_stagger_min_s ?? 120;
-  cfg.email_stagger_max_s = cfg.email_stagger_max_s ?? 300;
-  cfg.sms_stagger_min_s   = cfg.sms_stagger_min_s   ?? 20;
-  cfg.sms_stagger_max_s   = cfg.sms_stagger_max_s   ?? 60;
+  // backfill defaults if missing
+  cfg.email_stagger_min_s    = cfg.email_stagger_min_s    ?? 120;
+  cfg.email_stagger_max_s    = cfg.email_stagger_max_s    ?? 300;
+  cfg.sms_stagger_min_s      = cfg.sms_stagger_min_s      ?? 20;
+  cfg.sms_stagger_max_s      = cfg.sms_stagger_max_s      ?? 60;
+  cfg.email_sent_today       = cfg.email_sent_today       ?? 0;
+  cfg.email_sent_this_month  = cfg.email_sent_this_month  ?? 0;
+  cfg.email_total_sent       = cfg.email_total_sent       ?? 0;
+  cfg.sms_sent_today         = cfg.sms_sent_today         ?? 0;
+  cfg.sms_sent_this_month    = cfg.sms_sent_this_month    ?? 0;
+  cfg.sms_total_sent         = cfg.sms_total_sent         ?? 0;
   return cfg;
 }
 
@@ -102,10 +114,17 @@ function checkAutoRun(config) {
 }
 
 function checkLimits(config) {
-  if (config.today !== today()) { config.today = today(); config.sent_today = 0; }
+  if (config.today !== today()) {
+    config.today = today();
+    config.sent_today       = 0;
+    config.email_sent_today = 0;
+    config.sms_sent_today   = 0;
+  }
   if (config.current_month !== currentMonth()) {
-    config.current_month = currentMonth();
-    config.sent_this_month = 0;
+    config.current_month         = currentMonth();
+    config.sent_this_month       = 0;
+    config.email_sent_this_month = 0;
+    config.sms_sent_this_month   = 0;
   }
 
   if (config.sent_today >= config.daily_limit) {
@@ -415,9 +434,9 @@ async function main() {
         logSend(brief, result, channel, videoUrl);
         updateState(brief.lead_id, 'sent');
         if (brief.template_id) recordSent(channel, brief.template_id);
-        config.sent_today++;
-        config.sent_this_month++;
-        config.total_sent++;
+        recordEmail(1);
+        config.sent_today++;           config.sent_this_month++;           config.total_sent++;
+        config.email_sent_today++;     config.email_sent_this_month++;     config.email_total_sent++;
         saveConfig(config);
         sent++;
         console.log(`${label} — ✓ sent via Zoho (id: ${result.id}${brief.template_id ? ', tmpl: ' + brief.template_id : ''})`);
@@ -432,9 +451,8 @@ async function main() {
         updateState(brief.lead_id, 'sent');
         if (brief.template_id) recordSent(channel, brief.template_id);
         recordTwilio(1);
-        config.sent_today++;
-        config.sent_this_month++;
-        config.total_sent++;
+        config.sent_today++;         config.sent_this_month++;         config.total_sent++;
+        config.sms_sent_today++;     config.sms_sent_this_month++;     config.sms_total_sent++;
         saveConfig(config);
         sent++;
         console.log(`${label} — ✓ sent (Twilio sid: ${result.sid}${brief.template_id ? ', tmpl: ' + brief.template_id : ''})`);

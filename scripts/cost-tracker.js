@@ -48,6 +48,12 @@ function recordTwilio(messageCount, script = 'pitcher') {
   append('twilio', script, messageCount * TWILIO_PER_SMS_USD, { messages: messageCount });
 }
 
+function recordEmail(messageCount, script = 'pitcher') {
+  if (messageCount <= 0) return;
+  // Zoho is a flat subscription — $0 per send, track volume only
+  append('email', script, 0, { messages: messageCount });
+}
+
 function recordOutscraper(leadCount, costPerLead, script = 'scout') {
   if (leadCount <= 0) return;
   append('outscraper', script, leadCount * costPerLead, { leads: leadCount });
@@ -80,6 +86,7 @@ function getAllTimeSummary()      { return aggregate(loadLog().events); }
 module.exports = {
   recordAnthropic,
   recordTwilio,
+  recordEmail,
   recordOutscraper,
   getDailySummary,
   getMonthlySummary,

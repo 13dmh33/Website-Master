@@ -140,9 +140,12 @@ template reply rates, and day/month costs across all services.
 
 ## Template Vault
 
-10 pre-approved templates in `config/templates.json` — 5 SMS (s1–s5) + 5 email (e1–e5).
-Diagnoser picks and fills the right template for each lead. A/B rotation via
-epsilon-greedy algorithm (20% explore / 80% exploit) learns which template converts best.
+11 pre-approved templates in `config/templates.json` — 6 SMS (s1–s6) + 5 email (e1–e5).
+- All SMS templates ≤160 chars (1 Twilio segment = $0.0079/msg)
+- s6 = catch-all with no data requirements — always available as fallback
+- Templates with missing required fields skipped automatically
+- All templates open with "Hey," — no first name substitution
+- A/B rotation via epsilon-greedy algorithm (20% explore / 80% exploit)
 
 Reply tracking: `config/template-stats.json`
 

@@ -20,8 +20,12 @@ Your goal: 47 clients/month at $400/site + $300–500/mo Nora voice agent upsell
 - Reporter: ✅ scripts/reporter.js — morning email report; shows email vs SMS split, per-service costs
 
 ## Template Vault
-- 5 SMS templates (s1–s5) + 5 email templates (e1–e5) in config/templates.json
+- 6 SMS templates (s1–s6) + 5 email templates (e1–e5) in config/templates.json
+- s6 = catch-all (no data requirements) — always available as fallback
+- All SMS templates ≤160 chars (1 segment = $0.0079/msg, not $0.04)
+- Templates open with "Hey," — no [First Name] substitution
 - Diagnoser picks and fills the best template for each lead (no AI-generated copy)
+- Templates with missing required fields are skipped automatically (canFill check)
 - A/B rotation: epsilon-greedy (20% explore / 80% exploit), MIN_SENDS=3 bootstrap
 - Stats tracked in config/template-stats.json (sent + replies per template)
 - scripts/template-picker.js handles selection, fill, and stats recording
@@ -114,8 +118,8 @@ Local workflow after Scout/Pitcher runs on Mac:
 2. `git commit -m "..."` and `git push origin claude/kind-hypatia-3YzM0`
 3. Continue AI steps from container
 
-Note: GitHub push from Mac requires a Personal Access Token (PAT) — not account password.
-Create at: github.com/settings/tokens (classic, repo scope).
+Note: GitHub PAT is configured on Mac (set 2026-06-01). Push works without password prompts.
+Morning reporter cron is set on Mac: runs at 7am daily.
 
 ## Lead Filter
 Scout filters: 5–300 reviews, rating 4.0+, sorted by gap_score desc.
@@ -135,3 +139,7 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - 2026-06-01: First real SMS send — 18/19 Denver electricians sent via Twilio template s1
 - 2026-06-01: Phase 1+2 complete — dual-channel routing, per-channel counters, report email/SMS split
 - 2026-06-01: Email deliverability complete — SPF + DKIM + DMARC set in OpenSRS DNS
+- 2026-06-01: GitHub PAT + cron reporter configured on Mac
+- 2026-06-01: leads/*.json now tracked in git — Scout syncs to container automatically
+- 2026-06-01: SMS templates trimmed to ≤160 chars (1 seg); s6 catch-all added; Hey [First Name] removed
+- 2026-06-01: First email batch — 15 Denver plumbers sent via Zoho SMTP

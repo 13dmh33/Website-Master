@@ -17,7 +17,8 @@ Your goal: 47 clients/month at $400/site + $300–500/mo Nora voice agent upsell
 - Builder: ✅ scripts/builder.js — Lovable prompt generator, --submit to record URL, 5/day
 - Filmer: ✅ scripts/filmer.js — Loom instructions + ScreenshotOne, --submit to record URL, 5/day
 - Mobile: ✅ scripts/mobile.js — positive reply handler, weekday slot suggestions, auto-send, Nora upsell scheduler
-- Reporter: ✅ scripts/reporter.js — morning email report; shows email vs SMS split, per-service costs
+- Reporter: ✅ scripts/reporter.js — morning email report; shows email vs SMS split, per-service costs, drip stats
+- Drip: ✅ scripts/drip.js — 4-step follow-up sequence (d1/d1b/d1c/d2), per-channel, daily limit 20, --dry-run; config/drip-config.json
 
 ## Template Vault
 - 6 SMS templates (s1–s6) + 5 email templates (e1–e5) in config/templates.json
@@ -69,7 +70,8 @@ Manual order:
 4. Filmer → mockups from Builder — run in container
 5. Pitcher → approved messages only — **run on Mac** (Twilio blocked from container)
 6. Mobile → monitor /messages/ for positive replies — run in container
-7. Reporter → `node scripts/reporter.js` on Mac each morning (or cron at 7am)
+7. Drip → follow-up non-responders — **run on Mac** (Twilio + Zoho SMTP blocked from container)
+8. Reporter → `node scripts/reporter.js` on Mac each morning (or cron at 7am)
 
 ## Nora Upsell
 - Website deal closes → set nora_pitch_due = closed_date + 7 days in state.json
@@ -108,6 +110,7 @@ The remote Claude Code container has restricted outbound network access.
 **Must run on Mac:**
 - Scout (scripts/scout.js) — Outscraper API blocks container IPs
 - Pitcher (scripts/pitcher.js) — Twilio SMS API blocked from container
+- Drip (scripts/drip.js) — Twilio SMS + Zoho SMTP blocked from container
 - Reporter (scripts/reporter.js) — Zoho SMTP blocked from container
 
 **Runs fine in container:**
@@ -143,3 +146,4 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - 2026-06-01: leads/*.json now tracked in git — Scout syncs to container automatically
 - 2026-06-01: SMS templates trimmed to ≤160 chars (1 seg); s6 catch-all added; Hey [First Name] removed
 - 2026-06-01: First email batch — 15 Denver plumbers sent via Zoho SMTP
+- 2026-06-01: Drip campaign live — drip.js built (4-step sequence, 8 templates approved and loaded)

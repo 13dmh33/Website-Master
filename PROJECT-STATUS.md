@@ -16,7 +16,8 @@
 | builder.js | ✅ Live | Container |
 | filmer.js | ✅ Live | Container |
 | mobile.js | ✅ Live | Container — auto-send, no approval gate |
-| reporter.js | ✅ Live | Mac — morning email, shows email/SMS split + per-service costs |
+| reporter.js | ✅ Live | Mac — morning email, shows email/SMS split + per-service costs + drip stats |
+| drip.js | ✅ Live | Mac — 4-step sequence (d1/d1b/d1c/d2), per-channel, daily limit 20 |
 
 ---
 
@@ -65,6 +66,7 @@
 - [x] **SMS templates trimmed to 1 segment** — all ≤160 chars; s6 catch-all added (no data requirements)
 - [x] **[First Name] removed** — all templates open with "Hey," — no bad name substitution
 - [x] **First email batch** — 15 Denver plumbers sent via Zoho SMTP (2026-06-01)
+- [x] **Drip campaign** — drip.js live, 8 templates loaded (d1/d1b/d1c/d2 × email + SMS), run on Mac with --force
 
 ---
 
@@ -72,7 +74,7 @@
 
 | Item | Risk Level | Notes |
 |---|---|---|
-| **Drip templates not written** | 🔴 High | Every non-reply is a dead end. At ~8% SMS reply rate, ~30 of 33 leads need follow-up. Writing 4 templates this week doubles effective reply rate from existing sends. |
+| **Drip not yet run** | 🟡 Medium | drip.js is live. Run `node scripts/drip.js --dry-run --force` on Mac to preview first due messages. First d1 sends will be due ~Day 4 (Jun 5). |
 | **No Loom links in pitch yet** | 🔴 High | Filmer generates instructions but Dave hasn't recorded yet. Attaching a custom mockup video is the main differentiator — without it the pitch is just another cold message. |
 | **Reply handling is manual** | 🟡 Medium | Twilio console must be checked manually for SMS replies. Fine at 33 sends, becomes a bottleneck above 100/week. Twilio webhook is the fix. |
 | **Twilio paid account** | 🟡 Medium | D&J Enterprises failure was a trial-account limit. Confirm paid upgrade is active before scaling volume. |
@@ -84,7 +86,7 @@
 
 | Day | Priority | Action |
 |---|---|---|
-| Today–Tue | 🔴 | Monitor first batch for replies (Twilio console + Zoho inbox); **write the 4 drip templates** — highest leverage item in the entire roadmap |
+| Today–Tue | 🔴 | Monitor first batch for replies (Twilio console + Zoho inbox); drip.js is live — **first d1 sends due ~Jun 5** (day 4 from Jun 1 sends) |
 | Wed | 🔴 | Confirm Twilio is on paid account; retry D&J Enterprises; run second Scout batch (new city or second Denver trade) |
 | Thu | 🟡 | Record first Loom walkthrough for a real mockup and attach to an active lead sequence |
 | Fri | 🟡 | Set up Cal.com link (`CALCOM_LINK=` in `.env.local`) so Mobile agent can book calls from positive replies |
@@ -96,7 +98,7 @@
 
 | Priority | Task | Command / Action |
 |---|---|---|
-| 🔴 High | Write 4 drip templates (Dave writes copy) | d1-sms, d2-sms, d1-email, d2-email — see PROJECT-ROADMAP.md Phase 3 |
+| 🟡 Medium | Run first drip batch on Mac (Jun 5) | `node scripts/drip.js --dry-run --force` to preview, then `node scripts/drip.js --force` |
 | 🔴 High | Record first Loom + attach to active leads | Run `node scripts/filmer.js --force`, record walkthrough, submit URL |
 | 🟡 Medium | Retry D&J Enterprises SMS | Mac: `git pull && node scripts/pitcher.js --force` |
 | 🟡 Medium | Scout second batch | Mac: `node scripts/scout.js --city "..." --trade ... --force` |
@@ -123,6 +125,9 @@ node scripts/filmer.js --force       # record Loom
 git pull && node scripts/pitcher.js --force
 # MAC — Send (run 2: ~4h later, SMS follow-ups go out to dual-channel leads)
 node scripts/pitcher.js --force
+
+# MAC — Drip (run daily; first sends due Day 4 from initial send)
+node scripts/drip.js --force
 
 git add state.json config/ && git commit && git push
 

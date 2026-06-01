@@ -11,13 +11,13 @@ Your goal: 47 clients/month at $400/site + $300–500/mo Nora voice agent upsell
 
 ## Build Status (as of 2026-06-01)
 - Scout: ✅ scripts/scout.js — Outscraper API, $10/mo cap, auto_run toggle
-- Diagnoser: ✅ scripts/diagnoser.js — Claude Haiku, prompt caching, $5/mo cap, daily limit; email field passed through pipeline
-- Checker: ✅ scripts/checker.js — 5 evals + Claude rewrite loop, $3/mo cap; template-based fast-path skips evals
-- Pitcher: ✅ scripts/pitcher.js — email (Zoho SMTP), SMS (Twilio), manual drafts, --dry-run flag, staggered sends
+- Diagnoser: ✅ scripts/diagnoser.js — Claude Haiku, prompt caching, $5/mo cap; dual-channel: sets secondary_channel=sms when lead has both email + phone
+- Checker: ✅ scripts/checker.js — 5 evals + Claude rewrite loop, $3/mo cap; template fast-path validates both primary + secondary messages
+- Pitcher: ✅ scripts/pitcher.js — dual-channel (email first, SMS follows after sms_followup_delay_hours=4); per-channel sent tracking in messages/-sent.json; staggered sends; --dry-run
 - Builder: ✅ scripts/builder.js — Lovable prompt generator, --submit to record URL, 5/day
 - Filmer: ✅ scripts/filmer.js — Loom instructions + ScreenshotOne, --submit to record URL, 5/day
 - Mobile: ✅ scripts/mobile.js — positive reply handler, weekday slot suggestions, auto-send, Nora upsell scheduler
-- Reporter: ✅ scripts/reporter.js — morning email report (pipeline status, costs, template reply rates)
+- Reporter: ✅ scripts/reporter.js — morning email report; shows email vs SMS split, per-service costs
 
 ## Template Vault
 - 5 SMS templates (s1–s5) + 5 email templates (e1–e5) in config/templates.json
@@ -121,5 +121,12 @@ Create at: github.com/settings/tokens (classic, repo scope).
 Scout filters: 5–300 reviews, rating 4.0+, sorted by gap_score desc.
 Max reviews raised to 300 to capture qualifying leads in larger cities.
 
+## Channel Routing (Diagnoser)
+- Lead has email + phone → channel: email, secondary_channel: sms (SMS follows 4h later)
+- Lead has email only → channel: email
+- Lead has phone only → channel: sms (or ig_dm/linkedin per Scout trade assignment)
+- Delay configurable: config/pitcher-config.json → sms_followup_delay_hours (default: 4)
+
 ## Live Run History
 - 2026-06-01: First real SMS send — 18/19 Denver electricians sent via Twilio template s1
+- 2026-06-01: Phase 1+2 complete — dual-channel routing, per-channel counters, report email/SMS split

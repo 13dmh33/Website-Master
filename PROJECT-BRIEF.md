@@ -3,7 +3,7 @@
 **Date:** June 1, 2026
 **Owner:** Dave Hettinger — dave@trevoadvisors.com
 **Website:** trevoadvisors.com
-**Status:** All 8 scripts live. First real send complete — 18 Denver electricians texted 2026-06-01.
+**Status:** All 8 scripts live. Dual-channel outreach active. First batch sent 2026-06-01.
 
 ---
 
@@ -76,16 +76,18 @@ website. Assigns outreach channel by trade.
 
 - **Output:** `/leads/{city}-{trade}-{date}-run{n}.json`
 - **Cost cap:** $10/mo (Outscraper)
-- **Channel assignment:** plumbers/HVAC → email; electricians/roofers → SMS; handymen → IG DM
+- **Initial channel assignment by trade:** plumbers/HVAC → email; electricians/roofers → SMS; handymen → IG DM (overridden by Diagnoser based on actual contact data)
 - **⚠️ Must run locally** — Outscraper blocks cloud container IPs.
 
 ### 2. Diagnoser (`scripts/diagnoser.js`)
 Sends each lead to Claude Haiku with prompt caching. Generates diagnosis, hero angle,
-tone, and gap score. Then picks and fills a template from the vault (no AI-written copy).
+tone, and gap score. Determines channels based on available contact data, then picks
+and fills templates from the vault (no AI-written copy).
 
 - **Output:** `/queue/{lead_id}-brief.json`
 - **Cost cap:** $5/mo (~$0.001 per brief)
 - **Model:** Claude Haiku with ephemeral caching
+- **Dual-channel:** if lead has both email + phone, sets `secondary_channel: 'sms'` and fills a second SMS template
 
 ### 3. Checker (`scripts/checker.js`)
 Quality-gates every cold message. Template-based messages skip straight through
@@ -107,13 +109,14 @@ instructions. Owner records a 60-second walkthrough and submits the URL.
 - **Daily limit:** 5 videos / No API cost (ScreenshotOne optional)
 
 ### 6. Pitcher (`scripts/pitcher.js`)
-Sends the approved cold message via the right channel. Only sends if
-`checker_approved = true`. Supports `--dry-run` to preview first. Staggered
-sends (email: 120–300s random, SMS: 20–60s random).
+Sends the approved cold message via the right channel(s). Only sends if
+`checker_approved = true`. Supports `--dry-run` to preview first.
 
-- **Email:** Zoho SMTP — dave@trevoadvisors.com
-- **SMS:** Twilio (paid account) — +17209027555
+- **Email:** Zoho SMTP — dave@trevoadvisors.com (120–300s stagger)
+- **SMS:** Twilio (paid) — +17209027555 (20–60s stagger)
 - **IG DM / LinkedIn:** Manual draft written to `/messages/`
+- **Dual-channel:** email sent first; SMS sent automatically on next run after `sms_followup_delay_hours` (default 4h)
+- **Per-channel tracking:** `messages/{id}-sent.json` records `email_sent_at` and `sms_sent_at` separately
 - **Daily limit:** 30 messages
 - **⚠️ Must run locally** — Twilio API blocked from container.
 
@@ -220,7 +223,7 @@ At $400/site × 47 = $18,800/mo revenue, infrastructure is <0.2% of revenue.
 | GitHub PAT on Mac | High | Can't push to git from Mac without PAT — set up at github.com/settings/tokens |
 | Inbound reply detection | High | Must manually set `"status": "positive"` in messages JSON. Twilio webhook would automate this. |
 | Cron job for Reporter | Medium | Add 7am cron on Mac: `crontab -e` |
-| Email channel (plumbers/HVAC) | Medium | Zoho SMTP ready — need email leads from Scout |
+| Email deliverability (SPF/DKIM/DMARC) | High | Must set up before sending cold email at volume — see PROJECT-ROADMAP.md Task 1.4 |
 | D&J Enterprises SMS retry | Low | 1 failed send from first batch — retry with `node scripts/pitcher.js --force` |
 | Scout must run locally | Info | Cloud container IP blocked by Outscraper |
 | Pitcher must run locally | Info | Twilio blocked from container |

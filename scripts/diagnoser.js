@@ -307,12 +307,20 @@ async function main() {
       // Email-first: if lead has an email address, prefer email over trade-default channel
       const channel = lead.email ? 'email' : lead.channel;
       const tmpl     = pickAndFill(channel, { ...lead, ...brief });
-      const coldMsg  = tmpl?.message  || '';
+
+      // Secondary channel: if lead has both email AND phone, also prepare SMS
+      const secondaryChannel = (lead.email && lead.phone) ? 'sms' : null;
+      const secTmpl = secondaryChannel ? pickAndFill(secondaryChannel, { ...lead, ...brief }) : null;
+
+      const coldMsg  = tmpl?.message       || '';
       const tmplId   = tmpl?.template_id   || null;
       const tmplName = tmpl?.template_name || null;
 
       if (!tmpl) {
         console.log(`\n  ⚠  No template available for ${lead.business_name} (${channel}) — brief saved without cold_message`);
+      }
+      if (secondaryChannel && !secTmpl) {
+        console.log(`\n  ⚠  No SMS template available for ${lead.business_name} — secondary channel skipped`);
       }
 
       const fullBrief = {
@@ -328,15 +336,19 @@ async function main() {
         diagnosis:        brief.diagnosis  || '',
         hero_angle:       brief.hero_angle || '',
         tone:             brief.tone       || 'direct',
-        cold_message:     coldMsg,
-        template_id:      tmplId,
-        template_name:    tmplName,
-        template_based:   !!tmpl,
-        gap_score:        brief.gap_score  || lead.gap_score,
-        priority:         false,
-        channel:          lead.channel,
-        checker_approved: false,
-        diagnosed_at:     new Date().toISOString()
+        cold_message:            coldMsg,
+        template_id:             tmplId,
+        template_name:           tmplName,
+        template_based:          !!tmpl,
+        gap_score:               brief.gap_score  || lead.gap_score,
+        priority:                false,
+        channel:                 channel,
+        secondary_channel:       secondaryChannel,
+        secondary_message:       secTmpl?.message || null,
+        secondary_template_id:   secTmpl?.template_id || null,
+        secondary_template_name: secTmpl?.template_name || null,
+        checker_approved:        false,
+        diagnosed_at:            new Date().toISOString()
       };
 
       const outPath = path.join(QUEUE_DIR, `${lead.lead_id}-brief.json`);

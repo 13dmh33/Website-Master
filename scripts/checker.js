@@ -381,12 +381,20 @@ async function main() {
 
     // Template-based messages are pre-approved copy — only verify placeholders filled
     if (brief.template_based) {
-      const hasUnfilled = /\[[A-Z]/.test(message);
+      const primaryUnfilled   = /\[[A-Z]/.test(message);
+      const secondaryUnfilled = brief.secondary_message ? /\[[A-Z]/.test(brief.secondary_message) : false;
+      const hasUnfilled = primaryUnfilled || secondaryUnfilled;
       brief.final_message    = message;
       brief.checker_approved = !hasUnfilled;
-      brief.checker_flag     = hasUnfilled ? 'unfilled_placeholder' : '';
+      brief.checker_flag     = hasUnfilled
+        ? (primaryUnfilled ? 'unfilled_placeholder' : 'unfilled_secondary_placeholder')
+        : '';
       brief.rewrite_count    = 0;
-      brief.checker_score    = { template_based: true, placeholders_filled: !hasUnfilled };
+      brief.checker_score    = {
+        template_based:          true,
+        placeholders_filled:     !primaryUnfilled,
+        secondary_placeholders:  !secondaryUnfilled
+      };
       brief.checked_at       = new Date().toISOString();
       fs.writeFileSync(filePath, JSON.stringify(brief, null, 2));
       updateState(brief.lead_id, brief.checker_approved ? 'checked' : 'flagged');
@@ -395,11 +403,12 @@ async function main() {
       if (brief.checker_approved) {
         approved++;
         config.approved_total++;
-        console.log(`${label} — ✓ template approved (${brief.template_id})`);
+        const channels = [brief.template_id, brief.secondary_template_id].filter(Boolean).join(' + ');
+        console.log(`${label} — ✓ template approved (${channels})`);
       } else {
         flagged++;
         config.flagged_total++;
-        console.log(`${label} — ✗ unfilled placeholder in template ${brief.template_id}`);
+        console.log(`${label} — ✗ unfilled placeholder (${brief.checker_flag})`);
       }
       saveConfig(config);
       continue;

@@ -84,6 +84,7 @@ function loadConfig() {
       sms_sent_today: 0,
       sms_sent_this_month: 0,
       sms_total_sent: 0,
+      sms_followup_delay_hours: 4,
       last_run: null
     };
     fs.writeFileSync(CONFIG_PATH, JSON.stringify(defaults, null, 2));
@@ -98,9 +99,10 @@ function loadConfig() {
   cfg.email_sent_today       = cfg.email_sent_today       ?? 0;
   cfg.email_sent_this_month  = cfg.email_sent_this_month  ?? 0;
   cfg.email_total_sent       = cfg.email_total_sent       ?? 0;
-  cfg.sms_sent_today         = cfg.sms_sent_today         ?? 0;
-  cfg.sms_sent_this_month    = cfg.sms_sent_this_month    ?? 0;
-  cfg.sms_total_sent         = cfg.sms_total_sent         ?? 0;
+  cfg.sms_sent_today            = cfg.sms_sent_today            ?? 0;
+  cfg.sms_sent_this_month       = cfg.sms_sent_this_month       ?? 0;
+  cfg.sms_total_sent            = cfg.sms_total_sent            ?? 0;
+  cfg.sms_followup_delay_hours  = cfg.sms_followup_delay_hours  ?? 4;
   return cfg;
 }
 
@@ -157,29 +159,43 @@ function warnIfMissingCreds() {
 
 // ── LOAD APPROVED BRIEFS ──────────────────────────────────────────────────────
 
-function loadApprovedBriefs() {
-  // Build set of already-sent lead IDs from messages/
-  const sentIds = new Set(
-    fs.readdirSync(MESSAGES_DIR)
-      .filter(f => f.endsWith('-sent.json'))
-      .map(f => f.replace('-sent.json', ''))
-  );
-
-  const files  = fs.readdirSync(QUEUE_DIR).filter(f => f.endsWith('-brief.json'));
-  const briefs = [];
+function loadApprovedBriefs(config) {
+  const now      = Date.now();
+  const delayMs  = (config.sms_followup_delay_hours ?? 4) * 3600 * 1000;
+  const files    = fs.readdirSync(QUEUE_DIR).filter(f => f.endsWith('-brief.json'));
+  const briefs   = [];
 
   for (const file of files) {
     try {
       const data = JSON.parse(fs.readFileSync(path.join(QUEUE_DIR, file), 'utf8'));
-      if (data.checker_approved && !sentIds.has(data.lead_id)) {
-        briefs.push(data);
+      if (!data.checker_approved) continue;
+
+      const sentPath = path.join(MESSAGES_DIR, `${data.lead_id}-sent.json`);
+
+      if (!fs.existsSync(sentPath)) {
+        // Primary channel not yet sent
+        briefs.push({ ...data, _pending_channel: data.channel });
+        continue;
       }
+
+      // Check if secondary channel is pending (dual-channel lead)
+      if (data.secondary_channel) {
+        const sent   = JSON.parse(fs.readFileSync(sentPath, 'utf8'));
+        const secKey = `${data.secondary_channel}_sent`; // 'sms_sent' or 'email_sent'
+        if (!sent[secKey]) {
+          const primarySentAt = sent[`${data.channel}_sent_at`];
+          if (primarySentAt && (now - new Date(primarySentAt).getTime()) >= delayMs) {
+            briefs.push({ ...data, _pending_channel: data.secondary_channel });
+          }
+        }
+      }
+      // Single-channel lead with sent.json → fully done, skip
+
     } catch (e) {
       console.warn(`Could not read ${file}: ${e.message}`);
     }
   }
 
-  // Priority first, then by gap_score
   return briefs.sort((a, b) => {
     if (a.priority && !b.priority) return -1;
     if (!a.priority && b.priority) return 1;
@@ -343,29 +359,42 @@ function writeManualDraft(brief, videoUrl) {
 
 // ── LOG SEND ──────────────────────────────────────────────────────────────────
 
-function logSend(brief, result, channel, videoUrl, status = 'sent') {
-  const record = {
-    lead_id:       brief.lead_id,
-    business_name: brief.business_name,
-    trade:         brief.trade,
-    city:          brief.city,
-    phone:         brief.phone || null,
-    email:         brief.email || null,
-    channel,
-    template_id:   brief.template_id   || null,
-    template_name: brief.template_name || null,
-    sent_at:       new Date().toISOString(),
-    subject:       result.subject || null,
-    body:          result.body || brief.final_message,
-    video_url:     videoUrl || null,
-    status,
-    replies:       []
-  };
+function logSend(brief, result, channel, videoUrl) {
+  const sentPath = path.join(MESSAGES_DIR, `${brief.lead_id}-sent.json`);
+  const ts = new Date().toISOString();
 
-  fs.writeFileSync(
-    path.join(MESSAGES_DIR, `${brief.lead_id}-sent.json`),
-    JSON.stringify(record, null, 2)
-  );
+  // Load existing record or scaffold a new one
+  let record = fs.existsSync(sentPath)
+    ? JSON.parse(fs.readFileSync(sentPath, 'utf8'))
+    : {
+        lead_id:       brief.lead_id,
+        business_name: brief.business_name,
+        trade:         brief.trade,
+        city:          brief.city,
+        phone:         brief.phone || null,
+        email:         brief.email || null,
+        email_sent:    false, email_sent_at: null,
+        sms_sent:      false, sms_sent_at:   null,
+        replies:       []
+      };
+
+  if (channel === 'email') {
+    record.email_sent        = true;
+    record.email_sent_at     = ts;
+    record.email_template_id = brief.template_id || null;
+    record.email_subject     = result.subject    || null;
+    record.email_body        = result.body       || brief.final_message;
+    record.email_video_url   = videoUrl          || null;
+  } else if (channel === 'sms') {
+    record.sms_sent          = true;
+    record.sms_sent_at       = ts;
+    record.sms_template_id   = brief.secondary_template_id || brief.template_id || null;
+    record.sms_body          = result.body || brief.secondary_message || brief.final_message;
+    record.sms_sid           = result.sid  || null;
+    record.sms_video_url     = videoUrl    || null;
+  }
+
+  fs.writeFileSync(sentPath, JSON.stringify(record, null, 2));
 }
 
 function updateState(leadId, status) {
@@ -398,7 +427,7 @@ async function main() {
   warnIfMissingCreds();
   const effectiveLimit = checkLimits(config);
 
-  const briefs = loadApprovedBriefs();
+  const briefs = loadApprovedBriefs(config);
   if (briefs.length === 0) {
     console.log('No approved briefs ready to send. Run Checker first.');
     process.exit(0);
@@ -413,13 +442,22 @@ async function main() {
   for (let i = 0; i < toSend.length; i++) {
     const brief    = toSend[i];
     const videoUrl = getVideoUrl(brief.lead_id);
-    const label    = `[${i + 1}/${toSend.length}] ${brief.business_name} (${brief.channel})`;
-    const channel  = brief.channel || 'email';
+    const channel  = brief._pending_channel || brief.channel || 'email';
+    const label    = `[${i + 1}/${toSend.length}] ${brief.business_name} (${channel})`;
+
+    // Resolve the right message and template for this channel send
+    const isSecondary = channel === brief.secondary_channel;
+    const resolvedBrief = isSecondary
+      ? { ...brief,
+          final_message: brief.secondary_message || brief.final_message,
+          template_id:   brief.secondary_template_id   || brief.template_id,
+          template_name: brief.secondary_template_name || brief.template_name }
+      : brief;
 
     if (isDryRun) {
       console.log(`${label} — DRY RUN`);
       console.log(`  To:      ${brief.phone || brief.email || 'no contact info'}`);
-      console.log(`  Message: ${brief.final_message?.substring(0, 80)}...`);
+      console.log(`  Message: ${resolvedBrief.final_message?.substring(0, 80)}...`);
       console.log(`  Video:   ${videoUrl || 'none'}`);
       continue;
     }
@@ -430,37 +468,37 @@ async function main() {
           console.log(`${label} — skipped (no email address on lead)`);
           continue;
         }
-        const result = await sendEmail(brief, config, videoUrl);
+        const result = await sendEmail(resolvedBrief, config, videoUrl);
         logSend(brief, result, channel, videoUrl);
         updateState(brief.lead_id, 'sent');
-        if (brief.template_id) recordSent(channel, brief.template_id);
+        if (resolvedBrief.template_id) recordSent(channel, resolvedBrief.template_id);
         recordEmail(1);
         config.sent_today++;           config.sent_this_month++;           config.total_sent++;
         config.email_sent_today++;     config.email_sent_this_month++;     config.email_total_sent++;
         saveConfig(config);
         sent++;
-        console.log(`${label} — ✓ sent via Zoho (id: ${result.id}${brief.template_id ? ', tmpl: ' + brief.template_id : ''})`);
+        console.log(`${label} — ✓ sent via Zoho (id: ${result.id}${resolvedBrief.template_id ? ', tmpl: ' + resolvedBrief.template_id : ''})`);
 
       } else if (channel === 'sms') {
         if (!brief.phone) {
           console.log(`${label} — skipped (no phone number on lead)`);
           continue;
         }
-        const result = await sendSms(brief, videoUrl);
+        const result = await sendSms(resolvedBrief, videoUrl);
         logSend(brief, result, channel, videoUrl);
         updateState(brief.lead_id, 'sent');
-        if (brief.template_id) recordSent(channel, brief.template_id);
+        if (resolvedBrief.template_id) recordSent(channel, resolvedBrief.template_id);
         recordTwilio(1);
         config.sent_today++;         config.sent_this_month++;         config.total_sent++;
         config.sms_sent_today++;     config.sms_sent_this_month++;     config.sms_total_sent++;
         saveConfig(config);
         sent++;
-        console.log(`${label} — ✓ sent (Twilio sid: ${result.sid}${brief.template_id ? ', tmpl: ' + brief.template_id : ''})`);
+        console.log(`${label} — ✓ sent (Twilio sid: ${result.sid}${resolvedBrief.template_id ? ', tmpl: ' + resolvedBrief.template_id : ''})`);
 
       } else {
         // ig_dm or linkedin — write manual draft
-        const draft = writeManualDraft(brief, videoUrl);
-        logSend(brief, draft, channel, videoUrl, 'manual_pending');
+        const draft = writeManualDraft(resolvedBrief, videoUrl);
+        logSend(brief, draft, channel, videoUrl);
         updateState(brief.lead_id, 'manual_pending');
         manual++;
         console.log(`${label} — 📋 manual draft written to messages/${brief.lead_id}-draft.txt`);
@@ -472,7 +510,7 @@ async function main() {
     }
 
     if (i < toSend.length - 1 && !isDryRun) {
-      const isEmail = (brief.channel || 'email') === 'email';
+      const isEmail = channel === 'email';
       await staggerDelay(
         isEmail ? config.email_stagger_min_s : config.sms_stagger_min_s,
         isEmail ? config.email_stagger_max_s : config.sms_stagger_max_s

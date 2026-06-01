@@ -68,15 +68,41 @@
 
 ---
 
-## 🔜 Immediate Next Steps
+## ⚠️ Gaps & Risks
+
+| Item | Risk Level | Notes |
+|---|---|---|
+| **Drip templates not written** | 🔴 High | Every non-reply is a dead end. At ~8% SMS reply rate, ~30 of 33 leads need follow-up. Writing 4 templates this week doubles effective reply rate from existing sends. |
+| **No Loom links in pitch yet** | 🔴 High | Filmer generates instructions but Dave hasn't recorded yet. Attaching a custom mockup video is the main differentiator — without it the pitch is just another cold message. |
+| **Reply handling is manual** | 🟡 Medium | Twilio console must be checked manually for SMS replies. Fine at 33 sends, becomes a bottleneck above 100/week. Twilio webhook is the fix. |
+| **Twilio paid account** | 🟡 Medium | D&J Enterprises failure was a trial-account limit. Confirm paid upgrade is active before scaling volume. |
+| **state.json scaling** | 🟢 Low | Flat file is fine to ~1,000 leads (~8–10 weeks at current pace). SQLite migration documented for when needed. |
+
+---
+
+## 📅 Recommended Next 7 Days
+
+| Day | Priority | Action |
+|---|---|---|
+| Today–Tue | 🔴 | Monitor first batch for replies (Twilio console + Zoho inbox); **write the 4 drip templates** — highest leverage item in the entire roadmap |
+| Wed | 🔴 | Confirm Twilio is on paid account; retry D&J Enterprises; run second Scout batch (new city or second Denver trade) |
+| Thu | 🟡 | Record first Loom walkthrough for a real mockup and attach to an active lead sequence |
+| Fri | 🟡 | Set up Cal.com link (`CALCOM_LINK=` in `.env.local`) so Mobile agent can book calls from positive replies |
+| Weekend | 🟢 | Review morning reports for template performance; draft reply scripts for first positive responses |
+
+---
+
+## 🔜 Open Action Items
 
 | Priority | Task | Command / Action |
 |---|---|---|
-| 🟡 Medium | Retry D&J Enterprises SMS | `node scripts/pitcher.js --force` on Mac after git pull |
-| 🟡 Medium | Set up Twilio reply webhook | Auto-detect inbound SMS → update messages JSON |
-| 🟡 Medium | Scout next city/trade | `node scripts/scout.js --city "..." --trade ... --force` on Mac |
-| 🟡 Medium | Write drip campaign copy (4 templates) | See PROJECT-ROADMAP.md Phase 3 |
-| 🟢 Low | Set up Cal.com link | Add `CALCOM_LINK=` to `.env.local` |
+| 🔴 High | Write 4 drip templates (Dave writes copy) | d1-sms, d2-sms, d1-email, d2-email — see PROJECT-ROADMAP.md Phase 3 |
+| 🔴 High | Record first Loom + attach to active leads | Run `node scripts/filmer.js --force`, record walkthrough, submit URL |
+| 🟡 Medium | Retry D&J Enterprises SMS | Mac: `git pull && node scripts/pitcher.js --force` |
+| 🟡 Medium | Scout second batch | Mac: `node scripts/scout.js --city "..." --trade ... --force` |
+| 🟡 Medium | Set up Twilio reply webhook | Auto-detect inbound SMS → update messages JSON (~1.5hr build) |
+| 🟡 Medium | Set up Cal.com link | Add `CALCOM_LINK=` to `.env.local` on Mac |
+| 🟢 Low | Tighten DMARC after 30 days | OpenSRS DNS → change `p=none` to `p=quarantine` |
 
 ---
 

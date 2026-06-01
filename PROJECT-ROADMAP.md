@@ -47,14 +47,11 @@ Add `recordEmail(1)` to cost-tracker.js so the reporter can show email volume.
 
 Files: `scripts/pitcher.js`, `scripts/cost-tracker.js`
 
-**Task 1.4 — Email deliverability verification** (30 min) ⚠️
-Before sending cold email at volume, verify trevoadvisors.com DNS has:
-- **SPF record** — authorizes Zoho to send for your domain
-- **DKIM** — cryptographic signature; configure in Zoho Mail → Settings → Domains
-- **DMARC** — start with `p=none` to monitor without blocking
-Without SPF/DKIM, cold email from a new domain hits spam ~80% of the time.
-Check: mxtoolbox.com/spf and mxtoolbox.com/dkim
-Setup: mail.zoho.com → Settings → Domains → verify → add DNS records shown
+**Task 1.4 — Email deliverability verification** ✅ DONE (2026-06-01)
+SPF, DKIM, and DMARC all confirmed set in OpenSRS DNS for trevoadvisors.com:
+- SPF: `v=spf1 include:zohom ail.com ~all` (existing)
+- DKIM: `zoho._domainkey` TXT record (existing)
+- DMARC: `v=DMARC1; p=none; rua=mailto:dave@trevoadvisors.com` (added today)
 
 **Task 1.5 — Test run** (30 min)
 Scout Denver plumbers → diagnoser → checker → pitcher dry-run → confirm email routing works.

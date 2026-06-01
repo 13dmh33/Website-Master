@@ -127,6 +127,11 @@ Max reviews raised to 300 to capture qualifying leads in larger cities.
 - Lead has phone only → channel: sms (or ig_dm/linkedin per Scout trade assignment)
 - Delay configurable: config/pitcher-config.json → sms_followup_delay_hours (default: 4)
 
+## Email Deliverability
+✅ SPF + DKIM + DMARC all configured on trevoadvisors.com (OpenSRS DNS, 2026-06-01).
+Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighten to p=quarantine after first month.
+
 ## Live Run History
 - 2026-06-01: First real SMS send — 18/19 Denver electricians sent via Twilio template s1
 - 2026-06-01: Phase 1+2 complete — dual-channel routing, per-channel counters, report email/SMS split
+- 2026-06-01: Email deliverability complete — SPF + DKIM + DMARC set in OpenSRS DNS

@@ -223,7 +223,7 @@ At $400/site × 47 = $18,800/mo revenue, infrastructure is <0.2% of revenue.
 | GitHub PAT on Mac | High | Can't push to git from Mac without PAT — set up at github.com/settings/tokens |
 | Inbound reply detection | High | Must manually set `"status": "positive"` in messages JSON. Twilio webhook would automate this. |
 | Cron job for Reporter | Medium | Add 7am cron on Mac: `crontab -e` |
-| Email deliverability (SPF/DKIM/DMARC) | High | Must set up before sending cold email at volume — see PROJECT-ROADMAP.md Task 1.4 |
+| Email deliverability (SPF/DKIM/DMARC) | ✅ Done | SPF + DKIM + DMARC set in OpenSRS DNS for trevoadvisors.com (2026-06-01) |
 | D&J Enterprises SMS retry | Low | 1 failed send from first batch — retry with `node scripts/pitcher.js --force` |
 | Scout must run locally | Info | Cloud container IP blocked by Outscraper |
 | Pitcher must run locally | Info | Twilio blocked from container |

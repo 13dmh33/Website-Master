@@ -1,6 +1,6 @@
 # Trevo Advisors — Project Status
 
-**Last updated:** 2026-06-01
+**Last updated:** 2026-06-01 (email deliverability complete)
 **Branch:** `claude/kind-hypatia-3YzM0`
 
 ---
@@ -53,18 +53,7 @@
 - [x] queue/*.json tracked in git (Pitcher can run on any machine)
 - [x] **First real SMS sends** — 18 Denver electricians (2026-06-01)
 - [x] **Phase 1+2 complete** — dual-channel routing, per-channel counters, report email/SMS split
-
----
-
-## ⚠️ Before Sending Email at Scale
-
-Email deliverability setup required — without it, cold email hits spam ~80% of the time:
-
-1. **SPF record** — add to trevoadvisors.com DNS (Zoho provides the value)
-2. **DKIM** — set up in Zoho Mail → Settings → Domains → verify domain
-3. **DMARC** — add TXT record: `v=DMARC1; p=none; rua=mailto:dave@trevoadvisors.com`
-
-Check current status: mxtoolbox.com/spf and mxtoolbox.com/dkim
+- [x] **Email deliverability** — SPF + DKIM + DMARC all set on trevoadvisors.com (OpenSRS DNS, 2026-06-01)
 
 ---
 
@@ -72,7 +61,6 @@ Check current status: mxtoolbox.com/spf and mxtoolbox.com/dkim
 
 | Priority | Task | Command / Action |
 |---|---|---|
-| 🔴 High | Email deliverability — SPF/DKIM/DMARC | Zoho Mail → Settings → Domains (see above) |
 | 🔴 High | Set up GitHub PAT on Mac | github.com/settings/tokens → classic → repo scope |
 | 🔴 High | Set up cron for morning report | `crontab -e` → `0 7 * * * cd ~/Website-Master && /path/to/node scripts/reporter.js` |
 | 🟡 Medium | Scout plumbers/HVAC for first email batch | `node scripts/scout.js --city "Denver, CO" --trade plumber --force` on Mac |

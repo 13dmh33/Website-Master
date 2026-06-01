@@ -1,1 +1,13 @@
-{ "events": [] }
+{
+  "events": [
+    {
+      "ts": "2026-06-01T21:33:25.508Z",
+      "service": "outscraper",
+      "script": "scout",
+      "cost_usd": 0.03,
+      "meta": {
+        "leads": 30
+      }
+    }
+  ]
+}

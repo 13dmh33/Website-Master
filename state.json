@@ -189,14 +189,89 @@
       "diagnosed_at": "2026-05-29T13:53:18.245Z",
       "checked_at": "2026-05-29T13:53:22.477Z",
       "sent_at": "2026-06-01T14:02:23.122Z"
+    },
+    {
+      "lead_id": "ChIJg8N9jmF9bIcR4PUHv5OFig8",
+      "status": "scouted",
+      "added_at": "2026-06-01T21:33:25.508Z"
+    },
+    {
+      "lead_id": "ChIJz9HSnHh4bIcRz41VwVci7R8",
+      "status": "scouted",
+      "added_at": "2026-06-01T21:33:25.508Z"
+    },
+    {
+      "lead_id": "ChIJ7z702999bIcRLGI2hkDZpVk",
+      "status": "scouted",
+      "added_at": "2026-06-01T21:33:25.508Z"
+    },
+    {
+      "lead_id": "ChIJ48VL8uNLaYcRzDHX-rpmfQY",
+      "status": "scouted",
+      "added_at": "2026-06-01T21:33:25.508Z"
+    },
+    {
+      "lead_id": "ChIJE2E_MmJ5bIcRcUUSvcUScug",
+      "status": "scouted",
+      "added_at": "2026-06-01T21:33:25.508Z"
+    },
+    {
+      "lead_id": "ChIJB5l3fF5_bIcRB8JUyibbtKE",
+      "status": "scouted",
+      "added_at": "2026-06-01T21:33:25.508Z"
+    },
+    {
+      "lead_id": "ChIJbzthr81_bIcRudLONrHPcJ8",
+      "status": "scouted",
+      "added_at": "2026-06-01T21:33:25.508Z"
+    },
+    {
+      "lead_id": "ChIJuzi9P3aBa4cRRF42E7c4CJw",
+      "status": "scouted",
+      "added_at": "2026-06-01T21:33:25.508Z"
+    },
+    {
+      "lead_id": "ChIJHywWbKmHbIcR0BWbuT1IY7Q",
+      "status": "scouted",
+      "added_at": "2026-06-01T21:33:25.508Z"
+    },
+    {
+      "lead_id": "ChIJbVLhn9F_bIcRN1jkX7LphGo",
+      "status": "scouted",
+      "added_at": "2026-06-01T21:33:25.508Z"
+    },
+    {
+      "lead_id": "ChIJawyImiqBa4cR__X0KTStWHs",
+      "status": "scouted",
+      "added_at": "2026-06-01T21:33:25.508Z"
+    },
+    {
+      "lead_id": "ChIJZbjh6rqBbIcRNax57ESMrSM",
+      "status": "scouted",
+      "added_at": "2026-06-01T21:33:25.508Z"
+    },
+    {
+      "lead_id": "ChIJ0XgcXgeEa4cRahJrl-Q1dKM",
+      "status": "scouted",
+      "added_at": "2026-06-01T21:33:25.508Z"
+    },
+    {
+      "lead_id": "ChIJexN70-6sFKURtF076hPTeOM",
+      "status": "scouted",
+      "added_at": "2026-06-01T21:33:25.508Z"
+    },
+    {
+      "lead_id": "ChIJw4PwY5N_bIcRSBQtNn3QQz8",
+      "status": "scouted",
+      "added_at": "2026-06-01T21:33:25.508Z"
     }
   ],
   "active": [],
   "closed": [],
   "nora_pipeline": [],
-  "last_run": "2026-05-28T10:00:00.000Z",
+  "last_run": "2026-06-01T21:33:25.508Z",
   "daily_stats": {
-    "leads_scouted": 5,
+    "leads_scouted": 20,
     "briefs_written": 25,
     "mockups_built": 5,
     "messages_sent": 18,

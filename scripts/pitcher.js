@@ -33,8 +33,9 @@ const fs          = require('fs');
 const path        = require('path');
 const https       = require('https');
 const nodemailer  = require('nodemailer');
-const { writeLog }   = require('./logger');
-const { recordSent } = require('./template-picker');
+const { writeLog }    = require('./logger');
+const { recordSent }  = require('./template-picker');
+const { recordTwilio } = require('./cost-tracker');
 
 // ── PATHS ─────────────────────────────────────────────────────────────────────
 
@@ -430,6 +431,7 @@ async function main() {
         logSend(brief, result, channel, videoUrl);
         updateState(brief.lead_id, 'sent');
         if (brief.template_id) recordSent(channel, brief.template_id);
+        recordTwilio(1);
         config.sent_today++;
         config.sent_this_month++;
         config.total_sent++;

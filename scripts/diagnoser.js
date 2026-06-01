@@ -20,8 +20,9 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.loc
 const fs   = require('fs');
 const path = require('path');
 const Anthropic = require('@anthropic-ai/sdk');
-const { writeLog }    = require('./logger');
-const { pickAndFill } = require('./template-picker');
+const { writeLog }        = require('./logger');
+const { pickAndFill }     = require('./template-picker');
+const { recordAnthropic } = require('./cost-tracker');
 
 // ── PATHS ─────────────────────────────────────────────────────────────────────
 
@@ -301,6 +302,7 @@ async function main() {
     try {
       const { brief, usage } = await generateBrief(client, lead);
       const cost = calcCost(usage, config.rates);
+      recordAnthropic(cost, 'diagnoser', usage);
 
       // Pick and fill a template for the outreach message
       const channel  = lead.channel;

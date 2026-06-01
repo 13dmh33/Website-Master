@@ -19,7 +19,8 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.loc
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
-const { writeLog } = require('./logger');
+const { writeLog }           = require('./logger');
+const { recordOutscraper }   = require('./cost-tracker');
 
 // ── CONFIG ────────────────────────────────────────────────────────────────────
 
@@ -118,6 +119,7 @@ function updateSpend(config, resultsCount) {
   config.total_runs += 1;
   config.last_run = new Date().toISOString();
   fs.writeFileSync(CONFIG_PATH, JSON.stringify(config, null, 2));
+  recordOutscraper(resultsCount, config.cost_per_result);
   return cost;
 }
 

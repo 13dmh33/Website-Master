@@ -25,7 +25,8 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.loc
 const fs        = require('fs');
 const path      = require('path');
 const Anthropic = require('@anthropic-ai/sdk');
-const { writeLog } = require('./logger');
+const { writeLog }        = require('./logger');
+const { recordAnthropic } = require('./cost-tracker');
 
 // ── PATHS ─────────────────────────────────────────────────────────────────────
 
@@ -412,6 +413,7 @@ async function main() {
       try {
         const { message: newMsg, usage } = await rewrite(client, message, brief, evals.failures, config);
         const cost = calcCost(usage, config.rates);
+        recordAnthropic(cost, 'checker', usage);
         runCost += cost;
         totalCost += cost;
         config.spent_this_month = parseFloat((config.spent_this_month + cost).toFixed(6));

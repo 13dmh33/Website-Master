@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 'use strict';
 
-const fs       = require('fs');
-const path     = require('path');
-const https    = require('https');
+const fs         = require('fs');
+const path       = require('path');
+const https      = require('https');
+const nodemailer = require('nodemailer');
 const { recordReply } = require('./template-picker');
 
 require('dotenv').config({ path: path.resolve(__dirname, '../.env.local') });
@@ -90,10 +91,9 @@ function nextSlots() {
 // ── BUILD DRAFT RESPONSE ──────────────────────────────────────────────────────
 
 function buildDraft(record, slots, calLink) {
-  const firstName = (record.business_name || '').split(/[\s,]/)[0];
-  const link      = calLink ? `\n\nOr grab any time here: ${calLink}` : '';
-  const options   = slots.slice(0, 4).map((s, i) => `${i + 1}. ${s}`).join('\n');
-  return `Hey ${firstName}! Great to hear from you. I'd love to show you the full mockup on a quick call — should only take 15 minutes.\n\nHere are a few times over the next two weeks:\n${options}\n\nJust reply with a number or let me know what works better.${link}`;
+  const link    = calLink ? `\n\nOr grab any time here: ${calLink}` : '';
+  const options = slots.slice(0, 4).map((s, i) => `${i + 1}. ${s}`).join('\n');
+  return `Hey! Great to hear from you. I'd love to show you the full mockup on a quick call — should only take 15 minutes.\n\nHere are a few times over the next two weeks:\n${options}\n\nJust reply with a number or let me know what works better.${link}`;
 }
 
 // ── AUTO-SEND LOG ─────────────────────────────────────────────────────────────
@@ -164,67 +164,44 @@ function sendSms(phone, message) {
   });
 }
 
-function sendEmail(toEmail, businessName, message) {
-  const apiKey    = process.env.RESEND_API_KEY;
-  const fromEmail = process.env.FROM_EMAIL || 'outreach@yourdomain.com';
-  const fromName  = process.env.FROM_NAME  || 'Your Name';
-  if (!apiKey) throw new Error('RESEND_API_KEY not set in .env.local');
+async function sendEmail(toEmail, businessName, message) {
+  const user = process.env.ZOHO_EMAIL;
+  const pass = process.env.ZOHO_APP_PASSWORD;
+  if (!user || !pass) throw new Error('ZOHO_EMAIL and ZOHO_APP_PASSWORD must be set in .env.local');
 
-  const payload = JSON.stringify({
-    from:    `${fromName} <${fromEmail}>`,
-    to:      [toEmail],
+  const transport = nodemailer.createTransport({
+    host: 'smtp.zoho.com', port: 465, secure: true,
+    auth: { user, pass }
+  });
+
+  const info = await transport.sendMail({
+    from:    `"Dave" <${user}>`,
+    to:      toEmail,
     subject: `Re: ${businessName}'s website`,
     text:    message
   });
 
-  const options = {
-    hostname: 'api.resend.com',
-    path:     '/emails',
-    method:   'POST',
-    headers:  {
-      'Authorization':  `Bearer ${apiKey}`,
-      'Content-Type':   'application/json',
-      'Content-Length': Buffer.byteLength(payload)
-    }
-  };
-
-  const attempt = () => new Promise((resolve, reject) => {
-    const req = https.request(options, res => {
-      let data = '';
-      res.on('data', c => { data += c; });
-      res.on('end', () => {
-        try {
-          const parsed = JSON.parse(data);
-          res.statusCode >= 200 && res.statusCode < 300
-            ? resolve({ id: parsed.id })
-            : (() => { const e = new Error(`Resend ${res.statusCode}: ${data}`); e.statusCode = res.statusCode; reject(e); })();
-        } catch (e) { reject(e); }
-      });
-    });
-    req.on('error', reject);
-    req.write(payload);
-    req.end();
-  });
-
-  return attempt().catch(async err => {
-    if (err.statusCode === 429 || err.statusCode >= 500) { await delay(2000); return attempt(); }
-    throw err;
-  });
+  return { id: info.messageId };
 }
 
 // ── SEND DISPATCH ─────────────────────────────────────────────────────────────
 
 async function sendReply(record, message) {
-  const channel = record.channel;
-  if (channel === 'sms' && record.phone) {
+  // Prefer the channel the lead replied on; fall back to whichever channel was sent
+  const replyChannel = record.reply_channel
+    || (record.sms_sent_at && record.email_sent_at ? 'email' : null)
+    || (record.email_sent_at ? 'email' : null)
+    || (record.sms_sent_at  ? 'sms'   : null);
+
+  if (replyChannel === 'sms' && record.phone) {
     const result = await sendSms(record.phone, message);
     return { method: 'sms', ref: result.sid };
   }
-  if (channel === 'email' && record.email) {
+  if (replyChannel === 'email' && record.email) {
     const result = await sendEmail(record.email, record.business_name, message);
     return { method: 'email', ref: result.id };
   }
-  // Manual fallback for ig_dm, linkedin, or missing contact
+  // Manual fallback for ig_dm, linkedin, or missing contact info
   const draftPath = path.join(MESSAGES_DIR, `${record.lead_id}-reply-draft.txt`);
   fs.writeFileSync(draftPath, message);
   return { method: 'manual', ref: draftPath };
@@ -246,8 +223,7 @@ async function checkNoraPipeline() {
     try { record = JSON.parse(fs.readFileSync(path.join(MESSAGES_DIR, `${entry.lead_id}-sent.json`), 'utf8')); }
     catch { console.warn(`  Could not load record for ${entry.lead_id} — skipping`); continue; }
 
-    const firstName = (record.business_name || '').split(/[\s,]/)[0];
-    const pitch = `Hey ${firstName}! It's been a week since your site went live — hope it's already bringing in calls.\n\nQuick thought: we offer Nora, a 24/7 AI phone agent that answers calls, books jobs, and follows up with leads automatically. Our clients bundle it with hosting for $350/mo.\n\nWorth a 10-min chat to see if it fits?`;
+    const pitch = `Hey! It's been a week since your site went live — hope it's already bringing in calls.\n\nQuick thought: we offer Nora, a 24/7 AI phone agent that answers calls, books jobs, and follows up with leads automatically. Our clients bundle it with hosting for $350/mo.\n\nWorth a 10-min chat to see if it fits?`;
 
     console.log('\n' + '═'.repeat(56));
     console.log('NORA UPSELL PITCH');

@@ -5,7 +5,7 @@
 node_modules/
 
 # Runtime data
-leads/*.json
+# leads/*.json intentionally tracked so Diagnoser can run from container
 messages/*.json
 messages/*.txt
 mockups/*.txt

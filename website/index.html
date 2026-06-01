@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trevo Advisors — Websites & AI Phone Agents for Home Service Contractors</title>
+  <meta name="description" content="We build fast websites and 24/7 AI phone agents for local home service contractors. Live in 3–5 days. No tech skills required. $400 flat.">
+  <meta property="og:title" content="Trevo Advisors — Stop Losing Jobs After Hours">
+  <meta property="og:description" content="Websites and AI phone agents for local contractors. Get found online, answer every call, book more jobs — automatically.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ── TOKENS ─────────────────────────────────────────────────── */
+    :root {
+      --blue:       #2E5B8A;
+      --blue-dk:    #1e3d5c;
+      --blue-lt:    #4a7ab5;
+      --green:      #2E7D5B;
+      --green-dk:   #1f5940;
+      --cream:      #F8F7F3;
+      --amber:      #C8720E;
+      --amber-dk:   #a55e0a;
+      --gray:       #6b7280;
+      --gray-lt:    #f3f4f6;
+      --text:       #111827;
+      --white:      #ffffff;
+      --radius:     12px;
+      --shadow:     0 2px 12px rgba(0,0,0,0.08);
+    }
+
+    /* ── RESET ──────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; }
+
+    /* ── LAYOUT ─────────────────────────────────────────────────── */
+    .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+    section { padding: 88px 0; }
+
+    /* ── TYPOGRAPHY ─────────────────────────────────────────────── */
+    h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); line-height: 1.1; font-weight: 800; }
+    h2 { font-size: clamp(1.8rem, 3.5vw, 2.5rem); line-height: 1.2; font-weight: 700; }
+    h3 { font-size: 1.15rem; font-weight: 700; line-height: 1.3; }
+    p  { color: var(--gray); }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--green);
+      margin-bottom: 14px;
+    }
+
+    /* ── BUTTONS ────────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 28px; border-radius: 8px;
+      font-size: 1rem; font-weight: 600; font-family: inherit;
+      text-decoration: none; cursor: pointer;
+      border: 2px solid transparent;
+      transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+      white-space: nowrap;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
+    .btn-primary  { background: var(--blue);  color: var(--white); }
+    .btn-primary:hover  { background: var(--blue-dk); }
+    .btn-amber    { background: var(--amber); color: var(--white); }
+    .btn-amber:hover    { background: var(--amber-dk); }
+    .btn-outline  { background: transparent; color: var(--blue); border-color: var(--blue); }
+    .btn-outline:hover  { background: var(--blue); color: var(--white); }
+    .btn-ghost    { background: rgba(255,255,255,0.15); color: var(--white); border-color: rgba(255,255,255,0.3); }
+    .btn-ghost:hover    { background: rgba(255,255,255,0.25); }
+    .btn-white    { background: var(--white); color: var(--blue); }
+    .btn-white:hover    { background: var(--cream); }
+    .btn-lg { padding: 18px 36px; font-size: 1.05rem; border-radius: 10px; }
+
+    /* ── NAV ─────────────────────────────────────────────────────── */
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      position: sticky; top: 0; z-index: 200;
+    }
+    .nav-inner {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      max-width: 1080px; margin: 0 auto;
+    }
+    .logo {
+      font-weight: 800; font-size: 1.25rem;
+      color: var(--blue); text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+    .logo .dot { color: var(--amber); }
+    .nav-links {
+      display: flex; align-items: center;
+      gap: 36px; list-style: none;
+    }
+    .nav-links a {
+      text-decoration: none; font-weight: 500; font-size: 0.92rem;
+      color: var(--gray); transition: color 0.15s;
+    }
+    .nav-links a:hover { color: var(--blue); }
+    .nav-actions { display: flex; gap: 10px; align-items: center; }
+    @media (max-width: 780px) { .nav-links { display: none; } }
+
+    /* ── HERO ─────────────────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(140deg, var(--blue) 0%, var(--blue-dk) 100%);
+      color: var(--white);
+      padding: 96px 0 112px;
+      position: relative; overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; right: -120px; top: -120px;
+      width: 560px; height: 560px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 50%; pointer-events: none;
+    }
+    .hero-inner { max-width: 680px; position: relative; z-index: 1; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.88);
+      padding: 6px 16px; border-radius: 100px;
+      font-size: 0.8rem; font-weight: 600; letter-spacing: 0.5px;
+      text-transform: uppercase; margin-bottom: 28px;
+    }
+    .hero h1 { color: var(--white); margin-bottom: 22px; }
+    .hero h1 em { color: var(--amber); font-style: normal; }
+    .hero-sub {
+      font-size: 1.2rem; color: rgba(255,255,255,0.78);
+      line-height: 1.7; max-width: 560px; margin-bottom: 44px;
+    }
+    .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    /* ── STATS ───────────────────────────────────────────────────── */
+    .stats-bar {
+      background: var(--white);
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      padding: 40px 0;
+    }
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-size: 2.4rem; font-weight: 800;
+      color: var(--blue); line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-desc { font-size: 0.85rem; color: var(--gray); max-width: 200px; margin: 0 auto; }
+    @media (max-width: 600px) {
+      .stats-row { grid-template-columns: 1fr; gap: 32px; }
+    }
+
+    /* ── PROBLEM ─────────────────────────────────────────────────── */
+    .problem { background: var(--cream); }
+    .section-header { max-width: 580px; margin-bottom: 52px; }
+    .section-header h2 { margin-bottom: 14px; }
+    .section-header p { font-size: 1.1rem; line-height: 1.7; }
+    .cards-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 32px;
+      border: 1px solid rgba(0,0,0,0.07);
+      box-shadow: var(--shadow);
+    }
+    .card-icon {
+      width: 52px; height: 52px; border-radius: 10px;
+      background: rgba(46,91,138,0.08);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; margin-bottom: 18px;
+    }
+    .card h3 { color: var(--text); margin-bottom: 10px; }
+    @media (max-width: 800px) { .cards-3 { grid-template-columns: 1fr; } }
+
+    /* ── SERVICES ────────────────────────────────────────────────── */
+    .services { background: var(--white); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+    }
+    .service-card {
+      border-radius: 16px;
+      padding: 40px;
+      border: 1px solid rgba(0,0,0,0.09);
+    }
+    .service-card.dark {
+      background: linear-gradient(140deg, var(--blue) 0%, var(--blue-dk) 100%);
+      border-color: transparent;
+    }
+    .service-card.dark h3,
+    .service-card.dark .check-item { color: rgba(255,255,255,0.92); }
+    .service-card.dark p { color: rgba(255,255,255,0.68); }
+    .service-card.dark .price { color: var(--white); }
+    .service-chip {
+      display: inline-block;
+      padding: 4px 12px; border-radius: 100px;
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.8px; text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .chip-blue  { background: rgba(46,91,138,0.1);  color: var(--blue); }
+    .chip-white { background: rgba(255,255,255,0.18); color: rgba(255,255,255,0.88); }
+    .service-card h3 { font-size: 1.4rem; color: var(--text); margin-bottom: 10px; }
+    .price {
+      font-size: 2.2rem; font-weight: 800;
+      color: var(--blue); line-height: 1;
+      margin: 18px 0 4px;
+    }
+    .price-note { font-size: 0.85rem; color: var(--gray); margin-bottom: 26px; }
+    .check-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .check-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 0.95rem; color: var(--gray);
+    }
+    .check-item::before {
+      content: '✓';
+      font-weight: 700; color: var(--green);
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .service-card.dark .check-item::before { color: rgba(255,255,255,0.55); }
+    .card-cta { margin-top: 30px; }
+    @media (max-width: 760px) { .services-grid { grid-template-columns: 1fr; } }
+
+    /* ── BUNDLE BANNER ───────────────────────────────────────────── */
+    .bundle-banner {
+      background: var(--green);
+      border-radius: 16px;
+      padding: 44px 48px;
+      margin-top: 28px;
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 32px;
+      flex-wrap: wrap;
+    }
+    .bundle-copy h3 { font-size: 1.4rem; color: var(--white); margin-bottom: 8px; }
+    .bundle-copy p  { color: rgba(255,255,255,0.78); max-width: 460px; }
+    .bundle-perks   { margin-top: 14px; display: flex; flex-direction: column; gap: 6px; }
+    .bundle-perk {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.9rem; color: rgba(255,255,255,0.82);
+    }
+    .bundle-perk::before { content: '✓'; font-weight: 700; color: rgba(255,255,255,0.55); }
+    .bundle-right { text-align: right; flex-shrink: 0; }
+    .bundle-price { font-size: 2.8rem; font-weight: 800; color: var(--white); line-height: 1; }
+    .bundle-price-note { font-size: 0.85rem; color: rgba(255,255,255,0.65); margin-bottom: 20px; }
+    @media (max-width: 720px) { .bundle-right { text-align: left; } .bundle-banner { padding: 36px 28px; } }
+
+    /* ── PROCESS ─────────────────────────────────────────────────── */
+    .process { background: var(--cream); }
+    .steps-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-top: 52px;
+      position: relative;
+    }
+    .steps-row::before {
+      content: '';
+      position: absolute;
+      top: 24px; left: 60px; right: 60px; height: 2px;
+      background: linear-gradient(90deg, var(--blue-lt), var(--blue-lt));
+      opacity: 0.2;
+    }
+    .step { position: relative; }
+    .step-num {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: var(--blue); color: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 1rem;
+      margin-bottom: 18px;
+      position: relative; z-index: 1;
+    }
+    .step h3 { color: var(--text); margin-bottom: 8px; font-size: 1rem; }
+    @media (max-width: 860px) {
+      .steps-row { grid-template-columns: repeat(2, 1fr); }
+      .steps-row::before { display: none; }
+    }
+    @media (max-width: 480px) { .steps-row { grid-template-columns: 1fr; } }
+
+    /* ── ABOUT ───────────────────────────────────────────────────── */
+    .about { background: var(--white); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 64px; align-items: center;
+    }
+    .about-visual {
+      width: 100%; aspect-ratio: 1;
+      border-radius: 20px;
+      background: linear-gradient(140deg, var(--blue) 0%, var(--blue-dk) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem;
+    }
+    .about-text h2 { margin-bottom: 20px; }
+    .about-text p  { margin-bottom: 16px; font-size: 1.02rem; line-height: 1.75; }
+    @media (max-width: 780px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .about-visual { max-width: 200px; }
+    }
+
+    /* ── FAQ ─────────────────────────────────────────────────────── */
+    .faq { background: var(--cream); }
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-top: 48px;
+    }
+    .faq-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 28px 30px;
+      border: 1px solid rgba(0,0,0,0.07);
+    }
+    .faq-card h3 { font-size: 0.98rem; color: var(--text); margin-bottom: 8px; }
+    .faq-card p  { font-size: 0.92rem; line-height: 1.65; }
+    @media (max-width: 700px) { .faq-grid { grid-template-columns: 1fr; } }
+
+    /* ── FINAL CTA ───────────────────────────────────────────────── */
+    .final-cta {
+      background: linear-gradient(140deg, var(--blue) 0%, var(--blue-dk) 100%);
+      padding: 104px 0;
+      text-align: center;
+    }
+    .final-cta h2 { color: var(--white); margin-bottom: 18px; max-width: 680px; margin-left: auto; margin-right: auto; }
+    .final-cta p  { color: rgba(255,255,255,0.72); font-size: 1.15rem; margin-bottom: 44px; }
+    .cta-row { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
+
+    /* ── FOOTER ──────────────────────────────────────────────────── */
+    footer {
+      background: var(--text);
+      padding: 40px 0;
+      color: rgba(255,255,255,0.5);
+    }
+    .footer-row {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer-logo { color: var(--white); font-weight: 800; font-size: 1.1rem; text-decoration: none; }
+    .footer-links { display: flex; gap: 28px; }
+    .footer-links a {
+      color: rgba(255,255,255,0.45);
+      text-decoration: none; font-size: 0.88rem;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: rgba(255,255,255,0.8); }
+    .footer-copy { font-size: 0.82rem; }
+
+    /* ── UTILITIES ───────────────────────────────────────────────── */
+    .text-center { text-align: center; }
+    .mt-8  { margin-top: 8px;  }
+    .mt-16 { margin-top: 16px; }
+    .mt-24 { margin-top: 24px; }
+    .mt-32 { margin-top: 32px; }
+    .mb-0  { margin-bottom: 0; }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ──────────────────────────────────────────────────────── -->
+  <nav aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="#" class="logo">Trevo<span class="dot">.</span></a>
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#process">How It Works</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="mailto:dave@trevoadvisors.com"
+           class="btn btn-outline"
+           style="padding:10px 18px;font-size:.88rem;">Email Dave</a>
+        <a href="https://cal.com/david-hettinger-g8qbdk/30min"
+           class="btn btn-primary"
+           style="padding:10px 20px;font-size:.88rem;"
+           target="_blank" rel="noopener">Book a Call</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── HERO ─────────────────────────────────────────────────────── -->
+  <header class="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-badge">AI Agents Built for the Trades</div>
+        <h1>Stop Losing Jobs<br><em>After Hours.</em></h1>
+        <p class="hero-sub">We build websites and AI phone agents for local home service contractors. Get found online, answer every call, and book more jobs — automatically.</p>
+        <div class="hero-ctas">
+          <a href="https://cal.com/david-hettinger-g8qbdk/30min"
+             class="btn btn-amber btn-lg"
+             target="_blank" rel="noopener">Book a Free 15-Min Call →</a>
+          <a href="#pricing" class="btn btn-ghost btn-lg">See Pricing</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── STATS ─────────────────────────────────────────────────────── -->
+  <div class="stats-bar">
+    <div class="container">
+      <div class="stats-row">
+        <div class="stat">
+          <div class="stat-num">30–40%</div>
+          <p class="stat-desc">of after-hours leads go unanswered when there's no website or live answer</p>
+        </div>
+        <div class="stat">
+          <div class="stat-num">67%</div>
+          <p class="stat-desc">of missed callers don't leave a voicemail — they just call the next contractor</p>
+        </div>
+        <div class="stat">
+          <div class="stat-num">3–5 days</div>
+          <p class="stat-desc">from your first call to a live, mobile-ready website for your business</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── PROBLEM ───────────────────────────────────────────────────── -->
+  <section class="problem">
+    <div class="container">
+      <div class="section-header">
+        <div class="eyebrow">The Problem</div>
+        <h2>Your reputation is solid.<br>Your online presence isn't.</h2>
+        <p>Great reviews don't matter if nobody can find you. And when they do find you, they need to reach you — day or night.</p>
+      </div>
+      <div class="cards-3">
+        <div class="card">
+          <div class="card-icon">🔍</div>
+          <h3>You're invisible online</h3>
+          <p>When a homeowner searches "plumber near me" at 9pm, they book whoever has a website. No site means you don't get the call — no matter how good your work is.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📵</div>
+          <h3>Every missed call is a lost job</h3>
+          <p>You can't answer the phone when you're on a job site. That missed call is a $500–$2,000 project walking straight to a competitor who picked up.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📈</div>
+          <h3>Your competitors are catching up</h3>
+          <p>They have websites, booking forms, and 24/7 coverage. Every week you're not online is another week they're getting jobs that should be yours.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SERVICES ──────────────────────────────────────────────────── -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-header">
+        <div class="eyebrow">What We Build</div>
+        <h2>Two tools. One goal:<br>more booked jobs.</h2>
+        <p>A fast website gets you found. Nora makes sure every call that finds you gets answered — and turned into a booked appointment.</p>
+      </div>
+      <div class="services-grid">
+
+        <div class="service-card">
+          <div class="service-chip chip-blue">Website</div>
+          <h3>Your digital storefront</h3>
+          <p>Clean, fast, and mobile-ready. Built around your trade, your city, and your services. Live in 3–5 business days — we handle all the writing and design.</p>
+          <div class="price">$400</div>
+          <p class="price-note mb-0">flat build fee · then $97/month for hosting &amp; maintenance</p>
+          <ul class="check-list mt-24">
+            <li class="check-item">Mobile-optimized, Google-friendly</li>
+            <li class="check-item">Contact form &amp; booking link included</li>
+            <li class="check-item">Your services, reviews, and photos</li>
+            <li class="check-item">Live in 3–5 business days</li>
+            <li class="check-item">Ongoing maintenance — no extra charge</li>
+          </ul>
+          <div class="card-cta">
+            <a href="https://cal.com/david-hettinger-g8qbdk/30min"
+               class="btn btn-primary"
+               target="_blank" rel="noopener">Get Started →</a>
+          </div>
+        </div>
+
+        <div class="service-card dark">
+          <div class="service-chip chip-white">Nora Voice Agent</div>
+          <h3>24/7 AI phone agent</h3>
+          <p>Nora answers your calls, qualifies the job, and books the appointment — while you're elbow-deep in work. No hiring. No training. No breaks.</p>
+          <div class="price">$399<span style="font-size:1.2rem;font-weight:600">/mo</span></div>
+          <p class="price-note mb-0">standalone · no setup fee · cancel anytime</p>
+          <ul class="check-list mt-24">
+            <li class="check-item">Answers every call, every hour</li>
+            <li class="check-item">Qualifies job type, location &amp; urgency</li>
+            <li class="check-item">Books on your calendar automatically</li>
+            <li class="check-item">Follows up with missed callers</li>
+            <li class="check-item">Trained on your services &amp; pricing</li>
+          </ul>
+          <div class="card-cta">
+            <a href="https://cal.com/david-hettinger-g8qbdk/30min"
+               class="btn btn-white"
+               target="_blank" rel="noopener">Book a Demo →</a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bundle -->
+      <div class="bundle-banner" id="pricing">
+        <div class="bundle-copy">
+          <h3>The Bundle — Most Popular</h3>
+          <p>Website hosting and Nora together. One vendor, one invoice, everything working in sync from day one.</p>
+          <div class="bundle-perks">
+            <span class="bundle-perk">Website hosting &amp; maintenance included</span>
+            <span class="bundle-perk">Full Nora voice agent included</span>
+            <span class="bundle-perk">Save $146/month vs buying separately</span>
+          </div>
+        </div>
+        <div class="bundle-right">
+          <div class="bundle-price">$350<span style="font-size:1.3rem;font-weight:600">/mo</span></div>
+          <p class="bundle-price-note">after your $400 one-time website build</p>
+          <a href="https://cal.com/david-hettinger-g8qbdk/30min"
+             class="btn btn-white"
+             target="_blank" rel="noopener">Get the Bundle →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── PROCESS ───────────────────────────────────────────────────── -->
+  <section class="process" id="process">
+    <div class="container">
+      <div class="section-header">
+        <div class="eyebrow">How It Works</div>
+        <h2>From zero to live<br>in under a week.</h2>
+        <p>No tech knowledge required. We handle everything — you just approve and watch the leads come in.</p>
+      </div>
+      <div class="steps-row">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h3>Free 15-min call</h3>
+          <p>We learn your business, your trade, and what's been holding back your online presence. No pitch — just a conversation.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h3>We build your site</h3>
+          <p>We write the copy, design the layout, and build a fast, mobile-ready site specific to your trade and city.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h3>You approve</h3>
+          <p>We show you the mockup, make any changes, and go live as soon as you're happy. Usually takes one round.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <h3>Leads start coming in</h3>
+          <p>Your site goes live, Nora starts answering calls, and you start showing up when customers search for your trade.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT ─────────────────────────────────────────────────────── -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-visual" aria-hidden="true">👤</div>
+        <div class="about-text">
+          <div class="eyebrow">About</div>
+          <h2>Hey, I'm Dave.</h2>
+          <p>I built Trevo Advisors because I kept seeing the same thing: great contractors with strong reputations losing jobs to guys with worse reviews — just because they had a website and an answering service.</p>
+          <p>Trevo is a one-person shop. When you work with us, you work with me directly. I build your site, set up Nora, and stay available for as long as you need support.</p>
+          <p>I specialize in the trades — plumbers, electricians, HVAC techs, roofers, handymen. I know what homeowners search for and what it takes to show up at the top when they're ready to hire.</p>
+          <a href="https://cal.com/david-hettinger-g8qbdk/30min"
+             class="btn btn-primary mt-24"
+             target="_blank" rel="noopener">Book a Call with Dave →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ ───────────────────────────────────────────────────────── -->
+  <section class="faq" id="faq">
+    <div class="container">
+      <div class="section-header text-center" style="max-width:100%">
+        <div class="eyebrow">FAQ</div>
+        <h2>Common questions</h2>
+      </div>
+      <div class="faq-grid">
+        <div class="faq-card">
+          <h3>Do I need to write anything or provide content?</h3>
+          <p>Nope. We write the copy based on a short conversation with you. You review it and say yes (or ask for changes) — that's it.</p>
+        </div>
+        <div class="faq-card">
+          <h3>What if I already have a website?</h3>
+          <p>We'll rebuild it from scratch for $400 flat. Most existing contractor sites load slow and aren't mobile-optimized — we fix all of that.</p>
+        </div>
+        <div class="faq-card">
+          <h3>Is there a long-term contract?</h3>
+          <p>No. Hosting and Nora are month-to-month. Cancel any time with 30 days notice. No penalties, no games.</p>
+        </div>
+        <div class="faq-card">
+          <h3>How fast can I be live?</h3>
+          <p>Most sites go live within 3–5 business days of your first call. Nora activates the same day your site launches.</p>
+        </div>
+        <div class="faq-card">
+          <h3>What trades do you work with?</h3>
+          <p>Plumbers, HVAC techs, electricians, roofers, handymen, and most other home services. If you work on houses, we can help.</p>
+        </div>
+        <div class="faq-card">
+          <h3>How does Nora know what to say?</h3>
+          <p>We train Nora on your services, pricing, and service area before she goes live. She represents your business professionally on every call.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FINAL CTA ──────────────────────────────────────────────────── -->
+  <section class="final-cta">
+    <div class="container">
+      <h2>Ready to stop losing jobs to guys<br>with worse reviews than yours?</h2>
+      <p>Book a free 15-minute call. No pitch — just an honest look at whether this is a fit for your business.</p>
+      <div class="cta-row">
+        <a href="https://cal.com/david-hettinger-g8qbdk/30min"
+           class="btn btn-amber btn-lg"
+           target="_blank" rel="noopener">Book a Free Call →</a>
+        <a href="mailto:dave@trevoadvisors.com"
+           class="btn btn-white btn-lg">Email Dave</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────────────── -->
+  <footer>
+    <div class="container">
+      <div class="footer-row">
+        <a href="#" class="footer-logo">Trevo Advisors</a>
+        <div class="footer-links">
+          <a href="mailto:dave@trevoadvisors.com">dave@trevoadvisors.com</a>
+          <a href="tel:+17209027555">(720) 902-7555</a>
+          <a href="https://trevoadvisors.com">trevoadvisors.com</a>
+        </div>
+        <span class="footer-copy">© 2026 Trevo Advisors</span>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

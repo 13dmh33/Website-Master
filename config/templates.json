@@ -53,7 +53,7 @@
       "tag": "Best performer",
       "type": "initial",
       "requires": ["review_count"],
-      "body": "Hey [Business Name] — [X] five-star reviews on Google is legit. But when someone in [City] searches \"[trade] near me\" tonight, they're booking whoever has a website. You're losing jobs to guys with half your reputation. Worth a quick fix? — Dave, Trevo Advisors"
+      "body": "Hey — [X] stars on Google is legit. But in [City], someone's booking \"[trade] near me\" with a website tonight. You're losing those jobs. — Dave, Trevo"
     },
     {
       "id": "s2",
@@ -61,7 +61,7 @@
       "tag": "Loss aversion",
       "type": "initial",
       "requires": [],
-      "body": "Hey — average [trade] job is $400–$800. No website means you're missing 3–5 of those a week to competitors who do have one. I build them for $297 flat. 15-min call? — Dave, Trevo Advisors"
+      "body": "Hey — no website means missing 3–5 [trade] jobs a week to competitors who have one. I build them for $297 flat. 15-min call? — Dave, Trevo Advisors"
     },
     {
       "id": "s3",
@@ -69,7 +69,7 @@
       "tag": "Low friction",
       "type": "initial",
       "requires": [],
-      "body": "Hey — I build websites for local [trade] contractors. Clean, fast, live in under a week. $297 to start. Do you have one yet, or is that something you've been putting off? — Dave, Trevo Advisors"
+      "body": "Hey — I build websites for local [trade] contractors. Clean, fast, live in a week. $297 flat. Do you have one, or been putting it off? — Dave, Trevo Advisors"
     },
     {
       "id": "s4",
@@ -77,7 +77,7 @@
       "tag": "Competitive",
       "type": "initial",
       "requires": ["competitor_name"],
-      "body": "Hey — just searched \"[trade] in [City].\" [competitor_name] showed up first with a full site and booking form. [Business Name] didn't show up at all without knowing your name. I fix that for $297. Worth a call? — Dave, Trevo Advisors"
+      "body": "Hey — searched \"[trade] in [City].\" [competitor_name] has a website and booking form. [Business Name] doesn't show up. I fix that for $297. Call? — Dave, Trevo"
     },
     {
       "id": "s5",
@@ -85,7 +85,15 @@
       "tag": "Second touch",
       "type": "followup",
       "requires": [],
-      "body": "Hey — sent you a message last week about [Business Name]'s website. Still worth 10 minutes if the timing's better. No pressure either way. — Dave, Trevo Advisors"
+      "body": "Hey — reached out last week about [Business Name]'s website. Still worth 10 min if timing's better. No pressure. — Dave, Trevo Advisors"
+    },
+    {
+      "id": "s6",
+      "name": "The catch-all",
+      "tag": "No data required",
+      "type": "initial",
+      "requires": [],
+      "body": "Hey — I build websites for home service contractors. Clean, mobile-ready, live in a week. $297 flat. Worth a quick call? — Dave, Trevo Advisors"
     }
   ]
 }

@@ -1,179 +1,176 @@
-# Website Master — Maps Agency
+# Trevo Advisors — AI Outreach Pipeline
 
 Solo AI agency system for selling websites + Nora voice agent bundles to home service contractors.
+
+**Owner:** Dave Hettinger — dave@trevoadvisors.com
+**Branch:** `claude/kind-hypatia-3YzM0`
+
+---
 
 ## Revenue Model
 
 - Website: $400 one-time
-- Nora voice agent: $300–500/mo
-- Bundle: $350/mo (website hosting + Nora)
-- Target: 47 clients/mo = ~$18K/mo
+- Nora voice agent: $399/mo standalone / $350/mo bundle
+- Target: 47 clients/mo = ~$18K/mo recurring
+
+---
+
+## Quick Start
+
+```bash
+npm install
+cp .env.local.example .env.local   # fill in API keys
+```
+
+See daily workflow below.
 
 ---
 
 ## Project Status
 
-### Done
-- [x] Full folder structure (`leads/`, `queue/`, `mockups/`, `messages/`, `logs/`)
-- [x] `CLAUDE.md` — orchestrator config for Claude Code
-- [x] `state.json` — shared lead state schema
-- [x] All 7 agent system prompt files in `/agents/`
-- [x] `scripts/scout.js` — Outscraper API, $10/mo cap, auto_run toggle
-- [x] `scripts/diagnoser.js` — Claude Haiku, prompt caching, daily limit + $5/mo cap
-- [x] `scripts/checker.js` — 5 evals (personalization, AI markers, buzzwords, structure, spammy openers) + Claude rewrite loop, $3/mo cap
+### Done ✅
+- [x] Full folder structure + state machine
+- [x] `scripts/scout.js` — Outscraper API, $10/mo cap *(run on Mac)*
+- [x] `scripts/diagnoser.js` — Claude Haiku, prompt caching, $5/mo cap, template-based briefs
+- [x] `scripts/checker.js` — 5 evals + Claude rewrite loop, template fast-path, $3/mo cap
+- [x] `scripts/pitcher.js` — Zoho SMTP (email) + Twilio SMS, staggered sends, --dry-run *(run on Mac)*
+- [x] `scripts/builder.js` — Lovable prompt generator, 5/day
+- [x] `scripts/filmer.js` — Loom instructions + ScreenshotOne, 5/day
+- [x] `scripts/mobile.js` — auto-send booking reply, 4 slots/2 weeks, Nora upsell
+- [x] `scripts/reporter.js` — morning email report (pipeline, costs, template stats) *(run on Mac)*
+- [x] `scripts/cost-tracker.js` — central cost log across all agents → `config/cost-log.json`
+- [x] `scripts/template-picker.js` — 5 SMS + 5 email templates, epsilon-greedy A/B rotation
+- [x] `config/templates.json` — pre-approved template vault (s1–s5, e1–e5)
+- [x] `config/template-stats.json` — reply rate tracking per template
+- [x] **First real send** — 18/19 Denver electricians SMS sent 2026-06-01 via Twilio
 
-### Done (continued)
-- [x] `scripts/pitcher.js` — email (Resend) + SMS (Twilio), manual drafts for ig_dm/linkedin, --dry-run flag
-
-### Done (continued)
-- [x] `scripts/builder.js` — Lovable prompt generator (5/day), `--submit` to record URL
-- [x] `scripts/filmer.js` — Loom instructions + optional ScreenshotOne capture, `--submit` to record URL
-
-### Done (continued)
-- [x] `scripts/mobile.js` — positive reply handler, auto-sends booking with 4 slots across next 2 weeks, Nora upsell scheduler
-- [x] `run-daily.sh` — one-command daily pipeline runner with manual-step pauses
-
-### Done (continued)
-- [x] **First dry run** — full pipeline tested with 5 mock Phoenix plumber leads. All 5 briefs generated, all 5 checker-approved (1 rewrite), all 5 Lovable prompts built, Pitcher dry-run previewed. Total cost: $0.008.
-- [x] **Channel fix** — Diagnoser no longer overrides Scout's channel assignment. Scout is now authoritative.
-- [x] **Outscraper polling fix** — Scout was polling wrong URL (`api.app.outscraper.com/tasks/`). Now correctly uses `results_location` from initial response (`api.outscraper.cloud/requests/`).
-- [x] **Scout runs locally** — Outscraper API is blocked from remote container (cloud IP restriction). Scout must be run on local machine; all other scripts run fine from container.
-- [x] **Lead filter expanded** — max reviews raised from 100 → 300 to capture more qualifying leads in larger cities.
-- [x] **First real Scout run** — Denver plumbers successfully pulled from Outscraper on local machine.
-
-### Next Actions (in order)
-1. [ ] **Run Scout locally** — `node scripts/scout.js --city "Denver, CO" --trade electrician --force` (or roofer — SMS-first for first live send)
-2. [ ] **Push leads** — `git add leads/ state.json && git commit -m "Scout run" && git push origin claude/kind-hypatia-3YzM0`
-3. [ ] **Run full pipeline from container** — Diagnoser → Checker → Builder → Filmer → Pitcher dry-run
-4. [ ] **First live SMS send** — Twilio configured, electricians/roofers ready to go
-5. [ ] **Set up Resend + verify trevoadvisors.com** — needed for email channel (plumbers/HVAC)
-6. [ ] **Set up Cal.com link** — add `CALCOM_LINK` to `.env.local` for Mobile booking messages (optional)
-7. [ ] **Reply detection** — manual for now; set `"status": "positive"` in messages JSON when a lead replies, then run `node scripts/mobile.js`
-
-### Known Issues / Notes
-- [x] **Email field missing** — fixed. Scout captures email, Diagnoser passes through.
-- [x] **Channel override** — fixed. Scout assignment locked.
-- [x] **Outscraper polling** — fixed. Uses `results_location` URL.
-- [ ] **Scout must run locally** — remote container IP blocked by Outscraper. Document in onboarding.
-- [ ] **`years_on_maps` enrichment** — always `null`. Filter unenforced.
-- [ ] **Reply detection** — manual for now. Future: Twilio/Resend webhooks.
-- [ ] **Verify `cost_per_result`** — default $0.001. Confirm in Outscraper dashboard.
+### Pending
+- [ ] GitHub PAT on Mac — needed for `git push` from terminal
+- [ ] Cron job for Reporter — `crontab -e`, run at 7am daily
+- [ ] Twilio inbound webhook — auto-detect replies instead of manual status update
+- [ ] Email leads — run Scout for plumbers/HVAC to get Zoho SMTP sends flowing
 
 ---
 
-## Repo Structure
+## Daily Workflow
 
-```
-/agents/               — System prompts for all 7 agents
-  scout.md             — ✅ Outscraper integration docs
-  diagnoser.md         — ✅ Brief + message format + script usage
-  checker.md           — ✅ 5-eval quality gate + script usage
-  builder.md           — ✅ Lovable prompt template
-  filmer.md            — ✅ Screenshot + video spec
-  pitcher.md           — ✅ Multi-channel send logic
-  mobile.md            — ✅ Reply handler + Cal.com flow
-
-/config/
-  scout-config.json    — ✅ $10/mo cap, auto_run toggle
-  diagnoser-config.json — ✅ $5/mo cap, daily limit 30
-  checker-config.json  — ✅ $3/mo cap, daily limit 30
-
-/scripts/
-  scout.js             — ✅ Live (async task polling, email field)
-  diagnoser.js         — ✅ Live (email passed through pipeline)
-  checker.js           — ✅ Live (5 evals + rewrite loop)
-  pitcher.js           — ✅ Live
-  builder.js           — ✅ Live
-  filmer.js            — ✅ Live
-  mobile.js            — ✅ Live (auto-send reply, 4 slots/2 weeks, Nora upsell)
-  logger.js            — ✅ Shared log writer (all scripts → logs/{date}.log)
-
-run-daily.sh           — ✅ One-command daily pipeline runner
-
-/leads/                — Raw leads from Scout
-/queue/                — Briefs from Diagnoser (checker_approved flag)
-/mockups/              — Lovable URLs + video links
-/messages/             — Outreach log from Pitcher
-/logs/                 — Daily run logs
-
-CLAUDE.md              — Orchestrator config
-state.json             — Shared lead state
-.env.local.example     — API key template
-package.json           — npm scripts + dependencies
-```
-
----
-
-## 7 Agents
-
-| Agent | Status | Role | Daily Output |
-|---|---|---|---|
-| Scout | ✅ Live | Finds leads on Google Maps via Outscraper | 30 leads |
-| Diagnoser | ✅ Live | Writes briefs + cold messages via Claude Haiku | 30 briefs |
-| Checker | ✅ Live | 5 evals + Claude rewrite loop | Blocks/approves |
-| Builder | ✅ Live | Generates Lovable prompts + records URLs | 5 sites |
-| Filmer | ✅ Live | Loom instructions + ScreenshotOne capture | 5 videos |
-| Pitcher | ✅ Live | Sends outreach by channel (email + SMS + manual drafts) | 30 messages |
-| Mobile | ✅ Live | Auto-sends booking reply + Nora upsell (no approval gate) | Real-time |
-
----
-
-## Pipeline (current)
-
-**Quick start (recommended):**
+### Step 1 — Scout (on Mac)
 ```bash
-npm install                   # first time only
-cp .env.local.example .env.local  # fill in your API keys
-./run-daily.sh                # runs all 6 steps in order, pauses at manual steps
-./run-daily.sh --dry-run      # preview Pitcher output without sending
+node scripts/scout.js --city "Denver, CO" --trade electrician --force
+git add leads/ state.json config/cost-log.json
+git commit -m "Scout: Denver electricians" && git push origin claude/kind-hypatia-3YzM0
 ```
 
-**Step by step (manual):**
+### Step 2 — Diagnose + Check (in container)
 ```bash
-node scripts/scout.js --city "Austin, TX" --trade plumber --force    # Step 1
-node scripts/diagnoser.js --force                                     # Step 2
-node scripts/checker.js --force                                       # Step 3
-node scripts/builder.js --force                                       # Step 4a — generate Lovable prompts
-# → paste each into lovable.dev, copy deploy URL, then:
-node scripts/builder.js --submit --lead {id} --url {url}             # Step 4b — record URL
-node scripts/filmer.js --force                                        # Step 5a — write Loom instructions
-# → record 60-sec Loom walkthrough, then:
-node scripts/filmer.js --submit --lead {id} --url loom:{url}         # Step 5b — record video URL
-node scripts/pitcher.js --dry-run --force                            # Step 6 — preview
-node scripts/pitcher.js --force                                       # Step 6 — send
+node scripts/diagnoser.js --force
+node scripts/checker.js --force
+```
 
-# When a positive reply comes in:
-# Set "status": "positive" in messages/{lead_id}-sent.json, then:
-node scripts/mobile.js                                               # Step 7 — book call
+### Step 3 — Build + Film (in container, manual steps)
+```bash
+node scripts/builder.js --force      # paste prompts into lovable.dev
+node scripts/filmer.js --force       # record Loom walkthrough
+```
+
+### Step 4 — Send (on Mac)
+```bash
+git pull origin claude/kind-hypatia-3YzM0
+node scripts/pitcher.js --dry-run --force   # preview
+node scripts/pitcher.js --force             # send
+git add state.json config/ && git commit -m "Pitcher run" && git push origin claude/kind-hypatia-3YzM0
+```
+
+### Step 5 — Morning Report (on Mac, or via cron)
+```bash
+node scripts/reporter.js              # sends to REPORT_TO_EMAIL
+node scripts/reporter.js --print      # preview only
+```
+
+### When a Reply Comes In
+```bash
+# 1. Set "status": "positive" in messages/{lead_id}-sent.json
+# 2. Run:
+node scripts/mobile.js                # auto-sends booking reply + Nora upsell
 ```
 
 Supported trades: `plumber`, `hvac`, `electrician`, `roofer`, `handyman`
 
 ---
 
-## Cost Controls Per Script
+## What Runs Where
 
-| Script | Cap | Tracking File |
+| Script | Runs On | Why |
 |---|---|---|
-| scout.js | $10/mo (Outscraper) | config/scout-config.json |
-| diagnoser.js | $5/mo + 30/day (Claude) | config/diagnoser-config.json |
-| checker.js | $3/mo + 30/day (Claude rewrites only) | config/checker-config.json |
-| pitcher.js | 30/day send limit (no Claude cost) | config/pitcher-config.json |
-| builder.js | 5/day mockup limit (no API cost) | config/builder-config.json |
-| filmer.js | 5/day limit (no API cost) | config/filmer-config.json |
-
-All scripts respect `auto_run: false` — require `--force` flag in manual/testing mode.
+| scout.js | Mac only | Outscraper blocks cloud container IPs |
+| pitcher.js | Mac only | Twilio blocked from container |
+| reporter.js | Mac only | Zoho SMTP blocked from container |
+| diagnoser.js | Container ✓ | Anthropic API only |
+| checker.js | Container ✓ | Anthropic API only |
+| builder.js | Container ✓ | No external API |
+| filmer.js | Container ✓ | No external API |
+| mobile.js | Container ✓ | Anthropic API only |
 
 ---
 
-## Required Accounts
+## Cost Controls
 
-| Service | Used By | Notes |
+| Script | Cap | Config File |
 |---|---|---|
-| Anthropic API | Diagnoser, Checker | console.anthropic.com |
-| Outscraper | Scout | outscraper.com — verify cost_per_result in dashboard |
-| Resend | Pitcher (email) | resend.com |
-| Twilio | Pitcher (SMS) | reuse from Nora Agent |
-| Lovable.dev | Builder | lovable.dev |
-| Higgsfield.ai | Filmer | Optional — Loom works as fallback |
-| Cal.com | Mobile | cal.com |
+| scout.js | $10/mo (Outscraper) | config/scout-config.json |
+| diagnoser.js | $5/mo + 30/day (Claude) | config/diagnoser-config.json |
+| checker.js | $3/mo + 30/day (Claude rewrites) | config/checker-config.json |
+| pitcher.js | 30 sends/day | config/pitcher-config.json |
+| builder.js | 5/day | config/builder-config.json |
+| filmer.js | 5/day | config/filmer-config.json |
+
+All costs centrally logged → `config/cost-log.json`
+Morning report shows MTD totals per service.
+
+---
+
+## Environment Variables
+
+```bash
+# Copy .env.local.example → .env.local and fill in:
+
+OUTSCRAPER_API_KEY=       # outscraper.com/profile
+ANTHROPIC_API_KEY=        # console.anthropic.com/keys
+
+ZOHO_EMAIL=               # dave@trevoadvisors.com
+ZOHO_APP_PASSWORD=        # Zoho app password (not account password)
+
+TWILIO_ACCOUNT_SID=       # console.twilio.com
+TWILIO_AUTH_TOKEN=
+TWILIO_FROM_PHONE=        # +17209027555
+
+REPORT_TO_EMAIL=          # where morning report is emailed
+CALCOM_LINK=              # optional — cal.com booking link for Mobile
+```
+
+---
+
+## Repo Structure
+
+```
+/agents/              — System prompts for all 7 agents
+/config/              — Budget caps, templates, cost log
+  templates.json        — 5 SMS + 5 email pre-approved templates
+  template-stats.json   — A/B reply-rate tracking
+  cost-log.json         — Append-only cost events (tracked in git)
+/leads/               — Raw lead files from Scout
+/queue/               — Briefs from Diagnoser (tracked in git)
+/mockups/             — Lovable URLs + video links
+/messages/            — Outreach records from Pitcher (gitignored)
+/logs/                — Daily run logs
+/scripts/             — All Node.js scripts
+  scout.js · diagnoser.js · checker.js · pitcher.js
+  builder.js · filmer.js · mobile.js · reporter.js
+  cost-tracker.js · template-picker.js · logger.js
+state.json            — Shared lead state (tracked in git)
+run-daily.sh          — Full pipeline runner
+.env.local            — API keys (gitignored)
+.env.local.example    — Key template
+CLAUDE.md             — Orchestrator config for Claude Code
+PROJECT-BRIEF.md      — Full project brief
+```

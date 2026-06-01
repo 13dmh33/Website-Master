@@ -1,9 +1,9 @@
 # Trevo Advisors — Project Brief
 
-**Date:** May 28, 2026
+**Date:** June 1, 2026
 **Owner:** Dave Hettinger — dave@trevoadvisors.com
 **Website:** trevoadvisors.com
-**Status:** All 7 agents built and tested. Pipeline proven on real data. First live send pending Twilio setup.
+**Status:** All 8 scripts live. First real send complete — 18 Denver electricians texted 2026-06-01.
 
 ---
 
@@ -12,14 +12,15 @@
 Trevo Advisors is a solo AI agency that sells websites and voice agents to home service
 contractors (plumbers, HVAC techs, electricians, roofers, handymen). The entire outbound
 sales pipeline — from finding leads to sending the first message — is automated through
-a system of 7 Node.js scripts orchestrated by Claude Code.
+a system of Node.js scripts orchestrated by Claude Code.
 
 **Dave's daily role:**
-1. Run Scout locally (Outscraper blocked from cloud container — see note below)
-2. Approve or edit AI-generated outreach messages before sending (CLI)
+1. Run Scout locally (Mac) — Outscraper blocked from cloud container
+2. Run Pitcher locally (Mac) — Twilio SMS blocked from cloud container
 3. Paste Lovable prompts to build mockup sites (~5/day)
 4. Record a 60-second Loom walkthrough of each mockup (~5/day)
-5. Respond to positive replies via Mobile agent (approve/edit/skip in terminal)
+5. Review morning report email (auto-sent at 7am via cron)
+6. Respond to positive replies — Mobile agent handles booking automatically
 
 Everything else is automated.
 
@@ -53,19 +54,20 @@ Everything else is automated.
 
 ## Pipeline Status
 
-| Agent | Script | Status | Tested |
+| Agent | Script | Status | Notes |
 |---|---|---|---|
-| Scout | scout.js | ✅ Live | ✅ Real Denver leads pulled |
-| Diagnoser | diagnoser.js | ✅ Live | ✅ Real brief generated, $0.001 |
-| Checker | checker.js | ✅ Live | ✅ 100/100 score, no rewrites |
-| Builder | builder.js | ✅ Live | ✅ Lovable prompts generated |
-| Filmer | filmer.js | ✅ Live | ✅ Loom instructions generated |
-| Pitcher | pitcher.js | ✅ Live | ✅ Dry-run previewed |
-| Mobile | mobile.js | ✅ Live | ✅ Auto-send complete, awaiting first real reply |
+| Scout | scout.js | ✅ Live | Denver electricians pulled 2026-05-29 |
+| Diagnoser | diagnoser.js | ✅ Live | Template-based briefs, no AI copy |
+| Checker | checker.js | ✅ Live | Template fast-path, no API cost for templates |
+| Builder | builder.js | ✅ Live | Lovable prompts generated |
+| Filmer | filmer.js | ✅ Live | Loom instructions generated |
+| Pitcher | pitcher.js | ✅ Live | 18 SMS sent 2026-06-01 (Twilio paid) |
+| Mobile | mobile.js | ✅ Live | Auto-send, awaiting first real reply |
+| Reporter | reporter.js | ✅ Live | Morning email live, cron job pending setup |
 
 ---
 
-## The 7 Agents
+## The 8 Scripts
 
 ### 1. Scout (`scripts/scout.js`)
 Pulls contractor leads from Google Maps via the Outscraper API. Filters by review
@@ -75,161 +77,156 @@ website. Assigns outreach channel by trade.
 - **Output:** `/leads/{city}-{trade}-{date}-run{n}.json`
 - **Cost cap:** $10/mo (Outscraper)
 - **Channel assignment:** plumbers/HVAC → email; electricians/roofers → SMS; handymen → IG DM
-- **⚠️ Must run locally** — Outscraper blocks cloud container IPs. Run on local machine, push leads to repo, continue pipeline from container.
+- **⚠️ Must run locally** — Outscraper blocks cloud container IPs.
 
 ### 2. Diagnoser (`scripts/diagnoser.js`)
-Sends each lead to Claude Haiku with prompt caching. Generates a structured brief:
-diagnosis, hero angle, tone, and personalized cold message under 80 words. Marks top
-5 leads as priority for Builder.
+Sends each lead to Claude Haiku with prompt caching. Generates diagnosis, hero angle,
+tone, and gap score. Then picks and fills a template from the vault (no AI-written copy).
 
 - **Output:** `/queue/{lead_id}-brief.json`
 - **Cost cap:** $5/mo (~$0.001 per brief)
 - **Model:** Claude Haiku with ephemeral caching
 
 ### 3. Checker (`scripts/checker.js`)
-Quality-gates every cold message before it can be sent. Runs 5 local evals (no API
-cost). If any fail, calls Claude for a rewrite (max 2 attempts). Flags for human
-review if still failing.
+Quality-gates every cold message. Template-based messages skip straight through
+(checks only for unfilled placeholders). AI-generated messages run 5 local evals
+with optional Claude rewrite (max 2 attempts).
 
-**5 Evals (all run locally — no API cost):**
-1. Personalization — business name + trade + local signal, score ≥75/100
-2. No AI markers — "Certainly!", "As an AI", "I'd be happy to", etc.
-3. No buzzwords — "game-changing", "leverage", "seamlessly", etc.
-4. Structure — 20–80 words, ends with one question, ≤3 sentences before it
-5. No spammy openers — "Just reaching out", "I came across your", "My name is", etc.
-
-- **Cost cap:** $3/mo (rewrites only, ~$0.0003 each)
+- **Cost cap:** $3/mo (rewrites only — templates cost $0)
 
 ### 4. Builder (`scripts/builder.js`)
-Generates a filled-in Lovable.dev prompt for the top 5 priority leads. Uses
-trade-specific colors; falls back to Trevo's Slate Blue (#2E5B8A) for unknown trades.
+Generates a filled-in Lovable.dev prompt for the top 5 priority leads.
 Owner pastes each prompt into lovable.dev, copies the deploy URL, submits it.
 
 - **Daily limit:** 5 mockups / No API cost
 
 ### 5. Filmer (`scripts/filmer.js`)
 Optionally captures a mobile screenshot via ScreenshotOne, then writes Loom recording
-instructions. Owner records a 60-second walkthrough and submits the URL. Pitcher
-attaches the video link to outreach.
+instructions. Owner records a 60-second walkthrough and submits the URL.
 
 - **Daily limit:** 5 videos / No API cost (ScreenshotOne optional)
 
 ### 6. Pitcher (`scripts/pitcher.js`)
-Sends the approved cold message + Loom video link via the right channel.
-Only sends if `checker_approved = true`. Supports `--dry-run` to preview first.
+Sends the approved cold message via the right channel. Only sends if
+`checker_approved = true`. Supports `--dry-run` to preview first. Staggered
+sends (email: 120–300s random, SMS: 20–60s random).
 
-- **Email:** Resend API — from Dave / dave@trevoadvisors.com
-- **SMS:** Twilio
+- **Email:** Zoho SMTP — dave@trevoadvisors.com
+- **SMS:** Twilio (paid account) — +17209027555
 - **IG DM / LinkedIn:** Manual draft written to `/messages/`
 - **Daily limit:** 30 messages
+- **⚠️ Must run locally** — Twilio API blocked from container.
 
 ### 7. Mobile (`scripts/mobile.js`)
 Handles positive replies automatically. Scans `/messages/` for `status: "positive"`,
 drafts a booking reply with 4 time slots spread across the next 2 weeks
-(Mon/Wed/Thu preferred, 10am/2pm/4pm rotation), and sends immediately via the same
-channel as the original outreach. Also runs daily Nora upsell check (7 days after
-each closed deal) — auto-sends the pitch on the due date.
+(Mon/Wed/Thu preferred, 10am/2pm/4pm rotation), and sends immediately.
+Also runs daily Nora upsell check (7 days after each closed deal).
 
-- **Fully automatic** — no owner input required, sends on run
-- Cal.com link appended if `CALCOM_LINK` set in `.env.local` (optional)
+- **Fully automatic** — no owner input required
+
+### 8. Reporter (`scripts/reporter.js`)
+Sends a morning email summary to Dave. Shows pipeline counts, SMS/email stats,
+template reply rates, and day/month costs across all services.
+
+- **Run:** `node scripts/reporter.js` (print + email) or `--print` for preview only
+- **Cron:** `0 7 * * * cd ~/Website-Master && /path/to/node scripts/reporter.js`
+- **Email to:** REPORT_TO_EMAIL in .env.local
 
 ---
 
-## Daily Run
+## Template Vault
+
+10 pre-approved templates in `config/templates.json` — 5 SMS (s1–s5) + 5 email (e1–e5).
+Diagnoser picks and fills the right template for each lead. A/B rotation via
+epsilon-greedy algorithm (20% explore / 80% exploit) learns which template converts best.
+
+Reply tracking: `config/template-stats.json`
+
+---
+
+## Daily Workflow
 
 ```bash
-# On local machine first:
+# ── ON LOCAL MAC ───────────────────────────────────────────────
 node scripts/scout.js --city "Denver, CO" --trade plumber --force
-git add leads/ state.json && git commit -m "Scout run" && git push origin claude/kind-hypatia-3YzM0
+git add leads/ state.json config/cost-log.json
+git commit -m "Scout: Denver plumbers" && git push origin claude/kind-hypatia-3YzM0
 
-# Then from Claude Code container (or local):
-./run-daily.sh           # full pipeline with manual-step pauses
-./run-daily.sh --dry-run # preview only
+# ── IN CLAUDE CODE CONTAINER ───────────────────────────────────
+node scripts/diagnoser.js --force
+node scripts/checker.js --force
+node scripts/builder.js --force       # generates Lovable prompts
+node scripts/filmer.js --force        # writes Loom instructions
+
+# ── ON LOCAL MAC (after git pull) ─────────────────────────────
+git pull origin claude/kind-hypatia-3YzM0
+node scripts/pitcher.js --dry-run --force   # preview
+node scripts/pitcher.js --force             # send
+
+# ── EACH MORNING ON MAC ───────────────────────────────────────
+node scripts/reporter.js              # morning report email
+
+# ── WHEN REPLY COMES IN ───────────────────────────────────────
+# Set "status": "positive" in messages/{lead_id}-sent.json, then:
+node scripts/mobile.js                # auto-sends booking + Nora upsell
 ```
-
-**Typical active time:** 60–90 min/day (mostly Lovable + Loom manual steps)
 
 ---
 
 ## Lead State Machine
 
 ```
-scouted → diagnosed → checked → mockup_pending → mockup_ready → film_pending → filmed → sent → [positive] → call_booked → hot
+scouted → diagnosed → checked → sent → [positive reply] → call_booked → deal_closed → nora_pitch_due
 ```
 
 ---
 
-## What's Still Needed to Go Live
+## Cost Tracking
 
-| Item | Status | Notes |
+All costs logged to `config/cost-log.json` (append-only, tracked in git).
+Morning report aggregates by day and month.
+
+| Service | Rate | Cap |
 |---|---|---|
-| Twilio credentials | ✅ Configured | ACdb3cd77... / +17209027555 |
-| Resend API key | ❌ Missing | Needed for email channel (plumbers/HVAC) |
-| Domain verified in Resend | ❌ Missing | trevoadvisors.com must be verified before sending email |
-| Scout run (electricians/roofers) | ❌ Pending | Run locally → push leads → run pipeline from container |
-| Cal.com link | ❌ Optional | Add to `.env.local` for booking drafts |
+| Anthropic (Diagnoser) | ~$0.001/brief | $5/mo |
+| Anthropic (Checker rewrites) | ~$0.0003/rewrite | $3/mo |
+| Outscraper (Scout) | ~$0.001/lead | $10/mo |
+| Twilio (SMS) | $0.0079/msg | none |
+| Zoho SMTP (email) | flat subscription | n/a |
 
-**Ready to send SMS now** — run Scout locally for electricians or roofers, push leads, run pipeline from container. Email channel needs Resend setup.
+**Actual spend 2026-06 MTD:** $0.14 (18 SMS, first batch)
 
 ---
 
-## Cost at Scale (47 clients/month)
+## Infrastructure Costs at Scale (47 clients/month)
 
 | Service | Monthly Cost |
 |---|---|
 | Outscraper (Scout) | ~$2/mo |
 | Anthropic API (Diagnoser + Checker) | ~$16/mo |
-| Resend (email) | ~$20/mo |
+| Zoho Mail (email) | flat subscription |
 | Twilio (SMS) | ~$5–10/mo |
-| **Total infrastructure** | **~$45/mo** |
+| **Total infrastructure** | **~$25–30/mo** |
 
-At $400/site × 47 = $18,800/mo revenue, infrastructure is <0.25% of revenue.
-
----
-
-## Tech Stack
-
-| Layer | Choice | Why |
-|---|---|---|
-| Runtime | Node.js (no framework) | Simple, no build step, runs anywhere |
-| AI | Claude Haiku via Anthropic SDK | Cheapest capable model; prompt caching ~80% cheaper |
-| Lead source | Outscraper Google Maps API | Best contractor data |
-| Email | Resend | Clean API, strong deliverability |
-| SMS | Twilio | Reliable, standard |
-| Site builder | Lovable.dev | Fast no-code pages, no API needed |
-| Video | Loom (manual) | Higgsfield.ai not integrated yet |
-| State | Flat JSON (`state.json`) | No DB overhead at current scale |
+At $400/site × 47 = $18,800/mo revenue, infrastructure is <0.2% of revenue.
 
 ---
 
-## Known Gaps
+## Known Gaps / Next Steps
 
-| Gap | Priority | Notes |
+| Item | Priority | Notes |
 |---|---|---|
-| Inbound reply detection | Medium | Must manually set `"status": "positive"` in messages JSON. No webhook yet. |
-| Contractor email availability | Medium | Outscraper rarely returns emails for small contractors. SMS first is the workaround. |
-| Scout runs locally only | Low | Cloud container IP blocked by Outscraper. 2-command local workflow documented. |
+| GitHub PAT on Mac | High | Can't push to git from Mac without PAT — set up at github.com/settings/tokens |
+| Inbound reply detection | High | Must manually set `"status": "positive"` in messages JSON. Twilio webhook would automate this. |
+| Cron job for Reporter | Medium | Add 7am cron on Mac: `crontab -e` |
+| Email channel (plumbers/HVAC) | Medium | Zoho SMTP ready — need email leads from Scout |
+| D&J Enterprises SMS retry | Low | 1 failed send from first batch — retry with `node scripts/pitcher.js --force` |
+| Scout must run locally | Info | Cloud container IP blocked by Outscraper |
+| Pitcher must run locally | Info | Twilio blocked from container |
+| Reporter must run locally | Info | Zoho SMTP blocked from container |
 | `years_on_maps` filter | Low | Outscraper doesn't return this field. Filter unenforced. |
-| Higgsfield.ai video | Low | Loom works fine as manual fallback |
-| Auto-run / scheduling | Low | All scripts require `--force`. No cron job yet. |
-
----
-
-## Questions for Consultant
-
-1. **Reply detection** — No inbound monitoring. Owner must check Twilio/Resend dashboards manually and update JSON. How would you solve this at low cost?
-
-2. **Lovable + Loom as daily manual work** — 30–45 min/day at volume. Is there a tighter path (Lovable API, auto-screen-record) worth pursuing now vs. later?
-
-3. **Email deliverability** — Cold email to contractors from a new domain is risky. Is Resend + trevoadvisors.com the right setup, or is there a better cold outreach stack for this niche?
-
-4. **47 clients/month reality check** — Is this volume achievable from cold outreach alone? What's a realistic conversion funnel (leads → reply → call → close)?
-
-5. **Nora upsell** — Nora isn't in this repo. Is 7-day timing right? What's a realistic close rate from website client → Nora add-on?
-
-6. **State management at scale** — `state.json` is a flat file. 30 leads/day = ~900/month. When should this move to SQLite?
-
-7. **SMS for contractors** — Roofers and electricians get SMS. Is cold SMS to a business number effective, or does it get ignored/blocked?
+| State management at scale | Low | state.json flat file fine until ~1,000 leads, then consider SQLite |
 
 ---
 
@@ -237,20 +234,40 @@ At $400/site × 47 = $18,800/mo revenue, infrastructure is <0.25% of revenue.
 
 ```
 /agents/         — System prompts for all 7 agents
-/config/         — Budget caps, counters, brand.json
+/config/         — Budget caps, counters, templates, cost log
+  templates.json       — 5 SMS + 5 email pre-approved templates
+  template-stats.json  — A/B reply-rate tracking per template
+  cost-log.json        — Append-only cost events (Anthropic/Twilio/Outscraper)
+  pitcher-config.json  — Send counts + stagger settings
+  diagnoser-config.json
+  checker-config.json
+  scout-config.json
 /leads/          — Raw lead files from Scout
-/queue/          — Brief files from Diagnoser
+/queue/          — Brief files from Diagnoser (tracked in git)
 /mockups/        — Lovable URLs, screenshots, Loom links
-/messages/       — Outreach records from Pitcher
+/messages/       — Outreach records from Pitcher (gitignored)
 /logs/           — Daily append-only logs
-/scripts/        — All 7 Node.js agent scripts
+/scripts/        — All 8 Node.js scripts
+  scout.js
+  diagnoser.js
+  checker.js
+  pitcher.js
+  builder.js
+  filmer.js
+  mobile.js
+  reporter.js
+  cost-tracker.js  — Shared cost logging module
+  template-picker.js — A/B template selection module
+  logger.js          — Shared log writer
 state.json       — Shared lead state
 run-daily.sh     — Full pipeline runner
 .env.local       — API keys (gitignored)
+.env.local.example — Key template
 CLAUDE.md        — Orchestrator config for Claude Code
 PROJECT-BRIEF.md — This file
+README.md        — Quick start
 ```
 
 ---
 
-*Last updated: 2026-05-29 — Twilio configured, Mobile auto-send complete, all 7 agents live. Ready for first SMS send (needs Scout run locally for electricians/roofers).*
+*Last updated: 2026-06-01 — First real SMS send complete (18 Denver electricians). Reporter live. All 8 scripts operational.*

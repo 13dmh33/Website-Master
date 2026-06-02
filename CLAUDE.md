@@ -161,6 +161,19 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - 2026-06-02: mobile.js updated — sends /start URL in positive reply, Zoho SMTP fix confirmed
 - 2026-06-02: Branches 1–6 merged to main; claude/website and claude/demo-site held pending review
 - 2026-06-02: Global pricing update — $150/$200 build + $65/mo applied across all templates, scripts, website pages, and MD files
+- 2026-06-03: 30 Denver/Englewood plumbers sent via SMS (Twilio) — 48 total MTD
+- 2026-06-03: Diagnoser channel routing bug fixed — phone-only leads now correctly route to sms instead of email
+- 2026-06-03: webhook.js timingSafeEqual RangeError fixed; poller.js null-headers crash fixed
+- 2026-06-03: EIN obtained (IRS CP575G) for Trevo Advisors — stored locally, not in repo
+- 2026-06-03: Twilio A2P 10DLC Brand registration submitted (Bundle SID: BUb725ec9662f0dc3da58ed24117df8684) — pending approval
+
+## Twilio A2P 10DLC Status
+- Brand registration submitted: 2026-06-03
+- Bundle SID: BUb725ec9662f0dc3da58ed24117df8684
+- Status: Pending approval (1–3 business days)
+- EIN on file locally (not in repo) — obtained 2026-06-03
+- Once approved: create Campaign (use case: Mixed) → link +1 720 number to Sender Pool
+- Until approved: SMS sends will hit error 30034 and be blocked by carriers
 
 ## Tomorrow's Tasks (2026-06-03)
 

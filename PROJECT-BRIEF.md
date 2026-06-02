@@ -308,6 +308,20 @@ At $150/site × 47 = $7,050/mo revenue, infrastructure is <0.5% of revenue.
 | Pricing update across all files ($150/$200/$65) | 2026-06-02 |
 | Website funnel built (6 pages) | 2026-06-02 |
 | Branches 1–6 merged to main | 2026-06-02 |
+| EIN obtained (IRS CP575G) for Trevo Advisors | 2026-06-03 |
+| A2P 10DLC Brand registration submitted | 2026-06-03 |
+| Diagnoser phone-only channel routing bug fixed | 2026-06-03 |
+| 30 SMS sent — Denver + Englewood plumbers (48 MTD) | 2026-06-03 |
+
+### Twilio A2P 10DLC Status
+
+| Field | Value |
+|---|---|
+| Brand status | Submitted — pending approval (1–3 business days) |
+| Bundle SID | BUb725ec9662f0dc3da58ed24117df8684 |
+| EIN | On file locally — not stored in repo |
+| Next step | After Brand approved: create Campaign (Mixed use case) → link +1 720 number to Sender Pool |
+| Sends blocked until | Campaign approved and number added to Sender Pool |
 
 ---
 
@@ -352,4 +366,4 @@ README.md        — Quick start
 
 ---
 
-*Last updated: 2026-06-02 — All 14 scripts live. Full website funnel built (6 pages, claude/demo-site). Global pricing updated: $150/$200 build + $65/mo. Branches 1–6 merged to main. Tomorrow: Stripe + Formspree config, deploy website, merge demo-site.*
+*Last updated: 2026-06-03 — 48 SMS sent MTD. EIN obtained. A2P 10DLC Brand submitted (pending). Diagnoser channel routing bug fixed. Next: Campaign approval → Stripe + Formspree → deploy website.*

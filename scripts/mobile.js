@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 'use strict';
 
-const fs       = require('fs');
-const path     = require('path');
-const https    = require('https');
+const fs         = require('fs');
+const path       = require('path');
+const https      = require('https');
+const nodemailer = require('nodemailer');
 const { recordReply } = require('./template-picker');
 
 require('dotenv').config({ path: path.resolve(__dirname, '../.env.local') });
@@ -165,51 +166,19 @@ function sendSms(phone, message) {
 }
 
 function sendEmail(toEmail, businessName, message) {
-  const apiKey    = process.env.RESEND_API_KEY;
-  const fromEmail = process.env.FROM_EMAIL || 'outreach@yourdomain.com';
-  const fromName  = process.env.FROM_NAME  || 'Your Name';
-  if (!apiKey) throw new Error('RESEND_API_KEY not set in .env.local');
-
-  const payload = JSON.stringify({
-    from:    `${fromName} <${fromEmail}>`,
-    to:      [toEmail],
+  const user = process.env.ZOHO_EMAIL;
+  const pass = process.env.ZOHO_APP_PASSWORD;
+  if (!user || !pass) throw new Error('ZOHO_EMAIL and ZOHO_APP_PASSWORD not set in .env.local');
+  const transport = nodemailer.createTransport({
+    host: 'smtp.zoho.com', port: 465, secure: true,
+    auth: { user, pass }
+  });
+  return transport.sendMail({
+    from:    `"Dave" <${user}>`,
+    to:      toEmail,
     subject: `Re: ${businessName}'s website`,
     text:    message
-  });
-
-  const options = {
-    hostname: 'api.resend.com',
-    path:     '/emails',
-    method:   'POST',
-    headers:  {
-      'Authorization':  `Bearer ${apiKey}`,
-      'Content-Type':   'application/json',
-      'Content-Length': Buffer.byteLength(payload)
-    }
-  };
-
-  const attempt = () => new Promise((resolve, reject) => {
-    const req = https.request(options, res => {
-      let data = '';
-      res.on('data', c => { data += c; });
-      res.on('end', () => {
-        try {
-          const parsed = JSON.parse(data);
-          res.statusCode >= 200 && res.statusCode < 300
-            ? resolve({ id: parsed.id })
-            : (() => { const e = new Error(`Resend ${res.statusCode}: ${data}`); e.statusCode = res.statusCode; reject(e); })();
-        } catch (e) { reject(e); }
-      });
-    });
-    req.on('error', reject);
-    req.write(payload);
-    req.end();
-  });
-
-  return attempt().catch(async err => {
-    if (err.statusCode === 429 || err.statusCode >= 500) { await delay(2000); return attempt(); }
-    throw err;
-  });
+  }).then(info => ({ id: info.messageId }));
 }
 
 // ── SEND DISPATCH ─────────────────────────────────────────────────────────────

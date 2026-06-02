@@ -262,20 +262,46 @@
 </footer>
 
 <script>
-  // Pull details from query params set by checkout page on success
+  // Pull details from query params (Stripe redirect) or sessionStorage (checkout handoff)
   const p = new URLSearchParams(window.location.search);
 
-  const name  = p.get('name')  || '';
-  const biz   = p.get('biz')   || '';
-  const email = p.get('email') || '';
-  const pi    = p.get('pi')    || '';
-  const nora  = p.get('nora')  === '1';
+  let stored = {};
+  try { stored = JSON.parse(sessionStorage.getItem('trevo_checkout') || '{}'); }
+  catch { /* ignore */ }
 
-  if (name)  document.getElementById('greet-name').textContent = name;
-  if (biz)   document.getElementById('r-biz').textContent   = biz;
-  if (email) document.getElementById('r-email').textContent = email;
-  if (pi)    document.getElementById('r-pi').textContent    = pi;
-  if (nora)  document.getElementById('noraCallout').classList.add('visible');
+  const name  = p.get('name')  || stored.name  || '';
+  const biz   = p.get('biz')   || stored.biz   || '';
+  const email = p.get('email') || stored.email  || '';
+  const pi    = p.get('pi')    || '';
+  const nora  = (p.get('nora') || stored.nora) === '1';
+
+  // Clear sessionStorage after reading so it doesn't persist across future visits
+  try { sessionStorage.removeItem('trevo_checkout'); } catch { /* ignore */ }
+
+  const hasData = name || biz || email;
+
+  if (!hasData) {
+    // Navigated directly without completing checkout — show a helpful fallback
+    document.querySelector('.success-hero').innerHTML = `
+      <span class="success-emoji">👋</span>
+      <h1>Ready to get started?</h1>
+      <p>It looks like you haven't completed checkout yet. Click below to start your order — takes about 2 minutes.</p>
+      <a href="../checkout/" style="display:inline-flex;align-items:center;gap:8px;background:#2E5B8A;color:#fff;padding:14px 28px;border-radius:10px;font-size:17px;font-weight:800;text-decoration:none;margin-top:8px;">Go to Checkout →</a>
+    `;
+    document.querySelector('.receipt-card').style.display = 'none';
+    document.querySelector('.steps-card').style.display = 'none';
+    document.querySelector('.intake-cta').innerHTML = `
+      <h2>Questions first?</h2>
+      <p>Call or text Dave at (720) 902-7555 and he'll walk you through everything.</p>
+      <a href="tel:+17209027555" class="intake-btn">📞 Call (720) 902-7555</a>
+    `;
+  } else {
+    if (name)  document.getElementById('greet-name').textContent = name;
+    if (biz)   document.getElementById('r-biz').textContent   = biz;
+    if (email) document.getElementById('r-email').textContent = email;
+    if (pi)    document.getElementById('r-pi').textContent    = pi;
+    if (nora)  document.getElementById('noraCallout').classList.add('visible');
+  }
 </script>
 
 </body>

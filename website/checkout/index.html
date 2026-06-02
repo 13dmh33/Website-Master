@@ -7,8 +7,7 @@
   <meta name="description" content="Secure payment for your custom contractor website — $400 flat, delivered in 3 business days." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <!-- Load Stripe.js -->
-  <script src="https://js.stripe.com/v3/"></script>
+  <!-- Stripe.js loaded only if needed for future embedded checkout upgrade -->
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -268,15 +267,12 @@
   <!-- PAYMENT FORM -->
   <div class="payment-card">
     <h2>Secure Payment</h2>
-    <p>Your card info is encrypted and never stored on our servers.</p>
+    <p>Fill in your details below — you'll be taken to Stripe's secure payment page to complete checkout.</p>
 
-    <!-- Dev config notice — remove before going live -->
-    <div class="config-notice" id="configNotice">
-      <strong>⚙️ Setup required before going live:</strong>
-      Replace <code>pk_test_YOUR_STRIPE_PUBLISHABLE_KEY</code> in this file with your real Stripe publishable key,
-      and set <code>STRIPE_PRICE_ID</code> in your backend handler.
-      <a href="https://dashboard.stripe.com/apikeys" target="_blank" style="color:#92400E;">Stripe dashboard →</a>
-    </div>
+    <!-- ⚙️ SETUP: Replace STRIPE_PAYMENT_LINK below with your real Stripe Payment Link URL.
+         Create one at: https://dashboard.stripe.com/payment-links
+         Set the success URL to: https://trevoadvisors.com/thankyou/
+         Supports: ?prefilled_email=EMAIL to pre-fill the customer's email field. -->
 
     <div class="payment-icons">
       <div class="payment-icon">VISA</div>
@@ -289,42 +285,22 @@
       <div class="field-row">
         <div class="field">
           <label>First Name</label>
-          <input type="text" id="first_name" placeholder="Mike" required />
+          <input type="text" id="first_name" placeholder="Mike" autocomplete="given-name" />
         </div>
         <div class="field">
           <label>Last Name</label>
-          <input type="text" id="last_name" placeholder="Johnson" required />
+          <input type="text" id="last_name" placeholder="Johnson" autocomplete="family-name" />
         </div>
       </div>
 
       <div class="field">
         <label>Email</label>
-        <input type="email" id="email" placeholder="mike@yourcompany.com" required />
+        <input type="email" id="email" placeholder="mike@yourcompany.com" autocomplete="email" />
       </div>
 
       <div class="field">
         <label>Business Name</label>
-        <input type="text" id="biz_name" placeholder="Peak Comfort HVAC" required />
-      </div>
-
-      <!-- Stripe Card Element -->
-      <div class="field">
-        <span class="stripe-field-label">Card Number</span>
-        <div class="stripe-field" id="card-number-element"></div>
-      </div>
-      <div class="card-row">
-        <div class="field" style="margin-bottom:0">
-          <span class="stripe-field-label">Expiration</span>
-          <div class="stripe-field" id="card-expiry-element"></div>
-        </div>
-        <div class="field" style="margin-bottom:0">
-          <span class="stripe-field-label">CVC</span>
-          <div class="stripe-field" id="card-cvc-element"></div>
-        </div>
-        <div class="field" style="margin-bottom:0">
-          <span class="stripe-field-label">ZIP</span>
-          <div class="stripe-field" id="card-zip-element"></div>
-        </div>
+        <input type="text" id="biz_name" placeholder="Peak Comfort HVAC" />
       </div>
 
       <!-- Nora add-on -->
@@ -343,10 +319,10 @@
       <div class="card-errors" id="card-errors"></div>
 
       <button type="submit" class="pay-btn" id="pay-btn">
-        🔒 Pay <span id="pay-amount">$400</span> — Start My Build
+        🔒 Continue to Secure Payment →
       </button>
       <p class="pay-sub">
-        By paying you agree to our <a href="#">Terms of Service</a>.
+        You'll be taken to Stripe's secure checkout page to enter your card details.
         Questions? <a href="tel:+17209027555">(720) 902-7555</a>
       </p>
     </form>
@@ -355,139 +331,49 @@
 </div>
 
 <script>
-  // ── STRIPE SETUP ─────────────────────────────────────────────────────────────
-  // Replace with your real publishable key from https://dashboard.stripe.com/apikeys
-  const STRIPE_PUBLISHABLE_KEY = 'pk_test_YOUR_STRIPE_PUBLISHABLE_KEY';
+  // ── CONFIG ───────────────────────────────────────────────────────────────────
+  // Create a Payment Link at https://dashboard.stripe.com/payment-links
+  // Set success URL to: https://trevoadvisors.com/thankyou/
+  // Then paste the URL below (format: https://buy.stripe.com/XXXXXXXX)
+  const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/YOUR_PAYMENT_LINK_ID';
 
-  // After payment succeeds, redirect to your thank-you page
-  const SUCCESS_URL = '../thankyou/';
-
-  // Your backend endpoint that creates a PaymentIntent
-  // See: https://stripe.com/docs/payments/accept-a-payment
-  const PAYMENT_INTENT_ENDPOINT = '/api/create-payment-intent';
-
-  const stripe   = Stripe(STRIPE_PUBLISHABLE_KEY);
-  const elements = stripe.elements({ fonts: [{ cssSrc: 'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500&display=swap' }] });
-
-  const style = {
-    base: {
-      fontFamily:  "'Plus Jakarta Sans', sans-serif",
-      fontSize:    '15px',
-      color:       '#0F1E2D',
-      '::placeholder': { color: '#A0B0C0' },
-    },
-    invalid: { color: '#C0392B' }
-  };
-
-  const cardNumber = elements.create('cardNumber', { style });
-  const cardExpiry = elements.create('cardExpiry', { style });
-  const cardCvc    = elements.create('cardCvc',    { style });
-  const postalCode = elements.create('postalCode', { style });
-
-  cardNumber.mount('#card-number-element');
-  cardExpiry.mount('#card-expiry-element');
-  cardCvc.mount('#card-cvc-element');
-  postalCode.mount('#card-zip-element');
-
-  // Focus border highlight
-  [cardNumber, cardExpiry, cardCvc, postalCode].forEach((el, i) => {
-    const ids = ['card-number-element','card-expiry-element','card-cvc-element','card-zip-element'];
-    el.on('focus', () => document.getElementById(ids[i]).classList.add('focused'));
-    el.on('blur',  () => document.getElementById(ids[i]).classList.remove('focused'));
-    el.on('change', e => {
-      document.getElementById('card-errors').textContent = e.error ? e.error.message : '';
-    });
-  });
-
-  // ── TOTAL TOGGLE ─────────────────────────────────────────────────────────────
+  // ── NORA TOGGLE ──────────────────────────────────────────────────────────────
   function updateTotal() {
-    const addNora = document.getElementById('add_nora').checked;
-    document.getElementById('total-display').textContent = '$400';
-    document.getElementById('pay-amount').textContent    = '$400';
-    const box = document.getElementById('noraAddon');
-    box.classList.toggle('selected', addNora);
-    // Note: Nora is billed monthly starting after launch — $350/mo bundle vs $97/mo
-    // The one-time charge today is always $400 regardless
+    document.getElementById('noraAddon')
+      .classList.toggle('selected', document.getElementById('add_nora').checked);
   }
 
   // ── FORM SUBMIT ──────────────────────────────────────────────────────────────
-  document.getElementById('payment-form').addEventListener('submit', async (e) => {
+  document.getElementById('payment-form').addEventListener('submit', (e) => {
     e.preventDefault();
 
-    const btn = document.getElementById('pay-btn');
-    btn.disabled = true;
-    btn.textContent = 'Processing...';
-
+    const btn       = document.getElementById('pay-btn');
+    const errEl     = document.getElementById('card-errors');
     const firstName = document.getElementById('first_name').value.trim();
     const lastName  = document.getElementById('last_name').value.trim();
     const email     = document.getElementById('email').value.trim();
     const bizName   = document.getElementById('biz_name').value.trim();
     const addNora   = document.getElementById('add_nora').checked;
 
-    if (!firstName || !lastName || !email || !bizName) {
-      document.getElementById('card-errors').textContent = 'Please fill in all fields above.';
-      btn.disabled = false;
-      btn.innerHTML = '🔒 Pay <span id="pay-amount">$400</span> — Start My Build';
-      return;
-    }
+    errEl.textContent = '';
 
+    if (!firstName || !lastName) { errEl.textContent = 'Please enter your first and last name.'; return; }
+    if (!email || !email.includes('@')) { errEl.textContent = 'Please enter a valid email address.'; return; }
+    if (!bizName) { errEl.textContent = 'Please enter your business name.'; return; }
+
+    // Save details to sessionStorage so thankyou page can show receipt
     try {
-      // 1. Create a PaymentIntent on your backend
-      //    Your backend should accept { amount, currency, metadata } and return { clientSecret }
-      //    Example backend: https://stripe.com/docs/payments/accept-a-payment#web-create-intent
-      const res    = await fetch(PAYMENT_INTENT_ENDPOINT, {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({
-          amount:   40000, // cents
-          currency: 'usd',
-          metadata: {
-            customer_name: `${firstName} ${lastName}`,
-            email,
-            business_name: bizName,
-            add_nora:      addNora ? 'yes' : 'no',
-          }
-        })
-      });
-      const { clientSecret, error: backendError } = await res.json();
-      if (backendError) throw new Error(backendError);
+      sessionStorage.setItem('trevo_checkout', JSON.stringify({
+        name: firstName, biz: bizName, email, nora: addNora ? '1' : '0'
+      }));
+    } catch { /* sessionStorage unavailable — thankyou page falls back gracefully */ }
 
-      // 2. Confirm payment with Stripe
-      const { error: stripeError, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: cardNumber,
-          billing_details: {
-            name:  `${firstName} ${lastName}`,
-            email,
-          }
-        }
-      });
+    btn.disabled = true;
+    btn.textContent = 'Redirecting to Stripe...';
 
-      if (stripeError) {
-        document.getElementById('card-errors').textContent = stripeError.message;
-        btn.disabled = false;
-        btn.innerHTML = '🔒 Pay <span id="pay-amount">$400</span> — Start My Build';
-        return;
-      }
-
-      // 3. Success — pass details to thank-you page via query params
-      const params = new URLSearchParams({
-        name:     firstName,
-        biz:      bizName,
-        email,
-        pi:       paymentIntent.id,
-        nora:     addNora ? '1' : '0',
-      });
-      window.location.href = `${SUCCESS_URL}?${params.toString()}`;
-
-    } catch (err) {
-      document.getElementById('card-errors').textContent =
-        err.message.includes('fetch') || err.message.includes('Failed')
-          ? 'Payment server not reachable. Contact dave@trevoadvisors.com to complete your order.'
-          : err.message;
-      btn.disabled = false;
-      btn.innerHTML = '🔒 Pay <span id="pay-amount">$400</span> — Start My Build';
-    }
+    // Build Payment Link URL with pre-filled email
+    const params = new URLSearchParams({ prefilled_email: email });
+    window.location.href = `${STRIPE_PAYMENT_LINK}?${params.toString()}`;
   });
 </script>
 

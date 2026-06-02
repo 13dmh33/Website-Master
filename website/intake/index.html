@@ -531,13 +531,12 @@
 
     <div class="field-row single" id="logo_upload_row" style="display:none;">
       <div class="field">
-        <label>Upload Your Logo</label>
-        <div class="upload-area" onclick="document.getElementById('logo_file').click()">
-          <input type="file" id="logo_file" accept=".png,.jpg,.jpeg,.svg,.pdf,.ai,.eps" onchange="handleLogoUpload(this)" />
-          <div class="upload-icon">📁</div>
-          <h4>Click to upload logo</h4>
-          <p>PNG, JPG, SVG, PDF, AI, EPS — any format is fine</p>
-          <p class="upload-selected" id="logo_selected"></p>
+        <label>Send Us Your Logo</label>
+        <div class="upload-area" style="cursor:default;">
+          <div class="upload-icon">📧</div>
+          <h4>Email your logo file to Dave</h4>
+          <p><a href="mailto:dave@trevoadvisors.com?subject=Logo for [Your Business Name]" style="color:var(--blue);font-weight:700;">dave@trevoadvisors.com</a></p>
+          <p style="margin-top:6px;">PNG, JPG, SVG, or PDF — any size is fine. Subject: "Logo for [Your Business Name]"</p>
         </div>
       </div>
     </div>
@@ -723,14 +722,6 @@
     });
   });
 
-  function handleLogoUpload(input) {
-    const el = document.getElementById('logo_selected');
-    if (input.files.length) {
-      el.textContent = '✓ ' + input.files[0].name;
-      el.style.display = 'block';
-    }
-  }
-
   function setProgress(step) {
     for (let i = 1; i <= 4; i++) {
       const num = document.getElementById('sn' + i);
@@ -749,23 +740,56 @@
     currentStep = n;
   }
 
+  function setError(id, msg) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.add('error');
+    const hint = el.parentElement.querySelector('.field-error');
+    if (hint && msg) { hint.textContent = msg; hint.style.display = 'block'; }
+    el.parentElement.classList.add('has-error');
+  }
+  function clearError(id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.classList.remove('error');
+    el.parentElement.classList.remove('has-error');
+  }
+
   function validate(step) {
     let ok = true;
     if (step === 1) {
-      if (!document.getElementById('biz_name').value.trim()) {
-        document.getElementById('f-biz-name').classList.add('has-error');
-        document.getElementById('biz_name').classList.add('error');
+      const bizName = document.getElementById('biz_name').value.trim();
+      if (!bizName) { setError('biz_name', 'Business name is required'); ok = false; }
+      else clearError('biz_name');
+
+      const trade = document.getElementById('trade').value;
+      if (!trade) {
+        document.getElementById('trade').classList.add('error');
+        document.getElementById('f-biz-name').parentElement
+          .querySelector('[for="trade"]')?.parentElement?.classList.add('has-error');
         ok = false;
       } else {
-        document.getElementById('f-biz-name').classList.remove('has-error');
-        document.getElementById('biz_name').classList.remove('error');
+        document.getElementById('trade').classList.remove('error');
       }
+
+      const phone = document.getElementById('phone').value.trim();
+      if (!phone) { setError('phone', 'Phone number is required'); ok = false; }
+      else clearError('phone');
+
+      const owner = document.getElementById('owner_name').value.trim();
+      if (!owner) { setError('owner_name', 'Contact name is required'); ok = false; }
+      else clearError('owner_name');
+
+      const city = document.getElementById('city').value.trim();
+      if (!city) { setError('city', 'City is required'); ok = false; }
+      else clearError('city');
     }
     if (step === 2) {
       const sv = document.getElementById('services_list');
       if (!sv.value.trim()) { sv.classList.add('error'); ok = false; }
       else sv.classList.remove('error');
     }
+    // step 3 — all optional, no required fields
     if (step === 4) {
       const fe = document.getElementById('form_email');
       if (!fe.value.trim() || !fe.value.includes('@')) { fe.classList.add('error'); ok = false; }
@@ -783,11 +807,19 @@
     showStep(from - 1);
   }
 
-  function submitForm() {
+  async function submitForm() {
     if (!validate(4)) return;
 
-    // Collect all form data
+    // ⚙️ SETUP: Create a free form at https://formspree.io and replace the endpoint below.
+    // Free tier: 50 submissions/mo, emails you every submission. No account needed to test.
+    const FORMSPREE_ENDPOINT = 'https://formspree.io/f/YOUR_FORM_ID';
+
+    const btn = document.querySelector('.btn-submit');
+    btn.disabled = true;
+    btn.textContent = 'Submitting...';
+
     const data = {
+      _subject:       'New Website Intake — Trevo Advisors',
       biz_name:       document.getElementById('biz_name').value,
       trade:          document.getElementById('trade').value,
       owner_name:     document.getElementById('owner_name').value,
@@ -808,6 +840,8 @@
       rating:         document.querySelector('input[name="rating"]:checked')?.value || '',
       hours:          document.getElementById('hours').value,
       has_logo:       document.querySelector('input[name="has_logo"]:checked')?.value || '',
+      logo_note:      document.querySelector('input[name="has_logo"]:checked')?.value === 'yes'
+                        ? 'Client will email logo to dave@trevoadvisors.com' : '',
       color_pref:     document.querySelector('input[name="color_pref"]:checked')?.value || '',
       brand_colors:   document.getElementById('brand_colors').value,
       existing_website: document.getElementById('existing_website').value,
@@ -815,21 +849,48 @@
       tagline:        document.getElementById('tagline').value,
       has_domain:     document.querySelector('input[name="has_domain"]:checked')?.value || '',
       domain_name:    document.getElementById('domain_name').value,
-      form_email:     document.getElementById('form_email').value,
+      lead_form_email: document.getElementById('form_email').value,
       nora_interest:  document.querySelector('input[name="nora_interest"]:checked')?.value || '',
       referral_source: document.getElementById('referral_source').value,
       notes:          document.getElementById('notes').value,
-      submitted_at:   new Date().toISOString(),
     };
 
-    // Log to console (in production: POST to endpoint or Formspree)
-    console.log('Intake form submitted:', JSON.stringify(data, null, 2));
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body:    JSON.stringify(data),
+      });
 
-    // Show success
-    document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
-    document.getElementById('successScreen').classList.add('visible');
-    document.getElementById('progressBar').style.display = 'none';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || `HTTP ${res.status}`);
+      }
+
+      // Show success
+      document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+      document.getElementById('successScreen').classList.add('visible');
+      document.getElementById('progressBar').style.display = 'none';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = '✓ Submit & Start Build';
+      // Friendly fallback: if Formspree not yet wired, tell them to email directly
+      const isNotWired = FORMSPREE_ENDPOINT.includes('YOUR_FORM_ID') || err.message.includes('404');
+      if (isNotWired) {
+        // Show success anyway — form data is in the page, not lost
+        document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+        document.getElementById('successScreen').classList.add('visible');
+        document.getElementById('progressBar').style.display = 'none';
+        document.querySelector('.success-next').insertAdjacentHTML('afterend',
+          '<p style="margin-top:16px;font-size:13px;color:#C0392B;text-align:center;">⚠️ Formspree not yet configured — please email your details to <a href="mailto:dave@trevoadvisors.com">dave@trevoadvisors.com</a></p>'
+        );
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        alert(`Submission failed: ${err.message}\n\nPlease email dave@trevoadvisors.com or call (720) 902-7555.`);
+      }
+    }
   }
 </script>
 

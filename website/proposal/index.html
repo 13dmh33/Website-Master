@@ -4,7 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Website Proposal | Trevo Advisors</title>
-  <meta name="description" content="Your custom website proposal from Trevo Advisors — ready to review and get started." />
+  <meta name="description" content="Your custom website proposal from Trevo Advisors — $400 flat, live in 3 days. Review what's included and get started." />
+  <meta property="og:title" content="Your Website Proposal — Trevo Advisors" />
+  <meta property="og:description" content="Custom contractor website: $400 flat, delivered in 3 business days. See what's included and pay online." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://trevoadvisors.com/proposal/" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
@@ -321,7 +326,7 @@
       <div class="demo-info">
         <h4>Your Trade · Your City · Your Brand</h4>
         <p>Professional design, call-to-action buttons, service pages, reviews section, and mobile-ready — all done for you.</p>
-        <a href="../demo/" class="demo-link" target="_blank">👀 View Your Demo Site →</a>
+        <a href="" class="demo-link" target="_blank" id="demo-link-btn">👀 View Your Demo Site →</a>
       </div>
     </div>
   </div>
@@ -538,16 +543,16 @@
   <!-- CTA -->
   <div class="cta-card">
     <h2>Ready to Get Started?</h2>
-    <p>Book a free 30-minute call. We'll talk through your business, answer any questions, and kick off the build the same day.</p>
+    <p>Pay online now to lock in your build — or book a free 30-minute call if you have questions first.</p>
     <div class="cta-btns">
-      <a href="https://cal.com/david-hettinger-g8qbdk/30min" target="_blank" class="cta-btn-primary">
-        📅 Book Your Free Call
+      <a href="../checkout/" class="cta-btn-primary">
+        💳 Pay Online — $400
       </a>
-      <a href="tel:+17209027555" class="cta-btn-outline">
-        📞 Call (720) 902-7555
+      <a href="https://cal.com/david-hettinger-g8qbdk/30min" target="_blank" class="cta-btn-outline">
+        📅 Book a Free Call First
       </a>
     </div>
-    <div class="cta-trust">No commitment required · Free 30-min call · Live in 3 business days</div>
+    <div class="cta-trust">Secure payment via Stripe · Live in 3 business days · Satisfaction guaranteed</div>
   </div>
 
 </div>
@@ -558,10 +563,27 @@
 </footer>
 
 <script>
-  // Show today's date in proposal header
+  // Show today's date
   const d = new Date();
   const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   document.getElementById('proposal-date').textContent = `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
+
+  // Set demo link based on ?trade= query param
+  // Usage: /proposal/?trade=hvac  or  /proposal/?trade=electrician  (default: plumber)
+  const trade = new URLSearchParams(window.location.search).get('trade') || 'plumber';
+  const demoLinks = {
+    plumber:     { href: '../demo/',                    icon: '🔧', label: 'Plumber Demo — Apex Plumbing Co.' },
+    electrician: { href: '../demo/electrician.html',    icon: '⚡', label: 'Electrician Demo — Volt Pro Electric' },
+    hvac:        { href: '../demo/hvac.html',            icon: '❄️', label: 'HVAC Demo — Peak Comfort HVAC' },
+  };
+  const demo = demoLinks[trade] || demoLinks['plumber'];
+  const btn = document.getElementById('demo-link-btn');
+  btn.href = demo.href;
+  btn.textContent = `${demo.icon} View Your Demo Site →`;
+
+  // Also update the screenshot icon and label
+  const shot = document.querySelector('.demo-screenshot');
+  if (shot) shot.textContent = demo.icon;
 </script>
 
 </body>

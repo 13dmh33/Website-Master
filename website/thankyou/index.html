@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment Confirmed — Let's Build Your Site | Trevo Advisors</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:   #2E5B8A;
+      --green:  #2E7D5B;
+      --cream:  #F8F7F3;
+      --amber:  #C8720E;
+      --dark:   #0F1E2D;
+      --mid:    #2A3F52;
+      --muted:  #60748A;
+      --border: #D8E3EC;
+      --white:  #FFFFFF;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--dark);
+      background: var(--cream);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      background: var(--dark);
+      color: #fff;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 40px;
+    }
+    .topbar-logo { display: flex; align-items: center; gap: 10px; }
+    .topbar-mark { width: 32px; height: 32px; background: var(--blue); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 15px; }
+    .topbar-brand { font-size: 16px; font-weight: 800; }
+    .topbar-confirm { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #4CAF50; font-weight: 600; }
+
+    main {
+      flex: 1;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 56px 24px 80px;
+      width: 100%;
+    }
+
+    /* ── CONFETTI HEADER ── */
+    .success-hero { text-align: center; margin-bottom: 40px; }
+    .success-emoji { font-size: 72px; margin-bottom: 16px; display: block; animation: pop .4s ease-out; }
+    @keyframes pop { 0%{transform:scale(.5);opacity:0} 70%{transform:scale(1.15)} 100%{transform:scale(1);opacity:1} }
+    .success-hero h1 { font-size: clamp(28px, 5vw, 44px); font-weight: 800; color: var(--dark); margin-bottom: 10px; }
+    .success-hero p { font-size: 18px; color: var(--muted); line-height: 1.6; }
+    .success-hero .name { color: var(--blue); font-weight: 800; }
+
+    /* ── RECEIPT ── */
+    .receipt-card {
+      background: var(--white); border-radius: 16px;
+      padding: 28px 32px; border: 1.5px solid var(--border);
+      box-shadow: 0 2px 16px rgba(0,0,0,.05);
+      margin-bottom: 24px;
+    }
+    .receipt-label { font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--green); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+    .receipt-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 15px; }
+    .receipt-row:last-child { border-bottom: none; }
+    .receipt-row .key { color: var(--muted); }
+    .receipt-row .val { font-weight: 700; color: var(--dark); }
+    .receipt-total { display: flex; justify-content: space-between; align-items: center; background: #EAF6EE; border-radius: 8px; padding: 14px 16px; margin-top: 14px; }
+    .receipt-total .label { font-size: 14px; font-weight: 700; color: var(--mid); }
+    .receipt-total .amount { font-size: 24px; font-weight: 800; color: var(--green); }
+
+    /* ── NEXT STEPS ── */
+    .steps-card {
+      background: var(--white); border-radius: 16px;
+      padding: 28px 32px; border: 1.5px solid var(--border);
+      box-shadow: 0 2px 16px rgba(0,0,0,.05);
+      margin-bottom: 24px;
+    }
+    .steps-card h2 { font-size: 20px; font-weight: 800; color: var(--dark); margin-bottom: 6px; }
+    .steps-card > p { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
+
+    .step { display: flex; gap: 18px; margin-bottom: 0; }
+    .step-left { display: flex; flex-direction: column; align-items: center; }
+    .step-num {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--blue); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 800; flex-shrink: 0;
+    }
+    .step-num.done { background: var(--green); }
+    .step-line { width: 2px; background: var(--border); flex: 1; min-height: 28px; margin: 4px 0; }
+    .step:last-child .step-line { display: none; }
+    .step-content { padding-bottom: 24px; }
+    .step-tag { font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--blue); margin-bottom: 4px; padding-top: 7px; }
+    .step-content h4 { font-size: 16px; font-weight: 800; color: var(--dark); margin-bottom: 4px; }
+    .step-content p { font-size: 14px; color: var(--muted); line-height: 1.55; }
+
+    /* intake CTA */
+    .intake-cta {
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dk, #1E3F63) 100%);
+      border-radius: 16px; padding: 36px 32px; text-align: center; color: #fff;
+      margin-bottom: 24px;
+    }
+    .intake-cta h2 { font-size: 24px; font-weight: 800; margin-bottom: 10px; }
+    .intake-cta p { font-size: 15px; color: rgba(255,255,255,.78); margin-bottom: 24px; line-height: 1.6; max-width: 440px; margin-left: auto; margin-right: auto; }
+    .intake-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #FFD580; color: var(--dark);
+      padding: 16px 32px; border-radius: 10px;
+      font-size: 18px; font-weight: 800;
+      transition: filter .2s;
+    }
+    .intake-btn:hover { filter: brightness(1.06); }
+    .intake-sub { margin-top: 14px; font-size: 13px; color: rgba(255,255,255,.55); }
+
+    /* nora callout */
+    .nora-callout {
+      background: var(--white); border-radius: 14px; padding: 24px 28px;
+      border: 1.5px solid rgba(46,91,138,.25);
+      margin-bottom: 24px; display: none;
+    }
+    .nora-callout.visible { display: block; }
+    .nora-callout h3 { font-size: 17px; font-weight: 800; color: var(--dark); margin-bottom: 6px; }
+    .nora-callout p { font-size: 14px; color: var(--muted); line-height: 1.55; }
+
+    /* contact */
+    .contact-row {
+      text-align: center; font-size: 14px; color: var(--muted); margin-top: 8px;
+    }
+    .contact-row a { color: var(--blue); font-weight: 600; }
+
+    footer {
+      background: var(--dark); color: rgba(255,255,255,.4);
+      text-align: center; padding: 20px 40px; font-size: 13px;
+    }
+    footer a { color: #6BB8FF; }
+
+    @media (max-width: 600px) {
+      .topbar { padding: 14px 20px; flex-direction: column; gap: 8px; }
+      main { padding: 36px 16px 60px; }
+      .receipt-card, .steps-card, .intake-cta { padding: 22px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-logo">
+    <div class="topbar-mark">🌱</div>
+    <div class="topbar-brand">Trevo Advisors</div>
+  </div>
+  <div class="topbar-confirm">✓ Payment Confirmed</div>
+</div>
+
+<main>
+
+  <!-- SUCCESS HEADER -->
+  <div class="success-hero">
+    <span class="success-emoji">🎉</span>
+    <h1>You're in, <span class="name" id="greet-name">friend</span>!</h1>
+    <p>Payment confirmed — your website build starts now. Fill out the quick intake form below and we'll have a preview ready for you in 1–2 business days.</p>
+  </div>
+
+  <!-- RECEIPT -->
+  <div class="receipt-card">
+    <div class="receipt-label">✓ Payment Receipt</div>
+    <div class="receipt-row">
+      <span class="key">Business</span>
+      <span class="val" id="r-biz">—</span>
+    </div>
+    <div class="receipt-row">
+      <span class="key">Email</span>
+      <span class="val" id="r-email">—</span>
+    </div>
+    <div class="receipt-row">
+      <span class="key">Item</span>
+      <span class="val">Website Design & Build + 1 month hosting</span>
+    </div>
+    <div class="receipt-row">
+      <span class="key">Payment ID</span>
+      <span class="val" id="r-pi" style="font-size:12px;font-family:monospace;">—</span>
+    </div>
+    <div class="receipt-total">
+      <span class="label">Total charged</span>
+      <span class="amount" id="r-total">$150.00</span>
+    </div>
+  </div>
+
+  <!-- NORA CALLOUT (only shown if they added Nora) -->
+  <div class="nora-callout" id="noraCallout">
+    <h3>🤖 Nora AI Agent — Added!</h3>
+    <p>We'll set up Nora alongside your website. Dave will reach out to configure your phone number and call preferences during the build. Your hosting ($65/mo) covers everything when your site goes live.</p>
+  </div>
+
+  <!-- NEXT STEPS -->
+  <div class="steps-card">
+    <h2>What Happens Next</h2>
+    <p>Here's exactly how the next 3 days go:</p>
+    <div class="step">
+      <div class="step-left"><div class="step-num done">✓</div><div class="step-line"></div></div>
+      <div class="step-content">
+        <div class="step-tag">Done — Right Now</div>
+        <h4>Payment Confirmed</h4>
+        <p>You'll get a receipt email from Stripe. Dave gets a notification and starts your build file.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num" style="background:var(--amber);">→</div><div class="step-line"></div></div>
+      <div class="step-content">
+        <div class="step-tag" style="color:var(--amber);">Next — Fill Intake Form</div>
+        <h4>Send Us Your Details</h4>
+        <p>5-minute form below — your services, phone number, service areas, logo (if you have one). The faster you fill it, the faster your site goes live.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num">2</div><div class="step-line"></div></div>
+      <div class="step-content">
+        <div class="step-tag">Day 1–2</div>
+        <h4>We Build Your Site</h4>
+        <p>Dave builds your custom website. You'll get a preview link via email to review before anything goes live.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num">3</div><div class="step-line"></div></div>
+      <div class="step-content">
+        <div class="step-tag">Day 2–3</div>
+        <h4>Review & Revisions</h4>
+        <p>Check the preview, request any changes, and we'll revise until you're happy — no charge.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-left"><div class="step-num">4</div></div>
+      <div class="step-content">
+        <div class="step-tag">Day 3</div>
+        <h4>Your Site Goes Live 🚀</h4>
+        <p>We connect your domain, launch the site, and send you everything you need. Start getting calls.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTAKE CTA -->
+  <div class="intake-cta">
+    <h2>Fill Out Your Intake Form Now</h2>
+    <p>Takes 5 minutes. Tells us everything we need to build your site — services, location, logo, and contact info.</p>
+    <a href="../intake/" class="intake-btn">📋 Fill Out Intake Form →</a>
+    <div class="intake-sub">Takes about 5 minutes · No login required</div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="contact-row">
+    Questions? Text or call Dave at <a href="tel:+17209027555">(720) 902-7555</a> or <a href="mailto:dave@trevoadvisors.com">dave@trevoadvisors.com</a>
+  </div>
+
+</main>
+
+<footer>
+  © 2025 Trevo Advisors · <a href="mailto:dave@trevoadvisors.com">dave@trevoadvisors.com</a> · <a href="tel:+17209027555">(720) 902-7555</a>
+</footer>
+
+<script>
+  // Pull details from query params (Stripe redirect) or sessionStorage (checkout handoff)
+  const p = new URLSearchParams(window.location.search);
+
+  let stored = {};
+  try { stored = JSON.parse(sessionStorage.getItem('trevo_checkout') || '{}'); }
+  catch { /* ignore */ }
+
+  const name  = p.get('name')  || stored.name  || '';
+  const biz   = p.get('biz')   || stored.biz   || '';
+  const email = p.get('email') || stored.email  || '';
+  const pi    = p.get('pi')    || '';
+  const nora  = (p.get('nora') || stored.nora) === '1';
+
+  // Clear sessionStorage after reading so it doesn't persist across future visits
+  try { sessionStorage.removeItem('trevo_checkout'); } catch { /* ignore */ }
+
+  const hasData = name || biz || email;
+
+  if (!hasData) {
+    // Navigated directly without completing checkout — show a helpful fallback
+    document.querySelector('.success-hero').innerHTML = `
+      <span class="success-emoji">👋</span>
+      <h1>Ready to get started?</h1>
+      <p>It looks like you haven't completed checkout yet. Click below to start your order — takes about 2 minutes.</p>
+      <a href="../checkout/" style="display:inline-flex;align-items:center;gap:8px;background:#2E5B8A;color:#fff;padding:14px 28px;border-radius:10px;font-size:17px;font-weight:800;text-decoration:none;margin-top:8px;">Go to Checkout →</a>
+    `;
+    document.querySelector('.receipt-card').style.display = 'none';
+    document.querySelector('.steps-card').style.display = 'none';
+    document.querySelector('.intake-cta').innerHTML = `
+      <h2>Questions first?</h2>
+      <p>Call or text Dave at (720) 902-7555 and he'll walk you through everything.</p>
+      <a href="tel:+17209027555" class="intake-btn">📞 Call (720) 902-7555</a>
+    `;
+  } else {
+    if (name)  document.getElementById('greet-name').textContent = name;
+    if (biz)   document.getElementById('r-biz').textContent   = biz;
+    if (email) document.getElementById('r-email').textContent = email;
+    if (pi)    document.getElementById('r-pi').textContent    = pi;
+    if (nora) {
+      document.getElementById('noraCallout').classList.add('visible');
+      document.getElementById('r-total').textContent = '$200.00';
+    }
+  }
+</script>
+
+</body>
+</html>

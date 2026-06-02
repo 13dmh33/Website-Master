@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Secure Checkout | Trevo Advisors</title>
+  <meta name="description" content="Secure payment for your custom contractor website — $400 flat, delivered in 3 business days." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- Stripe.js loaded only if needed for future embedded checkout upgrade -->
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:    #2E5B8A;
+      --blue-dk: #1E3F63;
+      --green:   #2E7D5B;
+      --cream:   #F8F7F3;
+      --amber:   #C8720E;
+      --dark:    #0F1E2D;
+      --mid:     #2A3F52;
+      --muted:   #60748A;
+      --border:  #D8E3EC;
+      --white:   #FFFFFF;
+      --error:   #C0392B;
+    }
+
+    body { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--dark); background: var(--cream); min-height: 100vh; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      background: var(--dark);
+      color: #fff;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 40px;
+    }
+    .topbar-logo { display: flex; align-items: center; gap: 10px; }
+    .topbar-mark { width: 32px; height: 32px; background: var(--blue); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 15px; }
+    .topbar-brand { font-size: 16px; font-weight: 800; }
+    .secure-badge { display: flex; align-items: center; gap: 6px; font-size: 13px; color: rgba(255,255,255,.6); }
+    .secure-badge span { color: #4CAF50; }
+
+    /* ── LAYOUT ── */
+    .checkout-layout {
+      max-width: 940px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+      display: grid;
+      grid-template-columns: 1fr 400px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    /* ── ORDER SUMMARY ── */
+    .summary-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 32px;
+      border: 1.5px solid var(--border);
+      box-shadow: 0 2px 16px rgba(0,0,0,.05);
+    }
+    .summary-label { font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--blue); margin-bottom: 8px; }
+    .summary-card h2 { font-size: 22px; font-weight: 800; color: var(--dark); margin-bottom: 24px; }
+
+    .line-item { display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 0; border-bottom: 1px solid var(--border); }
+    .line-item:last-of-type { border-bottom: none; }
+    .line-desc h4 { font-size: 15px; font-weight: 700; color: var(--dark); margin-bottom: 3px; }
+    .line-desc p { font-size: 13px; color: var(--muted); line-height: 1.45; }
+    .line-price { font-size: 18px; font-weight: 800; color: var(--dark); white-space: nowrap; }
+    .line-price.monthly { font-size: 15px; color: var(--muted); }
+
+    .total-row {
+      display: flex; justify-content: space-between; align-items: center;
+      background: #EAF6EE; border-radius: 10px;
+      padding: 16px 18px; margin-top: 16px;
+    }
+    .total-row .label { font-size: 14px; font-weight: 700; color: var(--mid); }
+    .total-row .amount { font-size: 28px; font-weight: 800; color: var(--green); }
+
+    .recurring-note {
+      margin-top: 10px; font-size: 12px; color: var(--muted);
+      background: var(--cream); border-radius: 8px;
+      padding: 10px 14px; border: 1px solid var(--border);
+    }
+
+    /* included list */
+    .included { margin-top: 28px; }
+    .included h4 { font-size: 13px; font-weight: 800; color: var(--mid); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 12px; }
+    .included ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .included ul li { display: flex; gap: 10px; font-size: 14px; color: var(--mid); align-items: flex-start; }
+    .included ul li::before { content: '✓'; color: var(--green); font-weight: 800; flex-shrink: 0; }
+
+    .guarantee {
+      display: flex; align-items: flex-start; gap: 12px;
+      background: rgba(46,125,91,.06); border: 1.5px solid rgba(46,125,91,.2);
+      border-radius: 10px; padding: 14px 16px; margin-top: 20px;
+    }
+    .guarantee-icon { font-size: 22px; flex-shrink: 0; }
+    .guarantee p { font-size: 13px; color: var(--mid); line-height: 1.55; }
+    .guarantee strong { color: var(--dark); }
+
+    /* ── PAYMENT FORM ── */
+    .payment-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 32px;
+      border: 1.5px solid var(--border);
+      box-shadow: 0 2px 16px rgba(0,0,0,.05);
+    }
+    .payment-card h2 { font-size: 22px; font-weight: 800; color: var(--dark); margin-bottom: 6px; }
+    .payment-card > p { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
+
+    .field { margin-bottom: 18px; }
+    .field label { display: block; font-size: 12px; font-weight: 700; color: var(--mid); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; }
+    .field input {
+      width: 100%; padding: 12px 14px;
+      border: 1.5px solid var(--border); border-radius: 8px;
+      font-family: inherit; font-size: 15px; color: var(--dark);
+      background: #fff; transition: border-color .2s;
+    }
+    .field input:focus { outline: none; border-color: var(--blue); }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    /* Stripe element container */
+    .stripe-field {
+      padding: 13px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      background: #fff;
+      transition: border-color .2s;
+      min-height: 46px;
+    }
+    .stripe-field.focused { border-color: var(--blue); }
+    .stripe-field-label { font-size: 12px; font-weight: 700; color: var(--mid); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 6px; display: block; }
+
+    .card-row { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+
+    /* payment icons */
+    .payment-icons { display: flex; gap: 8px; margin-bottom: 20px; align-items: center; }
+    .payment-icon {
+      height: 24px; padding: 3px 8px;
+      background: var(--cream); border: 1px solid var(--border);
+      border-radius: 4px; font-size: 11px; font-weight: 700; color: var(--muted);
+      display: flex; align-items: center;
+    }
+
+    /* add-on toggle */
+    .addon-box {
+      background: var(--cream); border: 1.5px solid var(--border);
+      border-radius: 10px; padding: 16px 18px; margin-bottom: 20px;
+      cursor: pointer; transition: border-color .2s;
+    }
+    .addon-box:hover { border-color: var(--blue); }
+    .addon-box.selected { border-color: var(--blue); background: rgba(46,91,138,.05); }
+    .addon-header { display: flex; align-items: center; justify-content: space-between; }
+    .addon-header label { display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 15px; font-weight: 700; color: var(--dark); }
+    .addon-header label input { accent-color: var(--blue); width: 18px; height: 18px; }
+    .addon-price { font-size: 15px; font-weight: 800; color: var(--blue); }
+    .addon-desc { font-size: 13px; color: var(--muted); margin-top: 6px; line-height: 1.5; padding-left: 28px; }
+
+    /* pay button */
+    .pay-btn {
+      width: 100%; padding: 16px;
+      background: var(--green); color: #fff;
+      border: none; border-radius: 10px;
+      font-family: inherit; font-size: 18px; font-weight: 800;
+      cursor: pointer; transition: filter .2s;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .pay-btn:hover { filter: brightness(1.08); }
+    .pay-btn:disabled { opacity: .65; cursor: not-allowed; filter: none; }
+
+    .pay-sub { text-align: center; font-size: 12px; color: var(--muted); margin-top: 10px; }
+    .pay-sub a { color: var(--blue); }
+
+    /* error */
+    .card-errors { color: var(--error); font-size: 13px; margin-bottom: 14px; min-height: 18px; }
+
+    /* ── CONFIG NOTICE (dev only) ── */
+    .config-notice {
+      background: #FFF3CD; border: 1.5px solid #FBBF24;
+      border-radius: 10px; padding: 14px 18px;
+      margin-bottom: 20px; font-size: 13px; color: #92400E;
+    }
+    .config-notice strong { display: block; margin-bottom: 4px; }
+    .config-notice code { background: rgba(0,0,0,.08); padding: 1px 5px; border-radius: 3px; font-size: 12px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 800px) {
+      .checkout-layout { grid-template-columns: 1fr; }
+      .topbar { padding: 14px 20px; }
+    }
+    @media (max-width: 500px) {
+      .card-row { grid-template-columns: 1fr; }
+      .field-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-logo">
+    <div class="topbar-mark">🌱</div>
+    <div class="topbar-brand">Trevo Advisors</div>
+  </div>
+  <div class="secure-badge"><span>🔒</span> Secured by Stripe</div>
+</div>
+
+<!-- CHECKOUT LAYOUT -->
+<div class="checkout-layout">
+
+  <!-- ORDER SUMMARY -->
+  <div class="summary-card">
+    <div class="summary-label">Order Summary</div>
+    <h2>Your Custom Website</h2>
+
+    <div class="line-item">
+      <div class="line-desc">
+        <h4>Website Design & Build</h4>
+        <p>Custom 5–7 page site for your trade · Delivered in 3 business days · Mobile-ready</p>
+      </div>
+      <div class="line-price" id="build-price">$150</div>
+    </div>
+    <div class="line-item">
+      <div class="line-desc">
+        <h4>First Month Hosting</h4>
+        <p>SSL · fast servers · maintenance included</p>
+      </div>
+      <div class="line-price" style="color:var(--green);">FREE</div>
+    </div>
+    <div class="line-item" id="nora-line" style="display:none;">
+      <div class="line-desc">
+        <h4>Nora AI Phone Agent Setup</h4>
+        <p>Included in your build — Dave configures after launch</p>
+      </div>
+      <div class="line-price" style="color:var(--blue);">+$50</div>
+    </div>
+    <div class="line-item">
+      <div class="line-desc">
+        <h4>Hosting — Month 2+</h4>
+        <p>Cancel anytime · No long-term commitment</p>
+      </div>
+      <div class="line-price monthly">$65/mo</div>
+    </div>
+
+    <div class="total-row">
+      <div class="label">Due today</div>
+      <div class="amount" id="total-display">$150</div>
+    </div>
+    <div class="recurring-note">$65/mo billing starts after your site launches. Cancel anytime.</div>
+
+    <div class="included">
+      <h4>What's included</h4>
+      <ul>
+        <li>Custom design (not a template)</li>
+        <li>Click-to-call on every page</li>
+        <li>Lead capture forms → your email</li>
+        <li>Google reviews section</li>
+        <li>SEO foundation built in</li>
+        <li>Mobile-first & fast loading</li>
+        <li>Unlimited revision requests</li>
+        <li>Domain DNS setup (if needed)</li>
+      </ul>
+    </div>
+
+    <div class="guarantee">
+      <div class="guarantee-icon">🛡️</div>
+      <p><strong>Satisfaction guarantee.</strong> If you're not happy after revisions, we'll refund you in full. No questions asked.</p>
+    </div>
+  </div>
+
+  <!-- PAYMENT FORM -->
+  <div class="payment-card">
+    <h2>Secure Payment</h2>
+    <p>Fill in your details below — you'll be taken to Stripe's secure payment page to complete checkout.</p>
+
+    <!-- ⚙️ SETUP: Replace STRIPE_PAYMENT_LINK below with your real Stripe Payment Link URL.
+         Create one at: https://dashboard.stripe.com/payment-links
+         Set the success URL to: https://trevoadvisors.com/thankyou/
+         Supports: ?prefilled_email=EMAIL to pre-fill the customer's email field. -->
+
+    <div class="payment-icons">
+      <div class="payment-icon">VISA</div>
+      <div class="payment-icon">MC</div>
+      <div class="payment-icon">AMEX</div>
+      <div class="payment-icon">DISCOVER</div>
+    </div>
+
+    <form id="payment-form">
+      <div class="field-row">
+        <div class="field">
+          <label>First Name</label>
+          <input type="text" id="first_name" placeholder="Mike" autocomplete="given-name" />
+        </div>
+        <div class="field">
+          <label>Last Name</label>
+          <input type="text" id="last_name" placeholder="Johnson" autocomplete="family-name" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="email" placeholder="mike@yourcompany.com" autocomplete="email" />
+      </div>
+
+      <div class="field">
+        <label>Business Name</label>
+        <input type="text" id="biz_name" placeholder="Peak Comfort HVAC" />
+      </div>
+
+      <!-- Nora add-on -->
+      <div style="margin:20px 0 8px; font-size:13px; font-weight:800; color:var(--mid); text-transform:uppercase; letter-spacing:.06em;">Optional Add-On</div>
+      <div class="addon-box" id="noraAddon">
+        <div class="addon-header">
+          <label>
+            <input type="checkbox" id="add_nora" onchange="updateTotal()" />
+            🤖 Add Nora AI Phone Agent
+          </label>
+          <span class="addon-price">+$50 today</span>
+        </div>
+        <div class="addon-desc">Answers calls, books jobs, texts missed callers — 24/7. Adds $50 to today's build fee. Nothing extra per month — included in your $65/mo hosting.</div>
+      </div>
+
+      <div class="card-errors" id="card-errors"></div>
+
+      <button type="submit" class="pay-btn" id="pay-btn">
+        🔒 Continue to Secure Payment →
+      </button>
+      <p class="pay-sub">
+        You'll be taken to Stripe's secure checkout page to enter your card details.
+        Questions? <a href="tel:+17209027555">(720) 902-7555</a>
+      </p>
+    </form>
+  </div>
+
+</div>
+
+<script>
+  // ── CONFIG ───────────────────────────────────────────────────────────────────
+  // Create TWO Payment Links at https://dashboard.stripe.com/payment-links
+  // Both success URLs → https://trevoadvisors.com/thankyou/
+  // Website only ($150):
+  const STRIPE_LINK_WEBSITE = 'https://buy.stripe.com/YOUR_WEBSITE_LINK_ID';
+  // Website + Nora ($200):
+  const STRIPE_LINK_NORA    = 'https://buy.stripe.com/YOUR_NORA_LINK_ID';
+
+  // ── NORA TOGGLE ──────────────────────────────────────────────────────────────
+  function updateTotal() {
+    const checked = document.getElementById('add_nora').checked;
+    document.getElementById('noraAddon').classList.toggle('selected', checked);
+    document.getElementById('nora-line').style.display  = checked ? 'flex' : 'none';
+    document.getElementById('build-price').textContent  = checked ? '$200' : '$150';
+    document.getElementById('total-display').textContent = checked ? '$200' : '$150';
+  }
+
+  // ── FORM SUBMIT ──────────────────────────────────────────────────────────────
+  document.getElementById('payment-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const btn       = document.getElementById('pay-btn');
+    const errEl     = document.getElementById('card-errors');
+    const firstName = document.getElementById('first_name').value.trim();
+    const lastName  = document.getElementById('last_name').value.trim();
+    const email     = document.getElementById('email').value.trim();
+    const bizName   = document.getElementById('biz_name').value.trim();
+    const addNora   = document.getElementById('add_nora').checked;
+
+    errEl.textContent = '';
+
+    if (!firstName || !lastName) { errEl.textContent = 'Please enter your first and last name.'; return; }
+    if (!email || !email.includes('@')) { errEl.textContent = 'Please enter a valid email address.'; return; }
+    if (!bizName) { errEl.textContent = 'Please enter your business name.'; return; }
+
+    // Save details to sessionStorage so thankyou page can show receipt
+    try {
+      sessionStorage.setItem('trevo_checkout', JSON.stringify({
+        name: firstName, biz: bizName, email, nora: addNora ? '1' : '0'
+      }));
+    } catch { /* sessionStorage unavailable — thankyou page falls back gracefully */ }
+
+    btn.disabled = true;
+    btn.textContent = 'Redirecting to Stripe...';
+
+    // Route to correct Payment Link based on Nora selection
+    const link   = addNora ? STRIPE_LINK_NORA : STRIPE_LINK_WEBSITE;
+    const params = new URLSearchParams({ prefilled_email: email });
+    window.location.href = `${link}?${params.toString()}`;
+  });
+</script>
+
+</body>
+</html>

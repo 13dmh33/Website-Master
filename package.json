@@ -12,6 +12,7 @@
     "film": "node scripts/filmer.js",
     "mobile": "node scripts/mobile.js",
     "dash": "node scripts/dashboard.js",
+    "webhook": "node scripts/webhook.js",
     "daily": "bash run-daily.sh",
     "daily:dry": "bash run-daily.sh --dry-run"
   },

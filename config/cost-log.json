@@ -548,6 +548,276 @@
         "cache_read": 0,
         "cache_write": 0
       }
+    },
+    {
+      "ts": "2026-06-02T14:16:25.035Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:17:04.522Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:18:03.966Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:18:31.469Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:19:28.133Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:20:16.618Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:21:07.035Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:21:47.535Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:22:37.118Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:23:17.734Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:23:51.984Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:24:38.663Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:25:08.012Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:25:54.374Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:26:37.180Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:27:15.466Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:27:37.979Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:28:09.593Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:28:50.879Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:29:35.575Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:30:16.075Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:31:05.573Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:31:38.911Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:32:10.754Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:32:40.144Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:33:21.869Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:33:52.463Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:34:14.088Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:35:10.710Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-02T14:35:57.239Z",
+      "service": "twilio",
+      "script": "pitcher",
+      "cost_usd": 0.0079,
+      "meta": {
+        "messages": 1
+      }
     }
   ]
 }

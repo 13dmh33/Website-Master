@@ -13,12 +13,14 @@
     "mobile": "node scripts/mobile.js",
     "dash": "node scripts/dashboard.js",
     "webhook": "node scripts/webhook.js",
+    "poll": "node scripts/poller.js",
     "daily": "bash run-daily.sh",
     "daily:dry": "bash run-daily.sh --dry-run"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.37.0",
     "dotenv": "^16.0.0",
+    "imapflow": "^1.0.0",
     "nodemailer": "^6.9.0"
   }
 }

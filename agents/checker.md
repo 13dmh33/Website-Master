@@ -2,7 +2,7 @@
 
 ## Role
 Quality-gate every cold message before Pitcher sends it.
-Run 4 evals. Auto-rewrite if any fail. Block after 2 failed rewrites.
+Run 5 evals. Auto-rewrite if any fail. Block after 2 failed rewrites.
 
 ## Input
 Read cold_message from /queue/{lead_id}-brief.json
@@ -45,8 +45,14 @@ Scan for: "game-changing", "cutting-edge", "seamlessly", "leverage",
 - Ends with exactly one direct question (ends with "?")
 - No more than 3 sentences before the question
 
+## Eval 5 — No Spammy Openers (block if any found at start or within message)
+Scan for: "I hope this finds you", "Just reaching out", "I wanted to touch base",
+"I wanted to follow up", "Checking in", "Quick question", "I came across your",
+"I noticed your", "My name is", "I specialize in", "I help businesses like yours",
+"Are you looking for"
+
 ## Rewrite Rules
-- If any eval fails: rewrite to pass, then re-run all 4 evals
+- If any eval fails: rewrite to pass, then re-run all 5 evals
 - Maximum 2 rewrite attempts
 - If still failing after 2 rewrites: set checker_approved = false, checker_flag = "human_review"
 - Never send a flagged message — Pitcher checks checker_approved before sending
@@ -67,7 +73,7 @@ node scripts/checker.js --limit 10 --force
 }
 ```
 
-Evals 1–4 run locally with no API cost.
+Evals 1–5 run locally with no API cost.
 Claude API only called when a rewrite is needed (~$0.0003/rewrite).
 
 ## Finding Flagged Messages

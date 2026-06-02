@@ -1,0 +1,31 @@
+{
+  "lead_id": "ChIJ1XgiHfiiIowR5ogX1vW7gFs",
+  "business_name": "Electrician Denver CO",
+  "trade": "electrician",
+  "city": "Denver, CO",
+  "phone": "+1 303-990-3781",
+  "email": "",
+  "website": "none",
+  "review_count": 44,
+  "rating": 4.7,
+  "diagnosis": "Strong local reputation (44 reviews, 4.7★) but completely missing website. Zero online presence beyond Google Maps. Losing credibility and job inquiries to competitors with web presence.",
+  "hero_angle": "Established Denver electrician with proven customer trust—ready to convert that reputation into consistent online revenue.",
+  "tone": "urgent",
+  "cold_message": "Hey — 44 five-star reviews on Google is legit. But when someone in Denver, CO searches \"electrician near me\" tonight, they're booking whoever has a website. You're losing jobs to guys with half your reputation. Worth a quick fix? — Dave, Trevo Advisors",
+  "template_id": "s1",
+  "template_name": "The reputation gap",
+  "template_based": true,
+  "gap_score": 9,
+  "priority": false,
+  "channel": "sms",
+  "checker_approved": true,
+  "diagnosed_at": "2026-05-29T13:52:52.597Z",
+  "final_message": "Hey — 44 five-star reviews on Google is legit. But when someone in Denver, CO searches \"electrician near me\" tonight, they're booking whoever has a website. You're losing jobs to guys with half your reputation. Worth a quick fix? — Dave, Trevo Advisors",
+  "checker_flag": "",
+  "rewrite_count": 0,
+  "checker_score": {
+    "template_based": true,
+    "placeholders_filled": true
+  },
+  "checked_at": "2026-05-29T13:53:22.475Z"
+}

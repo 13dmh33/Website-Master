@@ -1,0 +1,31 @@
+{
+  "lead_id": "rodriguez-family-plumbing-phoenix-az",
+  "business_name": "Rodriguez Family Plumbing",
+  "trade": "plumber",
+  "city": "Phoenix, AZ",
+  "phone": "+16025550101",
+  "email": "",
+  "website": "none",
+  "review_count": 42,
+  "rating": 4.8,
+  "diagnosis": "42 great reviews (4.8★) but zero web presence. Local calls go nowhere online. Competitors with basic sites are capturing their search traffic and phone inquiries.",
+  "hero_angle": "Rodriguez Family Plumbing has earned 42 authentic reviews—that's word-of-mouth gold that needs a home base.",
+  "tone": "warm",
+  "cold_message": "Hi—Rodriguez Family Plumbing shows 42 solid reviews on Google. Question: when someone searches \"plumber near me\" in Phoenix, are they finding you or your competitors? A simple site turns those reviews into bookings. Worth a quick call?",
+  "gap_score": 9,
+  "priority": true,
+  "channel": "sms",
+  "checker_approved": true,
+  "diagnosed_at": "2026-05-28T02:15:33.257Z",
+  "final_message": "Hi—Rodriguez Family Plumbing shows 42 solid reviews on Google. Question: when someone searches \"plumber near me\" in Phoenix, are they finding you or your competitors? A simple site turns those reviews into bookings. Worth a quick call?",
+  "checker_flag": "",
+  "rewrite_count": 0,
+  "checker_score": {
+    "personalization": 100,
+    "no_ai_markers": true,
+    "no_buzzwords": true,
+    "structure": true,
+    "no_spammy_openers": true
+  },
+  "checked_at": "2026-05-28T02:16:02.375Z"
+}

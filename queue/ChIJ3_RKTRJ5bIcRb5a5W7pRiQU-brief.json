@@ -1,0 +1,31 @@
+{
+  "lead_id": "ChIJ3_RKTRJ5bIcRb5a5W7pRiQU",
+  "business_name": "Colorado Electricians",
+  "trade": "electrician",
+  "city": "Denver, CO",
+  "phone": "+1 720-697-2905",
+  "email": "",
+  "website": "none",
+  "review_count": 9,
+  "rating": 5,
+  "diagnosis": "9 verified 5-star reviews but completely invisible online—no website means they're losing qualified leads to competitors with basic web presence. Strong reputation stuck on Google Maps only.",
+  "hero_angle": "Perfect review score with zero web friction—one website and they double their qualified leads without changing anything else.",
+  "tone": "direct",
+  "cold_message": "Hey — 9 five-star reviews on Google is legit. But when someone in Denver, CO searches \"electrician near me\" tonight, they're booking whoever has a website. You're losing jobs to guys with half your reputation. Worth a quick fix? — Dave, Trevo Advisors",
+  "template_id": "s1",
+  "template_name": "The reputation gap",
+  "template_based": true,
+  "gap_score": 7,
+  "priority": false,
+  "channel": "sms",
+  "checker_approved": true,
+  "diagnosed_at": "2026-05-29T13:53:10.041Z",
+  "final_message": "Hey — 9 five-star reviews on Google is legit. But when someone in Denver, CO searches \"electrician near me\" tonight, they're booking whoever has a website. You're losing jobs to guys with half your reputation. Worth a quick fix? — Dave, Trevo Advisors",
+  "checker_flag": "",
+  "rewrite_count": 0,
+  "checker_score": {
+    "template_based": true,
+    "placeholders_filled": true
+  },
+  "checked_at": "2026-05-29T13:53:22.477Z"
+}

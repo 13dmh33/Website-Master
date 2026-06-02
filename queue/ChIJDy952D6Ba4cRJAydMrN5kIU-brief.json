@@ -1,0 +1,31 @@
+{
+  "lead_id": "ChIJDy952D6Ba4cRJAydMrN5kIU",
+  "business_name": "Taurus Electric",
+  "trade": "electrician",
+  "city": "Denver, CO",
+  "phone": "+1 303-358-8688",
+  "email": "",
+  "website": "none",
+  "review_count": 9,
+  "rating": 5,
+  "diagnosis": "Taurus Electric has strong reviews (9, 5-star) but zero web presence—no website, email, or address listed. Missing digital storefront costs them visibility and makes booking friction high for local Denver customers searching online.",
+  "hero_angle": "Perfect 5-star review record proves quality; a simple website unlocks more referrals without changing the work.",
+  "tone": "direct",
+  "cold_message": "Hey — 9 five-star reviews on Google is legit. But when someone in Denver, CO searches \"electrician near me\" tonight, they're booking whoever has a website. You're losing jobs to guys with half your reputation. Worth a quick fix? — Dave, Trevo Advisors",
+  "template_id": "s1",
+  "template_name": "The reputation gap",
+  "template_based": true,
+  "gap_score": 7,
+  "priority": false,
+  "channel": "sms",
+  "checker_approved": true,
+  "diagnosed_at": "2026-05-29T13:53:12.401Z",
+  "final_message": "Hey — 9 five-star reviews on Google is legit. But when someone in Denver, CO searches \"electrician near me\" tonight, they're booking whoever has a website. You're losing jobs to guys with half your reputation. Worth a quick fix? — Dave, Trevo Advisors",
+  "checker_flag": "",
+  "rewrite_count": 0,
+  "checker_score": {
+    "template_based": true,
+    "placeholders_filled": true
+  },
+  "checked_at": "2026-05-29T13:53:22.477Z"
+}

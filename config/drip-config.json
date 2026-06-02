@@ -1,0 +1,17 @@
+{
+  "enabled": true,
+  "auto_run": false,
+  "d1_delay_days": 4,
+  "d1b_delay_days": 8,
+  "d1c_delay_days": 12,
+  "d2_delay_days": 19,
+  "dead_after_days": 26,
+  "daily_limit": 20,
+  "email_stagger_min_s": 120,
+  "email_stagger_max_s": 300,
+  "sms_stagger_min_s": 20,
+  "sms_stagger_max_s": 60,
+  "today": "2026-06-01",
+  "sent_today": 0,
+  "last_run": null
+}

@@ -31,9 +31,13 @@ Running without `--force` will exit early with no API call made.
 ```
 
 ## Target Criteria (filtered automatically by script)
-- Fewer than 100 reviews
+- Between 5 and 300 reviews (raised from 100 — larger cities need wider range)
 - Rating 4.0 or higher
 - Sorted by gap_score descending
+
+## Important: Run Locally Only
+The Outscraper API is blocked from the remote Claude Code container (cloud IP restriction).
+Always run Scout from your local machine, then commit and push the leads file.
 
 ## Gap Score
 - +4 if no website
@@ -44,9 +48,12 @@ Running without `--force` will exit early with no API call made.
 - Max: 10
 
 ## Output
-Writes to `/leads/{city}-{YYYY-MM-DD}.json`
+Writes to `/leads/{city}-{trade}-{YYYY-MM-DD}-run{n}.json`
+Each lead includes: lead_id, business_name, trade, city, phone, email, website, rating, review_count, gap_score, channel
 Updates `state.json` queue with new lead IDs
 Updates `config/scout-config.json` with spend
+
+Note: `email` comes from Outscraper and is often empty for small contractors. `years_on_maps` is always null — Outscraper does not provide this field.
 
 ## Channel Assignment (auto)
 - plumber / hvac → email

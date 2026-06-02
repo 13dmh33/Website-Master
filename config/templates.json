@@ -1,0 +1,161 @@
+{
+  "email": [
+    {
+      "id": "e1",
+      "name": "The reputation gap",
+      "tag": "Soft open",
+      "type": "initial",
+      "requires": ["review_count"],
+      "subject": "Your reviews are good. Your website isn't.",
+      "body": "Hey,\n\nI was looking up [Business Name] — [X] five-star reviews is genuinely impressive. But right now, when a homeowner in [City] searches \"[trade] near me\" at 9pm, they're booking whoever has a website. Not whoever has the best reputation.\n\nI build clean, fast websites for local [trade] contractors. $297 to build, $97/month to keep it live and maintained. Most clients are up in 3–5 business days.\n\nWorth a 15-minute call this week? No pitch — just want to see if it's a fit.\n\n— Dave\nTrevo Advisors | AI agents built for the trades.\n[Phone] | trevoadvisors.com"
+    },
+    {
+      "id": "e2",
+      "name": "The missed call",
+      "tag": "Problem-first",
+      "type": "initial",
+      "requires": [],
+      "subject": "You're losing jobs after hours",
+      "body": "Hey,\n\nQuick stat: the average local [trade] business misses 30–40% of after-hours leads — mostly because there's no website or no one answering chat.\n\n67% of those customers don't leave a voicemail. They just call your competitor.\n\nI build websites for local contractors that capture leads around the clock. Contact forms, booking links, mobile-ready. $297 to set up, $97/month after that.\n\nIf you want to stop sending jobs to guys with worse reviews than yours, I'd love to show you what this looks like.\n\n15 minutes this week?\n\n— Dave\nTrevo Advisors | AI agents built for the trades.\n[Phone] | trevoadvisors.com"
+    },
+    {
+      "id": "e3",
+      "name": "The broken site",
+      "tag": "Direct",
+      "type": "initial",
+      "requires": ["website_observation"],
+      "subject": "Checked out your website — a few things stood out",
+      "body": "Hey,\n\nI looked up [Business Name] and checked your site. [website_observation]. That's costing you leads every week.\n\nI rebuild sites like yours — clean, fast, mobile-ready, with a real contact and booking form. $297 flat to rebuild, $97/month to keep it maintained. Done in 3–5 days.\n\nWould it be worth 15 minutes to walk through what I'd change?\n\n— Dave\nTrevo Advisors | AI agents built for the trades.\n[Phone] | trevoadvisors.com"
+    },
+    {
+      "id": "e4",
+      "name": "The competitor angle",
+      "tag": "Competitive",
+      "type": "initial",
+      "requires": ["competitor_name"],
+      "subject": "Who's showing up when someone searches for you",
+      "body": "Hey,\n\nI searched \"[trade] in [City]\" — [competitor_name] is ranking at the top with a full website. They've got a booking form and everything.\n\n[Business Name] doesn't come up until someone already knows to search your name.\n\nThat's the gap. A clean website with your services, reviews, and a booking link puts you in that top results section. Mine start at $297 — done in a week.\n\nWorth 15 minutes to talk through it?\n\n— Dave\nTrevo Advisors | AI agents built for the trades.\n[Phone] | trevoadvisors.com"
+    },
+    {
+      "id": "e5",
+      "name": "The referral warm-up",
+      "tag": "Warm",
+      "type": "initial",
+      "requires": ["referral_name"],
+      "subject": "[referral_name] mentioned you",
+      "body": "Hey,\n\n[referral_name] mentioned you — said [Business Name] does solid work in [City].\n\nI help local [trade] contractors get a proper web presence — clean website, contact and booking forms, hosted and maintained. Most of my clients don't have time to deal with the tech side, so I handle all of it. $297 to build, $97/month after.\n\nWould a quick call make sense? Happy to keep it short — just want to see if there's a fit.\n\n— Dave\nTrevo Advisors | AI agents built for the trades.\n[Phone] | trevoadvisors.com"
+    }
+  ],
+  "sms": [
+    {
+      "id": "s1",
+      "name": "The reputation gap",
+      "tag": "Best performer",
+      "type": "initial",
+      "requires": ["review_count"],
+      "body": "Hey — [X] stars on Google is legit. But in [City], someone's booking \"[trade] near me\" with a website tonight. You're losing those jobs. — Dave, Trevo"
+    },
+    {
+      "id": "s2",
+      "name": "The missed job",
+      "tag": "Loss aversion",
+      "type": "initial",
+      "requires": [],
+      "body": "Hey — no website means missing 3–5 [trade] jobs a week to competitors who have one. I build them for $297 flat. 15-min call? — Dave, Trevo Advisors"
+    },
+    {
+      "id": "s3",
+      "name": "The simple ask",
+      "tag": "Low friction",
+      "type": "initial",
+      "requires": [],
+      "body": "Hey — I build websites for local [trade] contractors. Clean, fast, live in a week. $297 flat. Do you have one, or been putting it off? — Dave, Trevo Advisors"
+    },
+    {
+      "id": "s4",
+      "name": "The Google search",
+      "tag": "Competitive",
+      "type": "initial",
+      "requires": ["competitor_name"],
+      "body": "Hey — searched \"[trade] in [City].\" [competitor_name] has a website and booking form. [Business Name] doesn't show up. I fix that for $297. Call? — Dave, Trevo"
+    },
+    {
+      "id": "s5",
+      "name": "The follow-up",
+      "tag": "Second touch",
+      "type": "followup",
+      "requires": [],
+      "body": "Hey — reached out last week about [Business Name]'s website. Still worth 10 min if timing's better. No pressure. — Dave, Trevo Advisors"
+    },
+    {
+      "id": "s6",
+      "name": "The catch-all",
+      "tag": "No data required",
+      "type": "initial",
+      "requires": [],
+      "body": "Hey — I build websites for home service contractors. Clean, mobile-ready, live in a week. $297 flat. Worth a quick call? — Dave, Trevo Advisors"
+    }
+  ],
+  "drip": {
+    "d1": {
+      "sms": {
+        "id": "d1-sms",
+        "name": "Follow-up 1 — soft check-in",
+        "requires": [],
+        "body": "Hey — Dave from Trevo. Sent a note about your website a few days back. No pressure, just wanted to make sure it landed. Worth a quick look? trevoadvisors.com"
+      },
+      "email": {
+        "id": "d1-email",
+        "name": "Follow-up 1 — referral objection",
+        "requires": [],
+        "subject": "A few [City] [trade]s asked us this same question",
+        "body": "Hey,\n\nWanted to follow up on my last note.\n\nOne thing we hear a lot from [trade] businesses: \"We get most of our work from referrals — do we really need a website?\"\n\nShort answer: yes, because that referral is Googling you before they call. If nothing shows up, or what shows up looks old, you lose the job before it starts.\n\nWe fix that for $400 flat. Hosting is $97/month after that.\n\nWorth 15 minutes? → cal.com/david-hettinger-g8qbdk/30min\n\n— Dave\ndave@trevoadvisors.com"
+      }
+    },
+    "d1b": {
+      "sms": {
+        "id": "d1b-sms",
+        "name": "Follow-up 1b — missed call angle",
+        "requires": [],
+        "body": "Dave @ Trevo — quick thought: every call you miss on a job goes to a competitor who answers. Nora answers for you 24/7. Curious? trevoadvisors.com"
+      },
+      "email": {
+        "id": "d1b-email",
+        "name": "Follow-up 1b — missed call angle",
+        "requires": [],
+        "subject": "Who's answering your phone when you're on a job?",
+        "body": "Hey,\n\nHere's a problem almost every [trade] owner tells us about: a customer calls while you're elbow-deep in a job. You can't answer. They hang up and call the next guy.\n\nThat's a $500–$2,000 job walking out the door.\n\nNora — our AI voice agent — answers calls, qualifies the job, and books the appointment while you're working. No hiring, no training.\n\nBundled with a website: $350/month.\n\n15 minutes: cal.com/david-hettinger-g8qbdk/30min\n\n— Dave\ndave@trevoadvisors.com"
+      }
+    },
+    "d1c": {
+      "sms": {
+        "id": "d1c-sms",
+        "name": "Follow-up 1c — competitor visibility",
+        "requires": [],
+        "body": "Dave @ Trevo again. Searched [trade] in [City] today — your competitors are showing up. If you're not, you're invisible to people ready to hire. trevoadvisors.com"
+      },
+      "email": {
+        "id": "d1c-email",
+        "name": "Follow-up 1c — competitor visibility",
+        "requires": [],
+        "subject": "Searched \"[trade] [City]\" — here's what I found",
+        "body": "Hey,\n\nI ran a quick Google search for [trade] services in [City].\n\nA few competitors have clean sites, Google reviews, and show up immediately. If [Business Name] isn't there, anyone searching right now isn't finding you — they're finding them.\n\nA website doesn't have to be complicated. Ours go live fast, cost $400 to build, and $97/month to keep running.\n\nIf you want to be in that search result next week: cal.com/david-hettinger-g8qbdk/30min\n\n— Dave\ndave@trevoadvisors.com"
+      }
+    },
+    "d2": {
+      "sms": {
+        "id": "d2-sms",
+        "name": "Final touch — breakup",
+        "requires": [],
+        "body": "Last note from Dave at Trevo. If the timing's off, no worries — happy to revisit whenever. trevoadvisors.com"
+      },
+      "email": {
+        "id": "d2-email",
+        "name": "Final touch — breakup",
+        "requires": [],
+        "subject": "Closing the loop — [Business Name]",
+        "body": "Hey,\n\nI won't keep filling your inbox — this is my last note.\n\nIf the timing isn't right or you've already handled the website situation, genuinely glad to hear it.\n\nIf it ever becomes a priority — new site, or an AI agent that answers calls and books jobs while you're on a job — we're easy to find.\n\nWishing [Business Name] a busy season.\n\n— Dave\ndave@trevoadvisors.com | trevoadvisors.com"
+      }
+    }
+  }
+}

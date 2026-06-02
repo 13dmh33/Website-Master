@@ -20,7 +20,9 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.loc
 const fs   = require('fs');
 const path = require('path');
 const Anthropic = require('@anthropic-ai/sdk');
-const { writeLog } = require('./logger');
+const { writeLog }        = require('./logger');
+const { pickAndFill }     = require('./template-picker');
+const { recordAnthropic } = require('./cost-tracker');
 
 // ── PATHS ─────────────────────────────────────────────────────────────────────
 
@@ -173,9 +175,10 @@ function loadScoutedLeads() {
 // ── CLAUDE API ────────────────────────────────────────────────────────────────
 
 // System prompt is cached — only billed once per session, then cheap reads
-const SYSTEM_PROMPT = `You are an expert cold outreach copywriter for a web agency targeting home service contractors.
+const SYSTEM_PROMPT = `You are an expert sales researcher for a web agency targeting home service contractors.
 
-Given a lead (a contractor with a weak or missing website), you produce a structured JSON brief.
+Given a lead (a contractor with a weak or missing website), produce a structured JSON brief for internal use.
+The cold message copy is handled separately — do NOT write one here.
 
 Rules:
 - diagnosis: max 60 words, specific about their actual gaps (review count, no website, outdated site, etc.)
@@ -185,14 +188,10 @@ Rules:
   - direct = trades, no-nonsense, time = money
   - urgent = they're losing jobs to competitors right now
   - professional = general contractors, remodelers
-- cold_message: max 80 words, mentions business name + trade + local signal, ends with one question, NO AI markers, NO buzzwords
 - gap_score: integer 1-10 (your own assessment — may differ slightly from the input score)
-- channel: email | sms | ig_dm | linkedin
+- channel: copy exactly from the input — do not change it
 
-AI markers to avoid: "Certainly!", "As an AI", "I'd be happy to", "Great question", "Of course!", "Absolutely!", "I hope this message finds you well", "touch base", "circle back"
-Buzzwords to avoid: "game-changing", "cutting-edge", "seamlessly", "leverage", "synergy", "revolutionize", "disruptive", "innovative solution", "next-level", "empower", "transformative", "streamline"
-
-Respond ONLY with a valid JSON object. No markdown, no explanation.`;
+Respond ONLY with a valid JSON object with keys: diagnosis, hero_angle, tone, gap_score, channel. No markdown, no explanation.`;
 
 async function generateBrief(client, lead) {
   const userContent = `Generate a brief for this lead:
@@ -303,25 +302,53 @@ async function main() {
     try {
       const { brief, usage } = await generateBrief(client, lead);
       const cost = calcCost(usage, config.rates);
+      recordAnthropic(cost, 'diagnoser', usage);
+
+      // Email-first: if lead has an email address, prefer email over trade-default channel
+      const channel = lead.email ? 'email' : lead.channel;
+      const tmpl     = pickAndFill(channel, { ...lead, ...brief });
+
+      // Secondary channel: if lead has both email AND phone, also prepare SMS
+      const secondaryChannel = (lead.email && lead.phone) ? 'sms' : null;
+      const secTmpl = secondaryChannel ? pickAndFill(secondaryChannel, { ...lead, ...brief }) : null;
+
+      const coldMsg  = tmpl?.message       || '';
+      const tmplId   = tmpl?.template_id   || null;
+      const tmplName = tmpl?.template_name || null;
+
+      if (!tmpl) {
+        console.log(`\n  ⚠  No template available for ${lead.business_name} (${channel}) — brief saved without cold_message`);
+      }
+      if (secondaryChannel && !secTmpl) {
+        console.log(`\n  ⚠  No SMS template available for ${lead.business_name} — secondary channel skipped`);
+      }
 
       const fullBrief = {
-        lead_id:       lead.lead_id,
-        business_name: lead.business_name,
-        trade:         lead.trade,
-        city:          lead.city,
-        phone:         lead.phone,
-        website:       lead.website,
-        review_count:  lead.review_count,
-        rating:        lead.rating,
-        diagnosis:     brief.diagnosis    || '',
-        hero_angle:    brief.hero_angle   || '',
-        tone:          brief.tone         || 'direct',
-        cold_message:  brief.cold_message || '',
-        gap_score:     brief.gap_score    || lead.gap_score,
-        priority:      false,
-        channel:       brief.channel      || lead.channel,
-        checker_approved: false,
-        diagnosed_at:  new Date().toISOString()
+        lead_id:          lead.lead_id,
+        business_name:    lead.business_name,
+        trade:            lead.trade,
+        city:             lead.city,
+        phone:            lead.phone,
+        email:            lead.email || '',
+        website:          lead.website,
+        review_count:     lead.review_count,
+        rating:           lead.rating,
+        diagnosis:        brief.diagnosis  || '',
+        hero_angle:       brief.hero_angle || '',
+        tone:             brief.tone       || 'direct',
+        cold_message:            coldMsg,
+        template_id:             tmplId,
+        template_name:           tmplName,
+        template_based:          !!tmpl,
+        gap_score:               brief.gap_score  || lead.gap_score,
+        priority:                false,
+        channel:                 channel,
+        secondary_channel:       secondaryChannel,
+        secondary_message:       secTmpl?.message || null,
+        secondary_template_id:   secTmpl?.template_id || null,
+        secondary_template_name: secTmpl?.template_name || null,
+        checker_approved:        false,
+        diagnosed_at:            new Date().toISOString()
       };
 
       const outPath = path.join(QUEUE_DIR, `${lead.lead_id}-brief.json`);

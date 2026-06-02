@@ -25,7 +25,8 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.loc
 const fs        = require('fs');
 const path      = require('path');
 const Anthropic = require('@anthropic-ai/sdk');
-const { writeLog } = require('./logger');
+const { writeLog }        = require('./logger');
+const { recordAnthropic } = require('./cost-tracker');
 
 // ── PATHS ─────────────────────────────────────────────────────────────────────
 
@@ -376,8 +377,44 @@ async function main() {
 
     let message      = brief.cold_message;
     let rewriteCount = 0;
-    let evals        = runAllEvals(message, brief);
     let runCost      = 0;
+
+    // Template-based messages are pre-approved copy — only verify placeholders filled
+    if (brief.template_based) {
+      const primaryUnfilled   = /\[[A-Z]/.test(message);
+      const secondaryUnfilled = brief.secondary_message ? /\[[A-Z]/.test(brief.secondary_message) : false;
+      const hasUnfilled = primaryUnfilled || secondaryUnfilled;
+      brief.final_message    = message;
+      brief.checker_approved = !hasUnfilled;
+      brief.checker_flag     = hasUnfilled
+        ? (primaryUnfilled ? 'unfilled_placeholder' : 'unfilled_secondary_placeholder')
+        : '';
+      brief.rewrite_count    = 0;
+      brief.checker_score    = {
+        template_based:          true,
+        placeholders_filled:     !primaryUnfilled,
+        secondary_placeholders:  !secondaryUnfilled
+      };
+      brief.checked_at       = new Date().toISOString();
+      fs.writeFileSync(filePath, JSON.stringify(brief, null, 2));
+      updateState(brief.lead_id, brief.checker_approved ? 'checked' : 'flagged');
+      config.processed_today += 1;
+      config.total_processed += 1;
+      if (brief.checker_approved) {
+        approved++;
+        config.approved_total++;
+        const channels = [brief.template_id, brief.secondary_template_id].filter(Boolean).join(' + ');
+        console.log(`${label} — ✓ template approved (${channels})`);
+      } else {
+        flagged++;
+        config.flagged_total++;
+        console.log(`${label} — ✗ unfilled placeholder (${brief.checker_flag})`);
+      }
+      saveConfig(config);
+      continue;
+    }
+
+    let evals = runAllEvals(message, brief);
 
     // Rewrite loop — max 2 attempts
     while (!evals.allPass && rewriteCount < 2) {
@@ -385,6 +422,7 @@ async function main() {
       try {
         const { message: newMsg, usage } = await rewrite(client, message, brief, evals.failures, config);
         const cost = calcCost(usage, config.rates);
+        recordAnthropic(cost, 'checker', usage);
         runCost += cost;
         totalCost += cost;
         config.spent_this_month = parseFloat((config.spent_this_month + cost).toFixed(6));

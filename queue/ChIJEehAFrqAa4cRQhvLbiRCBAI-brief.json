@@ -1,0 +1,31 @@
+{
+  "lead_id": "ChIJEehAFrqAa4cRQhvLbiRCBAI",
+  "business_name": "MH Electrical and Solar",
+  "trade": "electrician",
+  "city": "Denver, CO",
+  "phone": "+1 303-915-0914",
+  "email": "",
+  "website": "none",
+  "review_count": 86,
+  "rating": 5,
+  "diagnosis": "86 5-star reviews on Google Maps but zero web presence. Missing website, email, and address details—leaving money on the table as customers can't learn about services, pricing, or book online.",
+  "hero_angle": "Exceptional reputation (86 five-star reviews) ready to convert into predictable revenue with a professional web footprint.",
+  "tone": "direct",
+  "cold_message": "Hey — 86 five-star reviews on Google is legit. But when someone in Denver, CO searches \"electrician near me\" tonight, they're booking whoever has a website. You're losing jobs to guys with half your reputation. Worth a quick fix? — Dave, Trevo Advisors",
+  "template_id": "s1",
+  "template_name": "The reputation gap",
+  "template_based": true,
+  "gap_score": 8,
+  "priority": false,
+  "channel": "sms",
+  "checker_approved": true,
+  "diagnosed_at": "2026-05-29T13:53:08.076Z",
+  "final_message": "Hey — 86 five-star reviews on Google is legit. But when someone in Denver, CO searches \"electrician near me\" tonight, they're booking whoever has a website. You're losing jobs to guys with half your reputation. Worth a quick fix? — Dave, Trevo Advisors",
+  "checker_flag": "",
+  "rewrite_count": 0,
+  "checker_score": {
+    "template_based": true,
+    "placeholders_filled": true
+  },
+  "checked_at": "2026-05-29T13:53:22.476Z"
+}

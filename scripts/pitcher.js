@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Pitcher — sends approved cold messages via email (Resend) or SMS (Twilio)
+ * Pitcher — sends approved cold messages via email (Zoho SMTP) or SMS (Twilio)
  *
  * Usage:
  *   node scripts/pitcher.js --force
@@ -10,24 +10,32 @@
  * Reads:  queue/*-brief.json     (checker_approved = true, status != sent)
  *         mockups/*-video.txt    (video URL if available — attached to email)
  *         config/pitcher-config.json
- *         .env.local             (RESEND_API_KEY, TWILIO_*)
+ *         .env.local             (ZOHO_EMAIL, ZOHO_APP_PASSWORD, TWILIO_*)
  * Writes: messages/{lead_id}-sent.json
  *         state.json             (status: checked → sent)
  *         config/pitcher-config.json (daily count tracking)
  *
  * Channel routing (set by Diagnoser, verified here):
- *   email  → plumbers, HVAC  (via Resend)
+ *   email  → plumbers, HVAC  (via Zoho SMTP — dave@trevoadvisors.com)
  *   sms    → electricians, roofers  (via Twilio)
  *   ig_dm  → flagged as manual_send (no API — written to messages/ as draft)
  *   linkedin → flagged as manual_send
+ *
+ * Stagger: random delay between sends to avoid spam filters.
+ *   Email: email_stagger_min_s – email_stagger_max_s (default 120–300s)
+ *   SMS:   sms_stagger_min_s  – sms_stagger_max_s   (default 20–60s)
+ *   Configurable in config/pitcher-config.json
  */
 
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.local') });
 
-const fs    = require('fs');
-const path  = require('path');
-const https = require('https');
-const { writeLog } = require('./logger');
+const fs          = require('fs');
+const path        = require('path');
+const https       = require('https');
+const nodemailer  = require('nodemailer');
+const { writeLog }              = require('./logger');
+const { recordSent }            = require('./template-picker');
+const { recordTwilio, recordEmail } = require('./cost-tracker');
 
 // ── PATHS ─────────────────────────────────────────────────────────────────────
 
@@ -59,19 +67,43 @@ function loadConfig() {
     const defaults = {
       daily_limit: 30,
       auto_run: false,
-      from_email: process.env.RESEND_FROM_EMAIL || 'outreach@yourdomain.com',
-      from_name: 'Your Name',
+      from_email: 'dave@trevoadvisors.com',
+      from_name: 'Dave',
+      email_stagger_min_s: 120,
+      email_stagger_max_s: 300,
+      sms_stagger_min_s: 20,
+      sms_stagger_max_s: 60,
       current_month: currentMonth(),
       today: today(),
       sent_today: 0,
       sent_this_month: 0,
       total_sent: 0,
+      email_sent_today: 0,
+      email_sent_this_month: 0,
+      email_total_sent: 0,
+      sms_sent_today: 0,
+      sms_sent_this_month: 0,
+      sms_total_sent: 0,
+      sms_followup_delay_hours: 4,
       last_run: null
     };
     fs.writeFileSync(CONFIG_PATH, JSON.stringify(defaults, null, 2));
     return defaults;
   }
-  return JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
+  const cfg = JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
+  // backfill defaults if missing
+  cfg.email_stagger_min_s    = cfg.email_stagger_min_s    ?? 120;
+  cfg.email_stagger_max_s    = cfg.email_stagger_max_s    ?? 300;
+  cfg.sms_stagger_min_s      = cfg.sms_stagger_min_s      ?? 20;
+  cfg.sms_stagger_max_s      = cfg.sms_stagger_max_s      ?? 60;
+  cfg.email_sent_today       = cfg.email_sent_today       ?? 0;
+  cfg.email_sent_this_month  = cfg.email_sent_this_month  ?? 0;
+  cfg.email_total_sent       = cfg.email_total_sent       ?? 0;
+  cfg.sms_sent_today            = cfg.sms_sent_today            ?? 0;
+  cfg.sms_sent_this_month       = cfg.sms_sent_this_month       ?? 0;
+  cfg.sms_total_sent            = cfg.sms_total_sent            ?? 0;
+  cfg.sms_followup_delay_hours  = cfg.sms_followup_delay_hours  ?? 4;
+  return cfg;
 }
 
 function checkAutoRun(config) {
@@ -84,10 +116,17 @@ function checkAutoRun(config) {
 }
 
 function checkLimits(config) {
-  if (config.today !== today()) { config.today = today(); config.sent_today = 0; }
+  if (config.today !== today()) {
+    config.today = today();
+    config.sent_today       = 0;
+    config.email_sent_today = 0;
+    config.sms_sent_today   = 0;
+  }
   if (config.current_month !== currentMonth()) {
-    config.current_month = currentMonth();
-    config.sent_this_month = 0;
+    config.current_month         = currentMonth();
+    config.sent_this_month       = 0;
+    config.email_sent_this_month = 0;
+    config.sms_sent_this_month   = 0;
   }
 
   if (config.sent_today >= config.daily_limit) {
@@ -111,41 +150,52 @@ function ensureDirs() {
   fs.mkdirSync(MOCKUPS_DIR,  { recursive: true });
 }
 
-function warnIfPlaceholder(config) {
-  if (
-    config.from_email === 'outreach@yourdomain.com' ||
-    config.from_name  === 'Your Name'
-  ) {
-    console.warn('⚠  WARNING: from_email or from_name in pitcher-config.json still set to placeholder.');
-    console.warn('   Update config/pitcher-config.json before sending real emails.\n');
+function warnIfMissingCreds() {
+  if (!process.env.ZOHO_EMAIL || !process.env.ZOHO_APP_PASSWORD) {
+    console.warn('⚠  WARNING: ZOHO_EMAIL or ZOHO_APP_PASSWORD not set in .env.local');
+    console.warn('   Email sends will fail. Set both before running live.\n');
   }
 }
 
 // ── LOAD APPROVED BRIEFS ──────────────────────────────────────────────────────
 
-function loadApprovedBriefs() {
-  // Build set of already-sent lead IDs from messages/
-  const sentIds = new Set(
-    fs.readdirSync(MESSAGES_DIR)
-      .filter(f => f.endsWith('-sent.json'))
-      .map(f => f.replace('-sent.json', ''))
-  );
-
-  const files  = fs.readdirSync(QUEUE_DIR).filter(f => f.endsWith('-brief.json'));
-  const briefs = [];
+function loadApprovedBriefs(config) {
+  const now      = Date.now();
+  const delayMs  = (config.sms_followup_delay_hours ?? 4) * 3600 * 1000;
+  const files    = fs.readdirSync(QUEUE_DIR).filter(f => f.endsWith('-brief.json'));
+  const briefs   = [];
 
   for (const file of files) {
     try {
       const data = JSON.parse(fs.readFileSync(path.join(QUEUE_DIR, file), 'utf8'));
-      if (data.checker_approved && !sentIds.has(data.lead_id)) {
-        briefs.push(data);
+      if (!data.checker_approved) continue;
+
+      const sentPath = path.join(MESSAGES_DIR, `${data.lead_id}-sent.json`);
+
+      if (!fs.existsSync(sentPath)) {
+        // Primary channel not yet sent
+        briefs.push({ ...data, _pending_channel: data.channel });
+        continue;
       }
+
+      // Check if secondary channel is pending (dual-channel lead)
+      if (data.secondary_channel) {
+        const sent   = JSON.parse(fs.readFileSync(sentPath, 'utf8'));
+        const secKey = `${data.secondary_channel}_sent`; // 'sms_sent' or 'email_sent'
+        if (!sent[secKey]) {
+          const primarySentAt = sent[`${data.channel}_sent_at`];
+          if (primarySentAt && (now - new Date(primarySentAt).getTime()) >= delayMs) {
+            briefs.push({ ...data, _pending_channel: data.secondary_channel });
+          }
+        }
+      }
+      // Single-channel lead with sent.json → fully done, skip
+
     } catch (e) {
       console.warn(`Could not read ${file}: ${e.message}`);
     }
   }
 
-  // Priority first, then by gap_score
   return briefs.sort((a, b) => {
     if (a.priority && !b.priority) return -1;
     if (!a.priority && b.priority) return 1;
@@ -170,70 +220,56 @@ function isRetryable(statusCode) {
 
 function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-// ── EMAIL SENDER (Resend) ─────────────────────────────────────────────────────
+// ── EMAIL SENDER (Zoho SMTP) ──────────────────────────────────────────────────
 
-function sendEmail(brief, config, videoUrl) {
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) return Promise.reject(new Error('RESEND_API_KEY not set in .env.local'));
+let _zohoTransport = null;
 
-  const subject = `Quick question about ${brief.business_name}'s website`;
+function getZohoTransport() {
+  if (_zohoTransport) return _zohoTransport;
+  const user = process.env.ZOHO_EMAIL;
+  const pass = process.env.ZOHO_APP_PASSWORD;
+  if (!user || !pass) throw new Error('ZOHO_EMAIL and ZOHO_APP_PASSWORD must be set in .env.local');
+  _zohoTransport = nodemailer.createTransport({
+    host:   'smtp.zoho.com',
+    port:   465,
+    secure: true,
+    auth:   { user, pass }
+  });
+  return _zohoTransport;
+}
 
-  const ps = videoUrl
+async function sendEmail(brief, config, videoUrl) {
+  const transport = getZohoTransport();
+  const subject   = `Quick question about ${brief.business_name}'s website`;
+  const ps        = videoUrl
     ? `\n\nP.S. Built a quick mockup of what a new site could look like: ${videoUrl}`
     : `\n\nP.S. I put together a quick mockup of what a new site could look like — happy to share it on a call.`;
+  const text = `${brief.final_message}${ps}`;
 
-  const body = `${brief.final_message}${ps}`;
-
-  const payload = JSON.stringify({
-    from: `${config.from_name} <${config.from_email}>`,
-    to:   [brief.email],
+  const info = await transport.sendMail({
+    from:    `${config.from_name} <${config.from_email}>`,
+    to:      brief.email,
     subject,
-    text: body
+    text
   });
 
-  const options = {
-    hostname: 'api.resend.com',
-    path:     '/emails',
-    method:   'POST',
-    headers:  {
-      'Authorization': `Bearer ${apiKey}`,
-      'Content-Type':  'application/json',
-      'Content-Length': Buffer.byteLength(payload)
-    }
-  };
+  return { id: info.messageId, subject, body: text };
+}
 
-  const attempt = () => new Promise((resolve, reject) => {
-    const req = https.request(options, (res) => {
-      let data = '';
-      res.on('data', chunk => { data += chunk; });
-      res.on('end', () => {
-        try {
-          const parsed = JSON.parse(data);
-          if (res.statusCode >= 200 && res.statusCode < 300) {
-            resolve({ id: parsed.id, subject, body });
-          } else {
-            const err = new Error(`Resend error ${res.statusCode}: ${data}`);
-            err.statusCode = res.statusCode;
-            reject(err);
-          }
-        } catch (e) {
-          reject(new Error(`Failed to parse Resend response: ${data}`));
-        }
-      });
-    });
-    req.on('error', reject);
-    req.write(payload);
-    req.end();
-  });
+// ── STAGGER DELAY ─────────────────────────────────────────────────────────────
 
-  return attempt().catch(async (err) => {
-    if (isRetryable(err.statusCode)) {
-      console.warn(`  Resend ${err.statusCode} — retrying in 2s…`);
-      await delay(2000);
-      return attempt();
-    }
-    throw err;
-  });
+async function staggerDelay(minS, maxS) {
+  const seconds = minS + Math.floor(Math.random() * (maxS - minS + 1));
+  const mins    = Math.floor(seconds / 60);
+  const secs    = seconds % 60;
+  const label   = mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
+  process.stdout.write(`  ⏱  Staggering ${label} before next send`);
+  const tick = Math.ceil(seconds / 20);
+  for (let i = 0; i < seconds; i += tick) {
+    await delay(Math.min(tick, seconds - i) * 1000);
+    process.stdout.write('.');
+  }
+  process.stdout.write('\n');
 }
 
 // ── SMS SENDER (Twilio) ───────────────────────────────────────────────────────
@@ -323,27 +359,42 @@ function writeManualDraft(brief, videoUrl) {
 
 // ── LOG SEND ──────────────────────────────────────────────────────────────────
 
-function logSend(brief, result, channel, videoUrl, status = 'sent') {
-  const record = {
-    lead_id:       brief.lead_id,
-    business_name: brief.business_name,
-    trade:         brief.trade,
-    city:          brief.city,
-    phone:         brief.phone || null,
-    email:         brief.email || null,
-    channel,
-    sent_at:       new Date().toISOString(),
-    subject:       result.subject || null,
-    body:          result.body || brief.final_message,
-    video_url:     videoUrl || null,
-    status,
-    replies:       []
-  };
+function logSend(brief, result, channel, videoUrl) {
+  const sentPath = path.join(MESSAGES_DIR, `${brief.lead_id}-sent.json`);
+  const ts = new Date().toISOString();
 
-  fs.writeFileSync(
-    path.join(MESSAGES_DIR, `${brief.lead_id}-sent.json`),
-    JSON.stringify(record, null, 2)
-  );
+  // Load existing record or scaffold a new one
+  let record = fs.existsSync(sentPath)
+    ? JSON.parse(fs.readFileSync(sentPath, 'utf8'))
+    : {
+        lead_id:       brief.lead_id,
+        business_name: brief.business_name,
+        trade:         brief.trade,
+        city:          brief.city,
+        phone:         brief.phone || null,
+        email:         brief.email || null,
+        email_sent:    false, email_sent_at: null,
+        sms_sent:      false, sms_sent_at:   null,
+        replies:       []
+      };
+
+  if (channel === 'email') {
+    record.email_sent        = true;
+    record.email_sent_at     = ts;
+    record.email_template_id = brief.template_id || null;
+    record.email_subject     = result.subject    || null;
+    record.email_body        = result.body       || brief.final_message;
+    record.email_video_url   = videoUrl          || null;
+  } else if (channel === 'sms') {
+    record.sms_sent          = true;
+    record.sms_sent_at       = ts;
+    record.sms_template_id   = brief.secondary_template_id || brief.template_id || null;
+    record.sms_body          = result.body || brief.secondary_message || brief.final_message;
+    record.sms_sid           = result.sid  || null;
+    record.sms_video_url     = videoUrl    || null;
+  }
+
+  fs.writeFileSync(sentPath, JSON.stringify(record, null, 2));
 }
 
 function updateState(leadId, status) {
@@ -373,10 +424,10 @@ async function main() {
   ensureDirs();
   const config = loadConfig();
   checkAutoRun(config);
-  warnIfPlaceholder(config);
+  warnIfMissingCreds();
   const effectiveLimit = checkLimits(config);
 
-  const briefs = loadApprovedBriefs();
+  const briefs = loadApprovedBriefs(config);
   if (briefs.length === 0) {
     console.log('No approved briefs ready to send. Run Checker first.');
     process.exit(0);
@@ -391,13 +442,22 @@ async function main() {
   for (let i = 0; i < toSend.length; i++) {
     const brief    = toSend[i];
     const videoUrl = getVideoUrl(brief.lead_id);
-    const label    = `[${i + 1}/${toSend.length}] ${brief.business_name} (${brief.channel})`;
-    const channel  = brief.channel || 'email';
+    const channel  = brief._pending_channel || brief.channel || 'email';
+    const label    = `[${i + 1}/${toSend.length}] ${brief.business_name} (${channel})`;
+
+    // Resolve the right message and template for this channel send
+    const isSecondary = channel === brief.secondary_channel;
+    const resolvedBrief = isSecondary
+      ? { ...brief,
+          final_message: brief.secondary_message || brief.final_message,
+          template_id:   brief.secondary_template_id   || brief.template_id,
+          template_name: brief.secondary_template_name || brief.template_name }
+      : brief;
 
     if (isDryRun) {
       console.log(`${label} — DRY RUN`);
       console.log(`  To:      ${brief.phone || brief.email || 'no contact info'}`);
-      console.log(`  Message: ${brief.final_message?.substring(0, 80)}...`);
+      console.log(`  Message: ${resolvedBrief.final_message?.substring(0, 80)}...`);
       console.log(`  Video:   ${videoUrl || 'none'}`);
       continue;
     }
@@ -408,35 +468,37 @@ async function main() {
           console.log(`${label} — skipped (no email address on lead)`);
           continue;
         }
-        const result = await sendEmail(brief, config, videoUrl);
+        const result = await sendEmail(resolvedBrief, config, videoUrl);
         logSend(brief, result, channel, videoUrl);
         updateState(brief.lead_id, 'sent');
-        config.sent_today++;
-        config.sent_this_month++;
-        config.total_sent++;
+        if (resolvedBrief.template_id) recordSent(channel, resolvedBrief.template_id);
+        recordEmail(1);
+        config.sent_today++;           config.sent_this_month++;           config.total_sent++;
+        config.email_sent_today++;     config.email_sent_this_month++;     config.email_total_sent++;
         saveConfig(config);
         sent++;
-        console.log(`${label} — ✓ sent (Resend id: ${result.id})`);
+        console.log(`${label} — ✓ sent via Zoho (id: ${result.id}${resolvedBrief.template_id ? ', tmpl: ' + resolvedBrief.template_id : ''})`);
 
       } else if (channel === 'sms') {
         if (!brief.phone) {
           console.log(`${label} — skipped (no phone number on lead)`);
           continue;
         }
-        const result = await sendSms(brief, videoUrl);
+        const result = await sendSms(resolvedBrief, videoUrl);
         logSend(brief, result, channel, videoUrl);
         updateState(brief.lead_id, 'sent');
-        config.sent_today++;
-        config.sent_this_month++;
-        config.total_sent++;
+        if (resolvedBrief.template_id) recordSent(channel, resolvedBrief.template_id);
+        recordTwilio(1);
+        config.sent_today++;         config.sent_this_month++;         config.total_sent++;
+        config.sms_sent_today++;     config.sms_sent_this_month++;     config.sms_total_sent++;
         saveConfig(config);
         sent++;
-        console.log(`${label} — ✓ sent (Twilio sid: ${result.sid})`);
+        console.log(`${label} — ✓ sent (Twilio sid: ${result.sid}${resolvedBrief.template_id ? ', tmpl: ' + resolvedBrief.template_id : ''})`);
 
       } else {
         // ig_dm or linkedin — write manual draft
-        const draft = writeManualDraft(brief, videoUrl);
-        logSend(brief, draft, channel, videoUrl, 'manual_pending');
+        const draft = writeManualDraft(resolvedBrief, videoUrl);
+        logSend(brief, draft, channel, videoUrl);
         updateState(brief.lead_id, 'manual_pending');
         manual++;
         console.log(`${label} — 📋 manual draft written to messages/${brief.lead_id}-draft.txt`);
@@ -447,7 +509,13 @@ async function main() {
       errors++;
     }
 
-    if (i < toSend.length - 1) await new Promise(r => setTimeout(r, 500));
+    if (i < toSend.length - 1 && !isDryRun) {
+      const isEmail = channel === 'email';
+      await staggerDelay(
+        isEmail ? config.email_stagger_min_s : config.sms_stagger_min_s,
+        isEmail ? config.email_stagger_max_s : config.sms_stagger_max_s
+      );
+    }
   }
 
   config.last_run = new Date().toISOString();

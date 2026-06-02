@@ -47,7 +47,8 @@ const TRADE_COLORS = {
   hvac:        { hex: '#c0392b', name: 'Red' },
   electrician: { hex: '#f39c12', name: 'Amber' },
   roofer:      { hex: '#7f8c8d', name: 'Slate Grey' },
-  handyman:    { hex: '#27ae60', name: 'Green' }
+  handyman:    { hex: '#27ae60', name: 'Green' },
+  default:     { hex: '#2E5B8A', name: 'Slate Blue' }  // Trevo brand primary
 };
 
 // ── CONFIG ────────────────────────────────────────────────────────────────────
@@ -119,7 +120,7 @@ function loadPriorityBriefs(limit) {
 // ── PROMPT GENERATOR ──────────────────────────────────────────────────────────
 
 function generatePrompt(brief) {
-  const color = TRADE_COLORS[brief.trade?.toLowerCase()] || { hex: '#2c3e50', name: 'Dark Navy' };
+  const color = TRADE_COLORS[brief.trade?.toLowerCase()] || TRADE_COLORS.default;
 
   return `Build a landing page for ${brief.business_name}, a ${brief.trade} based in ${brief.city}.
 

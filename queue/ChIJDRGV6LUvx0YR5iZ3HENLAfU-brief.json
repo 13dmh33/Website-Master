@@ -1,0 +1,31 @@
+{
+  "lead_id": "ChIJDRGV6LUvx0YR5iZ3HENLAfU",
+  "business_name": "Resilient Electrical",
+  "trade": "electrician",
+  "city": "Denver, CO",
+  "phone": "+1 303-578-6528",
+  "email": "",
+  "website": "none",
+  "review_count": 27,
+  "rating": 5,
+  "diagnosis": "Strong 5-star reputation (27 reviews) but zero web presence. No website means lost quote requests, no SEO visibility, and customers can't verify credentials or see service details online.",
+  "hero_angle": "Perfect 5-star track record with proven customer base—now capture the leads searching for electricians online.",
+  "tone": "direct",
+  "cold_message": "Hey — 27 five-star reviews on Google is legit. But when someone in Denver, CO searches \"electrician near me\" tonight, they're booking whoever has a website. You're losing jobs to guys with half your reputation. Worth a quick fix? — Dave, Trevo Advisors",
+  "template_id": "s1",
+  "template_name": "The reputation gap",
+  "template_based": true,
+  "gap_score": 9,
+  "priority": true,
+  "channel": "sms",
+  "checker_approved": true,
+  "diagnosed_at": "2026-05-29T13:52:41.768Z",
+  "final_message": "Hey — 27 five-star reviews on Google is legit. But when someone in Denver, CO searches \"electrician near me\" tonight, they're booking whoever has a website. You're losing jobs to guys with half your reputation. Worth a quick fix? — Dave, Trevo Advisors",
+  "checker_flag": "",
+  "rewrite_count": 0,
+  "checker_score": {
+    "template_based": true,
+    "placeholders_filled": true
+  },
+  "checked_at": "2026-05-29T13:53:22.473Z"
+}

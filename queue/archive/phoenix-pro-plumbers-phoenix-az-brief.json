@@ -1,0 +1,31 @@
+{
+  "lead_id": "phoenix-pro-plumbers-phoenix-az",
+  "business_name": "Phoenix Pro Plumbers",
+  "trade": "plumber",
+  "city": "Phoenix, AZ",
+  "phone": "+16025550102",
+  "email": "",
+  "website": "none",
+  "review_count": 18,
+  "rating": 4.6,
+  "diagnosis": "No website despite 18 solid reviews (4.6★). Customers can't easily find service details, pricing, or booking options. You're losing jobs to competitors with online presence.",
+  "hero_angle": "18 verified reviews show Phoenix Pro Plumbers delivers real results—now it's time to let prospects find you before they call someone else.",
+  "tone": "urgent",
+  "cold_message": "Hi—Phoenix Pro Plumbers has great reviews on Google (18 ratings, 4.6 stars), but no website. That means people searching for plumbers in Van Buren area can't learn about you online. How many calls per week do you think you're missing because you're not easy to find?",
+  "gap_score": 8,
+  "priority": true,
+  "channel": "sms",
+  "checker_approved": true,
+  "diagnosed_at": "2026-05-28T02:15:36.374Z",
+  "final_message": "Hi—Phoenix Pro Plumbers has great reviews on Google (18 ratings, 4.6 stars), but no website. That means people searching for plumbers in Van Buren area can't learn about you online. How many calls per week do you think you're missing because you're not easy to find?",
+  "checker_flag": "",
+  "rewrite_count": 0,
+  "checker_score": {
+    "personalization": 100,
+    "no_ai_markers": true,
+    "no_buzzwords": true,
+    "structure": true,
+    "no_spammy_openers": true
+  },
+  "checked_at": "2026-05-28T02:16:02.576Z"
+}

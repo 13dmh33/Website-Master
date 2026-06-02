@@ -160,3 +160,29 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - 2026-06-02: website/ directory built — 3 demos + proposal + intake + checkout + thankyou + /start funnel (on claude/demo-site, pending merge)
 - 2026-06-02: mobile.js updated — sends /start URL in positive reply, Zoho SMTP fix confirmed
 - 2026-06-02: Branches 1–6 merged to main; claude/website and claude/demo-site held pending review
+- 2026-06-02: Global pricing update — $150/$200 build + $65/mo applied across all templates, scripts, website pages, and MD files
+
+## Tomorrow's Tasks (2026-06-03)
+
+### On Mac (must do locally)
+1. Create 2 Stripe Payment Links: $150 (website-only) + $200 (website+Nora)
+   → Paste into `website/checkout/index.html` replacing `YOUR_WEBSITE_LINK_ID` and `YOUR_NORA_LINK_ID`
+2. Create Formspree form at formspree.io
+   → Paste form ID into `website/intake/index.html` replacing `YOUR_FORM_ID`
+3. Merge `claude/demo-site` → `main`, then deploy `website/` to trevoadvisors.com
+4. `npm install imapflow` for poller.js
+5. Start `node scripts/webhook.js` + ngrok + register URL in Twilio console
+6. Add `SITE_START_URL=https://trevoadvisors.com/start/` to `.env.local`
+
+### Bug Fixes (container OK)
+- `webhook.js`: guard `crypto.timingSafeEqual()` — add length check before compare to prevent RangeError
+- `poller.js`: guard `isAutoReply()` — add `if (!headers) return false;` to prevent null crash
+- `mobile.js`: change `call_booked` status to `booking_sent` on send (call not booked until prospect replies)
+- `drip.js`: fix `[trade]`/`[City]` token substitution in d1c-sms template
+
+### Low Priority Polish (container OK)
+- `website/demo/hvac.html`: add `<meta name="robots" content="noindex, nofollow">` + emoji favicon
+- `website/start/index.html` + `website/thankyou/index.html`: add OG tags
+- All demo contact forms: add "This is a demo — submit disabled" alert on form submit
+- `website/proposal/index.html`: show all 3 demo links when no `?trade=` param
+- Intake form step 3: make optional fields visually obvious

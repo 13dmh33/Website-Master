@@ -51,21 +51,27 @@ See daily workflow below.
 - [x] GitHub PAT on Mac — push without password prompts
 - [x] Cron job for Reporter — runs at 7am daily on Mac
 
-### Pending (website branch — claude/demo-site, not yet merged)
-- [ ] `website/start/` — /start funnel page (the link texted to positive replies)
-- [ ] `website/demo/` — 3 demo sites: plumber, electrician, HVAC
-- [ ] `website/proposal/` — sales proposal page with trade-specific demo link
-- [ ] `website/intake/` — 4-step client intake form (Formspree)
-- [ ] `website/checkout/` — Stripe Payment Link checkout
-- [ ] `website/thankyou/` — post-payment confirmation + next steps
+### Website funnel (built on claude/demo-site — pending Stripe/Formspree config + merge)
+- [x] `website/start/` — /start funnel page (the link texted to positive replies)
+- [x] `website/demo/` — 3 demo sites: plumber, electrician, HVAC
+- [x] `website/proposal/` — sales proposal page with trade-specific demo link
+- [x] `website/intake/` — 4-step client intake form (Formspree)
+- [x] `website/checkout/` — Stripe Payment Link checkout ($150 website / $200 +Nora)
+- [x] `website/thankyou/` — post-payment confirmation + next steps
 
-### Mac setup still needed
-- [ ] Create Stripe Payment Link → paste URL into `website/checkout/index.html`
-- [ ] Create Formspree form → paste ID into `website/intake/index.html`
+### Tomorrow — Mac setup (do before next run)
+- [ ] Create **2 Stripe Payment Links**: $150 (website-only) + $200 (website+Nora) → paste into `website/checkout/index.html`
+- [ ] Create Formspree form → paste ID into `website/intake/index.html` replacing `YOUR_FORM_ID`
 - [ ] Add `SITE_START_URL=https://trevoadvisors.com/start/` to `.env.local`
 - [ ] `npm install imapflow` (for poller.js)
 - [ ] `node scripts/webhook.js` + ngrok + paste URL in Twilio console
-- [ ] Deploy `website/` to trevoadvisors.com after demo-site branch merges
+- [ ] Merge `claude/demo-site` → `main` and deploy `website/` to trevoadvisors.com
+
+### Tomorrow — Bug fixes (container)
+- [ ] `webhook.js`: add `if (expected.length !== signature.length) return false;` before `timingSafeEqual()`
+- [ ] `poller.js`: add `if (!headers) return false;` at top of `isAutoReply()`
+- [ ] `mobile.js`: change `call_booked` status to `booking_sent` on send (before call actually books)
+- [ ] `drip.js`: fix `[trade]`/`[City]` token substitution in d1c-sms template
 
 ---
 

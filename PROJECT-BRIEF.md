@@ -44,11 +44,12 @@ Everything else is automated.
 
 | Product | Price | Type |
 |---|---|---|
-| Website build | $400 | One-time |
-| Nora voice agent | $399/mo | Recurring standalone |
-| Bundle (hosting + Nora) | $350/mo | Recurring |
+| Website build | $150 | One-time |
+| Hosting | $65/mo | Recurring |
+| Website + Nora build | $200 | One-time |
+| Bundle (hosting + Nora) | $65/mo | Recurring |
 
-**Target:** 47 clients/month → ~$18,800/mo recurring at scale
+**Target:** 47 clients/month → ~$7,050/mo recurring at scale
 
 ---
 
@@ -215,7 +216,7 @@ Morning report aggregates by day and month.
 | Twilio (SMS) | ~$5–10/mo |
 | **Total infrastructure** | **~$25–30/mo** |
 
-At $400/site × 47 = $18,800/mo revenue, infrastructure is <0.2% of revenue.
+At $150/site × 47 = $7,050/mo revenue, infrastructure is <0.5% of revenue.
 
 ---
 

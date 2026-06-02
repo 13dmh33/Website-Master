@@ -9,9 +9,9 @@ Solo AI agency system for selling websites + Nora voice agent bundles to home se
 
 ## Revenue Model
 
-- Website: $400 one-time
-- Nora voice agent: $399/mo standalone / $350/mo bundle
-- Target: 47 clients/mo = ~$18K/mo recurring
+- Website build: $150 one-time + $65/mo hosting
+- Website + Nora bundle: $200 build + $65/mo
+- Target: 47 clients/mo = ~$7K/mo recurring
 
 ---
 

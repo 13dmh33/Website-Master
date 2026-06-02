@@ -44,7 +44,7 @@ automatically sends:
 Hey [Name]! It's been a week since your site went live — hope it's already bringing in calls.
 
 Quick thought: we offer Nora, a 24/7 AI phone agent that answers calls, books jobs, and follows
-up with leads automatically. Our clients bundle it with hosting for $350/mo.
+up with leads automatically. Bundle it with your hosting for just $65/mo.
 
 Worth a 10-min chat to see if it fits?
 ```

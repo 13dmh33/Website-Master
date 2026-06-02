@@ -7,7 +7,7 @@ Owner: Dave — dave@trevoadvisors.com
 
 Brand colors: Slate Blue #2E5B8A (primary) · Growth Green #2E7D5B · Warm Cream #F8F7F3 · Amber #C8720E
 
-Your goal: 47 clients/month at $400/site + $300–500/mo Nora voice agent upsell.
+Your goal: 47 clients/month at $150/site + $65/mo hosting; Nora bundle adds $200 build + $65/mo.
 
 ## Build Status (as of 2026-06-02)
 - Scout: ✅ scripts/scout.js — Outscraper API, $10/mo cap, auto_run toggle
@@ -81,8 +81,8 @@ Manual order:
 ## Nora Upsell
 - Website deal closes → set nora_pitch_due = closed_date + 7 days in state.json
 - Mobile agent sends Nora pitch message on due date
-- Bundle price: $350/mo (website hosting + Nora)
-- Standalone Nora: $399/mo
+- Bundle price: $65/mo (website hosting + Nora)
+- Build fee with Nora included: $200 (vs $150 website-only)
 
 ## Cost Controls
 - Scout: $10/mo Outscraper cap (config/scout-config.json)

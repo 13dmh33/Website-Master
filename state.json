@@ -294,14 +294,114 @@
       "added_at": "2026-06-01T21:33:25.508Z",
       "diagnosed_at": "2026-06-01T21:43:31.821Z",
       "checked_at": "2026-06-01T21:43:35.302Z"
+    },
+    {
+      "lead_id": "ChIJdTagoFyBbIcRVEYuo87j6HI",
+      "status": "scouted",
+      "added_at": "2026-06-02T13:57:06.135Z"
+    },
+    {
+      "lead_id": "ChIJddVJKq2BbIcRFcp2J9FrR_Y",
+      "status": "scouted",
+      "added_at": "2026-06-02T13:57:06.135Z"
+    },
+    {
+      "lead_id": "ChIJD6mkSlqBbIcRDqtBbmDlGBA",
+      "status": "scouted",
+      "added_at": "2026-06-02T13:57:06.135Z"
+    },
+    {
+      "lead_id": "ChIJx1yZsVyzfyYRThlYO0xxI34",
+      "status": "scouted",
+      "added_at": "2026-06-02T13:57:06.135Z"
+    },
+    {
+      "lead_id": "ChIJj9gV1G9_bIcRAwNGw5tICDE",
+      "status": "scouted",
+      "added_at": "2026-06-02T13:57:06.135Z"
+    },
+    {
+      "lead_id": "ChIJg0fC4TuFbIcRp2ZOeBkxh-0",
+      "status": "scouted",
+      "added_at": "2026-06-02T13:57:06.135Z"
+    },
+    {
+      "lead_id": "ChIJgbkxvYyFbIcRVU-qYSrUU-A",
+      "status": "scouted",
+      "added_at": "2026-06-02T13:57:06.135Z"
+    },
+    {
+      "lead_id": "ChIJcwIlQ_1_bIcRORRuRXaYnog",
+      "status": "scouted",
+      "added_at": "2026-06-02T13:57:06.135Z"
+    },
+    {
+      "lead_id": "ChIJu538-7V9bIcRRQ2ljLYHPX4",
+      "status": "scouted",
+      "added_at": "2026-06-02T13:57:06.135Z"
+    },
+    {
+      "lead_id": "ChIJa6ryhg6BbIcRvk07XsV5ea0",
+      "status": "scouted",
+      "added_at": "2026-06-02T13:57:06.135Z"
+    },
+    {
+      "lead_id": "ChIJVe38niWObIcRbhDudy-6fLo",
+      "status": "scouted",
+      "added_at": "2026-06-02T13:57:06.135Z"
+    },
+    {
+      "lead_id": "ChIJ-X1uXhWAbIcRae6vftJGKwg",
+      "status": "scouted",
+      "added_at": "2026-06-02T13:57:06.135Z"
+    },
+    {
+      "lead_id": "ChIJr6QiG6OBbIcRpMGs57SvkBE",
+      "status": "scouted",
+      "added_at": "2026-06-02T13:57:06.135Z"
+    },
+    {
+      "lead_id": "ChIJWeYiK5Z8bIcRqj2o5k1_Sls",
+      "status": "scouted",
+      "added_at": "2026-06-02T13:57:06.135Z"
+    },
+    {
+      "lead_id": "ChIJGWRG9LSBbIcRZWDCkAA33TY",
+      "status": "scouted",
+      "added_at": "2026-06-02T13:57:06.135Z"
+    },
+    {
+      "lead_id": "ChIJ3zvX0pmBbIcR5pXMJRDeJXM",
+      "status": "scouted",
+      "added_at": "2026-06-02T13:57:06.135Z"
+    },
+    {
+      "lead_id": "ChIJk2sbvTCBbIcRa9u5uIqFk-U",
+      "status": "scouted",
+      "added_at": "2026-06-02T13:57:06.135Z"
+    },
+    {
+      "lead_id": "ChIJg54G9yJYYSQRMXYI-rEEoXw",
+      "status": "scouted",
+      "added_at": "2026-06-02T13:57:06.135Z"
+    },
+    {
+      "lead_id": "ChIJ05Dd3i5_a4cRfyFvbQDC2Vs",
+      "status": "scouted",
+      "added_at": "2026-06-02T13:57:06.135Z"
+    },
+    {
+      "lead_id": "ChIJ-dS37XmFa4cRTfjNBKjVX4g",
+      "status": "scouted",
+      "added_at": "2026-06-02T13:57:06.135Z"
     }
   ],
   "active": [],
   "closed": [],
   "nora_pipeline": [],
-  "last_run": "2026-06-01T21:33:25.508Z",
+  "last_run": "2026-06-02T13:57:06.135Z",
   "daily_stats": {
-    "leads_scouted": 20,
+    "leads_scouted": 40,
     "briefs_written": 40,
     "mockups_built": 5,
     "messages_sent": 18,

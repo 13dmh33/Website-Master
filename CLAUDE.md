@@ -7,18 +7,23 @@ Owner: Dave — dave@trevoadvisors.com
 
 Brand colors: Slate Blue #2E5B8A (primary) · Growth Green #2E7D5B · Warm Cream #F8F7F3 · Amber #C8720E
 
-Your goal: 47 clients/month at $400/site + $300–500/mo Nora voice agent upsell.
+Your goal: 47 clients/month at $150/site + $65/mo hosting; Nora bundle adds $200 build + $65/mo.
 
-## Build Status (as of 2026-06-01)
+## Build Status (as of 2026-06-02)
 - Scout: ✅ scripts/scout.js — Outscraper API, $10/mo cap, auto_run toggle
 - Diagnoser: ✅ scripts/diagnoser.js — Claude Haiku, prompt caching, $5/mo cap; dual-channel: sets secondary_channel=sms when lead has both email + phone
 - Checker: ✅ scripts/checker.js — 5 evals + Claude rewrite loop, $3/mo cap; template fast-path validates both primary + secondary messages
 - Pitcher: ✅ scripts/pitcher.js — dual-channel (email first, SMS follows after sms_followup_delay_hours=4); per-channel sent tracking in messages/-sent.json; staggered sends; --dry-run
 - Builder: ✅ scripts/builder.js — Lovable prompt generator, --submit to record URL, 5/day
 - Filmer: ✅ scripts/filmer.js — Loom instructions + ScreenshotOne, --submit to record URL, 5/day
-- Mobile: ✅ scripts/mobile.js — positive reply handler, weekday slot suggestions, auto-send, Nora upsell scheduler
+- Mobile: ✅ scripts/mobile.js — positive reply handler, weekday slot suggestions, auto-send, Nora upsell scheduler; sends /start link in booking reply
 - Reporter: ✅ scripts/reporter.js — morning email report; shows email vs SMS split, per-service costs, drip stats
 - Drip: ✅ scripts/drip.js — 4-step follow-up sequence (d1/d1b/d1c/d2), per-channel, daily limit 20, --dry-run; config/drip-config.json
+- Reply Classifier: ✅ scripts/reply-classifier.js — keyword-based intent classifier (positive/question/objection/negative/stop/auto_reply/neutral), zero API cost
+- Dashboard: ✅ scripts/dashboard.js — terminal pipeline view, --leads and --drip flags, color-coded by status
+- Webhook: ✅ scripts/webhook.js — Twilio inbound SMS server, HMAC-SHA1 validation; **run on Mac**
+- Poller: ✅ scripts/poller.js — IMAP email reply poller (imapflow), auto-reply detection; **run on Mac**
+- Website/Demo: ✅ website/ — 3 demo sites (plumber/HVAC/electrician), proposal page, intake form, checkout, thank-you, /start funnel; **on claude/demo-site branch (not yet merged)**
 
 ## Template Vault
 - 6 SMS templates (s1–s6) + 5 email templates (e1–e5) in config/templates.json
@@ -76,8 +81,8 @@ Manual order:
 ## Nora Upsell
 - Website deal closes → set nora_pitch_due = closed_date + 7 days in state.json
 - Mobile agent sends Nora pitch message on due date
-- Bundle price: $350/mo (website hosting + Nora)
-- Standalone Nora: $399/mo
+- Bundle price: $65/mo (website hosting + Nora)
+- Build fee with Nora included: $200 (vs $150 website-only)
 
 ## Cost Controls
 - Scout: $10/mo Outscraper cap (config/scout-config.json)
@@ -95,9 +100,11 @@ ZOHO_APP_PASSWORD=       # Zoho app-specific password (not account password)
 TWILIO_ACCOUNT_SID=
 TWILIO_AUTH_TOKEN=
 TWILIO_FROM_PHONE=
+TWILIO_WEBHOOK_SECRET=   # same as TWILIO_AUTH_TOKEN — used for HMAC validation in webhook.js
 REPORT_TO_EMAIL=         # where morning report is emailed (defaults to ZOHO_EMAIL)
 CONTRACTOR_EMAIL=        # optional — deal/reply notifications
 CALCOM_LINK=             # optional — shown in Mobile booking drafts
+SITE_START_URL=          # https://trevoadvisors.com/start/ — sent in positive reply drafts
 ```
 
 ## Start Each Session
@@ -112,13 +119,15 @@ The remote Claude Code container has restricted outbound network access.
 - Pitcher (scripts/pitcher.js) — Twilio SMS API blocked from container
 - Drip (scripts/drip.js) — Twilio SMS + Zoho SMTP blocked from container
 - Reporter (scripts/reporter.js) — Zoho SMTP blocked from container
+- Webhook (scripts/webhook.js) — Twilio inbound webhook server, must be publicly reachable (use ngrok)
+- Poller (scripts/poller.js) — Zoho IMAP blocked from container
 
 **Runs fine in container:**
-- Diagnoser, Checker, Builder, Filmer, Mobile (all use Anthropic API only)
+- Diagnoser, Checker, Builder, Filmer, Mobile, Dashboard, Reply Classifier (all use Anthropic API or no external API)
 
 Local workflow after Scout/Pitcher runs on Mac:
 1. `git add queue/ state.json config/pitcher-config.json config/cost-log.json`
-2. `git commit -m "..."` and `git push origin claude/kind-hypatia-3YzM0`
+2. `git commit -m "..."` and `git push origin main`
 3. Continue AI steps from container
 
 Note: GitHub PAT is configured on Mac (set 2026-06-01). Push works without password prompts.
@@ -147,3 +156,55 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - 2026-06-01: SMS templates trimmed to ≤160 chars (1 seg); s6 catch-all added; Hey [First Name] removed
 - 2026-06-01: First email batch — 15 Denver plumbers sent via Zoho SMTP
 - 2026-06-01: Drip campaign live — drip.js built (4-step sequence, 8 templates approved and loaded)
+- 2026-06-02: reply-classifier.js, dashboard.js, webhook.js, poller.js merged to main
+- 2026-06-02: website/ directory built — 3 demos + proposal + intake + checkout + thankyou + /start funnel (on claude/demo-site, pending merge)
+- 2026-06-02: mobile.js updated — sends /start URL in positive reply, Zoho SMTP fix confirmed
+- 2026-06-02: Branches 1–6 merged to main; claude/website and claude/demo-site held pending review
+- 2026-06-02: Global pricing update — $150/$200 build + $65/mo applied across all templates, scripts, website pages, and MD files
+- 2026-06-03: 30 Denver/Englewood plumbers sent via SMS (Twilio) — 48 total MTD — NOTE: likely hit error 30034 (A2P not yet approved); will re-send after Campaign approved
+- 2026-06-03: Diagnoser channel routing bug fixed — phone-only leads now correctly route to sms instead of email
+- 2026-06-03: webhook.js timingSafeEqual RangeError fixed; poller.js null-headers crash fixed
+- 2026-06-03: EIN obtained (IRS CP575G) for Trevo Advisors — stored locally, not in repo
+- 2026-06-03: Twilio A2P 10DLC Brand registration submitted (Bundle SID: BUb725ec9662f0dc3da58ed24117df8684) — initially rejected (name mismatch), resubmitted under "David M Hettinger" to match EIN
+- 2026-06-03: claude/demo-site merged to main — website funnel live on Netlify (extraordinary-pothos-08912d.netlify.app)
+- 2026-06-03: Formspree wired into intake form (form ID: xbdbneej)
+- 2026-06-03: DNS updated in OpenSRS — A record → 75.2.60.5 (Netlify), www CNAME → Netlify
+- 2026-06-03: Stripe setup started — blocked on EIN propagation (new EINs take 1–2 weeks to reach IRS verification systems)
+
+## Twilio A2P 10DLC Status
+- Brand registration submitted: 2026-06-03
+- Bundle SID: BUb725ec9662f0dc3da58ed24117df8684
+- Status: Resubmitted 2026-06-03 under "David M Hettinger" (initial rejection: name didn't match EIN)
+- EIN on file locally (not in repo) — obtained 2026-06-03
+- Legal name for all Twilio/IRS submissions: David M Hettinger (DBA: Trevo Advisors)
+- Once approved: create Campaign (use case: Mixed) → link +1 720 number to Sender Pool
+- Until approved: SMS sends will hit error 30034 and be blocked by carriers
+
+## Waiting On (as of 2026-06-03)
+- **Twilio A2P Brand approval** (1–3 days) → then create Campaign → re-send 30 blocked leads
+- **EIN IRS propagation** (1–2 weeks) → then complete Stripe setup → create 2 Payment Links → paste into checkout/index.html
+- **trevoadvisors.com DNS** — may take up to 24h to fully propagate worldwide
+
+## Tomorrow's Tasks (2026-06-04)
+
+### On Mac
+1. `node scripts/webhook.js` + ngrok + register URL in Twilio console (for reply detection)
+2. Add `SITE_START_URL=https://trevoadvisors.com/start/` to `.env.local`
+3. `npm install imapflow` for poller.js
+4. Run Scout → new city/trade (ask at start of session)
+5. Check if trevoadvisors.com is live — if yes, verify in Stripe
+
+### Container
+- Run Diagnoser + Checker for 12 remaining Englewood plumbers (still in scouted status)
+- Fix `mobile.js`: change `call_booked` → `booking_sent` on send
+- Fix `drip.js`: `[trade]`/`[City]` token substitution in d1c-sms template
+
+### When A2P Approved (Twilio console)
+1. Create Campaign → use case: Mixed
+2. Add +1 720 number to Sender Pool
+3. Reset 30 blocked leads → re-send via Pitcher
+
+### When EIN Propagates (~1–2 weeks)
+1. Complete Stripe business verification
+2. Create 2 Payment Links: $150 (website) + $200 (website+Nora)
+3. Paste into `website/checkout/index.html` replacing `YOUR_WEBSITE_LINK_ID` / `YOUR_NORA_LINK_ID`

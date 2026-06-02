@@ -90,10 +90,10 @@ function nextSlots() {
 // ── BUILD DRAFT RESPONSE ──────────────────────────────────────────────────────
 
 function buildDraft(record, slots, calLink) {
-  const firstName = (record.business_name || '').split(/[\s,]/)[0];
-  const link      = calLink ? `\n\nOr grab any time here: ${calLink}` : '';
+  const startLink = process.env.SITE_START_URL || 'https://trevoadvisors.com/start/';
+  const calPart   = calLink ? `\n\nOr book directly: ${calLink}` : '';
   const options   = slots.slice(0, 4).map((s, i) => `${i + 1}. ${s}`).join('\n');
-  return `Hey ${firstName}! Great to hear from you. I'd love to show you the full mockup on a quick call — should only take 15 minutes.\n\nHere are a few times over the next two weeks:\n${options}\n\nJust reply with a number or let me know what works better.${link}`;
+  return `Hey! Great to hear from you. I'd love to show you the full mockup on a quick call — only takes 15 min.\n\nHere are a few times:\n${options}\n\nJust reply with a number. Or if you're ready to move forward now, you can get started here: ${startLink}${calPart}`;
 }
 
 // ── AUTO-SEND LOG ─────────────────────────────────────────────────────────────
@@ -246,8 +246,9 @@ async function checkNoraPipeline() {
     try { record = JSON.parse(fs.readFileSync(path.join(MESSAGES_DIR, `${entry.lead_id}-sent.json`), 'utf8')); }
     catch { console.warn(`  Could not load record for ${entry.lead_id} — skipping`); continue; }
 
-    const firstName = (record.business_name || '').split(/[\s,]/)[0];
-    const pitch = `Hey ${firstName}! It's been a week since your site went live — hope it's already bringing in calls.\n\nQuick thought: we offer Nora, a 24/7 AI phone agent that answers calls, books jobs, and follows up with leads automatically. Our clients bundle it with hosting for $350/mo.\n\nWorth a 10-min chat to see if it fits?`;
+    const calLink2  = process.env.CALCOM_LINK || null;
+    const calPart2  = calLink2 ? ` Book here: ${calLink2}` : ' Just reply and we\'ll set up a quick call.';
+    const pitch = `Hey! It's been a week since your site went live — hope it's already bringing in calls.\n\nQuick thought: we offer Nora, a 24/7 AI phone agent that answers calls, books jobs, and follows up with leads automatically. Our clients bundle it with hosting for $350/mo.\n\nWorth a 10-min chat to see if it fits?${calPart2}`;
 
     console.log('\n' + '═'.repeat(56));
     console.log('NORA UPSELL PITCH');

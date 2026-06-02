@@ -186,14 +186,14 @@
     </div>
     <div class="receipt-total">
       <span class="label">Total charged</span>
-      <span class="amount">$400.00</span>
+      <span class="amount" id="r-total">$150.00</span>
     </div>
   </div>
 
   <!-- NORA CALLOUT (only shown if they added Nora) -->
   <div class="nora-callout" id="noraCallout">
     <h3>🤖 Nora AI Agent — Added!</h3>
-    <p>We'll set up Nora alongside your website. Dave will reach out to configure your phone number and call preferences during the build. Your bundle billing ($350/mo) starts when your site goes live.</p>
+    <p>We'll set up Nora alongside your website. Dave will reach out to configure your phone number and call preferences during the build. Your hosting ($65/mo) covers everything when your site goes live.</p>
   </div>
 
   <!-- NEXT STEPS -->
@@ -300,7 +300,10 @@
     if (biz)   document.getElementById('r-biz').textContent   = biz;
     if (email) document.getElementById('r-email').textContent = email;
     if (pi)    document.getElementById('r-pi').textContent    = pi;
-    if (nora)  document.getElementById('noraCallout').classList.add('visible');
+    if (nora) {
+      document.getElementById('noraCallout').classList.add('visible');
+      document.getElementById('r-total').textContent = '$200.00';
+    }
   }
 </script>
 

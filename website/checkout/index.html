@@ -221,7 +221,7 @@
         <h4>Website Design & Build</h4>
         <p>Custom 5–7 page site for your trade · Delivered in 3 business days · Mobile-ready</p>
       </div>
-      <div class="line-price">$400</div>
+      <div class="line-price" id="build-price">$150</div>
     </div>
     <div class="line-item">
       <div class="line-desc">
@@ -230,19 +230,26 @@
       </div>
       <div class="line-price" style="color:var(--green);">FREE</div>
     </div>
+    <div class="line-item" id="nora-line" style="display:none;">
+      <div class="line-desc">
+        <h4>Nora AI Phone Agent Setup</h4>
+        <p>Included in your build — Dave configures after launch</p>
+      </div>
+      <div class="line-price" style="color:var(--blue);">+$50</div>
+    </div>
     <div class="line-item">
       <div class="line-desc">
         <h4>Hosting — Month 2+</h4>
         <p>Cancel anytime · No long-term commitment</p>
       </div>
-      <div class="line-price monthly">$97/mo</div>
+      <div class="line-price monthly">$65/mo</div>
     </div>
 
     <div class="total-row">
       <div class="label">Due today</div>
-      <div class="amount" id="total-display">$400</div>
+      <div class="amount" id="total-display">$150</div>
     </div>
-    <div class="recurring-note">$97/mo billing starts after your site launches. Cancel anytime.</div>
+    <div class="recurring-note">$65/mo billing starts after your site launches. Cancel anytime.</div>
 
     <div class="included">
       <h4>What's included</h4>
@@ -311,9 +318,9 @@
             <input type="checkbox" id="add_nora" onchange="updateTotal()" />
             🤖 Add Nora AI Phone Agent
           </label>
-          <span class="addon-price">+$253/mo</span>
+          <span class="addon-price">+$50 today</span>
         </div>
-        <div class="addon-desc">Answers calls, books jobs, texts missed callers — 24/7. Bundled with hosting: $350/mo total (saves $146/mo).</div>
+        <div class="addon-desc">Answers calls, books jobs, texts missed callers — 24/7. Adds $50 to today's build fee. Nothing extra per month — included in your $65/mo hosting.</div>
       </div>
 
       <div class="card-errors" id="card-errors"></div>
@@ -332,15 +339,20 @@
 
 <script>
   // ── CONFIG ───────────────────────────────────────────────────────────────────
-  // Create a Payment Link at https://dashboard.stripe.com/payment-links
-  // Set success URL to: https://trevoadvisors.com/thankyou/
-  // Then paste the URL below (format: https://buy.stripe.com/XXXXXXXX)
-  const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/YOUR_PAYMENT_LINK_ID';
+  // Create TWO Payment Links at https://dashboard.stripe.com/payment-links
+  // Both success URLs → https://trevoadvisors.com/thankyou/
+  // Website only ($150):
+  const STRIPE_LINK_WEBSITE = 'https://buy.stripe.com/YOUR_WEBSITE_LINK_ID';
+  // Website + Nora ($200):
+  const STRIPE_LINK_NORA    = 'https://buy.stripe.com/YOUR_NORA_LINK_ID';
 
   // ── NORA TOGGLE ──────────────────────────────────────────────────────────────
   function updateTotal() {
-    document.getElementById('noraAddon')
-      .classList.toggle('selected', document.getElementById('add_nora').checked);
+    const checked = document.getElementById('add_nora').checked;
+    document.getElementById('noraAddon').classList.toggle('selected', checked);
+    document.getElementById('nora-line').style.display  = checked ? 'flex' : 'none';
+    document.getElementById('build-price').textContent  = checked ? '$200' : '$150';
+    document.getElementById('total-display').textContent = checked ? '$200' : '$150';
   }
 
   // ── FORM SUBMIT ──────────────────────────────────────────────────────────────
@@ -371,9 +383,10 @@
     btn.disabled = true;
     btn.textContent = 'Redirecting to Stripe...';
 
-    // Build Payment Link URL with pre-filled email
+    // Route to correct Payment Link based on Nora selection
+    const link   = addNora ? STRIPE_LINK_NORA : STRIPE_LINK_WEBSITE;
     const params = new URLSearchParams({ prefilled_email: email });
-    window.location.href = `${STRIPE_PAYMENT_LINK}?${params.toString()}`;
+    window.location.href = `${link}?${params.toString()}`;
   });
 </script>
 

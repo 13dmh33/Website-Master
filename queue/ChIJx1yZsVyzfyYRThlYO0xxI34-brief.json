@@ -8,23 +8,23 @@
   "website": "none",
   "review_count": 29,
   "rating": 5,
-  "diagnosis": "29 5-star reviews on Google Maps but zero web presence. No website, no email contact listed. Losing potential customers who search online before calling—competitors with websites capture leads they can't convert.",
-  "hero_angle": "Perfect 5-star reputation with 29 verified reviews—you've earned trust; now earn the calls that come from search.",
+  "diagnosis": "Strong Google presence (29 reviews, 5-star rating) but zero web footprint. No website means lost inquiry conversions, no portfolio visibility, and customers defaulting to competitors with online presence despite Anytime's solid reputation.",
+  "hero_angle": "29 verified 5-star reviews—now capture the inquiry traffic those reviews deserve with a professional website.",
   "tone": "direct",
-  "cold_message": "Hey,\n\nI was looking up Anytime Plumbing Englewood — 29 five-star reviews is genuinely impressive. But right now, when a homeowner in Englewood, CO searches \"plumber near me\" at 9pm, they're booking whoever has a website. Not whoever has the best reputation.\n\nI build clean, fast websites for local plumber contractors. $150 to build, $65/month to keep it live and maintained. Most clients are up in 3–5 business days.\n\nWorth a 15-minute call this week? No pitch — just want to see if it's a fit.\n\n— Dave\nTrevo Advisors | AI agents built for the trades.\ntrevoadvisors.com | trevoadvisors.com",
-  "template_id": "e1",
-  "template_name": "The reputation gap",
+  "cold_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $150 flat. 15-min call? — Dave @ Trevo Advisors",
+  "template_id": "s2",
+  "template_name": "The missed job",
   "template_based": true,
   "gap_score": 9,
   "priority": true,
-  "channel": "email",
+  "channel": "sms",
   "secondary_channel": null,
   "secondary_message": null,
   "secondary_template_id": null,
   "secondary_template_name": null,
   "checker_approved": true,
-  "diagnosed_at": "2026-06-02T14:03:54.621Z",
-  "final_message": "Hey,\n\nI was looking up Anytime Plumbing Englewood — 29 five-star reviews is genuinely impressive. But right now, when a homeowner in Englewood, CO searches \"plumber near me\" at 9pm, they're booking whoever has a website. Not whoever has the best reputation.\n\nI build clean, fast websites for local plumber contractors. $150 to build, $65/month to keep it live and maintained. Most clients are up in 3–5 business days.\n\nWorth a 15-minute call this week? No pitch — just want to see if it's a fit.\n\n— Dave\nTrevo Advisors | AI agents built for the trades.\ntrevoadvisors.com | trevoadvisors.com",
+  "diagnosed_at": "2026-06-02T14:09:41.952Z",
+  "final_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $150 flat. 15-min call? — Dave @ Trevo Advisors",
   "checker_flag": "",
   "rewrite_count": 0,
   "checker_score": {
@@ -32,5 +32,5 @@
     "placeholders_filled": true,
     "secondary_placeholders": true
   },
-  "checked_at": "2026-06-02T14:04:38.941Z"
+  "checked_at": "2026-06-02T14:10:12.955Z"
 }

@@ -304,8 +304,8 @@ async function main() {
       const cost = calcCost(usage, config.rates);
       recordAnthropic(cost, 'diagnoser', usage);
 
-      // Email-first: if lead has an email address, prefer email over trade-default channel
-      const channel = lead.email ? 'email' : lead.channel;
+      // Email-first: if lead has email use it; if phone-only fall back to sms; else keep Scout's assignment
+      const channel = lead.email ? 'email' : (lead.phone ? 'sms' : lead.channel);
       const tmpl     = pickAndFill(channel, { ...lead, ...brief });
 
       // Secondary channel: if lead has both email AND phone, also prepare SMS

@@ -8,23 +8,23 @@
   "website": "none",
   "review_count": 22,
   "rating": 5,
-  "diagnosis": "22 five-star reviews but zero web presence. No website, no email, no address listed. Losing discovery traffic and quote requests to competitors with basic sites.",
-  "hero_angle": "Perfect 5-star rating with strong local proof—just needs a digital storefront to capture emergency calls.",
+  "diagnosis": "Perfect 5-star rating with 22 reviews but zero web presence. Emergency plumber losing credibility and inquiry volume by lacking a website. No email, no digital storefront—leaving money on the table despite strong reputation.",
+  "hero_angle": "Perfect reviews on Google Maps prove quality; a professional website would convert that trust into 24/7 bookings.",
   "tone": "urgent",
-  "cold_message": "Hey,\n\nI was looking up Prime Englewood Emergency Plumber — 22 five-star reviews is genuinely impressive. But right now, when a homeowner in Englewood, CO searches \"plumber near me\" at 9pm, they're booking whoever has a website. Not whoever has the best reputation.\n\nI build clean, fast websites for local plumber contractors. $150 to build, $65/month to keep it live and maintained. Most clients are up in 3–5 business days.\n\nWorth a 15-minute call this week? No pitch — just want to see if it's a fit.\n\n— Dave\nTrevo Advisors | AI agents built for the trades.\ntrevoadvisors.com | trevoadvisors.com",
-  "template_id": "e1",
-  "template_name": "The reputation gap",
+  "cold_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $150 flat. 15-min call? — Dave @ Trevo Advisors",
+  "template_id": "s2",
+  "template_name": "The missed job",
   "template_based": true,
   "gap_score": 9,
   "priority": false,
-  "channel": "email",
+  "channel": "sms",
   "secondary_channel": null,
   "secondary_message": null,
   "secondary_template_id": null,
   "secondary_template_name": null,
   "checker_approved": true,
-  "diagnosed_at": "2026-06-02T14:03:58.931Z",
-  "final_message": "Hey,\n\nI was looking up Prime Englewood Emergency Plumber — 22 five-star reviews is genuinely impressive. But right now, when a homeowner in Englewood, CO searches \"plumber near me\" at 9pm, they're booking whoever has a website. Not whoever has the best reputation.\n\nI build clean, fast websites for local plumber contractors. $150 to build, $65/month to keep it live and maintained. Most clients are up in 3–5 business days.\n\nWorth a 15-minute call this week? No pitch — just want to see if it's a fit.\n\n— Dave\nTrevo Advisors | AI agents built for the trades.\ntrevoadvisors.com | trevoadvisors.com",
+  "diagnosed_at": "2026-06-02T14:09:46.552Z",
+  "final_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $150 flat. 15-min call? — Dave @ Trevo Advisors",
   "checker_flag": "",
   "rewrite_count": 0,
   "checker_score": {
@@ -32,5 +32,5 @@
     "placeholders_filled": true,
     "secondary_placeholders": true
   },
-  "checked_at": "2026-06-02T14:04:38.942Z"
+  "checked_at": "2026-06-02T14:10:12.956Z"
 }

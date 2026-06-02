@@ -8,23 +8,23 @@
   "website": "none",
   "review_count": 11,
   "rating": 4.6,
-  "diagnosis": "No website despite 11 solid reviews (4.6★). Missing critical conversion funnel—leads viewing their Google profile have nowhere to learn services, pricing, or book online. Englewood market is competitive; they're leaving jobs on the table.",
-  "hero_angle": "11 verified reviews prove reliability; a professional website transforms that trust into bookings.",
+  "diagnosis": "No website despite 11 reviews and 4.6 rating. Missing critical conversion point—customers can't learn about services, pricing, or book online. Strong local reputation trapped on Google Maps alone.",
+  "hero_angle": "11 verified reviews and 4.6 rating prove Swift Plumbing delivers—a website unlocks that trust to drive calls and jobs.",
   "tone": "direct",
-  "cold_message": "Hey,\n\nI was looking up Swift Plumbing Englewood Experts — 11 five-star reviews is genuinely impressive. But right now, when a homeowner in Englewood, CO searches \"plumber near me\" at 9pm, they're booking whoever has a website. Not whoever has the best reputation.\n\nI build clean, fast websites for local plumber contractors. $150 to build, $65/month to keep it live and maintained. Most clients are up in 3–5 business days.\n\nWorth a 15-minute call this week? No pitch — just want to see if it's a fit.\n\n— Dave\nTrevo Advisors | AI agents built for the trades.\ntrevoadvisors.com | trevoadvisors.com",
-  "template_id": "e1",
-  "template_name": "The reputation gap",
+  "cold_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $150 flat. 15-min call? — Dave @ Trevo Advisors",
+  "template_id": "s2",
+  "template_name": "The missed job",
   "template_based": true,
   "gap_score": 9,
   "priority": true,
-  "channel": "email",
+  "channel": "sms",
   "secondary_channel": null,
   "secondary_message": null,
   "secondary_template_id": null,
   "secondary_template_name": null,
   "checker_approved": true,
-  "diagnosed_at": "2026-06-02T14:03:56.759Z",
-  "final_message": "Hey,\n\nI was looking up Swift Plumbing Englewood Experts — 11 five-star reviews is genuinely impressive. But right now, when a homeowner in Englewood, CO searches \"plumber near me\" at 9pm, they're booking whoever has a website. Not whoever has the best reputation.\n\nI build clean, fast websites for local plumber contractors. $150 to build, $65/month to keep it live and maintained. Most clients are up in 3–5 business days.\n\nWorth a 15-minute call this week? No pitch — just want to see if it's a fit.\n\n— Dave\nTrevo Advisors | AI agents built for the trades.\ntrevoadvisors.com | trevoadvisors.com",
+  "diagnosed_at": "2026-06-02T14:09:43.995Z",
+  "final_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $150 flat. 15-min call? — Dave @ Trevo Advisors",
   "checker_flag": "",
   "rewrite_count": 0,
   "checker_score": {
@@ -32,5 +32,5 @@
     "placeholders_filled": true,
     "secondary_placeholders": true
   },
-  "checked_at": "2026-06-02T14:04:38.940Z"
+  "checked_at": "2026-06-02T14:10:12.955Z"
 }

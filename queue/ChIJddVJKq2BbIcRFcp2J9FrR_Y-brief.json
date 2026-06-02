@@ -8,23 +8,23 @@
   "website": "none",
   "review_count": 11,
   "rating": 5,
-  "diagnosis": "Zero web presence despite 11 five-star reviews. No website means lost inquiry conversions and weak search visibility. Reviews trapped on Google only—no owned channels.",
-  "hero_angle": "Perfect 5-star rating with 11 verified reviews gives you immediate credibility; a website unlocks those testimonials to win 3–5 more jobs monthly.",
+  "diagnosis": "No website despite 11 five-star reviews on Google Maps. Missing critical online presence to convert local search traffic and establish credibility beyond Maps listing.",
+  "hero_angle": "11 perfect-rated plumber with proven local trust—ready to capture the customers searching for you online.",
   "tone": "direct",
-  "cold_message": "Hey,\n\nI was looking up Englewood Plumbing Pros — 11 five-star reviews is genuinely impressive. But right now, when a homeowner in Englewood, CO searches \"plumber near me\" at 9pm, they're booking whoever has a website. Not whoever has the best reputation.\n\nI build clean, fast websites for local plumber contractors. $150 to build, $65/month to keep it live and maintained. Most clients are up in 3–5 business days.\n\nWorth a 15-minute call this week? No pitch — just want to see if it's a fit.\n\n— Dave\nTrevo Advisors | AI agents built for the trades.\ntrevoadvisors.com | trevoadvisors.com",
-  "template_id": "e1",
-  "template_name": "The reputation gap",
+  "cold_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $150 flat. 15-min call? — Dave @ Trevo Advisors",
+  "template_id": "s2",
+  "template_name": "The missed job",
   "template_based": true,
   "gap_score": 9,
   "priority": true,
-  "channel": "email",
+  "channel": "sms",
   "secondary_channel": null,
   "secondary_message": null,
   "secondary_template_id": null,
   "secondary_template_name": null,
   "checker_approved": true,
-  "diagnosed_at": "2026-06-02T14:03:49.840Z",
-  "final_message": "Hey,\n\nI was looking up Englewood Plumbing Pros — 11 five-star reviews is genuinely impressive. But right now, when a homeowner in Englewood, CO searches \"plumber near me\" at 9pm, they're booking whoever has a website. Not whoever has the best reputation.\n\nI build clean, fast websites for local plumber contractors. $150 to build, $65/month to keep it live and maintained. Most clients are up in 3–5 business days.\n\nWorth a 15-minute call this week? No pitch — just want to see if it's a fit.\n\n— Dave\nTrevo Advisors | AI agents built for the trades.\ntrevoadvisors.com | trevoadvisors.com",
+  "diagnosed_at": "2026-06-02T14:09:36.746Z",
+  "final_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $150 flat. 15-min call? — Dave @ Trevo Advisors",
   "checker_flag": "",
   "rewrite_count": 0,
   "checker_score": {
@@ -32,5 +32,5 @@
     "placeholders_filled": true,
     "secondary_placeholders": true
   },
-  "checked_at": "2026-06-02T14:04:38.940Z"
+  "checked_at": "2026-06-02T14:10:12.954Z"
 }

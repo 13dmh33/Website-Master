@@ -165,13 +165,14 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - 2026-06-03: Diagnoser channel routing bug fixed — phone-only leads now correctly route to sms instead of email
 - 2026-06-03: webhook.js timingSafeEqual RangeError fixed; poller.js null-headers crash fixed
 - 2026-06-03: EIN obtained (IRS CP575G) for Trevo Advisors — stored locally, not in repo
-- 2026-06-03: Twilio A2P 10DLC Brand registration submitted (Bundle SID: BUb725ec9662f0dc3da58ed24117df8684) — pending approval
+- 2026-06-03: Twilio A2P 10DLC Brand registration submitted (Bundle SID: BUb725ec9662f0dc3da58ed24117df8684) — initially rejected (name mismatch), resubmitted under "David M Hettinger" to match EIN
 
 ## Twilio A2P 10DLC Status
 - Brand registration submitted: 2026-06-03
 - Bundle SID: BUb725ec9662f0dc3da58ed24117df8684
-- Status: Pending approval (1–3 business days)
+- Status: Resubmitted 2026-06-03 under "David M Hettinger" (initial rejection: name didn't match EIN)
 - EIN on file locally (not in repo) — obtained 2026-06-03
+- Legal name for all Twilio/IRS submissions: David M Hettinger (DBA: Trevo Advisors)
 - Once approved: create Campaign (use case: Mixed) → link +1 720 number to Sender Pool
 - Until approved: SMS sends will hit error 30034 and be blocked by carriers
 

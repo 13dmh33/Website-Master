@@ -7,9 +7,11 @@
 
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 
-const insights = require('../lib/instagram-insights');
-const store    = require('../lib/store');
-const claude   = require('../lib/claude');
+const insights      = require('../lib/instagram-insights');
+const store         = require('../lib/store');
+const claude        = require('../lib/claude');
+const reeveHandoff  = require('../lib/reeve-handoff');
+const abTracker     = require('../lib/ab-tracker');
 
 // get the Monday of the current week as YYYY-MM-DD
 function weekStartDate() {
@@ -117,8 +119,9 @@ async function main() {
 
   if (highSignalPosts.length) {
     console.log(`High-signal posts this week: ${highSignalPosts.length}`);
-    // reeve-handoff.js will pick these up in Phase 2
-    // TODO: call reeve-handoff.notifyReeve() here in Phase 2
+    for (const post of highSignalPosts) {
+      reeveHandoff.notifyReeve(post.id, { ...post, weekOf });
+    }
   }
 
   // save analytics
@@ -149,13 +152,30 @@ async function main() {
     weekOf,
   });
 
-  // identify top hashtags from high-performing posts
-  const topHashtags = brandVoice.top_hashtags || [];
-  for (const post of sorted.slice(0, 2)) {
+  // Enhancement A: hashtag performance tracking
+  // count how many times each hashtag appeared in top-performing posts (top 33%)
+  const topThird       = sorted.slice(0, Math.max(1, Math.ceil(sorted.length / 3)));
+  const hashtagCounts  = {};
+  for (const post of topThird) {
     const hashtags = (post.caption || '').match(/#\w+/g) || [];
-    topHashtags.push(...hashtags);
+    for (const tag of hashtags) {
+      hashtagCounts[tag] = (hashtagCounts[tag] || 0) + 1;
+    }
   }
-  const uniqueTopHashtags = [...new Set(topHashtags)].slice(-20);
+  // keep rolling top-hashtag list: tags that appeared 3+ times across all weeks get priority
+  const prevTopHashtags = brandVoice.top_hashtags || [];
+  const hashtagFrequency = {};
+  for (const entry of prevTopHashtags) {
+    if (typeof entry === 'object') hashtagFrequency[entry.tag] = (entry.count || 0) + (hashtagCounts[entry.tag] || 0);
+    else hashtagFrequency[entry] = (hashtagFrequency[entry] || 0) + (hashtagCounts[entry] || 0);
+  }
+  for (const [tag, count] of Object.entries(hashtagCounts)) {
+    hashtagFrequency[tag] = (hashtagFrequency[tag] || 0) + count;
+  }
+  const uniqueTopHashtags = Object.entries(hashtagFrequency)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 20)
+    .map(([tag, count]) => ({ tag, count }));
 
   store.updateBrandVoice({ what_works: whatWorks, top_hashtags: uniqueTopHashtags });
 

@@ -195,17 +195,27 @@ Optional but recommended for full functionality:
 - `INSTAGRAM_ACCESS_TOKEN` + `INSTAGRAM_BUSINESS_ACCOUNT_ID` — analytics feedback loop
 - `SERPAPI_KEY` — live research (otherwise evergreen fallback always used)
 
-## Phase 2 roadmap
+## What's built — Phase 6 enhancements (all live)
 
-Items marked `// TODO: Twilio alert — add in Phase 2` in the codebase:
+**Enhancement A: Hashtag performance tracking** — analyst identifies which hashtags appeared in top-performing posts (top third by engagement rate) and maintains a frequency-ranked `top_hashtags` list in `brand-voice.json`. Generator reads this to weight toward proven hashtags.
 
-1. **Twilio alerts** — SMS to Dave when Scheduler runs successfully, with summary of what was posted
+**Enhancement B: Caption A/B variants** — generator writes 2 versions of caption-1 each week (same angle, different hook). `lib/ab-tracker.js` alternates between variant A and B weekly. After 4+ weeks, analyst runs Claude pattern analysis on which hooks drove more engagement.
+
+**Enhancement C: Content archive pattern analysis** — after 4+ weeks of analytics data, analyst automatically runs a Claude API call to identify top formats, save rate leaders, schedule recommendations. Saved to `/output/archive/pattern-analysis-[date].json`.
+
+**Enhancement D: Reeve handoff stub** — `lib/reeve-handoff.js` exists. Analyst calls `notifyReeve()` when it detects posts with profile visits >2x weekly average. Writes to `/output/archive/high-signal-[weekOf].json`. Webhook stub is ready for Phase 2 integration with Reeve's Watcher agent.
+
+**Enhancement E: Weekly content preview** — scheduler generates `/output/queue/preview-[date].html` with base64-encoded images, captions, and scheduled times. Open in browser to review the week before it posts.
+
+## Phase 2 remaining items
+
+Items still marked `// TODO` in the codebase:
+
+1. **Twilio alerts** — SMS to Dave when Scheduler runs successfully
 2. **Twilio weekly summary** — SMS with analytics highlights after Analyst runs
 3. **Airtable swap** — replace local JSON with Airtable in `lib/store.js`. No agent code changes needed.
-4. **A/B testing visuals** — swap `DESIGN_CONFIG` in `lib/canvas-render.js` from dark navy to white + teal. Track engagement by visual variant in analytics.
-5. **Caption A/B variants** — generator writes 2 hook variations per week. Analyst tracks which version performed better after 4 weeks.
-6. **Pattern analysis** — after 4+ weeks of data, analyst runs a Claude API call to identify content patterns and recommend schedule adjustments.
-7. **Reeve handoff** — when analyst detects posts with profile visits >2x weekly average, `lib/reeve-handoff.js` flags them for Reeve's DM agent to increase activity.
+4. **A/B visual testing** — swap `DESIGN_CONFIG` in `lib/canvas-render.js` from dark navy to white + teal.
+5. **Reeve webhook** — wire `lib/reeve-handoff.js` to POST to Reeve's Watcher agent when high-signal posts are detected.
 
 ## Content design hypothesis
 

@@ -166,14 +166,20 @@ async function main() {
   }
   console.log('Carousel done.');
 
-  console.log('Generating caption...');
+  // Enhancement B: generate 2 caption variants (different hook, same angle)
+  // scheduler picks A or B alternating weekly via ab-tracker
+  console.log('Generating caption variants A and B...');
+  let caption1A, caption1B;
   if (captionAngle.prewrittenContent) {
     const prc = captionAngle.prewrittenContent;
-    caption1 = `${prc.hook}\n\n${prc.body}\n\n— Reeve\n\n${prc.hashtags.join(' ')}`;
+    caption1A = `${prc.hook}\n\n${prc.body}\n\n— Reeve\n\n${prc.hashtags.join(' ')}`;
+    caption1B = caption1A; // evergreen content has one version; duplicate is fine
   } else {
-    caption1 = await generateCaption(captionAngle, weekNiches.caption, voiceContext);
+    caption1A = await generateCaption(captionAngle, weekNiches.caption, voiceContext);
+    caption1B = await generateCaption({ ...captionAngle, angle: captionAngle.angle + ' (alternate angle)' }, weekNiches.caption, voiceContext);
   }
-  console.log('Caption done.');
+  caption1 = caption1A; // default — scheduler overrides based on ab-tracker
+  console.log('Caption variants done.');
 
   console.log('Generating Reeve found post...');
   if (reeveFoundAngle.prewrittenContent) {
@@ -202,7 +208,7 @@ async function main() {
     niches:      weekNiches,
     posts: {
       carousel:   { slides: carousel.slides, caption: carousel.caption },
-      caption1:   { body: caption1 },
+      caption1:   { body: caption1A, variantA: caption1A, variantB: caption1B },
       reevefound: { body: reeveFound },
       reel:       { script: reelScript, hookLine: extractReelHook(reelScript) },
     },

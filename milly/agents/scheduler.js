@@ -7,9 +7,10 @@
 
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 
-const path     = require('path');
-const store    = require('../lib/store');
-const postpeer = require('../lib/postpeer');
+const path      = require('path');
+const store     = require('../lib/store');
+const postpeer  = require('../lib/postpeer');
+const abTracker = require('../lib/ab-tracker');
 
 const TIMEZONE = process.env.TIMEZONE || 'America/Denver';
 const SCHEDULE_STR = process.env.POST_SCHEDULE || 'TUE:07:00,THU:12:00,SAT:09:00,SUN:18:00';
@@ -51,6 +52,14 @@ function buildPostObjects(content, schedule) {
   const { weekOf, posts, imagePaths } = content;
   const DAYS = ['TUE', 'THU', 'SAT', 'SUN'];
 
+  // Enhancement B: pick A or B variant for caption alternating weekly
+  const captionVariant = abTracker.getCurrentVariant();
+  const captionBody    = captionVariant === 'B' && posts.caption1.variantB
+    ? posts.caption1.variantB
+    : posts.caption1.variantA || posts.caption1.body;
+  abTracker.recordVariant(weekOf, captionVariant);
+  console.log(`Caption variant this week: ${captionVariant}`);
+
   const postDefs = [
     {
       format:    'carousel',
@@ -60,7 +69,7 @@ function buildPostObjects(content, schedule) {
     },
     {
       format:    'caption',
-      caption:   posts.caption1.body,
+      caption:   captionBody,
       images:    (imagePaths && imagePaths.caption1) || [],
       scheduleDay: DAYS[1],
     },

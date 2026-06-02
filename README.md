@@ -3,7 +3,7 @@
 Solo AI agency system for selling websites + Nora voice agent bundles to home service contractors.
 
 **Owner:** Dave Hettinger — dave@trevoadvisors.com
-**Branch:** `claude/kind-hypatia-3YzM0`
+**Branch:** `main` (active development)
 
 ---
 
@@ -36,19 +36,36 @@ See daily workflow below.
 - [x] `scripts/pitcher.js` — Zoho SMTP (email) + Twilio SMS, staggered sends, --dry-run *(run on Mac)*
 - [x] `scripts/builder.js` — Lovable prompt generator, 5/day
 - [x] `scripts/filmer.js` — Loom instructions + ScreenshotOne, 5/day
-- [x] `scripts/mobile.js` — auto-send booking reply, 4 slots/2 weeks, Nora upsell
+- [x] `scripts/mobile.js` — auto-send booking reply, 4 slots/2 weeks, Nora upsell, /start link
 - [x] `scripts/reporter.js` — morning email report (pipeline, costs, template stats) *(run on Mac)*
 - [x] `scripts/cost-tracker.js` — central cost log across all agents → `config/cost-log.json`
-- [x] `scripts/template-picker.js` — 5 SMS + 5 email templates, epsilon-greedy A/B rotation
-- [x] `config/templates.json` — pre-approved template vault (s1–s5, e1–e5)
+- [x] `scripts/template-picker.js` — 6 SMS + 5 email templates, epsilon-greedy A/B rotation
+- [x] `scripts/reply-classifier.js` — keyword intent classifier, zero API cost
+- [x] `scripts/dashboard.js` — terminal pipeline view with color-coded status
+- [x] `scripts/webhook.js` — Twilio inbound SMS webhook + HMAC-SHA1 validation *(run on Mac)*
+- [x] `scripts/poller.js` — IMAP email reply poller via imapflow *(run on Mac)*
+- [x] `config/templates.json` — pre-approved template vault (s1–s6, e1–e5)
 - [x] `config/template-stats.json` — reply rate tracking per template
 - [x] **First real send** — 18/19 Denver electricians SMS sent 2026-06-01 via Twilio
+- [x] **First email batch** — 15 Denver plumbers sent via Zoho SMTP 2026-06-01
+- [x] GitHub PAT on Mac — push without password prompts
+- [x] Cron job for Reporter — runs at 7am daily on Mac
 
-### Pending
-- [ ] GitHub PAT on Mac — needed for `git push` from terminal
-- [ ] Cron job for Reporter — `crontab -e`, run at 7am daily
-- [ ] Twilio inbound webhook — auto-detect replies instead of manual status update
-- [ ] Email leads — run Scout for plumbers/HVAC to get Zoho SMTP sends flowing
+### Pending (website branch — claude/demo-site, not yet merged)
+- [ ] `website/start/` — /start funnel page (the link texted to positive replies)
+- [ ] `website/demo/` — 3 demo sites: plumber, electrician, HVAC
+- [ ] `website/proposal/` — sales proposal page with trade-specific demo link
+- [ ] `website/intake/` — 4-step client intake form (Formspree)
+- [ ] `website/checkout/` — Stripe Payment Link checkout
+- [ ] `website/thankyou/` — post-payment confirmation + next steps
+
+### Mac setup still needed
+- [ ] Create Stripe Payment Link → paste URL into `website/checkout/index.html`
+- [ ] Create Formspree form → paste ID into `website/intake/index.html`
+- [ ] Add `SITE_START_URL=https://trevoadvisors.com/start/` to `.env.local`
+- [ ] `npm install imapflow` (for poller.js)
+- [ ] `node scripts/webhook.js` + ngrok + paste URL in Twilio console
+- [ ] Deploy `website/` to trevoadvisors.com after demo-site branch merges
 
 ---
 
@@ -58,7 +75,7 @@ See daily workflow below.
 ```bash
 node scripts/scout.js --city "Denver, CO" --trade electrician --force
 git add leads/ state.json config/cost-log.json
-git commit -m "Scout: Denver electricians" && git push origin claude/kind-hypatia-3YzM0
+git commit -m "Scout: Denver electricians" && git push origin main
 ```
 
 ### Step 2 — Diagnose + Check (in container)
@@ -75,10 +92,10 @@ node scripts/filmer.js --force       # record Loom walkthrough
 
 ### Step 4 — Send (on Mac)
 ```bash
-git pull origin claude/kind-hypatia-3YzM0
+git pull origin main
 node scripts/pitcher.js --dry-run --force   # preview
 node scripts/pitcher.js --force             # send
-git add state.json config/ && git commit -m "Pitcher run" && git push origin claude/kind-hypatia-3YzM0
+git add state.json config/ && git commit -m "Pitcher run" && git push origin main
 ```
 
 ### Step 5 — Morning Report (on Mac, or via cron)
@@ -87,11 +104,22 @@ node scripts/reporter.js              # sends to REPORT_TO_EMAIL
 node scripts/reporter.js --print      # preview only
 ```
 
-### When a Reply Comes In
+### Step 5 — Reply Detection (on Mac)
 ```bash
-# 1. Set "status": "positive" in messages/{lead_id}-sent.json
-# 2. Run:
-node scripts/mobile.js                # auto-sends booking reply + Nora upsell
+# Option A — SMS webhook (recommended)
+node scripts/webhook.js               # start server; expose with ngrok
+# Option B — manual IMAP poll
+node scripts/poller.js                # checks Zoho inbox for email replies
+
+# When a positive reply is detected:
+node scripts/mobile.js                # auto-sends booking reply + /start link + Nora upsell
+```
+
+### Pipeline Dashboard (any machine)
+```bash
+node scripts/dashboard.js             # full pipeline view
+node scripts/dashboard.js --leads     # leads table only
+node scripts/dashboard.js --drip      # drip queue only
 ```
 
 Supported trades: `plumber`, `hvac`, `electrician`, `roofer`, `handyman`
@@ -110,6 +138,10 @@ Supported trades: `plumber`, `hvac`, `electrician`, `roofer`, `handyman`
 | builder.js | Container ✓ | No external API |
 | filmer.js | Container ✓ | No external API |
 | mobile.js | Container ✓ | Anthropic API only |
+| dashboard.js | Container ✓ | No external API |
+| reply-classifier.js | Container ✓ | No external API |
+| webhook.js | Mac only | Must be publicly reachable (ngrok) |
+| poller.js | Mac only | Zoho IMAP blocked from container |
 
 ---
 
@@ -146,6 +178,8 @@ TWILIO_FROM_PHONE=        # +17209027555
 
 REPORT_TO_EMAIL=          # where morning report is emailed
 CALCOM_LINK=              # optional — cal.com booking link for Mobile
+TWILIO_WEBHOOK_SECRET=    # same as TWILIO_AUTH_TOKEN — HMAC validation in webhook.js
+SITE_START_URL=           # https://trevoadvisors.com/start/ — sent in positive reply drafts
 ```
 
 ---
@@ -166,7 +200,10 @@ CALCOM_LINK=              # optional — cal.com booking link for Mobile
 /scripts/             — All Node.js scripts
   scout.js · diagnoser.js · checker.js · pitcher.js
   builder.js · filmer.js · mobile.js · reporter.js
-  cost-tracker.js · template-picker.js · logger.js
+  drip.js · webhook.js · poller.js · dashboard.js
+  reply-classifier.js · cost-tracker.js · template-picker.js · logger.js
+/website/             — Client-facing pages (on claude/demo-site branch)
+  start/ · demo/ · proposal/ · intake/ · checkout/ · thankyou/
 state.json            — Shared lead state (tracked in git)
 run-daily.sh          — Full pipeline runner
 .env.local            — API keys (gitignored)

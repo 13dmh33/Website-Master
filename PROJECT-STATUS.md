@@ -1,7 +1,7 @@
 # Trevo Advisors — Project Status
 
-**Last updated:** 2026-06-01 (Denver plumbers sent — first email batch)
-**Branch:** `claude/kind-hypatia-3YzM0`
+**Last updated:** 2026-06-02 (branches 1–6 merged to main; website branch pending)
+**Branch:** `main`
 
 ---
 
@@ -9,15 +9,20 @@
 
 | Script | Status | Notes |
 |---|---|---|
-| scout.js | ✅ Live | Run on Mac — Outscraper blocked from container |
-| diagnoser.js | ✅ Live | Container — dual-channel: sets email + secondary SMS when both contacts available |
-| checker.js | ✅ Live | Container — validates primary + secondary messages for unfilled placeholders |
-| pitcher.js | ✅ Live | Mac — email first; SMS auto-queued 4h later; per-channel sent tracking |
+| scout.js | ✅ Live | Mac — Outscraper blocked from container |
+| diagnoser.js | ✅ Live | Container — dual-channel routing |
+| checker.js | ✅ Live | Container — validates primary + secondary messages |
+| pitcher.js | ✅ Live | Mac — email first; SMS auto-queued 4h later |
 | builder.js | ✅ Live | Container |
 | filmer.js | ✅ Live | Container |
-| mobile.js | ✅ Live | Container — auto-send, no approval gate |
-| reporter.js | ✅ Live | Mac — morning email, shows email/SMS split + per-service costs + drip stats |
-| drip.js | ✅ Live | Mac — 4-step sequence (d1/d1b/d1c/d2), per-channel, daily limit 20 |
+| mobile.js | ✅ Live | Container — auto-send booking reply + /start link + Nora upsell |
+| reporter.js | ✅ Live | Mac — morning email, email/SMS split + costs + drip stats |
+| drip.js | ✅ Live | Mac — 4-step sequence (d1/d1b/d1c/d2), daily limit 20 |
+| reply-classifier.js | ✅ Live | Container — keyword intent classification, zero API cost |
+| dashboard.js | ✅ Live | Container — terminal pipeline view |
+| webhook.js | ✅ Live | Mac — Twilio inbound SMS, HMAC-SHA1 validation (needs ngrok + Twilio config) |
+| poller.js | ✅ Live | Mac — IMAP email reply poller (needs `npm install imapflow`) |
+| website/ | 🟡 Pending | claude/demo-site branch — awaiting final review + merge |
 
 ---
 
@@ -67,6 +72,11 @@
 - [x] **[First Name] removed** — all templates open with "Hey," — no bad name substitution
 - [x] **First email batch** — 15 Denver plumbers sent via Zoho SMTP (2026-06-01)
 - [x] **Drip campaign** — drip.js live, 8 templates loaded (d1/d1b/d1c/d2 × email + SMS), run on Mac with --force
+- [x] **Reply classifier** — reply-classifier.js merged to main (keyword-based, zero cost)
+- [x] **Pipeline dashboard** — dashboard.js merged to main
+- [x] **Twilio webhook** — webhook.js merged to main (needs Mac setup: ngrok + Twilio console config)
+- [x] **Email reply poller** — poller.js merged to main (needs `npm install imapflow` on Mac)
+- [x] **Branches 1–6 merged** — main is now current; claude/website + claude/demo-site held pending review
 
 ---
 
@@ -74,11 +84,14 @@
 
 | Item | Risk Level | Notes |
 |---|---|---|
-| **Drip not yet run** | 🟡 Medium | drip.js is live. Run `node scripts/drip.js --dry-run --force` on Mac to preview first due messages. First d1 sends will be due ~Day 4 (Jun 5). |
-| **No Loom links in pitch yet** | 🔴 High | Filmer generates instructions but Dave hasn't recorded yet. Attaching a custom mockup video is the main differentiator — without it the pitch is just another cold message. |
-| **Reply handling is manual** | 🟡 Medium | Twilio console must be checked manually for SMS replies. Fine at 33 sends, becomes a bottleneck above 100/week. Twilio webhook is the fix. |
-| **Twilio paid account** | 🟡 Medium | D&J Enterprises failure was a trial-account limit. Confirm paid upgrade is active before scaling volume. |
-| **state.json scaling** | 🟢 Low | Flat file is fine to ~1,000 leads (~8–10 weeks at current pace). SQLite migration documented for when needed. |
+| **Drip first sends due Jun 5** | 🔴 High | Run `node scripts/drip.js --dry-run --force` on Mac to preview, then send. d1 sends are due ~4 days after initial outreach. |
+| **No Loom links in pitch yet** | 🔴 High | Filmer generates instructions but Dave hasn't recorded. Custom mockup video is the main differentiator. |
+| **Webhook not yet wired** | 🟡 Medium | webhook.js is built and merged. Needs: `node scripts/webhook.js` on Mac + ngrok + paste URL in Twilio console → Messaging → A Number → Incoming. |
+| **Poller needs imapflow** | 🟡 Medium | Run `npm install imapflow` on Mac before using poller.js. |
+| **Stripe Payment Link not configured** | 🟡 Medium | Create at dashboard.stripe.com/payment-links → paste URL into `website/checkout/index.html` replacing `YOUR_PAYMENT_LINK_ID`. |
+| **Formspree not configured** | 🟡 Medium | Create free form at formspree.io → paste ID into `website/intake/index.html` replacing `YOUR_FORM_ID`. |
+| **Website not deployed** | 🟡 Medium | claude/demo-site branch not merged to main yet. Deploy `website/` to trevoadvisors.com after merge. |
+| **state.json scaling** | 🟢 Low | Flat file is fine to ~1,000 leads. SQLite migration documented for when needed. |
 
 ---
 
@@ -98,12 +111,16 @@
 
 | Priority | Task | Command / Action |
 |---|---|---|
-| 🟡 Medium | Run first drip batch on Mac (Jun 5) | `node scripts/drip.js --dry-run --force` to preview, then `node scripts/drip.js --force` |
-| 🔴 High | Record first Loom + attach to active leads | Run `node scripts/filmer.js --force`, record walkthrough, submit URL |
+| 🔴 High | Run first drip batch (Jun 5) | Mac: `node scripts/drip.js --dry-run --force` preview → `node scripts/drip.js --force` |
+| 🔴 High | Wire Twilio webhook | Mac: `node scripts/webhook.js` + ngrok + paste URL in Twilio console |
+| 🔴 High | Record first Loom + attach to active leads | `node scripts/filmer.js --force`, record walkthrough, submit URL |
+| 🟡 Medium | `npm install imapflow` on Mac | Needed before poller.js can run |
+| 🟡 Medium | Create Stripe Payment Link | dashboard.stripe.com/payment-links → paste into website/checkout/index.html |
+| 🟡 Medium | Create Formspree form | formspree.io → paste ID into website/intake/index.html |
+| 🟡 Medium | Add `SITE_START_URL` to .env.local | `SITE_START_URL=https://trevoadvisors.com/start/` |
+| 🟡 Medium | Merge claude/demo-site → deploy website | After Stripe + Formspree configured |
 | 🟡 Medium | Retry D&J Enterprises SMS | Mac: `git pull && node scripts/pitcher.js --force` |
 | 🟡 Medium | Scout second batch | Mac: `node scripts/scout.js --city "..." --trade ... --force` |
-| 🟡 Medium | Set up Twilio reply webhook | Auto-detect inbound SMS → update messages JSON (~1.5hr build) |
-| 🟡 Medium | Set up Cal.com link | Add `CALCOM_LINK=` to `.env.local` on Mac |
 | 🟢 Low | Tighten DMARC after 30 days | OpenSRS DNS → change `p=none` to `p=quarantine` |
 
 ---

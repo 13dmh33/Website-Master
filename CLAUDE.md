@@ -9,16 +9,21 @@ Brand colors: Slate Blue #2E5B8A (primary) · Growth Green #2E7D5B · Warm Cream
 
 Your goal: 47 clients/month at $400/site + $300–500/mo Nora voice agent upsell.
 
-## Build Status (as of 2026-06-01)
+## Build Status (as of 2026-06-02)
 - Scout: ✅ scripts/scout.js — Outscraper API, $10/mo cap, auto_run toggle
 - Diagnoser: ✅ scripts/diagnoser.js — Claude Haiku, prompt caching, $5/mo cap; dual-channel: sets secondary_channel=sms when lead has both email + phone
 - Checker: ✅ scripts/checker.js — 5 evals + Claude rewrite loop, $3/mo cap; template fast-path validates both primary + secondary messages
 - Pitcher: ✅ scripts/pitcher.js — dual-channel (email first, SMS follows after sms_followup_delay_hours=4); per-channel sent tracking in messages/-sent.json; staggered sends; --dry-run
 - Builder: ✅ scripts/builder.js — Lovable prompt generator, --submit to record URL, 5/day
 - Filmer: ✅ scripts/filmer.js — Loom instructions + ScreenshotOne, --submit to record URL, 5/day
-- Mobile: ✅ scripts/mobile.js — positive reply handler, weekday slot suggestions, auto-send, Nora upsell scheduler
+- Mobile: ✅ scripts/mobile.js — positive reply handler, weekday slot suggestions, auto-send, Nora upsell scheduler; sends /start link in booking reply
 - Reporter: ✅ scripts/reporter.js — morning email report; shows email vs SMS split, per-service costs, drip stats
 - Drip: ✅ scripts/drip.js — 4-step follow-up sequence (d1/d1b/d1c/d2), per-channel, daily limit 20, --dry-run; config/drip-config.json
+- Reply Classifier: ✅ scripts/reply-classifier.js — keyword-based intent classifier (positive/question/objection/negative/stop/auto_reply/neutral), zero API cost
+- Dashboard: ✅ scripts/dashboard.js — terminal pipeline view, --leads and --drip flags, color-coded by status
+- Webhook: ✅ scripts/webhook.js — Twilio inbound SMS server, HMAC-SHA1 validation; **run on Mac**
+- Poller: ✅ scripts/poller.js — IMAP email reply poller (imapflow), auto-reply detection; **run on Mac**
+- Website/Demo: ✅ website/ — 3 demo sites (plumber/HVAC/electrician), proposal page, intake form, checkout, thank-you, /start funnel; **on claude/demo-site branch (not yet merged)**
 
 ## Template Vault
 - 6 SMS templates (s1–s6) + 5 email templates (e1–e5) in config/templates.json
@@ -95,9 +100,11 @@ ZOHO_APP_PASSWORD=       # Zoho app-specific password (not account password)
 TWILIO_ACCOUNT_SID=
 TWILIO_AUTH_TOKEN=
 TWILIO_FROM_PHONE=
+TWILIO_WEBHOOK_SECRET=   # same as TWILIO_AUTH_TOKEN — used for HMAC validation in webhook.js
 REPORT_TO_EMAIL=         # where morning report is emailed (defaults to ZOHO_EMAIL)
 CONTRACTOR_EMAIL=        # optional — deal/reply notifications
 CALCOM_LINK=             # optional — shown in Mobile booking drafts
+SITE_START_URL=          # https://trevoadvisors.com/start/ — sent in positive reply drafts
 ```
 
 ## Start Each Session
@@ -112,13 +119,15 @@ The remote Claude Code container has restricted outbound network access.
 - Pitcher (scripts/pitcher.js) — Twilio SMS API blocked from container
 - Drip (scripts/drip.js) — Twilio SMS + Zoho SMTP blocked from container
 - Reporter (scripts/reporter.js) — Zoho SMTP blocked from container
+- Webhook (scripts/webhook.js) — Twilio inbound webhook server, must be publicly reachable (use ngrok)
+- Poller (scripts/poller.js) — Zoho IMAP blocked from container
 
 **Runs fine in container:**
-- Diagnoser, Checker, Builder, Filmer, Mobile (all use Anthropic API only)
+- Diagnoser, Checker, Builder, Filmer, Mobile, Dashboard, Reply Classifier (all use Anthropic API or no external API)
 
 Local workflow after Scout/Pitcher runs on Mac:
 1. `git add queue/ state.json config/pitcher-config.json config/cost-log.json`
-2. `git commit -m "..."` and `git push origin claude/kind-hypatia-3YzM0`
+2. `git commit -m "..."` and `git push origin main`
 3. Continue AI steps from container
 
 Note: GitHub PAT is configured on Mac (set 2026-06-01). Push works without password prompts.
@@ -147,3 +156,7 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - 2026-06-01: SMS templates trimmed to ≤160 chars (1 seg); s6 catch-all added; Hey [First Name] removed
 - 2026-06-01: First email batch — 15 Denver plumbers sent via Zoho SMTP
 - 2026-06-01: Drip campaign live — drip.js built (4-step sequence, 8 templates approved and loaded)
+- 2026-06-02: reply-classifier.js, dashboard.js, webhook.js, poller.js merged to main
+- 2026-06-02: website/ directory built — 3 demos + proposal + intake + checkout + thankyou + /start funnel (on claude/demo-site, pending merge)
+- 2026-06-02: mobile.js updated — sends /start URL in positive reply, Zoho SMTP fix confirmed
+- 2026-06-02: Branches 1–6 merged to main; claude/website and claude/demo-site held pending review

@@ -11,6 +11,7 @@
     "build": "node scripts/builder.js",
     "film": "node scripts/filmer.js",
     "mobile": "node scripts/mobile.js",
+    "dash": "node scripts/dashboard.js",
     "daily": "bash run-daily.sh",
     "daily:dry": "bash run-daily.sh --dry-run"
   },

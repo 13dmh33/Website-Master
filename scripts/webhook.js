@@ -68,7 +68,10 @@ function validateTwilioSignature(authToken, signature, url, params) {
   const sortedKeys = Object.keys(params).sort();
   const signing    = url + sortedKeys.map(k => k + params[k]).join('');
   const expected   = crypto.createHmac('sha1', authToken).update(signing).digest('base64');
-  return crypto.timingSafeEqual(Buffer.from(expected), Buffer.from(signature));
+  const expBuf = Buffer.from(expected);
+  const sigBuf = Buffer.from(signature);
+  if (expBuf.length !== sigBuf.length) return false;
+  return crypto.timingSafeEqual(expBuf, sigBuf);
 }
 
 // ── LEAD LOOKUP ───────────────────────────────────────────────────────────────

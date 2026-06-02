@@ -65,6 +65,7 @@ function saveConfig(cfg) {
 }
 
 function isAutoReply(envelope, headers) {
+  if (!headers) return false;
   const subject = (envelope?.subject || '').toLowerCase();
   if (AUTO_REPLY_SUBJECTS.some(kw => subject.includes(kw))) return true;
   // Standard auto-reply headers

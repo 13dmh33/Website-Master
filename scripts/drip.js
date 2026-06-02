@@ -89,9 +89,11 @@ function loadDripTemplates() {
 }
 
 function fill(text, lead) {
+  // strip state suffix from city so "Denver, CO" → "Denver" in SMS templates
+  const cityName = (lead.city || '').replace(/,\s*[A-Z]{2}$/, '').trim();
   return text
     .replace(/\[Business Name\]/g, lead.business_name || '')
-    .replace(/\[City\]/g,          lead.city           || '')
+    .replace(/\[City\]/g,          cityName)
     .replace(/\[trade\]/g,         lead.trade          || '');
 }
 

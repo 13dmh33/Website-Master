@@ -1,0 +1,320 @@
+{
+  "version": 1,
+  "terms": [
+    {
+      "term": "bureau",
+      "definition": "A speakers bureau is an agency that represents speakers to event planners and meeting professionals, handling inquiries, negotiations, and bookings in exchange for a commission — typically 25–30% of the speaker fee.",
+      "content_angle": "Bureaus don't find you work — they amplify work you've already proven. Applying to a bureau before you have consistent $5k+ bookings is like asking a publisher for a book deal before writing a word. They need evidence, not a pitch.",
+      "niche": "booking",
+      "hook_potential": "high"
+    },
+    {
+      "term": "one-sheet",
+      "definition": "A one-page PDF document that summarizes a speaker's topics, credentials, audience outcomes, fee range, and contact information — the primary leave-behind for event planners and bureaus.",
+      "content_angle": "Most speaker one-sheets are written for the speaker, not the planner. The planner doesn't care about your backstory — they care about one thing: 'Will this speaker make me look good to my boss?' Every line on your one-sheet should answer that question.",
+      "niche": "booking",
+      "hook_potential": "high"
+    },
+    {
+      "term": "demo reel",
+      "definition": "A short video (typically 2–5 minutes) that showcases a speaker's stage presence, audience engagement, and speaking style using footage from real engagements — the single most important sales asset for a professional speaker.",
+      "content_angle": "Event planners decide in the first 90 seconds of your demo reel whether to keep watching. They're not looking for polish — they're looking for the moment the room shifts. If your reel doesn't have a visible audience reaction in the first 60 seconds, you're losing bookings you never knew you were being considered for.",
+      "niche": "booking",
+      "hook_potential": "high"
+    },
+    {
+      "term": "kill fee",
+      "definition": "A contractual penalty paid by a client who cancels a confirmed booking after a set deadline — typically 50% of the full fee if cancelled within 30–60 days, and 100% within 2 weeks of the event.",
+      "content_angle": "Most new speakers don't charge a kill fee because they're afraid of scaring off clients. But the speakers who skip kill fees are the ones getting cancelled on 10 days out with no income and a blocked calendar date they can no longer sell.",
+      "niche": "booking",
+      "hook_potential": "high"
+    },
+    {
+      "term": "rider",
+      "definition": "A rider is the list of technical, logistical, and hospitality requirements a speaker includes with their contract — covering AV setup, travel arrangements, accommodations, and on-site needs the client must provide.",
+      "content_angle": "A vague rider is a liability. When you don't specify exactly what 'a lapel mic' means, you show up to a 500-person room with a handheld that kills your hand gestures and throws off your timing. Your rider isn't a wishlist — it's a performance protection document.",
+      "niche": "booking",
+      "hook_potential": "medium"
+    },
+    {
+      "term": "call for speakers",
+      "definition": "An open invitation published by a conference or event organizer asking speakers to submit proposals for consideration — often the lowest-cost entry point for new speakers to access conference stages.",
+      "content_angle": "Calls for speakers look democratic but they're not. Organizers already have 60–70% of their lineup locked. The call fills the remaining slots — usually lower-profile sessions. Applying cold to a CFP is a long shot. Applying after a warm introduction to the program chair is a near-certain yes.",
+      "niche": "booking",
+      "hook_potential": "high"
+    },
+    {
+      "term": "RFP (request for proposal)",
+      "definition": "A formal document issued by corporations, associations, or event planners soliciting detailed proposals from speakers — including topic summaries, fees, past client lists, and availability — before making a booking decision.",
+      "content_angle": "When a corporation sends you an RFP, they've already narrowed their list to 3–5 speakers. The RFP isn't an open competition — it's a formality that favors whoever built the relationship first. If you're receiving RFPs cold, you're already behind. If you're generating them through relationship, you're usually winning them.",
+      "niche": "booking",
+      "hook_potential": "medium"
+    },
+    {
+      "term": "anchor talk",
+      "definition": "A speaker's primary, signature topic — the talk they're most known for, most often booked to deliver, and from which all other products and services extend.",
+      "content_angle": "The mistake isn't having one anchor talk — it's trying to have five. Every topic you add to your website splits the planner's attention and dilutes your positioning. The highest-paid speakers are the ones where the topic and the name are synonymous. You can't be the 'leadership, sales, mindset, and culture' speaker. You can be the resilience speaker.",
+      "niche": "booking",
+      "hook_potential": "high"
+    },
+    {
+      "term": "open market vs exclusive",
+      "definition": "Open market speakers are represented by multiple bureaus simultaneously. Exclusive speakers are represented by a single bureau that manages all their bookings — typically in exchange for higher placement and marketing commitment from the bureau.",
+      "content_angle": "Bureau exclusivity sounds prestigious, but it concentrates your entire business in one relationship. If your exclusive bureau loses interest or folds, your pipeline collapses. Most mid-career speakers do better staying open market until a bureau proactively offers exclusivity with concrete booking volume guarantees attached.",
+      "niche": "booking",
+      "hook_potential": "medium"
+    },
+    {
+      "term": "CSP (Certified Speaking Professional)",
+      "definition": "The Certified Speaking Professional designation is the speaking industry's highest earned credential, awarded by the National Speakers Association to members who meet thresholds for paid engagements (250+ over 5 years) and client diversity.",
+      "content_angle": "The CSP is a credential planners rarely ask for but bureaus absolutely notice. It's not a marketing tool — it's an industry signal that you've done the volume. The irony: you can only earn it after you've already built a serious speaking business, which means it confirms success rather than creates it.",
+      "niche": "booking",
+      "hook_potential": "medium"
+    },
+    {
+      "term": "speaker showcase",
+      "definition": "A curated event where multiple speakers each deliver short presentations (typically 20–30 minutes) to an audience of event planners, meeting professionals, and bureau agents — designed as a live audition environment.",
+      "content_angle": "Showcases feel like a big break, but the ROI is almost always negative for newer speakers. You're paying thousands to perform for planners booking at fee ranges you're not yet at. The speakers who win bookings from showcases already had relationships with the planners in the room. Do showcases when you're ready to scale, not to validate.",
+      "niche": "booking",
+      "hook_potential": "high"
+    },
+    {
+      "term": "NSA (National Speakers Association)",
+      "definition": "The National Speakers Association is the primary professional association for paid speakers in the United States, offering education, community, credentialing, and the annual Influence conference as core member benefits.",
+      "content_angle": "NSA membership is worth it for one reason: the hallway conversations. The main sessions are good — the real value is meeting a bureau agent during a break or getting an introduction from a CSP who's seen you speak. The speakers who treat NSA as a conference miss the point. The ones who treat it as a relationship accelerator build their pipeline in a weekend.",
+      "niche": "booking",
+      "hook_potential": "medium"
+    },
+    {
+      "term": "honorarium",
+      "definition": "An honorarium is a nominal payment offered to a speaker — typically from nonprofits, academic institutions, or government agencies — when a full market-rate fee isn't available. It acknowledges the speaker's contribution without framing it as a commercial transaction.",
+      "content_angle": "Accepting honorariums isn't charity — it's a strategic choice that depends entirely on what you're getting back. Footage, a testimonial, a warm intro to the board, a new vertical of clients — those can be worth more than $500. Accepting them for none of those reasons is just undervaluing yourself with extra steps.",
+      "niche": "business",
+      "hook_potential": "medium"
+    },
+    {
+      "term": "fee ladder ($0→$2500→$7500→$15k→$25k+)",
+      "definition": "The fee ladder describes the typical progression of a speaker's booking fee across career stages — from unpaid or expenses-only (building credentials), through emerging ($2,500–$7,500), established ($7,500–$15,000), and professional ($15,000–$25,000+) tiers.",
+      "content_angle": "Most speakers stay stuck at $2,500 not because the market won't pay more, but because they never raised their price and tested the resistance. The jump from $2,500 to $7,500 rarely requires better content — it requires a better one-sheet, stronger social proof, and the courage to quote the higher number without apologizing.",
+      "niche": "business",
+      "hook_potential": "high"
+    },
+    {
+      "term": "exclusivity clause",
+      "definition": "A contract provision requiring a speaker not to deliver the same talk to a competitor of the booking client — either in a defined geographic region, industry vertical, or time window surrounding the event.",
+      "content_angle": "Exclusivity clauses sound reasonable but they can quietly block your next three bookings. A clause that says 'you won't speak at a competing event for 6 months' in a vertical where conferences cluster in spring can cost you $30k. Always counter with a narrow geographic scope and a 90-day window instead of the 6 months they'll ask for.",
+      "niche": "business",
+      "hook_potential": "high"
+    },
+    {
+      "term": "travel rider",
+      "definition": "A travel rider specifies the travel requirements a speaker includes in their contract — covering flight class, hotel tier, ground transportation, and whether travel expenses are included in the fee or billed separately.",
+      "content_angle": "Not separating travel from your fee is a hidden income leak. If you're quoting $5,000 all-in and flying business class, you've just netted $3,200. Itemize travel above your fee — clients expect it, bureaus prefer it, and your bookings become dramatically more profitable at the same quoted number.",
+      "niche": "business",
+      "hook_potential": "high"
+    },
+    {
+      "term": "multi-book discount",
+      "definition": "A discounted fee structure offered to clients who book a speaker for two or more engagements — typically a 10–20% reduction on the second and subsequent bookings in exchange for volume commitment.",
+      "content_angle": "Multi-book discounts work in reverse of how most speakers use them. Don't offer the discount to close a hesitant client — offer it proactively to a satisfied client the day after the event when they're still riding the high. That's the moment they'll say yes to two more dates they haven't planned yet.",
+      "niche": "business",
+      "hook_potential": "high"
+    },
+    {
+      "term": "referral window",
+      "definition": "The referral window is the period immediately following an engagement when a client is most likely to proactively recommend a speaker to peers — typically 24–72 hours after the event while the experience is still vivid.",
+      "content_angle": "The referral window closes at 72 hours. Most speakers send their thank-you email two weeks later. By then, the client has moved on to their next project and has to dig through memory to write your recommendation. Asking for the referral the morning after the event — while the audience feedback is still coming in — is the single highest-ROI move in the speaking business.",
+      "niche": "business",
+      "hook_potential": "high"
+    },
+    {
+      "term": "retainer model",
+      "definition": "A retainer arrangement where a corporation or association pays a speaker a fixed monthly or annual fee for on-call availability, content access, or a set number of speaking appearances per year — creating recurring revenue independent of per-event bookings.",
+      "content_angle": "A retainer is the speaking business's answer to the feast-or-famine cycle. One $3,000/month retainer is worth more than four $7,500 bookings because it's predictable. Most speakers don't know to offer retainers — they wait to be asked. The companies most likely to say yes are the ones that already booked you twice in the same year.",
+      "niche": "business",
+      "hook_potential": "high"
+    },
+    {
+      "term": "intellectual property (speaker IP)",
+      "definition": "A speaker's intellectual property includes their frameworks, methodologies, coined terms, proprietary models, and original content — assets that can be licensed, turned into books or courses, or protected contractually from client replication.",
+      "content_angle": "Most speakers give away their entire framework during a keynote and then wonder why the client doesn't call back for a workshop. When your IP is clearly defined and named — your three-step system, your proprietary model — clients understand there's more to buy. Unnamed frameworks get used once. Named frameworks get licensed.",
+      "niche": "business",
+      "hook_potential": "high"
+    },
+    {
+      "term": "spin-off booking",
+      "definition": "A spin-off booking occurs when an audience member from one engagement hires the speaker independently — generating a new booking from a single original client relationship without additional outreach.",
+      "content_angle": "The highest-leverage audience member in any room is the one who will become your next client — not the person clapping hardest, but the one quietly taking notes on their phone. The way to trigger spin-off bookings is to mention your availability from the stage: 'If you'd like to bring this conversation to your team, here's how.' Planners never tell you this is allowed. It always is.",
+      "niche": "business",
+      "hook_potential": "high"
+    },
+    {
+      "term": "follow-on product",
+      "definition": "A follow-on product is any offering a speaker can sell or recommend after an engagement — workshops, online courses, books, coaching programs, or assessments that extend the keynote's impact and create an additional revenue stream.",
+      "content_angle": "The keynote is not the product — it's the most expensive sample you'll ever give. Every speaker who walks off stage without a clear next step for the audience is leaving revenue on the table. The follow-on product doesn't need to be a course. Even a $29 book sale at the back of the room changes your economics completely.",
+      "niche": "business",
+      "hook_potential": "high"
+    },
+    {
+      "term": "speaker agreement",
+      "definition": "A speaker agreement is the formal contract between a speaker and a client that specifies the engagement date, fee, payment terms, cancellation policy, AV requirements, IP ownership, and any exclusivity provisions.",
+      "content_angle": "Most first-time speakers rely on the client's contract and assume it protects them. It doesn't — it protects the client. The most important clause most client contracts omit: what happens if they record you and use the footage commercially. If you don't own your recording rights by contract, you don't own them at all.",
+      "niche": "business",
+      "hook_potential": "high"
+    },
+    {
+      "term": "warm referral vs cold pitch",
+      "definition": "A warm referral is an introduction to a potential client made by a mutual contact — typically a past client, bureau agent, or fellow speaker. A cold pitch is unsolicited outreach to a decision maker with no prior relationship or shared connection.",
+      "content_angle": "Cold pitching to event planners has roughly a 1–3% response rate. A warm referral from someone the planner already trusts has a conversion rate closer to 40–60%. The math tells you everything: one strong client relationship that generates three introductions is worth more than a hundred cold emails. The speaking business runs on introductions, not inboxes.",
+      "niche": "business",
+      "hook_potential": "high"
+    },
+    {
+      "term": "opening 90 seconds",
+      "definition": "The opening 90 seconds of a keynote is the window in which an audience decides whether they're fully engaged or mentally elsewhere — the highest-stakes segment of any talk, requiring a hook that creates immediate tension, curiosity, or emotional investment.",
+      "content_angle": "Audiences don't give speakers the benefit of the doubt — they decide in 90 seconds whether this is worth their attention. The biggest mistake isn't starting slow — it's starting with credentials. 'I've worked with 200 Fortune 500 companies' means nothing to someone who doesn't yet care about you. Start with a problem they recognize, not a résumé they'll forget.",
+      "niche": "mindset",
+      "hook_potential": "high"
+    },
+    {
+      "term": "planted question",
+      "definition": "A planted question is a pre-arranged audience interaction where a speaker briefs an attendee in advance to ask a specific question — creating the appearance of spontaneous dialogue while ensuring the speaker can pivot to a key point or story at the right moment.",
+      "content_angle": "Planted questions aren't dishonest — they're architectural. The best speakers design the Q&A they want before the event starts. When you leave Q&A to chance, you get the one person who wants to debate your premise in front of 400 people. Planting one question gives you a reset moment and controls the emotional close of the room.",
+      "niche": "mindset",
+      "hook_potential": "high"
+    },
+    {
+      "term": "talk arc",
+      "definition": "The talk arc is the narrative structure of a keynote — typically following a tension-resolution framework that moves the audience from a recognized problem through a shift in perspective to a clear, actionable conclusion.",
+      "content_angle": "Most speakers build their talk as a list of insights. The best speakers build it as a story with one main character — the audience. The difference between a talk people remember and one they forget isn't the quality of the content. It's whether the audience felt like the protagonist. Your insights are the plot twists, not the point.",
+      "niche": "mindset",
+      "hook_potential": "high"
+    },
+    {
+      "term": "callback (rhetorical device)",
+      "definition": "A callback is a rhetorical technique where a speaker references an earlier moment, phrase, or story from the same talk — creating a sense of narrative completion and rewarding the audience for paying attention.",
+      "content_angle": "A well-placed callback at minute 42 can make an audience feel like the last 40 minutes just snapped into focus. It's not a trick — it's a signal that the talk was designed, not assembled. Audiences don't know the word 'callback,' but they feel the difference between a talk that just ends and one that closes.",
+      "niche": "mindset",
+      "hook_potential": "medium"
+    },
+    {
+      "term": "green room",
+      "definition": "The green room is the backstage area where a speaker waits before taking the stage — the pre-performance environment that shapes a speaker's mental and physical state going into their talk.",
+      "content_angle": "What you do in the green room is a performance decision. Most speakers check email and try to stay calm. The ones who consistently nail their opening have a pre-talk ritual that raises energy, not lowers it. The green room isn't a waiting room — it's the last chance to get your nervous system in the state your talk needs.",
+      "niche": "mindset",
+      "hook_potential": "medium"
+    },
+    {
+      "term": "run of show",
+      "definition": "The run of show (ROS) is the event's master timeline document — detailing every segment, transition, speaker cue, AV change, and timing beat from doors-open through closing remarks.",
+      "content_angle": "The speakers who never get rebooked are usually the ones who went 8 minutes over. Event planners don't tell you — they just never call again. Getting your hands on the run of show before the event isn't a nice-to-have; it's the difference between a speaker who fits the day and one who breaks it.",
+      "niche": "mindset",
+      "hook_potential": "high"
+    },
+    {
+      "term": "hot mic",
+      "definition": "A hot mic is a live, active microphone that is transmitting audio — most critically relevant when a speaker believes the mic is off but it is still recording or broadcasting to the room or a live stream.",
+      "content_angle": "Every experienced speaker has a hot mic story — usually someone else's. The mic is always on until you physically hand it to someone else. The comment you make walking offstage, the frustrated exhale after a bad tech glitch, the side conversation with the event planner — all of it can be live. Treat every microphone like it's broadcasting until you're in your hotel room.",
+      "niche": "mindset",
+      "hook_potential": "high"
+    },
+    {
+      "term": "tech check",
+      "definition": "A tech check is a pre-event rehearsal with the AV team where a speaker tests slide transitions, audio levels, clicker functionality, and stage lighting — ideally conducted in the actual room 30–60 minutes before showtime.",
+      "content_angle": "Skipping the tech check is a form of arrogance. You're telling yourself the room will conform to your expectations. The speakers who do tech checks aren't nervous — they're thorough. The three things that kill talks aren't bad content: it's a clicker that skips two slides at once, a mic that cuts in and out, and a spotlight that blinds you from seeing the audience.",
+      "niche": "mindset",
+      "hook_potential": "medium"
+    },
+    {
+      "term": "clicker",
+      "definition": "A clicker (presentation remote) is the handheld device a speaker uses to advance slides — a physical tool whose absence, malfunction, or unfamiliarity can derail presentation flow and break the speaker's relationship with their own content.",
+      "content_angle": "Always bring your own clicker. The venue's clicker has dead batteries, an unpredictable range, and was last used by someone whose slides were in a different order than yours. Your clicker is part of your craft — as much as your mic technique or your opening line. It belongs in your carry-on, not checked luggage.",
+      "niche": "mindset",
+      "hook_potential": "medium"
+    },
+    {
+      "term": "stage fright vs performance anxiety",
+      "definition": "Stage fright is the fear of performing that seeks avoidance. Performance anxiety is arousal before high-stakes performance that, when reframed as excitement, can enhance presence and delivery — research shows the reframe from 'calm down' to 'I'm excited' measurably improves performance outcomes.",
+      "content_angle": "The advice to 'calm down before you speak' is physiologically backwards. The elevated heart rate, the heightened awareness, the adrenaline — those are the same signals as excitement. Speakers who try to eliminate pre-show nerves suppress the very energy that makes them compelling. The reframe isn't pretending to be confident. It's channeling arousal instead of fighting it.",
+      "niche": "mindset",
+      "hook_potential": "high"
+    },
+    {
+      "term": "Q&A trap (ending on Q&A kills momentum)",
+      "definition": "The Q&A trap is the common mistake of ending a keynote with an open audience Q&A session — which almost always closes the talk on an unpredictable, often flat note rather than the carefully crafted emotional conclusion the speaker designed.",
+      "content_angle": "Ending on Q&A is handing the microphone to the one person in the room most likely to derail your close. The last thing the audience remembers is the last thing they feel — and 'any final questions?' followed by silence is the worst possible final impression. Close your talk with your close. Take Q&A before the final 3 minutes, then reclaim the room for your ending.",
+      "niche": "mindset",
+      "hook_potential": "high"
+    },
+    {
+      "term": "prospect list",
+      "definition": "A prospect list is a curated database of potential speaking clients — typically conferences, associations, corporations, or event series — organized by industry vertical, typical budget range, decision-maker contact, and outreach status.",
+      "content_angle": "Most speakers build their prospect list reactively — chasing every call for speakers they stumble across. A strategic prospect list is built in reverse: start with the three industries where you have the most credibility, identify every conference and association event in those verticals, and work the list top-down by budget. That one afternoon of research can define your outreach calendar for 12 months.",
+      "niche": "automation",
+      "hook_potential": "high"
+    },
+    {
+      "term": "pipeline",
+      "definition": "A speaker's pipeline is the collection of all active booking opportunities at various stages — from first contact through proposal, negotiation, contract, and confirmed booking — tracked to forecast income and prioritize follow-up.",
+      "content_angle": "If your speaking business lives in your inbox, you don't have a pipeline — you have a memory game you'll eventually lose. The moment you have more than 10 active conversations, every unbookmarked thread is a leaked opportunity. A simple pipeline tracker with five columns — contacted, responded, proposed, negotiating, booked — turns a chaotic inbox into a revenue forecast.",
+      "niche": "automation",
+      "hook_potential": "high"
+    },
+    {
+      "term": "CRM for speakers",
+      "definition": "A CRM (Customer Relationship Management) system adapted for speakers tracks contacts, event history, follow-up sequences, referral sources, and contract status — replacing the inbox and memory as the primary relationship management system.",
+      "content_angle": "You don't need Salesforce. You need a spreadsheet with six columns and the discipline to update it after every conversation. The speakers who book consistently aren't better at speaking — they're better at follow-through, and follow-through requires a system. A CRM you'll actually use is better than the perfect one collecting dust.",
+      "niche": "automation",
+      "hook_potential": "medium"
+    },
+    {
+      "term": "follow-up cadence",
+      "definition": "A follow-up cadence is the predetermined schedule of outreach touchpoints a speaker uses after initial contact with a prospect — typically structured as day 1, day 4, day 10, day 21 intervals across multiple channels.",
+      "content_angle": "The average speaker follows up once, gets no response, and assumes the answer is no. The data says otherwise: over 60% of booked speakers got the gig on a follow-up, not the initial pitch. The difference between a speaker who gets booked and one who gets overlooked is usually just the willingness to send the third email.",
+      "niche": "automation",
+      "hook_potential": "high"
+    },
+    {
+      "term": "pitch template",
+      "definition": "A pitch template is a pre-written, customizable outreach message a speaker uses to contact event planners and decision makers — designed to reduce the time cost of personalization while maintaining enough specificity to feel researched, not automated.",
+      "content_angle": "A pitch template is not a form letter — it's a structure with blanks that require actual research to fill. The templates that get responses have one thing in common: they demonstrate that the speaker actually read the conference program. 'I noticed your keynote track hasn't covered X in three years' opens more doors than 'I'd love to speak at your event.'",
+      "niche": "automation",
+      "hook_potential": "high"
+    },
+    {
+      "term": "decision maker mapping",
+      "definition": "Decision maker mapping is the process of identifying the specific person within an organization who controls the speaking budget and booking decisions — which can be an events director, VP of HR, meeting planner, or association program chair depending on the event type.",
+      "content_angle": "Pitching the wrong person is the most expensive mistake in speaker outreach — you waste a warm lead on someone who has to forward your email upstairs. For corporate events, the decision maker is almost never the person who responds to your cold email. Finding the right name before you reach out is research that triples your conversion rate.",
+      "niche": "automation",
+      "hook_potential": "high"
+    },
+    {
+      "term": "conference calendar",
+      "definition": "A conference calendar is a curated, forward-looking database of industry events, association conferences, and corporate summits — organized by date, submission deadline, expected budget, and relevant speaking topics — used to time outreach and proposal submissions.",
+      "content_angle": "Most speakers reach out to conferences after the program is locked. Decision-maker outreach needs to happen 6–9 months before the event date — which means you need to know when every conference on your target list is scheduled a year out. The speakers who consistently get booked aren't pitching harder — they're pitching earlier.",
+      "niche": "automation",
+      "hook_potential": "high"
+    },
+    {
+      "term": "outreach sequence",
+      "definition": "An outreach sequence is a multi-step, multi-touchpoint communication plan for engaging a cold or warm prospect — combining email, LinkedIn, and phone contact across a defined timeline until a response or explicit no is received.",
+      "content_angle": "A one-touch outreach strategy is not a strategy — it's a hope. Prospects respond to speakers who demonstrate persistence and professionalism through a structured sequence, not volume. A 5-step sequence over 21 days gets more replies than 20 emails in 3 days. Sequence design is as important as the message content inside it.",
+      "niche": "automation",
+      "hook_potential": "medium"
+    },
+    {
+      "term": "booking funnel",
+      "definition": "A booking funnel is the end-to-end process a prospective client moves through from first awareness of a speaker to a signed contract — typically: discovery (website/video) → initial inquiry → proposal → negotiation → contract → deposit.",
+      "content_angle": "Every speaker has a booking funnel — most just haven't mapped it. The gap between 'they watched my demo reel' and 'they signed the contract' is filled with friction points most speakers never diagnose. Map where leads drop off and you'll find your revenue leak: it's almost always the gap between inquiry and proposal, where a slow response killed the momentum.",
+      "niche": "automation",
+      "hook_potential": "high"
+    },
+    {
+      "term": "conference research tools",
+      "definition": "Conference research tools are platforms and methods speakers use to identify relevant events, submission deadlines, and organizer contacts — including tools like 10times.com, Sessionize, Lanyrd, Google conference calendar searches, and LinkedIn event tracking.",
+      "content_angle": "The most underused conference research tool isn't a platform — it's the 'previous speakers' page on every conference website. That list tells you exactly what type of speaker gets booked, what topics they cover, and — if you reverse-engineer their LinkedIn — who made the booking decision. Your next engagement is hiding in someone else's past lineup.",
+      "niche": "automation",
+      "hook_potential": "high"
+    }
+  ]
+}

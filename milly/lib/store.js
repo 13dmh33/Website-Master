@@ -166,22 +166,26 @@ module.exports = {
     return readJson(PATHS.postFormats);
   },
 
-  // advance the weekly alternation counter for caption + reel niches
+  // advance the weekly alternation counter — mods by caption array length
+  // so adding more niches to caption_niche_alternation just works
   advanceWeekRotation() {
     const data = readJson(PATHS.postFormats);
     if (!data) return;
-    data.weekly_rotation.current_week = (data.weekly_rotation.current_week + 1) % 2;
+    const len = data.weekly_rotation.caption_niche_alternation.length || 2;
+    data.weekly_rotation.current_week = (data.weekly_rotation.current_week + 1) % len;
     writeJson(PATHS.postFormats, data);
   },
 
   // get which niche to use for caption and reel this week
   getWeekNiches() {
     const data = readJson(PATHS.postFormats);
-    if (!data) return { caption: 'mindset', reel: 'automation' };
+    if (!data) return { caption: 'mindset', reel: 'automation', weekNumber: 0 };
     const idx = data.weekly_rotation.current_week || 0;
+    const reelLen = data.weekly_rotation.reel_niche_alternation.length || 2;
     return {
-      caption: data.weekly_rotation.caption_niche_alternation[idx],
-      reel:    data.weekly_rotation.reel_niche_alternation[idx],
+      caption:    data.weekly_rotation.caption_niche_alternation[idx],
+      reel:       data.weekly_rotation.reel_niche_alternation[idx % reelLen],
+      weekNumber: idx,
     };
   },
 

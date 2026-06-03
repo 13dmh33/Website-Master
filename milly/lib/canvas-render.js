@@ -39,6 +39,7 @@ const NICHE_PHOTO_QUERIES = {
   reevefound: ['conference hall chandelier', 'event venue empty', 'ballroom stage', 'hotel conference room'],
   reel:       ['spotlight stage empty', 'theater curtain', 'concert hall lights', 'stage fog lights'],
   carousel:   ['auditorium seats empty', 'conference hall wide', 'stage microphone podium', 'speaker hall light'],
+  business:   ['contract signing desk', 'boardroom table empty', 'handshake business deal', 'executive office window'],
 };
 
 // fetch a photo from Unsplash and return it as a loadable image
@@ -122,6 +123,13 @@ const NICHE_PALETTES = {
     spotlight: { x: 0.50, y: 0.0,  r: 0.55, color: 'rgba(255,255,200,0.18)' },
     rim:       { x: 0.85, y: 0.85, r: 0.40, color: 'rgba(29,168,132,0.12)' },
     topGrad:   ['rgba(0,0,0,0.0)', 'rgba(2,2,5,0.70)'],
+  },
+  business: {
+    // boardroom: warm charcoal base, amber/gold deal-making glow, teal rim
+    base: '#080604',
+    spotlight: { x: 0.55, y: 0.28, r: 0.58, color: 'rgba(210,150,40,0.22)' },
+    rim:       { x: 0.08, y: 0.78, r: 0.40, color: 'rgba(29,168,132,0.14)' },
+    topGrad:   ['rgba(35,22,5,0.22)', 'rgba(8,6,4,0.0)'],
   },
 };
 

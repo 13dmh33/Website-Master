@@ -5,3 +5,23 @@
   from = "/"
   to = "/start/"
   status = 301
+
+[[redirects]]
+  from = "/demo/"
+  to = "/demos/plumbing/"
+  status = 301
+
+[[redirects]]
+  from = "/demo/index.html"
+  to = "/demos/plumbing/"
+  status = 301
+
+[[redirects]]
+  from = "/demo/electrician.html"
+  to = "/demos/electrical/"
+  status = 301
+
+[[redirects]]
+  from = "/demo/hvac.html"
+  to = "/demos/hvac/"
+  status = 301

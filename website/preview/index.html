@@ -818,6 +818,16 @@ ${areaSection}
   <span style="font-weight:700;color:rgba(255,255,255,.6);">${biz}</span>
   <span>© 2025 ${biz} · ${city} · Powered by <a href="https://trevoadvisors.com" style="color:${accent};">Trevo Advisors</a></span>
 </footer>
+<script>
+  window.NoraConfig = {
+    apiUrl:        "https://nora-agent-lemon.vercel.app",
+    trade:         "${cfg.trade || 'plumber'}",
+    businessName:  "${biz}",
+    enabledTrades: ["${cfg.trade || 'plumber'}"],
+    accentColor:   "${accent}"
+  };
+</script>
+<script src="https://nora-agent-lemon.vercel.app/widget.js"></script>
 </body>
 </html>`;
   }

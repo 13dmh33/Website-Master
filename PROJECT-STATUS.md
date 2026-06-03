@@ -1,6 +1,6 @@
 # Trevo Advisors — Project Status
 
-**Last updated:** 2026-06-03
+**Last updated:** 2026-06-03 (session 2)
 **Branch:** `main` — all branches merged and live
 
 ---
@@ -29,11 +29,11 @@
 | URL | File | Status |
 |---|---|---|
 | /start/ | website/start/ | Live — redesigned with navy/teal brand |
-| /demos/plumbing/ | website/demos/plumbing/ | Live — Peak Flow Plumbing demo |
-| /demos/hvac/ | website/demos/hvac/ | Live — Comfort Pro HVAC demo |
-| /demos/electrical/ | website/demos/electrical/ | Live — Volt & Wire Electric demo |
-| /demos/handyman/ | website/demos/handyman/ | Live — Square Deal Handyman demo |
-| /preview/ | website/preview/ | Live — interactive site configurator |
+| /demos/plumbing/ | website/demos/plumbing/ | Live — Peak Flow Plumbing, **real Nora widget** |
+| /demos/hvac/ | website/demos/hvac/ | Live — Comfort Pro HVAC, **real Nora widget** |
+| /demos/electrical/ | website/demos/electrical/ | Live — Volt & Wire Electric, **real Nora widget** |
+| /demos/handyman/ | website/demos/handyman/ | Live — Square Deal Handyman, **real Nora widget** |
+| /preview/ | website/preview/ | Live — configurator, **Nora injected into srcdoc** |
 | /intake/ | website/intake/ | Live — Formspree form (xbdbneej) |
 | /proposal/ | website/proposal/ | Live |
 | /checkout/ | website/checkout/ | Live — **Stripe links are PLACEHOLDERS** (see action items) |
@@ -69,6 +69,10 @@
 - [x] Website redesigned + deployed — navy/teal brand, 4 demo sites, configurator
 - [x] netlify.toml — old /demo/* URLs redirected to new /demos/* paths
 - [x] brand.json updated to new navy/teal palette
+- [x] scout.js — filters leads without website + requires email (email trades) or phone (SMS trades)
+- [x] Nora-Agent refactored — 5-trade config system, widget.js rewritten, CORS added
+- [x] Demo sites — real Nora widget embedded (nora-agent-lemon.vercel.app), fake scripted widget removed
+- [x] Configurator — Nora injected into srcdoc preview, updates with trade + business name
 
 ---
 
@@ -78,6 +82,8 @@
 |---|---|---|
 | 🔴 HIGH | **Wire Stripe Payment Links** | Stripe is currently down. When back up: create 2 payment links at dashboard.stripe.com/payment-links ($150 website, $200 Nora bundle) → paste into `website/checkout/index.html` lines 345–347 replacing `YOUR_WEBSITE_LINK_ID` and `YOUR_NORA_LINK_ID` |
 | 🔴 HIGH | Twilio A2P 10DLC approval | Awaiting carrier approval (Bundle SID: BUb725ec9662f0dc3da58ed24117df8684). SMS sends hit error 30034 until approved. Monitor Twilio console. |
+| 🔴 HIGH | Push Nora-Agent to GitHub | On Mac: `cd /path/to/Nora-Agent && git pull && git push origin main` — or clone fresh from container diff |
+| 🔴 HIGH | Set Nora-Agent env vars on Vercel | Add `CONTRACTOR_TRADE` + `CONTRACTOR_BUSINESS_NAME` per deployment in Vercel dashboard |
 | 🔴 HIGH | Wire Twilio inbound webhook | Mac: `node scripts/webhook.js` + ngrok + paste public URL in Twilio console → Phone Numbers → your number → Messaging → Webhook URL |
 | 🔴 HIGH | Run drip campaign (due Jun 5) | Mac: `node scripts/drip.js --dry-run --force` preview → `node scripts/drip.js --force` |
 | 🟡 MED | Record first Loom walkthrough | `node scripts/filmer.js --force`, record screen, submit URL |

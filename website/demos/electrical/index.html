@@ -86,26 +86,6 @@
     footer a { color: rgba(255,255,255,.4); transition: color .2s; }
     footer a:hover { color: var(--accent); }
 
-    .nora-widget { position: fixed; bottom: 24px; right: 24px; z-index: 1000; display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
-    .nora-panel { width: 300px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(255,255,255,.1); box-shadow: 0 20px 60px rgba(0,0,0,.45); display: none; flex-direction: column; }
-    .nora-header { padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; background: var(--dark); }
-    .nora-header-info { display: flex; align-items: center; gap: 10px; }
-    .nora-name { font-size: 14px; font-weight: 700; color: #fff; }
-    .nora-status { font-size: 11px; color: #00C8AF; }
-    .nora-close { background: none; border: none; color: rgba(255,255,255,.4); cursor: pointer; font-size: 18px; padding: 0 4px; line-height: 1; }
-    .nora-messages { padding: 14px; display: flex; flex-direction: column; gap: 10px; min-height: 130px; max-height: 240px; overflow-y: auto; background: #f4f5f7; }
-    .nora-msg { max-width: 88%; padding: 10px 12px; border-radius: 10px; font-size: 13px; line-height: 1.5; font-family: 'Barlow', sans-serif; }
-    .nora-msg-nora { background: #fff; border: 1px solid #e0e0e0; color: #111; align-self: flex-start; }
-    .nora-msg-user { background: var(--accent); color: #fff; align-self: flex-end; }
-    .nora-input-row { display: flex; gap: 8px; padding: 10px 12px; background: #fff; border-top: 1px solid #e0e0e0; }
-    .nora-input { flex: 1; border: 1px solid #ddd; border-radius: 6px; padding: 8px 10px; font-size: 13px; font-family: 'Barlow', sans-serif; outline: none; }
-    .nora-input:focus { border-color: var(--accent); }
-    .nora-send { padding: 8px 14px; border: none; border-radius: 6px; background: var(--accent); color: #fff; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Barlow', sans-serif; }
-    .nora-toggle-row { display: flex; align-items: center; gap: 10px; }
-    .nora-pill { background: rgba(0,0,0,.7); color: #fff; padding: 7px 14px; border-radius: 100px; font-size: 12px; font-weight: 600; backdrop-filter: blur(4px); font-family: 'Barlow', sans-serif; }
-    .nora-toggle { width: 52px; height: 52px; border-radius: 14px; border: none; background: var(--dark); cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(0,0,0,.4); transition: transform .2s; }
-    .nora-toggle:hover { transform: scale(1.06); }
-
     @media (max-width: 768px) {
       nav { padding: 0 20px; }
       .hero-content { padding: 0 24px; }
@@ -218,38 +198,15 @@
   <span>© 2025 Volt & Wire Electric · Austin, TX · Powered by <a href="https://trevoadvisors.com">Trevo Advisors</a></span>
 </footer>
 
-<div class="nora-widget" id="noraWidget">
-  <div class="nora-panel" id="noraPanel">
-    <div class="nora-header">
-      <div class="nora-header-info">
-        <svg width="28" height="28" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" rx="18" fill="#071610"/><ellipse cx="50" cy="50" rx="38" ry="24" fill="none" stroke="#fff" stroke-width="3.5"/><ellipse cx="50" cy="50" rx="21" ry="13" fill="#00C8AF"/><ellipse cx="50" cy="50" rx="13" ry="8" fill="#008870"/><ellipse cx="50" cy="50" rx="8" ry="5" fill="#071610"/><circle cx="50" cy="50" r="3.5" fill="#00C8AF"/><line x1="12" y1="50" x2="43" y2="50" stroke="#fff" stroke-width="2.5"/><line x1="57" y1="50" x2="88" y2="50" stroke="#fff" stroke-width="2.5"/></svg>
-        <div><div class="nora-name">Nora</div><div class="nora-status">● Online now</div></div>
-      </div>
-      <button class="nora-close" id="noraClose">×</button>
-    </div>
-    <div class="nora-messages" id="noraMessages">
-      <div class="nora-msg nora-msg-nora">Hi! I'm Nora from Volt & Wire. Electrical issue? I can have someone at your door today.</div>
-    </div>
-    <div class="nora-input-row">
-      <input type="text" class="nora-input" id="noraInput" placeholder="Type a message..." />
-      <button class="nora-send" id="noraSend">Send</button>
-    </div>
-  </div>
-  <div class="nora-toggle-row">
-    <div class="nora-pill">Book instantly with Nora</div>
-    <button class="nora-toggle" id="noraToggle" aria-label="Open Nora chat">
-      <svg width="28" height="28" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" rx="18" fill="#071610"/><ellipse cx="50" cy="50" rx="38" ry="24" fill="none" stroke="#fff" stroke-width="3.5"/><ellipse cx="50" cy="50" rx="21" ry="13" fill="#00C8AF"/><ellipse cx="50" cy="50" rx="13" ry="8" fill="#008870"/><ellipse cx="50" cy="50" rx="8" ry="5" fill="#071610"/><circle cx="50" cy="50" r="3.5" fill="#00C8AF"/><line x1="12" y1="50" x2="43" y2="50" stroke="#fff" stroke-width="2.5"/><line x1="57" y1="50" x2="88" y2="50" stroke="#fff" stroke-width="2.5"/></svg>
-    </button>
-  </div>
-</div>
-
 <script>
-  const panel=document.getElementById('noraPanel'),toggle=document.getElementById('noraToggle'),closeBtn=document.getElementById('noraClose'),sendBtn=document.getElementById('noraSend'),input=document.getElementById('noraInput'),messages=document.getElementById('noraMessages');
-  toggle.addEventListener('click',()=>{panel.style.display=panel.style.display==='flex'?'none':'flex';});
-  closeBtn.addEventListener('click',()=>{panel.style.display='none';});
-  function send(){const t=input.value.trim();if(!t)return;const um=document.createElement('div');um.className='nora-msg nora-msg-user';um.textContent=t;messages.appendChild(um);input.value='';messages.scrollTop=messages.scrollHeight;setTimeout(()=>{const nm=document.createElement('div');nm.className='nora-msg nora-msg-nora';nm.textContent="Got it! Can I get your name and best number to reach you?";messages.appendChild(nm);messages.scrollTop=messages.scrollHeight;},900);}
-  sendBtn.addEventListener('click',send);
-  input.addEventListener('keydown',e=>{if(e.key==='Enter')send();});
+  window.NoraConfig = {
+    apiUrl:        "https://nora-agent-lemon.vercel.app",
+    trade:         "electrician",
+    businessName:  "Volt & Wire Electric",
+    enabledTrades: ["electrician"],
+    accentColor:   "#1D7A3A"
+  };
 </script>
+<script src="https://nora-agent-lemon.vercel.app/widget.js"></script>
 </body>
 </html>

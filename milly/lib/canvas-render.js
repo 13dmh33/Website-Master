@@ -78,7 +78,110 @@ function getPhotoQuery(niche) {
   return queries[Math.floor(Math.random() * queries.length)];
 }
 
-// draw background: photo + dark overlay, or flat color fallback
+// niche-specific canvas backgrounds — used when Unsplash is unavailable
+// each palette evokes the visual mood of its niche without needing a photo
+const NICHE_PALETTES = {
+  booking: {
+    // deep stage: dark navy base, warm off-center spotlight, cool rim
+    base: '#04080F',
+    spotlight: { x: 0.62, y: 0.28, r: 0.55, color: 'rgba(180,140,60,0.22)' },
+    rim:       { x: 0.12, y: 0.72, r: 0.40, color: 'rgba(29,168,132,0.14)' },
+    topGrad:   ['rgba(10,18,40,0.0)', 'rgba(4,8,15,0.55)'],
+  },
+  carousel: {
+    base: '#040912',
+    spotlight: { x: 0.5,  y: 0.20, r: 0.65, color: 'rgba(120,110,200,0.18)' },
+    rim:       { x: 0.15, y: 0.80, r: 0.45, color: 'rgba(29,168,132,0.16)' },
+    topGrad:   ['rgba(8,12,30,0.0)', 'rgba(4,9,18,0.60)'],
+  },
+  mindset: {
+    // horizon: deep ocean blue fading to lighter blue-teal at top
+    base: '#030B18',
+    spotlight: { x: 0.50, y: 0.35, r: 0.70, color: 'rgba(29,100,168,0.28)' },
+    rim:       { x: 0.80, y: 0.10, r: 0.50, color: 'rgba(60,190,180,0.15)' },
+    topGrad:   ['rgba(20,60,100,0.30)', 'rgba(3,11,24,0.0)'],
+  },
+  automation: {
+    // tech: near-black with subtle cool cyan tint, faint grid
+    base: '#020608',
+    spotlight: { x: 0.78, y: 0.22, r: 0.50, color: 'rgba(0,200,220,0.12)' },
+    rim:       { x: 0.20, y: 0.78, r: 0.40, color: 'rgba(29,168,132,0.10)' },
+    topGrad:   ['rgba(0,20,30,0.0)', 'rgba(2,6,8,0.65)'],
+    grid: true,
+  },
+  reevefound: {
+    // event venue: warm chandelier amber glow on dark navy
+    base: '#060510',
+    spotlight: { x: 0.50, y: 0.15, r: 0.60, color: 'rgba(220,160,40,0.20)' },
+    rim:       { x: 0.15, y: 0.85, r: 0.35, color: 'rgba(180,80,40,0.10)' },
+    topGrad:   ['rgba(30,20,5,0.25)', 'rgba(6,5,16,0.0)'],
+  },
+  reel: {
+    // dramatic stage: single harsh spotlight from above
+    base: '#020205',
+    spotlight: { x: 0.50, y: 0.0,  r: 0.55, color: 'rgba(255,255,200,0.18)' },
+    rim:       { x: 0.85, y: 0.85, r: 0.40, color: 'rgba(29,168,132,0.12)' },
+    topGrad:   ['rgba(0,0,0,0.0)', 'rgba(2,2,5,0.70)'],
+  },
+};
+
+// draw a niche-specific editorial gradient background — no external images needed
+function drawGradientBackground(ctx, width, height, niche) {
+  const p = NICHE_PALETTES[niche] || NICHE_PALETTES.booking;
+
+  // base fill
+  ctx.fillStyle = p.base;
+  ctx.fillRect(0, 0, width, height);
+
+  // primary spotlight — radial gradient
+  const sx = p.spotlight.x * width;
+  const sy = p.spotlight.y * height;
+  const sr = p.spotlight.r * Math.max(width, height);
+  const spot = ctx.createRadialGradient(sx, sy, 0, sx, sy, sr);
+  spot.addColorStop(0, p.spotlight.color);
+  spot.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = spot;
+  ctx.fillRect(0, 0, width, height);
+
+  // rim light
+  const rx = p.rim.x * width;
+  const ry = p.rim.y * height;
+  const rr = p.rim.r * Math.max(width, height);
+  const rim = ctx.createRadialGradient(rx, ry, 0, rx, ry, rr);
+  rim.addColorStop(0, p.rim.color);
+  rim.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = rim;
+  ctx.fillRect(0, 0, width, height);
+
+  // top-to-bottom linear mood gradient
+  const mood = ctx.createLinearGradient(0, 0, 0, height);
+  mood.addColorStop(0, p.topGrad[0]);
+  mood.addColorStop(1, p.topGrad[1]);
+  ctx.fillStyle = mood;
+  ctx.fillRect(0, 0, width, height);
+
+  // faint grid for automation niche
+  if (p.grid) {
+    ctx.strokeStyle = 'rgba(0,200,220,0.04)';
+    ctx.lineWidth = 1;
+    const step = 72;
+    for (let x = 0; x < width; x += step) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, height); ctx.stroke();
+    }
+    for (let y = 0; y < height; y += step) {
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(width, y); ctx.stroke();
+    }
+  }
+
+  // bottom vignette — always grounds the text area
+  const vig = ctx.createLinearGradient(0, height * 0.55, 0, height);
+  vig.addColorStop(0, 'rgba(0,0,0,0)');
+  vig.addColorStop(1, 'rgba(0,0,0,0.72)');
+  ctx.fillStyle = vig;
+  ctx.fillRect(0, 0, width, height);
+}
+
+// draw background: Unsplash photo + dark overlay, or niche gradient fallback
 async function drawBackground(ctx, width, height, niche) {
   const query = getPhotoQuery(niche);
   const photo = await fetchUnsplashPhoto(query);
@@ -91,21 +194,21 @@ async function drawBackground(ctx, width, height, niche) {
     const drawX  = (width  - drawW) / 2;
     const drawY  = (height - drawH) / 2;
     ctx.drawImage(photo, drawX, drawY, drawW, drawH);
-  } else {
-    ctx.fillStyle = DESIGN_CONFIG.fallbackBg;
+
+    // dark overlay for text legibility
+    ctx.fillStyle = DESIGN_CONFIG.overlay;
     ctx.fillRect(0, 0, width, height);
+
+    // bottom grounding gradient
+    const grad = ctx.createLinearGradient(0, height * 0.65, 0, height);
+    grad.addColorStop(0, 'rgba(0,0,0,0)');
+    grad.addColorStop(1, 'rgba(8,15,30,0.75)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, width, height);
+  } else {
+    // no photo available — use the niche-specific gradient background
+    drawGradientBackground(ctx, width, height, niche);
   }
-
-  // dark overlay for text legibility
-  ctx.fillStyle = DESIGN_CONFIG.overlay;
-  ctx.fillRect(0, 0, width, height);
-
-  // subtle teal gradient at the bottom third for grounding
-  const grad = ctx.createLinearGradient(0, height * 0.65, 0, height);
-  grad.addColorStop(0, 'rgba(0,0,0,0)');
-  grad.addColorStop(1, 'rgba(8,15,30,0.75)');
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, 0, width, height);
 }
 
 // draw Reeve wordmark top-right
@@ -232,8 +335,7 @@ async function renderFallback(text, niche = 'mindset') {
   const canvas = new Canvas(width, height);
   const ctx    = canvas.getContext('2d');
 
-  ctx.fillStyle = DESIGN_CONFIG.fallbackBg;
-  ctx.fillRect(0, 0, width, height);
+  drawGradientBackground(ctx, width, height, niche);
   renderTopBar(ctx, width);
   renderReeveBrand(ctx, width);
 

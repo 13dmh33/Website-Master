@@ -2,14 +2,14 @@
 
 // scheduler — posting agent
 // runs Tuesday 6am MT after designer
-// primary: PostPeer API (auto-schedules 4 posts)
+// primary: Buffer API (auto-schedules 4 posts to Instagram)
 // fallback: writes posts to /output/queue/ as JSON for manual publishing
 
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 
 const path      = require('path');
 const store     = require('../lib/store');
-const postpeer  = require('../lib/postpeer');
+const buffer    = require('../lib/buffer');
 const abTracker = require('../lib/ab-tracker');
 
 const TIMEZONE = process.env.TIMEZONE || 'America/Denver';
@@ -110,33 +110,33 @@ async function main() {
   const postObjects = buildPostObjects(content, schedule);
 
   console.log(`Scheduler running for week of ${content.weekOf}.`);
-  console.log(`PostPeer configured: ${postpeer.isConfigured()}`);
+  console.log(`Buffer configured: ${buffer.isConfigured()}`);
 
   const forceQueue = process.env.FORCE_QUEUE === '1';
 
-  if (postpeer.isConfigured() && !forceQueue) {
-    // primary path: schedule via PostPeer
+  if (buffer.isConfigured() && !forceQueue) {
+    // primary path: schedule via Buffer → Instagram
     let successCount = 0;
     for (const post of postObjects) {
       try {
-        const result = await postpeer.schedulePost({
+        const result = await buffer.schedulePost({
           imagePaths:  post.images,
           caption:     post.caption,
           scheduledAt: post.scheduledFor,
         });
         store.updatePostStatus(post.weekOf, post.format, 'scheduled');
-        console.log(`Scheduled ${post.format} for ${post.scheduledFor} — PostPeer ID: ${result.postId}`);
+        console.log(`Scheduled ${post.format} for ${post.scheduledFor} — Buffer ID: ${result.updateId}`);
         successCount++;
       } catch (err) {
-        console.warn(`PostPeer schedule failed for ${post.format}: ${err.message}`);
+        console.warn(`Buffer schedule failed for ${post.format}: ${err.message}`);
         console.warn(`Saving ${post.format} to queue fallback.`);
         store.saveToQueue(post);
       }
     }
     if (successCount === postObjects.length) {
-      console.log(`4 posts scheduled via PostPeer.`);
+      console.log(`4 posts scheduled via Buffer.`);
     } else {
-      console.log(`${successCount} posts scheduled via PostPeer. ${postObjects.length - successCount} saved to queue.`);
+      console.log(`${successCount} posts scheduled via Buffer. ${postObjects.length - successCount} saved to queue.`);
     }
   } else {
     // fallback path: write to /output/queue/
@@ -144,7 +144,7 @@ async function main() {
       const filePath = store.saveToQueue(post);
       console.log(`Saved ${post.format} → ${path.basename(filePath)} (scheduled for ${post.scheduledFor})`);
     }
-    console.log(`PostPeer not configured — 4 posts saved to queue. Run: node scripts/push-queue.js`);
+    console.log(`Buffer not configured — 4 posts saved to queue. Run: node scripts/push-queue.js`);
   }
 
   // generate HTML preview for Dave to review

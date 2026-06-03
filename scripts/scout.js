@@ -182,7 +182,7 @@ async function callOutscraper(query, limit) {
     limit:    String(limit),
     language: 'en',
     region:   'us',
-    fields:   'name,phone,site,full_address,rating,reviews,subtypes,place_id,latitude,longitude'
+    fields:   'name,email,phone,site,full_address,rating,reviews,subtypes,place_id,latitude,longitude'
   });
 
   const options = {
@@ -251,26 +251,31 @@ function slugify(str) {
 }
 
 function filterAndFormat(results, tradeStr, cityStr) {
-  return results
-    .filter(r => {
-      if (!r.reviews || r.reviews < 5) return false;
-      if (r.reviews > 300) return false;
-      if (!r.rating || r.rating < 4.0) return false;
-      return true;
-    })
-    .map(r => ({
+  let discardedReviews = 0;
+  let discardedRating  = 0;
+  let discardedWebsite = 0;
+  let discardedNoEmail = 0;
+
+  const leads = [];
+
+  for (const r of results) {
+    if (!r.reviews || r.reviews < 5 || r.reviews > 300) { discardedReviews++; continue; }
+    if (!r.rating  || r.rating  < 4.0)                  { discardedRating++;  continue; }
+    if (r.site && r.site.trim() !== '')                  { discardedWebsite++; continue; }
+    if (!r.email || r.email.trim() === '')               { discardedNoEmail++; continue; }
+
+    leads.push({
       lead_id: r.place_id || `${slugify(r.name)}-${slugify(cityStr)}`,
       business_name: r.name || '',
       trade: tradeStr,
       city: cityStr,
       // NOTE: Outscraper does not return years_on_maps directly.
       // This field is null until a future enrichment step adds it.
-      // The "5+ years on Maps" filter is not enforced at Scout time.
       years_on_maps: null,
       review_count: r.reviews || 0,
       rating: r.rating || 0,
-      website: r.site || 'none',
-      email:   r.email || '',
+      website: 'none',
+      email:   r.email.trim(),
       phone:   r.phone || '',
       address: r.full_address || '',
       place_id: r.place_id || null,
@@ -278,8 +283,17 @@ function filterAndFormat(results, tradeStr, cityStr) {
       channel: channelForTrade(tradeStr),
       notes: '',
       scraped_at: new Date().toISOString()
-    }))
-    .sort((a, b) => b.gap_score - a.gap_score);
+    });
+  }
+
+  console.log(`  Filter breakdown (${results.length} raw):`);
+  console.log(`    Kept:                        ${leads.length}`);
+  console.log(`    Reviews out of range (5–300): ${discardedReviews}`);
+  console.log(`    Rating below 4.0:             ${discardedRating}`);
+  console.log(`    Has existing website:         ${discardedWebsite}`);
+  console.log(`    No valid email:               ${discardedNoEmail}`);
+
+  return leads.sort((a, b) => b.gap_score - a.gap_score);
 }
 
 // ── FILENAME — no overwrites on same-day runs ─────────────────────────────────

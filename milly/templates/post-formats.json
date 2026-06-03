@@ -47,8 +47,14 @@
     }
   },
   "weekly_rotation": {
-    "caption_niche_alternation": ["mindset", "automation"],
-    "reel_niche_alternation": ["automation", "mindset"],
+    "caption_niche_alternation": [
+      "mindset",
+      "automation"
+    ],
+    "reel_niche_alternation": [
+      "automation",
+      "mindset"
+    ],
     "current_week": 0
   }
 }

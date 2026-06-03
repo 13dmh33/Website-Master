@@ -9,11 +9,12 @@ Brand colors: Navy #0A1228 (background) · Teal #00C8AF (primary accent) · Deep
 
 Your goal: 47 clients/month at $150/site + $65/mo hosting; Nora bundle adds $200 build + $65/mo.
 
-## Build Status (as of 2026-06-02)
+## Build Status (as of 2026-06-03)
 - Scout: ✅ scripts/scout.js — Outscraper API, $10/mo cap, auto_run toggle
 - Diagnoser: ✅ scripts/diagnoser.js — Claude Haiku, prompt caching, $5/mo cap; dual-channel: sets secondary_channel=sms when lead has both email + phone
 - Checker: ✅ scripts/checker.js — 5 evals + Claude rewrite loop, $3/mo cap; template fast-path validates both primary + secondary messages
-- Pitcher: ✅ scripts/pitcher.js — dual-channel (email first, SMS follows after sms_followup_delay_hours=4); per-channel sent tracking in messages/-sent.json; staggered sends; --dry-run
+- Personalizer: ✅ scripts/personalizer.js — generates demo_url for every approved email lead; writes to brief JSON; no API cost; --write to save
+- Pitcher: ✅ scripts/pitcher.js — dual-channel (email first, SMS follows after sms_followup_delay_hours=4); per-channel sent tracking in messages/-sent.json; staggered sends; --dry-run; uses demo_url P.S. if set
 - Builder: ✅ scripts/builder.js — Lovable prompt generator, --submit to record URL, 5/day
 - Filmer: ✅ scripts/filmer.js — Loom instructions + ScreenshotOne, --submit to record URL, 5/day
 - Mobile: ✅ scripts/mobile.js — positive reply handler, weekday slot suggestions, auto-send, Nora upsell scheduler; sends /start link in booking reply
@@ -72,11 +73,12 @@ Manual order:
 1. Scout → target city + trade (ask human at start of each session) — **run on Mac**
 2. Diagnoser → process all new leads from /leads/ — run in container
 3. Checker + Builder → top 5 priority leads only — run in container
-4. Filmer → mockups from Builder — run in container
-5. Pitcher → approved messages only — **run on Mac** (Twilio blocked from container)
-6. Mobile → monitor /messages/ for positive replies — run in container
-7. Drip → follow-up non-responders — **run on Mac** (Twilio + Zoho SMTP blocked from container)
-8. Reporter → `node scripts/reporter.js` on Mac each morning (or cron at 7am)
+4. Personalizer → `node scripts/personalizer.js --write` — generates demo_url for every approved lead — run in container
+5. Filmer → mockups from Builder — run in container
+6. Pitcher → approved messages only — **run on Mac** (Twilio blocked from container)
+7. Mobile → monitor /messages/ for positive replies — run in container
+8. Drip → follow-up non-responders — **run on Mac** (Twilio + Zoho SMTP blocked from container)
+9. Reporter → `node scripts/reporter.js` on Mac each morning (or cron at 7am)
 
 ## Nora Upsell
 - Website deal closes → set nora_pitch_due = closed_date + 7 days in state.json
@@ -166,6 +168,8 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - 2026-06-03: webhook.js timingSafeEqual RangeError fixed; poller.js null-headers crash fixed
 - 2026-06-03: EIN obtained (IRS CP575G) for Trevo Advisors — stored locally, not in repo
 - 2026-06-03: Twilio A2P 10DLC Brand registration submitted (Bundle SID: BUb725ec9662f0dc3da58ed24117df8684) — initially rejected (name mismatch), resubmitted under "David M Hettinger" to match EIN
+- 2026-06-03: Template/SMS audit — all em/en dashes replaced with hyphens (GSM-7, 1 seg), dead templates replaced, tone routing added
+- 2026-06-03: Personalizer built — scripts/personalizer.js generates /for/?b=&t=&c=&r= demo URL per lead; website/for/index.html is the prospect-facing page; pitcher.js uses demo_url P.S. in emails
 
 ## Twilio A2P 10DLC Status
 - Brand registration submitted: 2026-06-03

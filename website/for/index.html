@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Your New Website | Trevo Advisors</title>
+  <meta name="description" content="A personalized website demo built for your contracting business — ready to go live in under a week." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:       #0A1228;
+      --navy-mid:   #111d3a;
+      --teal:       #00C8AF;
+      --teal-dark:  #008870;
+      --white:      #FFFFFF;
+      --muted:      #8BA8C4;
+      --border:     rgba(255,255,255,0.08);
+      --border-teal:rgba(0,200,175,0.25);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── NAV ─────────────────────────────────────────────────────────── */
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(10,18,40,0.96);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+      height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px;
+    }
+    .nav-brand {
+      font-size: 15px; font-weight: 700; letter-spacing: -0.01em;
+      color: var(--teal);
+    }
+    .nav-for {
+      font-size: 13px; color: var(--muted);
+    }
+    .nav-for strong { color: var(--white); }
+
+    /* ── HERO ────────────────────────────────────────────────────────── */
+    .hero {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 64px 24px 48px;
+      text-align: center;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: rgba(0,200,175,0.1);
+      border: 1px solid var(--border-teal);
+      color: var(--teal);
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: 5px 14px; border-radius: 100px;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+    .hero h1 .accent { color: var(--teal); }
+    .hero-sub {
+      font-size: 17px;
+      color: rgba(255,255,255,0.7);
+      max-width: 560px;
+      margin: 0 auto 32px;
+      line-height: 1.65;
+    }
+    .hero-sub strong { color: var(--white); font-weight: 600; }
+
+    .hero-ctas {
+      display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .btn-primary {
+      background: var(--teal);
+      color: var(--navy);
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-size: 15px; font-weight: 700;
+      transition: filter .15s, transform .15s;
+      white-space: nowrap;
+    }
+    .btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
+    .btn-secondary {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      color: var(--white);
+      padding: 14px 24px;
+      border-radius: 8px;
+      font-size: 15px; font-weight: 500;
+      transition: background .15s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.1); }
+
+    .hero-meta {
+      display: flex; gap: 8px; justify-content: center;
+      font-size: 13px; color: var(--muted); flex-wrap: wrap;
+    }
+    .hero-meta .sep { opacity: 0.4; }
+
+    /* ── PREVIEW SECTION ─────────────────────────────────────────────── */
+    .preview-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px 64px;
+    }
+    .preview-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 12px; flex-wrap: wrap; gap: 8px;
+    }
+    .preview-header-left {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .preview-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 8px var(--teal);
+    }
+    .preview-label {
+      font-size: 13px; font-weight: 600;
+      color: var(--teal);
+      text-transform: uppercase; letter-spacing: .06em;
+    }
+    .preview-note {
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 500px;
+    }
+
+    /* browser chrome */
+    .browser {
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04);
+    }
+    .browser-bar {
+      background: #1a2540;
+      padding: 10px 16px;
+      display: flex; align-items: center; gap: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .browser-dots {
+      display: flex; gap: 6px;
+    }
+    .browser-dots span {
+      width: 11px; height: 11px; border-radius: 50%;
+    }
+    .browser-dots span:nth-child(1) { background: #ff5f57; }
+    .browser-dots span:nth-child(2) { background: #febc2e; }
+    .browser-dots span:nth-child(3) { background: #28c840; }
+    .browser-url {
+      flex: 1;
+      background: rgba(255,255,255,0.06);
+      border-radius: 6px;
+      padding: 5px 12px;
+      font-size: 12px;
+      color: var(--muted);
+      font-family: monospace;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .iframe-container {
+      position: relative;
+      width: 100%;
+      height: 620px;
+      overflow: hidden;
+    }
+    .iframe-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+
+    /* mobile: shrink iframe, keep it usable */
+    @media (max-width: 600px) {
+      .iframe-container { height: 420px; }
+    }
+
+    .preview-cta {
+      margin-top: 24px;
+      text-align: center;
+    }
+    .preview-cta .btn-primary {
+      padding: 16px 36px;
+      font-size: 16px;
+    }
+
+    /* ── TRUST STRIP ─────────────────────────────────────────────────── */
+    .trust-strip {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 24px;
+      display: flex; justify-content: center; gap: 40px;
+      flex-wrap: wrap;
+      margin-bottom: 64px;
+    }
+    .trust-item {
+      text-align: center;
+    }
+    .trust-item .trust-val {
+      font-size: 22px; font-weight: 800;
+      color: var(--teal);
+    }
+    .trust-item .trust-lab {
+      font-size: 12px; color: var(--muted);
+      text-transform: uppercase; letter-spacing: .06em;
+    }
+
+    /* ── PRICING ─────────────────────────────────────────────────────── */
+    .pricing-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      text-align: center;
+    }
+    .pricing-section h2 {
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 800; letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .pricing-sub {
+      font-size: 15px; color: var(--muted);
+      margin-bottom: 40px;
+    }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 600px) {
+      .pricing-grid { grid-template-columns: 1fr; }
+    }
+    .plan {
+      background: var(--navy-mid);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 28px;
+      text-align: left;
+      position: relative;
+    }
+    .plan.featured {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 1px var(--border-teal);
+    }
+    .plan-badge {
+      position: absolute; top: -11px; left: 50%; transform: translateX(-50%);
+      background: var(--teal);
+      color: var(--navy);
+      font-size: 10px; font-weight: 800;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: 3px 12px; border-radius: 100px;
+      white-space: nowrap;
+    }
+    .plan h3 {
+      font-size: 16px; font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--muted);
+    }
+    .plan .price {
+      font-size: 44px; font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+    .plan .price-note {
+      font-size: 12px; color: var(--muted);
+      margin-bottom: 24px;
+    }
+    .plan ul {
+      list-style: none;
+      margin-bottom: 24px;
+    }
+    .plan ul li {
+      font-size: 14px; color: rgba(255,255,255,0.75);
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .plan ul li::before {
+      content: '';
+      display: inline-block;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--teal);
+      flex-shrink: 0;
+    }
+    .plan .monthly-note {
+      font-size: 13px; color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .btn-plan {
+      display: block;
+      background: var(--teal);
+      color: var(--navy);
+      padding: 13px 20px;
+      border-radius: 7px;
+      font-size: 14px; font-weight: 700;
+      text-align: center;
+      transition: filter .15s;
+    }
+    .btn-plan:hover { filter: brightness(1.08); }
+    .plan:not(.featured) .btn-plan {
+      background: rgba(255,255,255,0.08);
+      color: var(--white);
+    }
+    .plan:not(.featured) .btn-plan:hover { background: rgba(255,255,255,0.14); }
+
+    /* ── FOOTER ──────────────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+      font-size: 13px; color: var(--muted);
+      line-height: 1.8;
+    }
+    footer a { color: var(--teal); }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-brand">Trevo Advisors</div>
+    <div class="nav-for" id="nav-for">Built for <strong id="nav-biz"></strong></div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-tag" id="hero-tag">Contractor Website Demo</div>
+    <h1>Your website, <span class="accent">ready to launch</span></h1>
+    <p class="hero-sub" id="hero-sub">
+      We put together a live demo based on what we found online.
+      Below is exactly what your new site would look like.
+    </p>
+    <div class="hero-ctas">
+      <a href="/checkout/" class="btn-primary" id="cta-hero">Get this site live — $150</a>
+      <a href="mailto:dave@trevoadvisors.com" class="btn-secondary">Questions? Email Dave</a>
+    </div>
+    <div class="hero-meta">
+      <span>Live in 3-5 business days</span>
+      <span class="sep">·</span>
+      <span>$65/mo hosting after</span>
+      <span class="sep">·</span>
+      <span>Cancel anytime</span>
+    </div>
+  </section>
+
+  <!-- DEMO PREVIEW -->
+  <section class="preview-section">
+    <div class="preview-header">
+      <div class="preview-header-left">
+        <div class="preview-dot"></div>
+        <div class="preview-label" id="demo-label">Live demo</div>
+      </div>
+      <div class="preview-note" id="preview-note">
+        Your business name, phone number, and city replace the demo content.
+      </div>
+    </div>
+    <div class="browser">
+      <div class="browser-bar">
+        <div class="browser-dots">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="browser-url" id="browser-url">trevoadvisors.com/your-site</div>
+      </div>
+      <div class="iframe-container">
+        <iframe id="demo-frame" src="" title="Demo site preview" loading="lazy"></iframe>
+      </div>
+    </div>
+    <div class="preview-cta">
+      <a href="/checkout/" class="btn-primary" id="cta-preview">Get this site — $150 flat</a>
+    </div>
+  </section>
+
+  <!-- TRUST STRIP -->
+  <div class="trust-strip">
+    <div class="trust-item">
+      <div class="trust-val">3-5</div>
+      <div class="trust-lab">Days to go live</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-val">$150</div>
+      <div class="trust-lab">One-time build fee</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-val">$65</div>
+      <div class="trust-lab">Per month after</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-val">24/7</div>
+      <div class="trust-lab">Lead capture</div>
+    </div>
+  </div>
+
+  <!-- PRICING -->
+  <section class="pricing-section">
+    <h2>Simple, transparent pricing</h2>
+    <p class="pricing-sub">One-time build fee. Monthly hosting keeps it live and maintained.</p>
+    <div class="pricing-grid">
+      <div class="plan">
+        <h3>Website</h3>
+        <div class="price">$150</div>
+        <div class="price-note">one-time build fee</div>
+        <ul>
+          <li>Custom design for your trade</li>
+          <li>Your name, phone, and city</li>
+          <li>Mobile-ready, fast loading</li>
+          <li>Contact form + click-to-call</li>
+          <li>Google-ready (SEO basics)</li>
+          <li>Live in 3-5 business days</li>
+        </ul>
+        <p class="monthly-note">+ $65/mo hosting and maintenance</p>
+        <a href="/checkout/" class="btn-plan">Get Started</a>
+      </div>
+      <div class="plan featured">
+        <div class="plan-badge">BEST VALUE</div>
+        <h3>Website + Nora</h3>
+        <div class="price">$200</div>
+        <div class="price-note">one-time build fee</div>
+        <ul>
+          <li>Everything in Website</li>
+          <li>Nora — AI voice agent</li>
+          <li>Answers calls 24/7</li>
+          <li>Qualifies leads automatically</li>
+          <li>Books appointments for you</li>
+          <li>No missed calls after hours</li>
+        </ul>
+        <p class="monthly-note">+ $65/mo — website and Nora bundled</p>
+        <a href="/checkout/" class="btn-plan">Get Started</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Trevo Advisors &middot; <a href="mailto:dave@trevoadvisors.com">dave@trevoadvisors.com</a> &middot; trevoadvisors.com</p>
+    <p style="margin-top:4px;">AI agents built for the trades.</p>
+  </footer>
+
+  <script>
+    const params  = new URLSearchParams(window.location.search);
+    const bizName = (params.get('b') || '').trim();
+    const trade   = (params.get('t') || '').toLowerCase().trim();
+    const city    = (params.get('c') || '').trim();
+    const reviews = parseInt(params.get('r') || '0', 10);
+
+    // Trade → demo path and display label
+    const TRADE_MAP = {
+      plumber:     { path: '/demos/plumbing/',   label: 'Plumbing template' },
+      plumbing:    { path: '/demos/plumbing/',   label: 'Plumbing template' },
+      hvac:        { path: '/demos/hvac/',       label: 'HVAC template'     },
+      electrician: { path: '/demos/electrical/', label: 'Electrical template' },
+      electrical:  { path: '/demos/electrical/', label: 'Electrical template' },
+      handyman:    { path: '/demos/handyman/',   label: 'Handyman template'  },
+      roofer:      { path: '/demos/plumbing/',   label: 'Roofing template'   },
+      roofing:     { path: '/demos/plumbing/',   label: 'Roofing template'   },
+    };
+    const tradeInfo = TRADE_MAP[trade] || TRADE_MAP['plumber'];
+
+    // Set page title
+    if (bizName) {
+      document.title = `${bizName} — Your New Website | Trevo Advisors`;
+    }
+
+    // Populate nav
+    if (bizName) {
+      document.getElementById('nav-biz').textContent = bizName;
+    } else {
+      document.getElementById('nav-for').style.display = 'none';
+    }
+
+    // Trade tag
+    document.getElementById('hero-tag').textContent = tradeInfo.label.toUpperCase();
+
+    // Hero subheadline
+    const heroSub = document.getElementById('hero-sub');
+    if (bizName && city) {
+      heroSub.innerHTML = `We put together a live demo for <strong>${bizName}</strong> in ${city}. Below is exactly what your new site would look like.`;
+    } else if (bizName) {
+      heroSub.innerHTML = `We put together a live demo for <strong>${bizName}</strong>. Below is exactly what your new site would look like.`;
+    }
+
+    // CTA label
+    if (bizName) {
+      const firstName = bizName.split(/\s+/)[0];
+      document.getElementById('cta-hero').textContent = `Get ${firstName}'s site live — $150`;
+    }
+
+    // Preview label and browser URL
+    document.getElementById('demo-label').textContent = tradeInfo.label;
+    if (bizName) {
+      const slug = bizName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+      document.getElementById('browser-url').textContent = `trevoadvisors.com / ${slug}`;
+    }
+
+    // Review count personalization
+    if (reviews > 0) {
+      const loc = city || 'your area';
+      document.getElementById('preview-note').textContent =
+        `Your ${reviews} Google reviews, paired with a site like this, put you ahead of most competitors in ${loc}.`;
+    }
+
+    // Load the iframe
+    document.getElementById('demo-frame').src = tradeInfo.path;
+  </script>
+</body>
+</html>

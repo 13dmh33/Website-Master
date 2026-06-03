@@ -241,9 +241,17 @@ function getZohoTransport() {
 async function sendEmail(brief, config, videoUrl) {
   const transport = getZohoTransport();
   const subject   = `Quick question about ${brief.business_name}'s website`;
-  const ps        = videoUrl
-    ? `\n\nP.S. Built a quick mockup of what a new site could look like: ${videoUrl}`
-    : `\n\nP.S. I put together a quick mockup of what a new site could look like — happy to share it on a call.`;
+
+  // Demo URL (personalizer) > video URL (filmer) > generic fallback
+  let ps;
+  if (brief.demo_url) {
+    ps = `\n\nP.S. Here's a live demo of what your site could look like: ${brief.demo_url}`;
+  } else if (videoUrl) {
+    ps = `\n\nP.S. Built a quick mockup of what a new site could look like: ${videoUrl}`;
+  } else {
+    ps = `\n\nP.S. I put together a quick mockup of what a new site could look like — happy to share it on a call.`;
+  }
+
   const text = `${brief.final_message}${ps}`;
 
   const info = await transport.sendMail({

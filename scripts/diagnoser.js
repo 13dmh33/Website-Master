@@ -339,6 +339,7 @@ async function main() {
         cold_message:            coldMsg,
         template_id:             tmplId,
         template_name:           tmplName,
+        template_subject:        tmpl?.subject || null,
         template_based:          !!tmpl,
         gap_score:               brief.gap_score  || lead.gap_score,
         priority:                false,

@@ -240,7 +240,7 @@ function getZohoTransport() {
 
 async function sendEmail(brief, config, videoUrl) {
   const transport = getZohoTransport();
-  const subject   = `Quick question about ${brief.business_name}'s website`;
+  const subject   = brief.template_subject || `Quick question about ${brief.business_name}'s website`;
 
   // Demo URL (personalizer) > video URL (filmer) > generic fallback
   let ps;

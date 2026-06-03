@@ -346,6 +346,12 @@
   // Website + Nora ($200):
   const STRIPE_LINK_NORA    = 'https://buy.stripe.com/YOUR_NORA_LINK_ID';
 
+  // ── PLAN PRE-SELECT ───────────────────────────────────────────────────────────
+  // ?plan=nora pre-checks the Nora add-on (linked from /for/ pricing card)
+  if (new URLSearchParams(window.location.search).get('plan') === 'nora') {
+    document.getElementById('add_nora').checked = true;
+  }
+
   // ── NORA TOGGLE ──────────────────────────────────────────────────────────────
   function updateTotal() {
     const checked = document.getElementById('add_nora').checked;

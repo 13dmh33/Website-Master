@@ -251,10 +251,15 @@ function slugify(str) {
 }
 
 function filterAndFormat(results, tradeStr, cityStr) {
-  let discardedReviews = 0;
-  let discardedRating  = 0;
-  let discardedWebsite = 0;
-  let discardedNoEmail = 0;
+  const channel = channelForTrade(tradeStr);
+  const needsEmail = channel === 'email';
+  const needsPhone = channel === 'sms';
+
+  let discardedReviews  = 0;
+  let discardedRating   = 0;
+  let discardedWebsite  = 0;
+  let discardedNoEmail  = 0;
+  let discardedNoPhone  = 0;
 
   const leads = [];
 
@@ -262,7 +267,8 @@ function filterAndFormat(results, tradeStr, cityStr) {
     if (!r.reviews || r.reviews < 5 || r.reviews > 300) { discardedReviews++; continue; }
     if (!r.rating  || r.rating  < 4.0)                  { discardedRating++;  continue; }
     if (r.site && r.site.trim() !== '')                  { discardedWebsite++; continue; }
-    if (!r.email || r.email.trim() === '')               { discardedNoEmail++; continue; }
+    if (needsEmail && (!r.email || r.email.trim() === '')) { discardedNoEmail++; continue; }
+    if (needsPhone && (!r.phone || r.phone.trim() === '')) { discardedNoPhone++; continue; }
 
     leads.push({
       lead_id: r.place_id || `${slugify(r.name)}-${slugify(cityStr)}`,
@@ -275,23 +281,25 @@ function filterAndFormat(results, tradeStr, cityStr) {
       review_count: r.reviews || 0,
       rating: r.rating || 0,
       website: 'none',
-      email:   r.email.trim(),
+      email:   r.email ? r.email.trim() : '',
       phone:   r.phone || '',
       address: r.full_address || '',
       place_id: r.place_id || null,
       gap_score: scoreGap(r),
-      channel: channelForTrade(tradeStr),
+      channel,
       notes: '',
       scraped_at: new Date().toISOString()
     });
   }
 
+  console.log(`  Channel: ${channel} (${tradeStr})`);
   console.log(`  Filter breakdown (${results.length} raw):`);
-  console.log(`    Kept:                        ${leads.length}`);
-  console.log(`    Reviews out of range (5–300): ${discardedReviews}`);
-  console.log(`    Rating below 4.0:             ${discardedRating}`);
-  console.log(`    Has existing website:         ${discardedWebsite}`);
-  console.log(`    No valid email:               ${discardedNoEmail}`);
+  console.log(`    Kept:                         ${leads.length}`);
+  console.log(`    Reviews out of range (5–300):  ${discardedReviews}`);
+  console.log(`    Rating below 4.0:              ${discardedRating}`);
+  console.log(`    Has existing website:          ${discardedWebsite}`);
+  if (needsEmail) console.log(`    No valid email:               ${discardedNoEmail}`);
+  if (needsPhone) console.log(`    No valid phone:               ${discardedNoPhone}`);
 
   return leads.sort((a, b) => b.gap_score - a.gap_score);
 }

@@ -9,6 +9,16 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') }
 
 const fetch = require('node-fetch');
 const store  = require('../lib/store');
+const fs     = require('fs');
+const path   = require('path');
+
+// pull recurring themes from inspiration sources to seed angle ideas
+function getInspirationAngles() {
+  const sourcesPath = path.join(__dirname, '..', 'templates', 'inspiration-sources.json');
+  if (!fs.existsSync(sourcesPath)) return [];
+  const sources = JSON.parse(fs.readFileSync(sourcesPath, 'utf8'));
+  return sources.recurring_themes || [];
+}
 
 // get the Monday of the current week as YYYY-MM-DD
 function weekStartDate() {
@@ -78,19 +88,29 @@ function buildAnglesFromSearch(allResults) {
     mindset:    allResults[2] || [],
   };
 
+  // pull a relevant inspiration theme to seed the hook for each niche
+  const inspirationAngles = getInspirationAngles();
+  const nicheThemes = {
+    booking:    inspirationAngles.filter(t => /booked|pipeline|pitch|bureau|fee|stage/.test(t)),
+    automation: inspirationAngles.filter(t => /system|pipeline|process|waiting|discovered/.test(t)),
+    mindset:    inspirationAngles.filter(t => /introvert|clarity|confus|message|follow|bio/.test(t)),
+  };
+
   for (const [niche, results] of Object.entries(nicheMap)) {
-    const topResult = results[0];
+    const topResult    = results[0];
     if (!topResult) continue;
+    const themeSeed    = nicheThemes[niche]?.[0] || '';
 
     angles.push({
       id:              `angle-${angles.length + 1}`,
       niche,
       angle:           topResult.title.slice(0, 120),
-      hook:            `Most speakers don't know this about ${niche === 'booking' ? 'getting booked' : niche === 'automation' ? 'running their pipeline' : 'showing up on stage'}.`,
+      hook:            themeSeed || `Most speakers don't know this about ${niche === 'booking' ? 'getting booked' : niche === 'automation' ? 'running their pipeline' : 'showing up on stage'}.`,
       painPoint:       'waiting to be discovered instead of pitching proactively',
       dataPoint:       topResult.snippet ? topResult.snippet.slice(0, 120) : null,
       suggestedFormat: niche === 'booking' ? 'carousel' : niche === 'automation' ? 'reel_script' : 'caption',
       source:          topResult.link,
+      inspirationSeed: themeSeed || null,
     });
   }
 

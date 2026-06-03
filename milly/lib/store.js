@@ -15,9 +15,10 @@ const PATHS = {
   images:    path.join(ROOT, 'output', 'images'),
   queue:     path.join(ROOT, 'output', 'queue'),
   archive:   path.join(ROOT, 'output', 'archive'),
-  brandVoice: path.join(ROOT, 'templates', 'brand-voice.json'),
-  postFormats: path.join(ROOT, 'templates', 'post-formats.json'),
-  evergreen: path.join(ROOT, 'templates', 'evergreen.json'),
+  brandVoice:   path.join(ROOT, 'templates', 'brand-voice.json'),
+  postFormats:  path.join(ROOT, 'templates', 'post-formats.json'),
+  evergreen:    path.join(ROOT, 'templates', 'evergreen.json'),
+  inspiration:  path.join(ROOT, 'templates', 'inspiration-sources.json'),
 };
 
 // ensure a directory exists before writing to it
@@ -129,6 +130,11 @@ module.exports = {
   },
 
   // ─── brand voice ──────────────────────────────────────────────────────────
+
+  // read inspiration sources — themes only, never copy content directly
+  getInspirationSources() {
+    return readJson(PATHS.inspiration);
+  },
 
   // read the brand voice config
   getBrandVoice() {

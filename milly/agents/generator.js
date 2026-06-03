@@ -9,6 +9,19 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') }
 
 const claude = require('../lib/claude');
 const store  = require('../lib/store');
+const fs     = require('fs');
+const path   = require('path');
+
+// load inspiration sources — used to inform themes, never copied directly
+function loadInspirationThemes() {
+  const sourcesPath = path.join(__dirname, '..', 'templates', 'inspiration-sources.json');
+  if (!fs.existsSync(sourcesPath)) return '';
+  const sources = JSON.parse(fs.readFileSync(sourcesPath, 'utf8'));
+  const themes = sources.recurring_themes || [];
+  return themes.length
+    ? `Proven content themes from the speaking industry (use as inspiration, never copy directly):\n${themes.map(t => `- ${t}`).join('\n')}`
+    : '';
+}
 
 // build the shared voice context string injected into every Claude call
 function buildVoiceContext(brandVoice) {
@@ -136,9 +149,10 @@ async function main() {
     process.exit(1);
   }
 
-  const brandVoice   = store.getBrandVoice();
-  const weekNiches   = store.getWeekNiches();
-  const voiceContext = buildVoiceContext(brandVoice);
+  const brandVoice       = store.getBrandVoice();
+  const weekNiches       = store.getWeekNiches();
+  const inspirationThemes = loadInspirationThemes();
+  const voiceContext     = buildVoiceContext(brandVoice) + (inspirationThemes ? `\n\n${inspirationThemes}` : '');
   const { angles, conferencesFound, weekOf } = brief;
 
   console.log(`Generating content for week of ${weekOf}.`);

@@ -19,8 +19,10 @@ const SCHEDULE_STR = process.env.POST_SCHEDULE || 'TUE:07:00,THU:12:00,SAT:09:00
 function parseSchedule() {
   const map = {};
   for (const entry of SCHEDULE_STR.split(',')) {
-    const [day, time] = entry.trim().split(':');
-    map[day.toUpperCase()] = time;
+    const colonIdx = entry.indexOf(':');
+    const day  = entry.slice(0, colonIdx).trim().toUpperCase();
+    const time = entry.slice(colonIdx + 1).trim(); // preserves HH:MM
+    map[day] = time;
   }
   return map;
 }

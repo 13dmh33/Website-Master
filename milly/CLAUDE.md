@@ -1,114 +1,135 @@
-# Milly — Claude Code session context
+# Milly — Content Engine
 
 ## What Milly is
 
-Milly is the automated Instagram content engine for the Reeve speaker booking agency. It runs a weekly pipeline that researches speaking industry topics, generates 4 Instagram posts (carousel, caption, "Reeve found this," and a reel script), renders branded images, and schedules them via PostPeer or saves them to a manual queue.
+Milly is the automated Instagram content engine for the Reeve speaker booking agency. It runs a weekly pipeline: research speaking industry angles → generate 4 posts via Claude → render branded PNG images via skia-canvas → schedule via Buffer.
 
-Milly is internal. It is never customer-facing. The Instagram account it posts to (@reeve.agency) is the Reeve brand account — no human persona attached.
+Milly is internal. It posts to @reeve.agency (Reeve's brand account). No human persona.
 
 ## Business flywheel
 
 ```
-Milly posts 3-4x/week on Instagram
+Milly posts 4x/week on Instagram
   → emerging speakers find the content
   → they follow or engage
-  → Reeve's DM agent detects engagement
-  → sends warm qualifier DM
-  → speaker fills onboarding form
-  → becomes paying Reeve client ($597–$997/mo retainer)
+  → they DM "stages" → Reeve DM agent qualifies them
+  → qualified speakers become paying Reeve clients ($597–$997/mo)
 ```
 
-Every post is a lead gen asset. Every piece of content exists to make an emerging speaker feel the pain of missed stage opportunities and think "I need Reeve."
+Every post is a lead gen asset. Each piece of content exists to make an emerging speaker feel the pain of missed opportunities and think "I need Reeve."
 
-## Repo structure
+## Active branch
 
-```
-/Website-Master           ← main repo (Trevo Advisors system)
-  /milly                  ← all Milly code (this directory)
-    CLAUDE.md             ← you are here
-    README.md             ← plain English setup guide
-    package.json
-    .env.example
-    /agents               ← autonomous agents (one job each)
-      researcher.js       ← weekly research brief
-      generator.js        ← brief → 4 content pieces via Claude API
-      designer.js         ← content → PNG images via skia-canvas
-      scheduler.js        ← content + images → PostPeer or queue
-      analyst.js          ← Instagram insights → performance feedback
-    /lib                  ← shared utilities
-      claude.js           ← Claude API wrapper
-      store.js            ← data persistence abstraction (JSON today, Airtable later)
-      postpeer.js         ← PostPeer API helpers
-      instagram-insights.js ← Instagram Graph API read-only
-      canvas-render.js    ← skia-canvas image generation helpers
-    /templates
-      brand-voice.json    ← Milly's voice config, updated by analyst weekly
-      evergreen.json      ← 10+ backup posts for slow research weeks
-      post-formats.json   ← format specs, weekly niche rotation counter
-    /cron
-      weekly-pipeline.yml ← GitHub Actions: Monday 6am MT
-      weekly-analytics.yml ← GitHub Actions: Sunday 10pm MT
-    /output               ← all generated content lives here
-      /briefs             ← weekly research briefs
-      /content            ← generated content batches
-      /images             ← rendered PNGs
-      /queue              ← posts pending manual push
-      /archive            ← completed weeks + analytics
-    /scripts
-      setup.js            ← validate env vars
-      push-queue.js       ← manually post everything in /queue
-      test-pipeline.js    ← dry run: full pipeline, no posting
-      generate-evergreen.js ← one-time: generate 10 evergreen posts
-  /reeve                  ← future Reeve agent code (placeholder only)
-```
+`claude/milly-content-engine-qZme3`
 
-## Branch strategy
-
-- All development on feature branches: `feature/[name]`
-- Never commit directly to main
-- Current active branch: `claude/milly-content-engine-qZme3`
-- Merge to main only after Dave reviews and approves
+---
 
 ## Agent roster
 
 | Agent | File | Trigger | Job |
 |-------|------|---------|-----|
-| Researcher | agents/researcher.js | Mon 6am MT | Searches for speaking industry angles and conference deadlines. Falls back to evergreen if live search fails. |
-| Generator | agents/generator.js | Mon 8am MT | Reads latest brief, makes 4 separate Claude API calls to create carousel, caption, "Reeve found this," and reel content. |
-| Designer | agents/designer.js | Mon 9am MT | Renders PNG images for each post using skia-canvas. Dark navy + teal design. |
-| Scheduler | agents/scheduler.js | Tue 6am MT | Sends 4 posts to PostPeer for scheduled publishing, or saves to /output/queue/ if PostPeer not configured. |
-| Analyst | agents/analyst.js | Sun 10pm MT | Reads Instagram engagement data, updates brand-voice.json with what's working. |
+| Researcher | `agents/researcher.js` | Mon 6am MT | Live SerpApi search for speaking angles + conference CFPs. Falls back to evergreen if search fails. |
+| Generator | `agents/generator.js` | Mon 8am MT | Brief → 4 Claude API calls → carousel, caption, reevefound/clarity, reel content. |
+| Designer | `agents/designer.js` | Mon 9am MT | Content → PNG images via skia-canvas. Unsplash photos + niche gradient fallback. |
+| Scheduler | `agents/scheduler.js` | Tue 6am MT | Images + captions → Buffer API → scheduled Instagram posts. Falls back to /output/queue/. |
+| Analyst | `agents/analyst.js` | Sun 10pm MT | Instagram engagement data → updates brand-voice.json with what's working. |
 
-## How to run each agent manually
+## Library files
 
-```bash
-cd milly
+| File | Purpose |
+|------|---------|
+| `lib/store.js` | Data abstraction — all I/O goes through here (JSON today, Airtable later) |
+| `lib/claude.js` | Claude API wrapper with JSON parsing and retry logic |
+| `lib/canvas-render.js` | skia-canvas rendering helpers — slide layouts, gradient palettes, word wrap |
+| `lib/buffer.js` | Buffer API v1 — image upload + scheduled post creation |
+| `lib/glossary.js` | Speaking industry terms → seeded into every Claude prompt |
+| `lib/ab-tracker.js` | A/B variant tracking for caption hooks |
+| `lib/reeve-handoff.js` | High-signal post alerts → `/output/archive/high-signal-[weekOf].json` |
+| `lib/instagram-insights.js` | Instagram Graph API — read-only engagement data |
 
-# validate environment first
-node scripts/setup.js
+---
 
-# run full pipeline in test mode (no posting, outputs locally)
-node scripts/test-pipeline.js
+## The 4 weekly post formats
 
-# run individual agents
-node agents/researcher.js
-node agents/generator.js
-node agents/designer.js
-node agents/scheduler.js
-node agents/analyst.js
+| Format | Schedule | Niche | CTA |
+|--------|----------|-------|-----|
+| Carousel | Tue 7am | booking | DM "stages" |
+| Caption | Thu 12pm | mindset / automation / business (rotating) | link in bio |
+| Reeve Found / Clarity | Sat 9am | booking | DM "stages" |
+| Reel script | Sun 6pm | automation / mindset (alternating) | DM "stages" |
 
-# post everything in the manual queue
-node scripts/push-queue.js
+### Caption niche rotation (3-week cycle)
+Week 0 → mindset · Week 1 → automation · Week 2 → business → repeats.
+Driven by `post-formats.json` `caption_niche_alternation` array. Generator reads `store.getWeekNiches()`.
+
+### Reeve Found vs Service Clarity alternation
+- **Odd** `weekNumber` → "Reeve Found This" (real conference deadlines, proof of work)
+- **Even** `weekNumber` → "What Reeve Does" (service clarity, retainer model, differentiation from bureaus)
+
+### Reel format
+Talking-head, 20 seconds. Hook (2s) + body (12s) + CTA (6s). Direct to camera. No B-roll.
+
+---
+
+## The 4 content pillars
+
+1. **Booking** — getting on stages, pitching to conferences, reading CFPs. Carousel format.
+2. **Mindset** — how speakers think: confidence, niche clarity, message precision. Caption format.
+3. **Automation** — systematic outreach, CRM discipline, follow-up cadences. Caption/reel format.
+4. **Business** — contracts, fee ladders, negotiation, honoraria, retainer model. Caption format.
+
+---
+
+## Speaking glossary
+
+`templates/speaking-glossary.json` — 45 industry-specific terms across 4 niches.
+
+- **booking (12):** bureau, one-sheet, demo reel, kill fee, rider, CFP, RFP, anchor talk, open market vs exclusive, CSP, speaker showcase, NSA
+- **business (12):** honorarium, fee ladder, exclusivity clause, travel rider, multi-book discount, referral window, retainer model, speaker IP, spin-off booking, follow-on product, speaker agreement, warm vs cold referral
+- **mindset (11):** opening 90 seconds, planted question, talk arc, callback, green room, run of show, hot mic, tech check, clicker, stage fright vs performance anxiety, Q&A trap
+- **automation (10):** prospect list, pipeline, CRM for speakers, follow-up cadence, pitch template, decision maker mapping, conference calendar, outreach sequence, booking funnel, conference research tools
+
+`lib/glossary.js` picks 2-3 terms per week, formats them for Claude injection. Researcher also seeds angle ideas from glossary terms per niche.
+
+---
+
+## Image design system
+
+### Primary: Unsplash photos + dark overlay
+- Fetched at runtime via `UNSPLASH_ACCESS_KEY`
+- Query per niche (e.g. `booking` → "conference stage spotlight", "keynote speaker podium")
+- Dark overlay `rgba(8,15,30,0.62)` for text legibility + bottom grounding gradient
+- **Blocked from container** — Unsplash API only works from Mac
+
+### Fallback: niche-specific gradient backgrounds (always works)
+6 editorial palettes in `DESIGN_CONFIG` (all in `lib/canvas-render.js`):
+
+| Niche | Palette mood |
+|-------|-------------|
+| `booking` | Dark navy, warm amber off-center spotlight, teal rim |
+| `carousel` | Deep charcoal, purple-indigo overhead, teal rim |
+| `mindset` | Deep ocean blue, cool horizon sunrise |
+| `automation` | Near-black, cyan grid, tech glow |
+| `reevefound` | Chandelier amber on dark navy |
+| `reel` | Theatre black, white overhead spotlight |
+| `business` | Dark charcoal, gold boardroom glow, teal rim |
+
+### Design constants (`DESIGN_CONFIG`)
+```javascript
+overlay:       'rgba(8, 15, 30, 0.62)'
+headline:      '#FFFFFF'
+accent:        '#1DA884'  // teal
+body:          '#E2E8F0'
+headlineSize:  56px
+brandSize:     20px   // "REEVE" wordmark
+padding:       72px
 ```
+
+---
 
 ## The store.js abstraction pattern
 
-All agents read and write data through `lib/store.js`. No agent ever calls `fs` directly or touches Airtable directly.
-
-Why this matters: when you swap from local JSON files to Airtable, you only change `store.js`. The agents don't change at all.
-
-Current backend: local JSON files in `/output/`  
-Future backend: replace `readJson`/`writeJson` internals with Airtable API calls. The exported function signatures stay identical.
+All agents use `store.js`. No agent calls `fs` directly or touches Airtable directly.
 
 ```javascript
 // agents do this:
@@ -121,106 +142,169 @@ const fs = require('fs');
 const brief = JSON.parse(fs.readFileSync('./output/briefs/brief-2026-06-09.json'));
 ```
 
-## How to add a new evergreen post
+To swap to Airtable: change only `lib/store.js`. Agent code is untouched.
 
-1. Open `templates/evergreen.json`
-2. Add a new entry to the `posts` array:
-   ```json
-   {
-     "id": "ev-11",
-     "niche": "booking | automation | mindset",
-     "format": "carousel | caption | reevefound | reel",
-     "hook": "opening line that stops a speaker mid-scroll",
-     "body": "the full post body",
-     "hashtags": ["#publicspeaking", "#speakerlife"],
-     "used": false,
-     "lastUsed": null
-   }
-   ```
-3. Done. Researcher will pick it up automatically when live research fails.
+---
 
-Alternatively, run `node scripts/generate-evergreen.js` to generate a fresh batch via Claude API.
+## Running agents
 
-## How to update brand voice config
+```bash
+cd milly
 
-Edit `templates/brand-voice.json` directly. Key fields:
+# Validate environment
+node scripts/setup.js
 
-- `avoid_words` — words Milly will never use in generated content
-- `what_works` — rolling 8-week record of top-performing formats (written by analyst)
-- `top_hashtags` — rolling 8-week top performers (written by analyst)
-- `visual_hypothesis` — current design hypothesis for the image aesthetic
+# Full pipeline, no posting (dry run)
+node scripts/test-pipeline.js
 
-The analyst updates `what_works`, `top_hashtags`, and `last_updated` automatically after each weekly review.
+# Individual agents
+node agents/researcher.js
+node agents/generator.js
+node agents/designer.js
+node agents/scheduler.js   # run on Mac — Buffer API blocked from container
+node agents/analyst.js
 
-## How to onboard a new Instagram account
+# Post everything in the manual queue (run on Mac)
+node scripts/push-queue.js
+```
 
-1. Convert the Instagram account to Business (free — done in the Instagram app under Account settings)
-2. Create a PostPeer account at postpeer.dev and connect the Instagram Business account
-3. Copy the PostPeer API key and account ID from the PostPeer dashboard
-4. Add to `.env`:
-   ```
-   POSTPEER_ACCOUNT_ID=your_account_id_here
-   POSTPEER_API_KEY=your_api_key_here
-   INSTAGRAM_HANDLE=@your.handle
-   ```
-5. Run `node scripts/setup.js` to confirm everything is connected
-6. Run `node scripts/test-pipeline.js` to generate a week's content in dry-run mode
-7. Review `/output/queue/preview-[date].html` in a browser
-8. If the content looks right, run `node agents/scheduler.js` to schedule it live
-
-## Common failure modes and fixes
-
-**Researcher fails with network error**  
-Researcher falls back to evergreen automatically. Check the log — it will say "Live research failed — using evergreen fallback for week of [date]."
-
-**Generator returns invalid JSON**  
-`lib/claude.js` strips markdown code fences before parsing. If it still fails, the raw Claude response is logged. Usually means the prompt was truncated — check max_tokens setting in generator.js.
-
-**Designer fails on a single slide**  
-The fallback renderer kicks in: plain white background, black text, content only. The pipeline continues. Check logs for "Slide N render failed — using fallback."
-
-**PostPeer call fails**  
-Scheduler writes to `/output/queue/` automatically. Run `node scripts/push-queue.js` to post manually when PostPeer is back.
-
-**Analyst skips with "not configured"**  
-Normal behavior when `INSTAGRAM_ACCESS_TOKEN` is not set. Add the token to `.env` to enable analytics.
+---
 
 ## Environment variables
 
-See `.env.example` for the full list with inline comments. Minimum to run:
-- `ANTHROPIC_API_KEY` — required for all content generation
+```
+# Required
+ANTHROPIC_API_KEY=          # all content generation
 
-Optional but recommended for full functionality:
-- `POSTPEER_API_KEY` + `POSTPEER_ACCOUNT_ID` — auto-posting
-- `INSTAGRAM_ACCESS_TOKEN` + `INSTAGRAM_BUSINESS_ACCOUNT_ID` — analytics feedback loop
-- `SERPAPI_KEY` — live research (otherwise evergreen fallback always used)
+# Posting (Buffer — run on Mac)
+BUFFER_ACCESS_TOKEN=        # classic token from buffer.com/developers (NOT OIDC token)
+BUFFER_INSTAGRAM_PROFILE_ID= # get via GET /profiles.json once token is valid
 
-## What's built — Phase 6 enhancements (all live)
+# Live research
+SERPAPI_KEY=                # otherwise evergreen fallback always used
 
-**Enhancement A: Hashtag performance tracking** — analyst identifies which hashtags appeared in top-performing posts (top third by engagement rate) and maintains a frequency-ranked `top_hashtags` list in `brand-voice.json`. Generator reads this to weight toward proven hashtags.
+# Images
+UNSPLASH_ACCESS_KEY=        # editorial photos; falls back to gradients if missing/blocked
 
-**Enhancement B: Caption A/B variants** — generator writes 2 versions of caption-1 each week (same angle, different hook). `lib/ab-tracker.js` alternates between variant A and B weekly. After 4+ weeks, analyst runs Claude pattern analysis on which hooks drove more engagement.
+# Analytics
+INSTAGRAM_ACCESS_TOKEN=              # Graph API read-only
+INSTAGRAM_BUSINESS_ACCOUNT_ID=      # numeric account ID
 
-**Enhancement C: Content archive pattern analysis** — after 4+ weeks of analytics data, analyst automatically runs a Claude API call to identify top formats, save rate leaders, schedule recommendations. Saved to `/output/archive/pattern-analysis-[date].json`.
+# Notifications
+DAVE_NOTIFY_EMAIL=          # optional — high-signal post alerts
+```
 
-**Enhancement D: Reeve handoff stub** — `lib/reeve-handoff.js` exists. Analyst calls `notifyReeve()` when it detects posts with profile visits >2x weekly average. Writes to `/output/archive/high-signal-[weekOf].json`. Webhook stub is ready for Phase 2 integration with Reeve's Watcher agent.
+**Buffer token note:** Buffer API v1 requires a classic access token from `buffer.com/developers → Create App → Generate Access Token`. OIDC tokens from the Buffer MCP integration page return 401 and will not work.
 
-**Enhancement E: Weekly content preview** — scheduler generates `/output/queue/preview-[date].html` with base64-encoded images, captions, and scheduled times. Open in browser to review the week before it posts.
+---
 
-## Phase 2 remaining items
+## What's built (current state, 2026-06-03)
 
-Items still marked `// TODO` in the codebase:
+### Core pipeline (all ✅)
+- Researcher with live SerpApi + evergreen fallback
+- Generator: carousel, caption, reevefound/clarity, reel — all with sharp prompts and glossary injection
+- Designer: Unsplash photos + niche gradient fallbacks; niche passthrough from generator
+- Scheduler: Buffer API v1 (replaced PostPeer which had no Instagram support)
+- Analyst: engagement tracking + brand-voice.json updates
 
-1. **Twilio alerts** — SMS to Dave when Scheduler runs successfully
-2. **Twilio weekly summary** — SMS with analytics highlights after Analyst runs
-3. **Airtable swap** — replace local JSON with Airtable in `lib/store.js`. No agent code changes needed.
-4. **A/B visual testing** — swap `DESIGN_CONFIG` in `lib/canvas-render.js` from dark navy to white + teal.
-5. **Reeve webhook** — wire `lib/reeve-handoff.js` to POST to Reeve's Watcher agent when high-signal posts are detected.
+### Speaking expertise upgrades (all ✅)
+- **Speaking glossary:** 45 terms, injected into every Claude call via `lib/glossary.js`
+- **Business niche pillar:** 3rd caption rotation week (contracts, fees, negotiation)
+- **Talking-head reel format:** direct to camera, stacked evidence, no B-roll
+- **Service clarity rotation:** alternates "Reeve Found This" (odd weeks) / "What Reeve Does" (even weeks)
 
-## Content design hypothesis
+### A/B and analytics (built, pending data)
+- Caption A/B variants via `lib/ab-tracker.js` (2 hooks/week, same angle)
+- Hashtag performance tracking in `brand-voice.json`
+- Content archive pattern analysis after 4+ weeks of data
+- `lib/reeve-handoff.js` stub — fires when profile visits >2x average
 
-Current design (v1): dark navy (#0B1120) background, teal (#1DA884) accent, white headline text, light gray body text.
+---
 
-Rationale: brand consistency with Reeve's overall aesthetic. Testable.
+## Activation checklist (pending)
 
-To A/B test: update `DESIGN_CONFIG` in `lib/canvas-render.js`. All render functions reference this config object — the entire visual can be swapped in one place.
+1. **Buffer access token** — Create App at `buffer.com/developers` → Generate Access Token → add to `.env`
+2. **Buffer profile ID** — `curl https://api.bufferapp.com/1/profiles.json?access_token=YOUR_TOKEN` → find the Instagram profile → copy the `id`
+3. **SerpApi key** — add to `.env` to enable live research; without it, evergreen fallback runs every week
+4. **Unsplash key** — add to `.env` on Mac; container always uses gradient fallback
+
+---
+
+## Common failure modes
+
+**Researcher falls back to evergreen every week**
+SerpApi key not configured. Add `SERPAPI_KEY` to `.env`.
+
+**Generator returns invalid JSON**
+`lib/claude.js` strips markdown fences before parsing. If still failing, the raw Claude response is logged — usually means max_tokens was hit. Increase in `generator.js`.
+
+**Designer renders flat dark background instead of photo**
+Expected behavior when `UNSPLASH_ACCESS_KEY` is missing or when running from container (Unsplash API is blocked). Niche gradient is the designed fallback.
+
+**Scheduler falls back to /output/queue/**
+Buffer not configured or token invalid. Check `.env`. Run `node scripts/push-queue.js` on Mac to post manually.
+
+**Buffer returns 401 "OIDC tokens not accepted"**
+Wrong token type. Get a classic access token from `buffer.com/developers`, not from the Buffer MCP page.
+
+**"— Reeve" appears twice in captions**
+Fixed. Generator strips existing attribution from `prc.body` with regex before appending. If re-emerging, check the evergreen post's `body` field for the attribution string.
+
+**Analyst skips with "not configured"**
+Normal when `INSTAGRAM_ACCESS_TOKEN` is not set. Add token to enable analytics feedback loop.
+
+---
+
+## File structure
+
+```
+milly/
+  CLAUDE.md
+  README.md
+  package.json
+  .env.example
+  agents/
+    researcher.js         # Mon 6am — brief generation
+    generator.js          # Mon 8am — 4 posts via Claude
+    designer.js           # Mon 9am — PNG rendering
+    scheduler.js          # Tue 6am — Buffer scheduling (run on Mac)
+    analyst.js            # Sun 10pm — engagement feedback loop
+  lib/
+    store.js              # all I/O abstraction
+    claude.js             # Claude API wrapper
+    canvas-render.js      # image rendering (skia-canvas)
+    buffer.js             # Buffer API v1
+    glossary.js           # speaking terms → Claude prompt injection
+    ab-tracker.js         # caption A/B tracking
+    reeve-handoff.js      # high-signal post alerts
+    instagram-insights.js # Graph API read-only
+    postpeer.js           # deprecated — keep for reference only
+  templates/
+    brand-voice.json      # Reeve voice config + analyst feedback
+    post-formats.json     # format specs + weekly rotation counter
+    inspiration-sources.json  # content inspiration themes
+    speaking-glossary.json    # 45 industry terms
+    evergreen.json        # 10+ backup posts
+  cron/
+    weekly-pipeline.yml   # GitHub Actions: Mon 6am MT
+    weekly-analytics.yml  # GitHub Actions: Sun 10pm MT
+  output/
+    briefs/               # weekly research briefs
+    content/              # generated post content
+    images/               # rendered PNGs
+    queue/                # manual posting queue + preview HTML
+    archive/              # completed weeks + pattern analysis
+  scripts/
+    setup.js              # env var validation
+    push-queue.js         # manual queue posting (run on Mac)
+    test-pipeline.js      # full dry run, no posting
+    generate-evergreen.js # generate evergreen batch via Claude
+```
+
+## Phase 2 items (not yet built)
+
+1. **Twilio alerts** — SMS to Dave when Scheduler or Analyst completes
+2. **Airtable swap** — replace local JSON with Airtable in `lib/store.js`; no agent changes
+3. **A/B visual testing** — swap overlay opacity and/or NICHE_PALETTES for design experiments
+4. **Reeve webhook** — wire `lib/reeve-handoff.js` to POST to Reeve's Watcher agent
+5. **Stories format** — vertical (1080x1920) behind-the-scenes content

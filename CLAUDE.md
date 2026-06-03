@@ -1,15 +1,79 @@
-# Maps Agency — Orchestrator Config
+# Website-Master — Project Overview
 
-## Identity
-You are the orchestrator of **Trevo Advisors** (trevoadvisors.com), a solo AI agency
-selling websites + voice agents to home service contractors (plumbers, HVAC, electricians, roofers).
-Owner: Dave — dave@trevoadvisors.com
+This repo contains three separate product systems. Each has its own subdirectory and CLAUDE.md.
 
-Brand colors: Slate Blue #2E5B8A (primary) · Growth Green #2E7D5B · Warm Cream #F8F7F3 · Amber #C8720E
+---
 
-Your goal: 47 clients/month at $150/site + $65/mo hosting; Nora bundle adds $200 build + $65/mo.
+## 1. Trevo Advisors — AI agency for home service contractors
 
-## Build Status (as of 2026-06-02)
+**Directory:** root (`/scripts`, `/config`, `/website`, etc.)
+**Owner:** Dave — dave@trevoadvisors.com
+**Business:** Sell websites + voice agents to plumbers, HVAC, electricians, roofers
+**Goal:** 47 clients/month at $150/site + $65/mo hosting; Nora bundle $200 build + $65/mo
+
+### Build Status (as of 2026-06-03)
+- Scout: ✅ scripts/scout.js — Outscraper API, $10/mo cap, auto_run toggle
+- Diagnoser: ✅ scripts/diagnoser.js — Claude Haiku, prompt caching, $5/mo cap; dual-channel routing
+- Checker: ✅ scripts/checker.js — 5 evals + Claude rewrite loop, $3/mo cap
+- Pitcher: ✅ scripts/pitcher.js — dual-channel (email first, SMS 4h later); staggered sends; --dry-run
+- Builder: ✅ scripts/builder.js — Lovable prompt generator, --submit to record URL, 5/day
+- Filmer: ✅ scripts/filmer.js — Loom instructions + ScreenshotOne, --submit to record URL, 5/day
+- Mobile: ✅ scripts/mobile.js — positive reply handler, weekday slots, Nora upsell, /start link
+- Reporter: ✅ scripts/reporter.js — morning email report; email/SMS split, per-service costs
+- Drip: ✅ scripts/drip.js — 4-step follow-up (d1/d1b/d1c/d2), per-channel, daily limit 20
+- Reply Classifier: ✅ scripts/reply-classifier.js — keyword intent classifier, zero API cost
+- Dashboard: ✅ scripts/dashboard.js — terminal pipeline view, color-coded by status
+- Webhook: ✅ scripts/webhook.js — Twilio inbound SMS, HMAC-SHA1; **run on Mac**
+- Poller: ✅ scripts/poller.js — IMAP email reply poller (imapflow); **run on Mac**
+- Website: ✅ website/ — 3 demos + proposal + intake + checkout + /start funnel
+
+### Pending (Mac tasks)
+- Create Stripe Payment Links ($150 + $200) → paste into website/checkout/index.html
+- Create Formspree form → paste ID into website/intake/index.html
+- Merge claude/demo-site → main → deploy to trevoadvisors.com
+- npm install imapflow, start webhook.js + ngrok, register in Twilio
+
+### Key rules
+- Scout: any US city, any trade — never hardcoded defaults
+- Pitcher sends ONLY after Checker approves
+- Human approval required: deals over $3,000, reply rate below 12%
+- Must run on Mac: Scout, Pitcher, Drip, Reporter, Webhook, Poller (all blocked from container)
+
+---
+
+## 2. Milly — Instagram content engine for Reeve
+
+**Directory:** `/milly`
+**Branch:** `claude/milly-content-engine-qZme3`
+**See:** `milly/CLAUDE.md` for full detail
+
+Posts 4x/week to @reeve.agency. Feeds the Reeve client acquisition flywheel.
+Weekly pipeline: Researcher → Generator → Designer → Scheduler (Mon–Tue cron via GitHub Actions)
+
+**Status:** Fully built and tested. Pending: Buffer access token (classic API token, not OIDC) + Mac scheduler run.
+
+---
+
+## 3. Reeve — Speaker booking DM agent and outreach system
+
+**Directory:** `/reeve`
+**Branch:** `claude/milly-content-engine-qZme3` (same branch as Milly for now)
+**See:** `reeve/CLAUDE.md` for full scope and roadmap
+
+DM qualification agent live. When speaker DMs "stages" → Reeve runs 3-question qualification → scores fit → routes to Dave or declines.
+
+**Status:** DM agent built (agents/dm-agent.js). Pending: Meta App setup + Railway deploy + Cal.com link.
+Full outreach pipeline (Phase 2) scoped in reeve/CLAUDE.md.
+
+---
+
+## Repo branch strategy
+- `main` — stable, deployed code
+- `claude/milly-content-engine-qZme3` — active Milly + Reeve development
+- Merge to main only after Dave reviews
+
+## Active branch summary (claude/milly-content-engine-qZme3)
+Everything in /milly and /reeve is on this branch. All commits pushed. Merge to main when ready to go live.
 - Scout: ✅ scripts/scout.js — Outscraper API, $10/mo cap, auto_run toggle
 - Diagnoser: ✅ scripts/diagnoser.js — Claude Haiku, prompt caching, $5/mo cap; dual-channel: sets secondary_channel=sms when lead has both email + phone
 - Checker: ✅ scripts/checker.js — 5 evals + Claude rewrite loop, $3/mo cap; template fast-path validates both primary + secondary messages

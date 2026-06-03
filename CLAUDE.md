@@ -180,27 +180,16 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - Once approved: create Campaign (use case: Mixed) → link +1 720 number to Sender Pool
 - Until approved: SMS sends will hit error 30034 and be blocked by carriers
 
-## Tomorrow's Tasks (2026-06-03)
+## Mac Action Items (next terminal session)
 
-### On Mac (must do locally)
-1. Create 2 Stripe Payment Links: $150 (website-only) + $200 (website+Nora)
+1. **Deploy website/ to Netlify** — main branch is ready; Netlify should auto-deploy; verify /for/ is live at trevoadvisors.com/for/
+2. **Run personalizer** — `node scripts/personalizer.js --write` — stamps demo_url into all 54 approved briefs; do AFTER /for/ is confirmed live
+3. **Create 2 Stripe Payment Links** ($150 website-only + $200 website+Nora) at dashboard.stripe.com/payment-links
    → Paste into `website/checkout/index.html` replacing `YOUR_WEBSITE_LINK_ID` and `YOUR_NORA_LINK_ID`
-2. Create Formspree form at formspree.io
-   → Paste form ID into `website/intake/index.html` replacing `YOUR_FORM_ID`
-3. Merge `claude/demo-site` → `main`, then deploy `website/` to trevoadvisors.com
-4. `npm install imapflow` for poller.js
-5. Start `node scripts/webhook.js` + ngrok + register URL in Twilio console
-6. Add `SITE_START_URL=https://trevoadvisors.com/start/` to `.env.local`
-
-### Bug Fixes (container OK)
-- `webhook.js`: guard `crypto.timingSafeEqual()` — add length check before compare to prevent RangeError
-- `poller.js`: guard `isAutoReply()` — add `if (!headers) return false;` to prevent null crash
-- `mobile.js`: change `call_booked` status to `booking_sent` on send (call not booked until prospect replies)
-- `drip.js`: fix `[trade]`/`[City]` token substitution in d1c-sms template
-
-### Low Priority Polish (container OK)
-- `website/demo/hvac.html`: add `<meta name="robots" content="noindex, nofollow">` + emoji favicon
-- `website/start/index.html` + `website/thankyou/index.html`: add OG tags
-- All demo contact forms: add "This is a demo — submit disabled" alert on form submit
-- `website/proposal/index.html`: show all 3 demo links when no `?trade=` param
-- Intake form step 3: make optional fields visually obvious
+4. **Create Formspree form** at formspree.io → paste form ID into `website/intake/index.html` replacing `YOUR_FORM_ID`
+5. **Check Twilio A2P 10DLC** — log into Twilio console, check Bundle SID BUb725ec9662f0dc3da58ed24117df8684; SMS blocked until approved
+6. **Run next lead batch** — `node scripts/pitcher.js --force` (after personalizer) — 5 checked leads ready to pitch with demo URLs
+7. **Start webhook + ngrok** — `node scripts/webhook.js` + ngrok tunnel → register URL in Twilio console for inbound SMS
+8. **Add to .env.local** — `SITE_START_URL=https://trevoadvisors.com/start/` and `CALCOM_LINK=` (if using cal.com)
+9. **npm install imapflow** on Mac for poller.js
+10. **Nora-Agent push** — `cd ~/Nora-Agent && git push origin main` with GitHub PAT (repo scope)

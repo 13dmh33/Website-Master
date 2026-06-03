@@ -132,7 +132,7 @@
         "id": "d1c-sms",
         "name": "Follow-up 1c — competitor visibility",
         "requires": [],
-        "body": "Dave @ Trevo again. Searched [trade] in [City] today — your competitors are showing up. If you're not, you're invisible to people ready to hire. trevoadvisors.com"
+        "body": "Dave @ Trevo. Searched [trade] in [City] today - competitors are showing up. If you're not there, you're invisible. trevoadvisors.com"
       },
       "email": {
         "id": "d1c-email",

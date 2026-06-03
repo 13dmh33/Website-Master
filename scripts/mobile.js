@@ -292,7 +292,7 @@ async function main() {
       }
       log(`Reply sent to ${record.business_name} (${record.lead_id}) via ${result.method}`);
 
-      record.status      = 'call_booked';
+      record.status      = 'booking_sent';
       record.booked_at   = new Date().toISOString();
       record.booking_msg = message;
       if (record.template_id) recordReply(record.channel, record.template_id);

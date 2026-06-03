@@ -89,9 +89,10 @@ function loadDripTemplates() {
 }
 
 function fill(text, lead) {
+  const cityDisplay = (lead.city || '').replace(/,\s*[A-Z]{2}$/, '');
   return text
     .replace(/\[Business Name\]/g, lead.business_name || '')
-    .replace(/\[City\]/g,          lead.city           || '')
+    .replace(/\[City\]/g,          cityDisplay)
     .replace(/\[trade\]/g,         lead.trade          || '');
 }
 

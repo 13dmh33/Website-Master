@@ -321,12 +321,22 @@
     <div class="card-label">Your Demo</div>
     <h2>See Your Mockup Site</h2>
     <p>I built a live demo so you can see exactly what your new website will look like before committing to anything. It's fully mobile-responsive and designed specifically for your trade.</p>
-    <div class="demo-box">
-      <div class="demo-screenshot">🏠</div>
-      <div class="demo-info">
-        <h4>Your Trade · Your City · Your Brand</h4>
-        <p>Professional design, call-to-action buttons, service pages, reviews section, and mobile-ready — all done for you.</p>
-        <a href="" class="demo-link" target="_blank" id="demo-link-btn">👀 View Your Demo Site →</a>
+    <div id="demo-single">
+      <div class="demo-box">
+        <div class="demo-info">
+          <h4>Your Trade · Your City · Your Brand</h4>
+          <p>Professional design, call-to-action buttons, service pages, reviews section, and mobile-ready — all done for you.</p>
+          <a href="" class="demo-link" target="_blank" id="demo-link-btn">View Your Demo Site →</a>
+        </div>
+      </div>
+    </div>
+    <div id="demo-all" style="display:none;">
+      <p style="margin-bottom:16px;font-size:15px;color:var(--muted);">Browse all four demo sites to see the style options:</p>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <a href="/demos/plumbing/" class="demo-link" target="_blank">Plumbing Demo — Peak Flow Plumbing →</a>
+        <a href="/demos/hvac/" class="demo-link" target="_blank">HVAC Demo — Comfort Pro HVAC →</a>
+        <a href="/demos/electrical/" class="demo-link" target="_blank">Electrical Demo — Volt &amp; Wire Electric →</a>
+        <a href="/demos/handyman/" class="demo-link" target="_blank">Handyman Demo — Square Deal Handyman →</a>
       </div>
     </div>
   </div>
@@ -568,22 +578,23 @@
   const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   document.getElementById('proposal-date').textContent = `${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()}`;
 
-  // Set demo link based on ?trade= query param
-  // Usage: /proposal/?trade=hvac  or  /proposal/?trade=electrician  (default: plumber)
-  const trade = new URLSearchParams(window.location.search).get('trade') || 'plumber';
+  // Show single demo when ?trade= is set, otherwise show all four
+  const tradeParam = new URLSearchParams(window.location.search).get('trade');
   const demoLinks = {
-    plumber:     { href: '../demo/',                    icon: '🔧', label: 'Plumber Demo — Apex Plumbing Co.' },
-    electrician: { href: '../demo/electrician.html',    icon: '⚡', label: 'Electrician Demo — Volt Pro Electric' },
-    hvac:        { href: '../demo/hvac.html',            icon: '❄️', label: 'HVAC Demo — Peak Comfort HVAC' },
+    plumber:     { href: '/demos/plumbing/',   label: 'Plumbing Demo — Peak Flow Plumbing' },
+    electrician: { href: '/demos/electrical/', label: 'Electrical Demo — Volt & Wire Electric' },
+    hvac:        { href: '/demos/hvac/',       label: 'HVAC Demo — Comfort Pro HVAC' },
+    handyman:    { href: '/demos/handyman/',   label: 'Handyman Demo — Square Deal Handyman' },
   };
-  const demo = demoLinks[trade] || demoLinks['plumber'];
-  const btn = document.getElementById('demo-link-btn');
-  btn.href = demo.href;
-  btn.textContent = `${demo.icon} View Your Demo Site →`;
-
-  // Also update the screenshot icon and label
-  const shot = document.querySelector('.demo-screenshot');
-  if (shot) shot.textContent = demo.icon;
+  if (tradeParam && demoLinks[tradeParam]) {
+    const demo = demoLinks[tradeParam];
+    const btn = document.getElementById('demo-link-btn');
+    btn.href = demo.href;
+    btn.textContent = `${demo.label} →`;
+  } else {
+    document.getElementById('demo-single').style.display = 'none';
+    document.getElementById('demo-all').style.display = 'block';
+  }
 </script>
 
 </body>

@@ -51,9 +51,16 @@ Data point: ${angle.dataPoint || 'none'}
 Write a 6-slide carousel. Return as JSON array only — no markdown, no preamble.
 Format: [{"slide": 1, "headline": "", "body": ""}]
 
+IMPORTANT — quality bar:
+- Be specific. Name real situations: "your speaker page has no demo reel", "you pitched 3 events this quarter and heard nothing back", "event planners open speaker one-sheets for 8 seconds on average."
+- Use numbers wherever you can. Real-feeling stats build credibility.
+- Write like a cynical industry insider who has seen every mistake speakers make.
+- Every slide should make a speaker feel a micro-pang of recognition — "that's me."
+- No generic motivational language. No filler. No observations speakers already know.
+
 Rules:
-- Slide 1: hook — make a speaker stop scrolling. One punchy statement as headline. Body is empty string.
-- Slides 2-5: deliver the insight. One idea per slide. Max 8 words headline, max 20 words body. Sentence case.
+- Slide 1: hook — one punchy statement that makes a speaker feel called out. Max 10 words. Body is empty string.
+- Slides 2-5: deliver the insight. One specific, actionable idea per slide. Max 8 words headline, max 25 words body. Concrete example or number on each slide.
 - Slide 6: soft CTA. Headline: "Ready to stop waiting?" Body: "Reeve handles the pitching. You just show up and speak. DM us the word stages."
 - Never use any word from the avoid list.
 - Return only the JSON array. No explanation before or after.`;
@@ -78,7 +85,13 @@ ${voiceContext}
 Angle: ${angle.angle}
 Niche: ${niche}
 
-Write a caption that opens with a single line that stops a speaker mid-scroll.
+IMPORTANT — quality bar:
+- Open with a single line that feels like a gut punch of recognition. Not "Most speakers…" — something more specific and cinematic. Example: "You delivered the best talk of your career. Nobody knew your name two weeks later."
+- Each short paragraph should land a new specific observation — not a vague generalization.
+- Reference concrete scenarios: the email that sat unread for 11 days, the event planner who booked someone with half your experience, the demo reel nobody watched.
+- Write like an insider who has watched hundreds of speakers plateau. Sharp. Not harsh — honest.
+- The caption should make the reader feel understood before it tells them what to do.
+
 100-150 words. Sentence case. Short paragraphs, 1-2 sentences max.
 End with: "— Reeve"
 Add exactly 3-5 hashtags from this list at the very end (new line): #publicspeaking #speakingbusiness #speakerlife #keynote #thoughtleadership
@@ -101,9 +114,12 @@ ${voiceContext}
 Conferences and opportunities found this week:
 ${conferenceText}
 
-Write a post that shows Reeve doing its job — finding real speaking opportunities.
-Do NOT name specific clients. Reference real conference types or topics found.
-Demonstrate the value of having a systematic booking pipeline.
+IMPORTANT — quality bar:
+- Open with a specific concrete finding: the event name, a deadline date, the speaker fee range, the topic gap they're trying to fill. Make it feel like surveillance — Reeve is scanning events so speakers don't have to.
+- Include at least 2 real-feeling specifics: an audience size, a city, a deadline, a fee, a stated topic need.
+- The tone is efficient, professional, proof-of-work. Not inspirational. Just: this is what we found. This is the gap. Can you fill it?
+- The implicit message: you would have missed this. We didn't.
+
 80-120 words. Sentence case. End with: "That's the job. — Reeve"
 Add exactly 3 hashtags from this list at the very end: #publicspeaking #speakingbusiness #speakerlife
 Return as plain text only. No JSON, no markdown.`;
@@ -120,6 +136,12 @@ ${voiceContext}
 
 Angle: ${angle.angle}
 Niche: ${niche}
+
+IMPORTANT — quality bar:
+- [HOOK - 2 sec]: must be a pattern interrupt. Not a question — a statement that sounds like it's talking directly to the viewer. Something specific they recognize from their own experience: "You've given 40 talks. You still don't have a booking manager." That's the bar.
+- [BODY - 12 sec]: short punchy sentences that stack. Each one adds a new piece of evidence. No filler, no transitions. Write like a voice memo from someone who knows too much.
+- B-roll suggestions should be specific and visual: "close-up of an unopened email from an event organizer", "speaker at podium, crowd barely visible", not just "speaking at event."
+- The script should feel urgent, slightly uncomfortable, and immediately shareable.
 
 Structure (label each section exactly as shown):
 [HOOK - 2 sec]: pattern interrupt. A speaker hears this and thinks "that's me."
@@ -186,7 +208,8 @@ async function main() {
   let caption1A, caption1B;
   if (captionAngle.prewrittenContent) {
     const prc = captionAngle.prewrittenContent;
-    caption1A = `${prc.hook}\n\n${prc.body}\n\n— Reeve\n\n${prc.hashtags.join(' ')}`;
+    const cleanBody = prc.body.replace(/\s*—\s*Reeve\s*$/i, '').trimEnd();
+    caption1A = `${prc.hook}\n\n${cleanBody}\n\n— Reeve\n\n${prc.hashtags.join(' ')}`;
     caption1B = caption1A; // evergreen content has one version; duplicate is fine
   } else {
     caption1A = await generateCaption(captionAngle, weekNiches.caption, voiceContext);
@@ -198,7 +221,8 @@ async function main() {
   console.log('Generating Reeve found post...');
   if (reeveFoundAngle.prewrittenContent) {
     const prc = reeveFoundAngle.prewrittenContent;
-    reeveFound = `${prc.hook}\n\n${prc.body}\n\nThat's the job. — Reeve\n\n${prc.hashtags.slice(0, 3).join(' ')}`;
+    const cleanRfBody = prc.body.replace(/\s*(That['']s the job\.\s*)?—\s*Reeve\s*$/i, '').trimEnd();
+    reeveFound = `${prc.hook}\n\n${cleanRfBody}\n\nThat's the job. — Reeve\n\n${prc.hashtags.slice(0, 3).join(' ')}`;
   } else {
     reeveFound = await generateReeveFound(conferencesFound || [], voiceContext);
   }

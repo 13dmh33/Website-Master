@@ -154,12 +154,15 @@ Return as plain text script only. No JSON, no markdown.`;
   return claude.call({ prompt, maxTokens: 1000 });
 }
 
-// extract the hook line from a reel script (first non-empty line after [HOOK])
+// extract the hook line from a reel script
+// Claude sometimes puts content on the same line as [HOOK - 2 sec]: and sometimes on the next
 function extractReelHook(script) {
   const lines = script.split('\n').map(l => l.trim()).filter(Boolean);
   const hookIdx = lines.findIndex(l => l.toLowerCase().includes('[hook'));
-  if (hookIdx >= 0 && lines[hookIdx + 1]) {
-    return lines[hookIdx + 1].replace(/^\[B-ROLL.*?\]\s*/i, '').trim();
+  if (hookIdx >= 0) {
+    const sameLine = lines[hookIdx].replace(/^\[HOOK[^\]]*\]\s*:?\s*/i, '').replace(/^\[B-ROLL[^\]]*\]\s*/i, '').trim();
+    if (sameLine.length > 10) return sameLine;
+    if (lines[hookIdx + 1]) return lines[hookIdx + 1].replace(/^\[B-ROLL[^\]]*\]\s*/i, '').trim();
   }
   return lines[0] || 'Most speakers are invisible — and they don\'t know it.';
 }

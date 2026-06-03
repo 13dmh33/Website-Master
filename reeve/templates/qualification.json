@@ -1,0 +1,31 @@
+{
+  "trigger_keywords": ["stages", "STAGES", "Stages"],
+  "questions": [
+    {
+      "id": "q1_experience",
+      "text": "Got it — before we connect, one quick question: how many paid speaking engagements have you done in the last 12 months?",
+      "field": "paid_talks_count"
+    },
+    {
+      "id": "q2_fee",
+      "text": "And what's your current fee for a 45-minute keynote? (Even a rough range is fine.)",
+      "field": "fee_range"
+    },
+    {
+      "id": "q3_topic",
+      "text": "Last one — what's your primary speaking topic or niche?",
+      "field": "topic"
+    }
+  ],
+  "scoring": {
+    "high_fit": { "label": "high", "action": "book_call" },
+    "mid_fit":  { "label": "mid",  "action": "flag_dave" },
+    "low_fit":  { "label": "low",  "action": "decline" }
+  },
+  "messages": {
+    "trigger_reply": "Got it — before we connect, one quick question: how many paid speaking engagements have you done in the last 12 months?",
+    "high_fit": "Based on what you've shared, you sound like a strong fit. Here's a link to book a 20-minute call with Dave: {CALL_BOOKING_LINK}\n\nHe'll look at your pipeline and tell you exactly how Reeve can help.",
+    "mid_fit": "Thanks for sharing that. Let me have Dave take a look — he'll follow up within 24 hours to see if it makes sense to connect.",
+    "low_fit": "Thanks for reaching out. Reeve works best with speakers who have a few paid gigs under their belt and are ready to scale. You're not quite there yet — but follow along. We post booking strategy 3x a week and you'll get a lot from it. When the time is right, DM us again."
+  }
+}

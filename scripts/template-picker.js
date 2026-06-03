@@ -23,6 +23,17 @@ const STATS_PATH     = path.join(__dirname, '..', 'config', 'template-stats.json
 const EPSILON        = 0.20;
 const MIN_SENDS      = 3;
 
+// Tone hints — steers explore/bootstrap toward tone-matched templates
+const TONE_MAP = {
+  email: { warm: ['e1', 'e5'], direct: ['e2', 'e3', 'e4'], urgent: ['e2', 'e4'], professional: ['e1', 'e3'] },
+  sms:   { warm: ['s1'],       direct: ['s2', 's3', 's4'], urgent: ['s2'],        professional: ['s1', 's3'] },
+};
+
+function toneMatches(templateId, channel, tone) {
+  if (!tone) return false;
+  return (TONE_MAP[channel]?.[tone] || []).includes(templateId);
+}
+
 // ── LOAD / SAVE ───────────────────────────────────────────────────────────────
 
 function loadTemplates() {
@@ -72,14 +83,20 @@ function selectTemplate(channel, lead) {
   // Prioritise templates below MIN_SENDS threshold (bootstrap phase)
   const underserved = available.filter(t => (cs[t.id]?.sent || 0) < MIN_SENDS);
   if (underserved.length > 0) {
-    return underserved.reduce((a, b) =>
+    // Within bootstrap, prefer tone-matched templates first
+    const tonePool = underserved.filter(t => toneMatches(t.id, channel, lead.tone));
+    const pool = tonePool.length > 0 ? tonePool : underserved;
+    return pool.reduce((a, b) =>
       (cs[a.id]?.sent || 0) <= (cs[b.id]?.sent || 0) ? a : b
     );
   }
 
   // Epsilon-greedy
   if (Math.random() < EPSILON) {
-    return available[Math.floor(Math.random() * available.length)];
+    // Explore: prefer tone-matched templates when available
+    const tonePool = available.filter(t => toneMatches(t.id, channel, lead.tone));
+    const pool = tonePool.length > 0 ? tonePool : available;
+    return pool[Math.floor(Math.random() * pool.length)];
   }
 
   return available.reduce((best, t) =>
@@ -90,13 +107,14 @@ function selectTemplate(channel, lead) {
 // ── PLACEHOLDER FILLING ───────────────────────────────────────────────────────
 
 function fill(text, lead) {
-  const firstName = (lead.business_name || '').split(/[\s,]+/)[0] || lead.business_name;
-  const phone     = process.env.CONTACT_PHONE || 'trevoadvisors.com';
+  const firstName   = (lead.business_name || '').split(/[\s,]+/)[0] || lead.business_name;
+  const phone       = process.env.CONTACT_PHONE || 'trevoadvisors.com';
+  const cityDisplay = (lead.city || '').replace(/,\s*[A-Z]{2}$/, '');
 
   return text
     .replace(/\[First Name\]/g,        firstName)
     .replace(/\[Business Name\]/g,     lead.business_name       || '')
-    .replace(/\[City\]/g,              lead.city                || '')
+    .replace(/\[City\]/g,              cityDisplay)
     .replace(/\[trade\]/g,             lead.trade               || '')
     .replace(/\[X\]/g,                 String(lead.review_count || ''))
     .replace(/\[Review Count\]/g,      String(lead.review_count || ''))

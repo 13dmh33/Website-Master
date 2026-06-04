@@ -271,6 +271,14 @@
     .cta-btn-outline:hover { border-color: #fff; }
     .cta-trust { margin-top: 20px; font-size: 13px; color: rgba(255,255,255,.55); }
 
+    /* ── WHY TREVO ── */
+    .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; }
+    @media (max-width: 700px) { .why-grid { grid-template-columns: 1fr; } }
+    .why-item { background: var(--cream); border-radius: 12px; padding: 20px; border: 1.5px solid var(--border); }
+    .why-icon { font-size: 22px; margin-bottom: 8px; }
+    .why-item h4 { font-size: 15px; font-weight: 800; color: var(--dark); margin-bottom: 6px; }
+    .why-item p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
     /* ── FOOTER ── */
     footer {
       background: var(--dark);
@@ -551,6 +559,35 @@
     </div>
   </div>
 
+  <!-- WHY TREVO -->
+  <div class="card">
+    <div class="card-label">Why Trevo Advisors</div>
+    <h2>Built for Contractors, Not Corporates</h2>
+    <p>Most web agencies build sites for restaurants and startups, then apply the same template to plumbers and electricians. We don't. Every site we build is for a home service contractor.</p>
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="why-icon">🎯</div>
+        <h4>Trades-Only Focus</h4>
+        <p>We know what converts for plumbers, HVAC techs, and electricians — because that's all we build for. The layouts, CTAs, and copy are tuned for your customers, not generic web visitors.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">⚡</div>
+        <h4>Live in Days, Not Months</h4>
+        <p>You review a finished site in 48 hours — not a PowerPoint mockup after a 3-week discovery phase. We move fast because we've built the process to move fast.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">👤</div>
+        <h4>You Deal With Dave Directly</h4>
+        <p>Text or email and you reach the person who built your site. No ticket system, no account manager, no "I'll check with the team." Dave handles it himself.</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">🛡️</div>
+        <h4>See It Before You Pay</h4>
+        <p>We show you the finished site before charging you a cent. If it's not right after revisions, you get a full refund. In practice it hasn't happened — but the offer stands.</p>
+      </div>
+    </div>
+  </div>
+
   <!-- CTA -->
   <div class="cta-card">
     <h2>Ready to Get Started?</h2>
@@ -559,7 +596,7 @@
       <a href="../checkout/" class="cta-btn-primary">
         💳 Pay Online — $150
       </a>
-      <a href="https://cal.com/david-hettinger-g8qbdk/30min" target="_blank" class="cta-btn-outline">
+      <a href="/start/" class="cta-btn-outline">
         📅 Book a Free Call First
       </a>
     </div>

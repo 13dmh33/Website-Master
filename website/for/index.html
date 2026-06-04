@@ -332,6 +332,65 @@
       line-height: 1.8;
     }
     footer a { color: var(--teal); }
+
+    /* ── COMPARE SECTION ─────────────────────────────────────────────── */
+    .compare-section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px 64px;
+    }
+    .compare-section h2 {
+      text-align: center;
+      font-size: clamp(18px, 3vw, 26px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 580px) { .compare-grid { grid-template-columns: 1fr; } }
+    .compare-col {
+      border-radius: 12px;
+      padding: 24px 20px;
+    }
+    .compare-before {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    .compare-after {
+      background: rgba(0,200,175,0.07);
+      border: 1px solid rgba(0,200,175,0.2);
+    }
+    .compare-tag {
+      font-size: 10px; font-weight: 800;
+      letter-spacing: .1em; text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .compare-before .compare-tag { color: var(--muted); }
+    .compare-after  .compare-tag { color: var(--teal); }
+    .compare-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .compare-col ul li {
+      font-size: 14px; line-height: 1.4;
+      display: flex; align-items: flex-start; gap: 9px;
+    }
+    .compare-before ul li { color: rgba(255,255,255,0.45); }
+    .compare-after  ul li { color: rgba(255,255,255,0.85); }
+    .compare-before ul li::before {
+      content: '✗'; color: rgba(255,90,90,0.6); font-weight: 700; flex-shrink: 0;
+    }
+    .compare-after ul li::before {
+      content: '✓'; color: var(--teal); font-weight: 700; flex-shrink: 0;
+    }
+
+    /* ── CTA NOTE ────────────────────────────────────────────────────── */
+    .cta-note {
+      margin-top: 10px;
+      font-size: 13px;
+      color: var(--muted);
+    }
   </style>
 </head>
 <body>
@@ -387,6 +446,34 @@
     </div>
     <div class="preview-cta">
       <a href="/checkout/" class="btn-primary" id="cta-preview">Get this site — $150 flat</a>
+      <p class="cta-note">We typically go live within the same week. No contracts, cancel anytime.</p>
+    </div>
+  </section>
+
+  <!-- BEFORE / AFTER -->
+  <section class="compare-section">
+    <h2>What actually changes when you have a website</h2>
+    <div class="compare-grid">
+      <div class="compare-col compare-before">
+        <div class="compare-tag">Right now — no website</div>
+        <ul>
+          <li>Invisible to homeowners searching at night</li>
+          <li>Leads go to whoever shows up on Google first</li>
+          <li>Referrals can't find you — they move on</li>
+          <li>Zero after-hours lead capture</li>
+          <li>Competitors with worse reviews are winning jobs</li>
+        </ul>
+      </div>
+      <div class="compare-col compare-after">
+        <div class="compare-tag">With your new site</div>
+        <ul>
+          <li>Shows up when someone searches your trade + city</li>
+          <li>One-tap call on mobile — no typing, no waiting</li>
+          <li>Contact form captures leads while you sleep</li>
+          <li>Your Google reviews front and center</li>
+          <li>Looks like a $3,000 site — built in 3 days for $150</li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -488,8 +575,12 @@
       document.getElementById('nav-for').style.display = 'none';
     }
 
-    // Trade tag
-    document.getElementById('hero-tag').textContent = tradeLabel.toUpperCase();
+    // Trade tag — lead with the gap when review count is present
+    if (reviews > 0) {
+      document.getElementById('hero-tag').textContent = `${reviews} Google reviews · no website yet`;
+    } else {
+      document.getElementById('hero-tag').textContent = tradeLabel.toUpperCase();
+    }
 
     // H1 — personalized when bizName is present
     const h1 = document.getElementById('hero-h1');
@@ -497,9 +588,11 @@
       h1.innerHTML = `What <span class="accent">${bizName}</span>'s site could look like`;
     }
 
-    // Hero subheadline — honest about it being a template
+    // Hero subheadline — stronger when review count is present
     const heroSub = document.getElementById('hero-sub');
-    if (bizName && city) {
+    if (bizName && city && reviews > 0) {
+      heroSub.innerHTML = `<strong>${bizName}</strong> has ${reviews} Google reviews. But right now, homeowners in ${city} searching "${trade} near me" are calling whoever comes up first — not whoever has the best reputation. This site changes that.`;
+    } else if (bizName && city) {
       heroSub.innerHTML = `We matched <strong>${bizName}</strong> to our ${tradeInfo.label.toLowerCase()} for ${city}. Your business name, phone, and services replace the placeholder content — live in 3-5 days.`;
     } else if (bizName) {
       heroSub.innerHTML = `We matched <strong>${bizName}</strong> to our ${tradeInfo.label.toLowerCase()}. Your business name, phone, and services replace the placeholder content — live in 3-5 days.`;

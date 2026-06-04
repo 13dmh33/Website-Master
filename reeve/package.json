@@ -14,6 +14,9 @@
     "report":         "node agents/reporter.js",
     "review":         "node scripts/review-drafts.js",
     "review:list":    "node scripts/review-drafts.js --list",
+    "leads":          "node scripts/review-leads.js",
+    "leads:list":     "node scripts/review-leads.js --list",
+    "leads:high":     "node scripts/review-leads.js --high",
     "onboard":        "node scripts/onboard-client.js"
   },
   "dependencies": {

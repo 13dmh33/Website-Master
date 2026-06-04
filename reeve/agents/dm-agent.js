@@ -1,8 +1,9 @@
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 
-const express  = require('express');
-const crypto   = require('crypto');
-const https    = require('https');
+const express    = require('express');
+const crypto     = require('crypto');
+const https      = require('https');
+const nodemailer = require('nodemailer');
 
 const state     = require('../lib/state');
 const qualifier = require('../lib/qualifier');
@@ -23,6 +24,9 @@ const META_APP_SECRET       = process.env.META_APP_SECRET;
 const META_PAGE_ACCESS_TOKEN = process.env.META_PAGE_ACCESS_TOKEN;
 const INSTAGRAM_PAGE_ID     = process.env.INSTAGRAM_PAGE_ID;
 const CALL_BOOKING_LINK     = process.env.CALL_BOOKING_LINK || '(booking link not configured)';
+const DAVE_NOTIFY_EMAIL     = process.env.DAVE_NOTIFY_EMAIL;
+const ZOHO_EMAIL            = process.env.ZOHO_EMAIL;
+const ZOHO_APP_PASSWORD     = process.env.ZOHO_APP_PASSWORD;
 
 // ─── Startup checks ───────────────────────────────────────────────────────────
 
@@ -36,6 +40,8 @@ const REQUIRED_VARS = [
 
 const OPTIONAL_VARS = [
   'DAVE_NOTIFY_EMAIL',
+  'ZOHO_EMAIL',
+  'ZOHO_APP_PASSWORD',
   'CALL_BOOKING_LINK',
   'PORT'
 ];
@@ -147,6 +153,55 @@ function buildRoutingMessage(score) {
 }
 
 /**
+ * Email Dave when a lead is routed. Fire-and-forget — never throws.
+ */
+async function notifyDave(convo, score, reasoning) {
+  if (!DAVE_NOTIFY_EMAIL || !ZOHO_EMAIL || !ZOHO_APP_PASSWORD) return;
+
+  const scoreLabel = { high: '🟢 HIGH FIT', mid: '🟡 MID FIT', low: '🔴 LOW FIT' }[score] || score.toUpperCase();
+  const name       = convo.senderName || convo.senderId;
+
+  const subject = `[Reeve] New lead routed — ${scoreLabel} — ${name}`;
+  const body = [
+    `A new speaker just completed the Reeve qualification flow.`,
+    ``,
+    `Name:        ${name}`,
+    `Score:       ${scoreLabel}`,
+    `Reasoning:   ${reasoning}`,
+    ``,
+    `Answers:`,
+    `  Paid gigs (last 12mo): ${convo.answers.paid_talks_count || '—'}`,
+    `  Keynote fee:           ${convo.answers.fee_range || '—'}`,
+    `  Topic/niche:           ${convo.answers.topic || '—'}`,
+    ``,
+    score === 'high' ? `ACTION: Book a call — they were sent your Cal.com link automatically.` :
+    score === 'mid'  ? `ACTION: Review and follow up within 24 hours.` :
+                       `ACTION: No action needed — they received the warm decline message.`,
+    ``,
+    `To onboard this lead as a client:`,
+    `  node scripts/onboard-client.js --from-dm ${convo.senderId}`,
+    ``,
+    `— Reeve`,
+  ].join('\n');
+
+  try {
+    const transport = nodemailer.createTransport({
+      host: 'smtp.zoho.com', port: 465, secure: true,
+      auth: { user: ZOHO_EMAIL, pass: ZOHO_APP_PASSWORD }
+    });
+    await transport.sendMail({
+      from:    `"Reeve" <${ZOHO_EMAIL}>`,
+      to:      DAVE_NOTIFY_EMAIL,
+      subject,
+      text:    body,
+    });
+    console.log(`[notify] Dave notified at ${DAVE_NOTIFY_EMAIL} (score: ${score})`);
+  } catch (err) {
+    console.error(`[notify] Failed to email Dave: ${err.message}`);
+  }
+}
+
+/**
  * Check whether the incoming message text matches a trigger keyword.
  */
 function isTrigger(text) {
@@ -248,6 +303,9 @@ async function handleMessage(senderId, senderName, messageText) {
     await sendDM(senderId, routingMessage);
 
     console.log(`[flow] Routed ${senderId} → ${scoreResult.score} (${templates.scoring[`${scoreResult.score}_fit`].action})`);
+
+    // Notify Dave — fire-and-forget, never blocks the flow
+    notifyDave(convo, scoreResult.score, scoreResult.reasoning).catch(() => {});
     return;
   }
 

@@ -381,5 +381,13 @@
   };
 </script>
 <script src="https://nora-agent-lemon.vercel.app/widget.js"></script>
+<script>
+  document.querySelectorAll('form').forEach(function(f) {
+    f.addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('This is a demo site — form submission is disabled.\n\nTo get your own site, visit trevoadvisors.com');
+    });
+  });
+</script>
 </body>
 </html>

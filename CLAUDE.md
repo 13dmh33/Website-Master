@@ -9,8 +9,8 @@ Brand colors: Navy #0A1228 (background) · Teal #00C8AF (primary accent) · Deep
 
 Your goal: 47 clients/month at $150/site + $65/mo hosting; Nora bundle adds $200 build + $65/mo.
 
-## Build Status (as of 2026-06-03)
-- Scout: ✅ scripts/scout.js — Outscraper API, $10/mo cap, auto_run toggle
+## Build Status (as of 2026-06-04)
+- Scout: ✅ scripts/scout.js — Outscraper API, $10/mo cap, auto_run toggle; --multi flag (TRADE_SYNONYMS, place_id dedup); all trades → sms; gap score 3-10; subtypes/lat/lng stored
 - Diagnoser: ✅ scripts/diagnoser.js — Claude Haiku, prompt caching, $5/mo cap; dual-channel: sets secondary_channel=sms when lead has both email + phone
 - Checker: ✅ scripts/checker.js — 5 evals + Claude rewrite loop, $3/mo cap; template fast-path validates both primary + secondary messages
 - Personalizer: ✅ scripts/personalizer.js — generates demo_url for every approved email lead; writes to brief JSON; no API cost; --write to save
@@ -170,6 +170,8 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - 2026-06-03: Twilio A2P 10DLC Brand registration submitted (Bundle SID: BUb725ec9662f0dc3da58ed24117df8684) — initially rejected (name mismatch), resubmitted under "David M Hettinger" to match EIN
 - 2026-06-03: Template/SMS audit — all em/en dashes replaced with hyphens (GSM-7, 1 seg), dead templates replaced, tone routing added
 - 2026-06-03: Personalizer built — scripts/personalizer.js generates /for/?b=&t=&c=&r= demo URL per lead; website/for/index.html is the prospect-facing page; pitcher.js uses demo_url P.S. in emails
+- 2026-06-04: Scout improved — plumber/hvac switched to sms channel; needsEmail filter removed; gap scoring rewritten (3-10 range); --multi flag + TRADE_SYNONYMS; subtypes/lat/lng stored; effective CPL logged
+- 2026-06-04: Demo form guard — submit-disabled alert added to all 5 demos (plumbing/hvac/electrical/handyman/roofing)
 
 ## Twilio A2P 10DLC Status
 - Brand registration submitted: 2026-06-03
@@ -180,27 +182,21 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - Once approved: create Campaign (use case: Mixed) → link +1 720 number to Sender Pool
 - Until approved: SMS sends will hit error 30034 and be blocked by carriers
 
-## Tomorrow's Tasks (2026-06-03)
+## Mac Action Items (as of 2026-06-04)
 
-### On Mac (must do locally)
+### Must do on Mac
 1. Create 2 Stripe Payment Links: $150 (website-only) + $200 (website+Nora)
    → Paste into `website/checkout/index.html` replacing `YOUR_WEBSITE_LINK_ID` and `YOUR_NORA_LINK_ID`
 2. Create Formspree form at formspree.io
    → Paste form ID into `website/intake/index.html` replacing `YOUR_FORM_ID`
-3. Merge `claude/demo-site` → `main`, then deploy `website/` to trevoadvisors.com
-4. `npm install imapflow` for poller.js
-5. Start `node scripts/webhook.js` + ngrok + register URL in Twilio console
-6. Add `SITE_START_URL=https://trevoadvisors.com/start/` to `.env.local`
+3. Verify Netlify auto-deployed `website/` to trevoadvisors.com (check /start/, /for/, /demos/)
+4. Run `node scripts/personalizer.js --write` (after /for/ confirmed live on prod)
+5. Check Twilio A2P 10DLC status (Bundle SID: BUb725ec9662f0dc3da58ed24117df8684)
+6. Run `node scripts/pitcher.js --force` when A2P approved (5 leads ready)
+7. Start `node scripts/webhook.js` + ngrok → register URL in Twilio console
+8. Add `SITE_START_URL=https://trevoadvisors.com/start/` + `CALCOM_LINK` to `.env.local`
+9. `npm install imapflow` for poller.js
+10. Nora-Agent push: `cd ~/Nora-Agent && git push origin main`
 
-### Bug Fixes (container OK)
-- `webhook.js`: guard `crypto.timingSafeEqual()` — add length check before compare to prevent RangeError
-- `poller.js`: guard `isAutoReply()` — add `if (!headers) return false;` to prevent null crash
-- `mobile.js`: change `call_booked` status to `booking_sent` on send (call not booked until prospect replies)
-- `drip.js`: fix `[trade]`/`[City]` token substitution in d1c-sms template
-
-### Low Priority Polish (container OK)
-- `website/demo/hvac.html`: add `<meta name="robots" content="noindex, nofollow">` + emoji favicon
-- `website/start/index.html` + `website/thankyou/index.html`: add OG tags
-- All demo contact forms: add "This is a demo — submit disabled" alert on form submit
-- `website/proposal/index.html`: show all 3 demo links when no `?trade=` param
+### Remaining Polish (container OK)
 - Intake form step 3: make optional fields visually obvious

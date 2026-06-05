@@ -10,7 +10,7 @@ Brand colors: Navy #0A1228 (background) · Teal #00C8AF (primary accent) · Deep
 Your goal: 47 clients/month at $150/site + $65/mo hosting; AI bundles (Nora/Atlas/Argus) add $200 build + $65/mo. Three AI products, one price point.
 
 ## Build Status (as of 2026-06-05)
-- Scout: ✅ scripts/scout.js — Outscraper API, $10/mo cap, auto_run toggle; --multi flag (TRADE_SYNONYMS, place_id dedup); all trades → sms; gap score 3-10; subtypes/lat/lng stored
+- Scout: ✅ scripts/scout.js — Outscraper API, $10/mo cap, auto_run toggle; --multi flag (TRADE_SYNONYMS, place_id dedup); all trades → sms; gap score 3-10; subtypes/lat/lng stored; **v2**: --budget (per-run $$ cap), --target (auto-calc limit for N qualifying leads), --min-score filter, --dry-run preview, --csv export, pre-dedup from existing leads files (skips already-known place_ids), ROI estimate in output, qualify_rate tracked in config
 - Enricher: ✅ scripts/enricher.js — Apollo.io People Match, 200 credit/mo cap; finds owner email by biz name+city+phone; upgrades queue briefs sms→email when found; --dry-run; runs in container
 - Diagnoser: ✅ scripts/diagnoser.js — Claude Haiku, prompt caching, $5/mo cap; dual-channel: sets secondary_channel=sms when lead has both email + phone
 - Checker: ✅ scripts/checker.js — 5 evals + Claude rewrite loop, $3/mo cap; template fast-path validates both primary + secondary messages
@@ -188,6 +188,7 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - 2026-06-04: Demo form guard — submit-disabled alert added to all 5 demos (plumbing/hvac/electrical/handyman/roofing)
 - 2026-06-05: Enricher built — scripts/enricher.js hits Apollo People Match API to find owner emails for phone-only leads; upgrades queue briefs sms→email; 200 credit/mo cap
 - 2026-06-05: CEO sprint complete — Caller/SMS/LinkedIn/Referral/GBP-Audit/Warm-Lead/Brief tools; Atlas + Argus product pages; /start/ AI suite; 3 Stripe slots (Nora/Atlas/Argus) in checkout; intake→checkout flow fixed; 54 briefs have demo_url; 8 SMS + 7 email templates
+- 2026-06-05: Scout v2 — --budget/--target/--min-score/--dry-run/--csv flags; pre-dedup from existing files; ROI estimate; qualify_rate tracked; social-only site detection (Facebook/Yelp not counted as real website)
 
 ## Twilio A2P 10DLC Status
 - Brand registration submitted: 2026-06-03

@@ -82,6 +82,15 @@ function loadConfig() {
   }
 }
 
+function checkAutoRun(config) {
+  if (hasFlag('--force')) return;
+  if (!config.auto_run) {
+    console.log('Diagnoser is in manual mode (auto_run = false).');
+    console.log('Run with --force, or set auto_run = true in config/diagnoser-config.json.');
+    process.exit(0);
+  }
+}
+
 function checkLimits(config) {
   // Reset daily counter on new day
   if (config.today !== today()) {

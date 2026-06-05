@@ -201,7 +201,7 @@ DAVE_NOTIFY_EMAIL=          # optional — high-signal post alerts
 
 ---
 
-## What's built (current state, 2026-06-03)
+## What's built (current state, 2026-06-05)
 
 ### Core pipeline (all ✅)
 - Researcher with live SerpApi + evergreen fallback
@@ -217,8 +217,8 @@ DAVE_NOTIFY_EMAIL=          # optional — high-signal post alerts
 - **Service clarity rotation:** alternates "Reeve Found This" (odd weeks) / "What Reeve Does" (even weeks) / "What Reeve Costs" (business week)
 - **CTA diversity:** `buildOutboundCta(weekNumber)` alternates "DM stages" (even weeks) with "DM audit" (odd weeks) on reel and clarity posts; carousel always uses stages (high-intent audience)
 - **Pricing transparency post:** `generatePricingClarity()` runs on business-niche clarity weeks; names Scout/Pitch/Full tiers and prices directly
-- **Client result evergreen posts:** ev-11 (first booking story) and ev-12 (90-day pipeline story) added; function as social proof before real case studies exist
-- **Evergreen bank reset:** all 10 original posts reset to `used: false`; 3 new posts added (ev-11, ev-12, ev-13)
+- **Client result evergreen posts:** ev-11 (first booking story) and ev-12 (90-day pipeline story) — social proof before real case studies exist
+- **Evergreen bank expanded:** 25 total posts (ev-01 through ev-25); covers 6 weeks of fallback content across all 4 pillars (booking, mindset, automation, business). New posts include: fee-setting framework, one-sheet strategy, how to read a CFP, niche clarity, imposter syndrome, opening 90 seconds, minimal CRM setup, 2-hour pipeline schedule, conference calendar mapping, kill fees, fee ladder mechanics
 
 ### A/B and analytics (built, pending data)
 - Caption A/B variants via `lib/ab-tracker.js` (2 hooks/week, same angle)

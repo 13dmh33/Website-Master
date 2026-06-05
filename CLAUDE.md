@@ -11,7 +11,7 @@ This repo contains three separate product systems. Each has its own subdirectory
 **Business:** Sell websites + voice agents to plumbers, HVAC, electricians, roofers
 **Goal:** 47 clients/month at $150/site + $65/mo hosting; Nora bundle $200 build + $65/mo
 
-### Build Status (as of 2026-06-03)
+### Build Status (as of 2026-06-05)
 - Scout: ✅ scripts/scout.js — Outscraper API, $10/mo cap, auto_run toggle
 - Diagnoser: ✅ scripts/diagnoser.js — Claude Haiku, prompt caching, $5/mo cap; dual-channel routing
 - Checker: ✅ scripts/checker.js — 5 evals + Claude rewrite loop, $3/mo cap
@@ -242,24 +242,27 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - 2026-06-02: mobile.js updated — sends /start URL in positive reply, Zoho SMTP fix confirmed
 - 2026-06-02: Branches 1–6 merged to main; claude/website and claude/demo-site held pending review
 - 2026-06-02: Global pricing update — $150/$200 build + $65/mo applied across all templates, scripts, website pages, and MD files
+- 2026-06-05: JSON.parse hardening — all 7 Trevo scripts crash-safe; saveConfig/checkAutoRun gaps fixed
+- 2026-06-05: Milly evergreen bank expanded 13→25 posts; SECRETS_SETUP.md added
+- 2026-06-05: GitHub Actions workflows moved to .github/workflows/, Buffer env vars corrected
+- 2026-06-05: Reeve 4-tier qualifier, scout follow-up flow; Strategy monitor agent built
 
-## Tomorrow's Tasks (2026-06-03)
+## Action Items for Dave (2026-06-05)
 
-### On Mac (must do locally)
-1. Create 2 Stripe Payment Links: $150 (website-only) + $200 (website+Nora)
-   → Paste into `website/checkout/index.html` replacing `YOUR_WEBSITE_LINK_ID` and `YOUR_NORA_LINK_ID`
-2. Create Formspree form at formspree.io
-   → Paste form ID into `website/intake/index.html` replacing `YOUR_FORM_ID`
-3. Merge `claude/demo-site` → `main`, then deploy `website/` to trevoadvisors.com
-4. `npm install imapflow` for poller.js
-5. Start `node scripts/webhook.js` + ngrok + register URL in Twilio console
-6. Add `SITE_START_URL=https://trevoadvisors.com/start/` to `.env.local`
+### On Mac — one-time setup
+See `SECRETS_SETUP.md` for full step-by-step guide.
 
-### Bug Fixes (container OK)
-- `webhook.js`: guard `crypto.timingSafeEqual()` — add length check before compare to prevent RangeError
-- `poller.js`: guard `isAutoReply()` — add `if (!headers) return false;` to prevent null crash
-- `mobile.js`: change `call_booked` status to `booking_sent` on send (call not booked until prospect replies)
-- `drip.js`: fix `[trade]`/`[City]` token substitution in d1c-sms template
+1. **Buffer classic token** — buffer.com/developers → Create App → Generate Access Token → add to `milly/.env`
+2. **Buffer profile ID** — `curl https://api.bufferapp.com/1/profiles.json?access_token=YOUR_TOKEN` → copy Instagram profile `id` → add to `milly/.env`
+3. **GitHub Actions secrets** (7 required) — repo → Settings → Secrets → Actions:
+   `ANTHROPIC_API_KEY`, `BUFFER_ACCESS_TOKEN`, `BUFFER_INSTAGRAM_PROFILE_ID`, `SERPAPI_KEY`, `UNSPLASH_ACCESS_KEY`, `INSTAGRAM_ACCESS_TOKEN`, `INSTAGRAM_BUSINESS_ACCOUNT_ID`
+4. **Stripe Payment Links** — dashboard.stripe.com → paste IDs into `website/checkout/index.html`
+5. **Formspree form** — formspree.io → paste ID into `website/intake/index.html`
+6. **Deploy demo site** — merge `claude/demo-site` → `main` → deploy `website/` to trevoadvisors.com
+7. **imapflow + webhook** — `npm install imapflow` → start `webhook.js` + ngrok → register URL in Twilio console
+8. **Add to .env.local** — `SITE_START_URL=https://trevoadvisors.com/start/`
+9. **Reeve** — Meta App setup + Railway deploy + Cal.com link (see `reeve/CLAUDE.md`)
+10. **Merge to main** — review `claude/milly-content-engine-qZme3` → merge when ready to activate GitHub Actions
 
 ### Low Priority Polish (container OK)
 - `website/demo/hvac.html`: add `<meta name="robots" content="noindex, nofollow">` + emoji favicon
@@ -267,3 +270,13 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - All demo contact forms: add "This is a demo — submit disabled" alert on form submit
 - `website/proposal/index.html`: show all 3 demo links when no `?trade=` param
 - Intake form step 3: make optional fields visually obvious
+
+## Completed This Session (2026-06-05)
+- JSON.parse hardening: all 7 Trevo scripts now fail cleanly instead of crashing with SyntaxError
+- Restored missing `saveConfig()` in drip.js; added missing `checkAutoRun()` in diagnoser.js
+- Milly evergreen bank: expanded from 13 → 25 posts (6 weeks of fallback content across all 4 pillars)
+- SECRETS_SETUP.md: one-sitting deployment guide for Dave
+- Milly GitHub Actions: moved workflows to `.github/workflows/`, fixed Buffer env vars, correct cron times
+- Reeve: 4-tier qualifier (high/mid/scout/low), scout follow-up flow, review-leads.js --scout flag
+- Strategy: strategist.js zero-API-cost monitor, pricing analysis, CLAUDE.md
+- Milly generator: CTA alternation, pricing transparency post, service clarity rotation

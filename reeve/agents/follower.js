@@ -99,7 +99,7 @@ Return ONLY a JSON object with no markdown:
     return JSON.parse(cleaned);
   } catch (parseErr) {
     console.error('[follower] Could not parse Claude response as JSON:', cleaned.slice(0, 200));
-    throw new Error(`Follow-up draft JSON parse failed for pitch ${pitch.id}`);
+    throw new Error(`Follow-up draft JSON parse failed for pitch ${originalPitch.id}`);
   }
 }
 

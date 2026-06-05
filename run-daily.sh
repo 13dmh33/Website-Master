@@ -9,7 +9,7 @@ DRY_RUN=${1:-""}
 
 echo ""
 echo "╔══════════════════════════════════════════════════╗"
-echo "║         Maps Agency — Daily Run                  ║"
+echo "║       Trevo Advisors — Daily Run                 ║"
 echo "╚══════════════════════════════════════════════════╝"
 echo ""
 

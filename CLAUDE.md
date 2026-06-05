@@ -274,9 +274,13 @@ See `SECRETS_SETUP.md` for full step-by-step guide.
 ## Completed This Session (2026-06-05)
 - JSON.parse hardening: all 7 Trevo scripts now fail cleanly instead of crashing with SyntaxError
 - Restored missing `saveConfig()` in drip.js; added missing `checkAutoRun()` in diagnoser.js
-- Milly evergreen bank: expanded from 13 → 25 posts (6 weeks of fallback content across all 4 pillars)
+- Milly evergreen bank: expanded from 13 → 36 posts (9 weeks of fallback content across all 4 pillars)
 - SECRETS_SETUP.md: one-sitting deployment guide for Dave
 - Milly GitHub Actions: moved workflows to `.github/workflows/`, fixed Buffer env vars, correct cron times
 - Reeve: 4-tier qualifier (high/mid/scout/low), scout follow-up flow, review-leads.js --scout flag
-- Strategy: strategist.js zero-API-cost monitor, pricing analysis, CLAUDE.md
+- Strategy: strategist.js zero-API-cost monitor, week-over-week trend tracking, pricing analysis, CLAUDE.md
 - Milly generator: CTA alternation, pricing transparency post, service clarity rotation
+- run-daily.sh: fixed banner — "Maps Agency" → "Trevo Advisors"
+- Reeve follower.js: fixed undefined variable bug (`pitch.id` → `originalPitch.id` in error message)
+- Dependency alignment: `@anthropic-ai/sdk` pinned to `^0.37.0` across root, milly, and reeve package.json
+- root package.json description: "Maps Agency" → "Trevo Advisors"

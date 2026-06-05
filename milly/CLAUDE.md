@@ -218,7 +218,7 @@ DAVE_NOTIFY_EMAIL=          # optional — high-signal post alerts
 - **CTA diversity:** `buildOutboundCta(weekNumber)` alternates "DM stages" (even weeks) with "DM audit" (odd weeks) on reel and clarity posts; carousel always uses stages (high-intent audience)
 - **Pricing transparency post:** `generatePricingClarity()` runs on business-niche clarity weeks; names Scout/Pitch/Full tiers and prices directly
 - **Client result evergreen posts:** ev-11 (first booking story) and ev-12 (90-day pipeline story) — social proof before real case studies exist
-- **Evergreen bank expanded:** 25 total posts (ev-01 through ev-25); covers 6 weeks of fallback content across all 4 pillars (booking, mindset, automation, business). New posts include: fee-setting framework, one-sheet strategy, how to read a CFP, niche clarity, imposter syndrome, opening 90 seconds, minimal CRM setup, 2-hour pipeline schedule, conference calendar mapping, kill fees, fee ladder mechanics
+- **Evergreen bank expanded:** 36 total posts (ev-01 through ev-36); covers 9 weeks of fallback content across all 4 pillars (booking, mindset, automation, business). Posts include: fee-setting framework, one-sheet strategy, how to read a CFP, niche clarity, imposter syndrome, opening 90 seconds, minimal CRM setup, 2-hour pipeline schedule, conference calendar mapping, kill fees, fee ladder mechanics, rejection-as-data, batch research day, speaker agreements (5 clauses), speaker showcases, education/association CFPs, fee confidence, pitch acceptance rate tracking, 3-touch follow-up sequence, saying no to misfit gigs, verbal vs written confirmation, ROI framing for organizers
 
 ### A/B and analytics (built, pending data)
 - Caption A/B variants via `lib/ab-tracker.js` (2 hooks/week, same angle)

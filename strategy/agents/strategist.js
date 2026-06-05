@@ -226,6 +226,32 @@ function assessPricingModel(metrics) {
   return lines.join('\n');
 }
 
+// ── Week-over-week trend comparison ───────────────────────────────────────────
+
+function loadLastWeekMetrics() {
+  if (!fs.existsSync(REPORTS_DIR)) return null;
+  const reports = fs.readdirSync(REPORTS_DIR)
+    .filter(f => f.startsWith('monitor-') && f.endsWith('.json'))
+    .sort()
+    .reverse();
+  // skip index 0 (today's if already saved) and take the next most recent
+  for (const file of reports.slice(0, 5)) {
+    try {
+      const data = JSON.parse(fs.readFileSync(path.join(REPORTS_DIR, file), 'utf8'));
+      if (data.metrics) return data.metrics;
+    } catch { /* skip */ }
+  }
+  return null;
+}
+
+function calcTrend(current, previous) {
+  if (previous === null || previous === undefined) return null;
+  if (previous === 0) return current > 0 ? '+∞' : '—';
+  const delta = current - previous;
+  const pct   = Math.round((delta / Math.abs(previous)) * 100);
+  return `${delta >= 0 ? '+' : ''}${delta} (${pct >= 0 ? '+' : ''}${pct}%)`;
+}
+
 // ── Compute all metrics ───────────────────────────────────────────────────────
 
 function computeMetrics() {
@@ -263,25 +289,34 @@ function computeMetrics() {
 
 function printDashboard(metrics, alerts) {
   const SEV_COLOR = { HIGH: '🔴', MEDIUM: '🟡', INFO: '🔵' };
+  const prev = loadLastWeekMetrics();
+
+  function trend(cur, prv) {
+    const t = calcTrend(cur, prv);
+    if (!t || t === '—') return '';
+    const up = t.startsWith('+');
+    return `  ${up ? '↑' : '↓'} ${t}`;
+  }
 
   console.log('\n' + '═'.repeat(56));
   console.log('  REEVE STRATEGY DASHBOARD');
   console.log(`  ${new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}`);
+  if (prev) console.log('  (trends vs last saved snapshot)');
   console.log('═'.repeat(56));
 
   console.log('\n── REVENUE ──────────────────────────────────────────');
-  console.log(`  MRR:             $${metrics.mrr.toLocaleString()}`);
+  console.log(`  MRR:             $${metrics.mrr.toLocaleString()}${trend(metrics.mrr, prev?.mrr)}`);
   console.log(`  ARR (projected): $${metrics.arr.toLocaleString()}`);
-  console.log(`  Active clients:  ${metrics.active_clients}`);
+  console.log(`  Active clients:  ${metrics.active_clients}${trend(metrics.active_clients, prev?.active_clients)}`);
 
   console.log('\n── PIPELINE ─────────────────────────────────────────');
-  console.log(`  Open CFPs:       ${metrics.pipeline.open_opps}`);
+  console.log(`  Open CFPs:       ${metrics.pipeline.open_opps}${trend(metrics.pipeline.open_opps, prev?.pipeline?.open_opps)}`);
   console.log(`  Urgent (7d):     ${metrics.pipeline.urgent_cfps}`);
-  console.log(`  Pitches sent:    ${metrics.pipeline.pitches_sent}`);
+  console.log(`  Pitches sent:    ${metrics.pipeline.pitches_sent}${trend(metrics.pipeline.pitches_sent, prev?.pipeline?.pitches_sent)}`);
   console.log(`  Pending review:  ${metrics.pipeline.pending_review}`);
 
   console.log('\n── CONVERSION ───────────────────────────────────────');
-  console.log(`  DM leads routed: ${metrics.routed_conversations}`);
+  console.log(`  DM leads routed: ${metrics.routed_conversations}${trend(metrics.routed_conversations, prev?.routed_conversations)}`);
   console.log(`  → Clients:       ${metrics.active_clients} (${metrics.conversion_rate !== null ? metrics.conversion_rate + '%' : 'n/a'})`);
   console.log(`  Pitch acceptance: ${metrics.pitch_acceptance_rate !== null ? metrics.pitch_acceptance_rate + '%' : 'no data yet'}`);
   console.log(`  Avg bookings/client: ${metrics.avg_bookings_per_client}`);

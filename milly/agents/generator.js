@@ -17,11 +17,16 @@ const path     = require('path');
 function loadInspirationThemes() {
   const sourcesPath = path.join(__dirname, '..', 'templates', 'inspiration-sources.json');
   if (!fs.existsSync(sourcesPath)) return '';
-  const sources = JSON.parse(fs.readFileSync(sourcesPath, 'utf8'));
-  const themes = sources.recurring_themes || [];
-  return themes.length
-    ? `Proven content themes from the speaking industry (use as inspiration, never copy directly):\n${themes.map(t => `- ${t}`).join('\n')}`
-    : '';
+  try {
+    const sources = JSON.parse(fs.readFileSync(sourcesPath, 'utf8'));
+    const themes = sources.recurring_themes || [];
+    return themes.length
+      ? `Proven content themes from the speaking industry (use as inspiration, never copy directly):\n${themes.map(t => `- ${t}`).join('\n')}`
+      : '';
+  } catch {
+    console.warn('[generator] Could not parse inspiration-sources.json — skipping themes');
+    return '';
+  }
 }
 
 // build the shared voice context string injected into every Claude call

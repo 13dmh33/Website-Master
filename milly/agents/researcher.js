@@ -17,8 +17,13 @@ const path     = require('path');
 function getInspirationAngles() {
   const sourcesPath = path.join(__dirname, '..', 'templates', 'inspiration-sources.json');
   if (!fs.existsSync(sourcesPath)) return [];
-  const sources = JSON.parse(fs.readFileSync(sourcesPath, 'utf8'));
-  return sources.recurring_themes || [];
+  try {
+    const sources = JSON.parse(fs.readFileSync(sourcesPath, 'utf8'));
+    return sources.recurring_themes || [];
+  } catch {
+    console.warn('[researcher] Could not parse inspiration-sources.json — using empty themes');
+    return [];
+  }
 }
 
 // get the Monday of the current week as YYYY-MM-DD

@@ -71,7 +71,12 @@ function parseJson(text) {
     .replace(/^```\s*/i, '')
     .replace(/```\s*$/i, '')
     .trim();
-  return JSON.parse(cleaned);
+  try {
+    return JSON.parse(cleaned);
+  } catch (err) {
+    console.error('[claude] JSON parse failed. Raw (first 300 chars):', cleaned.slice(0, 300));
+    throw new Error(`Claude response was not valid JSON: ${err.message}`);
+  }
 }
 
 module.exports = { call, parseJson, MODEL };

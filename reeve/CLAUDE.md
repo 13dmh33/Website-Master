@@ -39,20 +39,20 @@ Milly posts 4x/week → speaker sees content → DMs "stages"
 | `templates/qualification.json` | All trigger keywords, questions, scoring actions, message templates |
 | `scripts/test-qualify.js` | 3 test scenarios — high/mid/low fit |
 
-### Phase 2: Conference Scout (not yet built)
-Automated weekly search for open CFPs and speaker application deadlines. Sources: Papercall.io, Sessionize.com, direct conference sites via SerpApi.
+### Phase 2: Conference Scout ✅ BUILT
+`agents/conference-scout.js` — weekly SerpApi search for open CFPs (papercall.io, sessionize.com, Google). Deduplicates against existing pipeline. `--dry-run` and `--summary` flags.
 
-### Phase 3: Pitcher (not yet built)
-Drafts and sends conference pitches on behalf of clients. Reads client's talk title, bio, and topic. Outputs: pitch email draft + custom subject line + deadline reminder.
+### Phase 3: Pitcher ✅ BUILT
+`agents/pitcher.js` — topic-matches clients to open opportunities, Claude drafts pitch emails. All output saved as drafts. Dave reviews via `scripts/review-drafts.js`.
 
-### Phase 4: Follower (not yet built)
-Follow-up cadence for submitted pitches. Sends follow-up 14 days after submission if no response. Tracks all touchpoints per conference per client.
+### Phase 4: Follower ✅ BUILT
+`agents/follower.js` — finds sent pitches >14 days old with no response, Claude drafts follow-up emails. Dave reviews before send.
 
-### Phase 5: Reporter (not yet built)
-Weekly digest to clients: pitches submitted this week, responses received, pipeline totals, upcoming deadlines. Delivered via email.
+### Phase 5: Reporter ✅ BUILT
+`agents/reporter.js` — weekly digest per active client (pitches sent/pending/accepted, pipeline totals). Claude writes the email. Dave reviews before send.
 
-### Phase 6: Closer (not yet built)
-Handles the negotiation stage: fee discussion, contract review, travel rider, kill fee. AI-drafted responses that Dave reviews before sending.
+### Phase 6: Closer ✅ BUILT
+`agents/closer.js` — when a conference accepts a pitch (`scripts/record-response.js` → accepted), Claude drafts two emails: (1) logistics confirmation to the conference organizer, (2) good-news update to the client/speaker. Also increments `bookings_confirmed` on the client profile.
 
 ---
 
@@ -268,30 +268,31 @@ reeve/
   .env.example            ← env var template
   package.json
   agents/
-    dm-agent.js           ✅ Phase 1 — webhook server + conversation flow
-    [conference-scout.js] ⬜ Phase 2 — CFP discovery
-    [pitcher.js]          ⬜ Phase 3 — pitch drafting
-    [follower.js]         ⬜ Phase 4 — follow-up cadence
-    [reporter.js]         ⬜ Phase 5 — weekly client digest
-    [closer.js]           ⬜ Phase 6 — negotiation drafts
+    dm-agent.js           ✅ Phase 1 — webhook server + conversation flow + Dave notifications
+    conference-scout.js   ✅ Phase 2 — CFP discovery (SerpApi, deduplication)
+    pitcher.js            ✅ Phase 3 — topic matching + Claude pitch drafts
+    follower.js           ✅ Phase 4 — 14-day follow-up on unanswered pitches
+    reporter.js           ✅ Phase 5 — weekly client digest drafts
+    closer.js             ✅ Phase 6 — conference confirmation + client good-news emails
   lib/
     qualifier.js          ✅ Phase 1 — Claude scoring + response generation
-    state.js              ✅ Phase 1 — conversation persistence
-    [client-store.js]     ⬜ Phase 2 — client profiles + pipeline state
-    [opportunity-store.js] ⬜ Phase 2 — conference/CFP tracking
-    [email.js]            ⬜ Phase 5 — Zoho SMTP for client reports
+    state.js              ✅ Phase 1 — DM conversation persistence
+    client-store.js       ✅ Phase 2 — client profiles CRUD
+    opportunity-store.js  ✅ Phase 2 — conference/CFP pipeline CRUD
   templates/
     qualification.json    ✅ Phase 1 — trigger words, questions, messages, routing
-    [client-profile.json] ⬜ Phase 2 — client onboarding schema
-    [pitch-templates.json] ⬜ Phase 3 — pitch email frameworks
+    client-profile.json   ✅ Phase 2 — client schema reference + example
   scripts/
     test-qualify.js       ✅ Phase 1 — 3-scenario qualification test
-    [onboard-client.js]   ⬜ Phase 2 — client setup wizard
+    onboard-client.js     ✅ Phase 2 — interactive client setup wizard (--from-dm flag)
+    review-leads.js       ✅ Phase 1.5 — review routed DM leads, launch onboarding
+    review-drafts.js      ✅ All — approve/reject/send pitch/followup/closer/report drafts
+    record-response.js    ✅ Phase 6 — log conference response; triggers closer.js
   output/
-    conversations/        ← one JSON per DM sender (created at runtime)
-    [clients/]            ⬜ Phase 2 — client profiles
-    [opportunities/]      ⬜ Phase 2 — CFP pipeline
-    [pitches/]            ⬜ Phase 3 — submitted pitches
+    conversations/        ← one JSON per DM sender (runtime)
+    clients/              ← one JSON per onboarded client (runtime)
+    opportunities/        ← one JSON per conference/CFP (runtime)
+    pitches/              ← all draft types: pitch, followup, closer, report (runtime)
 ```
 
 ---

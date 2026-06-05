@@ -90,13 +90,13 @@ function getPendingDrafts() {
 
 function printList() {
   const all    = loadDrafts();
-  const byType = { pitch: [], followup: [], report: [] };
+  const byType = { pitch: [], followup: [], closer: [], report: [] };
 
   for (const d of all) {
     if (byType[d.type]) byType[d.type].push(d);
   }
 
-  const typeLabel = { pitch: 'Pitches', followup: 'Follow-ups', report: 'Reports' };
+  const typeLabel = { pitch: 'Pitches', followup: 'Follow-ups', closer: 'Closing emails', report: 'Reports' };
 
   console.log('\n═══ Reeve Draft Queue ═══\n');
 
@@ -127,7 +127,8 @@ function ask(prompt) {
 }
 
 function printDraft(draft, index, total) {
-  const typeLabels = { pitch: 'PITCH', followup: 'FOLLOW-UP', report: 'REPORT' };
+  const closerSubLabel = draft.closerType === 'conference_confirmation' ? 'CLOSER → CONFERENCE' : 'CLOSER → CLIENT';
+  const typeLabels = { pitch: 'PITCH', followup: 'FOLLOW-UP', closer: closerSubLabel, report: 'REPORT' };
   const label = typeLabels[draft.type] || draft.type.toUpperCase();
 
   console.log('\n' + '═'.repeat(60));
@@ -140,6 +141,17 @@ function printDraft(draft, index, total) {
     if (draft.opportunityUrl) console.log(`  CFP URL:     ${draft.opportunityUrl}`);
     console.log(`  Client:      ${draft.clientName}`);
     console.log(`  To:          ${draft.to || '⚠  NOT SET — enter organizer email below'}`);
+  }
+
+  if (draft.type === 'closer') {
+    console.log(`  Conference:  ${draft.conference || '—'}`);
+    console.log(`  Client:      ${draft.clientName}`);
+    console.log(`  To:          ${draft.to || '⚠  NOT SET — enter recipient email below'}`);
+    if (draft.closerType === 'conference_confirmation') {
+      console.log(`  ↳ Sends to: conference organizer`);
+    } else {
+      console.log(`  ↳ Sends to: speaker/client (good news)`);
+    }
   }
 
   if (draft.type === 'report') {

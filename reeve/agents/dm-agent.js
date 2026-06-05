@@ -316,6 +316,25 @@ async function handleMessage(senderId, senderName, messageText) {
 // ─── Routes ───────────────────────────────────────────────────────────────────
 
 /**
+ * GET /health — Railway health check and status endpoint.
+ */
+app.get('/health', (req, res) => {
+  const conversations = require('../lib/state').getAllActive();
+  const routed  = conversations.filter(c => c.routed).length;
+  const active  = conversations.filter(c => !c.routed).length;
+  res.status(200).json({
+    status:    'ok',
+    uptime:    Math.round(process.uptime()),
+    env: {
+      meta:         !!META_PAGE_ACCESS_TOKEN,
+      anthropic:    !!process.env.ANTHROPIC_API_KEY,
+      notifications: !!(ZOHO_EMAIL && DAVE_NOTIFY_EMAIL),
+    },
+    pipeline: { active_conversations: active, routed_total: routed },
+  });
+});
+
+/**
  * GET /webhook — Meta webhook verification handshake.
  * Meta sends hub.mode, hub.verify_token, hub.challenge.
  * We confirm the token matches and echo back the challenge.

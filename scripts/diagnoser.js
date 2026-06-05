@@ -74,15 +74,11 @@ function loadConfig() {
     fs.writeFileSync(CONFIG_PATH, JSON.stringify(defaults, null, 2));
     return defaults;
   }
-  return JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
-}
-
-function checkAutoRun(config) {
-  if (hasFlag('--force')) return;
-  if (!config.auto_run) {
-    console.log('Diagnoser is in manual mode (auto_run = false).');
-    console.log('Run with --force to execute, or set auto_run = true in config/diagnoser-config.json.');
-    process.exit(0);
+  try {
+    return JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
+  } catch (err) {
+    console.error(`[diagnoser] Could not parse config file: ${err.message}`);
+    process.exit(1);
   }
 }
 
@@ -139,7 +135,13 @@ function saveConfig(config) {
 // ── LEAD LOADING ──────────────────────────────────────────────────────────────
 
 function loadScoutedLeads() {
-  const state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+  let state;
+  try {
+    state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+  } catch (err) {
+    console.error(`[diagnoser] Could not parse state.json: ${err.message}`);
+    process.exit(1);
+  }
 
   // Find lead IDs that are still in 'scouted' status
   const scoutedIds = new Set(
@@ -231,7 +233,13 @@ ${JSON.stringify(lead, null, 2)}`;
 // ── STATE UPDATE ──────────────────────────────────────────────────────────────
 
 function updateState(leadId, status) {
-  const state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+  let state;
+  try {
+    state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+  } catch (err) {
+    console.error(`[diagnoser] Could not parse state.json: ${err.message}`);
+    return;
+  }
   const entry = state.queue.find(l => l.lead_id === leadId);
   if (entry) {
     entry.status = status;

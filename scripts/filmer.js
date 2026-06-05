@@ -57,7 +57,12 @@ function loadConfig() {
     fs.writeFileSync(CONFIG_PATH, JSON.stringify(defaults, null, 2));
     return defaults;
   }
-  return JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
+  try {
+    return JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
+  } catch (err) {
+    console.error(`[filmer] Could not parse config file: ${err.message}`);
+    process.exit(1);
+  }
 }
 
 function saveConfig(config) {

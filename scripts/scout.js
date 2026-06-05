@@ -74,7 +74,12 @@ function loadConfig() {
     fs.writeFileSync(CONFIG_PATH, JSON.stringify(defaults, null, 2));
     return defaults;
   }
-  return JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
+  try {
+    return JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
+  } catch (err) {
+    console.error(`[scout] Could not parse config file: ${err.message}`);
+    process.exit(1);
+  }
 }
 
 function checkAutoRun(config) {
@@ -301,7 +306,13 @@ function buildFilename(cityStr) {
 // ── STATE UPDATE ──────────────────────────────────────────────────────────────
 
 function updateState(leads) {
-  const state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+  let state;
+  try {
+    state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+  } catch (err) {
+    console.error(`[scout] Could not parse state.json: ${err.message}`);
+    process.exit(1);
+  }
   const existingIds = new Set([
     ...state.queue.map(l => l.lead_id || l),
     ...state.active.map(l => l.lead_id || l),

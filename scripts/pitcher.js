@@ -90,7 +90,13 @@ function loadConfig() {
     fs.writeFileSync(CONFIG_PATH, JSON.stringify(defaults, null, 2));
     return defaults;
   }
-  const cfg = JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
+  let cfg;
+  try {
+    cfg = JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
+  } catch (err) {
+    console.error(`[pitcher] Could not parse config file: ${err.message}`);
+    process.exit(1);
+  }
   // backfill defaults if missing
   cfg.email_stagger_min_s    = cfg.email_stagger_min_s    ?? 120;
   cfg.email_stagger_max_s    = cfg.email_stagger_max_s    ?? 300;

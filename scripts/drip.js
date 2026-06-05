@@ -60,10 +60,17 @@ function loadConfig() {
     fs.writeFileSync(CONFIG_PATH, JSON.stringify(defaults, null, 2));
     return defaults;
   }
-  return JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
+  try {
+    return JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
+  } catch (err) {
+    console.error(`[drip] Could not parse config file: ${err.message}`);
+    process.exit(1);
+  }
 }
 
-function saveConfig(cfg) { fs.writeFileSync(CONFIG_PATH, JSON.stringify(cfg, null, 2)); }
+function saveConfig(cfg) {
+  fs.writeFileSync(CONFIG_PATH, JSON.stringify(cfg, null, 2));
+}
 
 function checkAutoRun(cfg) {
   if (hasFlag('--force')) return;
@@ -85,7 +92,12 @@ function checkLimits(cfg) {
 // ── TEMPLATES ──────────────────────────────────────────────────────────────────
 
 function loadDripTemplates() {
-  return JSON.parse(fs.readFileSync(TEMPLATES_PATH, 'utf8')).drip || {};
+  try {
+    return JSON.parse(fs.readFileSync(TEMPLATES_PATH, 'utf8')).drip || {};
+  } catch (err) {
+    console.error(`[drip] Could not parse templates file: ${err.message}`);
+    process.exit(1);
+  }
 }
 
 function fill(text, lead) {
@@ -194,7 +206,13 @@ function markUnresponsive(cfg) {
 // ── STATE ──────────────────────────────────────────────────────────────────────
 
 function updateState(leadId, status) {
-  const state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+  let state;
+  try {
+    state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+  } catch (err) {
+    console.error(`[drip] Could not parse state.json: ${err.message}`);
+    return;
+  }
   const entry = state.queue.find(l => l.lead_id === leadId);
   if (entry) { entry.status = status; entry.drip_updated_at = new Date().toISOString(); }
   fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));

@@ -856,6 +856,7 @@
       nora_interest:  document.querySelector('input[name="nora_interest"]:checked')?.value || '',
       referral_source: document.getElementById('referral_source').value,
       notes:          document.getElementById('notes').value,
+      product:        new URLSearchParams(window.location.search).get('product') || 'website',
     };
 
     try {
@@ -870,11 +871,12 @@
         throw new Error(err.error || `HTTP ${res.status}`);
       }
 
-      // Show success
-      document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
-      document.getElementById('successScreen').classList.add('visible');
-      document.getElementById('progressBar').style.display = 'none';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Redirect to checkout with product pre-selection
+      const product = new URLSearchParams(window.location.search).get('product') || '';
+      const checkoutUrl = product && product !== 'website'
+        ? `/checkout/?plan=${encodeURIComponent(product)}`
+        : '/checkout/';
+      window.location.href = checkoutUrl;
 
     } catch (err) {
       btn.disabled = false;
@@ -882,14 +884,12 @@
       // Friendly fallback: if Formspree not yet wired, tell them to email directly
       const isNotWired = FORMSPREE_ENDPOINT.includes('YOUR_FORM_ID') || err.message.includes('404');
       if (isNotWired) {
-        // Show success anyway — form data is in the page, not lost
-        document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
-        document.getElementById('successScreen').classList.add('visible');
-        document.getElementById('progressBar').style.display = 'none';
-        document.querySelector('.success-next').insertAdjacentHTML('afterend',
-          '<p style="margin-top:16px;font-size:13px;color:#C0392B;text-align:center;">⚠️ Formspree not yet configured — please email your details to <a href="mailto:dave@trevoadvisors.com">dave@trevoadvisors.com</a></p>'
-        );
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Redirect to checkout anyway — intake data captured
+        const product = new URLSearchParams(window.location.search).get('product') || '';
+        const checkoutUrl = product && product !== 'website'
+          ? `/checkout/?plan=${encodeURIComponent(product)}`
+          : '/checkout/';
+        window.location.href = checkoutUrl;
       } else {
         alert(`Submission failed: ${err.message}\n\nPlease email dave@trevoadvisors.com or call (720) 902-7555.`);
       }

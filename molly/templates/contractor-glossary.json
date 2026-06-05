@@ -1,0 +1,145 @@
+{
+  "description": "Contractor and home service industry terms for Molly content generation. These seed content angles and make posts feel credible to trade professionals.",
+  "terms": [
+    {
+      "term": "gap score",
+      "niche": "education",
+      "definition": "the distance between a contractor's current online presence and their top local competitor's",
+      "content_angle": "most contractors don't realize how big their gap score is until they lose a job to someone with a website",
+      "hook_potential": "high"
+    },
+    {
+      "term": "local pack",
+      "niche": "education",
+      "definition": "the 3-business map listing that appears at the top of Google for local service searches",
+      "content_angle": "every plumber in your city is fighting for 3 spots on Google — a website is what gets you in the ring",
+      "hook_potential": "high"
+    },
+    {
+      "term": "emergency button",
+      "niche": "product",
+      "definition": "a prominent tap-to-call button on mobile specifically for after-hours emergency calls",
+      "content_angle": "one emergency call at 2am pays for a website — if they can find you",
+      "hook_potential": "high"
+    },
+    {
+      "term": "trust signals",
+      "niche": "education",
+      "definition": "licenses, insurance badges, Google review counts, and years-in-business shown above the fold",
+      "content_angle": "homeowners decide in 8 seconds whether to call — trust signals are what they're scanning for",
+      "hook_potential": "high"
+    },
+    {
+      "term": "review velocity",
+      "niche": "education",
+      "definition": "how fast new Google reviews come in — a high rate signals an active, trusted business",
+      "content_angle": "your competitor with 200 reviews didn't get them by accident — their website asks for them after every job",
+      "hook_potential": "medium"
+    },
+    {
+      "term": "mobile-first",
+      "niche": "product",
+      "definition": "a site designed to look and work perfectly on a phone before anything else",
+      "content_angle": "87% of homeowners search for contractors on their phone — if your site isn't built for mobile, you don't exist",
+      "hook_potential": "high"
+    },
+    {
+      "term": "service area pages",
+      "niche": "product",
+      "definition": "dedicated landing pages targeting specific cities or neighborhoods a contractor serves",
+      "content_angle": "one service area page targeting a 10-mile radius can double the calls from that ZIP code",
+      "hook_potential": "medium"
+    },
+    {
+      "term": "word-of-mouth ceiling",
+      "niche": "education",
+      "definition": "the natural limit of how much revenue a contractor can generate from referrals alone",
+      "content_angle": "every contractor hits the word-of-mouth ceiling eventually — a website is what breaks through it",
+      "hook_potential": "high"
+    },
+    {
+      "term": "call tracking",
+      "niche": "product",
+      "definition": "a unique phone number on the website that tells the contractor exactly how many calls came from it",
+      "content_angle": "you can't scale what you can't measure — call tracking shows exactly what your website is worth",
+      "hook_potential": "medium"
+    },
+    {
+      "term": "48-hour build",
+      "niche": "product",
+      "definition": "Trevo's standard turnaround time from intake form to live site",
+      "content_angle": "you lose a job to a competitor with a website on Monday. By Wednesday, you can have one too.",
+      "hook_potential": "high"
+    },
+    {
+      "term": "ghost listing",
+      "niche": "education",
+      "definition": "a Google Business Profile that exists but has no website link, no photos, and incomplete info",
+      "content_angle": "a ghost listing tells Google you don't care about new customers — and Google believes it",
+      "hook_potential": "high"
+    },
+    {
+      "term": "above the fold",
+      "niche": "product",
+      "definition": "the visible portion of a webpage before a user scrolls — where decisions are made",
+      "content_angle": "you have 8 seconds and one screen. Trade name, phone number, what you do. That's it.",
+      "hook_potential": "medium"
+    },
+    {
+      "term": "voice search",
+      "niche": "education",
+      "definition": "search queries spoken into phones or smart speakers like 'plumber near me open now'",
+      "content_angle": "plumber near me open now — someone just said that. Did your name come up?",
+      "hook_potential": "high"
+    },
+    {
+      "term": "social proof section",
+      "niche": "product",
+      "definition": "a dedicated section showcasing Google review stars, count, and selected customer quotes",
+      "content_angle": "a homeowner with 3 plumbers in front of them picks the one with 150 reviews — every time",
+      "hook_potential": "medium"
+    },
+    {
+      "term": "financing badge",
+      "niche": "product",
+      "definition": "a visible indicator that the contractor offers payment plans or financing options",
+      "content_angle": "a $4,000 HVAC job becomes a yes when the homeowner sees they can pay $199/month",
+      "hook_potential": "medium"
+    },
+    {
+      "term": "conversion rate",
+      "niche": "education",
+      "definition": "the percentage of website visitors who call, text, or book a job",
+      "content_angle": "100 people visited your site this month. How many called? If you don't know, that's the problem.",
+      "hook_potential": "medium"
+    },
+    {
+      "term": "seasonal push",
+      "niche": "results",
+      "definition": "running targeted promotions before peak demand seasons (AC tune-ups before summer, heating before winter)",
+      "content_angle": "HVAC contractors with websites run seasonal promotions. The ones without just wait and hope.",
+      "hook_potential": "medium"
+    },
+    {
+      "term": "no-website penalty",
+      "niche": "education",
+      "definition": "the revenue lost each month from customers who searched online, couldn't find you, and hired a competitor",
+      "content_angle": "you're not losing jobs to better plumbers. You're losing them to plumbers with better websites.",
+      "hook_potential": "high"
+    },
+    {
+      "term": "intake form",
+      "niche": "product",
+      "definition": "a simple job request form on the website that captures the customer's name, problem, and availability",
+      "content_angle": "your phone rings while you're under a sink. The intake form takes the job anyway.",
+      "hook_potential": "medium"
+    },
+    {
+      "term": "demo site",
+      "niche": "product",
+      "definition": "a fully built, trade-specific website example Trevo shows prospects before they commit",
+      "content_angle": "you wouldn't buy a truck without a test drive. We let you see your website before you pay.",
+      "hook_potential": "high"
+    }
+  ]
+}

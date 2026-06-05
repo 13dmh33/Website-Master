@@ -9,8 +9,8 @@ Brand colors: Navy #0A1228 (background) · Teal #00C8AF (primary accent) · Deep
 
 Your goal: 47 clients/month at $150/site + $65/mo hosting; AI bundles (Nora/Atlas/Argus) add $200 build + $65/mo. Three AI products, one price point.
 
-## Build Status (as of 2026-06-05)
-- Scout: ✅ scripts/scout.js — Outscraper API, $10/mo cap, auto_run toggle; --multi flag (TRADE_SYNONYMS, place_id dedup); all trades → sms; gap score 3-10; subtypes/lat/lng stored
+## Build Status (as of 2026-06-05 — updated session 2)
+- Scout v2: ✅ scripts/scout.js — --budget/--target/--min-score/--dry-run/--csv flags; pre-dedup from existing leads; social-only site detection; qualify_rate tracking; ROI estimate; top-5 preview; **on claude/scout-refinement**
 - Enricher: ✅ scripts/enricher.js — Apollo.io People Match, 200 credit/mo cap; finds owner email by biz name+city+phone; upgrades queue briefs sms→email when found; --dry-run; runs in container
 - Diagnoser: ✅ scripts/diagnoser.js — Claude Haiku, prompt caching, $5/mo cap; dual-channel: sets secondary_channel=sms when lead has both email + phone
 - Checker: ✅ scripts/checker.js — 5 evals + Claude rewrite loop, $3/mo cap; template fast-path validates both primary + secondary messages
@@ -26,6 +26,9 @@ Your goal: 47 clients/month at $150/site + $65/mo hosting; AI bundles (Nora/Atla
 - Webhook: ✅ scripts/webhook.js — Twilio inbound SMS server, HMAC-SHA1 validation; **run on Mac**
 - Poller: ✅ scripts/poller.js — IMAP email reply poller (imapflow), auto-reply detection; **run on Mac**
 - Website/Demo: ✅ website/ — 3 demo sites (plumber/HVAC/electrician), proposal page, intake form, checkout, thank-you, /start funnel, /atlas/ landing page; **on claude/trevo-advisors-review-Sjewy**
+- Configurator v2: ✅ website/preview/index.html — labeled 4-step flow, font picker, 6 color presets, 8 section toggles, device toggle, debounced live preview, AI Enhance button (calls /.netlify/functions/enhance), all 4 plan cards; **on claude/molly-ui-polish**
+- Netlify Enhance Function: ✅ netlify/functions/enhance.js — POST endpoint; calls Claude Haiku; returns headline/tagline/about/cta/trust_line/services JSON; 503 if ANTHROPIC_API_KEY not set; **on claude/molly-ui-polish**
+- Molly: ✅ molly/ — Instagram/LinkedIn content engine for Trevo Advisors; adapted from Milly architecture; researcher→generator→designer→scheduler→analyst pipeline; 20 evergreen posts; Trevo navy/teal canvas design; **on claude/molly-ui-polish**
 - Caller: ✅ scripts/caller.js — cold call sheet generator; ranked by gap score; CSV to reports/; --sms mode for personal iPhone texts; shows demo_url per lead; zero API cost
 - GBP Audit: ✅ scripts/gbp-audit.js — Google Business Profile gap analysis; generates specific outreach hooks per lead (no-website, low-reviews, low-rating, etc); CSV export; zero API cost
 - Warm Lead: ✅ scripts/warm-lead.js — instant follow-up generator after cold call; personalized text + email + D+2 follow-up; usage: -n "Biz" -t trade -c "City" -r reviews -e email
@@ -188,6 +191,9 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - 2026-06-04: Demo form guard — submit-disabled alert added to all 5 demos (plumbing/hvac/electrical/handyman/roofing)
 - 2026-06-05: Enricher built — scripts/enricher.js hits Apollo People Match API to find owner emails for phone-only leads; upgrades queue briefs sms→email; 200 credit/mo cap
 - 2026-06-05: CEO sprint complete — Caller/SMS/LinkedIn/Referral/GBP-Audit/Warm-Lead/Brief tools; Atlas + Argus product pages; /start/ AI suite; 3 Stripe slots (Nora/Atlas/Argus) in checkout; intake→checkout flow fixed; 54 briefs have demo_url; 8 SMS + 7 email templates
+- 2026-06-05: Scout v2 — --budget/--target/--min-score/--dry-run/--csv flags; pre-dedup from existing leads; social-only site detection; qualify_rate tracking; ROI estimate; on claude/scout-refinement branch
+- 2026-06-05: Configurator v2 — 4-step labeled flow, font picker, 6 color presets, 8 section toggles, device toggle, AI Enhance button (Netlify function → Claude Haiku), all 4 plan cards; on claude/molly-ui-polish
+- 2026-06-05: Molly built — Instagram/LinkedIn content engine adapted from Milly; researcher→generator→designer→scheduler→analyst; 20 evergreen posts (carousel/caption/trevo_found/reel); Trevo navy/teal canvas; on claude/molly-ui-polish
 
 ## Twilio A2P 10DLC Status
 - Brand registration submitted: 2026-06-03
@@ -230,3 +236,12 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 
 ### Remaining Polish (container OK)
 - Intake form step 3: make optional fields visually obvious
+
+### Molly setup (Mac)
+1. `cd molly && npm install` (requires skia-canvas — may need Xcode tools on Mac)
+2. `cp .env.example .env` → add `ANTHROPIC_API_KEY`
+3. `node scripts/setup.js` to validate
+4. `node scripts/test-pipeline.js` to run a dry pipeline test
+5. Weekly run: `npm run research && npm run generate && npm run design && npm run schedule`
+6. Optional: add `BUFFER_ACCESS_TOKEN` to auto-schedule; without it posts go to output/queue/ for manual publishing
+7. Optional: add `SERPAPI_KEY` for live research; without it uses 20-post evergreen bank (already loaded)

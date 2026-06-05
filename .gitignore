@@ -14,8 +14,9 @@ mockups/*.txt
 # Logs
 logs/*.log
 
-# Generated reports (local CSVs — not tracked)
+# Generated reports (local output — not tracked)
 reports/*.csv
+reports/*.json
 
 # OS
 .DS_Store

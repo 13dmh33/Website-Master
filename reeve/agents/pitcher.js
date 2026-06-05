@@ -114,7 +114,12 @@ Return ONLY a JSON object with no markdown:
 
   const raw     = response.content[0].text.trim();
   const cleaned = raw.replace(/^```json?\s*/i, '').replace(/```\s*$/, '').trim();
-  return JSON.parse(cleaned);
+  try {
+    return JSON.parse(cleaned);
+  } catch (parseErr) {
+    console.error('[pitcher] Could not parse Claude response as JSON:', cleaned.slice(0, 200));
+    throw new Error(`Pitch draft JSON parse failed for ${speaker.name} / ${opportunity.conference}`);
+  }
 }
 
 // ── Main ──────────────────────────────────────────────────────────────────────

@@ -162,8 +162,9 @@ async function recordResponse(pitch, allDrafts) {
       console.log('\n');
       try {
         execSync(`node "${path.join(__dirname, '..', 'agents', 'closer.js')}" --pitch ${pitch.id}`, {
-          stdio:  'inherit',
-          cwd:    path.join(__dirname, '..'),
+          stdio:   'inherit',
+          cwd:     path.join(__dirname, '..'),
+          timeout: 120000,
         });
       } catch (err) {
         console.error(`Closer exited: ${err.message}`);

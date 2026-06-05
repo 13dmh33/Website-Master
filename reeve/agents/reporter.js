@@ -70,7 +70,7 @@ function buildClientSummary(speaker, allDrafts) {
   const accepted    = sentPitches.filter(d => d.response === 'accepted');
   const declined    = sentPitches.filter(d => d.response === 'declined');
   const waitlisted  = sentPitches.filter(d => d.response === 'waitlisted');
-  const respondedThisWeek = sentPitches.filter(d => d.response && d.reviewedAt >= oneWeekAgo);
+  const respondedThisWeek = sentPitches.filter(d => d.response && d.respondedAt >= oneWeekAgo);
 
   // Pending (sent, no response)
   const pending = sentPitches.filter(d => !d.response);
@@ -148,7 +148,12 @@ Return ONLY a JSON object with no markdown:
 
   const raw     = response.content[0].text.trim();
   const cleaned = raw.replace(/^```json?\s*/i, '').replace(/```\s*$/, '').trim();
-  return JSON.parse(cleaned);
+  try {
+    return JSON.parse(cleaned);
+  } catch (parseErr) {
+    console.error('[reporter] Could not parse Claude response as JSON:', cleaned.slice(0, 200));
+    throw new Error(`Report draft JSON parse failed for ${speaker.name}`);
+  }
 }
 
 // ── Main ──────────────────────────────────────────────────────────────────────
@@ -189,13 +194,17 @@ async function main() {
       continue;
     }
 
+    if (!speaker.email) {
+      console.warn(`  ⚠ ${speaker.name} has no email address — report will save but cannot be sent.`);
+    }
+
     const draft = saveDraft({
       id:          generateDraftId(),
       type:        'report',
       status:      'draft',
       clientId:    speaker.id,
       clientName:  speaker.name,
-      to:          speaker.email,
+      to:          speaker.email || null,
       subject:     content.subject,
       body:        content.body,
       summary,

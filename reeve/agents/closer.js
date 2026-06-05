@@ -105,7 +105,12 @@ Return ONLY a JSON object with no markdown:
 
   const raw     = response.content[0].text.trim();
   const cleaned = raw.replace(/^```json?\s*/i, '').replace(/```\s*$/, '').trim();
-  return JSON.parse(cleaned);
+  try {
+    return JSON.parse(cleaned);
+  } catch (parseErr) {
+    console.error('[closer] Could not parse conference confirmation JSON:', cleaned.slice(0, 200));
+    throw new Error(`Conference confirmation draft parse failed for ${opportunity.conference}`);
+  }
 }
 
 async function draftClientUpdate(speaker, opportunity, pitch) {
@@ -147,7 +152,12 @@ Return ONLY a JSON object with no markdown:
 
   const raw     = response.content[0].text.trim();
   const cleaned = raw.replace(/^```json?\s*/i, '').replace(/```\s*$/, '').trim();
-  return JSON.parse(cleaned);
+  try {
+    return JSON.parse(cleaned);
+  } catch (parseErr) {
+    console.error('[closer] Could not parse client update JSON:', cleaned.slice(0, 200));
+    throw new Error(`Client update draft parse failed for ${speaker.name} / ${opportunity.conference}`);
+  }
 }
 
 // ── Main ──────────────────────────────────────────────────────────────────────

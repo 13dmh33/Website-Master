@@ -17,55 +17,76 @@
       "city": "Phoenix",
       "state": "AZ",
       "metro": "Phoenix-Mesa-Chandler, AZ",
-      "trades": ["hvac", "plumbing", "electrical", "handyman", "roofing"],
+      "trades": [
+        "plumbing",
+        "electrical",
+        "handyman",
+        "roofing"
+      ],
       "contractor_density": 9,
       "digital_gap": 8,
       "homeownership_rate": 7,
       "growth_rate": 10,
       "demand_score": 8.35,
-      "notes": "Fastest-growing Sun Belt market; extreme heat = HVAC goldmine; massive housing expansion; high % of solo contractors"
+      "notes": "Fastest-growing Sun Belt market; massive housing expansion; roofing + plumbing + electrical demand; high % of solo contractors without web presence"
     },
     {
       "city": "Las Vegas",
       "state": "NV",
       "metro": "Las Vegas-Henderson-Paradise, NV",
-      "trades": ["hvac", "plumbing", "electrical", "handyman"],
+      "trades": [
+        "plumbing",
+        "electrical",
+        "handyman"
+      ],
       "contractor_density": 9,
       "digital_gap": 9,
       "homeownership_rate": 5,
       "growth_rate": 9,
-      "demand_score": 8.50,
+      "demand_score": 8.5,
       "notes": "Extreme heat market; very high digital gap; rapid population growth; many small operators without web presence"
     },
     {
       "city": "Tampa",
       "state": "FL",
       "metro": "Tampa-St. Petersburg-Clearwater, FL",
-      "trades": ["hvac", "roofing", "plumbing", "electrical"],
+      "trades": [
+        "roofing",
+        "plumbing",
+        "electrical"
+      ],
       "contractor_density": 8,
       "digital_gap": 8,
       "homeownership_rate": 6,
       "growth_rate": 9,
-      "demand_score": 8.10,
-      "notes": "Hurricane-driven roofing demand; HVAC year-round; major retiree influx; fragmented solo contractor market"
+      "demand_score": 8.1,
+      "notes": "Hurricane-driven roofing demand; plumbing emergencies year-round; major retiree influx; fragmented solo contractor market"
     },
     {
       "city": "Orlando",
       "state": "FL",
       "metro": "Orlando-Kissimmee-Sanford, FL",
-      "trades": ["hvac", "plumbing", "electrical", "handyman"],
+      "trades": [
+        "plumbing",
+        "electrical",
+        "handyman"
+      ],
       "contractor_density": 8,
       "digital_gap": 8,
       "homeownership_rate": 5,
       "growth_rate": 9,
       "demand_score": 7.95,
-      "notes": "Explosive growth market; tech influx + Disney draw; HVAC essential; high density of small contractors"
+      "notes": "Explosive growth market; tech influx + Disney draw; high density of small contractors; plumbing + electrical demand constant"
     },
     {
       "city": "Austin",
       "state": "TX",
       "metro": "Austin-Round Rock-Georgetown, TX",
-      "trades": ["electrical", "plumbing", "hvac", "handyman"],
+      "trades": [
+        "electrical",
+        "plumbing",
+        "handyman"
+      ],
       "contractor_density": 8,
       "digital_gap": 7,
       "homeownership_rate": 6,
@@ -77,7 +98,11 @@
       "city": "Houston",
       "state": "TX",
       "metro": "Houston-The Woodlands-Sugar Land, TX",
-      "trades": ["hvac", "plumbing", "electrical", "roofing"],
+      "trades": [
+        "plumbing",
+        "electrical",
+        "roofing"
+      ],
       "contractor_density": 10,
       "digital_gap": 9,
       "homeownership_rate": 7,
@@ -89,19 +114,27 @@
       "city": "Dallas",
       "state": "TX",
       "metro": "Dallas-Fort Worth-Arlington, TX",
-      "trades": ["hvac", "electrical", "plumbing", "roofing"],
+      "trades": [
+        "electrical",
+        "plumbing",
+        "roofing"
+      ],
       "contractor_density": 9,
       "digital_gap": 8,
       "homeownership_rate": 7,
       "growth_rate": 9,
       "demand_score": 8.35,
-      "notes": "Major storm market (hail) = roofing churn; steady HVAC demand; business-owner culture, referral-heavy = digital gap"
+      "notes": "Major storm market (hail) = roofing churn; strong electrical + plumbing demand; business-owner culture, referral-heavy = digital gap"
     },
     {
       "city": "San Antonio",
       "state": "TX",
       "metro": "San Antonio-New Braunfels, TX",
-      "trades": ["hvac", "plumbing", "electrical", "handyman"],
+      "trades": [
+        "plumbing",
+        "electrical",
+        "handyman"
+      ],
       "contractor_density": 8,
       "digital_gap": 9,
       "homeownership_rate": 7,
@@ -113,19 +146,27 @@
       "city": "Charlotte",
       "state": "NC",
       "metro": "Charlotte-Concord-Gastonia, NC-SC",
-      "trades": ["electrical", "hvac", "plumbing", "handyman"],
+      "trades": [
+        "electrical",
+        "plumbing",
+        "handyman"
+      ],
       "contractor_density": 8,
       "digital_gap": 8,
       "homeownership_rate": 7,
       "growth_rate": 9,
-      "demand_score": 8.10,
+      "demand_score": 8.1,
       "notes": "Southeast banking hub; major population influx; new subdivisions driving electrical + HVAC demand"
     },
     {
       "city": "Raleigh",
       "state": "NC",
       "metro": "Raleigh-Cary, NC",
-      "trades": ["electrical", "hvac", "plumbing", "handyman"],
+      "trades": [
+        "electrical",
+        "plumbing",
+        "handyman"
+      ],
       "contractor_density": 7,
       "digital_gap": 7,
       "homeownership_rate": 7,
@@ -137,7 +178,11 @@
       "city": "Nashville",
       "state": "TN",
       "metro": "Nashville-Davidson-Murfreesboro-Franklin, TN",
-      "trades": ["hvac", "electrical", "plumbing", "handyman"],
+      "trades": [
+        "electrical",
+        "plumbing",
+        "handyman"
+      ],
       "contractor_density": 8,
       "digital_gap": 8,
       "homeownership_rate": 6,
@@ -149,7 +194,11 @@
       "city": "Denver",
       "state": "CO",
       "metro": "Denver-Aurora-Lakewood, CO",
-      "trades": ["electrical", "hvac", "plumbing", "handyman"],
+      "trades": [
+        "electrical",
+        "plumbing",
+        "handyman"
+      ],
       "contractor_density": 7,
       "digital_gap": 6,
       "homeownership_rate": 6,
@@ -161,7 +210,10 @@
       "city": "Tucson",
       "state": "AZ",
       "metro": "Tucson, AZ",
-      "trades": ["hvac", "plumbing", "electrical"],
+      "trades": [
+        "plumbing",
+        "electrical"
+      ],
       "contractor_density": 7,
       "digital_gap": 9,
       "homeownership_rate": 7,
@@ -173,7 +225,11 @@
       "city": "Colorado Springs",
       "state": "CO",
       "metro": "Colorado Springs, CO",
-      "trades": ["hvac", "electrical", "plumbing", "handyman"],
+      "trades": [
+        "electrical",
+        "plumbing",
+        "handyman"
+      ],
       "contractor_density": 7,
       "digital_gap": 8,
       "homeownership_rate": 8,
@@ -185,7 +241,11 @@
       "city": "Jacksonville",
       "state": "FL",
       "metro": "Jacksonville, FL",
-      "trades": ["roofing", "hvac", "plumbing", "electrical"],
+      "trades": [
+        "roofing",
+        "plumbing",
+        "electrical"
+      ],
       "contractor_density": 8,
       "digital_gap": 9,
       "homeownership_rate": 7,
@@ -197,55 +257,74 @@
       "city": "Fort Worth",
       "state": "TX",
       "metro": "Fort Worth-Arlington-Grapevine, TX",
-      "trades": ["hvac", "plumbing", "electrical", "roofing"],
+      "trades": [
+        "plumbing",
+        "electrical",
+        "roofing"
+      ],
       "contractor_density": 8,
       "digital_gap": 8,
       "homeownership_rate": 7,
       "growth_rate": 9,
-      "demand_score": 8.00,
+      "demand_score": 8,
       "notes": "Separate identity from Dallas; residential-heavy; storm hail market; strong blue-collar contractor base"
     },
     {
       "city": "El Paso",
       "state": "TX",
       "metro": "El Paso, TX",
-      "trades": ["hvac", "plumbing", "electrical"],
+      "trades": [
+        "plumbing",
+        "electrical"
+      ],
       "contractor_density": 7,
       "digital_gap": 10,
       "homeownership_rate": 7,
       "growth_rate": 5,
-      "demand_score": 7.90,
+      "demand_score": 7.9,
       "notes": "Highest digital gap in SW; extreme heat; military base = homeownership; low competition from agencies"
     },
     {
       "city": "Albuquerque",
       "state": "NM",
       "metro": "Albuquerque, NM",
-      "trades": ["hvac", "plumbing", "electrical", "handyman"],
+      "trades": [
+        "plumbing",
+        "electrical",
+        "handyman"
+      ],
       "contractor_density": 7,
       "digital_gap": 9,
       "homeownership_rate": 7,
       "growth_rate": 5,
-      "demand_score": 7.60,
-      "notes": "High desert = HVAC + evaporative cooler market; underserved by agencies; high digital gap"
+      "demand_score": 7.6,
+      "notes": "Underserved market; plumbing + electrical demand high; older housing stock; very high digital gap; agencies ignore NM interior"
     },
     {
       "city": "Oklahoma City",
       "state": "OK",
       "metro": "Oklahoma City, OK",
-      "trades": ["roofing", "hvac", "plumbing", "electrical"],
+      "trades": [
+        "roofing",
+        "plumbing",
+        "electrical"
+      ],
       "contractor_density": 8,
       "digital_gap": 9,
       "homeownership_rate": 8,
       "growth_rate": 6,
-      "demand_score": 8.00,
+      "demand_score": 8,
       "notes": "Tornado alley = roofing + storm demand; high homeownership; agencies rarely target here = opportunity"
     },
     {
       "city": "Tulsa",
       "state": "OK",
       "metro": "Tulsa, OK",
-      "trades": ["roofing", "hvac", "plumbing", "handyman"],
+      "trades": [
+        "roofing",
+        "plumbing",
+        "handyman"
+      ],
       "contractor_density": 7,
       "digital_gap": 9,
       "homeownership_rate": 8,
@@ -257,43 +336,59 @@
       "city": "Kansas City",
       "state": "MO",
       "metro": "Kansas City, MO-KS",
-      "trades": ["hvac", "plumbing", "electrical", "roofing"],
+      "trades": [
+        "plumbing",
+        "electrical",
+        "roofing"
+      ],
       "contractor_density": 8,
       "digital_gap": 8,
       "homeownership_rate": 8,
       "growth_rate": 6,
-      "demand_score": 7.80,
+      "demand_score": 7.8,
       "notes": "Four-season extreme climate = HVAC + plumbing demand; high homeownership in suburbs; referral-reliant market"
     },
     {
       "city": "St. Louis",
       "state": "MO",
       "metro": "St. Louis, MO-IL",
-      "trades": ["hvac", "plumbing", "electrical", "handyman"],
+      "trades": [
+        "plumbing",
+        "electrical",
+        "handyman"
+      ],
       "contractor_density": 8,
       "digital_gap": 8,
       "homeownership_rate": 8,
       "growth_rate": 4,
-      "demand_score": 7.40,
+      "demand_score": 7.4,
       "notes": "Older housing stock = high service demand; flat growth but stable homeowner base; digital gap high"
     },
     {
       "city": "Indianapolis",
       "state": "IN",
       "metro": "Indianapolis-Carmel-Anderson, IN",
-      "trades": ["hvac", "plumbing", "electrical", "handyman"],
+      "trades": [
+        "plumbing",
+        "electrical",
+        "handyman"
+      ],
       "contractor_density": 8,
       "digital_gap": 9,
       "homeownership_rate": 8,
       "growth_rate": 6,
-      "demand_score": 8.00,
+      "demand_score": 8,
       "notes": "Rust belt edge = value market; four-season = HVAC/plumbing; high homeownership; agencies rarely focus here"
     },
     {
       "city": "Columbus",
       "state": "OH",
       "metro": "Columbus, OH",
-      "trades": ["hvac", "electrical", "plumbing", "handyman"],
+      "trades": [
+        "electrical",
+        "plumbing",
+        "handyman"
+      ],
       "contractor_density": 8,
       "digital_gap": 8,
       "homeownership_rate": 7,
@@ -305,31 +400,42 @@
       "city": "Cincinnati",
       "state": "OH",
       "metro": "Cincinnati, OH-KY-IN",
-      "trades": ["hvac", "plumbing", "electrical"],
+      "trades": [
+        "plumbing",
+        "electrical"
+      ],
       "contractor_density": 8,
       "digital_gap": 8,
       "homeownership_rate": 8,
       "growth_rate": 5,
-      "demand_score": 7.50,
+      "demand_score": 7.5,
       "notes": "Four-season; high homeownership suburbs; steady demand; referral-dependent contractor market"
     },
     {
       "city": "Cleveland",
       "state": "OH",
       "metro": "Cleveland-Elyria, OH",
-      "trades": ["hvac", "plumbing", "electrical", "handyman"],
+      "trades": [
+        "plumbing",
+        "electrical",
+        "handyman"
+      ],
       "contractor_density": 8,
       "digital_gap": 9,
       "homeownership_rate": 7,
       "growth_rate": 3,
-      "demand_score": 7.40,
+      "demand_score": 7.4,
       "notes": "Old housing stock = constant repair demand; high digital gap; declining population but stable homeowners"
     },
     {
       "city": "Detroit",
       "state": "MI",
       "metro": "Detroit-Warren-Dearborn, MI",
-      "trades": ["hvac", "plumbing", "electrical", "handyman"],
+      "trades": [
+        "plumbing",
+        "electrical",
+        "handyman"
+      ],
       "contractor_density": 9,
       "digital_gap": 9,
       "homeownership_rate": 7,
@@ -341,175 +447,231 @@
       "city": "Grand Rapids",
       "state": "MI",
       "metro": "Grand Rapids-Kentwood, MI",
-      "trades": ["hvac", "plumbing", "electrical", "handyman"],
+      "trades": [
+        "plumbing",
+        "electrical",
+        "handyman"
+      ],
       "contractor_density": 7,
       "digital_gap": 9,
       "homeownership_rate": 8,
       "growth_rate": 6,
-      "demand_score": 7.90,
+      "demand_score": 7.9,
       "notes": "Underserved by agencies; high homeownership; Dutch/faith community = referral-dependent = digital gap"
     },
     {
       "city": "Minneapolis",
       "state": "MN",
       "metro": "Minneapolis-St. Paul-Bloomington, MN-WI",
-      "trades": ["hvac", "plumbing", "electrical", "handyman"],
+      "trades": [
+        "plumbing",
+        "electrical",
+        "handyman"
+      ],
       "contractor_density": 8,
       "digital_gap": 7,
       "homeownership_rate": 7,
       "growth_rate": 5,
-      "demand_score": 7.20,
+      "demand_score": 7.2,
       "notes": "Extreme cold = HVAC + plumbing gold; high homeownership suburbs; more digitally aware than south markets"
     },
     {
       "city": "Milwaukee",
       "state": "WI",
       "metro": "Milwaukee-Waukesha, WI",
-      "trades": ["hvac", "plumbing", "electrical"],
+      "trades": [
+        "plumbing",
+        "electrical"
+      ],
       "contractor_density": 8,
       "digital_gap": 9,
       "homeownership_rate": 7,
       "growth_rate": 3,
-      "demand_score": 7.40,
+      "demand_score": 7.4,
       "notes": "Harsh winters; old housing stock; high digital gap; unions strong = solo contractors less common but present"
     },
     {
       "city": "Louisville",
       "state": "KY",
       "metro": "Louisville/Jefferson County, KY-IN",
-      "trades": ["hvac", "plumbing", "electrical", "handyman"],
+      "trades": [
+        "plumbing",
+        "electrical",
+        "handyman"
+      ],
       "contractor_density": 8,
       "digital_gap": 9,
       "homeownership_rate": 8,
       "growth_rate": 5,
-      "demand_score": 7.90,
-      "notes": "Underserved; high homeownership; four-season = HVAC demand; agencies rarely target here; high digital gap"
+      "demand_score": 7.9,
+      "notes": "Underserved; high homeownership; four-season plumbing demand; agencies rarely target here; high digital gap"
     },
     {
       "city": "Memphis",
       "state": "TN",
       "metro": "Memphis, TN-MS-AR",
-      "trades": ["hvac", "plumbing", "electrical"],
+      "trades": [
+        "plumbing",
+        "electrical"
+      ],
       "contractor_density": 8,
       "digital_gap": 10,
       "homeownership_rate": 7,
       "growth_rate": 4,
-      "demand_score": 7.90,
-      "notes": "Extremely high digital gap; humid heat = HVAC demand; low competition from agencies; price-sensitive market"
+      "demand_score": 7.9,
+      "notes": "Extremely high digital gap; plumbing + electrical demand in older homes; low competition from agencies; price-sensitive market"
     },
     {
       "city": "Birmingham",
       "state": "AL",
       "metro": "Birmingham-Hoover, AL",
-      "trades": ["hvac", "plumbing", "electrical", "roofing"],
+      "trades": [
+        "plumbing",
+        "electrical",
+        "roofing"
+      ],
       "contractor_density": 8,
       "digital_gap": 10,
       "homeownership_rate": 7,
       "growth_rate": 4,
-      "demand_score": 7.90,
-      "notes": "One of highest digital gaps in US; Southern contractor culture = word of mouth; HVAC = year-round business"
+      "demand_score": 7.9,
+      "notes": "One of highest digital gaps in US; Southern contractor culture = word of mouth; plumbing + electrical + roofing constant demand"
     },
     {
       "city": "Atlanta",
       "state": "GA",
       "metro": "Atlanta-Sandy Springs-Alpharetta, GA",
-      "trades": ["hvac", "electrical", "plumbing", "roofing"],
+      "trades": [
+        "electrical",
+        "plumbing",
+        "roofing"
+      ],
       "contractor_density": 9,
       "digital_gap": 8,
       "homeownership_rate": 6,
       "growth_rate": 8,
-      "demand_score": 7.90,
+      "demand_score": 7.9,
       "notes": "Massive market; high growth; suburban sprawl = lots of homeowners; contractor density high = opportunity"
     },
     {
       "city": "Richmond",
       "state": "VA",
       "metro": "Richmond, VA",
-      "trades": ["hvac", "electrical", "plumbing", "handyman"],
+      "trades": [
+        "electrical",
+        "plumbing",
+        "handyman"
+      ],
       "contractor_density": 7,
       "digital_gap": 8,
       "homeownership_rate": 8,
       "growth_rate": 6,
-      "demand_score": 7.50,
+      "demand_score": 7.5,
       "notes": "Mid-Atlantic growing city; high homeownership suburbs; four-season demand; underserved by agencies"
     },
     {
       "city": "Virginia Beach",
       "state": "VA",
       "metro": "Virginia Beach-Norfolk-Newport News, VA-NC",
-      "trades": ["hvac", "roofing", "plumbing", "electrical"],
+      "trades": [
+        "roofing",
+        "plumbing",
+        "electrical"
+      ],
       "contractor_density": 8,
       "digital_gap": 8,
       "homeownership_rate": 8,
       "growth_rate": 5,
-      "demand_score": 7.60,
-      "notes": "Military-heavy = high homeownership; coastal storms; humidity HVAC demand; solid market"
+      "demand_score": 7.6,
+      "notes": "Military-heavy = high homeownership; coastal storm roofing demand; plumbing + electrical essential; solid market"
     },
     {
       "city": "Baltimore",
       "state": "MD",
       "metro": "Baltimore-Columbia-Towson, MD",
-      "trades": ["hvac", "plumbing", "electrical", "handyman"],
+      "trades": [
+        "plumbing",
+        "electrical",
+        "handyman"
+      ],
       "contractor_density": 8,
       "digital_gap": 7,
       "homeownership_rate": 7,
       "growth_rate": 4,
-      "demand_score": 7.00,
+      "demand_score": 7,
       "notes": "Old housing; four-season; decent digital gap; DC suburbs have more digital-savvy contractors"
     },
     {
       "city": "Pittsburgh",
       "state": "PA",
       "metro": "Pittsburgh, PA",
-      "trades": ["hvac", "plumbing", "electrical", "handyman"],
+      "trades": [
+        "plumbing",
+        "electrical",
+        "handyman"
+      ],
       "contractor_density": 8,
       "digital_gap": 9,
       "homeownership_rate": 8,
       "growth_rate": 3,
-      "demand_score": 7.50,
+      "demand_score": 7.5,
       "notes": "Very old housing stock; high homeownership in suburbs; blue-collar culture = word of mouth = digital gap"
     },
     {
       "city": "Philadelphia",
       "state": "PA",
       "metro": "Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",
-      "trades": ["hvac", "plumbing", "electrical", "handyman"],
+      "trades": [
+        "plumbing",
+        "electrical",
+        "handyman"
+      ],
       "contractor_density": 9,
       "digital_gap": 7,
       "homeownership_rate": 7,
       "growth_rate": 4,
-      "demand_score": 7.30,
+      "demand_score": 7.3,
       "notes": "Large market; older rowhouse stock = plumbing + electrical demand; high contractor count but digital gap present"
     },
     {
       "city": "Buffalo",
       "state": "NY",
       "metro": "Buffalo-Cheektowaga, NY",
-      "trades": ["hvac", "plumbing", "electrical"],
+      "trades": [
+        "plumbing",
+        "electrical"
+      ],
       "contractor_density": 7,
       "digital_gap": 9,
       "homeownership_rate": 7,
       "growth_rate": 3,
-      "demand_score": 7.30,
+      "demand_score": 7.3,
       "notes": "Extreme winters; very old housing; high digital gap; improving economy (medical/tech) but agencies ignore it"
     },
     {
       "city": "Rochester",
       "state": "NY",
       "metro": "Rochester, NY",
-      "trades": ["hvac", "plumbing", "electrical", "handyman"],
+      "trades": [
+        "plumbing",
+        "electrical",
+        "handyman"
+      ],
       "contractor_density": 7,
       "digital_gap": 9,
       "homeownership_rate": 7,
       "growth_rate": 3,
-      "demand_score": 7.30,
+      "demand_score": 7.3,
       "notes": "One of snowiest cities; HVAC + plumbing essential; high digital gap; contractors here very referral-dependent"
     },
     {
       "city": "Hartford",
       "state": "CT",
       "metro": "Hartford-East Hartford-Middletown, CT",
-      "trades": ["hvac", "plumbing", "electrical"],
+      "trades": [
+        "plumbing",
+        "electrical"
+      ],
       "contractor_density": 7,
       "digital_gap": 7,
       "homeownership_rate": 8,
@@ -521,43 +683,57 @@
       "city": "Providence",
       "state": "RI",
       "metro": "Providence-Warwick, RI-MA",
-      "trades": ["hvac", "plumbing", "electrical"],
+      "trades": [
+        "plumbing",
+        "electrical"
+      ],
       "contractor_density": 7,
       "digital_gap": 8,
       "homeownership_rate": 7,
       "growth_rate": 4,
-      "demand_score": 7.10,
+      "demand_score": 7.1,
       "notes": "Old New England housing = constant repair demand; high digital gap for a NE market; underserved"
     },
     {
       "city": "Boise",
       "state": "ID",
       "metro": "Boise City, ID",
-      "trades": ["hvac", "electrical", "plumbing", "handyman"],
+      "trades": [
+        "electrical",
+        "plumbing",
+        "handyman"
+      ],
       "contractor_density": 7,
       "digital_gap": 8,
       "homeownership_rate": 7,
       "growth_rate": 9,
-      "demand_score": 7.80,
-      "notes": "Fastest-growing mid-size western market; California influx; extreme temperature swings = HVAC demand; high growth"
+      "demand_score": 7.8,
+      "notes": "Fastest-growing mid-size western market; California influx; plumbing + electrical boom with new construction; high growth"
     },
     {
       "city": "Salt Lake City",
       "state": "UT",
       "metro": "Salt Lake City, UT",
-      "trades": ["hvac", "electrical", "plumbing", "handyman"],
+      "trades": [
+        "electrical",
+        "plumbing",
+        "handyman"
+      ],
       "contractor_density": 7,
       "digital_gap": 7,
       "homeownership_rate": 7,
       "growth_rate": 8,
-      "demand_score": 7.30,
+      "demand_score": 7.3,
       "notes": "Growing tech hub; high homeownership; four-season; contractors here slightly more digitally aware"
     },
     {
       "city": "Spokane",
       "state": "WA",
       "metro": "Spokane-Spokane Valley, WA",
-      "trades": ["hvac", "plumbing", "electrical"],
+      "trades": [
+        "plumbing",
+        "electrical"
+      ],
       "contractor_density": 6,
       "digital_gap": 9,
       "homeownership_rate": 8,
@@ -569,103 +745,134 @@
       "city": "Fresno",
       "state": "CA",
       "metro": "Fresno, CA",
-      "trades": ["hvac", "plumbing", "electrical"],
+      "trades": [
+        "plumbing",
+        "electrical"
+      ],
       "contractor_density": 7,
       "digital_gap": 9,
       "homeownership_rate": 7,
       "growth_rate": 5,
-      "demand_score": 7.70,
+      "demand_score": 7.7,
       "notes": "Extreme heat (Central Valley); very high digital gap; agencies ignore CA interior; Spanish-speaking contractors common"
     },
     {
       "city": "Sacramento",
       "state": "CA",
       "metro": "Sacramento-Roseville-Folsom, CA",
-      "trades": ["hvac", "electrical", "plumbing"],
+      "trades": [
+        "electrical",
+        "plumbing"
+      ],
       "contractor_density": 7,
       "digital_gap": 7,
       "homeownership_rate": 6,
       "growth_rate": 6,
-      "demand_score": 6.80,
-      "notes": "Heat drives HVAC; solar boom; expensive market but many small operators; more digital-savvy than interior CA"
+      "demand_score": 6.8,
+      "notes": "Solar + EV charger boom drives electrical; plumbing demand in older stock; many small operators; more digital-savvy than interior CA"
     },
     {
       "city": "Bakersfield",
       "state": "CA",
       "metro": "Bakersfield, CA",
-      "trades": ["hvac", "plumbing", "electrical"],
+      "trades": [
+        "plumbing",
+        "electrical"
+      ],
       "contractor_density": 7,
       "digital_gap": 9,
       "homeownership_rate": 7,
       "growth_rate": 5,
-      "demand_score": 7.70,
+      "demand_score": 7.7,
       "notes": "Extreme heat; high digital gap; oil/ag economy; agencies completely ignore this market; wide-open opportunity"
     },
     {
       "city": "Riverside",
       "state": "CA",
       "metro": "Riverside-San Bernardino-Ontario, CA",
-      "trades": ["hvac", "plumbing", "electrical", "handyman"],
+      "trades": [
+        "plumbing",
+        "electrical",
+        "handyman"
+      ],
       "contractor_density": 8,
       "digital_gap": 8,
       "homeownership_rate": 6,
       "growth_rate": 7,
-      "demand_score": 7.50,
+      "demand_score": 7.5,
       "notes": "Inland Empire; extreme heat; growing contractor base; many newer homeowners; high Spanish-speaking population"
     },
     {
       "city": "San Diego",
       "state": "CA",
       "metro": "San Diego-Chula Vista-Carlsbad, CA",
-      "trades": ["electrical", "plumbing", "hvac", "handyman"],
+      "trades": [
+        "electrical",
+        "plumbing",
+        "handyman"
+      ],
       "contractor_density": 7,
       "digital_gap": 6,
       "homeownership_rate": 5,
       "growth_rate": 5,
-      "demand_score": 6.10,
+      "demand_score": 6.1,
       "notes": "Large market but high digital sophistication; pricey; EV/solar boom; harder to win on price"
     },
     {
       "city": "Portland",
       "state": "OR",
       "metro": "Portland-Vancouver-Hillsboro, OR-WA",
-      "trades": ["electrical", "hvac", "plumbing", "handyman"],
+      "trades": [
+        "electrical",
+        "plumbing",
+        "handyman"
+      ],
       "contractor_density": 7,
       "digital_gap": 6,
       "homeownership_rate": 5,
       "growth_rate": 5,
-      "demand_score": 6.10,
+      "demand_score": 6.1,
       "notes": "Eco-conscious = heat pump + solar demand; more web-aware market; harder sell but EV charger angle strong"
     },
     {
       "city": "Omaha",
       "state": "NE",
       "metro": "Omaha-Council Bluffs, NE-IA",
-      "trades": ["hvac", "plumbing", "electrical", "handyman"],
+      "trades": [
+        "plumbing",
+        "electrical",
+        "handyman"
+      ],
       "contractor_density": 7,
       "digital_gap": 9,
       "homeownership_rate": 8,
       "growth_rate": 6,
-      "demand_score": 7.90,
+      "demand_score": 7.9,
       "notes": "High homeownership; four-season; very high digital gap; underserved by agencies; strong blue-collar culture"
     },
     {
       "city": "Des Moines",
       "state": "IA",
       "metro": "Des Moines-West Des Moines, IA",
-      "trades": ["hvac", "plumbing", "electrical"],
+      "trades": [
+        "plumbing",
+        "electrical"
+      ],
       "contractor_density": 7,
       "digital_gap": 9,
       "homeownership_rate": 8,
       "growth_rate": 6,
-      "demand_score": 7.80,
+      "demand_score": 7.8,
       "notes": "Growing insurance/ag hub; high homeownership; very high digital gap; agencies skip Iowa entirely"
     },
     {
       "city": "Madison",
       "state": "WI",
       "metro": "Madison, WI",
-      "trades": ["hvac", "plumbing", "electrical"],
+      "trades": [
+        "plumbing",
+        "electrical"
+      ],
       "contractor_density": 6,
       "digital_gap": 7,
       "homeownership_rate": 7,
@@ -677,31 +884,42 @@
       "city": "Wichita",
       "state": "KS",
       "metro": "Wichita, KS",
-      "trades": ["hvac", "roofing", "plumbing", "electrical"],
+      "trades": [
+        "roofing",
+        "plumbing",
+        "electrical"
+      ],
       "contractor_density": 7,
       "digital_gap": 10,
       "homeownership_rate": 8,
       "growth_rate": 4,
-      "demand_score": 7.80,
+      "demand_score": 7.8,
       "notes": "Tornado alley; highest digital gap; agencies completely ignore Wichita; roofing after storms = emergency calls"
     },
     {
       "city": "Little Rock",
       "state": "AR",
       "metro": "Little Rock-North Little Rock-Conway, AR",
-      "trades": ["hvac", "plumbing", "electrical", "roofing"],
+      "trades": [
+        "plumbing",
+        "electrical",
+        "roofing"
+      ],
       "contractor_density": 7,
       "digital_gap": 10,
       "homeownership_rate": 8,
       "growth_rate": 5,
-      "demand_score": 8.00,
-      "notes": "Highest digital gap tier; Southern contractor culture; humid heat = HVAC demand; zero competition from agencies"
+      "demand_score": 8,
+      "notes": "Highest digital gap tier; Southern contractor culture; plumbing + roofing + electrical demand; zero competition from agencies"
     },
     {
       "city": "Jackson",
       "state": "MS",
       "metro": "Jackson, MS",
-      "trades": ["hvac", "plumbing", "electrical"],
+      "trades": [
+        "plumbing",
+        "electrical"
+      ],
       "contractor_density": 6,
       "digital_gap": 10,
       "homeownership_rate": 7,
@@ -713,43 +931,58 @@
       "city": "Baton Rouge",
       "state": "LA",
       "metro": "Baton Rouge, LA",
-      "trades": ["hvac", "plumbing", "electrical", "roofing"],
+      "trades": [
+        "plumbing",
+        "electrical",
+        "roofing"
+      ],
       "contractor_density": 7,
       "digital_gap": 9,
       "homeownership_rate": 7,
       "growth_rate": 4,
-      "demand_score": 7.60,
-      "notes": "Hurricane market; extreme heat/humidity; HVAC + roofing demand constant; high digital gap; agencies skip"
+      "demand_score": 7.6,
+      "notes": "Hurricane market; plumbing + roofing demand constant; high digital gap; agencies skip"
     },
     {
       "city": "New Orleans",
       "state": "LA",
       "metro": "New Orleans-Metairie, LA",
-      "trades": ["hvac", "plumbing", "roofing", "electrical"],
+      "trades": [
+        "plumbing",
+        "roofing",
+        "electrical"
+      ],
       "contractor_density": 7,
       "digital_gap": 9,
       "homeownership_rate": 6,
       "growth_rate": 3,
-      "demand_score": 7.20,
-      "notes": "Post-Katrina housing; constant storm prep; HVAC + roofing essential; high digital gap vs peer cities"
+      "demand_score": 7.2,
+      "notes": "Post-Katrina housing; constant storm prep; roofing + plumbing + electrical essential; high digital gap vs peer cities"
     },
     {
       "city": "Charleston",
       "state": "SC",
       "metro": "Charleston-North Charleston, SC",
-      "trades": ["hvac", "roofing", "plumbing", "electrical"],
+      "trades": [
+        "roofing",
+        "plumbing",
+        "electrical"
+      ],
       "contractor_density": 7,
       "digital_gap": 8,
       "homeownership_rate": 7,
       "growth_rate": 8,
-      "demand_score": 7.70,
+      "demand_score": 7.7,
       "notes": "Growing coastal market; hurricane prep; upscale homeowners; contractors here lag digitally vs tourism businesses"
     },
     {
       "city": "Columbia",
       "state": "SC",
       "metro": "Columbia, SC",
-      "trades": ["hvac", "plumbing", "electrical"],
+      "trades": [
+        "plumbing",
+        "electrical"
+      ],
       "contractor_density": 7,
       "digital_gap": 9,
       "homeownership_rate": 7,
@@ -761,19 +994,26 @@
       "city": "Huntsville",
       "state": "AL",
       "metro": "Huntsville, AL",
-      "trades": ["hvac", "electrical", "plumbing"],
+      "trades": [
+        "electrical",
+        "plumbing"
+      ],
       "contractor_density": 7,
       "digital_gap": 8,
       "homeownership_rate": 8,
       "growth_rate": 8,
-      "demand_score": 7.70,
-      "notes": "Fastest-growing Alabama city; NASA/defense = high-income homeowners; HVAC essential; underserved digitally"
+      "demand_score": 7.7,
+      "notes": "Fastest-growing Alabama city; NASA/defense = high-income homeowners; electrical + plumbing demand; underserved digitally"
     },
     {
       "city": "Knoxville",
       "state": "TN",
       "metro": "Knoxville, TN",
-      "trades": ["hvac", "plumbing", "electrical", "handyman"],
+      "trades": [
+        "plumbing",
+        "electrical",
+        "handyman"
+      ],
       "contractor_density": 7,
       "digital_gap": 9,
       "homeownership_rate": 7,
@@ -785,7 +1025,10 @@
       "city": "Lexington",
       "state": "KY",
       "metro": "Lexington-Fayette, KY",
-      "trades": ["hvac", "plumbing", "electrical"],
+      "trades": [
+        "plumbing",
+        "electrical"
+      ],
       "contractor_density": 6,
       "digital_gap": 9,
       "homeownership_rate": 7,
@@ -797,19 +1040,27 @@
       "city": "Greenville",
       "state": "SC",
       "metro": "Greenville-Anderson, SC",
-      "trades": ["hvac", "electrical", "plumbing", "handyman"],
+      "trades": [
+        "electrical",
+        "plumbing",
+        "handyman"
+      ],
       "contractor_density": 7,
       "digital_gap": 9,
       "homeownership_rate": 7,
       "growth_rate": 7,
-      "demand_score": 7.80,
-      "notes": "Fast-growing Upstate SC; BMW/automotive jobs = homeowners; HVAC heat demand; high digital gap"
+      "demand_score": 7.8,
+      "notes": "Fast-growing Upstate SC; BMW/automotive jobs = homeowners; electrical + plumbing demand; high digital gap"
     },
     {
       "city": "Fayetteville",
       "state": "AR",
       "metro": "Fayetteville-Springdale-Rogers, AR",
-      "trades": ["hvac", "plumbing", "electrical", "handyman"],
+      "trades": [
+        "plumbing",
+        "electrical",
+        "handyman"
+      ],
       "contractor_density": 7,
       "digital_gap": 9,
       "homeownership_rate": 7,
@@ -821,7 +1072,10 @@
       "city": "Reno",
       "state": "NV",
       "metro": "Reno, NV",
-      "trades": ["hvac", "electrical", "plumbing"],
+      "trades": [
+        "electrical",
+        "plumbing"
+      ],
       "contractor_density": 6,
       "digital_gap": 8,
       "homeownership_rate": 6,

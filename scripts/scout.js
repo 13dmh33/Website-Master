@@ -44,9 +44,9 @@ const REPORTS_DIR   = path.join(ROOT, 'reports');
 const DEFAULT_QUALIFY_RATE = 0.30;
 
 // ── TRADE SYNONYMS (--multi mode) ─────────────────────────────────────────────
+// HVAC excluded — owner works for HVAC manufacturer, no conflict-of-interest targeting
 const TRADE_SYNONYMS = {
   plumber:     ['plumber', 'plumbing company', 'drain cleaning service'],
-  hvac:        ['HVAC contractor', 'air conditioning repair', 'heating and cooling'],
   electrician: ['electrician', 'electrical contractor', 'electrical repair'],
   roofer:      ['roofing contractor', 'roof repair', 'roofer'],
   handyman:    ['handyman', 'home repair service', 'handyman service']
@@ -96,7 +96,7 @@ if (hasFlag('--suggest') || suggestTrade !== null) {
     console.log(`${'─'.repeat(65)}`);
     const top     = ranked[0];
     const tArg    = tradeFilter || 'plumbing';
-    const tradeMap = { hvac: 'hvac', plumbing: 'plumber', electrical: 'electrician', roofing: 'roofer', handyman: 'handyman' };
+    const tradeMap = { plumbing: 'plumber', electrical: 'electrician', roofing: 'roofer', handyman: 'handyman' };
     const scoutTrade = tradeMap[tArg] || tArg;
     console.log(`  To scrape the top market:`);
     console.log(`  node scripts/scout.js --city "${top.city}, ${top.state}" --trade ${scoutTrade} --budget 0.25 --force`);
@@ -118,7 +118,11 @@ if (!city || !trade) {
   process.exit(1);
 }
 
-const VALID_TRADES = ['plumber', 'hvac', 'electrician', 'roofer', 'handyman'];
+const VALID_TRADES = ['plumber', 'electrician', 'roofer', 'handyman'];
+if (trade.toLowerCase() === 'hvac') {
+  console.error('HVAC is not a target trade. Focus on: plumber, electrician, roofer, handyman.');
+  process.exit(1);
+}
 if (!VALID_TRADES.includes(trade.toLowerCase())) {
   console.error(`Trade must be one of: ${VALID_TRADES.join(', ')}`);
   process.exit(1);

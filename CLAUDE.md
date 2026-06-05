@@ -7,7 +7,7 @@ Owner: Dave — dave@trevoadvisors.com
 
 Brand colors: Navy #0A1228 (background) · Teal #00C8AF (primary accent) · Deep Teal #008870 (logo iris) · White #FFFFFF · Muted #8BA8C4 · Border rgba(255,255,255,0.08)
 
-Your goal: 47 clients/month at $150/site + $65/mo hosting; Nora bundle adds $200 build + $65/mo. Atlas bundle same price — AI lead follow-up instead of phone agent.
+Your goal: 47 clients/month at $150/site + $65/mo hosting; AI bundles (Nora/Atlas/Argus) add $200 build + $65/mo. Three AI products, one price point.
 
 ## Build Status (as of 2026-06-05)
 - Scout: ✅ scripts/scout.js — Outscraper API, $10/mo cap, auto_run toggle; --multi flag (TRADE_SYNONYMS, place_id dedup); all trades → sms; gap score 3-10; subtypes/lat/lng stored
@@ -31,6 +31,8 @@ Your goal: 47 clients/month at $150/site + $65/mo hosting; Nora bundle adds $200
 - LinkedIn: ✅ scripts/linkedin.js — connection request + follow-up DM generator for all queue leads; CSV to reports/; zero API cost
 - Referral: ✅ scripts/referral.js — outreach generator for referral partners (realtors, inspectors, PMs, designers); LinkedIn + email copy; zero API cost
 - Atlas: ✅ website/atlas/index.html — AI lead follow-up product page; $200 setup + $65/mo; wired into proposal + checkout
+- Argus: ✅ website/argus/index.html — AI Google review responder product page; $200 setup + $65/mo; wired into /start/ + checkout
+- /start/ updated: AI suite section showing Nora/Atlas/Argus; unified "$200 + pick your AI" pricing
 
 ## Template Vault
 - 6 SMS templates (s1–s6) + 5 email templates (e1–e5) in config/templates.json
@@ -181,7 +183,7 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - 2026-06-04: Scout improved — plumber/hvac switched to sms channel; needsEmail filter removed; gap scoring rewritten (3-10 range); --multi flag + TRADE_SYNONYMS; subtypes/lat/lng stored; effective CPL logged
 - 2026-06-04: Demo form guard — submit-disabled alert added to all 5 demos (plumbing/hvac/electrical/handyman/roofing)
 - 2026-06-05: Enricher built — scripts/enricher.js hits Apollo People Match API to find owner emails for phone-only leads; upgrades queue briefs sms→email; 200 credit/mo cap
-- 2026-06-05: CEO sprint — Caller (cold call sheet + --sms mode), LinkedIn, Referral (realtors/inspectors/PMs), Atlas product page, GBP Audit; personalizer run (54 briefs now have demo_url); 5 new channels
+- 2026-06-05: CEO sprint — Caller/LinkedIn/Referral/GBP-Audit tools; Atlas + Argus product pages; /start/ updated with 3-product AI suite; checkout handles Nora/Atlas/Argus; 54 briefs have demo_url
 
 ## Twilio A2P 10DLC Status
 - Brand registration submitted: 2026-06-03
@@ -206,11 +208,13 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 ### Setup required on Mac
 3. Sign up for Apollo.io Basic ($49/mo) → get API key → add `APOLLO_API_KEY=` to `.env.local`
    → Then run `node scripts/enricher.js --dry-run --force` to preview, `--force` to enrich
-4. Create 3 Stripe Payment Links (all success URL → https://trevoadvisors.com/thankyou/):
+4. Create 5 Stripe Payment Links (all success URL → https://trevoadvisors.com/thankyou/):
    - $150 (website-only) → replace `YOUR_WEBSITE_LINK_ID`
    - $200 (website+Nora) → replace `YOUR_NORA_LINK_ID`
    - $200 (website+Atlas) → replace `YOUR_ATLAS_LINK_ID`
-   → All three in `website/checkout/index.html`
+   - $200 (website+Argus) → replace `YOUR_ARGUS_LINK_ID`
+   → All four in `website/checkout/index.html`
+   Note: intake ?product=nora/atlas/argus pre-selects at checkout
 5. Create Formspree form at formspree.io
    → Paste form ID into `website/intake/index.html` replacing `YOUR_FORM_ID`
 6. Verify Netlify auto-deployed `website/` to trevoadvisors.com (check /start/, /for/, /atlas/, /demos/)

@@ -12,38 +12,37 @@ Your goal: 47 clients/month at $150/site + $65/mo hosting; AI bundles (Nora/Atla
 **Trade focus: Plumbing (40%) · Electrical (35%) · Handyman (25%) · Roofing (secondary)**
 **HVAC is excluded** — owner works for an HVAC manufacturer (conflict of interest). Never scout, pitch, or generate content targeting HVAC contractors.
 
-## Build Status (as of 2026-06-05 — updated session 3)
-- Scout v2: ✅ scripts/scout.js — --budget/--target/--min-score/--dry-run/--csv flags; pre-dedup from existing leads; social-only site detection; qualify_rate tracking; ROI estimate; top-5 preview; **on claude/scout-refinement**
-- Enricher: ✅ scripts/enricher.js — Apollo.io People Match, 200 credit/mo cap; finds owner email by biz name+city+phone; upgrades queue briefs sms→email when found; --dry-run; runs in container
-- Diagnoser: ✅ scripts/diagnoser.js — Claude Haiku, prompt caching, $5/mo cap; dual-channel: sets secondary_channel=sms when lead has both email + phone
-- Checker: ✅ scripts/checker.js — 5 evals + Claude rewrite loop, $3/mo cap; template fast-path validates both primary + secondary messages
-- Personalizer: ✅ scripts/personalizer.js — generates demo_url for every approved email lead; writes to brief JSON; no API cost; --write to save
-- Pitcher: ✅ scripts/pitcher.js — dual-channel (email first, SMS follows after sms_followup_delay_hours=4); per-channel sent tracking in messages/-sent.json; staggered sends; --dry-run; uses demo_url P.S. if set
-- Builder: ✅ scripts/builder.js — Lovable prompt generator, --submit to record URL, 5/day
-- Filmer: ✅ scripts/filmer.js — Loom instructions + ScreenshotOne, --submit to record URL, 5/day
-- Mobile: ✅ scripts/mobile.js — positive reply handler, weekday slot suggestions, auto-send, Nora upsell scheduler; sends /start link in booking reply
-- Reporter: ✅ scripts/reporter.js — morning email report; shows email vs SMS split, per-service costs, drip stats
-- Drip: ✅ scripts/drip.js — 4-step follow-up sequence (d1/d1b/d1c/d2), per-channel, daily limit 20, --dry-run; config/drip-config.json
-- Reply Classifier: ✅ scripts/reply-classifier.js — keyword-based intent classifier (positive/question/objection/negative/stop/auto_reply/neutral), zero API cost
-- Dashboard: ✅ scripts/dashboard.js — terminal pipeline view, --leads and --drip flags, color-coded by status
-- Webhook: ✅ scripts/webhook.js — Twilio inbound SMS server, HMAC-SHA1 validation; **run on Mac**
-- Poller: ✅ scripts/poller.js — IMAP email reply poller (imapflow), auto-reply detection; **run on Mac**
-- Website/Demo: ✅ website/ — 3 demo sites (plumber/HVAC/electrician), proposal page, intake form, checkout, thank-you, /start funnel, /atlas/ landing page; **on claude/trevo-advisors-review-Sjewy**
-- Configurator v2: ✅ website/preview/index.html — labeled 4-step flow, font picker, 6 color presets, 8 section toggles, device toggle, debounced live preview, AI Enhance button (calls /.netlify/functions/enhance), all 4 plan cards; **on claude/molly-ui-polish**
-- Netlify Enhance Function: ✅ netlify/functions/enhance.js — POST endpoint; calls Claude Haiku; returns headline/tagline/about/cta/trust_line/services JSON; 503 if ANTHROPIC_API_KEY not set; **on claude/molly-ui-polish**
-- Molly: ✅ molly/ — Instagram/LinkedIn content engine for Trevo Advisors; adapted from Milly architecture; researcher→generator→designer→scheduler→analyst pipeline; 20 evergreen posts; Trevo navy/teal canvas design; **on claude/molly-ui-polish**
-- Molly Source Intelligence: ✅ molly/lib/sources.js + molly/templates/sources.json — 200-source curated trade database; static archetypes for plumbing/electrical/handyman (pain points, hooks, angles, trends); optional free RSS fetching via native https (zero API cost); researcher.js rotates weekly through plumbing/electrical/handyman only; **HVAC excluded**; **on claude/molly-ui-polish**
-- Market Audit: ✅ scripts/market-audit.js — static scoring of 60+ US metros; ranked by contractor density + digital gap + homeownership + growth; CSV export; --trade flag; **on claude/scout-refinement**
-- Scout --suggest: ✅ scripts/scout.js — --suggest [trade] flag reads market-data.json, prints top 5 cities ranked by demand score before scraping; **on claude/scout-refinement**
-- Caller: ✅ scripts/caller.js — cold call sheet generator; ranked by gap score; CSV to reports/; --sms mode for personal iPhone texts; shows demo_url per lead; zero API cost
-- GBP Audit: ✅ scripts/gbp-audit.js — Google Business Profile gap analysis; generates specific outreach hooks per lead (no-website, low-reviews, low-rating, etc); CSV export; zero API cost
-- Warm Lead: ✅ scripts/warm-lead.js — instant follow-up generator after cold call; personalized text + email + D+2 follow-up; usage: -n "Biz" -t trade -c "City" -r reviews -e email
-- LinkedIn: ✅ scripts/linkedin.js — connection request + follow-up DM generator for all queue leads; CSV to reports/; zero API cost
-- Referral: ✅ scripts/referral.js — outreach generator for referral partners (realtors, inspectors, PMs, designers); LinkedIn + email copy; zero API cost
-- Atlas: ✅ website/atlas/index.html — AI lead follow-up product page; $200 setup + $65/mo; wired into proposal + checkout
-- Argus: ✅ website/argus/index.html — AI Google review responder product page; $200 setup + $65/mo; wired into /start/ + checkout
-- /start/ updated: AI suite section showing Nora/Atlas/Argus; unified "$200 + pick your AI" pricing
-- Brief: ✅ scripts/brief.js — daily morning briefing; shows pipeline stats, costs, prioritized action list, blockers; run every morning
+## Build Status (as of 2026-06-05 — updated session 3, final)
+- Scout v2: ✅ scripts/scout.js — --budget/--target/--min-score/--dry-run/--csv/--suggest flags; pre-dedup; social-only detection; qualify_rate; ROI estimate; **HVAC blocked**; **on claude/scout-refinement**
+- Market Audit: ✅ scripts/market-audit.js — 65 US metros scored (digital_gap×0.35 + density×0.30 + homeownership×0.20 + growth×0.15); --trade/--top/--csv; zero API cost; **on claude/scout-refinement**
+- Market Data: ✅ config/market-data.json — 65 metros with demand scores; hvac removed from all trades arrays; top markets: Houston, Las Vegas, Phoenix, Dallas, San Antonio; **on claude/scout-refinement**
+- Enricher: ✅ scripts/enricher.js — Apollo.io People Match, 200 credit/mo cap; finds owner email; upgrades sms→email; --dry-run; container
+- Diagnoser: ✅ scripts/diagnoser.js — Claude Haiku, prompt caching, $5/mo cap; dual-channel routing
+- Checker: ✅ scripts/checker.js — 5 evals + Claude rewrite loop, $3/mo cap
+- Personalizer: ✅ scripts/personalizer.js — generates demo_url per approved lead; --write to save
+- Pitcher: ✅ scripts/pitcher.js — dual-channel (email first, SMS +4h); --dry-run; uses demo_url P.S.
+- Builder: ✅ scripts/builder.js — Lovable prompt generator, --submit, 5/day
+- Filmer: ✅ scripts/filmer.js — Loom instructions + ScreenshotOne, --submit, 5/day
+- Mobile: ✅ scripts/mobile.js — positive reply handler; slot suggestions; Nora upsell; sends /start link
+- Reporter: ✅ scripts/reporter.js — morning email report; email/SMS split; per-service costs; drip stats
+- Drip: ✅ scripts/drip.js — 4-step follow-up (d1/d1b/d1c/d2), per-channel, daily limit 20
+- Reply Classifier: ✅ scripts/reply-classifier.js — keyword intent classifier, zero API cost
+- Dashboard: ✅ scripts/dashboard.js — terminal pipeline view, --leads/--drip, color-coded
+- Webhook: ✅ scripts/webhook.js — Twilio inbound SMS, HMAC-SHA1; **Mac only**
+- Poller: ✅ scripts/poller.js — IMAP email reply poller (imapflow); **Mac only**
+- Caller: ✅ scripts/caller.js — cold call sheet, ranked by gap score; --sms mode for iPhone
+- GBP Audit: ✅ scripts/gbp-audit.js — per-lead outreach hooks (no-website/low-reviews/etc); CSV
+- Warm Lead: ✅ scripts/warm-lead.js — instant follow-up after cold call; text + email + D+2
+- LinkedIn: ✅ scripts/linkedin.js — connection request + DM generator; CSV
+- Referral: ✅ scripts/referral.js — partner outreach (realtors/inspectors/PMs); LinkedIn + email
+- Brief: ✅ scripts/brief.js — daily morning briefing; pipeline stats; prioritized action list
+- Website/Demo: ✅ website/ — demos (plumbing/electrical/handyman), proposal, intake, checkout, /start, /atlas, /argus; **on claude/trevo-advisors-review-Sjewy**
+- Configurator v2: ✅ website/preview/index.html — 4-step flow, font picker, 6 color presets, 8 toggles, device toggle, AI Enhance (Netlify fn); **on claude/molly-ui-polish**
+- Netlify Enhance Fn: ✅ netlify/functions/enhance.js — POST → Claude Haiku → headline/tagline/about/cta/trust_line/services; **on claude/molly-ui-polish**
+- Molly: ✅ molly/ — Instagram/LinkedIn content engine; researcher→generator→designer→scheduler→analyst; 20 evergreen posts; Trevo navy/teal; **on claude/molly-ui-polish**
+- Molly Source Intelligence: ✅ molly/lib/sources.js + molly/templates/sources.json — 200-source DB; static archetypes for plumbing/electrical/handyman; optional RSS (zero API cost); weekly trade rotation (no HVAC); **on claude/molly-ui-polish**
+- Atlas: ✅ website/atlas/index.html — AI lead follow-up product; $200 + $65/mo
+- Argus: ✅ website/argus/index.html — AI review responder product; $200 + $65/mo
 
 ## Template Vault
 - 8 SMS templates (s1–s8) + 7 email templates (e1–e7) in config/templates.json
@@ -200,8 +199,9 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - 2026-06-05: Scout v2 — --budget/--target/--min-score/--dry-run/--csv flags; pre-dedup from existing leads; social-only site detection; qualify_rate tracking; ROI estimate; on claude/scout-refinement branch
 - 2026-06-05: Configurator v2 — 4-step labeled flow, font picker, 6 color presets, 8 section toggles, device toggle, AI Enhance button (Netlify function → Claude Haiku), all 4 plan cards; on claude/molly-ui-polish
 - 2026-06-05: Molly built — Instagram/LinkedIn content engine adapted from Milly; researcher→generator→designer→scheduler→analyst; 20 evergreen posts (carousel/caption/trevo_found/reel); Trevo navy/teal canvas; on claude/molly-ui-polish
-- 2026-06-05: Molly source intelligence — molly/lib/sources.js: static archetypes for all 4 trades + optional RSS (zero API cost); molly/templates/sources.json: full 200-source DB; researcher.js rotates trade focus weekly and seeds angles with real contractor pain points/hooks
-- 2026-06-05: Market prioritization — config/market-data.json: 60+ US metro scores; scripts/market-audit.js: ranked audit table + CSV; scout.js --suggest flag: shows top 5 cities at run time; on claude/scout-refinement
+- 2026-06-05: Molly source intelligence — molly/lib/sources.js: static archetypes for plumbing/electrical/handyman + optional RSS (zero API cost); molly/templates/sources.json: full 200-source DB; researcher.js rotates trade focus weekly
+- 2026-06-05: Market prioritization — config/market-data.json: 65 US metro scores; scripts/market-audit.js: ranked audit table + CSV; scout.js --suggest flag: shows top 5 cities at run time
+- 2026-06-05: HVAC excluded — removed from Scout TRADE_SYNONYMS + VALID_TRADES (error on --trade hvac); removed from all 65 market trades arrays; removed from Molly researcher + evergreen generator; trade focus locked to plumbing/electrical/handyman/roofing
 
 ## Twilio A2P 10DLC Status
 - Brand registration submitted: 2026-06-03
@@ -212,44 +212,38 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - Once approved: create Campaign (use case: Mixed) → link +1 720 number to Sender Pool
 - Until approved: SMS sends will hit error 30034 and be blocked by carriers
 
-## Mac Action Items (as of 2026-06-05)
+## Action Items (as of 2026-06-05 — next session)
 
-### Immediate revenue actions (do these today)
-1. **Personal SMS** (unblocks stuck leads NOW): `node scripts/caller.js --sms` → copy-paste messages for your 54 leads → text 10–15/day from iPhone, no Twilio needed
-2. **Cold calls**: `node scripts/caller.js` → ranked list with phone numbers + talk tracks + demo URLs → call top 20 today
-3. **GBP audit hook**: `node scripts/gbp-audit.js` → per-lead hook lines ("found 4 gaps costing you calls") → use as cold call opener
-4. **LinkedIn**: `node scripts/linkedin.js` → CSV at reports/linkedin-{date}.csv → send 15 connection requests today
-5. **Referral network**: `node scripts/referral.js` → LinkedIn + email scripts for realtors/inspectors/PMs → 3 partners = 6–12 leads/month passively
+### Revenue — do on Mac now
+1. **Personal SMS** (no Twilio needed): `node scripts/caller.js --sms` → copy-paste to iPhone → 10–15 leads/day
+2. **Cold calls**: `node scripts/caller.js` → ranked list with talk tracks + demo URLs → call top 20
+3. **GBP hooks**: `node scripts/gbp-audit.js` → per-lead opener lines → use before cold call
+4. **LinkedIn**: `node scripts/linkedin.js` → CSV → send 15 connection requests
+5. **Referral partners**: `node scripts/referral.js` → 3 realtors/inspectors/PMs = 6–12 passive leads/mo
+6. **Next Scout run**: `node scripts/scout.js --suggest plumbing` → pick top market → scrape $0.25
 
-### Setup required on Mac
-3. Sign up for Apollo.io Basic ($49/mo) → get API key → add `APOLLO_API_KEY=` to `.env.local`
-   → Then run `node scripts/enricher.js --dry-run --force` to preview, `--force` to enrich
-4. Create 5 Stripe Payment Links (all success URL → https://trevoadvisors.com/thankyou/):
-   - $150 (website-only) → replace `YOUR_WEBSITE_LINK_ID`
-   - $200 (website+Nora) → replace `YOUR_NORA_LINK_ID`
-   - $200 (website+Atlas) → replace `YOUR_ATLAS_LINK_ID`
-   - $200 (website+Argus) → replace `YOUR_ARGUS_LINK_ID`
-   → All four in `website/checkout/index.html`
-   Note: intake ?product=nora/atlas/argus pre-selects at checkout
-5. Create Formspree form at formspree.io
-   → Paste form ID into `website/intake/index.html` replacing `YOUR_FORM_ID`
-6. Verify Netlify auto-deployed `website/` to trevoadvisors.com (check /start/, /for/, /atlas/, /demos/)
-7. Run `node scripts/personalizer.js --write` (after /for/ confirmed live on prod)
-8. Check Twilio A2P 10DLC status (Bundle SID: BUb725ec9662f0dc3da58ed24117df8684)
-9. Run `node scripts/pitcher.js --force` when A2P approved (5 leads ready)
-10. Start `node scripts/webhook.js` + ngrok → register URL in Twilio console
-11. Add `SITE_START_URL=https://trevoadvisors.com/start/` + `CALCOM_LINK` to `.env.local`
-12. `npm install imapflow` for poller.js
-13. Nora-Agent push: `cd ~/Nora-Agent && git push origin main`
+### Setup blockers (Mac)
+- [ ] **Twilio A2P**: check status at console.twilio.com (Bundle SID: BUb725ec9662f0dc3da58ed24117df8684) — once approved, create Campaign, link +1 720, run `node scripts/pitcher.js --force`
+- [ ] **Stripe**: create 4 payment links ($150 website / $200 Nora / $200 Atlas / $200 Argus) → paste IDs into `website/checkout/index.html`
+- [ ] **Formspree**: create form at formspree.io → paste form ID into `website/intake/index.html`
+- [ ] **Netlify deploy**: confirm trevoadvisors.com/start/ + /for/ + /atlas/ + /argus/ + /demos/ all live
+- [ ] **Personalizer**: after /for/ confirmed live → `node scripts/personalizer.js --write`
+- [ ] **Webhook**: `node scripts/webhook.js` + ngrok → register URL in Twilio console
+- [ ] **Apollo.io**: sign up ($49/mo) → add `APOLLO_API_KEY=` to `.env.local` → `node scripts/enricher.js --force`
+- [ ] **Env vars**: add `SITE_START_URL=https://trevoadvisors.com/start/` + `CALCOM_LINK` to `.env.local`
+- [ ] **Poller**: `npm install imapflow` then `node scripts/poller.js`
 
-### Remaining Polish (container OK)
-- Intake form step 3: make optional fields visually obvious
+### Next Claude session — container tasks
+- [ ] Merge `claude/trevo-advisors-review-Sjewy` → main (website + demos)
+- [ ] Merge `claude/molly-ui-polish` → main (Configurator v2 + Molly + sources)
+- [ ] Merge `claude/scout-refinement` → main (Scout v2 + market audit)
+- [ ] Add handyman demo site to website/demos/ (plumbing + electrical exist; handyman missing)
+- [ ] Molly: run `node scripts/test-pipeline.js` to verify end-to-end after npm install
+- [ ] Intake form: make optional fields visually distinct (step 3 polish)
 
-### Molly setup (Mac)
-1. `cd molly && npm install` (requires skia-canvas — may need Xcode tools on Mac)
+### Molly — first run (Mac, after npm install)
+1. `cd molly && npm install`
 2. `cp .env.example .env` → add `ANTHROPIC_API_KEY`
-3. `node scripts/setup.js` to validate
-4. `node scripts/test-pipeline.js` to run a dry pipeline test
-5. Weekly run: `npm run research && npm run generate && npm run design && npm run schedule`
-6. Optional: add `BUFFER_ACCESS_TOKEN` to auto-schedule; without it posts go to output/queue/ for manual publishing
-7. Optional: add `SERPAPI_KEY` for live research; without it uses 20-post evergreen bank (already loaded)
+3. `node scripts/test-pipeline.js` → verify all green
+4. `npm run research && npm run generate && npm run design && npm run schedule`
+5. Posts land in `output/queue/` → publish manually to Instagram or add `BUFFER_ACCESS_TOKEN` to auto-schedule

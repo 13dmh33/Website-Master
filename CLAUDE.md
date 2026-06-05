@@ -34,6 +34,7 @@ Your goal: 47 clients/month at $150/site + $65/mo hosting; AI bundles (Nora/Atla
 - Atlas: ✅ website/atlas/index.html — AI lead follow-up product page; $200 setup + $65/mo; wired into proposal + checkout
 - Argus: ✅ website/argus/index.html — AI Google review responder product page; $200 setup + $65/mo; wired into /start/ + checkout
 - /start/ updated: AI suite section showing Nora/Atlas/Argus; unified "$200 + pick your AI" pricing
+- Brief: ✅ scripts/brief.js — daily morning briefing; shows pipeline stats, costs, prioritized action list, blockers; run every morning
 
 ## Template Vault
 - 8 SMS templates (s1–s8) + 7 email templates (e1–e7) in config/templates.json
@@ -186,7 +187,7 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - 2026-06-04: Scout improved — plumber/hvac switched to sms channel; needsEmail filter removed; gap scoring rewritten (3-10 range); --multi flag + TRADE_SYNONYMS; subtypes/lat/lng stored; effective CPL logged
 - 2026-06-04: Demo form guard — submit-disabled alert added to all 5 demos (plumbing/hvac/electrical/handyman/roofing)
 - 2026-06-05: Enricher built — scripts/enricher.js hits Apollo People Match API to find owner emails for phone-only leads; upgrades queue briefs sms→email; 200 credit/mo cap
-- 2026-06-05: CEO sprint — Caller/LinkedIn/Referral/GBP-Audit tools; Atlas + Argus product pages; /start/ updated with 3-product AI suite; checkout handles Nora/Atlas/Argus; 54 briefs have demo_url
+- 2026-06-05: CEO sprint complete — Caller/SMS/LinkedIn/Referral/GBP-Audit/Warm-Lead/Brief tools; Atlas + Argus product pages; /start/ AI suite; 3 Stripe slots (Nora/Atlas/Argus) in checkout; intake→checkout flow fixed; 54 briefs have demo_url; 8 SMS + 7 email templates
 
 ## Twilio A2P 10DLC Status
 - Brand registration submitted: 2026-06-03

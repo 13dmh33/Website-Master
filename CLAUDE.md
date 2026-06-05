@@ -28,6 +28,7 @@ Your goal: 47 clients/month at $150/site + $65/mo hosting; AI bundles (Nora/Atla
 - Website/Demo: ✅ website/ — 3 demo sites (plumber/HVAC/electrician), proposal page, intake form, checkout, thank-you, /start funnel, /atlas/ landing page; **on claude/trevo-advisors-review-Sjewy**
 - Caller: ✅ scripts/caller.js — cold call sheet generator; ranked by gap score; CSV to reports/; --sms mode for personal iPhone texts; shows demo_url per lead; zero API cost
 - GBP Audit: ✅ scripts/gbp-audit.js — Google Business Profile gap analysis; generates specific outreach hooks per lead (no-website, low-reviews, low-rating, etc); CSV export; zero API cost
+- Warm Lead: ✅ scripts/warm-lead.js — instant follow-up generator after cold call; personalized text + email + D+2 follow-up; usage: -n "Biz" -t trade -c "City" -r reviews -e email
 - LinkedIn: ✅ scripts/linkedin.js — connection request + follow-up DM generator for all queue leads; CSV to reports/; zero API cost
 - Referral: ✅ scripts/referral.js — outreach generator for referral partners (realtors, inspectors, PMs, designers); LinkedIn + email copy; zero API cost
 - Atlas: ✅ website/atlas/index.html — AI lead follow-up product page; $200 setup + $65/mo; wired into proposal + checkout
@@ -35,7 +36,9 @@ Your goal: 47 clients/month at $150/site + $65/mo hosting; AI bundles (Nora/Atla
 - /start/ updated: AI suite section showing Nora/Atlas/Argus; unified "$200 + pick your AI" pricing
 
 ## Template Vault
-- 6 SMS templates (s1–s6) + 5 email templates (e1–e5) in config/templates.json
+- 8 SMS templates (s1–s8) + 7 email templates (e1–e7) in config/templates.json
+- s7 = Atlas AI angle; s8 = Argus review hook
+- e6 = Atlas pitch; e7 = Argus pitch (requires review_count)
 - s6 = catch-all (no data requirements) — always available as fallback
 - All SMS templates ≤160 chars (1 segment = $0.0079/msg, not $0.04)
 - Templates open with "Hey," — no [First Name] substitution

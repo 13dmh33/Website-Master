@@ -60,10 +60,27 @@ Weekly pipeline: Researcher → Generator → Designer → Scheduler (Mon–Tue 
 **Branch:** `claude/milly-content-engine-qZme3` (same branch as Milly for now)
 **See:** `reeve/CLAUDE.md` for full scope and roadmap
 
-DM qualification agent live. When speaker DMs "stages" → Reeve runs 3-question qualification → scores fit → routes to Dave or declines.
+DM qualification agent live. When speaker DMs "stages" → Reeve runs 3-question qualification → scores fit → routes to Dave or declines. Full outreach pipeline built: conference scout, pitcher, follower, reporter, closer (Phases 2–6).
 
-**Status:** DM agent built (agents/dm-agent.js). Pending: Meta App setup + Railway deploy + Cal.com link.
-Full outreach pipeline (Phase 2) scoped in reeve/CLAUDE.md.
+**Status:** All 6 phases built. Pending: Meta App setup + Railway deploy + Cal.com link.
+
+---
+
+## 4. Strategy — Business intelligence and pricing monitor
+
+**Directory:** `/strategy`
+**Branch:** `claude/milly-content-engine-qZme3`
+**See:** `strategy/CLAUDE.md` for monitoring cadence and metric thresholds
+
+Zero-API-cost monitoring agent. Reads pipeline JSON files, computes MRR/conversion/churn metrics, flags alerts, produces pricing analysis. Run weekly.
+
+**Scripts:**
+- `node strategy/agents/strategist.js --dashboard` — terminal health view (default)
+- `node strategy/agents/strategist.js --monitor` — dashboard + save JSON snapshot to strategy/reports/
+- `node strategy/agents/strategist.js --pricing` — full pricing model analysis
+- `node strategy/agents/strategist.js --alerts` — active alerts only
+
+**Status:** Built. Pricing analysis complete (strategy/reports/pricing-analysis-2026-06-05.md). Run --monitor weekly (Mondays).
 
 ---
 
@@ -73,7 +90,7 @@ Full outreach pipeline (Phase 2) scoped in reeve/CLAUDE.md.
 - Merge to main only after Dave reviews
 
 ## Active branch summary (claude/milly-content-engine-qZme3)
-Everything in /milly and /reeve is on this branch. All commits pushed. Merge to main when ready to go live.
+Everything in /milly, /reeve, and /strategy is on this branch. All commits pushed. Merge to main when ready to go live.
 - Scout: ✅ scripts/scout.js — Outscraper API, $10/mo cap, auto_run toggle
 - Diagnoser: ✅ scripts/diagnoser.js — Claude Haiku, prompt caching, $5/mo cap; dual-channel: sets secondary_channel=sms when lead has both email + phone
 - Checker: ✅ scripts/checker.js — 5 evals + Claude rewrite loop, $3/mo cap; template fast-path validates both primary + secondary messages

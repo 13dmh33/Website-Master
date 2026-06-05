@@ -10,6 +10,9 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') }
 const fetch    = require('node-fetch');
 const store    = require('../lib/store');
 const glossary = require('../lib/glossary');
+const sources  = require('../lib/sources');
+
+const TRADES = ['plumbing', 'hvac', 'electrical', 'handyman'];
 
 function weekStartDate() {
   const now  = new Date();
@@ -38,8 +41,8 @@ async function searchSerpApi(query) {
   }
 }
 
-// build content angles from live search results
-function buildAnglesFromSearch(allResults) {
+// build content angles from live search results, enriched with trade intelligence
+function buildAnglesFromSearch(allResults, trade = 'hvac', tradeContext = null) {
   const niches  = ['education', 'results', 'product', 'journey'];
   const angles  = [];
   const now     = new Date();
@@ -59,32 +62,41 @@ function buildAnglesFromSearch(allResults) {
     product:   glossary.getAngleSeedTerms('product', 1),
   };
 
+  // pull trade-specific hooks and pain points if available
+  const tradeHooks      = tradeContext ? sources.getRandomHooks(trade, 3)      : [];
+  const tradePainPoints = tradeContext ? sources.getRandomPainPoints(trade, 3) : [];
+
   for (const [niche, results] of Object.entries(nicheMap)) {
-    const topResult = results[0];
+    const topResult  = results[0];
     if (!topResult) continue;
-    const termSeed  = glossarySeeds[niche]?.[0];
+    const termSeed   = glossarySeeds[niche]?.[0];
+    const tradeHook  = tradeHooks.shift() || null;
+    const painPoint  = tradePainPoints.shift() || 'losing jobs to competitors with better online presence';
 
     angles.push({
       id:              `angle-${angles.length + 1}`,
       niche,
+      trade,
       angle:           topResult.title.slice(0, 120),
-      hook:            termSeed?.content_angle || `Most contractors don't know this about ${niche === 'education' ? 'getting found online' : niche === 'results' ? 'how websites drive revenue' : niche === 'product' ? 'what a great contractor site includes' : 'how agency-built sites work'}.`,
-      painPoint:       'losing jobs to competitors with better online presence',
+      hook:            tradeHook || termSeed?.content_angle || `Most contractors don't know this about ${niche === 'education' ? 'getting found online' : niche === 'results' ? 'how websites drive revenue' : niche === 'product' ? 'what a great contractor site includes' : 'how agency-built sites work'}.`,
+      painPoint,
       dataPoint:       topResult.snippet ? topResult.snippet.slice(0, 120) : null,
       suggestedFormat: niche === 'education' ? 'carousel' : niche === 'product' ? 'trevo_found' : niche === 'results' ? 'caption' : 'reel',
       source:          topResult.link,
       glossarySeed:    termSeed ? { term: termSeed.term, angle: termSeed.content_angle } : null,
+      tradeContext:    tradeContext ? tradeContext.slice(0, 400) : null,
     });
   }
 
   // always include a trevo_found angle to showcase a demo
-  const trades = ['plumbing', 'HVAC', 'electrical', 'handyman', 'roofing'];
-  const trade  = trades[Math.floor(Math.random() * trades.length)];
+  const demoTrades = ['plumbing', 'HVAC', 'electrical', 'handyman', 'roofing'];
+  const demoTrade  = demoTrades[Math.floor(Math.random() * demoTrades.length)];
   angles.push({
     id:              `angle-${angles.length + 1}`,
     niche:           'product',
-    angle:           `New ${trade} demo site — ${month} ${year}`,
-    hook:            `Trevo just built a new ${trade} demo. Here\'s what\'s inside.`,
+    trade:           demoTrade,
+    angle:           `New ${demoTrade} demo site — ${month} ${year}`,
+    hook:            `Trevo just built a new ${demoTrade} demo. Here\'s what\'s inside.`,
     painPoint:       'contractors not seeing what a real site looks like for their trade',
     dataPoint:       null,
     suggestedFormat: 'trevo_found',
@@ -110,7 +122,10 @@ function buildAnglesFromEvergreen(evergreenPosts) {
 
 async function main() {
   const weekOf = weekStartDate();
-  console.log(`Molly research starting for week of ${weekOf}.`);
+  // rotate through trades each week so content varies
+  const tradeIndex = Math.floor(Date.now() / (7 * 24 * 60 * 60 * 1000)) % TRADES.length;
+  const weekTrade  = TRADES[tradeIndex];
+  console.log(`Molly research starting for week of ${weekOf} (trade focus: ${weekTrade}).`);
 
   let researchMode = 'live';
   let angles       = [];
@@ -118,12 +133,22 @@ async function main() {
   const month      = now.toLocaleString('en-US', { month: 'long' });
   const year       = now.getFullYear();
 
+  // fetch trade-specific context from sources intelligence (zero cost — static + optional RSS)
+  let tradeContext = null;
+  try {
+    tradeContext = await sources.getWeeklyResearchContext(weekTrade);
+    console.log(`Trade intelligence loaded for ${weekTrade}.`);
+  } catch {
+    // non-fatal — just log and continue
+    console.log('Trade intelligence unavailable — continuing without it.');
+  }
+
   if (process.env.SERPAPI_KEY) {
     console.log('Running live search via SerpApi...');
     try {
       const queries = [
-        `contractor website marketing tips ${year}`,
-        `home service contractor online presence ${month} ${year}`,
+        `${weekTrade} contractor website marketing tips ${year}`,
+        `home service ${weekTrade} contractor online presence ${month} ${year}`,
         `contractor website features that convert ${year}`,
         `local SEO for plumbers electricians HVAC ${year}`,
       ];
@@ -136,7 +161,7 @@ async function main() {
 
       const totalResults = allResults.reduce((sum, r) => sum + r.length, 0);
       if (totalResults > 0) {
-        angles       = buildAnglesFromSearch(allResults);
+        angles       = buildAnglesFromSearch(allResults, weekTrade, tradeContext);
         researchMode = 'live';
         console.log(`Live research complete. ${totalResults} results found, ${angles.length} angles built.`);
       } else {
@@ -166,6 +191,7 @@ async function main() {
     weekOf,
     generatedAt:  new Date().toISOString(),
     researchMode,
+    weekTrade,
     angles:       angles.slice(0, 4),
   };
 

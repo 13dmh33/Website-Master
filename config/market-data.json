@@ -108,7 +108,7 @@
       "homeownership_rate": 7,
       "growth_rate": 8,
       "demand_score": 8.75,
-      "notes": "Largest contractor market in South; humidity + heat = HVAC + plumbing demand; huge % without websites"
+      "notes": "Largest contractor market in South; humidity = plumbing demand year-round; huge % without websites; roofing + electrical boom"
     },
     {
       "city": "Dallas",
@@ -156,7 +156,7 @@
       "homeownership_rate": 7,
       "growth_rate": 9,
       "demand_score": 8.1,
-      "notes": "Southeast banking hub; major population influx; new subdivisions driving electrical + HVAC demand"
+      "notes": "Southeast banking hub; major population influx; new subdivisions driving electrical + plumbing demand; high digital gap"
     },
     {
       "city": "Raleigh",
@@ -346,7 +346,7 @@
       "homeownership_rate": 8,
       "growth_rate": 6,
       "demand_score": 7.8,
-      "notes": "Four-season extreme climate = HVAC + plumbing demand; high homeownership in suburbs; referral-reliant market"
+      "notes": "Four-season extreme climate = plumbing + electrical demand; high homeownership in suburbs; referral-reliant market; high digital gap"
     },
     {
       "city": "St. Louis",
@@ -378,7 +378,7 @@
       "homeownership_rate": 8,
       "growth_rate": 6,
       "demand_score": 8,
-      "notes": "Rust belt edge = value market; four-season = HVAC/plumbing; high homeownership; agencies rarely focus here"
+      "notes": "Four-season = plumbing/electrical demand; high homeownership; agencies rarely focus here; very high digital gap"
     },
     {
       "city": "Columbus",
@@ -473,7 +473,7 @@
       "homeownership_rate": 7,
       "growth_rate": 5,
       "demand_score": 7.2,
-      "notes": "Extreme cold = HVAC + plumbing gold; high homeownership suburbs; more digitally aware than south markets"
+      "notes": "Extreme cold = burst pipes + plumbing gold; high homeownership suburbs; more digitally aware than south markets"
     },
     {
       "city": "Milwaukee",
@@ -662,7 +662,7 @@
       "homeownership_rate": 7,
       "growth_rate": 3,
       "demand_score": 7.3,
-      "notes": "One of snowiest cities; HVAC + plumbing essential; high digital gap; contractors here very referral-dependent"
+      "notes": "One of snowiest cities; plumbing + electrical essential; high digital gap; contractors very referral-dependent"
     },
     {
       "city": "Hartford",

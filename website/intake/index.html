@@ -133,6 +133,21 @@
     .field label .req { color: var(--amber); margin-left: 3px; }
     .field label .opt { color: var(--muted); font-weight: 500; text-transform: none; letter-spacing: 0; margin-left: 4px; font-size: 12px; }
 
+    /* Optional fields get a visually lighter treatment */
+    .field.is-optional input,
+    .field.is-optional select,
+    .field.is-optional textarea {
+      border-style: dashed;
+      background: #FAFBFC;
+      color: var(--mid);
+    }
+    .field.is-optional input:focus,
+    .field.is-optional select:focus,
+    .field.is-optional textarea:focus {
+      border-style: solid;
+      background: #fff;
+    }
+
     .field input,
     .field select,
     .field textarea {
@@ -369,7 +384,7 @@
     </div>
 
     <div class="field-row single">
-      <div class="field">
+      <div class="field is-optional">
         <label>Business Email <span class="opt">(optional)</span></label>
         <input type="email" id="biz_email" placeholder="info@yourcompany.com" />
         <div class="field-hint">We'll show this on your contact page if you want it listed.</div>
@@ -382,14 +397,14 @@
         <input type="text" id="city" placeholder="Denver" />
         <div class="field-error">City is required</div>
       </div>
-      <div class="field">
+      <div class="field is-optional">
         <label>State <span class="opt">(optional)</span></label>
         <input type="text" id="state" placeholder="CO" maxlength="2" />
       </div>
     </div>
 
     <div class="field-row single">
-      <div class="field">
+      <div class="field is-optional">
         <label>Service Area <span class="opt">(optional)</span></label>
         <input type="text" id="service_area" placeholder="Denver, Aurora, Lakewood, Centennial, Highlands Ranch..." />
         <div class="field-hint">List all cities you serve. We'll show these on your site.</div>
@@ -397,7 +412,7 @@
     </div>
 
     <div class="field-row single">
-      <div class="field">
+      <div class="field is-optional">
         <label>Years in Business <span class="opt">(optional)</span></label>
         <div class="radio-group" id="years_group">
           <label class="radio-label"><input type="radio" name="years" value="1–2 years" /> 1–2 years</label>
@@ -410,7 +425,7 @@
     </div>
 
     <div class="field-row single">
-      <div class="field">
+      <div class="field is-optional">
         <label>License Number <span class="opt">(optional)</span></label>
         <input type="text" id="license" placeholder="e.g. H-09241 or E-38291" />
         <div class="field-hint">Displayed on your site to build trust. Leave blank if you prefer not to show it.</div>
@@ -441,7 +456,7 @@
     </div>
 
     <div class="field-row single">
-      <div class="field">
+      <div class="field is-optional">
         <label>Emergency / 24-7 Service? <span class="opt">(optional)</span></label>
         <div class="radio-group" id="emergency_group">
           <label class="radio-label"><input type="radio" name="emergency" value="yes" /> Yes — 24/7</label>
@@ -452,32 +467,32 @@
     </div>
 
     <div class="field-row">
-      <div class="field">
+      <div class="field is-optional">
         <label>Typical Response Time <span class="opt">(optional)</span></label>
         <input type="text" id="response_time" placeholder="e.g. Same-day, Within 24 hours" />
       </div>
-      <div class="field">
+      <div class="field is-optional">
         <label>Warranty Offered <span class="opt">(optional)</span></label>
         <input type="text" id="warranty" placeholder="e.g. 1-year parts & labor" />
       </div>
     </div>
 
     <div class="field-row single">
-      <div class="field">
+      <div class="field is-optional">
         <label>Brands / Makes You Service <span class="opt">(optional)</span></label>
         <input type="text" id="brands" placeholder="e.g. Carrier, Lennox, Trane, Rheem, all makes & models" />
       </div>
     </div>
 
     <div class="field-row single">
-      <div class="field">
+      <div class="field is-optional">
         <label>Special Offers or Discounts <span class="opt">(optional)</span></label>
         <input type="text" id="specials" placeholder="e.g. $99 tune-up, free estimates, senior discount, Xcel rebates" />
       </div>
     </div>
 
     <div class="field-row single">
-      <div class="field">
+      <div class="field is-optional">
         <label>Google Review Count <span class="opt">(optional)</span></label>
         <input type="text" id="review_count" placeholder="e.g. 187" />
         <div class="field-hint">We'll display your review count and rating to build social proof.</div>
@@ -485,7 +500,7 @@
     </div>
 
     <div class="field-row single">
-      <div class="field">
+      <div class="field is-optional">
         <label>Google Rating <span class="opt">(optional)</span></label>
         <div class="radio-group" id="rating_group">
           <label class="radio-label"><input type="radio" name="rating" value="5.0" /> 5.0 ★</label>
@@ -498,7 +513,7 @@
     </div>
 
     <div class="field-row single">
-      <div class="field">
+      <div class="field is-optional">
         <label>Hours of Operation <span class="opt">(optional)</span></label>
         <input type="text" id="hours" placeholder="e.g. Mon–Fri 7am–8pm, Sat 8am–6pm, Emergency 24/7" />
       </div>
@@ -522,7 +537,7 @@
     </div>
 
     <div class="field-row single">
-      <div class="field">
+      <div class="field is-optional">
         <label>Do you have an existing logo? <span class="opt">(optional)</span></label>
         <div class="radio-group" id="logo_group">
           <label class="radio-label"><input type="radio" name="has_logo" value="yes" /> Yes — I'll upload it</label>
@@ -545,7 +560,7 @@
     </div>
 
     <div class="field-row single">
-      <div class="field">
+      <div class="field is-optional">
         <label>Color Preference <span class="opt">(optional)</span></label>
         <div class="radio-group" id="color_group">
           <label class="radio-label"><input type="radio" name="color_pref" value="navy_amber" /> Navy + Amber</label>
@@ -559,7 +574,7 @@
     </div>
 
     <div class="field-row single">
-      <div class="field">
+      <div class="field is-optional">
         <label>Brand Colors (hex codes) <span class="opt">(optional)</span></label>
         <input type="text" id="brand_colors" placeholder="e.g. #1A3A5C and #E86A2E" />
         <div class="field-hint">Only fill this in if you have specific colors you want matched.</div>
@@ -567,7 +582,7 @@
     </div>
 
     <div class="field-row single">
-      <div class="field">
+      <div class="field is-optional">
         <label>Existing Website <span class="opt">(optional)</span></label>
         <input type="url" id="existing_website" placeholder="https://youroldsite.com" />
         <div class="field-hint">We'll review it for content and style reference. Don't worry if it's outdated — that's why you're here.</div>
@@ -575,14 +590,14 @@
     </div>
 
     <div class="field-row single">
-      <div class="field">
+      <div class="field is-optional">
         <label>Competitor Sites You Like <span class="opt">(optional)</span></label>
         <textarea id="competitor_sites" placeholder="Paste URLs of competitor or industry sites you think look good. We'll note what you like about them." rows="3"></textarea>
       </div>
     </div>
 
     <div class="field-row single">
-      <div class="field">
+      <div class="field is-optional">
         <label>Tagline or Slogan <span class="opt">(optional)</span></label>
         <input type="text" id="tagline" placeholder="e.g. Fast, Honest, Done Right · Denver's Most Trusted HVAC" />
         <div class="field-hint">We'll feature this prominently in your hero section.</div>
@@ -604,7 +619,7 @@
     </div>
 
     <div class="field-row single">
-      <div class="field">
+      <div class="field is-optional">
         <label>Do you have a domain name? <span class="opt">(optional)</span></label>
         <div class="radio-group" id="domain_group">
           <label class="radio-label"><input type="radio" name="has_domain" value="yes" /> Yes — I own it</label>
@@ -615,7 +630,7 @@
     </div>
 
     <div class="field-row single" id="domain_row">
-      <div class="field">
+      <div class="field is-optional">
         <label>Domain Name <span class="opt">(if you have one)</span></label>
         <input type="text" id="domain_name" placeholder="www.yourcompany.com" />
         <div class="field-hint">We'll handle all DNS setup — you don't need to do anything technical.</div>
@@ -632,7 +647,7 @@
     </div>
 
     <div class="field-row single">
-      <div class="field">
+      <div class="field is-optional">
         <label>Interested in Nora (AI Phone Agent)? <span class="opt">(optional)</span></label>
         <div class="radio-group" id="nora_group">
           <label class="radio-label"><input type="radio" name="nora_interest" value="yes" /> Yes — tell me more</label>
@@ -644,7 +659,7 @@
     </div>
 
     <div class="field-row single">
-      <div class="field">
+      <div class="field is-optional">
         <label>How did you hear about Trevo Advisors? <span class="opt">(optional)</span></label>
         <select id="referral_source">
           <option value="">Select...</option>
@@ -659,7 +674,7 @@
     </div>
 
     <div class="field-row single">
-      <div class="field">
+      <div class="field is-optional">
         <label>Anything Else? <span class="opt">(optional)</span></label>
         <textarea id="notes" placeholder="Any specific requests, questions, or things you want us to know before we start..." rows="4"></textarea>
       </div>

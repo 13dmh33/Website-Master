@@ -10,7 +10,9 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') }
 const claude = require('../lib/claude');
 const store  = require('../lib/store');
 
-const TRADES = ['plumbing', 'HVAC', 'electrical', 'handyman', 'roofing'];
+// HVAC excluded — owner works for HVAC manufacturer (conflict of interest)
+// Primary focus: plumbing (40%), electrical (35%), handyman (25%)
+const TRADES = ['plumbing', 'electrical', 'handyman', 'plumbing', 'roofing'];
 const FORMATS = ['carousel', 'caption', 'trevo_found', 'reel'];
 const NICHES  = {
   carousel:    'education',

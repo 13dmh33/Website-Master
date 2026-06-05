@@ -12,7 +12,8 @@ const store    = require('../lib/store');
 const glossary = require('../lib/glossary');
 const sources  = require('../lib/sources');
 
-const TRADES = ['plumbing', 'hvac', 'electrical', 'handyman'];
+// HVAC excluded — owner works for HVAC manufacturer (conflict of interest)
+const TRADES = ['plumbing', 'electrical', 'handyman'];
 
 function weekStartDate() {
   const now  = new Date();

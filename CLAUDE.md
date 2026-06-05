@@ -9,6 +9,9 @@ Brand colors: Navy #0A1228 (background) · Teal #00C8AF (primary accent) · Deep
 
 Your goal: 47 clients/month at $150/site + $65/mo hosting; AI bundles (Nora/Atlas/Argus) add $200 build + $65/mo. Three AI products, one price point.
 
+**Trade focus: Plumbing (40%) · Electrical (35%) · Handyman (25%) · Roofing (secondary)**
+**HVAC is excluded** — owner works for an HVAC manufacturer (conflict of interest). Never scout, pitch, or generate content targeting HVAC contractors.
+
 ## Build Status (as of 2026-06-05 — updated session 3)
 - Scout v2: ✅ scripts/scout.js — --budget/--target/--min-score/--dry-run/--csv flags; pre-dedup from existing leads; social-only site detection; qualify_rate tracking; ROI estimate; top-5 preview; **on claude/scout-refinement**
 - Enricher: ✅ scripts/enricher.js — Apollo.io People Match, 200 credit/mo cap; finds owner email by biz name+city+phone; upgrades queue briefs sms→email when found; --dry-run; runs in container
@@ -29,7 +32,7 @@ Your goal: 47 clients/month at $150/site + $65/mo hosting; AI bundles (Nora/Atla
 - Configurator v2: ✅ website/preview/index.html — labeled 4-step flow, font picker, 6 color presets, 8 section toggles, device toggle, debounced live preview, AI Enhance button (calls /.netlify/functions/enhance), all 4 plan cards; **on claude/molly-ui-polish**
 - Netlify Enhance Function: ✅ netlify/functions/enhance.js — POST endpoint; calls Claude Haiku; returns headline/tagline/about/cta/trust_line/services JSON; 503 if ANTHROPIC_API_KEY not set; **on claude/molly-ui-polish**
 - Molly: ✅ molly/ — Instagram/LinkedIn content engine for Trevo Advisors; adapted from Milly architecture; researcher→generator→designer→scheduler→analyst pipeline; 20 evergreen posts; Trevo navy/teal canvas design; **on claude/molly-ui-polish**
-- Molly Source Intelligence: ✅ molly/lib/sources.js + molly/templates/sources.json — 200-source curated trade database; static archetypes for hvac/plumbing/electrical/handyman (pain points, hooks, angles, trends); optional free RSS fetching via native https (zero API cost); researcher.js wired to rotate trade focus weekly; **on claude/molly-ui-polish**
+- Molly Source Intelligence: ✅ molly/lib/sources.js + molly/templates/sources.json — 200-source curated trade database; static archetypes for plumbing/electrical/handyman (pain points, hooks, angles, trends); optional free RSS fetching via native https (zero API cost); researcher.js rotates weekly through plumbing/electrical/handyman only; **HVAC excluded**; **on claude/molly-ui-polish**
 - Market Audit: ✅ scripts/market-audit.js — static scoring of 60+ US metros; ranked by contractor density + digital gap + homeownership + growth; CSV export; --trade flag; **on claude/scout-refinement**
 - Scout --suggest: ✅ scripts/scout.js — --suggest [trade] flag reads market-data.json, prints top 5 cities ranked by demand score before scraping; **on claude/scout-refinement**
 - Caller: ✅ scripts/caller.js — cold call sheet generator; ranked by gap score; CSV to reports/; --sms mode for personal iPhone texts; shows demo_url per lead; zero API cost

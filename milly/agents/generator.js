@@ -41,8 +41,16 @@ Attribution: posts end with "${brandVoice.post_attribution}"
 Never mention AI in any form.${glossarySection}`;
 }
 
+// CTA text alternates by week — mindset/business content → lower-barrier audit CTA;
+// booking + found content always use stages (high-intent audience)
+function buildOutboundCta(weekNumber) {
+  return weekNumber % 2 === 1
+    ? 'DM the word audit for a free 10-minute pipeline review'
+    : 'DM us the word stages';
+}
+
 // call 1 — 6-slide carousel (booking niche)
-async function generateCarousel(angle, voiceContext) {
+async function generateCarousel(angle, voiceContext, ctaText = 'DM us the word stages') {
   const prompt = `You are writing Instagram carousel content for Reeve, a speaker booking agency.
 
 Voice and rules:
@@ -65,7 +73,7 @@ IMPORTANT — quality bar:
 Rules:
 - Slide 1: hook — one punchy statement that makes a speaker feel called out. Max 10 words. Body is empty string.
 - Slides 2-5: deliver the insight. One specific, actionable idea per slide. Max 8 words headline, max 25 words body. Concrete example or number on each slide.
-- Slide 6: soft CTA. Headline: "Ready to stop waiting?" Body: "Reeve handles the pitching. You just show up and speak. DM us the word stages."
+- Slide 6: soft CTA. Headline: "Ready to stop waiting?" Body: "Reeve handles the pitching. You just show up and speak. ${ctaText}."
 - Never use any word from the avoid list.
 - Return only the JSON array. No explanation before or after.`;
 
@@ -158,7 +166,7 @@ Return as plain text only. No JSON, no markdown.`;
 
 // call 3b — "What Reeve does" — service clarity (even weeks)
 // runs every other week so the audience understands what Reeve actually is
-async function generateServiceClarity(voiceContext, brandVoice) {
+async function generateServiceClarity(voiceContext, brandVoice, ctaText = 'DM us the word stages to see if you\'re a fit') {
   const service = brandVoice.reeve_service || {};
 
   const prompt = `You are writing an Instagram caption for Reeve, a speaker booking agency.
@@ -180,7 +188,38 @@ IMPORTANT — quality bar:
 - Include at least one concrete deliverable or number that makes the value tangible.
 - The reader should finish this post knowing exactly what Reeve does and who it's for.
 - Do NOT be salesy. State it like a fact, not a pitch.
-- End with a soft CTA: "DM us the word stages to see if you're a fit."
+- End with a soft CTA: "${ctaText}."
+
+100-130 words. Sentence case. Short paragraphs, 1-2 sentences max.
+End with: "— Reeve"
+Add exactly 3 hashtags from this list at the very end: #publicspeaking #speakingbusiness #speakerlife
+Return as plain text only. No JSON, no markdown.`;
+
+  return claude.call({ prompt, maxTokens: 1000 });
+}
+
+// call 3c — pricing transparency (runs once per 3-week cycle on business week)
+// explains tiers directly — transparent, not salesy
+async function generatePricingClarity(voiceContext) {
+  const prompt = `You are writing an Instagram caption for Reeve, a speaker booking agency.
+
+Voice and rules:
+${voiceContext}
+
+Topic: Reeve's pricing — what each tier costs and what it includes.
+
+Tiers:
+- Scout: $97/month. Weekly digest of open conference CFPs matched to the speaker's topic. Speaker submits applications themselves. No active pitching.
+- Pitch: $297/month. Reeve pitches conferences on the speaker's behalf (up to 8 per month), manages follow-ups, sends weekly pipeline report.
+- Full: $597/month. Everything in Pitch plus one-sheet writing, negotiation support, and closing emails when a conference says yes.
+
+IMPORTANT — quality bar:
+- State the prices directly. No vague "investment" language. No apologies. No "starting at."
+- Each tier should feel obviously priced for the right person at the right stage. Not cheap, not expensive — correct.
+- The reader should know within 30 seconds which tier fits where they are right now.
+- Tone is matter-of-fact, like a menu at a good restaurant. No pitch needed.
+- End with: "DM the word audit and we'll tell you which tier fits where you are."
+- Do NOT use words like "unlock", "game-changer", or "investment."
 
 100-130 words. Sentence case. Short paragraphs, 1-2 sentences max.
 End with: "— Reeve"
@@ -191,7 +230,7 @@ Return as plain text only. No JSON, no markdown.`;
 }
 
 // call 4 — 20-second reel script (talking-head format — no B-roll needed)
-async function generateReelScript(angle, niche, voiceContext) {
+async function generateReelScript(angle, niche, voiceContext, ctaText = 'DM us the word stages') {
   const prompt = `You are writing a 20-second talking-head Instagram Reel script for Reeve, a speaker booking agency.
 
 Voice and rules:
@@ -206,7 +245,7 @@ This is the format that gets saves and shares in the speaking industry niche —
 IMPORTANT — quality bar:
 - [HOOK - 2 sec]: a single sentence spoken directly to camera. Specific. Name a real situation. "You've given 40 talks this year and you still don't have a booking system." Not a question — a statement they recognize about themselves.
 - [BODY - 12 sec]: 4-5 short sentences that stack. Each one lands a new piece of evidence or insight. No transitions. No filler. Write like someone who has seen this pattern a hundred times and is mildly irritated about it.
-- [CTA - 6 sec]: one soft sentence. "DM me the word stages if you want to fix this."
+- [CTA - 6 sec]: one soft sentence. "${ctaText} if you want to fix this."
 - The HOOK line will be turned into a quote-style image — make it punchy enough to work as a standalone quote.
 - Total spoken words: under 60.
 
@@ -249,9 +288,14 @@ async function main() {
 
   // service clarity alternates with "Reeve found this" — even weeks get clarity post
   const reeveFoundVariant = weekNiches.weekNumber % 2 === 0 ? 'clarity' : 'found';
+  // on business caption week (weekNumber 2), clarity slot becomes a pricing transparency post
+  const clarityVariant = (reeveFoundVariant === 'clarity' && weekNiches.weekNumber === 2) ? 'pricing' : 'service';
+
+  // CTA diversity: mindset/business weeks use lower-barrier "audit" CTA on reel and clarity posts
+  const ctaText = buildOutboundCta(weekNiches.weekNumber);
 
   console.log(`Generating content for week of ${weekOf}.`);
-  console.log(`Niches this week — caption: ${weekNiches.caption}, reel: ${weekNiches.reel}`);
+  console.log(`Niches this week — caption: ${weekNiches.caption}, reel: ${weekNiches.reel}, clarity: ${clarityVariant}, CTA: ${ctaText}`);
 
   // pick angles by type — fall back to first available if specific ones missing
   const carouselAngle    = angles.find(a => a.niche === 'booking') || angles[0];
@@ -271,7 +315,7 @@ async function main() {
       caption: `${prc.hook}\n\n${prc.hashtags.join(' ')}`,
     };
   } else {
-    carousel = await generateCarousel(carouselAngle, voiceContext);
+    carousel = await generateCarousel(carouselAngle, voiceContext, ctaText);
   }
   console.log('Carousel done.');
 
@@ -300,7 +344,12 @@ async function main() {
     const cleanRfBody = prc.body.replace(/\s*(That['']s the job\.\s*)?—\s*Reeve\s*$/i, '').trimEnd();
     reeveFound = `${prc.hook}\n\n${cleanRfBody}\n\nThat's the job. — Reeve\n\n${prc.hashtags.slice(0, 3).join(' ')}`;
   } else if (reeveFoundVariant === 'clarity') {
-    reeveFound = await generateServiceClarity(voiceContext, brandVoice);
+    if (clarityVariant === 'pricing') {
+      console.log('  (using pricing transparency variant this cycle)');
+      reeveFound = await generatePricingClarity(voiceContext);
+    } else {
+      reeveFound = await generateServiceClarity(voiceContext, brandVoice, ctaText === 'DM us the word stages' ? 'DM us the word stages to see if you\'re a fit' : 'DM the word audit for a free 10-minute pipeline review');
+    }
   } else {
     reeveFound = await generateReeveFound(conferencesFound || [], voiceContext);
   }
@@ -309,9 +358,9 @@ async function main() {
   console.log('Generating reel script...');
   if (reelAngle.prewrittenContent) {
     const prc = reelAngle.prewrittenContent;
-    reelScript = `[HOOK - 2 sec]: ${prc.hook}\n\n[BODY - 12 sec]: ${prc.body}\n\n[CTA - 6 sec]: DM us the word stages.`;
+    reelScript = `[HOOK - 2 sec]: ${prc.hook}\n\n[BODY - 12 sec]: ${prc.body}\n\n[CTA - 6 sec]: ${ctaText}.`;
   } else {
-    reelScript = await generateReelScript(reelAngle, weekNiches.reel, voiceContext);
+    reelScript = await generateReelScript(reelAngle, weekNiches.reel, voiceContext, ctaText);
   }
   console.log('Reel script done.');
 

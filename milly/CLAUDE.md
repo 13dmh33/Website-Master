@@ -64,7 +64,10 @@ Driven by `post-formats.json` `caption_niche_alternation` array. Generator reads
 
 ### Reeve Found vs Service Clarity alternation
 - **Odd** `weekNumber` → "Reeve Found This" (real conference deadlines, proof of work)
-- **Even** `weekNumber` → "What Reeve Does" (service clarity, retainer model, differentiation from bureaus)
+- **Even** `weekNumber` 0 → "What Reeve Does" (service clarity, retainer model, differentiation from bureaus)
+- **Even** `weekNumber` 2 (business caption week) → "What Reeve Costs" (transparent pricing: Scout $97 / Pitch $297 / Full $597)
+
+This means pricing appears approximately once per 3-week content cycle — monthly cadence.
 
 ### Reel format
 Talking-head, 20 seconds. Hook (2s) + body (12s) + CTA (6s). Direct to camera. No B-roll.
@@ -211,7 +214,11 @@ DAVE_NOTIFY_EMAIL=          # optional — high-signal post alerts
 - **Speaking glossary:** 45 terms, injected into every Claude call via `lib/glossary.js`
 - **Business niche pillar:** 3rd caption rotation week (contracts, fees, negotiation)
 - **Talking-head reel format:** direct to camera, stacked evidence, no B-roll
-- **Service clarity rotation:** alternates "Reeve Found This" (odd weeks) / "What Reeve Does" (even weeks)
+- **Service clarity rotation:** alternates "Reeve Found This" (odd weeks) / "What Reeve Does" (even weeks) / "What Reeve Costs" (business week)
+- **CTA diversity:** `buildOutboundCta(weekNumber)` alternates "DM stages" (even weeks) with "DM audit" (odd weeks) on reel and clarity posts; carousel always uses stages (high-intent audience)
+- **Pricing transparency post:** `generatePricingClarity()` runs on business-niche clarity weeks; names Scout/Pitch/Full tiers and prices directly
+- **Client result evergreen posts:** ev-11 (first booking story) and ev-12 (90-day pipeline story) added; function as social proof before real case studies exist
+- **Evergreen bank reset:** all 10 original posts reset to `used: false`; 3 new posts added (ev-11, ev-12, ev-13)
 
 ### A/B and analytics (built, pending data)
 - Caption A/B variants via `lib/ab-tracker.js` (2 hooks/week, same angle)

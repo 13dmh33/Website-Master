@@ -1,6 +1,6 @@
 {
   "generated": true,
-  "generatedAt": "2026-06-03T02:19:34.252Z",
+  "generatedAt": "2026-06-05T00:00:00.000Z",
   "posts": [
     {
       "id": "ev-01",
@@ -15,8 +15,7 @@
         "#keynote",
         "#thoughtleadership"
       ],
-      "used": true,
-      "lastUsed": "2026-06-03T19:13:35.764Z"
+      "used": false
     },
     {
       "id": "ev-02",
@@ -30,8 +29,7 @@
         "#speakingbusiness",
         "#thoughtleadership"
       ],
-      "used": true,
-      "lastUsed": "2026-06-03T19:13:35.764Z"
+      "used": false
     },
     {
       "id": "ev-03",
@@ -46,8 +44,7 @@
         "#speakerlife",
         "#thoughtleadership"
       ],
-      "used": true,
-      "lastUsed": "2026-06-03T02:56:47.468Z"
+      "used": false
     },
     {
       "id": "ev-04",
@@ -55,14 +52,13 @@
       "format": "reevefound",
       "topic": "how to find conferences looking for speakers right now",
       "hook": "Found: 3 conferences actively seeking speakers this month",
-      "body": "TechForward Summit 2024\nSan Francisco, March 15-17\nSeeking: digital transformation experts\nDeadline: February 10\nFee: $7,500 + travel\n\nWomen in Leadership Conference\nChicago, April 22-24\nSeeking: executive coaches, workplace culture speakers\nDeadline: February 28\nFee: $5,000 + expenses\n\nSustainable Business Expo\nAustin, May 8-10\nSeeking: sustainability consultants, green business experts\nDeadline: March 1\nFee: $4,000 + travel\n\nAll three accept cold pitches through their speaker application portals.\n\nStop waiting for invitations.\nStart pitching.\n\n— Reeve",
+      "body": "TechForward Summit 2026\nSan Francisco, September 15-17\nSeeking: digital transformation experts\nDeadline: July 31\nFee: $7,500 + travel\n\nWomen in Leadership Conference\nChicago, October 22-24\nSeeking: executive coaches, workplace culture speakers\nDeadline: August 15\nFee: $5,000 + expenses\n\nSustainable Business Expo\nAustin, November 8-10\nSeeking: sustainability consultants, green business experts\nDeadline: August 1\nFee: $4,000 + travel\n\nAll three accept cold pitches through their speaker application portals.\n\nStop waiting for invitations.\nStart pitching.\n\n— Reeve",
       "hashtags": [
         "#publicspeaking",
         "#speakingbusiness",
         "#keynote"
       ],
-      "used": true,
-      "lastUsed": "2026-06-03T02:56:47.468Z"
+      "used": false
     },
     {
       "id": "ev-05",
@@ -76,8 +72,7 @@
         "#speakingbusiness",
         "#speakerlife"
       ],
-      "used": true,
-      "lastUsed": "2026-06-03T02:56:47.468Z"
+      "used": false
     },
     {
       "id": "ev-06",
@@ -91,8 +86,7 @@
         "#speakingbusiness",
         "#keynote"
       ],
-      "used": true,
-      "lastUsed": "2026-06-03T02:56:47.468Z"
+      "used": false
     },
     {
       "id": "ev-07",
@@ -107,8 +101,7 @@
         "#keynote",
         "#thoughtleadership"
       ],
-      "used": true,
-      "lastUsed": "2026-06-03T19:13:35.764Z"
+      "used": false
     },
     {
       "id": "ev-08",
@@ -123,8 +116,7 @@
         "#speakerlife",
         "#keynote"
       ],
-      "used": true,
-      "lastUsed": "2026-06-03T19:13:35.764Z"
+      "used": false
     },
     {
       "id": "ev-09",
@@ -139,8 +131,7 @@
         "#speakerlife",
         "#thoughtleadership"
       ],
-      "used": true,
-      "lastUsed": "2026-06-03T02:34:42.920Z"
+      "used": false
     },
     {
       "id": "ev-10",
@@ -154,8 +145,50 @@
         "#speakingbusiness",
         "#speakerlife"
       ],
-      "used": true,
-      "lastUsed": "2026-06-03T02:34:42.920Z"
+      "used": false
+    },
+    {
+      "id": "ev-11",
+      "niche": "booking",
+      "format": "reevefound",
+      "topic": "client result — first booking in the pipeline",
+      "hook": "We submitted 5 pitches. One said yes. The speaker made $4,500.",
+      "body": "Week one: we scanned 40 open conferences in the speaker's niche.\n\nWe found five that were actively looking for their exact topic. All five had open CFP windows.\n\nFive targeted pitches went out in 48 hours. We wrote them. We sent them.\n\nBy day 14: one acceptance. A regional leadership summit. 300 attendees. $4,500 keynote fee plus travel.\n\nThe speaker found out via email from us.\n\nThey didn't have to research the conference, write the pitch, or manage the follow-up.\n\nThey just showed up and spoke.\n\nThat's what a pipeline looks like when it's actually running.",
+      "hashtags": [
+        "#publicspeaking",
+        "#speakingbusiness",
+        "#speakerlife"
+      ],
+      "used": false
+    },
+    {
+      "id": "ev-12",
+      "niche": "automation",
+      "format": "caption",
+      "topic": "client result — what 90 days of consistent pitching looks like",
+      "hook": "Month 1 with Reeve: 8 pitches sent. Month 3: first paid keynote booked.",
+      "body": "The first month is slow.\n\nWe're building the pipeline, learning which conferences match the speaker's niche, and writing the first round of pitches. Nothing comes back yes yet.\n\nMonth two: follow-ups go out. Three conferences ask for more information. One wants a call.\n\nMonth three: the call becomes a booking. A corporate summit. 400 attendees. $6,000 fee.\n\nThis isn't magic. It's math.\n\nMost speakers quit before month three because they don't have a system that keeps pitching when they're busy preparing for other talks.\n\nConsistency is the product. The booking is the proof.\n\n— Reeve",
+      "hashtags": [
+        "#publicspeaking",
+        "#speakingbusiness",
+        "#speakerlife",
+        "#keynote"
+      ],
+      "used": false
+    },
+    {
+      "id": "ev-13",
+      "niche": "business",
+      "format": "caption",
+      "topic": "what Reeve costs — transparent tier breakdown",
+      "hook": "Here's exactly what Reeve costs.",
+      "body": "Three tiers. No hidden fees. No commission on bookings.\n\nScout: $97/month. We send you a weekly digest of open conference slots that match your topic. You submit. Good for speakers just starting to build a pipeline.\n\nPitch: $297/month. We pitch conferences on your behalf — up to 8 per month. We write them, send them, follow up. You review the pipeline report each week.\n\nFull: $597/month. Everything in Pitch plus one-sheet writing, negotiation support, and we draft the logistics emails when a conference says yes.\n\nNo bureau takes 20-30% of your fee. You keep everything.\n\nDM the word audit and we'll tell you which tier fits where you are.\n\n— Reeve",
+      "hashtags": [
+        "#publicspeaking",
+        "#speakingbusiness",
+        "#speakerlife"
+      ],
+      "used": false
     }
   ]
 }

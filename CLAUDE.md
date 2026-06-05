@@ -26,8 +26,9 @@ Your goal: 47 clients/month at $150/site + $65/mo hosting; Nora bundle adds $200
 - Webhook: ✅ scripts/webhook.js — Twilio inbound SMS server, HMAC-SHA1 validation; **run on Mac**
 - Poller: ✅ scripts/poller.js — IMAP email reply poller (imapflow), auto-reply detection; **run on Mac**
 - Website/Demo: ✅ website/ — 3 demo sites (plumber/HVAC/electrician), proposal page, intake form, checkout, thank-you, /start funnel, /atlas/ landing page; **on claude/trevo-advisors-review-Sjewy**
-- Caller: ✅ scripts/caller.js — cold call sheet generator; ranked by gap score; CSV to reports/; call tips + trade breakdown; zero API cost
+- Caller: ✅ scripts/caller.js — cold call sheet generator; ranked by gap score; CSV to reports/; --sms mode for personal iPhone texts; zero API cost
 - LinkedIn: ✅ scripts/linkedin.js — connection request + follow-up DM generator for all queue leads; CSV to reports/; zero API cost
+- Referral: ✅ scripts/referral.js — outreach generator for referral partners (realtors, inspectors, PMs, designers); LinkedIn + email copy; zero API cost
 - Atlas: ✅ website/atlas/index.html — AI lead follow-up product page; $200 setup + $65/mo; wired into proposal + checkout
 
 ## Template Vault
@@ -179,7 +180,7 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - 2026-06-04: Scout improved — plumber/hvac switched to sms channel; needsEmail filter removed; gap scoring rewritten (3-10 range); --multi flag + TRADE_SYNONYMS; subtypes/lat/lng stored; effective CPL logged
 - 2026-06-04: Demo form guard — submit-disabled alert added to all 5 demos (plumbing/hvac/electrical/handyman/roofing)
 - 2026-06-05: Enricher built — scripts/enricher.js hits Apollo People Match API to find owner emails for phone-only leads; upgrades queue briefs sms→email; 200 credit/mo cap
-- 2026-06-05: CEO sprint — Caller (cold call sheet), LinkedIn outreach generator, Atlas landing page (/atlas/), Atlas wired into proposal + checkout; 3 new revenue channels opened
+- 2026-06-05: CEO sprint — Caller (cold call sheet + --sms mode), LinkedIn outreach, Atlas landing page + wired into proposal/checkout; Referral generator (realtors/inspectors/PMs/designers); 4 new channels
 
 ## Twilio A2P 10DLC Status
 - Brand registration submitted: 2026-06-03
@@ -195,8 +196,10 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 ## Mac Action Items (as of 2026-06-05)
 
 ### Immediate revenue actions (do these today)
-1. **Cold calls**: `node scripts/caller.js` → prints 54 ranked leads with phone numbers + talk tracks → call top 20 today
-2. **LinkedIn**: `node scripts/linkedin.js` → CSV at reports/linkedin-{date}.csv → send 15 connection requests today
+1. **Personal SMS** (unblocks stuck leads NOW): `node scripts/caller.js --sms` → copy-paste messages for your 54 leads → text 10–15/day from iPhone, no Twilio needed
+2. **Cold calls**: `node scripts/caller.js` → ranked list with phone numbers + talk tracks → call top 20 today
+3. **LinkedIn**: `node scripts/linkedin.js` → CSV at reports/linkedin-{date}.csv → send 15 connection requests today
+4. **Referral network**: `node scripts/referral.js` → LinkedIn + email scripts for realtors/inspectors/PMs → 3 partners = 6–12 leads/month passively
 
 ### Setup required on Mac
 3. Sign up for Apollo.io Basic ($49/mo) → get API key → add `APOLLO_API_KEY=` to `.env.local`

@@ -24,6 +24,7 @@ const getArg   = (f) => { const i = args.indexOf(f); return i !== -1 ? args[i + 
 const tradeFilter = getArg('--trade');
 const limitArg    = parseInt(getArg('--limit') || '0', 10);
 const noCsv       = args.includes('--no-csv');
+const smsMode     = args.includes('--sms');  // show copy-paste SMS texts instead of call talk tracks
 
 // ── LOAD BRIEFS ───────────────────────────────────────────────────────────────
 
@@ -65,6 +66,26 @@ function talkTrack(brief) {
   const hook    = brief.hero_angle || brief.diagnosis || '';
   const opener  = `${brief.business_name} has ${brief.review_count} reviews and ${website}. ${hook.split('.')[0]}.`;
   return opener.replace(/\s+/g, ' ').trim();
+}
+
+// ── SMS MODE ──────────────────────────────────────────────────────────────────
+
+function printSMS(ranked) {
+  console.log('\nSend from your personal iPhone — no A2P/Twilio needed.');
+  console.log('─'.repeat(60));
+  for (let i = 0; i < ranked.length; i++) {
+    const b = ranked[i];
+    const msg = b.final_message || b.cold_message || '';
+    console.log(`\n${i + 1}. ${b.business_name} · ${b.phone}`);
+    console.log(`   ${msg}`);
+  }
+  console.log('\n' + '─'.repeat(60));
+  console.log('Tips:');
+  console.log('  • Text from your personal number — no A2P registration needed');
+  console.log('  • Best windows: 9–11am or 1–3pm weekdays');
+  console.log('  • If they call back: "I sent you a text — I build websites for [trade]s in [city]"');
+  console.log('  • Do 10–15/day max to stay personal and avoid spam flags');
+  console.log();
 }
 
 // ── TABLE OUTPUT ──────────────────────────────────────────────────────────────
@@ -155,12 +176,18 @@ function main() {
 
   if (limitArg > 0) ranked = ranked.slice(0, limitArg);
 
-  console.log(`\nCold Call Sheet — ${new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}`);
+  const modeLabel = smsMode ? 'Personal SMS Texts' : 'Cold Call Sheet';
+  console.log(`\n${modeLabel} — ${new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}`);
   console.log(`${ranked.length} leads${limitArg > 0 ? ` (of ${total})` : ''} · sorted by gap score`);
   if (tradeFilter) console.log(`Trade filter: ${tradeFilter}`);
 
   if (ranked.length === 0) {
     console.log('No approved leads with phone numbers found.');
+    return;
+  }
+
+  if (smsMode) {
+    printSMS(ranked);
     return;
   }
 

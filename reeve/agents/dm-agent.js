@@ -143,12 +143,9 @@ function sendDM(recipientId, text) {
  * Build the routing message text for the given score.
  */
 function buildRoutingMessage(score) {
-  if (score === 'high') {
-    return templates.messages.high_fit.replace('{CALL_BOOKING_LINK}', CALL_BOOKING_LINK);
-  }
-  if (score === 'mid') {
-    return templates.messages.mid_fit;
-  }
+  if (score === 'high')  return templates.messages.high_fit.replace('{CALL_BOOKING_LINK}', CALL_BOOKING_LINK);
+  if (score === 'mid')   return templates.messages.mid_fit;
+  if (score === 'scout') return templates.messages.scout_fit;
   return templates.messages.low_fit;
 }
 
@@ -158,7 +155,7 @@ function buildRoutingMessage(score) {
 async function notifyDave(convo, score, reasoning) {
   if (!DAVE_NOTIFY_EMAIL || !ZOHO_EMAIL || !ZOHO_APP_PASSWORD) return;
 
-  const scoreLabel = { high: '🟢 HIGH FIT', mid: '🟡 MID FIT', low: '🔴 LOW FIT' }[score] || score.toUpperCase();
+  const scoreLabel = { high: '🟢 HIGH FIT', mid: '🟡 MID FIT', scout: '🔵 SCOUT FIT', low: '⚫ DECLINE' }[score] || score.toUpperCase();
   const name       = convo.senderName || convo.senderId;
 
   const subject = `[Reeve] New lead routed — ${scoreLabel} — ${name}`;
@@ -174,9 +171,10 @@ async function notifyDave(convo, score, reasoning) {
     `  Keynote fee:           ${convo.answers.fee_range || '—'}`,
     `  Topic/niche:           ${convo.answers.topic || '—'}`,
     ``,
-    score === 'high' ? `ACTION: Book a call — they were sent your Cal.com link automatically.` :
-    score === 'mid'  ? `ACTION: Review and follow up within 24 hours.` :
-                       `ACTION: No action needed — they received the warm decline message.`,
+    score === 'high'  ? `ACTION: Book a call — they were sent your Cal.com link automatically.` :
+    score === 'mid'   ? `ACTION: Review and follow up within 24 hours.` :
+    score === 'scout' ? `ACTION: They were offered the Scout tier ($97/mo). Follow up with details if they reply "yes".` :
+                        `ACTION: No action needed — they received the decline message.`,
     ``,
     `To onboard this lead as a client:`,
     `  node scripts/onboard-client.js --from-dm ${convo.senderId}`,

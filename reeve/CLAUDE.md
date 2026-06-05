@@ -73,21 +73,25 @@ Speaker DMs "stages" (or "STAGES", "Stages")
 
 ### Scoring rubric (in `lib/qualifier.js`)
 
-| Signal | Low | Mid | High |
-|--------|-----|-----|------|
-| Paid gigs (last 12 months) | 0 | 1–4 | 5+ |
-| Keynote fee | Under $2,500 | $2,500–$5,000 | $5,000+ |
-| Topic specificity | Vague/general | Some specificity | Clear niche |
+4-tier scoring model aligned with Reeve's tiered pricing:
+
+| Score | Criteria | Tier | Price |
+|-------|----------|------|-------|
+| `high` | 5+ paid gigs AND $5k+ fee AND clear niche | Full | $597/mo |
+| `mid` | 1–4 gigs OR $2,500–$5k fee AND some niche | Pitch | $297/mo |
+| `scout` | 0 paid gigs BUT motivated AND clear niche | Scout | $97/mo |
+| `low` | 0 paid gigs AND vague niche / no real speaking identity | — | Decline |
 
 All 3 signals combined → single score. Claude is told to be strict — vague answers pull the score down.
 
 ### Routing actions
 
-| Score | Action | Message |
-|-------|--------|---------|
-| `high` | Book a call — sends Cal.com link | Automated |
-| `mid` | Flag Dave for manual review | Automated |
-| `low` | Warm decline — stay and follow | Automated |
+| Score | Action | Tier offered | Message |
+|-------|--------|-------------|---------|
+| `high` | Book a call — sends Cal.com link | Full $597/mo | Automated |
+| `mid` | Flag Dave for manual review | Pitch $297/mo | Automated |
+| `scout` | Offer Scout tier | Scout $97/mo | Automated |
+| `low` | Decline | — | Automated |
 
 ### Re-trigger protection
 

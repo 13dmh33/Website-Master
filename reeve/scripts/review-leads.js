@@ -10,6 +10,7 @@
 //   node scripts/review-leads.js           (interactive — review and onboard)
 //   node scripts/review-leads.js --list    (just print the queue, no prompts)
 //   node scripts/review-leads.js --high    (show high-fit leads only)
+//   node scripts/review-leads.js --scout   (show scout-fit leads only)
 
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 
@@ -19,12 +20,13 @@ const { execSync } = require('child_process');
 const state       = require('../lib/state');
 const clientStore = require('../lib/client-store');
 
-const args      = process.argv.slice(2);
-const isList    = args.includes('--list');
-const highOnly  = args.includes('--high');
+const args       = process.argv.slice(2);
+const isList     = args.includes('--list');
+const highOnly   = args.includes('--high');
+const scoutOnly  = args.includes('--scout');
 
-const SCORE_ORDER  = { high: 0, mid: 1, low: 2 };
-const SCORE_LABEL  = { high: '🟢 HIGH', mid: '🟡 MID ', low: '🔴 LOW ' };
+const SCORE_ORDER  = { high: 0, mid: 1, scout: 2, low: 3 };
+const SCORE_LABEL  = { high: '🟢 HIGH', mid: '🟡 MID ', scout: '🔵 SCOUT', low: '⚫ LOW  ' };
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -49,7 +51,8 @@ function getPendingLeads() {
   return conversations
     .filter(c => c.routed && c.score)
     .filter(c => !isOnboarded(c.senderId))
-    .filter(c => !highOnly || c.score === 'high')
+    .filter(c => !highOnly  || c.score === 'high')
+    .filter(c => !scoutOnly || c.score === 'scout')
     .sort((a, b) => {
       // Sort by score priority (high first), then by time (newest first)
       const scoreDiff = (SCORE_ORDER[a.score] ?? 9) - (SCORE_ORDER[b.score] ?? 9);
@@ -79,19 +82,21 @@ function printLead(convo, index, total) {
     console.log('  ✓ They were sent the Cal.com booking link automatically.');
   } else if (convo.score === 'mid') {
     console.log('  → Dave should follow up within 24 hours.');
+  } else if (convo.score === 'scout') {
+    console.log('  → Offered Scout tier ($97/mo). Follow up if they reply "yes".');
   } else {
-    console.log('  → Warm decline sent. No immediate action needed.');
+    console.log('  → Declined. No immediate action needed.');
   }
 }
 
 function printList(leads) {
   if (!leads.length) {
-    const filter = highOnly ? ' high-fit' : '';
+    const filter = highOnly ? ' high-fit' : scoutOnly ? ' scout-fit' : '';
     console.log(`\nNo pending${filter} leads awaiting onboarding.`);
     return;
   }
 
-  const byScore = { high: [], mid: [], low: [] };
+  const byScore = { high: [], mid: [], scout: [], low: [] };
   for (const l of leads) {
     (byScore[l.score] || byScore.low).push(l);
   }
@@ -100,7 +105,7 @@ function printList(leads) {
 
   for (const [score, group] of Object.entries(byScore)) {
     if (!group.length) continue;
-    const label = { high: '🟢 HIGH FIT', mid: '🟡 MID FIT', low: '🔴 LOW FIT' }[score];
+    const label = { high: '🟢 HIGH FIT', mid: '🟡 MID FIT', scout: '🔵 SCOUT FIT', low: '⚫ DECLINED' }[score];
     console.log(`${label} (${group.length})`);
     for (const c of group) {
       const name    = c.senderName || c.senderId;
@@ -214,13 +219,13 @@ async function main() {
   }
 
   if (!leads.length) {
-    const filter = highOnly ? ' high-fit' : '';
+    const filter = highOnly ? ' high-fit' : scoutOnly ? ' scout-fit' : '';
     console.log(`\nNo pending${filter} leads awaiting onboarding.`);
     console.log('Leads appear here after speakers DM "stages" and complete the 3-question flow.');
     return;
   }
 
-  const filter = highOnly ? ' (high-fit only)' : '';
+  const filter = highOnly ? ' (high-fit only)' : scoutOnly ? ' (scout-fit only)' : '';
   console.log(`\n${leads.length} lead(s) pending onboarding${filter}.`);
   await reviewLeads(leads);
 }

@@ -20,6 +20,7 @@
     "leads":          "node scripts/review-leads.js",
     "leads:list":     "node scripts/review-leads.js --list",
     "leads:high":     "node scripts/review-leads.js --high",
+    "leads:scout":    "node scripts/review-leads.js --scout",
     "onboard":        "node scripts/onboard-client.js"
   },
   "dependencies": {

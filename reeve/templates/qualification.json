@@ -18,14 +18,16 @@
     }
   ],
   "scoring": {
-    "high_fit": { "label": "high", "action": "book_call" },
-    "mid_fit":  { "label": "mid",  "action": "flag_dave" },
-    "low_fit":  { "label": "low",  "action": "decline" }
+    "high_fit":  { "label": "high",  "action": "book_call",   "tier": "full"  },
+    "mid_fit":   { "label": "mid",   "action": "flag_dave",   "tier": "pitch" },
+    "scout_fit": { "label": "scout", "action": "offer_scout", "tier": "scout" },
+    "low_fit":   { "label": "low",   "action": "decline",     "tier": null    }
   },
   "messages": {
     "trigger_reply": "Got it — before we connect, one quick question: how many paid speaking engagements have you done in the last 12 months?",
     "high_fit": "Based on what you've shared, you sound like a strong fit. Here's a link to book a 20-minute call with Dave: {CALL_BOOKING_LINK}\n\nHe'll look at your pipeline and tell you exactly how Reeve can help.",
     "mid_fit": "Thanks for sharing that. Let me have Dave take a look — he'll follow up within 24 hours to see if it makes sense to connect.",
-    "low_fit": "Thanks for reaching out. Reeve works best with speakers who have a few paid gigs under their belt and are ready to scale. You're not quite there yet — but follow along. We post booking strategy 3x a week and you'll get a lot from it. When the time is right, DM us again."
+    "scout_fit": "You're building something real. Reeve has a Scout tier designed exactly for where you are — $97/month and we send you a weekly digest of open conference slots that match your topic. No pitching yet, just a curated pipeline so you can start submitting. Want me to send you the details?",
+    "low_fit": "Thanks for reaching out. The fit isn't quite there right now — Reeve works best with speakers who have a clear niche and are ready to start applying to gigs. Keep posting and building your angle. When that's locked in, DM us again."
   }
 }

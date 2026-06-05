@@ -20,25 +20,47 @@ const MODEL  = 'claude-sonnet-4-6';
 async function scoreConversation(answers) {
   const { paid_talks_count, fee_range, topic } = answers;
 
-  const prompt = `You are a qualification scorer for Reeve, a speaker booking agency. Your job is to evaluate whether a prospective speaker is a good fit for Reeve's services based on three data points.
+  const prompt = `You are a qualification scorer for Reeve, a speaker booking agency. Your job is to evaluate whether a prospective speaker is a good fit for Reeve's services, and which tier fits them best.
+
+Reeve has four tiers:
+- Full ($597/mo): Done-for-you outbound booking pipeline. Pitch writing, CFP submissions, negotiation.
+- Pitch ($297/mo): Reeve pitches on the speaker's behalf to conferences (up to 8/mo).
+- Scout ($97/mo): Weekly digest of open CFPs matching the speaker's niche. Speaker submits themselves.
+- Decline: No fit at this time.
 
 Scoring rubric:
-- Paid speaking engagements in last 12 months: 0 = low fit, 1–4 = mid fit, 5 or more = high fit
-- Current keynote fee: under $2,500 = low fit, $2,500–$5,000 = mid fit, $5,000+ = high fit
-- Speaking topic/niche: vague or "various topics" = low, general motivation without clear angle = mid, specific niche with clear expertise = high
+- Paid speaking engagements in last 12 months:
+    0 AND vague niche = decline
+    0 BUT clear niche and motivated = scout
+    1–4 = mid (pitch tier)
+    5 or more = high (full tier)
+- Current keynote fee:
+    Under $2,500 or none = lowers score
+    $2,500–$5,000 = mid signal
+    $5,000+ = high signal
+- Speaking topic/niche:
+    Vague, "various", "motivational speaker" with no angle = lowers score
+    General but specific enough (e.g. "women in leadership", "startup culture") = mid signal
+    Clear, ownable niche (e.g. "AI adoption in healthcare", "DEI for tech companies") = high signal
+
+Score rules:
+- "high"  → 5+ paid gigs AND $5k+ fee AND clear niche
+- "mid"   → 1–4 paid gigs OR $2,500–$5k fee AND some niche specificity
+- "scout" → 0 paid gigs BUT motivated AND has a clear niche they can speak on
+- "low"   → 0 paid gigs AND vague niche OR no real speaking identity yet
 
 Prospect answers:
 1. Paid talks in last 12 months: ${paid_talks_count || '(not provided)'}
 2. Current keynote fee: ${fee_range || '(not provided)'}
 3. Primary speaking topic/niche: ${topic || '(not provided)'}
 
-Evaluate all three signals together and return a single JSON object with no markdown formatting:
+Return a single JSON object with no markdown formatting:
 {
-  "score": "high" | "mid" | "low",
-  "reasoning": "1–2 sentence plain English explanation of the score"
+  "score": "high" | "mid" | "scout" | "low",
+  "reasoning": "1–2 sentence plain English explanation of the score and recommended tier"
 }
 
-Be strict. Reeve only takes clients who are already earning from speaking and have a clear niche. A vague answer on fee or topic should pull the score down. Do not be charitable — score what was actually said.`;
+Do not be charitable — score what was actually said. A vague niche or zero fee is a signal.`;
 
   try {
     const response = await client.messages.create({
@@ -61,7 +83,7 @@ Be strict. Reeve only takes clients who are already earning from speaking and ha
       return { score: 'mid', reasoning: 'Score parsing failed — flagged for manual review.' };
     }
 
-    const score = ['high', 'mid', 'low'].includes(parsed.score) ? parsed.score : 'mid';
+    const score = ['high', 'mid', 'scout', 'low'].includes(parsed.score) ? parsed.score : 'mid';
     return { score, reasoning: parsed.reasoning || '' };
 
   } catch (err) {

@@ -75,14 +75,17 @@ function printSMS(ranked) {
   console.log('─'.repeat(60));
   for (let i = 0; i < ranked.length; i++) {
     const b = ranked[i];
-    const msg = b.final_message || b.cold_message || '';
+    const msg  = b.final_message || b.cold_message || '';
+    const demo = b.demo_url || '';
     console.log(`\n${i + 1}. ${b.business_name} · ${b.phone}`);
     console.log(`   ${msg}`);
+    if (demo) console.log(`   Demo: ${demo}`);
   }
   console.log('\n' + '─'.repeat(60));
   console.log('Tips:');
   console.log('  • Text from your personal number — no A2P registration needed');
   console.log('  • Best windows: 9–11am or 1–3pm weekdays');
+  console.log('  • Add demo URL as a follow-up text if they reply with interest');
   console.log('  • If they call back: "I sent you a text — I build websites for [trade]s in [city]"');
   console.log('  • Do 10–15/day max to stay personal and avoid spam flags');
   console.log();

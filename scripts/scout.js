@@ -3,6 +3,8 @@
  * Scout — Google Maps lead finder via Outscraper
  *
  * Usage:
+ *   node scripts/scout.js --suggest hvac            ← show top 5 markets for a trade, then exit
+ *   node scripts/scout.js --suggest                 ← show top 5 across all trades
  *   node scripts/scout.js --city "Denver, CO" --trade plumber --force
  *   node scripts/scout.js --city "Austin, TX" --trade hvac --limit 20 --force
  *   node scripts/scout.js --city "Denver, CO" --trade electrician --multi --force
@@ -65,9 +67,49 @@ const minScore  = parseInt(get('--min-score') || '3', 10); // --min-score 5 → 
 const isDryRun  = hasFlag('--dry-run');
 const isMulti   = hasFlag('--multi');
 const exportCsv = hasFlag('--csv');
+const suggestTrade = get('--suggest');                      // --suggest hvac → show top 5 cities and exit
+
+// ── MARKET SUGGEST MODE ───────────────────────────────────────────────────────
+// show top 5 markets for a trade and optionally exit (no --city needed)
+if (hasFlag('--suggest') || suggestTrade !== null) {
+  const MARKET_DATA_PATH = path.join(ROOT, 'config', 'market-data.json');
+  if (!fs.existsSync(MARKET_DATA_PATH)) {
+    console.error('config/market-data.json not found — run node scripts/market-audit.js first.');
+    if (!city || !trade) process.exit(1);
+  } else {
+    const tradeFilter  = (suggestTrade || trade || '').toLowerCase();
+    const allMarkets   = JSON.parse(fs.readFileSync(MARKET_DATA_PATH, 'utf8')).markets;
+    const filtered     = tradeFilter
+      ? allMarkets.filter(m => m.trades.includes(tradeFilter))
+      : allMarkets;
+    const ranked       = [...filtered].sort((a, b) => b.demand_score - a.demand_score);
+    const tradeLabel   = tradeFilter ? tradeFilter.toUpperCase() : 'all trades';
+
+    console.log(`\n${'─'.repeat(65)}`);
+    console.log(`  TOP MARKETS for ${tradeLabel} (by contractor website demand)`);
+    console.log(`${'─'.repeat(65)}`);
+    ranked.slice(0, 5).forEach((m, i) => {
+      const score = m.demand_score.toFixed(2);
+      console.log(`  ${i + 1}. ${m.city}, ${m.state}  [score: ${score}]`);
+      console.log(`     ${m.notes}`);
+    });
+    console.log(`${'─'.repeat(65)}`);
+    const top     = ranked[0];
+    const tArg    = tradeFilter || 'plumbing';
+    const tradeMap = { hvac: 'hvac', plumbing: 'plumber', electrical: 'electrician', roofing: 'roofer', handyman: 'handyman' };
+    const scoutTrade = tradeMap[tArg] || tArg;
+    console.log(`  To scrape the top market:`);
+    console.log(`  node scripts/scout.js --city "${top.city}, ${top.state}" --trade ${scoutTrade} --budget 0.25 --force`);
+    console.log();
+
+    // if no --city/--trade provided, just show suggestions and exit
+    if (!city || !trade) process.exit(0);
+  }
+}
 
 if (!city || !trade) {
   console.error('Usage: node scout.js --city "Denver, CO" --trade plumber [--multi] [--force]');
+  console.error('       Add --suggest [trade]  to see top 5 markets before picking a city');
   console.error('       Add --budget 0.25 to hard-cap this run at $0.25');
   console.error('       Add --target 50 to auto-calculate limit for ~50 qualifying leads');
   console.error('       Add --min-score 5 to only keep gap_score >= 5 leads');

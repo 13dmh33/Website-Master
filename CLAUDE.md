@@ -9,8 +9,10 @@ Brand colors: Navy #0A1228 (background) · Teal #00C8AF (primary accent) · Deep
 
 Your goal: 47 clients/month at $150/site + $65/mo hosting; AI bundles (Nora/Atlas/Argus) add $200 build + $65/mo. Three AI products, one price point.
 
-## Build Status (as of 2026-06-05)
-- Scout: ✅ scripts/scout.js — Outscraper API, $10/mo cap, auto_run toggle; --multi flag (TRADE_SYNONYMS, place_id dedup); all trades → sms; gap score 3-10; subtypes/lat/lng stored; **v2**: --budget (per-run $$ cap), --target (auto-calc limit for N qualifying leads), --min-score filter, --dry-run preview, --csv export, pre-dedup from existing leads files (skips already-known place_ids), ROI estimate in output, qualify_rate tracked in config
+## Build Status (as of 2026-06-05 — updated session 3)
+- Scout: ✅ scripts/scout.js — Outscraper API, $10/mo cap, auto_run toggle; --multi flag (TRADE_SYNONYMS, place_id dedup); all trades → sms; gap score 3-10; subtypes/lat/lng stored; **v2**: --budget (per-run $$ cap), --target (auto-calc limit for N qualifying leads), --min-score filter, --dry-run preview, --csv export, pre-dedup from existing leads files (skips already-known place_ids), ROI estimate in output, qualify_rate tracked in config; **--suggest [trade]**: reads market-data.json, prints top 5 ranked cities before scraping
+- Market Audit: ✅ scripts/market-audit.js — 65 US metro static scores; ranked by weighted demand score (gap×0.35 + density×0.30 + homeownership×0.20 + growth×0.15); --trade/--top/--csv flags; saves to reports/; zero API cost; **on claude/scout-refinement**
+- Market Data: ✅ config/market-data.json — 65 US metros with contractor_density/digital_gap/homeownership_rate/growth_rate + demand_score; notes explain why each market is good; covers Sun Belt, Midwest, South, Mountain West; **on claude/scout-refinement**
 - Enricher: ✅ scripts/enricher.js — Apollo.io People Match, 200 credit/mo cap; finds owner email by biz name+city+phone; upgrades queue briefs sms→email when found; --dry-run; runs in container
 - Diagnoser: ✅ scripts/diagnoser.js — Claude Haiku, prompt caching, $5/mo cap; dual-channel: sets secondary_channel=sms when lead has both email + phone
 - Checker: ✅ scripts/checker.js — 5 evals + Claude rewrite loop, $3/mo cap; template fast-path validates both primary + secondary messages
@@ -189,6 +191,7 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - 2026-06-05: Enricher built — scripts/enricher.js hits Apollo People Match API to find owner emails for phone-only leads; upgrades queue briefs sms→email; 200 credit/mo cap
 - 2026-06-05: CEO sprint complete — Caller/SMS/LinkedIn/Referral/GBP-Audit/Warm-Lead/Brief tools; Atlas + Argus product pages; /start/ AI suite; 3 Stripe slots (Nora/Atlas/Argus) in checkout; intake→checkout flow fixed; 54 briefs have demo_url; 8 SMS + 7 email templates
 - 2026-06-05: Scout v2 — --budget/--target/--min-score/--dry-run/--csv flags; pre-dedup from existing files; ROI estimate; qualify_rate tracked; social-only site detection (Facebook/Yelp not counted as real website)
+- 2026-06-05: Market audit + prioritization — config/market-data.json (65 US metros scored); scripts/market-audit.js (ranked table + CSV); scout.js --suggest [trade] (top 5 cities shown at run time); zero API cost; Houston, Las Vegas, Phoenix emerge as top targets
 
 ## Twilio A2P 10DLC Status
 - Brand registration submitted: 2026-06-03
@@ -207,6 +210,7 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 3. **GBP audit hook**: `node scripts/gbp-audit.js` → per-lead hook lines ("found 4 gaps costing you calls") → use as cold call opener
 4. **LinkedIn**: `node scripts/linkedin.js` → CSV at reports/linkedin-{date}.csv → send 15 connection requests today
 5. **Referral network**: `node scripts/referral.js` → LinkedIn + email scripts for realtors/inspectors/PMs → 3 partners = 6–12 leads/month passively
+6. **Next Scout run** (top market): `node scripts/scout.js --suggest hvac` to see ranked cities, then scrape top market (Houston or Las Vegas recommended for HVAC)
 
 ### Setup required on Mac
 3. Sign up for Apollo.io Basic ($49/mo) → get API key → add `APOLLO_API_KEY=` to `.env.local`

@@ -28,6 +28,8 @@
     "high_fit": "Based on what you've shared, you sound like a strong fit. Here's a link to book a 20-minute call with Dave: {CALL_BOOKING_LINK}\n\nHe'll look at your pipeline and tell you exactly how Reeve can help.",
     "mid_fit": "Thanks for sharing that. Let me have Dave take a look — he'll follow up within 24 hours to see if it makes sense to connect.",
     "scout_fit": "You're building something real. Reeve has a Scout tier designed exactly for where you are — $97/month and we send you a weekly digest of open conference slots that match your topic. No pitching yet, just a curated pipeline so you can start submitting. Want me to send you the details?",
-    "low_fit": "Thanks for reaching out. The fit isn't quite there right now — Reeve works best with speakers who have a clear niche and are ready to start applying to gigs. Keep posting and building your angle. When that's locked in, DM us again."
+    "low_fit": "Thanks for reaching out. The fit isn't quite there right now — Reeve works best with speakers who have a clear niche and are ready to start applying to gigs. Keep posting and building your angle. When that's locked in, DM us again.",
+    "scout_followup": "Great. Here's how Scout works:\n\nEvery week we scan hundreds of conferences for open speaker slots. We filter by your topic and send you a digest — events that are actively looking for someone with your niche, with deadlines and application links.\n\nYou read it, pick what interests you, and submit. We don't pitch on your behalf at this tier, but we do the research so you're never starting from zero.\n\n$97/month. Cancel anytime.\n\nReply with your email address and we'll get you set up.",
+    "scout_already_responded": "We already sent you the Scout details — check your DMs from a few days ago. If you didn't see it or want to move forward, reply with your email and we'll get you set up."
   }
 }

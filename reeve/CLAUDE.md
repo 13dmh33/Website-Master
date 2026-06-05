@@ -97,6 +97,16 @@ All 3 signals combined → single score. Claude is told to be strict — vague a
 
 If a sender who has already been routed DMs "stages" again, they are silently ignored. Avoids duplicate routing for the same lead.
 
+### Scout follow-up flow
+
+If a routed lead scored `scout` and replies with a positive message ("yes", "interested", "tell me more", etc.):
+1. Agent sends `scout_followup` message — explains $97/mo Scout tier, asks for email
+2. Sets `convo.scoutFollowupSent = true` so the same message isn't re-sent
+3. Notifies Dave via email with subject "Scout lead replied YES — ready to convert at $97/mo"
+4. Dave collects their email reply and handles billing manually until Scout signup is automated
+
+If they message again after the follow-up has already been sent, they receive `scout_already_responded`.
+
 ### Conversation state shape
 
 ```json

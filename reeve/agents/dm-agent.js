@@ -208,6 +208,20 @@ function isTrigger(text) {
   return templates.trigger_keywords.some(kw => normalized === kw);
 }
 
+/**
+ * Check whether a message looks like a positive/interested reply.
+ * Used to catch Scout leads who reply "yes" after receiving the Scout tier offer.
+ */
+function isPositiveReply(text) {
+  if (!text) return false;
+  const lower = text.trim().toLowerCase().replace(/[^\w\s]/g, '');
+  const positivePatterns = ['yes', 'yeah', 'yep', 'yup', 'sure', 'ok', 'okay',
+    'sounds good', 'interested', 'tell me more', 'absolutely', 'definitely',
+    'id like', 'i would', 'sign me up', 'lets do it', 'let s do it', 'how do i',
+    'how does it work', 'more info', 'more details'];
+  return positivePatterns.some(p => lower.includes(p));
+}
+
 // ─── Conversation flow ────────────────────────────────────────────────────────
 
 /**
@@ -243,8 +257,23 @@ async function handleMessage(senderId, senderName, messageText) {
     return;
   }
 
-  // ── Already routed: ignore ────────────────────────────────────────────────
+  // ── Already routed: handle scout follow-ups ──────────────────────────────
   if (convo.routed) {
+    if (convo.score === 'scout' && isPositiveReply(messageText)) {
+      if (convo.scoutFollowupSent) {
+        console.log(`[flow] Scout follow-up already sent to ${senderId}`);
+        await sendDM(senderId, templates.messages.scout_already_responded);
+        return;
+      }
+      console.log(`[flow] ${senderId} replied YES to Scout offer — sending follow-up`);
+      await sendDM(senderId, templates.messages.scout_followup);
+      convo.scoutInterested = true;
+      convo.scoutFollowupSent = true;
+      convo.scoutFollowupAt = new Date().toISOString();
+      state.saveConversation(senderId, convo);
+      notifyDave(convo, 'scout', 'Scout lead replied YES to tier offer — ready to convert at $97/mo. Check their email reply.').catch(() => {});
+      return;
+    }
     console.log(`[flow] ${senderId} already routed (${convo.score}) — ignoring`);
     return;
   }

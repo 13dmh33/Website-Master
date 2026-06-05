@@ -1,0 +1,54 @@
+{
+  "formats": {
+    "carousel": {
+      "description": "5-slide educational carousel — highest save and share rate",
+      "slides": 5,
+      "image_size": "1080x1080",
+      "schedule_slot": "TUE:07:00",
+      "niche": "education",
+      "caption_length": "60-100 words",
+      "hook_purpose": "make a contractor stop scrolling — speak to a pain they feel daily",
+      "cta": "DM us the word demo",
+      "notes": "slide 1 is the hook — most important. slide 5 is always a soft CTA showing a demo link."
+    },
+    "caption": {
+      "description": "single-image pain-point or results caption — drives profile visits and follows",
+      "slides": 1,
+      "image_size": "1080x1080",
+      "schedule_slot": "THU:12:00",
+      "niche": "results or education (alternates weekly)",
+      "caption_length": "100-150 words",
+      "hook_purpose": "open with a line that stops a contractor mid-scroll — make it feel personal",
+      "cta": "link in bio",
+      "notes": "end with — Trevo attribution. short paragraphs, 1-2 sentences max."
+    },
+    "trevo_found": {
+      "description": "'Trevo built this' — shows a new demo or site launch for a real trade/city",
+      "slides": 1,
+      "image_size": "1080x1080",
+      "schedule_slot": "SAT:09:00",
+      "niche": "product",
+      "caption_length": "80-120 words",
+      "hook_purpose": "show proof of work — real demo, real trade, real features",
+      "cta": "DM us the word demo",
+      "notes": "ends with 'That's the build. — Trevo'. never names specific clients."
+    },
+    "reel": {
+      "description": "20-second reel script — highest reach, drives new followers",
+      "slides": 1,
+      "image_size": "1080x1080",
+      "schedule_slot": "SUN:18:00",
+      "niche": "results or journey (alternates weekly)",
+      "caption_length": "under 60 spoken words",
+      "hook_purpose": "pattern interrupt — contractor hears this and thinks 'that's me'",
+      "cta": "DM us the word demo",
+      "notes": "hook 2 sec, body 12 sec, cta 6 sec. include b-roll notes inline.",
+      "image_type": "reel_hook — just the hook line as a quote-style image"
+    }
+  },
+  "weekly_rotation": {
+    "caption_niche_alternation": ["results", "education", "journey"],
+    "reel_niche_alternation": ["results", "journey"],
+    "current_week": 0
+  }
+}

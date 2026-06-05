@@ -1,0 +1,4 @@
+.env
+output/images/
+output/queue/*.json
+node_modules/

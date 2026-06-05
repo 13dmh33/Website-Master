@@ -230,10 +230,25 @@ DAVE_NOTIFY_EMAIL=          # optional — high-signal post alerts
 
 ## Activation checklist (pending)
 
+### Local (.env)
 1. **Buffer access token** — Create App at `buffer.com/developers` → Generate Access Token → add to `.env`
 2. **Buffer profile ID** — `curl https://api.bufferapp.com/1/profiles.json?access_token=YOUR_TOKEN` → find the Instagram profile → copy the `id`
 3. **SerpApi key** — add to `.env` to enable live research; without it, evergreen fallback runs every week
 4. **Unsplash key** — add to `.env` on Mac; container always uses gradient fallback
+
+### GitHub Actions (required for automated weekly runs)
+Workflows are in `.github/workflows/`. They only trigger from the default branch (`main`).
+**Steps to activate:**
+1. Add secrets in GitHub repo → Settings → Secrets and variables → Actions:
+   - `ANTHROPIC_API_KEY`
+   - `BUFFER_ACCESS_TOKEN` (classic token, NOT OIDC)
+   - `BUFFER_INSTAGRAM_PROFILE_ID`
+   - `SERPAPI_KEY` (optional — evergreen fallback if missing)
+   - `UNSPLASH_ACCESS_KEY` (optional — gradient fallback if missing)
+   - `INSTAGRAM_ACCESS_TOKEN` (for analytics only)
+   - `INSTAGRAM_BUSINESS_ACCOUNT_ID` (for analytics only)
+2. Merge `claude/milly-content-engine-qZme3` → `main`
+3. Scheduled workflows activate automatically. Use `workflow_dispatch` to test manually.
 
 ---
 

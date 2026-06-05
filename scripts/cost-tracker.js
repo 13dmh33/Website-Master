@@ -48,6 +48,13 @@ function recordTwilio(messageCount, script = 'pitcher') {
   append('twilio', script, messageCount * TWILIO_PER_SMS_USD, { messages: messageCount });
 }
 
+function recordApollo(creditCount, script = 'enricher') {
+  if (creditCount <= 0) return;
+  // Apollo Basic: $49/mo ÷ ~1,000 credits ≈ $0.049/credit
+  const APOLLO_PER_CREDIT_USD = 0.049;
+  append('apollo', script, creditCount * APOLLO_PER_CREDIT_USD, { credits: creditCount });
+}
+
 function recordEmail(messageCount, script = 'pitcher') {
   if (messageCount <= 0) return;
   // Zoho is a flat subscription — $0 per send, track volume only
@@ -88,6 +95,7 @@ module.exports = {
   recordTwilio,
   recordEmail,
   recordOutscraper,
+  recordApollo,
   getDailySummary,
   getMonthlySummary,
   getAllTimeSummary,

@@ -11,6 +11,7 @@ Your goal: 47 clients/month at $150/site + $65/mo hosting; Nora bundle adds $200
 
 ## Build Status (as of 2026-06-04)
 - Scout: ✅ scripts/scout.js — Outscraper API, $10/mo cap, auto_run toggle; --multi flag (TRADE_SYNONYMS, place_id dedup); all trades → sms; gap score 3-10; subtypes/lat/lng stored
+- Enricher: ✅ scripts/enricher.js — Apollo.io People Match, 200 credit/mo cap; finds owner email by biz name+city+phone; upgrades queue briefs sms→email when found; --dry-run; runs in container
 - Diagnoser: ✅ scripts/diagnoser.js — Claude Haiku, prompt caching, $5/mo cap; dual-channel: sets secondary_channel=sms when lead has both email + phone
 - Checker: ✅ scripts/checker.js — 5 evals + Claude rewrite loop, $3/mo cap; template fast-path validates both primary + secondary messages
 - Personalizer: ✅ scripts/personalizer.js — generates demo_url for every approved email lead; writes to brief JSON; no API cost; --write to save
@@ -71,14 +72,15 @@ Shortcut: `./run-daily.sh` (or `npm run daily`) runs all steps in order with man
 
 Manual order:
 1. Scout → target city + trade (ask human at start of each session) — **run on Mac**
-2. Diagnoser → process all new leads from /leads/ — run in container
-3. Checker + Builder → top 5 priority leads only — run in container
-4. Personalizer → `node scripts/personalizer.js --write` — generates demo_url for every approved lead — run in container
-5. Filmer → mockups from Builder — run in container
-6. Pitcher → approved messages only — **run on Mac** (Twilio blocked from container)
-7. Mobile → monitor /messages/ for positive replies — run in container
-8. Drip → follow-up non-responders — **run on Mac** (Twilio + Zoho SMTP blocked from container)
-9. Reporter → `node scripts/reporter.js` on Mac each morning (or cron at 7am)
+2. Enricher → `node scripts/enricher.js --force` — finds emails for phone-only leads — run in container
+3. Diagnoser → process all new leads from /leads/ — run in container
+4. Checker + Builder → top 5 priority leads only — run in container
+5. Personalizer → `node scripts/personalizer.js --write` — generates demo_url for every approved lead — run in container
+6. Filmer → mockups from Builder — run in container
+7. Pitcher → approved messages only — **run on Mac** (Twilio blocked from container)
+8. Mobile → monitor /messages/ for positive replies — run in container
+9. Drip → follow-up non-responders — **run on Mac** (Twilio + Zoho SMTP blocked from container)
+10. Reporter → `node scripts/reporter.js` on Mac each morning (or cron at 7am)
 
 ## Nora Upsell
 - Website deal closes → set nora_pitch_due = closed_date + 7 days in state.json
@@ -104,6 +106,7 @@ TWILIO_AUTH_TOKEN=
 TWILIO_FROM_PHONE=
 TWILIO_WEBHOOK_SECRET=   # same as TWILIO_AUTH_TOKEN — used for HMAC validation in webhook.js
 REPORT_TO_EMAIL=         # where morning report is emailed (defaults to ZOHO_EMAIL)
+APOLLO_API_KEY=          # enricher.js — Apollo.io Basic plan ($49/mo); get at app.apollo.io → Settings → Integrations → API
 CONTRACTOR_EMAIL=        # optional — deal/reply notifications
 CALCOM_LINK=             # optional — shown in Mobile booking drafts
 SITE_START_URL=          # https://trevoadvisors.com/start/ — sent in positive reply drafts
@@ -172,6 +175,7 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - 2026-06-03: Personalizer built — scripts/personalizer.js generates /for/?b=&t=&c=&r= demo URL per lead; website/for/index.html is the prospect-facing page; pitcher.js uses demo_url P.S. in emails
 - 2026-06-04: Scout improved — plumber/hvac switched to sms channel; needsEmail filter removed; gap scoring rewritten (3-10 range); --multi flag + TRADE_SYNONYMS; subtypes/lat/lng stored; effective CPL logged
 - 2026-06-04: Demo form guard — submit-disabled alert added to all 5 demos (plumbing/hvac/electrical/handyman/roofing)
+- 2026-06-05: Enricher built — scripts/enricher.js hits Apollo People Match API to find owner emails for phone-only leads; upgrades queue briefs sms→email; 200 credit/mo cap
 
 ## Twilio A2P 10DLC Status
 - Brand registration submitted: 2026-06-03
@@ -185,7 +189,9 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 ## Mac Action Items (as of 2026-06-04)
 
 ### Must do on Mac
-1. Create 2 Stripe Payment Links: $150 (website-only) + $200 (website+Nora)
+1. Sign up for Apollo.io Basic ($49/mo) → get API key → add `APOLLO_API_KEY=` to `.env.local`
+   → Then run `node scripts/enricher.js --dry-run --force` to preview, `--force` to enrich
+2. Create 2 Stripe Payment Links: $150 (website-only) + $200 (website+Nora)
    → Paste into `website/checkout/index.html` replacing `YOUR_WEBSITE_LINK_ID` and `YOUR_NORA_LINK_ID`
 2. Create Formspree form at formspree.io
    → Paste form ID into `website/intake/index.html` replacing `YOUR_FORM_ID`

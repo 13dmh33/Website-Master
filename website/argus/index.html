@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Argus by Trevo — AI Google Review Responses for Contractors</title>
+  <meta name="description" content="Argus monitors your Google reviews and responds automatically — 24/7. Boost your local SEO ranking and convert skeptical customers into jobs." />
+  <meta property="og:title" content="Argus — AI Review Response for Contractors" />
+  <meta property="og:description" content="Never miss a Google review again. Argus responds to every review — 5-star or 1-star — within hours, in your voice, with the right message." />
+  <meta property="og:url" content="https://trevoadvisors.com/argus/" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:    #0A1228;
+      --teal:    #00C8AF;
+      --teal-dk: #008870;
+      --amber:   #F5A623;
+      --white:   #FFFFFF;
+      --muted:   #8BA8C4;
+      --border:  rgba(255,255,255,0.08);
+      --card-bg: rgba(255,255,255,0.04);
+    }
+    body { font-family: 'Outfit', sans-serif; background: var(--navy); color: var(--white); }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .teal { color: var(--teal); }
+    .amber { color: var(--amber); }
+
+    nav {
+      background: var(--navy); border-bottom: 1px solid var(--border);
+      padding: 0 40px; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
+    .nav-iris {
+      width: 32px; height: 32px; background: var(--teal-dk); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav-iris svg { width: 16px; height: 16px; fill: var(--teal); }
+    .nav-wordmark { font-size: 17px; font-weight: 700; }
+    .nav-wordmark .w1 { color: #fff; }
+    .nav-wordmark .w2 { color: var(--teal); }
+    .nav-back { font-size: 13px; color: var(--muted); transition: color .2s; }
+    .nav-back:hover { color: var(--teal); }
+
+    .hero {
+      padding: 96px 24px 108px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -180px; left: 50%; transform: translateX(-50%);
+      width: 900px; height: 900px;
+      background: radial-gradient(circle, rgba(245,166,35,0.07) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero > * { position: relative; }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 11px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase;
+      color: var(--amber); margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(34px, 5.5vw, 62px); font-weight: 800; line-height: 1.07;
+      margin-bottom: 22px; max-width: 800px; margin-left: auto; margin-right: auto;
+    }
+    .hero-sub {
+      font-size: clamp(16px, 2vw, 19px); color: var(--muted); max-width: 540px;
+      margin: 0 auto 44px; line-height: 1.65;
+    }
+    .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 48px; }
+    .btn-primary {
+      background: var(--teal); color: var(--navy);
+      padding: 16px 32px; border-radius: 100px;
+      font-size: 16px; font-weight: 700;
+      transition: background .2s; display: inline-block;
+    }
+    .btn-primary:hover { background: #00d9be; }
+    .btn-outline {
+      border: 1px solid rgba(255,255,255,.18); color: #fff;
+      padding: 16px 32px; border-radius: 100px;
+      font-size: 16px; font-weight: 600;
+      transition: border-color .2s, color .2s; display: inline-block;
+    }
+    .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
+
+    /* REVIEW DEMO */
+    .review-demo {
+      max-width: 480px; margin: 0 auto 20px;
+    }
+    .review-card {
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+      border-radius: 14px; padding: 18px 20px; margin-bottom: 14px;
+    }
+    .review-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+    .review-avatar {
+      width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; font-weight: 700; flex-shrink: 0;
+    }
+    .review-meta .name { font-size: 14px; font-weight: 700; }
+    .review-stars { color: var(--amber); font-size: 13px; margin-top: 2px; }
+    .review-text { font-size: 14px; color: rgba(255,255,255,0.8); line-height: 1.55; }
+    .review-response {
+      background: rgba(0,200,175,0.06); border: 1px solid rgba(0,200,175,0.2);
+      border-radius: 10px; padding: 12px 14px; margin-top: 12px;
+    }
+    .response-label { font-size: 11px; font-weight: 700; color: var(--teal); letter-spacing: .05em; margin-bottom: 6px; }
+    .response-text { font-size: 13px; color: rgba(255,255,255,0.75); line-height: 1.55; }
+    .response-time { font-size: 11px; color: var(--muted); margin-top: 6px; }
+
+    .trust-strip {
+      padding: 20px 24px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      display: flex; justify-content: center; gap: 48px; flex-wrap: wrap;
+    }
+    .trust-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); font-weight: 500; }
+    .trust-icon { color: var(--amber); font-size: 15px; }
+
+    section { padding: 80px 24px; }
+    .section-label {
+      font-size: 11px; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--amber); margin-bottom: 14px; display: block;
+    }
+    .section-h2 { font-size: clamp(24px, 3.5vw, 40px); font-weight: 800; line-height: 1.15; margin-bottom: 14px; }
+    .section-sub { font-size: 17px; color: var(--muted); line-height: 1.65; max-width: 540px; margin-bottom: 48px; }
+
+    .problem-section {
+      background: rgba(255,255,255,0.02);
+      border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+    .stat-row { display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; margin-top: 40px; }
+    .stat-card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 14px; padding: 28px 26px; min-width: 180px; text-align: center;
+    }
+    .stat-num { font-size: 44px; font-weight: 800; color: var(--amber); line-height: 1; }
+    .stat-label { font-size: 14px; color: var(--muted); margin-top: 8px; line-height: 1.4; }
+
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px;
+    }
+    .step-card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 14px; padding: 30px 26px;
+    }
+    .step-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(245,166,35,0.12); color: var(--amber);
+      font-size: 15px; font-weight: 800; margin-bottom: 16px;
+    }
+    .step-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+    .step-card p { font-size: 15px; color: var(--muted); line-height: 1.6; }
+
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+    .feature-card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 14px; padding: 28px 24px;
+    }
+    .feature-icon { font-size: 26px; margin-bottom: 14px; display: block; }
+    .feature-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+    .feature-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    .pricing-section { text-align: center; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; max-width: 700px; margin: 0 auto; }
+    .price-card { border-radius: 18px; padding: 36px 32px; text-align: left; }
+    .price-card.standard { background: var(--card-bg); border: 1px solid var(--border); }
+    .price-card.featured {
+      background: linear-gradient(135deg, rgba(245,166,35,.08) 0%, rgba(245,166,35,.03) 100%);
+      border: 1px solid rgba(245,166,35,0.25);
+    }
+    .price-badge {
+      display: inline-block; background: var(--amber); color: var(--navy);
+      font-size: 11px; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; padding: 4px 10px; border-radius: 100px; margin-bottom: 16px;
+    }
+    .price-name { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+    .price-amount { font-size: 42px; font-weight: 800; line-height: 1; margin-bottom: 6px; }
+    .price-amount sup { font-size: 22px; vertical-align: top; margin-top: 8px; }
+    .price-period { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
+    .price-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 24px; }
+    .price-features { list-style: none; margin-bottom: 32px; }
+    .price-features li {
+      font-size: 14px; padding: 7px 0; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,0.85);
+    }
+    .price-features li::before { content: '✓'; color: var(--teal); font-weight: 700; flex-shrink: 0; }
+    .price-cta {
+      display: block; text-align: center; background: var(--teal); color: var(--navy);
+      padding: 14px; border-radius: 100px; font-size: 15px; font-weight: 700; transition: background .2s;
+    }
+    .price-cta:hover { background: #00d9be; }
+    .price-cta.outline {
+      background: transparent; border: 1px solid rgba(255,255,255,.2); color: var(--white);
+    }
+    .price-cta.outline:hover { border-color: var(--teal); color: var(--teal); }
+
+    .faq-list { max-width: 680px; margin: 0 auto; }
+    .faq-item { border-bottom: 1px solid var(--border); padding: 22px 0; }
+    .faq-q { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+    .faq-a { font-size: 15px; color: var(--muted); line-height: 1.65; }
+
+    .cta-banner {
+      text-align: center; padding: 80px 24px;
+      background: linear-gradient(135deg, rgba(245,166,35,0.07) 0%, rgba(245,166,35,0.02) 100%);
+      border-top: 1px solid rgba(245,166,35,0.12);
+    }
+    .cta-banner h2 { font-size: clamp(24px, 3.5vw, 38px); font-weight: 800; margin-bottom: 14px; }
+    .cta-banner p { font-size: 17px; color: var(--muted); margin-bottom: 36px; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+
+    footer {
+      border-top: 1px solid var(--border); padding: 30px 40px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 12px; font-size: 13px; color: var(--muted);
+    }
+    footer a { color: var(--muted); transition: color .2s; }
+    footer a:hover { color: var(--teal); }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      section { padding: 60px 20px; }
+      .trust-strip { gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="/start/">
+    <div class="nav-iris"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg></div>
+    <div class="nav-wordmark"><span class="w1">Trevo</span> <span class="w2">Advisors</span></div>
+  </a>
+  <a class="nav-back" href="/start/">← Back to Trevo</a>
+</nav>
+
+<div class="hero">
+  <span class="hero-eyebrow">Argus by Trevo Advisors</span>
+  <h1>Every Google review gets<br>a <span class="amber">professional response</span>.<br>Automatically.</h1>
+  <p class="hero-sub">Argus monitors your Google Business Profile and responds to every review — 5-star or 1-star — within hours. Builds trust, boosts local rankings, and wins back upset customers.</p>
+  <div class="hero-btns">
+    <a href="/intake/?product=argus" class="btn-primary">Get Argus — $200 setup</a>
+    <a href="/proposal/" class="btn-outline">See the website plan first</a>
+  </div>
+
+  <!-- Review demo -->
+  <div class="review-demo">
+    <div class="review-card">
+      <div class="review-header">
+        <div class="review-avatar">J</div>
+        <div class="review-meta">
+          <div class="name">Jamie M.</div>
+          <div class="review-stars">★★★★★</div>
+        </div>
+      </div>
+      <div class="review-text">Mike came out same day for a burst pipe and had it fixed in 2 hours. Incredibly professional and fair price. Will call again for sure!</div>
+      <div class="review-response">
+        <div class="response-label">Owner response · via Argus</div>
+        <div class="response-text">Thank you so much, Jamie! Same-day response on emergencies is something we take seriously — glad we could get you sorted quickly. We look forward to helping you again!</div>
+        <div class="response-time">Responded 3 hours after review</div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-header">
+        <div class="review-avatar">R</div>
+        <div class="review-meta">
+          <div class="name">Robert K.</div>
+          <div class="review-stars" style="color:#8BA8C4;">★★★☆☆</div>
+        </div>
+      </div>
+      <div class="review-text">Showed up late and didn't explain the pricing upfront. Work was fine but I expected better communication.</div>
+      <div class="review-response">
+        <div class="response-label">Owner response · via Argus</div>
+        <div class="response-text">Robert, I appreciate the honest feedback. You're right that we should have communicated the timeline and pricing more clearly upfront — that's on us. I'd like to make it right. Please reach out directly at dave@trevoadvisors.com.</div>
+        <div class="response-time">Responded 5 hours after review</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="trust-strip">
+  <div class="trust-item"><span class="trust-icon">⭐</span> Responds within hours</div>
+  <div class="trust-item"><span class="trust-icon">📈</span> Boosts local SEO ranking</div>
+  <div class="trust-item"><span class="trust-icon">🛡️</span> Handles negative reviews professionally</div>
+  <div class="trust-item"><span class="trust-icon">🤖</span> Sounds like you, not a robot</div>
+</div>
+
+<!-- PROBLEM -->
+<section class="problem-section">
+  <div class="container">
+    <span class="section-label">Why this matters</span>
+    <h2 class="section-h2">Unanswered reviews cost you<br>customers every day.</h2>
+    <p class="section-sub" style="margin: 0 auto 40px;">Google ranks businesses that engage with reviews higher. Homeowners read reviews AND responses before calling. Most contractors ignore both.</p>
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="stat-num">89%</div>
+        <div class="stat-label">of consumers read a business's<br>response to negative reviews</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">45%</div>
+        <div class="stat-label">say a business response to a<br>bad review makes them more likely to call</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">1 in 3</div>
+        <div class="stat-label">contractors respond to<br>any reviews at all</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section>
+  <div class="container">
+    <span class="section-label">How Argus works</span>
+    <h2 class="section-h2">Set up once.<br>Every review answered.</h2>
+    <p class="section-sub">Argus connects to your Google Business Profile and monitors for new reviews around the clock.</p>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h3>New review comes in</h3>
+        <p>A customer leaves a review on your Google Business Profile — 5-star praise, a question, or a complaint.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h3>Argus reads and responds</h3>
+        <p>Argus reads the review context (star rating, sentiment, specific mentions) and crafts a personalized response that sounds like you — not a template.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h3>Response posted publicly</h3>
+        <p>The response goes live on your Google profile within hours. Future customers see an engaged, professional business owner who cares.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <h3>Negative reviews handled carefully</h3>
+        <p>1-3 star reviews get a response that acknowledges the concern, offers to make it right, and moves the conversation offline — the approach that turns unhappy customers into loyal ones.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section style="padding-top: 0;">
+  <div class="container">
+    <span class="section-label">What's included</span>
+    <h2 class="section-h2">More than just reply buttons.</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">✍️</span>
+        <h3>Personalized responses</h3>
+        <p>Each response references the specifics of the review — not a copy-pasted "Thanks for your review!" that customers see through immediately.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📊</span>
+        <h3>Weekly review summary</h3>
+        <p>You get a weekly digest of all new reviews and responses — stay informed without spending time on it.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🎯</span>
+        <h3>Keyword reinforcement</h3>
+        <p>Argus naturally weaves your city name, trade, and services into responses — reinforcing the keywords Google uses to rank you locally.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🛡️</span>
+        <h3>Reputation protection</h3>
+        <p>Fake or unfair reviews get flagged for you to dispute. Argus also drafts a response that positions you professionally to other readers.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">💬</span>
+        <h3>Review request prompts</h3>
+        <p>Argus generates a short "ask for a review" text you can send after completing jobs — growing your review count over time.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🎙️</span>
+        <h3>Your voice, not a bot's</h3>
+        <p>We tune Argus to your writing style and tone during onboarding. Responses sound like you — direct, warm, or professional, depending on your brand.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section">
+  <div class="container">
+    <span class="section-label">Pricing</span>
+    <h2 class="section-h2">Protect your reputation.<br>For less than a coffee a day.</h2>
+    <p class="section-sub" style="margin: 0 auto 48px;">One ignored 2-star review with no response costs you more than Argus does in a month.</p>
+    <div class="pricing-grid">
+      <div class="price-card standard">
+        <div class="price-name">Website Only</div>
+        <div class="price-amount"><sup>$</sup>150</div>
+        <div class="price-period">one-time · + $65/mo hosting</div>
+        <div class="price-desc">Get found online and convert searchers into calls.</div>
+        <ul class="price-features">
+          <li>Custom website for your trade</li>
+          <li>Google reviews section</li>
+          <li>Contact form + click-to-call</li>
+          <li>Mobile-optimized</li>
+          <li>Live in 3 business days</li>
+        </ul>
+        <a href="/intake/" class="price-cta outline">Get the website</a>
+      </div>
+      <div class="price-card featured">
+        <div class="price-badge">Reputation builder</div>
+        <div class="price-name">Website + Argus</div>
+        <div class="price-amount"><sup>$</sup>200</div>
+        <div class="price-period">one-time · + $65/mo hosting + Argus</div>
+        <div class="price-desc">Website turns searchers into visitors. Argus turns your reviews into trust that converts those visitors into calls.</div>
+        <ul class="price-features">
+          <li>Everything in Website</li>
+          <li>24/7 review monitoring</li>
+          <li>Personalized responses (not templates)</li>
+          <li>Negative review handling strategy</li>
+          <li>Weekly review digest</li>
+          <li>Review request message templates</li>
+        </ul>
+        <a href="/intake/?product=argus" class="price-cta">Get Website + Argus</a>
+      </div>
+    </div>
+    <p style="font-size: 13px; color: var(--muted); margin-top: 20px;">No contracts. Cancel anytime. Setup in 2–3 business days.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="container">
+    <span class="section-label">Common questions</span>
+    <h2 class="section-h2" style="text-align: center; margin-bottom: 48px;">Before you sign up</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">Can I review responses before they're posted?</div>
+        <div class="faq-a">Yes — if you prefer, we can set Argus to draft-only mode where responses wait for your approval before going live. Most clients switch to auto-post after seeing the quality.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What happens if a review is fake or unfair?</div>
+        <div class="faq-a">Argus flags suspicious reviews and helps you submit a dispute to Google. It also drafts a calm, professional public response so other customers see your side of the story.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Will responses sound like a robot wrote them?</div>
+        <div class="faq-a">No. During setup we calibrate Argus to your tone — whether that's friendly and casual or professional and direct. We review several sample responses with you before going live.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Does this work for all review platforms?</div>
+        <div class="faq-a">Argus focuses on Google reviews, which is where 90%+ of contractor research happens. Yelp and Facebook reviews are on the roadmap.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How is $65/mo justified?</div>
+        <div class="faq-a">One job typically pays $350–$1,200. If Argus's consistent responses convert even one extra skeptical customer per month, it's paid for 6 months. Most clients also see improved Google ranking within 60 days.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-banner">
+  <h2>Your competitors aren't responding.<br>That's your advantage.</h2>
+  <p>Most contractors ignore their reviews. Argus makes you the professional who doesn't — and Google ranks businesses that engage.</p>
+  <a href="/intake/?product=argus" class="btn-primary" style="font-size: 17px; padding: 18px 40px;">Get Website + Argus — $200</a>
+  <p style="font-size: 13px; color: var(--muted); margin-top: 16px;">Or start with just the website — <a href="/intake/" style="color: var(--teal); text-decoration: underline;">$150 flat</a></p>
+</div>
+
+<footer>
+  <div>© 2026 Trevo Advisors · dave@trevoadvisors.com</div>
+  <div style="display:flex; gap: 20px;">
+    <a href="/start/">Home</a>
+    <a href="/atlas/">Atlas</a>
+    <a href="/proposal/">Proposal</a>
+    <a href="/intake/">Get Started</a>
+  </div>
+</footer>
+
+</body>
+</html>

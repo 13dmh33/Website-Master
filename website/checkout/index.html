@@ -310,17 +310,37 @@
         <input type="text" id="biz_name" placeholder="Peak Comfort HVAC" />
       </div>
 
-      <!-- Nora add-on -->
-      <div style="margin:20px 0 8px; font-size:13px; font-weight:800; color:var(--mid); text-transform:uppercase; letter-spacing:.06em;">Optional Add-On</div>
+      <!-- AI add-on -->
+      <div style="margin:20px 0 8px; font-size:13px; font-weight:800; color:var(--mid); text-transform:uppercase; letter-spacing:.06em;">Optional Add-On — pick one</div>
       <div class="addon-box" id="noraAddon">
         <div class="addon-header">
           <label>
-            <input type="checkbox" id="add_nora" onchange="updateTotal()" />
-            🤖 Add Nora AI Phone Agent
+            <input type="radio" name="ai_addon" id="add_nora" value="nora" onchange="updateTotal()" />
+            🤖 Add Nora — AI Phone Agent
           </label>
           <span class="addon-price">+$50 today</span>
         </div>
-        <div class="addon-desc">Answers calls, books jobs, texts missed callers — 24/7. Adds $50 to today's build fee. Nothing extra per month — included in your $65/mo hosting.</div>
+        <div class="addon-desc">Nora answers your phone calls, books jobs, and texts missed callers — 24/7. Same $65/mo covers hosting + Nora.</div>
+      </div>
+      <div class="addon-box" id="atlasAddon" style="margin-top:10px;">
+        <div class="addon-header">
+          <label>
+            <input type="radio" name="ai_addon" id="add_atlas" value="atlas" onchange="updateTotal()" />
+            ⚡ Add Atlas — AI Lead Follow-Up
+          </label>
+          <span class="addon-price">+$50 today</span>
+        </div>
+        <div class="addon-desc">Atlas replies to every inbound text and web form in 60 seconds, collects job details, and books appointments automatically. Same $65/mo covers hosting + Atlas. <a href="/atlas/" target="_blank" style="color:var(--blue);">See how it works →</a></div>
+      </div>
+      <div class="addon-box" id="argusAddon" style="margin-top:10px;">
+        <div class="addon-header">
+          <label>
+            <input type="radio" name="ai_addon" id="add_argus" value="argus" onchange="updateTotal()" />
+            ⭐ Add Argus — AI Review Responses
+          </label>
+          <span class="addon-price">+$50 today</span>
+        </div>
+        <div class="addon-desc">Argus responds to every Google review within hours — professionally, in your voice. Boosts local SEO and wins back unhappy customers. Same $65/mo covers everything. <a href="/argus/" target="_blank" style="color:var(--blue);">See how it works →</a></div>
       </div>
 
       <div class="card-errors" id="card-errors"></div>
@@ -339,26 +359,42 @@
 
 <script>
   // ── CONFIG ───────────────────────────────────────────────────────────────────
-  // Create TWO Payment Links at https://dashboard.stripe.com/payment-links
-  // Both success URLs → https://trevoadvisors.com/thankyou/
+  // Create THREE Payment Links at https://dashboard.stripe.com/payment-links
+  // All success URLs → https://trevoadvisors.com/thankyou/
   // Website only ($150):
   const STRIPE_LINK_WEBSITE = 'https://buy.stripe.com/YOUR_WEBSITE_LINK_ID';
   // Website + Nora ($200):
   const STRIPE_LINK_NORA    = 'https://buy.stripe.com/YOUR_NORA_LINK_ID';
+  // Website + Atlas ($200) — same price, different setup:
+  const STRIPE_LINK_ATLAS   = 'https://buy.stripe.com/YOUR_ATLAS_LINK_ID';
+  // Website + Argus ($200) — review response agent:
+  const STRIPE_LINK_ARGUS   = 'https://buy.stripe.com/YOUR_ARGUS_LINK_ID';
 
   // ── PLAN PRE-SELECT ───────────────────────────────────────────────────────────
-  // ?plan=nora pre-checks the Nora add-on (linked from /for/ pricing card)
-  if (new URLSearchParams(window.location.search).get('plan') === 'nora') {
-    document.getElementById('add_nora').checked = true;
-  }
+  const planParam = new URLSearchParams(window.location.search).get('plan');
+  if (planParam === 'nora')  document.getElementById('add_nora').checked  = true;
+  if (planParam === 'atlas') document.getElementById('add_atlas').checked = true;
+  if (planParam === 'argus') document.getElementById('add_argus').checked = true;
+  updateTotal();
 
-  // ── NORA TOGGLE ──────────────────────────────────────────────────────────────
+  // ── ADD-ON TOGGLE ─────────────────────────────────────────────────────────────
   function updateTotal() {
-    const checked = document.getElementById('add_nora').checked;
-    document.getElementById('noraAddon').classList.toggle('selected', checked);
-    document.getElementById('nora-line').style.display  = checked ? 'flex' : 'none';
-    document.getElementById('build-price').textContent  = checked ? '$200' : '$150';
-    document.getElementById('total-display').textContent = checked ? '$200' : '$150';
+    const nora  = document.getElementById('add_nora').checked;
+    const atlas = document.getElementById('add_atlas').checked;
+    const argus = document.getElementById('add_argus').checked;
+    const hasAddon = nora || atlas || argus;
+    document.getElementById('noraAddon').classList.toggle('selected', nora);
+    document.getElementById('atlasAddon').classList.toggle('selected', atlas);
+    document.getElementById('argusAddon').classList.toggle('selected', argus);
+    document.getElementById('nora-line').style.display   = hasAddon ? 'flex' : 'none';
+    document.getElementById('build-price').textContent   = hasAddon ? '$200' : '$150';
+    document.getElementById('total-display').textContent  = hasAddon ? '$200' : '$150';
+    if (hasAddon) {
+      const label = argus ? 'Argus AI Review Response Setup'
+        : atlas ? 'Atlas AI Lead Follow-Up Setup'
+        : 'Nora AI Phone Agent Setup';
+      document.querySelector('#nora-line .line-desc h4').textContent = label;
+    }
   }
 
   // ── FORM SUBMIT ──────────────────────────────────────────────────────────────
@@ -372,6 +408,8 @@
     const email     = document.getElementById('email').value.trim();
     const bizName   = document.getElementById('biz_name').value.trim();
     const addNora   = document.getElementById('add_nora').checked;
+    const addAtlas  = document.getElementById('add_atlas').checked;
+    const addArgus  = document.getElementById('add_argus').checked;
 
     errEl.textContent = '';
 
@@ -382,15 +420,19 @@
     // Save details to sessionStorage so thankyou page can show receipt
     try {
       sessionStorage.setItem('trevo_checkout', JSON.stringify({
-        name: firstName, biz: bizName, email, nora: addNora ? '1' : '0'
+        name: firstName, biz: bizName, email,
+        nora: addNora ? '1' : '0', atlas: addAtlas ? '1' : '0', argus: addArgus ? '1' : '0'
       }));
     } catch { /* sessionStorage unavailable — thankyou page falls back gracefully */ }
 
     btn.disabled = true;
     btn.textContent = 'Redirecting to Stripe...';
 
-    // Route to correct Payment Link based on Nora selection
-    const link   = addNora ? STRIPE_LINK_NORA : STRIPE_LINK_WEBSITE;
+    // Route to correct Payment Link
+    let link = STRIPE_LINK_WEBSITE;
+    if (addNora)  link = STRIPE_LINK_NORA;
+    if (addAtlas) link = STRIPE_LINK_ATLAS;
+    if (addArgus) link = STRIPE_LINK_ARGUS;
     const params = new URLSearchParams({ prefilled_email: email });
     window.location.href = `${link}?${params.toString()}`;
   });

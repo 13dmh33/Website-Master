@@ -49,6 +49,26 @@
       "requires": [],
       "subject": "Quick question about [Business Name]",
       "body": "Hey,\n\nDo you get most of your work from referrals and word-of-mouth?\n\nIf so, I have something worth 2 minutes of your time.\n\n- Dave\nTrevo Advisors\ndave@trevoadvisors.com | trevoadvisors.com"
+    },
+    {
+      "id": "e6",
+      "name": "The Atlas pitch",
+      "tag": "AI angle",
+      "type": "initial",
+      "tone": ["direct", "warm"],
+      "requires": [],
+      "subject": "When a lead texts you at 11pm — who replies?",
+      "body": "Hey,\n\nHere's a scenario: a homeowner needs a [trade] job done. It's 11pm. They text you. Nobody replies until morning — and by then they've already booked someone else.\n\nI built something called Atlas that replies to every inbound text in under 60 seconds, 24/7. It collects the job details, offers available time slots, and books the appointment — while you sleep.\n\nBundled with a new website for [Business Name]: $200 flat to set up, $65/month after that. The website alone is $150.\n\nWorth 15 minutes? trevoadvisors.com/atlas/\n\n- Dave\nTrevo Advisors\ndave@trevoadvisors.com"
+    },
+    {
+      "id": "e7",
+      "name": "The Argus pitch",
+      "tag": "Reputation angle",
+      "type": "initial",
+      "tone": ["professional", "warm"],
+      "requires": ["review_count"],
+      "subject": "Your [X] Google reviews are almost working for you",
+      "body": "Hey,\n\n[Business Name] has [X] Google reviews — that's a serious advantage most [trade] businesses don't have.\n\nBut there's a catch: 89% of customers read the business's responses to reviews before calling. And most [trade] contractors never respond to any of them.\n\nI built Argus — it responds to every review automatically, in your voice, within hours. Professional, personalized, and tailored to 5-star thank-yous and 3-star concerns alike.\n\nBundled with a new website: $200 flat, $65/month. It also boosts your Google local ranking — Google rewards businesses that engage with reviews.\n\nWorth 15 minutes? trevoadvisors.com/argus/\n\n- Dave\nTrevo Advisors\ndave@trevoadvisors.com"
     }
   ],
   "sms": [
@@ -104,6 +124,24 @@
       "tone": ["direct"],
       "requires": [],
       "body": "Hey - I build websites for home service contractors. Clean, mobile-ready, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors"
+    },
+    {
+      "id": "s7",
+      "name": "The Atlas angle",
+      "tag": "AI hook",
+      "type": "initial",
+      "tone": ["direct"],
+      "requires": [],
+      "body": "Hey - I build [trade] websites that include an AI bot texting back leads 24/7. First missed reply costs more than the site. $200 flat. - Dave @ Trevo"
+    },
+    {
+      "id": "s8",
+      "name": "The Argus angle",
+      "tag": "Review hook",
+      "type": "initial",
+      "tone": ["warm", "professional"],
+      "requires": ["review_count"],
+      "body": "Hey - [X] reviews is solid. But no website + no review replies means Google buries you. I fix both for $200 flat. - Dave @ Trevo Advisors"
     }
   ],
   "drip": {

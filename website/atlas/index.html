@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Atlas by Trevo — AI Lead Follow-Up for Contractors</title>
+  <meta name="description" content="Atlas follows up with every inbound lead in under 60 seconds — 24/7. Built for plumbers, HVAC, electricians, and roofers who can't answer every call." />
+  <meta property="og:title" content="Atlas — AI Lead Follow-Up for Contractors" />
+  <meta property="og:description" content="Never miss another job. Atlas replies to every lead instantly, collects job details, and books appointments while you're on the job." />
+  <meta property="og:url" content="https://trevoadvisors.com/atlas/" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:    #0A1228;
+      --teal:    #00C8AF;
+      --teal-dk: #008870;
+      --white:   #FFFFFF;
+      --muted:   #8BA8C4;
+      --border:  rgba(255,255,255,0.08);
+      --card-bg: rgba(255,255,255,0.04);
+    }
+    body { font-family: 'Outfit', sans-serif; background: var(--navy); color: var(--white); }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .teal { color: var(--teal); }
+
+    /* NAV */
+    nav {
+      background: var(--navy);
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
+    .nav-iris {
+      width: 32px; height: 32px;
+      background: var(--teal-dk); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav-iris svg { width: 16px; height: 16px; fill: var(--teal); }
+    .nav-wordmark { font-size: 17px; font-weight: 700; }
+    .nav-wordmark .w1 { color: #fff; }
+    .nav-wordmark .w2 { color: var(--teal); }
+    .nav-back { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 6px; transition: color .2s; }
+    .nav-back:hover { color: var(--teal); }
+
+    /* HERO */
+    .hero {
+      padding: 100px 24px 112px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -160px; left: 50%; transform: translateX(-50%);
+      width: 1000px; height: 1000px;
+      background: radial-gradient(circle, rgba(0,200,175,0.09) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero > * { position: relative; }
+    .hero-eyebrow {
+      display: inline-block;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: .13em; text-transform: uppercase;
+      color: var(--teal); margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(34px, 5.5vw, 62px);
+      font-weight: 800; line-height: 1.07;
+      margin-bottom: 22px;
+      max-width: 800px; margin-left: auto; margin-right: auto;
+    }
+    .hero-sub {
+      font-size: clamp(16px, 2vw, 19px);
+      color: var(--muted); max-width: 540px;
+      margin: 0 auto 44px; line-height: 1.65;
+    }
+    .hero-btns {
+      display: flex; gap: 14px; justify-content: center;
+      flex-wrap: wrap; margin-bottom: 48px;
+    }
+    .btn-primary {
+      background: var(--teal); color: var(--navy);
+      padding: 16px 32px; border-radius: 100px;
+      font-size: 16px; font-weight: 700;
+      transition: background .2s, transform .15s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: #00d9be; transform: translateY(-1px); }
+    .btn-outline {
+      border: 1px solid rgba(255,255,255,.18);
+      color: #fff; padding: 16px 32px; border-radius: 100px;
+      font-size: 16px; font-weight: 600;
+      transition: border-color .2s, color .2s;
+      display: inline-block;
+    }
+    .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
+
+    /* DEMO CHAT */
+    .chat-demo {
+      max-width: 400px; margin: 0 auto 20px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 20px;
+    }
+    .chat-label {
+      font-size: 11px; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--muted);
+      text-align: center; margin-bottom: 16px;
+    }
+    .chat-msg {
+      display: flex; flex-direction: column;
+      gap: 10px;
+    }
+    .chat-bubble {
+      max-width: 82%; padding: 10px 14px;
+      border-radius: 12px; font-size: 14px; line-height: 1.5;
+    }
+    .chat-bubble.inbound {
+      background: rgba(255,255,255,0.08);
+      color: var(--white);
+      align-self: flex-start;
+    }
+    .chat-bubble.atlas {
+      background: var(--teal);
+      color: var(--navy);
+      align-self: flex-end;
+      font-weight: 600;
+    }
+    .chat-time {
+      font-size: 11px; color: var(--muted);
+      text-align: center; margin-top: 6px;
+    }
+
+    /* TRUST STRIP */
+    .trust-strip {
+      padding: 20px 24px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      display: flex; justify-content: center;
+      gap: 48px; flex-wrap: wrap;
+    }
+    .trust-item {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; color: var(--muted); font-weight: 500;
+    }
+    .trust-icon { color: var(--teal); font-size: 15px; }
+
+    /* SECTIONS */
+    section { padding: 80px 24px; }
+    .section-label {
+      font-size: 11px; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--teal);
+      margin-bottom: 14px; display: block;
+    }
+    .section-h2 {
+      font-size: clamp(24px, 3.5vw, 40px);
+      font-weight: 800; line-height: 1.15;
+      margin-bottom: 14px;
+    }
+    .section-sub {
+      font-size: 17px; color: var(--muted); line-height: 1.65;
+      max-width: 540px; margin-bottom: 48px;
+    }
+
+    /* PROBLEM SECTION */
+    .problem-section {
+      background: rgba(255,255,255,0.02);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+    .stat-row {
+      display: flex; gap: 40px; justify-content: center;
+      flex-wrap: wrap; margin-top: 40px;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px; padding: 30px 28px;
+      min-width: 180px; text-align: center;
+    }
+    .stat-num { font-size: 44px; font-weight: 800; color: var(--teal); line-height: 1; }
+    .stat-label { font-size: 14px; color: var(--muted); margin-top: 8px; line-height: 1.4; }
+
+    /* HOW IT WORKS */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px; margin-top: 0;
+    }
+    .step-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px; padding: 30px 26px;
+    }
+    .step-num {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(0,200,175,0.12); color: var(--teal);
+      font-size: 15px; font-weight: 800; margin-bottom: 16px;
+    }
+    .step-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+    .step-card p { font-size: 15px; color: var(--muted); line-height: 1.6; }
+
+    /* FEATURES */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px; padding: 28px 24px;
+    }
+    .feature-icon {
+      font-size: 26px; margin-bottom: 14px;
+      display: block;
+    }
+    .feature-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+    .feature-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* COMPARE */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px; max-width: 680px; margin: 0 auto;
+    }
+    @media (max-width: 600px) { .compare-grid { grid-template-columns: 1fr; } }
+    .compare-col {
+      border-radius: 14px; padding: 28px 24px;
+    }
+    .compare-col.before {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .compare-col.after {
+      background: rgba(0,200,175,0.06);
+      border: 1px solid rgba(0,200,175,0.2);
+    }
+    .compare-head {
+      font-size: 13px; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; margin-bottom: 18px;
+    }
+    .compare-col.before .compare-head { color: var(--muted); }
+    .compare-col.after .compare-head { color: var(--teal); }
+    .compare-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      margin-bottom: 14px; font-size: 14px; line-height: 1.5;
+    }
+    .compare-col.before .compare-item { color: rgba(255,255,255,0.55); }
+    .compare-col.after .compare-item { color: var(--white); }
+    .compare-dot { flex-shrink: 0; margin-top: 3px; }
+
+    /* PRICING */
+    .pricing-section { text-align: center; }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px; max-width: 700px; margin: 0 auto;
+    }
+    .price-card {
+      border-radius: 18px; padding: 36px 32px;
+      text-align: left;
+    }
+    .price-card.standard {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+    }
+    .price-card.featured {
+      background: linear-gradient(135deg, rgba(0,200,175,.1) 0%, rgba(0,200,175,.05) 100%);
+      border: 1px solid rgba(0,200,175,0.3);
+    }
+    .price-badge {
+      display: inline-block;
+      background: var(--teal); color: var(--navy);
+      font-size: 11px; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; padding: 4px 10px; border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .price-name { font-size: 22px; font-weight: 800; margin-bottom: 6px; }
+    .price-amount {
+      font-size: 42px; font-weight: 800; line-height: 1;
+      margin-bottom: 6px;
+    }
+    .price-amount sup { font-size: 22px; vertical-align: top; margin-top: 8px; }
+    .price-period { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
+    .price-desc { font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 24px; }
+    .price-features { list-style: none; margin-bottom: 32px; }
+    .price-features li {
+      font-size: 14px; padding: 7px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,0.85);
+    }
+    .price-features li::before { content: '✓'; color: var(--teal); font-weight: 700; flex-shrink: 0; }
+    .price-cta {
+      display: block; text-align: center;
+      background: var(--teal); color: var(--navy);
+      padding: 14px; border-radius: 100px;
+      font-size: 15px; font-weight: 700;
+      transition: background .2s;
+    }
+    .price-cta:hover { background: #00d9be; }
+    .price-cta.outline {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,.2);
+      color: var(--white);
+    }
+    .price-cta.outline:hover { border-color: var(--teal); color: var(--teal); }
+
+    /* FAQ */
+    .faq-list { max-width: 680px; margin: 0 auto; }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 22px 0;
+    }
+    .faq-q { font-size: 16px; font-weight: 700; margin-bottom: 10px; }
+    .faq-a { font-size: 15px; color: var(--muted); line-height: 1.65; }
+
+    /* CTA BANNER */
+    .cta-banner {
+      text-align: center;
+      padding: 80px 24px;
+      background: linear-gradient(135deg, rgba(0,200,175,0.08) 0%, rgba(0,200,175,0.03) 100%);
+      border-top: 1px solid rgba(0,200,175,0.15);
+    }
+    .cta-banner h2 { font-size: clamp(24px, 3.5vw, 38px); font-weight: 800; margin-bottom: 14px; }
+    .cta-banner p { font-size: 17px; color: var(--muted); margin-bottom: 36px; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.6; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 30px 40px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 12px;
+      font-size: 13px; color: var(--muted);
+    }
+    footer a { color: var(--muted); transition: color .2s; }
+    footer a:hover { color: var(--teal); }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      section { padding: 60px 20px; }
+      .trust-strip { gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="/start/">
+    <div class="nav-iris">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/></svg>
+    </div>
+    <div class="nav-wordmark"><span class="w1">Trevo</span> <span class="w2">Advisors</span></div>
+  </a>
+  <a class="nav-back" href="/start/">
+    ← Back to Trevo
+  </a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-eyebrow">Atlas by Trevo Advisors</span>
+  <h1>Every lead gets<br>a <span class="teal">60-second reply</span>.<br>Even at 2am.</h1>
+  <p class="hero-sub">Atlas is an AI follow-up agent that responds to every inbound text, voicemail, and website inquiry — 24/7 — before the homeowner calls your competitor.</p>
+  <div class="hero-btns">
+    <a href="/intake/?product=atlas" class="btn-primary">Get Atlas — $200 setup</a>
+    <a href="/proposal/" class="btn-outline">See the website plan first</a>
+  </div>
+
+  <!-- Chat demo -->
+  <div class="chat-demo">
+    <div class="chat-label">Atlas in action</div>
+    <div class="chat-msg">
+      <div class="chat-bubble inbound">Hi, do you guys do drain cleaning? Need someone ASAP</div>
+      <div class="chat-bubble atlas">Hey! Yes — we do drain cleaning same-day. What's the address and what's happening (slow drain, backup, smell)?</div>
+      <div class="chat-bubble inbound">123 Oak St Denver, kitchen sink is totally backed up</div>
+      <div class="chat-bubble atlas">Got it — we can get there between 2–5pm today. Does that work? I'll lock in the slot now.</div>
+    </div>
+    <div class="chat-time">Atlas replied in 12 seconds · 11:47pm</div>
+  </div>
+</div>
+
+<!-- TRUST STRIP -->
+<div class="trust-strip">
+  <div class="trust-item"><span class="trust-icon">⚡</span> Replies in under 60 seconds</div>
+  <div class="trust-item"><span class="trust-icon">🕐</span> Works 24 hours a day</div>
+  <div class="trust-item"><span class="trust-icon">📅</span> Books appointments automatically</div>
+  <div class="trust-item"><span class="trust-icon">💬</span> Handles texts, forms, and missed calls</div>
+</div>
+
+<!-- PROBLEM -->
+<section class="problem-section">
+  <div class="container">
+    <span class="section-label">The problem it solves</span>
+    <h2 class="section-h2">Most homeowners don't call back.<br>They move on.</h2>
+    <p class="section-sub" style="margin: 0 auto 40px;">When a homeowner reaches out and nobody answers, they Google the next contractor. You lose the job before you even knew about it.</p>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="stat-num">78%</div>
+        <div class="stat-label">of customers hire the first<br>contractor who responds</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">5 min</div>
+        <div class="stat-label">average time before a homeowner<br>moves to the next listing</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">3–6</div>
+        <div class="stat-label">jobs per month lost to slow<br>follow-up for busy contractors</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section>
+  <div class="container">
+    <span class="section-label">How Atlas works</span>
+    <h2 class="section-h2">Set it up once.<br>It works forever.</h2>
+    <p class="section-sub">Atlas connects to your existing phone number. No app to check, no training required.</p>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <h3>Lead reaches out</h3>
+        <p>A homeowner texts your number, fills out your website form, or leaves a voicemail requesting service.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <h3>Atlas replies instantly</h3>
+        <p>Within 60 seconds, Atlas sends a personalized reply, asks qualifying questions (job type, address, urgency), and keeps the conversation going.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <h3>Appointment booked</h3>
+        <p>Atlas offers available time slots from your calendar, confirms the booking, and sends you a notification with all the job details — ready to dispatch.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <h3>You show up and close</h3>
+        <p>You arrive to a prequalified appointment. Atlas handles the confirmation reminder, and follows up after the visit for a review request.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section style="padding-top: 0;">
+  <div class="container">
+    <span class="section-label">What's included</span>
+    <h2 class="section-h2">Everything an answering service does.<br>At a fraction of the cost.</h2>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">📱</span>
+        <h3>Inbound SMS handling</h3>
+        <p>Atlas replies to texts on your existing business number. No new phone needed.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🌐</span>
+        <h3>Website form follow-up</h3>
+        <p>Submits from your contact form trigger an instant Atlas text to the lead.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📅</span>
+        <h3>Calendar booking</h3>
+        <p>Atlas checks your availability and proposes time slots. Homeowner confirms in one tap.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🔔</span>
+        <h3>Job dispatch alerts</h3>
+        <p>You get a text with name, address, job type, and time for every booked appointment.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">⭐</span>
+        <h3>Post-job review requests</h3>
+        <p>Atlas follows up 24 hours after the job and asks for a Google review — automatically.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">💬</span>
+        <h3>Human escalation</h3>
+        <p>If a conversation gets complex, Atlas flags it and notifies you to take over directly.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE -->
+<section style="padding-top: 0; text-align: center;">
+  <div class="container">
+    <span class="section-label">Atlas vs. doing nothing</span>
+    <h2 class="section-h2" style="margin-bottom: 40px;">What changes when you add Atlas</h2>
+
+    <div class="compare-grid">
+      <div class="compare-col before">
+        <div class="compare-head">Without Atlas</div>
+        <div class="compare-item"><span class="compare-dot">✗</span> Leads sit unanswered for hours</div>
+        <div class="compare-item"><span class="compare-dot">✗</span> Homeowner calls the next contractor</div>
+        <div class="compare-item"><span class="compare-dot">✗</span> You play phone tag to schedule</div>
+        <div class="compare-item"><span class="compare-dot">✗</span> No-shows from poor confirmations</div>
+        <div class="compare-item"><span class="compare-dot">✗</span> Reviews left to chance</div>
+      </div>
+      <div class="compare-col after">
+        <div class="compare-head">With Atlas</div>
+        <div class="compare-item"><span class="compare-dot">✓</span> Every lead answered in 60 seconds</div>
+        <div class="compare-item"><span class="compare-dot">✓</span> Job details collected automatically</div>
+        <div class="compare-item"><span class="compare-dot">✓</span> Appointment booked in the same thread</div>
+        <div class="compare-item"><span class="compare-dot">✓</span> Confirmation + reminder sent automatically</div>
+        <div class="compare-item"><span class="compare-dot">✓</span> Review requests sent after every job</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section">
+  <div class="container">
+    <span class="section-label">Simple pricing</span>
+    <h2 class="section-h2">One job pays for Atlas.<br>Every month after is gravy.</h2>
+    <p class="section-sub" style="margin: 0 auto 48px;">The average contractor job is $350–$800. Atlas costs $65/mo. The math is easy.</p>
+
+    <div class="pricing-grid">
+      <div class="price-card standard">
+        <div class="price-name">Website Only</div>
+        <div class="price-amount"><sup>$</sup>150</div>
+        <div class="price-period">one-time · + $65/mo hosting</div>
+        <div class="price-desc">A fast, mobile-first website that shows your reviews and converts search traffic into calls.</div>
+        <ul class="price-features">
+          <li>Custom website for your trade</li>
+          <li>Google review integration</li>
+          <li>Contact form + click-to-call</li>
+          <li>Mobile-optimized</li>
+          <li>Live in 3 business days</li>
+        </ul>
+        <a href="/intake/" class="price-cta outline">Get the website</a>
+      </div>
+      <div class="price-card featured">
+        <div class="price-badge">Most popular</div>
+        <div class="price-name">Website + Atlas</div>
+        <div class="price-amount"><sup>$</sup>200</div>
+        <div class="price-period">one-time · + $65/mo hosting + Atlas</div>
+        <div class="price-desc">Everything in Website, plus Atlas handling every inbound lead 24/7 — booking jobs while you sleep.</div>
+        <ul class="price-features">
+          <li>Everything in Website</li>
+          <li>24/7 AI lead follow-up</li>
+          <li>Automatic appointment booking</li>
+          <li>Job dispatch notifications</li>
+          <li>Post-job review requests</li>
+          <li>Scales to all your incoming leads</li>
+        </ul>
+        <a href="/intake/?product=atlas" class="price-cta">Get Website + Atlas</a>
+      </div>
+    </div>
+    <p style="font-size: 13px; color: var(--muted); margin-top: 20px;">No contracts. Cancel anytime. Setup typically takes 2–3 business days.</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="container">
+    <span class="section-label">Common questions</span>
+    <h2 class="section-h2" style="text-align: center; margin-bottom: 48px;">What people ask before they sign up</h2>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">Do I need a new phone number?</div>
+        <div class="faq-a">No. Atlas works with your existing business number. Leads text you as usual — Atlas just handles the replies automatically when you're busy.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can I still answer texts myself?</div>
+        <div class="faq-a">Yes. You can take over any conversation at any time. Atlas handles the initial response and qualification, then hands off when you're ready.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What if the homeowner asks something Atlas doesn't know?</div>
+        <div class="faq-a">Atlas stays focused on qualifying the lead and booking an appointment. If a question is outside its scope, it lets the homeowner know you'll follow up directly — and texts you immediately.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What trades does Atlas work for?</div>
+        <div class="faq-a">Atlas works for any home service trade — plumbing, HVAC, electrical, roofing, handyman, and more. It's configured for your specific trade and service area.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">How long does setup take?</div>
+        <div class="faq-a">Typically 2–3 business days. We configure Atlas with your business info, services, and calendar, then run a test before going live.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What if I want to cancel?</div>
+        <div class="faq-a">No contracts. Cancel any month with one message. Your website stays yours — we export your content before offboarding.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="cta-banner">
+  <h2>Ready to stop missing leads?</h2>
+  <p>Atlas is live in 3 days. The next homeowner who texts you gets a reply in under a minute.</p>
+  <a href="/intake/?product=atlas" class="btn-primary" style="font-size: 17px; padding: 18px 40px;">Get Website + Atlas — $200</a>
+  <p style="font-size: 13px; color: var(--muted); margin-top: 16px;">Or start with just the website — <a href="/intake/" style="color: var(--teal); text-decoration: underline;">$150 flat</a></p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div>© 2026 Trevo Advisors · dave@trevoadvisors.com</div>
+  <div style="display:flex; gap: 20px;">
+    <a href="/start/">Home</a>
+    <a href="/proposal/">Proposal</a>
+    <a href="/intake/">Get Started</a>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -7,9 +7,9 @@ Owner: Dave — dave@trevoadvisors.com
 
 Brand colors: Navy #0A1228 (background) · Teal #00C8AF (primary accent) · Deep Teal #008870 (logo iris) · White #FFFFFF · Muted #8BA8C4 · Border rgba(255,255,255,0.08)
 
-Your goal: 47 clients/month at $150/site + $65/mo hosting; Nora bundle adds $200 build + $65/mo.
+Your goal: 47 clients/month at $150/site + $65/mo hosting; Nora bundle adds $200 build + $65/mo. Atlas bundle same price — AI lead follow-up instead of phone agent.
 
-## Build Status (as of 2026-06-04)
+## Build Status (as of 2026-06-05)
 - Scout: ✅ scripts/scout.js — Outscraper API, $10/mo cap, auto_run toggle; --multi flag (TRADE_SYNONYMS, place_id dedup); all trades → sms; gap score 3-10; subtypes/lat/lng stored
 - Enricher: ✅ scripts/enricher.js — Apollo.io People Match, 200 credit/mo cap; finds owner email by biz name+city+phone; upgrades queue briefs sms→email when found; --dry-run; runs in container
 - Diagnoser: ✅ scripts/diagnoser.js — Claude Haiku, prompt caching, $5/mo cap; dual-channel: sets secondary_channel=sms when lead has both email + phone
@@ -25,7 +25,10 @@ Your goal: 47 clients/month at $150/site + $65/mo hosting; Nora bundle adds $200
 - Dashboard: ✅ scripts/dashboard.js — terminal pipeline view, --leads and --drip flags, color-coded by status
 - Webhook: ✅ scripts/webhook.js — Twilio inbound SMS server, HMAC-SHA1 validation; **run on Mac**
 - Poller: ✅ scripts/poller.js — IMAP email reply poller (imapflow), auto-reply detection; **run on Mac**
-- Website/Demo: ✅ website/ — 3 demo sites (plumber/HVAC/electrician), proposal page, intake form, checkout, thank-you, /start funnel; **on claude/demo-site branch (not yet merged)**
+- Website/Demo: ✅ website/ — 3 demo sites (plumber/HVAC/electrician), proposal page, intake form, checkout, thank-you, /start funnel, /atlas/ landing page; **on claude/trevo-advisors-review-Sjewy**
+- Caller: ✅ scripts/caller.js — cold call sheet generator; ranked by gap score; CSV to reports/; call tips + trade breakdown; zero API cost
+- LinkedIn: ✅ scripts/linkedin.js — connection request + follow-up DM generator for all queue leads; CSV to reports/; zero API cost
+- Atlas: ✅ website/atlas/index.html — AI lead follow-up product page; $200 setup + $65/mo; wired into proposal + checkout
 
 ## Template Vault
 - 6 SMS templates (s1–s6) + 5 email templates (e1–e5) in config/templates.json
@@ -176,6 +179,7 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - 2026-06-04: Scout improved — plumber/hvac switched to sms channel; needsEmail filter removed; gap scoring rewritten (3-10 range); --multi flag + TRADE_SYNONYMS; subtypes/lat/lng stored; effective CPL logged
 - 2026-06-04: Demo form guard — submit-disabled alert added to all 5 demos (plumbing/hvac/electrical/handyman/roofing)
 - 2026-06-05: Enricher built — scripts/enricher.js hits Apollo People Match API to find owner emails for phone-only leads; upgrades queue briefs sms→email; 200 credit/mo cap
+- 2026-06-05: CEO sprint — Caller (cold call sheet), LinkedIn outreach generator, Atlas landing page (/atlas/), Atlas wired into proposal + checkout; 3 new revenue channels opened
 
 ## Twilio A2P 10DLC Status
 - Brand registration submitted: 2026-06-03
@@ -188,21 +192,30 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 
 ## Mac Action Items (as of 2026-06-04)
 
-### Must do on Mac
-1. Sign up for Apollo.io Basic ($49/mo) → get API key → add `APOLLO_API_KEY=` to `.env.local`
+## Mac Action Items (as of 2026-06-05)
+
+### Immediate revenue actions (do these today)
+1. **Cold calls**: `node scripts/caller.js` → prints 54 ranked leads with phone numbers + talk tracks → call top 20 today
+2. **LinkedIn**: `node scripts/linkedin.js` → CSV at reports/linkedin-{date}.csv → send 15 connection requests today
+
+### Setup required on Mac
+3. Sign up for Apollo.io Basic ($49/mo) → get API key → add `APOLLO_API_KEY=` to `.env.local`
    → Then run `node scripts/enricher.js --dry-run --force` to preview, `--force` to enrich
-2. Create 2 Stripe Payment Links: $150 (website-only) + $200 (website+Nora)
-   → Paste into `website/checkout/index.html` replacing `YOUR_WEBSITE_LINK_ID` and `YOUR_NORA_LINK_ID`
-2. Create Formspree form at formspree.io
+4. Create 3 Stripe Payment Links (all success URL → https://trevoadvisors.com/thankyou/):
+   - $150 (website-only) → replace `YOUR_WEBSITE_LINK_ID`
+   - $200 (website+Nora) → replace `YOUR_NORA_LINK_ID`
+   - $200 (website+Atlas) → replace `YOUR_ATLAS_LINK_ID`
+   → All three in `website/checkout/index.html`
+5. Create Formspree form at formspree.io
    → Paste form ID into `website/intake/index.html` replacing `YOUR_FORM_ID`
-3. Verify Netlify auto-deployed `website/` to trevoadvisors.com (check /start/, /for/, /demos/)
-4. Run `node scripts/personalizer.js --write` (after /for/ confirmed live on prod)
-5. Check Twilio A2P 10DLC status (Bundle SID: BUb725ec9662f0dc3da58ed24117df8684)
-6. Run `node scripts/pitcher.js --force` when A2P approved (5 leads ready)
-7. Start `node scripts/webhook.js` + ngrok → register URL in Twilio console
-8. Add `SITE_START_URL=https://trevoadvisors.com/start/` + `CALCOM_LINK` to `.env.local`
-9. `npm install imapflow` for poller.js
-10. Nora-Agent push: `cd ~/Nora-Agent && git push origin main`
+6. Verify Netlify auto-deployed `website/` to trevoadvisors.com (check /start/, /for/, /atlas/, /demos/)
+7. Run `node scripts/personalizer.js --write` (after /for/ confirmed live on prod)
+8. Check Twilio A2P 10DLC status (Bundle SID: BUb725ec9662f0dc3da58ed24117df8684)
+9. Run `node scripts/pitcher.js --force` when A2P approved (5 leads ready)
+10. Start `node scripts/webhook.js` + ngrok → register URL in Twilio console
+11. Add `SITE_START_URL=https://trevoadvisors.com/start/` + `CALCOM_LINK` to `.env.local`
+12. `npm install imapflow` for poller.js
+13. Nora-Agent push: `cd ~/Nora-Agent && git push origin main`
 
 ### Remaining Polish (container OK)
 - Intake form step 3: make optional fields visually obvious

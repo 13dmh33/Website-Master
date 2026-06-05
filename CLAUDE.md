@@ -9,7 +9,7 @@ Brand colors: Navy #0A1228 (background) · Teal #00C8AF (primary accent) · Deep
 
 Your goal: 47 clients/month at $150/site + $65/mo hosting; AI bundles (Nora/Atlas/Argus) add $200 build + $65/mo. Three AI products, one price point.
 
-## Build Status (as of 2026-06-05 — updated session 2)
+## Build Status (as of 2026-06-05 — updated session 3)
 - Scout v2: ✅ scripts/scout.js — --budget/--target/--min-score/--dry-run/--csv flags; pre-dedup from existing leads; social-only site detection; qualify_rate tracking; ROI estimate; top-5 preview; **on claude/scout-refinement**
 - Enricher: ✅ scripts/enricher.js — Apollo.io People Match, 200 credit/mo cap; finds owner email by biz name+city+phone; upgrades queue briefs sms→email when found; --dry-run; runs in container
 - Diagnoser: ✅ scripts/diagnoser.js — Claude Haiku, prompt caching, $5/mo cap; dual-channel: sets secondary_channel=sms when lead has both email + phone
@@ -29,6 +29,9 @@ Your goal: 47 clients/month at $150/site + $65/mo hosting; AI bundles (Nora/Atla
 - Configurator v2: ✅ website/preview/index.html — labeled 4-step flow, font picker, 6 color presets, 8 section toggles, device toggle, debounced live preview, AI Enhance button (calls /.netlify/functions/enhance), all 4 plan cards; **on claude/molly-ui-polish**
 - Netlify Enhance Function: ✅ netlify/functions/enhance.js — POST endpoint; calls Claude Haiku; returns headline/tagline/about/cta/trust_line/services JSON; 503 if ANTHROPIC_API_KEY not set; **on claude/molly-ui-polish**
 - Molly: ✅ molly/ — Instagram/LinkedIn content engine for Trevo Advisors; adapted from Milly architecture; researcher→generator→designer→scheduler→analyst pipeline; 20 evergreen posts; Trevo navy/teal canvas design; **on claude/molly-ui-polish**
+- Molly Source Intelligence: ✅ molly/lib/sources.js + molly/templates/sources.json — 200-source curated trade database; static archetypes for hvac/plumbing/electrical/handyman (pain points, hooks, angles, trends); optional free RSS fetching via native https (zero API cost); researcher.js wired to rotate trade focus weekly; **on claude/molly-ui-polish**
+- Market Audit: ✅ scripts/market-audit.js — static scoring of 60+ US metros; ranked by contractor density + digital gap + homeownership + growth; CSV export; --trade flag; **on claude/scout-refinement**
+- Scout --suggest: ✅ scripts/scout.js — --suggest [trade] flag reads market-data.json, prints top 5 cities ranked by demand score before scraping; **on claude/scout-refinement**
 - Caller: ✅ scripts/caller.js — cold call sheet generator; ranked by gap score; CSV to reports/; --sms mode for personal iPhone texts; shows demo_url per lead; zero API cost
 - GBP Audit: ✅ scripts/gbp-audit.js — Google Business Profile gap analysis; generates specific outreach hooks per lead (no-website, low-reviews, low-rating, etc); CSV export; zero API cost
 - Warm Lead: ✅ scripts/warm-lead.js — instant follow-up generator after cold call; personalized text + email + D+2 follow-up; usage: -n "Biz" -t trade -c "City" -r reviews -e email
@@ -194,6 +197,8 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - 2026-06-05: Scout v2 — --budget/--target/--min-score/--dry-run/--csv flags; pre-dedup from existing leads; social-only site detection; qualify_rate tracking; ROI estimate; on claude/scout-refinement branch
 - 2026-06-05: Configurator v2 — 4-step labeled flow, font picker, 6 color presets, 8 section toggles, device toggle, AI Enhance button (Netlify function → Claude Haiku), all 4 plan cards; on claude/molly-ui-polish
 - 2026-06-05: Molly built — Instagram/LinkedIn content engine adapted from Milly; researcher→generator→designer→scheduler→analyst; 20 evergreen posts (carousel/caption/trevo_found/reel); Trevo navy/teal canvas; on claude/molly-ui-polish
+- 2026-06-05: Molly source intelligence — molly/lib/sources.js: static archetypes for all 4 trades + optional RSS (zero API cost); molly/templates/sources.json: full 200-source DB; researcher.js rotates trade focus weekly and seeds angles with real contractor pain points/hooks
+- 2026-06-05: Market prioritization — config/market-data.json: 60+ US metro scores; scripts/market-audit.js: ranked audit table + CSV; scout.js --suggest flag: shows top 5 cities at run time; on claude/scout-refinement
 
 ## Twilio A2P 10DLC Status
 - Brand registration submitted: 2026-06-03

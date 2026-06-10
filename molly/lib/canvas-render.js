@@ -261,7 +261,8 @@ async function renderCarouselSlide(headline, body, slideNum, totalSlides, niche 
   return canvas.toBuffer('png');
 }
 
-async function renderQuotePost(mainText, attribution, niche = 'results') {
+// Caption post — editorial style with hook + body paragraphs
+async function renderCaptionPost(hookLine, bodyText, niche = 'results') {
   const { width, height, padding } = DESIGN_CONFIG;
   const canvas = new Canvas(width, height);
   const ctx    = canvas.getContext('2d');
@@ -270,26 +271,132 @@ async function renderQuotePost(mainText, attribution, niche = 'results') {
   renderTopBar(ctx, width);
   renderTrevoBrand(ctx, width);
 
-  ctx.font         = `bold 110px ${DESIGN_CONFIG.fontFamily}`;
-  ctx.fillStyle    = DESIGN_CONFIG.accent;
-  ctx.globalAlpha  = 0.7;
-  ctx.fillText('"', padding - 6, height * 0.38);
-  ctx.globalAlpha  = 1;
+  // hook line in teal — large
+  ctx.font      = `bold ${DESIGN_CONFIG.headlineSize - 4}px ${DESIGN_CONFIG.fontFamily}`;
+  ctx.fillStyle = DESIGN_CONFIG.accent;
+  const afterHook = wrapText(ctx, hookLine, padding, padding + 120, width - padding * 2, DESIGN_CONFIG.headlineSize + 8);
 
-  ctx.font      = `bold ${DESIGN_CONFIG.headlineSize - 2}px ${DESIGN_CONFIG.fontFamily}`;
-  ctx.fillStyle = DESIGN_CONFIG.headline;
-  const endY    = wrapText(ctx, mainText, padding, height * 0.4, width - padding * 2, DESIGN_CONFIG.headlineSize + 10);
+  // teal divider line
+  ctx.fillStyle = DESIGN_CONFIG.accent;
+  ctx.fillRect(padding, afterHook + 16, 48, 3);
 
-  if (attribution) {
-    ctx.font      = `${DESIGN_CONFIG.bodySize - 4}px ${DESIGN_CONFIG.fontFamily}`;
-    ctx.fillStyle = DESIGN_CONFIG.accent;
-    ctx.fillText(attribution, padding, endY + 28);
-  }
+  // body — first 3 sentences only (keep it readable)
+  const sentences = bodyText.replace(/\n+/g, ' ').split(/(?<=[.!?])\s+/).slice(0, 3).join(' ');
+  ctx.font      = `${DESIGN_CONFIG.bodySize - 2}px ${DESIGN_CONFIG.fontFamily}`;
+  ctx.fillStyle = DESIGN_CONFIG.body;
+  const afterBody = wrapText(ctx, sentences, padding, afterHook + 48, width - padding * 2, DESIGN_CONFIG.bodySize + 10);
+
+  // attribution
+  ctx.font      = `bold ${DESIGN_CONFIG.bodySize - 6}px ${DESIGN_CONFIG.fontFamily}`;
+  ctx.fillStyle = DESIGN_CONFIG.accent;
+  ctx.fillText('— Trevo', padding, Math.min(afterBody + 36, height - padding - 20));
 
   ctx.fillStyle = DESIGN_CONFIG.accent;
   ctx.fillRect(padding, height - padding, 44, 4);
 
   return canvas.toBuffer('png');
+}
+
+// Trevo Found — site reveal card with features list
+async function renderTrevoFoundPost(trade, city, features) {
+  const { width, height, padding } = DESIGN_CONFIG;
+  const canvas = new Canvas(width, height);
+  const ctx    = canvas.getContext('2d');
+
+  await drawBackground(ctx, width, height, 'trevo_found');
+  renderTopBar(ctx, width);
+
+  // "JUST BUILT" badge
+  ctx.fillStyle    = DESIGN_CONFIG.accent;
+  ctx.font         = `bold 18px ${DESIGN_CONFIG.fontFamily}`;
+  ctx.textBaseline = 'top';
+  ctx.fillText('JUST BUILT', padding, padding + 8);
+  ctx.textBaseline = 'alphabetic';
+
+  // TREVO brand right-aligned
+  ctx.font         = `bold ${DESIGN_CONFIG.brandSize}px ${DESIGN_CONFIG.fontFamily}`;
+  ctx.fillStyle    = DESIGN_CONFIG.accent;
+  ctx.textAlign    = 'right';
+  ctx.textBaseline = 'top';
+  ctx.fillText('TREVO', width - padding, padding);
+  ctx.textAlign    = 'left';
+  ctx.textBaseline = 'alphabetic';
+
+  // trade + city headline
+  const headline = `${trade} contractor site — ${city}`;
+  ctx.font      = `bold ${DESIGN_CONFIG.headlineSize}px ${DESIGN_CONFIG.fontFamily}`;
+  ctx.fillStyle = DESIGN_CONFIG.headline;
+  const afterHeadline = wrapText(ctx, headline, padding, padding + 140, width - padding * 2, DESIGN_CONFIG.headlineSize + 12);
+
+  // divider
+  ctx.fillStyle = DESIGN_CONFIG.accent;
+  ctx.fillRect(padding, afterHeadline + 12, width - padding * 2, 1);
+
+  // features list
+  let featureY = afterHeadline + 44;
+  ctx.font      = `${DESIGN_CONFIG.bodySize - 2}px ${DESIGN_CONFIG.fontFamily}`;
+  for (const feat of features.slice(0, 5)) {
+    ctx.fillStyle = DESIGN_CONFIG.accent;
+    ctx.fillText('→', padding, featureY);
+    ctx.fillStyle = DESIGN_CONFIG.body;
+    featureY = wrapText(ctx, feat, padding + 32, featureY, width - padding * 2 - 32, DESIGN_CONFIG.bodySize + 6);
+    featureY += 6;
+  }
+
+  // footer
+  ctx.font      = `bold ${DESIGN_CONFIG.bodySize - 6}px ${DESIGN_CONFIG.fontFamily}`;
+  ctx.fillStyle = DESIGN_CONFIG.accent;
+  ctx.fillText("That's the build. — Trevo", padding, height - padding - 20);
+
+  ctx.fillStyle = DESIGN_CONFIG.accent;
+  ctx.fillRect(padding, height - padding, 44, 4);
+
+  return canvas.toBuffer('png');
+}
+
+// Reel hook — bold single-line thumbnail
+async function renderReelHook(hookLine, niche = 'reel') {
+  const { width, height, padding } = DESIGN_CONFIG;
+  const canvas = new Canvas(width, height);
+  const ctx    = canvas.getContext('2d');
+
+  await drawBackground(ctx, width, height, niche);
+  renderTopBar(ctx, width);
+
+  // "REEL" badge top-left
+  ctx.fillStyle    = DESIGN_CONFIG.accent;
+  ctx.font         = `bold 18px ${DESIGN_CONFIG.fontFamily}`;
+  ctx.textBaseline = 'top';
+  ctx.fillText('REEL', padding, padding + 8);
+  ctx.textBaseline = 'alphabetic';
+
+  // TREVO brand right-aligned
+  ctx.font         = `bold ${DESIGN_CONFIG.brandSize}px ${DESIGN_CONFIG.fontFamily}`;
+  ctx.textAlign    = 'right';
+  ctx.textBaseline = 'top';
+  ctx.fillText('TREVO', width - padding, padding);
+  ctx.textAlign    = 'left';
+  ctx.textBaseline = 'alphabetic';
+
+  // big hook text — vertically centered
+  ctx.font      = `bold 64px ${DESIGN_CONFIG.fontFamily}`;
+  ctx.fillStyle = DESIGN_CONFIG.headline;
+  wrapText(ctx, hookLine, padding, height * 0.35, width - padding * 2, 78);
+
+  // CTA subline
+  ctx.font      = `${DESIGN_CONFIG.bodySize - 4}px ${DESIGN_CONFIG.fontFamily}`;
+  ctx.fillStyle = DESIGN_CONFIG.accent;
+  ctx.fillText('DM us the word  demo', padding, height - padding - 36);
+
+  ctx.fillStyle = DESIGN_CONFIG.accent;
+  ctx.fillRect(padding, height - padding, 44, 4);
+
+  return canvas.toBuffer('png');
+}
+
+// kept for fallback compatibility
+async function renderQuotePost(mainText, attribution, niche = 'results') {
+  return renderCaptionPost(mainText, attribution || '', niche);
 }
 
 async function renderFallback(text, niche = 'education') {

@@ -18,7 +18,7 @@ function buildVoiceContext(brandVoice, glossaryTerms) {
   const glossCtx = glossary.formatForPrompt(glossaryTerms);
 
   return `Brand: Trevo Advisors (@trevoadvisors)
-Audience: home service contractors (plumbers, HVAC, electricians, roofers, handymen) who need professional websites
+Audience: home service contractors (plumbers, electricians, roofers, handymen) who need professional websites
 Tone: ${tone}
 Casing: ${casing}
 Never use these words: ${avoid}
@@ -88,7 +88,7 @@ Return valid JSON only:
 }
 
 async function generateTrevoFound(angle, voiceContext) {
-  const trades = ['plumbing', 'HVAC', 'electrical', 'handyman', 'roofing'];
+  const trades = ['plumbing', 'electrical', 'handyman', 'roofing'];
   const cities = ['Denver', 'Austin', 'Chicago', 'Phoenix', 'Dallas', 'Atlanta', 'Seattle', 'Portland'];
   const trade  = trades[Math.floor(Math.random() * trades.length)];
   const city   = cities[Math.floor(Math.random() * cities.length)];

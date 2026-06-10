@@ -11,10 +11,10 @@
   },
   "current_month": "2026-06",
   "spent_this_month": 0,
-  "today": "2026-06-02",
+  "today": "2026-06-05",
   "processed_today": 30,
-  "total_processed": 70,
-  "approved_total": 70,
+  "total_processed": 100,
+  "approved_total": 100,
   "flagged_total": 0,
-  "last_run": "2026-06-02T14:10:12.959Z"
+  "last_run": "2026-06-05T22:25:31.068Z"
 }

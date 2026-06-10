@@ -23,6 +23,17 @@
   "secondary_message": null,
   "secondary_template_id": null,
   "secondary_template_name": null,
-  "checker_approved": false,
-  "diagnosed_at": "2026-06-05T21:49:53.945Z"
+  "checker_approved": true,
+  "diagnosed_at": "2026-06-05T21:49:53.945Z",
+  "final_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "checker_flag": "",
+  "rewrite_count": 0,
+  "checker_score": {
+    "template_based": true,
+    "placeholders_filled": true,
+    "secondary_placeholders": true
+  },
+  "checked_at": "2026-06-05T22:25:31.036Z",
+  "demo_url": "https://trevoadvisors.com/for/?b=SuperDry+Water+Damage+Restoration+Houston+TX&t=plumber&c=Houston&r=19",
+  "demo_url_created_at": "2026-06-05T22:26:08.241Z"
 }

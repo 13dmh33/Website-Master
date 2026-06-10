@@ -88,27 +88,39 @@ Return valid JSON only:
 }
 
 async function generateTrevoFound(angle, voiceContext) {
-  const trades = ['plumbing', 'electrical', 'handyman', 'roofing'];
-  const cities = ['Denver', 'Austin', 'Chicago', 'Phoenix', 'Dallas', 'Atlanta', 'Seattle', 'Portland'];
-  const trade  = trades[Math.floor(Math.random() * trades.length)];
-  const city   = cities[Math.floor(Math.random() * cities.length)];
+  // Rotate between demo site updates and AI agent product updates
+  const DEMOS = [
+    { trade: 'plumbing',    url: 'trevoadvisors.com/demos/plumbing/',    features: ['Tap-to-call above the fold', 'Emergency service page', 'Google reviews live', 'Service area map', 'Trust badges — licensed & insured', '48-hour build'] },
+    { trade: 'electrical',  url: 'trevoadvisors.com/demos/electrical/',  features: ['Tap-to-call above the fold', 'Panel upgrade service page', 'Google reviews live', 'Service area map', 'Trust badges — licensed & insured', '48-hour build'] },
+    { trade: 'handyman',    url: 'trevoadvisors.com/demos/handyman/',    features: ['Tap-to-call above the fold', 'Service menu with photos', 'Google reviews live', 'Instant quote request form', 'Trust badges', '48-hour build'] },
+  ];
+  const AGENTS = [
+    { name: 'Nora', tagline: 'AI lead follow-up agent', url: 'trevoadvisors.com/start/', features: ['Texts new leads in under 60 seconds', 'Follows up 3x without you lifting a finger', 'Hands off hot leads with full context', 'Works while you\'re on the job', '$65/mo — no contracts', 'Pairs with any Trevo website'] },
+    { name: 'Atlas', tagline: 'AI lead pipeline manager', url: 'trevoadvisors.com/atlas/', features: ['Scores and sorts leads by close probability', 'Sends personalized follow-up sequences', 'Flags high-value jobs for you', 'Dashboard to see pipeline at a glance', '$65/mo — no contracts', 'Add-on to your Trevo site'] },
+    { name: 'Argus', tagline: 'AI review responder', url: 'trevoadvisors.com/argus/', features: ['Responds to every Google review automatically', 'Flags negative reviews for human review', 'Keeps your profile active for SEO', 'Sounds like you — not a bot', '$65/mo — no contracts', 'Works on any Google Business Profile'] },
+  ];
 
-  const prompt = `${voiceContext}
+  // Alternate: odd weeks → demo, even weeks → agent
+  const weekNum = Math.floor(Date.now() / (7 * 24 * 60 * 60 * 1000));
+  const useAgent = weekNum % 2 === 0;
 
-You are writing a "Trevo built this" Instagram post — showing off a newly built contractor website for a specific trade and city.
+  if (useAgent) {
+    const agent = AGENTS[weekNum % AGENTS.length];
+    const prompt = `${voiceContext}
 
-Trade: ${trade}
-City: ${city}
-Hook angle: ${angle.hook}
+Write an Instagram product update post for Trevo Advisors introducing ${agent.name} — ${agent.tagline}.
 
 Requirements:
-- Open with "Trevo just built a [trade] site in [city]. Here's what's inside."
-- List 4-6 specific features of the site (tap-to-call, service pages, Google reviews pulled in, trust badges, etc.)
-- Mention the turnaround: "48-hour build"
-- End with "That's the build. — Trevo" followed by "DM us the word demo."
+- Open with "We just launched ${agent.name}. Here's what it does."
+- List what ${agent.name} does in 4-6 punchy lines (use the features below as a guide)
+- Mention the price: $65/mo, no contracts
+- End with "That's ${agent.name}. — Trevo" followed by "DM us the word demo."
 - 80-120 words total
+- Tone: direct, not salesy
 
-Also write the hook line only (max 12 words) for use as a reel-hook image.
+Features to reference: ${agent.features.join(', ')}
+
+Also write the hook line only (max 12 words) for a product reveal image.
 
 Return valid JSON only:
 {
@@ -116,9 +128,37 @@ Return valid JSON only:
   "hookLine": "short hook for image..."
 }`;
 
-  const raw    = await claude.call({ prompt, maxTokens: 600 });
-  const result = claude.parseJson(raw);
-  return { ...result, trade, city };
+    const raw    = await claude.call({ prompt, maxTokens: 600 });
+    const result = claude.parseJson(raw);
+    return { ...result, type: 'agent', name: agent.name, tagline: agent.tagline, url: agent.url, features: agent.features };
+  } else {
+    const demo  = DEMOS[weekNum % DEMOS.length];
+    const prompt = `${voiceContext}
+
+Write an Instagram post showing off Trevo's ${demo.trade} contractor demo website.
+
+Requirements:
+- Open with "We just updated our ${demo.trade} demo site. Here's what's inside."
+- List 4-6 specific features of the demo site
+- Mention contractors can view the live demo at ${demo.url}
+- End with "That's the build. — Trevo" followed by "DM us the word demo."
+- 80-120 words total
+- Tone: direct, results-focused
+
+Features to reference: ${demo.features.join(', ')}
+
+Also write the hook line only (max 12 words) for a site reveal image.
+
+Return valid JSON only:
+{
+  "body": "full post text...",
+  "hookLine": "short hook for image..."
+}`;
+
+    const raw    = await claude.call({ prompt, maxTokens: 600 });
+    const result = claude.parseJson(raw);
+    return { ...result, type: 'demo', trade: demo.trade, url: demo.url, features: demo.features };
+  }
 }
 
 async function generateReelScript(angle, voiceContext, niche) {

@@ -1,0 +1,68 @@
+{
+  "weekOf": "2026-06-09",
+  "generatedAt": "2026-06-10T03:25:14.878Z",
+  "researchMode": "evergreen",
+  "weekTrade": "electrical",
+  "angles": [
+    {
+      "id": "angle-1",
+      "niche": "education",
+      "angle": "5 things every contractor website needs to get more calls",
+      "hook": "5 things every contractor website needs to get more calls",
+      "painPoint": "losing jobs to competitors with better websites",
+      "dataPoint": null,
+      "suggestedFormat": "carousel",
+      "evergreenId": "ev-carousel-01",
+      "prewrittenContent": {
+        "hook": "5 things every contractor website needs to get more calls",
+        "body": "Slide 1: 5 things every contractor website needs to get more calls\nSlide 2: A tap-to-call button above the fold. Homeowners search on phones. Make it one tap.\nSlide 3: Your license and insurance number visible. It's what homeowners check first.\nSlide 4: Google reviews pulled in automatically. 4.8 stars shown before they scroll.\nSlide 5: A real photo of you or your crew. Stock photos signal 'this isn't a real company.'\nSlide 6: We build all 5 into every site. DM us the word demo.",
+        "hashtags": "#contractorwebsite #contractormarketing #plumbingbusiness #homeservices #trevoadvisors"
+      }
+    },
+    {
+      "id": "angle-2",
+      "niche": "education",
+      "angle": "Why homeowners pick the second result on Google over the first",
+      "hook": "Why homeowners pick the second result on Google over the first",
+      "painPoint": "losing jobs to competitors with better websites",
+      "dataPoint": null,
+      "suggestedFormat": "carousel",
+      "evergreenId": "ev-carousel-02",
+      "prewrittenContent": {
+        "hook": "Why homeowners pick the second result on Google over the first",
+        "body": "Slide 1: Why homeowners pick the second result on Google over the first\nSlide 2: The first result has 12 reviews and no website. The second has 89 reviews and a real site.\nSlide 3: Homeowners aren't buying your rank. They're buying your proof.\nSlide 4: Reviews signal trust. A website signals you're a real business.\nSlide 5: You don't need to be first. You need to look more legitimate.\nSlide 6: We build sites that close the gap. DM us the word demo.",
+        "hashtags": "#localSEO #contractormarketing #googlereviews #homeservices #trevoadvisors"
+      }
+    },
+    {
+      "id": "angle-3",
+      "niche": "education",
+      "angle": "What happens when a homeowner can't find you online",
+      "hook": "What happens when a homeowner can't find you online",
+      "painPoint": "losing jobs to competitors with better websites",
+      "dataPoint": null,
+      "suggestedFormat": "carousel",
+      "evergreenId": "ev-carousel-03",
+      "prewrittenContent": {
+        "hook": "What happens when a homeowner can't find you online",
+        "body": "Slide 1: What happens when a homeowner can't find you online\nSlide 2: They search 'plumber near me.' Your name doesn't appear.\nSlide 3: They find your competitor. He has 130 reviews and a website with an emergency button.\nSlide 4: They call him. He gets the job. You didn't lose on price — you lost on presence.\nSlide 5: This happens 3-5 times a week for contractors without websites.\nSlide 6: One site, 48-hour build. DM us the word demo.",
+        "hashtags": "#contractormarketing #plumbingbusiness #hvacbusiness #electrician #trevoadvisors"
+      }
+    },
+    {
+      "id": "angle-4",
+      "niche": "education",
+      "angle": "The 3-second test: does your website pass?",
+      "hook": "The 3-second test: does your website pass?",
+      "painPoint": "losing jobs to competitors with better websites",
+      "dataPoint": null,
+      "suggestedFormat": "carousel",
+      "evergreenId": "ev-carousel-04",
+      "prewrittenContent": {
+        "hook": "The 3-second test: does your website pass?",
+        "body": "Slide 1: The 3-second test: does your website pass?\nSlide 2: A homeowner lands on your site. They give it 3 seconds before hitting back.\nSlide 3: In those 3 seconds: they need to see what you do, where you work, and how to call.\nSlide 4: Most contractor websites fail this test — blurry photos, no phone number, no services listed.\nSlide 5: Failing the 3-second test costs you 5-10 calls per month.\nSlide 6: We build sites that pass it. DM us the word demo.",
+        "hashtags": "#websitedesign #contractormarketing #homeservices #localbusiness #trevoadvisors"
+      }
+    }
+  ]
+}

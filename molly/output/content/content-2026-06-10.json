@@ -1,0 +1,75 @@
+{
+  "weekOf": "2026-06-10",
+  "generatedAt": "2026-06-10T03:26:07.987Z",
+  "researchMode": "test",
+  "niches": {
+    "caption": "results",
+    "reel": "results"
+  },
+  "posts": {
+    "carousel": {
+      "slides": [
+        {
+          "headline": "Your website isn't broken. It's just not built for contractors.",
+          "body": "Most home service sites look professional but don't convert. They're designed by people who've never scheduled a job. We build them for people who do."
+        },
+        {
+          "headline": "Test one thing at a time.",
+          "body": "Change your headline, track calls for two weeks. Then change your photos. Then your CTA button. Most contractors guess. Winners test. Small changes add up to real revenue."
+        },
+        {
+          "headline": "Your conversion rate tells you everything.",
+          "body": "100 visitors this month — how many called? If you don't know, you're flying blind. Once you know the number, you can actually improve it. That's the difference between hoping and knowing."
+        },
+        {
+          "headline": "Reviews aren't just testimonials.",
+          "body": "High review velocity means your site is working. It means customers trust you enough to leave feedback. A site that doesn't ask for reviews is leaving money on the table every single job."
+        },
+        {
+          "headline": "Start measuring what matters.",
+          "body": "Calls, texts, bookings. Not pageviews or bounce rate. If your website isn't tied to your business metrics, you're just guessing. Let's talk about fixing that."
+        }
+      ],
+      "caption": "Most contractor websites fail quietly. They look fine but don't convert. The fix? Start testing instead of guessing. Track calls. Ask for reviews. Know your conversion rate. Small, measurable changes build better results than hoping your site does the work for you. — Trevo"
+    },
+    "caption1": {
+      "variantA": "A plumber went from 8 calls a month to 32 in the first 90 days.\n\nNo paid ads. No social media push. Just a website that actually worked.\n\nHere's what changed: his old site was a brochure. Nice photos, vague messaging, nowhere to actually book or call. People landed there, got confused, and left.\n\nThe new one was built for one job—get the phone to ring. Clear service areas. Fast load time. One obvious button to request a quote. Google reviews front and center.\n\nConversion rate jumped from 2% to 8%.\n\nTraffic didn't triple. Conversions did.\n\nThat's the difference between a website and a lead machine.\n\nIf you're wondering why your site sits quiet, it's probably not a traffic problem.\n\nIt's a conversion problem.\n\nLink in bio to see how.\n\n— Trevo",
+      "variantB": "Most contractors' websites don't drive calls. They drive frustration.\n\nOne HVAC owner realized his site was costing him money. Not helping. Costing.\n\nThink about it: someone searches \"emergency AC repair near me,\" finds your site, can't book, can't call, and moves to the next result.\n\nHe fixed it. Removed the noise. Made the call button impossible to miss. Posted new Google reviews every week. Made the service area crystal clear.\n\nResult: 24 new jobs in three months.\n\nSame market. Same skills. Different website.\n\nYour site should earn its place, not just take up space.\n\nLink in bio to start.\n\n— Trevo",
+      "body": "A plumber went from 8 calls a month to 32 in the first 90 days.\n\nNo paid ads. No social media push. Just a website that actually worked.\n\nHere's what changed: his old site was a brochure. Nice photos, vague messaging, nowhere to actually book or call. People landed there, got confused, and left.\n\nThe new one was built for one job—get the phone to ring. Clear service areas. Fast load time. One obvious button to request a quote. Google reviews front and center.\n\nConversion rate jumped from 2% to 8%.\n\nTraffic didn't triple. Conversions did.\n\nThat's the difference between a website and a lead machine.\n\nIf you're wondering why your site sits quiet, it's probably not a traffic problem.\n\nIt's a conversion problem.\n\nLink in bio to see how.\n\n— Trevo"
+    },
+    "trevo_found": {
+      "body": "Trevo just built an HVAC site in Portland. Here's what's inside.\n\nTap-to-call button above the fold. Service pages for heat pumps, furnace repair, and maintenance plans. Google reviews pulling in live. Trust badges showing license and insurance. Financing options displayed front and center. Mobile-first design that actually converts.\n\n48-hour build.\n\nThat's the build. — Trevo\n\nDM us the word demo.",
+      "hookLine": "Portland HVAC contractor site. Built in 48 hours.",
+      "trade": "HVAC",
+      "city": "Portland"
+    },
+    "reel": {
+      "script": "HOOK (0-2s): Your website isn't working if you don't know your conversion rate.\n[B-roll: contractor looking confused at laptop, shrugging]\n\nBODY (2-14s): 100 visitors last month. Three calls. That's 3%. Most contractors don't even track it. We built websites that turn browsers into jobs. One client went from 12 calls a month to 34.\n[B-roll: phone ringing, notification pings, calendar filling up, contractor smiling at phone]\n\nCTA (14-20s): Stop guessing. DM us the word demo and see what your conversion rate actually is.\n— Trevo",
+      "hookLine": "Your website is costing you money. Here's why.",
+      "caption": "Your website gets traffic. But how many people actually call? Most contractors have no idea. We track conversion rate — the percentage of visitors who book. One plumber went from 12 to 34 calls monthly. That's the difference between a website that looks good and one that pays. DM demo."
+    }
+  },
+  "glossaryTerms": [
+    "conversion rate",
+    "review velocity",
+    "word-of-mouth ceiling"
+  ],
+  "imagePaths": {
+    "carousel": [
+      "/Users/davidhettinger/Website-Master/molly/output/images/2026-06-10/carousel-slide-01.png",
+      "/Users/davidhettinger/Website-Master/molly/output/images/2026-06-10/carousel-slide-02.png",
+      "/Users/davidhettinger/Website-Master/molly/output/images/2026-06-10/carousel-slide-03.png",
+      "/Users/davidhettinger/Website-Master/molly/output/images/2026-06-10/carousel-slide-04.png",
+      "/Users/davidhettinger/Website-Master/molly/output/images/2026-06-10/carousel-slide-05.png"
+    ],
+    "caption1": [
+      "/Users/davidhettinger/Website-Master/molly/output/images/2026-06-10/caption-1.png"
+    ],
+    "trevo_found": [
+      "/Users/davidhettinger/Website-Master/molly/output/images/2026-06-10/trevo-found.png"
+    ],
+    "reel": [
+      "/Users/davidhettinger/Website-Master/molly/output/images/2026-06-10/reel-hook.png"
+    ]
+  }
+}

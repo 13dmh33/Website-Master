@@ -420,6 +420,9 @@ async function renderFallback(text, niche = 'education') {
 
 module.exports = {
   renderCarouselSlide,
+  renderCaptionPost,
+  renderTrevoFoundPost,
+  renderReelHook,
   renderQuotePost,
   renderFallback,
   renderTrevoBrand,

@@ -322,18 +322,23 @@ async function renderTrevoFoundPost(trade, city, features) {
   ctx.textAlign    = 'left';
   ctx.textBaseline = 'alphabetic';
 
-  // trade + city headline
-  const headline = `${trade} contractor site — ${city}`;
+  // headline — trade is the product/demo name, city is the tagline or URL
+  const headline = `${trade}`;
   ctx.font      = `bold ${DESIGN_CONFIG.headlineSize}px ${DESIGN_CONFIG.fontFamily}`;
   ctx.fillStyle = DESIGN_CONFIG.headline;
   const afterHeadline = wrapText(ctx, headline, padding, padding + 140, width - padding * 2, DESIGN_CONFIG.headlineSize + 12);
 
-  // divider
+  // subline (tagline or URL)
+  ctx.font      = `${DESIGN_CONFIG.bodySize - 6}px ${DESIGN_CONFIG.fontFamily}`;
   ctx.fillStyle = DESIGN_CONFIG.accent;
-  ctx.fillRect(padding, afterHeadline + 12, width - padding * 2, 1);
+  ctx.fillText(city, padding, afterHeadline + 4);
+
+  // divider
+  ctx.fillStyle = 'rgba(255,255,255,0.12)';
+  ctx.fillRect(padding, afterHeadline + 28, width - padding * 2, 1);
 
   // features list
-  let featureY = afterHeadline + 44;
+  let featureY = afterHeadline + 56;
   ctx.font      = `${DESIGN_CONFIG.bodySize - 2}px ${DESIGN_CONFIG.fontFamily}`;
   for (const feat of features.slice(0, 5)) {
     ctx.fillStyle = DESIGN_CONFIG.accent;

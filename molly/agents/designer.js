@@ -95,15 +95,14 @@ async function main() {
     imagePaths.caption1 = [];
   }
 
-  // 3. trevo_found — site reveal card
-  const tfTrade    = posts.trevo_found.trade || 'contractor';
-  const tfCity     = posts.trevo_found.city  || 'your city';
-  const tfBody     = posts.trevo_found.body  || '';
-  // extract bullet features from body (lines starting with letters after the opening line)
-  const tfFeatures = tfBody.split('\n').filter(l => l.trim().length > 10 && !l.includes('Trevo just built') && !l.includes("That's the build") && !l.includes('DM us')).slice(0, 5);
-  const tfPath     = path.join(imageDir, 'trevo-found.png');
+  // 3. trevo_found — demo site or agent product reveal
+  const tf      = posts.trevo_found;
+  const tfPath  = path.join(imageDir, 'trevo-found.png');
+  const tfLabel = tf.type === 'agent' ? tf.name : `${tf.trade} demo`;
+  const tfSub   = tf.type === 'agent' ? tf.tagline : tf.url || 'trevoadvisors.com/demos/';
+  const tfFeats = tf.features || [];
   try {
-    const buf = await render.renderTrevoFoundPost(tfTrade, tfCity, tfFeatures.length ? tfFeatures : ['Fast mobile site', 'Tap-to-call button', 'Google reviews integration', 'Service pages', '48-hour build']);
+    const buf = await render.renderTrevoFoundPost(tfLabel, tfSub, tfFeats.length ? tfFeats : ['Tap-to-call above the fold', 'Google reviews live', 'Service pages', 'Mobile-first', '48-hour build']);
     saveBuffer(buf, tfPath);
     imagePaths.trevo_found = [tfPath];
     console.log('Trevo found image rendered.');

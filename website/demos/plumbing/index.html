@@ -210,6 +210,8 @@
       footer { flex-direction: column; gap: 8px; text-align: center; padding: 16px 20px; }
       .trust-strip { padding: 12px 20px; gap: 0; }
       .trust-item { font-size: 12px; padding: 3px 12px; }
+      body { padding-bottom: 68px; }
+      .mobile-cta-bar { display: flex !important; }
     }
   </style>
 </head>
@@ -248,8 +250,8 @@
         <div class="hero-stat-lbl">Years in business</div>
       </div>
       <div>
-        <div class="hero-stat-val">24/7</div>
-        <div class="hero-stat-lbl">Emergency service</div>
+        <div class="hero-stat-val">142</div>
+        <div class="hero-stat-lbl">★ Google reviews</div>
       </div>
     </div>
   </div>
@@ -389,5 +391,10 @@
     });
   });
 </script>
+<!-- MOBILE STICKY BAR -->
+<div class="mobile-cta-bar" style="display:none;position:fixed;bottom:0;left:0;right:0;background:var(--accent);z-index:200;padding:10px 16px;align-items:center;gap:8px;">
+  <a href="tel:+13035550192" style="flex:1;background:rgba(0,0,0,.2);color:#fff;text-align:center;padding:11px;border-radius:6px;font-size:14px;font-weight:700;text-decoration:none;">📞 Call Now</a>
+  <a href="#contact" style="flex:1;background:#fff;color:var(--accent);text-align:center;padding:11px;border-radius:6px;font-size:14px;font-weight:700;text-decoration:none;">Get Free Quote</a>
+</div>
 </body>
 </html>

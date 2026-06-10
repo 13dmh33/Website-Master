@@ -1,0 +1,34 @@
+{
+  "name": "reeve-dm-agent",
+  "version": "1.0.0",
+  "description": "Reeve — Instagram DM qualification agent for speaker booking",
+  "main": "agents/dm-agent.js",
+  "type": "commonjs",
+  "scripts": {
+    "start":          "node agents/dm-agent.js",
+    "test-qualify":   "node scripts/test-qualify.js",
+    "scout":          "node agents/conference-scout.js",
+    "scout:summary":  "node agents/conference-scout.js --summary",
+    "pitch":          "node agents/pitcher.js",
+    "follow":         "node agents/follower.js",
+    "close":          "node agents/closer.js",
+    "report":         "node agents/reporter.js",
+    "review":         "node scripts/review-drafts.js",
+    "review:list":    "node scripts/review-drafts.js --list",
+    "review:closer":  "node scripts/review-drafts.js --type closer",
+    "response":       "node scripts/record-response.js",
+    "leads":          "node scripts/review-leads.js",
+    "leads:list":     "node scripts/review-leads.js --list",
+    "leads:high":     "node scripts/review-leads.js --high",
+    "leads:scout":    "node scripts/review-leads.js --scout",
+    "onboard":        "node scripts/onboard-client.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.37.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.18.2",
+    "node-fetch": "^2.7.0",
+    "nodemailer": "^6.9.14"
+  },
+  "engines": { "node": ">=18.0.0" }
+}

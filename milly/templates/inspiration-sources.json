@@ -1,0 +1,160 @@
+{
+  "note": "These sources inform Milly's content themes and angles. Never repeat their content directly — extract themes, reframe through the Reeve lens, and make it original.",
+  "instagram": [
+    {
+      "handle": "@nausheen.speaking.coach",
+      "theme": "TEDx-style coaching for corporate leaders — breaking down the mechanics of a great talk into repeatable steps",
+      "content_pillars": ["talk structure", "stage presence", "coaching frameworks for executives", "TEDx preparation"],
+      "angle_style": "tactical and specific — 'here are the 3 things you do before you walk on stage'"
+    },
+    {
+      "handle": "@deliver.your.best",
+      "theme": "Transforming nervous speakers into confident ones — the emotional journey of owning your voice",
+      "content_pillars": ["overcoming nerves", "authentic delivery", "building confidence on stage", "mindset before a talk"],
+      "angle_style": "empathetic and encouraging — meets speakers where they are"
+    },
+    {
+      "handle": "@speechcoach.shalando",
+      "theme": "Presence and power for entrepreneurs — speaking as a business growth tool",
+      "content_pillars": ["speaking with authority", "vocal presence", "entrepreneurial communication", "commanding a room"],
+      "angle_style": "direct and energizing — 'you already have what it takes'"
+    },
+    {
+      "handle": "@coachsujathakumari",
+      "theme": "Helping technical professionals (IT, C-suite) speak with confidence outside their comfort zone",
+      "content_pillars": ["confidence for introverts", "executive presence", "communication for technical experts", "speaking up in meetings"],
+      "angle_style": "practical and reassuring — bridges technical expertise to communication skills"
+    },
+    {
+      "handle": "@publicspeaking4women",
+      "theme": "Finding and owning your voice as a woman in professional settings",
+      "content_pillars": ["visibility", "speaking up", "leadership presence", "being heard"],
+      "angle_style": "empowering and community-driven"
+    },
+    {
+      "handle": "@toastmasters",
+      "theme": "Foundational speaking skills — the value of consistent practice",
+      "content_pillars": ["practice habits", "speech structure", "storytelling basics", "feedback culture"],
+      "angle_style": "educational and community-focused"
+    },
+    {
+      "handle": "@simonsinek",
+      "theme": "Start With Why — purpose-driven communication and leadership storytelling",
+      "content_pillars": ["why before what", "leadership communication", "inspiring others", "clarity of message"],
+      "angle_style": "philosophical and thought-provoking — big ideas in simple frames"
+    },
+    {
+      "handle": "@brendonburchard",
+      "theme": "High performance and personal brand — speaking as the vehicle for impact and influence",
+      "content_pillars": ["speaker as brand", "high-performance habits", "stage energy", "audience transformation"],
+      "angle_style": "high energy, motivational — challenge the speaker to level up"
+    },
+    {
+      "handle": "@tonyrobbins",
+      "theme": "Mastering audience energy and emotional connection at scale",
+      "content_pillars": ["audience psychology", "emotional state", "energy management", "persuasion"],
+      "angle_style": "bold and kinetic — state change as a speaking tool"
+    },
+    {
+      "handle": "@donaldmiller",
+      "theme": "StoryBrand — clarity of message. The audience is the hero, the speaker is the guide",
+      "content_pillars": ["message clarity", "story structure", "positioning the audience as hero", "eliminating confusion"],
+      "angle_style": "strategic and clean — if your message is confusing, you lose the booking"
+    },
+    {
+      "handle": "@jayacunzo",
+      "theme": "Storytelling as a business growth engine — resonance over reach",
+      "content_pillars": ["story over statistics", "resonant content", "finding your unique angle", "depth over volume"],
+      "angle_style": "contrarian and creative — challenges conventional speaking wisdom"
+    },
+    {
+      "handle": "@matthewpollard_",
+      "theme": "Introverted speakers and sellers — systematic storytelling for people who hate 'performing'",
+      "content_pillars": ["introverted speakers", "storytelling system", "sales through story", "quiet authority"],
+      "angle_style": "systematic and reassuring — you don't have to be extroverted to command a room"
+    }
+  ],
+  "newsletters_and_blogs": [
+    {
+      "source": "The Speaker Lab",
+      "url": "thespeakerlab.com/blog",
+      "theme": "The business of getting booked — pipeline, fees, outreach",
+      "content_pillars": ["getting booked", "speaker fees", "building a speaking business", "outreach strategy", "speaker bureau relationships"]
+    },
+    {
+      "source": "StoryBrand (Donald Miller)",
+      "url": "storybrand.com",
+      "theme": "Message clarity — if you confuse, you lose",
+      "content_pillars": ["one-liner pitch", "clear messaging", "positioning", "audience-first framing"]
+    },
+    {
+      "source": "Duarte Blog",
+      "url": "duarte.com/blog",
+      "theme": "Persuasive storytelling through structure and design — the architecture of a great talk",
+      "content_pillars": ["talk structure", "slide design", "persuasive narrative arc", "presentation as story"]
+    },
+    {
+      "source": "Manner of Speaking",
+      "url": "mannerofspeaking.org",
+      "theme": "Practical public speaking tips for all experience levels",
+      "content_pillars": ["vocal delivery", "body language", "speech structure", "practice techniques"]
+    },
+    {
+      "source": "Six Minutes",
+      "url": "sixminutes.dlugan.com",
+      "theme": "In-depth speech analysis — what separates good talks from great ones",
+      "content_pillars": ["speech analysis", "rhetorical devices", "opening and closing", "persuasion techniques"]
+    },
+    {
+      "source": "Presentation Zen (Garr Reynolds)",
+      "url": "presentationzen.com",
+      "theme": "Design-thinking approach to presentations — simplicity and visual storytelling",
+      "content_pillars": ["visual design", "simplicity", "Zen principles", "slide reduction"]
+    },
+    {
+      "source": "HBR Communication",
+      "url": "hbr.org/topic/communication",
+      "theme": "Executive-level communication research — what actually works in boardrooms and keynotes",
+      "content_pillars": ["executive presence", "persuasion research", "leadership communication", "credibility"]
+    },
+    {
+      "source": "Public Words",
+      "url": "publicwords.com",
+      "theme": "High-level speaker development for executives, celebrities, and thought leaders",
+      "content_pillars": ["speaker positioning", "charisma", "speech coaching", "thought leadership"]
+    },
+    {
+      "source": "ProPublicSpeaker",
+      "url": "propublicspeaker.com",
+      "theme": "Getting paid to speak — the practical side of the speaking business",
+      "content_pillars": ["speaker fees", "getting paid", "demo reels", "booking process"]
+    },
+    {
+      "source": "Ann Handley Total Annarchy",
+      "url": "annhandley.com",
+      "theme": "Marketing through storytelling and genuine audience connection",
+      "content_pillars": ["authentic voice", "audience connection", "writing for humans", "content that resonates"]
+    },
+    {
+      "source": "Ethos3 Blog",
+      "url": "ethos3.com/blog",
+      "theme": "Presentation design and storytelling for business — the visual side of a great talk",
+      "content_pillars": ["presentation design", "data storytelling", "visual narrative", "slide strategy"]
+    }
+  ],
+  "recurring_themes": [
+    "speakers who get booked have a system — speakers who don't are waiting to be discovered",
+    "clarity beats cleverness — if the audience is confused, you lose",
+    "the talk is only half the job — the pipeline is the other half",
+    "introverts can be extraordinary speakers — it's a skill, not a personality trait",
+    "your speaker bio is a pitch, not a resume",
+    "follow-up after a talk is where most speakers leave money on the table",
+    "the best speakers study their audience before they study their slides",
+    "a speaking pipeline is a relationship pipeline — not a transaction list",
+    "you don't need a big following to get booked — you need a clear message and a pitch that lands",
+    "stage time is a lagging indicator — the work happens before anyone sees you speak",
+    "bureaus take 20-30% per booking — flat-fee outbound is a different model entirely",
+    "the first booking is proof. everything after that is a system.",
+    "transparent pricing is a positioning statement — vague fees signal you don't know your value"
+  ]
+}

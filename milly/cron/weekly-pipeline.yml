@@ -1,0 +1,55 @@
+name: Milly weekly pipeline
+
+on:
+  schedule:
+    - cron: '0 13 * * 1'  # Monday 6am MT (UTC-7 during MDT)
+  workflow_dispatch:       # manual trigger for testing
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: milly/package-lock.json
+
+      - name: Install dependencies
+        run: cd milly && npm install
+
+      - name: Run researcher
+        run: cd milly && node agents/researcher.js
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SERPAPI_KEY:       ${{ secrets.SERPAPI_KEY }}
+
+      - name: Run generator
+        run: cd milly && node agents/generator.js
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: Run designer
+        run: cd milly && node agents/designer.js
+
+      - name: Run scheduler
+        run: cd milly && node agents/scheduler.js
+        env:
+          POSTPEER_API_KEY:    ${{ secrets.POSTPEER_API_KEY }}
+          POSTPEER_ACCOUNT_ID: ${{ secrets.POSTPEER_ACCOUNT_ID }}
+          POST_SCHEDULE:       ${{ vars.POST_SCHEDULE }}
+          TIMEZONE:            ${{ vars.TIMEZONE }}
+          INSTAGRAM_HANDLE:    ${{ vars.INSTAGRAM_HANDLE }}
+
+      - name: Upload output as artifact
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: milly-output-${{ github.run_id }}
+          path: milly/output/
+          retention-days: 14

@@ -1,0 +1,61 @@
+{
+  "formats": {
+    "carousel": {
+      "description": "6-slide educational carousel — highest save and share rate",
+      "slides": 6,
+      "image_size": "1080x1080",
+      "schedule_slot": "TUE:07:00",
+      "niche": "booking",
+      "caption_length": "60-100 words",
+      "hook_purpose": "make a speaker stop scrolling",
+      "cta": "DM us the word stages",
+      "notes": "slide 1 is the hook — most important. slide 6 is always soft CTA."
+    },
+    "caption": {
+      "description": "single-image pain-point caption — drives profile visits and follows",
+      "slides": 1,
+      "image_size": "1080x1080",
+      "schedule_slot": "THU:12:00",
+      "niche": "mindset or automation (alternates weekly)",
+      "caption_length": "100-150 words",
+      "hook_purpose": "open with a line that stops a speaker mid-scroll",
+      "cta": "link in bio",
+      "notes": "end with — Reeve attribution. short paragraphs, 1-2 sentences max."
+    },
+    "reevefound": {
+      "description": "'Reeve found this' — demonstrates the agency doing its job, finding real opportunities",
+      "slides": 1,
+      "image_size": "1080x1080",
+      "schedule_slot": "SAT:09:00",
+      "niche": "booking",
+      "caption_length": "80-120 words",
+      "hook_purpose": "show proof of work — real conferences, real deadlines",
+      "cta": "DM us the word stages",
+      "notes": "ends with 'That's the job. — Reeve'. never names specific clients."
+    },
+    "reel": {
+      "description": "20-second reel script — highest reach, drives new followers",
+      "slides": 1,
+      "image_size": "1080x1080",
+      "schedule_slot": "SUN:18:00",
+      "niche": "automation or mindset (alternates weekly)",
+      "caption_length": "under 60 spoken words",
+      "hook_purpose": "pattern interrupt — speaker hears this and thinks 'that's me'",
+      "cta": "DM us the word stages",
+      "notes": "hook 2 sec, body 12 sec, cta 6 sec. include b-roll notes inline.",
+      "image_type": "reel_hook — just the hook line as a quote-style image"
+    }
+  },
+  "weekly_rotation": {
+    "caption_niche_alternation": [
+      "mindset",
+      "automation",
+      "business"
+    ],
+    "reel_niche_alternation": [
+      "automation",
+      "mindset"
+    ],
+    "current_week": 0
+  }
+}

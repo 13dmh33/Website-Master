@@ -157,6 +157,12 @@ function handleReply(from, body) {
 const server = http.createServer((req, res) => {
   const url = req.url.split('?')[0];
 
+  if (req.method === 'GET' && url === '/health') {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ status: 'ok', timestamp: new Date().toISOString() }));
+    return;
+  }
+
   if (req.method !== 'POST' || url !== '/twilio/reply') {
     res.writeHead(404);
     res.end('Not found');
@@ -206,6 +212,7 @@ server.listen(PORT, () => {
   console.log('━'.repeat(50));
   console.log(`  Listening on port ${PORT}`);
   console.log(`  Endpoint: POST /twilio/reply`);
+  console.log(`  Health:   GET  /health`);
   console.log('');
   console.log('  Next steps:');
   console.log('    1. Run: ngrok http ' + PORT);

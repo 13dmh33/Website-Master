@@ -85,6 +85,8 @@ function loadConfig() {
       sms_sent_this_month: 0,
       sms_total_sent: 0,
       sms_followup_delay_hours: 4,
+      booking_link: 'https://cal.com/david-hettinger-g8qbdk/30min',
+      checkout_url: 'https://trevoadvisors.com/checkout/',
       last_run: null
     };
     fs.writeFileSync(CONFIG_PATH, JSON.stringify(defaults, null, 2));
@@ -103,6 +105,8 @@ function loadConfig() {
   cfg.sms_sent_this_month       = cfg.sms_sent_this_month       ?? 0;
   cfg.sms_total_sent            = cfg.sms_total_sent            ?? 0;
   cfg.sms_followup_delay_hours  = cfg.sms_followup_delay_hours  ?? 4;
+  cfg.booking_link              = cfg.booking_link              ?? 'https://cal.com/david-hettinger-g8qbdk/30min';
+  cfg.checkout_url              = cfg.checkout_url              ?? 'https://trevoadvisors.com/checkout/';
   return cfg;
 }
 
@@ -252,7 +256,14 @@ async function sendEmail(brief, config, videoUrl) {
     ps = `\n\nP.S. I put together a quick mockup of what a new site could look like — happy to share it on a call.`;
   }
 
-  const text = `${brief.final_message}${ps}`;
+  const cta = config.checkout_url
+    ? `\n\nReady to move forward? ${config.checkout_url}`
+    : '';
+  const bookCta = config.booking_link
+    ? `\nPrefer to talk first? Book a call: ${config.booking_link}`
+    : '';
+
+  const text = `${brief.final_message}${ps}${cta}${bookCta}`;
 
   const info = await transport.sendMail({
     from:    `${config.from_name} <${config.from_email}>`,

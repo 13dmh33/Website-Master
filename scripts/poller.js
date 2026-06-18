@@ -22,6 +22,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.loc
 
 const fs   = require('fs');
 const path = require('path');
+const stateStore = require('./state-store');
 
 const ROOT         = path.join(__dirname, '..');
 const QUEUE_DIR    = path.join(ROOT, 'queue');
@@ -97,12 +98,12 @@ function buildEmailIndex() {
 
 function updateState(leadId, status) {
   try {
-    const state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+    const state = stateStore.loadState();
     const entry = state.queue.find(l => l.lead_id === leadId);
     if (entry) {
       entry.status           = status;
       entry.reply_received_at = new Date().toISOString();
-      fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
+      stateStore.saveState(state);
     }
   } catch (e) {
     log(`WARN: could not update state.json — ${e.message}`);

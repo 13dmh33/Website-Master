@@ -18,5 +18,8 @@ logs/*.log
 reports/*.csv
 reports/*.json
 
+# Auto-generated safety snapshot — regenerated on every state.json write
+state.backup.json
+
 # OS
 .DS_Store

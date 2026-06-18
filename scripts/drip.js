@@ -23,6 +23,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.loc
 
 const fs         = require('fs');
 const path       = require('path');
+const stateStore = require('./state-store');
 const nodemailer = require('nodemailer');
 const twilio     = require('twilio');
 const { writeLog }             = require('./logger');
@@ -198,10 +199,10 @@ function markUnresponsive(cfg) {
 // ── STATE ──────────────────────────────────────────────────────────────────────
 
 function updateState(leadId, status) {
-  const state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+  const state = stateStore.loadState();
   const entry = state.queue.find(l => l.lead_id === leadId);
   if (entry) { entry.status = status; entry.drip_updated_at = new Date().toISOString(); }
-  fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
+  stateStore.saveState(state);
 }
 
 // ── SENDERS ────────────────────────────────────────────────────────────────────

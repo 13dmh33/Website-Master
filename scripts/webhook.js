@@ -31,6 +31,7 @@ const http       = require('http');
 const crypto     = require('crypto');
 const fs         = require('fs');
 const path       = require('path');
+const stateStore = require('./state-store');
 const querystring = require('querystring');
 
 const ROOT        = path.join(__dirname, '..');
@@ -97,12 +98,12 @@ function findLeadByPhone(fromNormalized) {
 
 function updateState(leadId, status) {
   try {
-    const state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+    const state = stateStore.loadState();
     const entry = state.queue.find(l => l.lead_id === leadId);
     if (entry) {
       entry.status = status;
       entry.reply_received_at = new Date().toISOString();
-      fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
+      stateStore.saveState(state);
     }
   } catch (e) {
     log(`WARN: could not update state.json — ${e.message}`);

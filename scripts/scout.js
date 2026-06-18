@@ -28,6 +28,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.loc
 
 const fs    = require('fs');
 const path  = require('path');
+const stateStore = require('./state-store');
 const https = require('https');
 const { writeLog }         = require('./logger');
 const { recordOutscraper } = require('./cost-tracker');
@@ -472,7 +473,7 @@ function buildFilename(cityStr) {
 // ── STATE UPDATE ──────────────────────────────────────────────────────────────
 
 function updateState(leads) {
-  const state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+  const state = stateStore.loadState();
   const existingIds = new Set([
     ...state.queue.map(l => l.lead_id || l),
     ...state.active.map(l => l.lead_id || l),
@@ -485,7 +486,7 @@ function updateState(leads) {
   });
   state.daily_stats.leads_scouted = (state.daily_stats.leads_scouted || 0) + newLeads.length;
   state.last_run = new Date().toISOString();
-  fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
+  stateStore.saveState(state);
   return newLeads.length;
 }
 

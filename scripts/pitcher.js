@@ -31,6 +31,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.loc
 
 const fs          = require('fs');
 const path        = require('path');
+const stateStore = require('./state-store');
 const https       = require('https');
 const nodemailer  = require('nodemailer');
 const { writeLog }              = require('./logger');
@@ -418,7 +419,7 @@ function logSend(brief, result, channel, videoUrl) {
 
 function updateState(leadId, status) {
   try {
-    const state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+    const state = stateStore.loadState();
     const entry = state.queue.find(l => l.lead_id === leadId);
     if (entry) {
       entry.status  = status;
@@ -428,7 +429,7 @@ function updateState(leadId, status) {
     }
     state.daily_stats = state.daily_stats || {};
     state.daily_stats.messages_sent = (state.daily_stats.messages_sent || 0) + 1;
-    fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
+    stateStore.saveState(state);
   } catch (e) {
     console.warn(`  Could not update state.json for ${leadId}: ${e.message}`);
   }

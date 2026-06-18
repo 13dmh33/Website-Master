@@ -9,6 +9,8 @@ const state     = require('../lib/state');
 const qualifier = require('../lib/qualifier');
 const templates = require('../templates/qualification.json');
 
+const isSimulate = process.argv.includes('--simulate');
+
 const app = express();
 
 // Parse raw body BEFORE json middleware so we can verify HMAC signatures
@@ -104,6 +106,10 @@ function verifySignature(req) {
  * Send a DM to a recipient via the Meta Graph API.
  */
 function sendDM(recipientId, text) {
+  if (isSimulate) {
+    console.log(`\n  [Reeve → ${recipientId}]\n  ${text}\n`);
+    return Promise.resolve({ simulated: true });
+  }
   return new Promise((resolve, reject) => {
     const body = JSON.stringify({
       recipient: { id: recipientId },
@@ -153,6 +159,10 @@ function buildRoutingMessage(score) {
  * Email Dave when a lead is routed. Fire-and-forget — never throws.
  */
 async function notifyDave(convo, score, reasoning) {
+  if (isSimulate) {
+    console.log(`  [simulate] Would notify Dave — score: ${score}, reasoning: ${reasoning}`);
+    return;
+  }
   if (!DAVE_NOTIFY_EMAIL || !ZOHO_EMAIL || !ZOHO_APP_PASSWORD) return;
 
   const scoreLabel = { high: '🟢 HIGH FIT', mid: '🟡 MID FIT', scout: '🔵 SCOUT FIT', low: '⚫ DECLINE' }[score] || score.toUpperCase();
@@ -438,10 +448,41 @@ app.post('/webhook', async (req, res) => {
   }
 });
 
+// ─── Simulate ─────────────────────────────────────────────────────────────────
+// node agents/dm-agent.js --simulate
+// Runs a mock DM conversation through all 3 qualifier questions and logs the
+// tier output. No Meta API or webhook needed — sendDM/notifyDave are stubbed
+// above when isSimulate is true.
+
+async function runSimulation() {
+  const senderId = `simulate-${Date.now()}`;
+  console.log('\n=== Reeve DM Agent — simulation mode ===\n');
+
+  await handleMessage(senderId, 'Test Speaker', 'stages');
+  await handleMessage(senderId, 'Test Speaker', '6 paid talks in the last year');
+  await handleMessage(senderId, 'Test Speaker', '$6,000 per talk');
+  await handleMessage(senderId, 'Test Speaker', 'AI adoption in healthcare operations');
+
+  const convo = state.getConversation(senderId);
+  console.log('\n── Result ──');
+  console.log(`  Score: ${convo?.score}`);
+  console.log(`  Routed: ${convo?.routed}`);
+
+  state.clearConversation(senderId);
+  console.log('\nSimulation conversation cleaned up.\n');
+}
+
 // ─── Start ────────────────────────────────────────────────────────────────────
 
-app.listen(PORT, () => {
-  logStartup();
-});
+if (isSimulate) {
+  runSimulation().catch(err => {
+    console.error('Simulation failed:', err.message);
+    process.exit(1);
+  });
+} else {
+  app.listen(PORT, () => {
+    logStartup();
+  });
+}
 
 module.exports = app; // export for testing

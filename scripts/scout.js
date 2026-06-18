@@ -3,10 +3,10 @@
  * Scout — Google Maps lead finder via Outscraper
  *
  * Usage:
- *   node scripts/scout.js --suggest hvac            ← show top 5 markets for a trade, then exit
+ *   node scripts/scout.js --suggest plumbing         ← show top 5 markets for a trade, then exit
  *   node scripts/scout.js --suggest                 ← show top 5 across all trades
  *   node scripts/scout.js --city "Denver, CO" --trade plumber --force
- *   node scripts/scout.js --city "Austin, TX" --trade hvac --limit 20 --force
+ *   node scripts/scout.js --city "Austin, TX" --trade electrician --limit 20 --force
  *   node scripts/scout.js --city "Denver, CO" --trade electrician --multi --force
  *   node scripts/scout.js --city "Denver, CO" --trade plumber --budget 0.25 --force
  *   node scripts/scout.js --city "Denver, CO" --trade plumber --target 50 --force

@@ -16,7 +16,7 @@
  *         config/pitcher-config.json (daily count tracking)
  *
  * Channel routing (set by Diagnoser, verified here):
- *   email  → plumbers, HVAC  (via Zoho SMTP — dave@trevoadvisors.com)
+ *   email  → plumbers, electricians  (via Zoho SMTP — dave@trevoadvisors.com)
  *   sms    → electricians, roofers  (via Twilio)
  *   ig_dm  → flagged as manual_send (no API — written to messages/ as draft)
  *   linkedin → flagged as manual_send

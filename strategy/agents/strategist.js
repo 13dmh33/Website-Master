@@ -267,6 +267,8 @@ function computeMetrics() {
   return {
     timestamp:              new Date().toISOString(),
     mrr,
+    // ARR = current MRR annualized. Reeve client retainers only (TIER_PRICE above) —
+    // Trevo hosting/Nora ($65/mo bundled) has no MRR tracking yet, not included here.
     arr:                    mrr * 12,
     total_clients:          clients.length,
     active_clients:         active.length,
@@ -301,6 +303,7 @@ function printDashboard(metrics, alerts) {
   console.log('\n' + '═'.repeat(56));
   console.log('  REEVE STRATEGY DASHBOARD');
   console.log(`  ${new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}`);
+  console.log(`  Last updated: ${metrics.timestamp}`);
   if (prev) console.log('  (trends vs last saved snapshot)');
   console.log('═'.repeat(56));
 

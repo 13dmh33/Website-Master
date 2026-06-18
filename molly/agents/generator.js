@@ -97,7 +97,7 @@ async function generateTrevoFound(angle, voiceContext) {
   const AGENTS = [
     { name: 'Nora', tagline: 'AI lead follow-up agent', url: 'trevoadvisors.com/start/', features: ['Texts new leads in under 60 seconds', 'Follows up 3x without you lifting a finger', 'Hands off hot leads with full context', 'Works while you\'re on the job', '$65/mo — no contracts', 'Pairs with any Trevo website'] },
     { name: 'Atlas', tagline: 'AI lead pipeline manager', url: 'trevoadvisors.com/atlas/', features: ['Scores and sorts leads by close probability', 'Sends personalized follow-up sequences', 'Flags high-value jobs for you', 'Dashboard to see pipeline at a glance', '$65/mo — no contracts', 'Add-on to your Trevo site'] },
-    { name: 'Argus', tagline: 'AI review responder', url: 'trevoadvisors.com/argus/', features: ['Responds to every Google review automatically', 'Flags negative reviews for human review', 'Keeps your profile active for SEO', 'Sounds like you — not a bot', '$65/mo — no contracts', 'Works on any Google Business Profile'] },
+    { name: 'Argus', tagline: 'AI review responder', url: 'trevoadvisors.com/argus/', features: ['Responds to every Google review automatically', 'Flags negative reviews for human review', 'Keeps your profile active for SEO', 'Sounds like you — not generic AI copy', '$65/mo — no contracts', 'Works on any Google Business Profile'] },
   ];
 
   // Alternate: odd weeks → demo, even weeks → agent

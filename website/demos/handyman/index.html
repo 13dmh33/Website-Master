@@ -91,6 +91,8 @@
       .hero-content { padding: 0 24px; }
       .services-grid, .reviews-grid { grid-template-columns: 1fr; }
       footer { flex-direction: column; gap: 8px; text-align: center; padding: 16px 20px; }
+      body { padding-bottom: 68px; }
+      .mobile-cta-bar { display: flex !important; }
     }
   </style>
 </head>
@@ -216,5 +218,10 @@
     });
   });
 </script>
+<!-- MOBILE STICKY BAR -->
+<div class="mobile-cta-bar" style="display:none;position:fixed;bottom:0;left:0;right:0;background:var(--accent);z-index:200;padding:10px 16px;align-items:center;gap:8px;">
+  <a href="tel:+17045550471" style="flex:1;background:rgba(0,0,0,.2);color:#fff;text-align:center;padding:11px;border-radius:6px;font-size:14px;font-weight:700;text-decoration:none;">📞 Call Now</a>
+  <a href="#contact" style="flex:1;background:#fff;color:var(--accent);text-align:center;padding:11px;border-radius:6px;font-size:14px;font-weight:700;text-decoration:none;">Get Free Quote</a>
+</div>
 </body>
 </html>

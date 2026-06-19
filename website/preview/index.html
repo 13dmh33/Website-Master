@@ -497,6 +497,27 @@
       </div>
     </div>
 
+    <!-- CREDIBILITY -->
+    <div class="section">
+      <div class="section-head"><span class="section-icon">🛡</span> Credibility <span style="font-size:9px;color:rgba(255,255,255,.2);font-weight:400;text-transform:none;letter-spacing:0;">optional — leave blank to skip</span></div>
+      <div class="input-group">
+        <div>
+          <div class="field-label" style="margin-bottom:5px;">Your guarantee</div>
+          <input type="text" id="bizGuarantee" placeholder="Done right or we come back free" />
+        </div>
+        <div class="input-row">
+          <div>
+            <div class="field-label" style="margin-bottom:5px;">License #</div>
+            <input type="text" id="bizLicense" placeholder="Lic #C12345" />
+          </div>
+          <div>
+            <div class="field-label" style="margin-bottom:5px;">Financing</div>
+            <input type="text" id="bizFinancing" placeholder="As low as $89/mo" />
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- DESIGN -->
     <div class="section">
       <div class="section-head"><span class="section-icon">🎨</span> Colors & Font</div>
@@ -546,10 +567,18 @@
       </div>
       <div id="uploadPhotos" style="display:none;">
         <div class="upload-grid">
-          <div class="upload-slot"><input type="file" accept="image/*" /><div class="upload-slot-label">Hero</div></div>
-          <div class="upload-slot"><input type="file" accept="image/*" /><div class="upload-slot-label">Service 1</div></div>
-          <div class="upload-slot"><input type="file" accept="image/*" /><div class="upload-slot-label">Service 2</div></div>
-          <div class="upload-slot"><input type="file" accept="image/*" /><div class="upload-slot-label">Service 3</div></div>
+          <div class="upload-slot" id="slotHero"><input type="file" accept="image/*" data-slot="hero" /><div class="upload-slot-label">Hero</div></div>
+          <div class="upload-slot" id="slotSvc1"><input type="file" accept="image/*" data-slot="svc1" /><div class="upload-slot-label">Service 1</div></div>
+          <div class="upload-slot" id="slotSvc2"><input type="file" accept="image/*" data-slot="svc2" /><div class="upload-slot-label">Service 2</div></div>
+          <div class="upload-slot" id="slotSvc3"><input type="file" accept="image/*" data-slot="svc3" /><div class="upload-slot-label">Service 3</div></div>
+        </div>
+        <div style="font-size:10px;color:rgba(255,255,255,.25);margin-top:6px;">Uploaded photos replace stock photos in the preview.</div>
+        <div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.06);">
+          <div class="field-label" style="margin-bottom:5px;">Before / After <span style="opacity:.5;font-size:9px;">(enables drag slider)</span></div>
+          <div class="upload-grid">
+            <div class="upload-slot" id="slotBefore"><input type="file" accept="image/*" data-slot="before" /><div class="upload-slot-label">Before</div></div>
+            <div class="upload-slot" id="slotAfter"><input type="file" accept="image/*" data-slot="after" /><div class="upload-slot-label">After</div></div>
+          </div>
         </div>
       </div>
     </div>
@@ -688,6 +717,8 @@ let config = {
   font: 'barlow', plan: 'basic',
   toggles: new Set(),
   aiEnhanced: null,
+  uploadedPhotos: {},   // { hero, svc1, svc2, svc3, before, after }
+  guarantee: '', license: '', financing: '',
 };
 let photoSetIndex = 0;
 
@@ -746,7 +777,8 @@ function renderPhotoGrid() {
 
 /* ── STEP UPDATER ── */
 function updateSteps() {
-  const s = [!!config.trade, !!config.biz, !!config.city, !!config.phone];
+  const infoFilled = !!(config.biz && config.city && config.phone);
+  const s = [!!config.trade, infoFilled, true, hasPreviewedOnce];
   s.forEach((done, i) => {
     const dot = document.getElementById(`stepDot${i+1}`);
     const item = document.getElementById(`stepItem${i+1}`);
@@ -775,6 +807,9 @@ function bindInput(id, key) {
 bindInput('bizName', 'biz'); bindInput('bizCity', 'city');
 bindInput('bizPhone', 'phone'); bindInput('bizTagline', 'tagline');
 bindInput('bizYears', 'years'); bindInput('bizReviews', 'reviews');
+bindInput('bizGuarantee', 'guarantee');
+bindInput('bizLicense', 'license');
+bindInput('bizFinancing', 'financing');
 document.getElementById('bizNotes').addEventListener('input', e => { config.notes = e.target.value; });
 
 /* ── COLOR PICKERS ── */
@@ -825,6 +860,25 @@ document.getElementById('tabUpload').addEventListener('click', () => {
   document.getElementById('uploadPhotos').style.display = ''; document.getElementById('stockPhotos').style.display = 'none';
 });
 document.getElementById('shuffleBtn').addEventListener('click', () => { photoSetIndex++; renderPhotoGrid(); scheduleLivePreview(); });
+
+/* ── UPLOAD PHOTOS ── */
+document.getElementById('uploadPhotos').addEventListener('change', e => {
+  const input = e.target;
+  if (input.type !== 'file' || !input.files[0]) return;
+  const slot = input.dataset.slot;
+  const slotEl = input.closest('.upload-slot');
+  const reader = new FileReader();
+  reader.onload = ev => {
+    config.uploadedPhotos[slot] = ev.target.result;
+    // show thumbnail in the slot
+    slotEl.style.backgroundImage = `url(${ev.target.result})`;
+    slotEl.style.backgroundSize = 'cover';
+    slotEl.style.backgroundPosition = 'center';
+    slotEl.querySelector('.upload-slot-label').style.display = 'none';
+    scheduleLivePreview();
+  };
+  reader.readAsDataURL(input.files[0]);
+});
 
 /* ── DEVICE TOGGLE ── */
 document.getElementById('btnDesktop').addEventListener('click', () => {
@@ -923,9 +977,16 @@ function generateHTML(cfg) {
   const dark    = cfg.dark;
   const font    = FONTS[cfg.font] || FONTS.barlow;
   const ai      = cfg.aiEnhanced;
-  const photos  = getPhotos(cfg.trade);
-  const heroPhoto = photos[0];
-  const svcPhotos = photos.slice(1);
+  const stockPhotos = getPhotos(cfg.trade);
+  const up = cfg.uploadedPhotos || {};
+  const heroPhoto = up.hero || stockPhotos[0];
+  const svcPhotos = [
+    up.svc1 || stockPhotos[1],
+    up.svc2 || stockPhotos[2],
+    up.svc3 || stockPhotos[3],
+    stockPhotos[4],
+    stockPhotos[5],
+  ];
   const svcList = (ai?.services?.map(s => s.name)) || SERVICES[trade] || SERVICES['default'] || ['Service 1','Service 2','Service 3','Service 4','Service 5','Service 6'];
   const svcDescs = ai?.services ? Object.fromEntries(ai.services.map(s => [s.name, s.desc])) : {};
   const headline  = ai?.headline || biz;
@@ -934,7 +995,10 @@ function generateHTML(cfg) {
   const trustLine = ai?.trust_line || 'Licensed · Insured · Same-day available';
   const aboutText = ai?.about || `${biz} has been serving ${city} and surrounding areas. We're a locally owned ${trade.toLowerCase()} company committed to honest pricing and quality work.`;
 
-  const toggles = cfg.toggles;
+  const toggles  = cfg.toggles;
+  const trustItems = cfg.license
+    ? [`Lic #${cfg.license} · Insured`, 'Upfront Pricing', 'Same-Day Available', 'Satisfaction Guaranteed']
+    : ['Licensed & Insured', 'Upfront Pricing', 'Same-Day Available', 'Satisfaction Guaranteed'];
 
   const emergencyBar = toggles.has('emergency')
     ? `<div style="background:#C0392B;color:#fff;text-align:center;padding:10px;font-size:13px;font-weight:700;letter-spacing:.04em;">24/7 EMERGENCY SERVICE — CALL NOW: ${phone}</div>`
@@ -951,15 +1015,47 @@ function generateHTML(cfg) {
       </section>` : '';
 
   const gallerySection = toggles.has('gallery')
-    ? `<section style="padding:50px 24px;background:${dark};">
-        <div style="max-width:960px;margin:0 auto;">
-          <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:${accent};margin-bottom:8px;">Our Work</div>
-          <h2 style="font-family:${font.heading};font-size:32px;font-weight:800;${font.headingStyle}margin-bottom:20px;">Before &amp; After</h2>
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
-            ${svcPhotos.map(p=>`<div style="height:160px;background:url(${p}) center/cover;border-radius:7px;"></div>`).join('')}
+    ? (up.before && up.after)
+      ? `<section style="padding:50px 24px;background:${dark};">
+          <div style="max-width:800px;margin:0 auto;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:${accent};margin-bottom:8px;">Our Work</div>
+            <h2 style="font-family:${font.heading};font-size:32px;font-weight:800;${font.headingStyle}margin-bottom:20px;">Before &amp; After</h2>
+            <div id="baSlider" style="position:relative;overflow:hidden;border-radius:10px;cursor:ew-resize;user-select:none;touch-action:none;">
+              <img src="${up.after}" style="width:100%;display:block;height:420px;object-fit:cover;" draggable="false" />
+              <div id="baOverlay" style="position:absolute;inset:0;overflow:hidden;width:50%;">
+                <img src="${up.before}" style="width:100%;display:block;height:420px;object-fit:cover;min-width:100%;" draggable="false" />
+              </div>
+              <div id="baDivider" style="position:absolute;top:0;bottom:0;left:50%;width:4px;background:#fff;margin-left:-2px;pointer-events:none;box-shadow:0 0 8px rgba(0,0,0,.4);">
+                <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40px;height:40px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;box-shadow:0 2px 10px rgba(0,0,0,.35);">↔</div>
+              </div>
+              <div style="position:absolute;top:12px;left:12px;background:rgba(0,0,0,.65);color:#fff;padding:5px 12px;border-radius:4px;font-size:11px;font-weight:700;letter-spacing:.06em;">BEFORE</div>
+              <div style="position:absolute;top:12px;right:12px;background:${accent};color:#fff;padding:5px 12px;border-radius:4px;font-size:11px;font-weight:700;letter-spacing:.06em;">AFTER</div>
+            </div>
+            <script>
+            (function(){
+              var s=document.getElementById('baSlider'),o=document.getElementById('baOverlay'),d=document.getElementById('baDivider'),drag=false;
+              function move(x){var r=s.getBoundingClientRect(),p=Math.max(5,Math.min(95,(x-r.left)/r.width*100));o.style.width=p+'%';d.style.left=p+'%';}
+              s.addEventListener('mousedown',function(e){drag=true;move(e.clientX);});
+              window.addEventListener('mousemove',function(e){if(drag)move(e.clientX);});
+              window.addEventListener('mouseup',function(){drag=false;});
+              s.addEventListener('touchstart',function(e){drag=true;move(e.touches[0].clientX);},{passive:true});
+              window.addEventListener('touchmove',function(e){if(drag)move(e.touches[0].clientX);},{passive:true});
+              window.addEventListener('touchend',function(){drag=false;});
+            })();
+            </script>
           </div>
-        </div>
-      </section>` : '';
+        </section>`
+      : `<section style="padding:50px 24px;background:${dark};">
+          <div style="max-width:960px;margin:0 auto;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:${accent};margin-bottom:8px;">Our Work</div>
+            <h2 style="font-family:${font.heading};font-size:32px;font-weight:800;${font.headingStyle}margin-bottom:20px;">Before &amp; After</h2>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+              ${svcPhotos.slice(0,3).map(p=>`<div style="height:160px;background:url(${p}) center/cover;border-radius:7px;"></div>`).join('')}
+            </div>
+            <div style="margin-top:10px;font-size:11px;color:rgba(255,255,255,.25);text-align:center;">Upload a before + after photo in the sidebar to enable the drag slider.</div>
+          </div>
+        </section>`
+    : '';
 
   const financingBanner = toggles.has('financing')
     ? `<div style="background:${accent};padding:18px 40px;display:flex;align-items:center;justify-content:space-between;">
@@ -1006,7 +1102,7 @@ function generateHTML(cfg) {
           <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:${accent};margin-bottom:8px;">FAQ</div>
           <h2 style="font-family:${font.heading};font-size:30px;font-weight:800;${font.headingStyle}margin-bottom:20px;">Common questions</h2>
           ${[['Do you offer free estimates?','Yes — we provide free on-site estimates for all jobs.'],
-             ['Are you licensed and insured?','Fully licensed and insured in ${city}.'],
+             ['Are you licensed and insured?',`Fully licensed and insured in ${city}.`],
              ['How quickly can you come out?','Same-day and next-day appointments available.']
             ].map(([q,a]) => `<div style="border-bottom:1px solid rgba(255,255,255,.08);padding:14px 0;"><div style="font-size:14px;font-weight:700;margin-bottom:5px;">${q}</div><div style="font-size:13px;color:rgba(255,255,255,.55);">${a}</div></div>`).join('')}
         </div>
@@ -1033,14 +1129,17 @@ ${emergencyBar}
     <div style="display:inline-block;background:${accent}33;border:1px solid ${accent}88;color:#fff;padding:5px 14px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px;">${trade} · ${city}</div>
     <h1 style="font-family:${font.heading};font-size:clamp(44px,6.5vw,70px);font-weight:800;${font.headingStyle}line-height:1;margin-bottom:12px;">${headline}</h1>
     <p style="font-size:15px;color:rgba(255,255,255,.7);margin-bottom:22px;">${trustLine}</p>
-    <div style="display:flex;gap:10px;">
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
       <a href="tel:" style="background:${accent};color:#fff;padding:12px 24px;border-radius:6px;font-size:14px;font-weight:700;">${cta}</a>
       <a href="#" style="border:2px solid rgba(255,255,255,.35);color:#fff;padding:10px 20px;border-radius:6px;font-size:14px;font-weight:600;">Free estimate</a>
     </div>
+    ${cfg.financing ? `<div style="margin-top:10px;font-size:13px;color:rgba(255,255,255,.65);">💳 ${cfg.financing}</div>` : ''}
+    ${cfg.guarantee ? `<div style="display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:9px 16px;background:rgba(255,255,255,.08);border-left:3px solid ${accent};border-radius:4px;font-size:13px;font-weight:600;color:#fff;">✓ ${cfg.guarantee}</div>` : ''}
+    ${cfg.reviews ? `<div style="display:inline-flex;align-items:center;gap:7px;margin-top:12px;background:rgba(255,215,0,.1);border:1px solid rgba(255,215,0,.25);border-radius:100px;padding:6px 14px;font-size:13px;font-weight:700;color:#fff;"><span style="color:#FFD700;">★★★★★</span>${cfg.reviews} Google reviews</div>` : ''}
   </div>
 </section>
 <div style="background:${accent};padding:12px 40px;display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;">
-  ${['Licensed & Insured','Upfront Pricing','Same-Day Available','Satisfaction Guaranteed'].map((t,i)=>`<span style="font-size:12px;font-weight:700;color:#fff;padding:3px ${i?'18px':'14px'};${i?'border-left:1px solid rgba(255,255,255,.3);':''}">${t}</span>`).join('')}
+  ${trustItems.map((t,i)=>`<span style="font-size:12px;font-weight:700;color:#fff;padding:3px ${i?'18px':'14px'};${i?'border-left:1px solid rgba(255,255,255,.3);':''}">${t}</span>`).join('')}
 </div>
 ${financingBanner}
 ${reviewsSection}
@@ -1070,6 +1169,11 @@ ${gallerySection}${veteranSection}${aboutSection}${areaSection}${faqSection}
   <span style="font-weight:700;color:rgba(255,255,255,.55);">${biz}</span>
   <span>© 2025 ${biz} · ${city} · Powered by <a href="https://trevoadvisors.com" style="color:${accent};">Trevo Advisors</a></span>
 </footer>
+<div id="mobileCtaBar" style="display:none;position:fixed;bottom:0;left:0;right:0;background:${accent};z-index:200;padding:10px 16px;align-items:center;gap:8px;">
+  <a href="tel:" style="flex:1;background:rgba(0,0,0,.2);color:#fff;text-align:center;padding:11px;border-radius:6px;font-size:14px;font-weight:700;text-decoration:none;">📞 Call Now</a>
+  <a href="#" style="flex:1;background:rgba(255,255,255,.9);color:${accent};text-align:center;padding:11px;border-radius:6px;font-size:14px;font-weight:700;text-decoration:none;">Get Quote</a>
+</div>
+<style>@media(max-width:768px){#mobileCtaBar{display:flex!important;}body{padding-bottom:68px;}}</style>
 </body></html>`;
 }
 
@@ -1077,6 +1181,7 @@ ${gallerySection}${veteranSection}${aboutSection}${areaSection}${faqSection}
 document.getElementById('previewBtn').addEventListener('click', () => {
   hasPreviewedOnce = true;
   buildAndShowPreview();
+  updateSteps();
 });
 
 /* ── CTA BAR → PURCHASE PANEL ── */

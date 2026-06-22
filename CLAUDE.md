@@ -236,6 +236,8 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - 2026-06-19: Live Stripe Payment Links wired for Website-only + Website+Nora in checkout
 - 2026-06-22: Has-website lead segment identified (~100+ CO plumbers); has-website pitcher scoped (not built); diagnostic-agent discovery questionnaire sent to design partner
 - 2026-06-22: Manual lead-quality cleanup underway (phone validation, DO NOT CALL tagging) in Google Sheets
+- 2026-06-22: Has-website "email + website" tab confirmed in Google Sheet (~100 CO plumbers, real URLs/emails); diagnostic-agent scoping questionnaire sent to design partner
+- 2026-06-22: Site-audit diagnostic agent built (scoping/draft-only) — **on feature/site-audit, NOT merged**
 
 ## Twilio A2P 10DLC Status
 - Brand registration submitted: 2026-06-03
@@ -257,6 +259,16 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - User is manually calling through Pueblo/Colorado Springs/Aurora/Denver leads in a Google Sheet, tagging each row: "Phone Good?" (Yes/No) and "Outcome" (VM, Not interested, DO NOT CALL, etc.).
 - Dead/disconnected numbers and DO-NOT-CALL flags should eventually map to the `Unsubscribe` field if/when these leads are merged into Trevo's automated `leads/*.json` pipeline — not yet automated, purely manual tracking today.
 - No automated phone-validation or lead-decay scoring has been built — explicitly deferred until volume justifies it.
+
+## Site-Audit Diagnostic Agent (as of 2026-06-22)
+- **Directory:** `/audit` — fully isolated, own `package.json` (ESM, `"type": "module"`), own deps, mirrors `/milly`'s isolation pattern. Zero modifications to Scout/Diagnose/Check/Build/Film/Pitch/Reply/Report/drip.js/webhook.js/state.json/milly.
+- **Branch:** `feature/site-audit` — **NOT merged to main.** Built off `main` (this repo has no `master` branch).
+- **Purpose:** Given a contractor's existing website URL, classifies it (`diy-builder` / `pro-maintained` / `unknown` + confidence) and drafts two cold-outreach assets — an email hook (2-4 sentences, no price) and a one-page mini-audit (markdown, price reframe as the close, exactly one soft Nora mention, never co-pitched in the email). **Draft-only — never sends email/SMS, never touches money.**
+- **Pipeline:** Module 1 (`lib/htmlChecks.js`, `lib/pagespeed.js` — deterministic/free: platform detection, SSL, tap-to-call, contact form, structured data, staleness, PageSpeed/CWV) → Module 2 (`lib/screenshot.js` + `lib/vision.js` — Playwright mobile screenshot → Claude vision pass, constrained findings, critiques the site never the owner) → Module 3 (`lib/classifier.js` — pure function of Module 1 signals only) → Module 4 (`lib/compose.js` — Claude-generated copy, hard-enforces `lib/brandVoice.js` linter before returning; throws on emoji/bot/"business days"/Title-Case violations).
+- **Orchestrator:** `scripts/run.js` — reads `input/leads.csv`, writes `output/<slug>.json` + `.email.txt` + `.mini-audit.md` + `output/index.json`; per-lead error isolation.
+- **Tests/lint:** 37/37 unit tests passing (`npm test` in `/audit`, Node's built-in test runner, zero network calls — PageSpeed/Anthropic/Playwright all mocked via dependency injection), custom lint script (`npm run lint` → `node --check` on every file, since repo has no shared ESLint config).
+- **Not yet done:** a true live-API run. Container has no `ANTHROPIC_API_KEY`/`PAGESPEED_API_KEY` and blocks general outbound fetch — same constraint as Scout/Pitcher/Drip/Reporter/Webhook/Poller (must run on Mac). Verified end-to-end logic instead via a mocked harness against the 3 bucket fixtures (all correct). See `audit/CHECKPOINT.md` for full resume instructions.
+- **Next steps before this can feed real outreach:** run on Mac with real API keys against real has-website leads (the ~100 CO plumbers in the Google Sheet "email + website" tab), spot-check output by eye, decide on a `config/templates.json` integration path (currently `/audit` is fully standalone, not wired into Diagnoser/Pitcher), merge `feature/site-audit` → `main` once vetted.
 
 ## Checkout — Live Stripe Links (as of 2026-06-19)
 - Website-only and Website+Nora Stripe Payment Links are LIVE in `website/checkout/index.html` (`STRIPE_LINK_WEBSITE`, `STRIPE_LINK_NORA`).

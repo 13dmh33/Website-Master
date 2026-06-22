@@ -40,14 +40,14 @@ This pipeline currently assumes the lead has **no existing website** — that's 
 - **Live and running:** Scout, Diagnoser, Checker, Pitcher, Drip, Mobile, Reporter, plus manual channels (cold calling, personal SMS, LinkedIn, referral outreach).
 - **Checkout:** Website-only and Website+Nora are live with real Stripe Payment Links. Atlas/Argus checkout exists in code but isn't live (no real payment link yet).
 - **New lead segment identified, not yet built:** ~100+ Colorado plumbing contractors who already HAVE a website and email — a different pitch is needed for them ("your current site is costing you" / "you may be overpaying for hosting"), instead of the "you have no website" pitch the rest of the system is built around.
-- **In scoping, not built:** A "diagnostic agent" that would visit a contractor's existing website and generate a specific, credible critique to use as the hook in outreach to that new segment. Currently gathering input from a website-design professional on what's worth flagging (conversion killers, design trends, realistic hosting cost benchmarks) before any build decision.
+- **Built (draft-only, not merged, not live):** A "site-audit" diagnostic agent now exists in `/audit` (own isolated codebase, on branch `feature/site-audit`). Given a contractor's existing website URL, it scores the site, classifies it as DIY-builder / professionally-maintained / unknown, and drafts an email hook + a one-page mini-audit for outreach. It's fully tested (37/37 unit tests) but has not yet been run against real leads with live API keys, is not merged to `main`, and is not wired into the rest of the pipeline (Diagnoser/Pitcher). Still gathering input from a website-design professional on what's worth flagging before treating it as production-ready.
 - **Tabled for later:** "Name your price" pricing model for the basic website tier — discussed, deliberately not pursued yet.
 - **Manual cleanup in progress:** Calling through existing lead lists, tagging phone numbers as good/bad and outcomes (voicemail, not interested, do not call) directly in a shared Google Sheet — purely manual right now, not yet automated.
 
 ## What's NOT done yet (known gaps)
 
 - No outreach template exists for the "has website, has email" segment — every current template assumes the lead has no site.
-- No automated site-auditing/diagnostic tool exists — would need to be built once the scoping questions above are answered.
+- The new site-audit diagnostic agent (`/audit`) hasn't been run against real leads yet, isn't merged to `main`, and isn't wired into Diagnoser/Pitcher — it's a standalone, vetted-but-unproven tool today.
 - No phone-number validation or lead-decay automation — stale/dead leads are currently caught only by manually calling them.
 - Atlas and Argus have no backend — they are not sellable products yet, despite having marketing pages.
 - Twilio A2P 10DLC registration is pending carrier approval — SMS sending is otherwise functional but may be rate-limited/blocked until approved.

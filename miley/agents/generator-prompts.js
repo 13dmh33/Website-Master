@@ -68,6 +68,7 @@ Return ONLY valid JSON (no markdown, no commentary, no code fences) in exactly t
   "donation": "<the single donation line>",
   "cta": "<the single call to action>",
   "caption": "<the FULL assembled post: hook + blank line + body + blank line + donation + blank line + cta>",
+  "captionVariantB": "<the SAME post rewritten with a DIFFERENT opening hook (same body/donation/cta, same formula) — for A/B testing>",
   "hashtag_set": "<one of: product | trades_humor | mission | engagement | motivational>",
   "suggested_visual": "<one short sentence describing the ideal image for the Designer/Canva>",
   "extra": "<OPTIONAL: for carousel = slide-by-slide text; for reel = the spoken script + on-screen text. Empty string if not needed.>"
@@ -75,6 +76,7 @@ Return ONLY valid JSON (no markdown, no commentary, no code fences) in exactly t
 
 Rules for the fields:
 - "caption" is what actually posts. Assemble it yourself from the parts, with blank lines between sections.
+- "captionVariantB" must differ ONLY in the hook (a fresh angle on the same joke/scene/idea) — never a different topic.
 - "hashtag_set" picks WHICH saved hashtag group to attach (the pipeline adds the actual tags). Choose the closest fit.
 - Do NOT put hashtags inside the caption — the pipeline appends them.
 - Keep it copy-paste ready. No placeholders like [brand] or [link].

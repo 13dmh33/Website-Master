@@ -95,6 +95,7 @@ function fromEvergreen(ev) {
     donation:         ev.donation || '',
     cta:              ev.cta,
     caption:          ev.caption,
+    captionVariantB:  ev.caption, // no real A/B for evergreen — same text both ways
     hashtag_set:      ev.hashtag_set,
     suggested_visual: ev.suggested_visual || '',
     extra:            ev.extra || '',
@@ -127,6 +128,7 @@ async function generateViaApi(planPost, brief, idx, weeklyTerms) {
     donation:         post.donation || '',
     cta:              post.cta,
     caption:          post.caption,
+    captionVariantB:  post.captionVariantB || post.caption, // fall back to A if Claude omitted it
     hashtag_set:      post.hashtag_set,
     suggested_visual: post.suggested_visual || '',
     extra:            post.extra || '',
@@ -195,6 +197,7 @@ async function main() {
       donation:         content.donation,
       cta:              content.cta,
       caption:          content.caption,
+      captionVariantB:  content.captionVariantB || content.caption,
       hashtag_set:      content.hashtag_set,
       suggested_visual: content.suggested_visual,
       extra:            content.extra,

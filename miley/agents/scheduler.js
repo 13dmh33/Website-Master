@@ -11,10 +11,11 @@
 
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 
-const path   = require('path');
-const fs     = require('fs');
-const store  = require('../lib/store');
-const buffer = require('../lib/buffer');
+const path      = require('path');
+const fs        = require('fs');
+const store     = require('../lib/store');
+const buffer    = require('../lib/buffer');
+const abTracker = require('../lib/ab-tracker');
 
 const DAY_IDX = { MON: 0, TUE: 1, WED: 2, THU: 3, FRI: 4, SAT: 5, SUN: 6 };
 
@@ -58,9 +59,16 @@ async function main() {
   console.log(`Scheduler running for week of ${weekOf} (mode: ${campaignMode}, ${posts.length} posts).`);
   console.log(`FORCE_QUEUE=${forceQueue ? '1' : '0'} · Buffer configured: ${buffer.isConfigured()} → ${useBuffer ? 'scheduling via Buffer' : 'review queue only'}`);
 
+  // A/B caption testing: alternate the whole week between hook variant A and B
+  // (each Claude-generated post carries both; evergreen posts have no real B).
+  const captionVariant = abTracker.getCurrentVariant();
+  abTracker.recordVariant(weekOf, captionVariant);
+  console.log(`Caption variant this week: ${captionVariant}`);
+
   const queued = [];
   for (const post of posts) {
     const scheduledFor = nextWeekOccurrence(post.day, post.time);
+    const caption = (captionVariant === 'B' && post.captionVariantB) ? post.captionVariantB : post.caption;
     const record = {
       weekOf,
       slot:        post.slot,
@@ -71,9 +79,10 @@ async function main() {
       product:     post.product || null,
       isOctober:   post.isOctober,
       scheduledFor,
-      caption:     post.caption,
+      caption,
+      captionVariant,
       hashtags:    post.hashtags || [],
-      postText:    buildPostText(post),
+      postText:    buildPostText({ ...post, caption }),
       images:      post.images || [],
       suggested_visual: post.suggested_visual || '',
       extra:       post.extra || '',

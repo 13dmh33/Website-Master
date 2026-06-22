@@ -28,9 +28,9 @@ Weekly pipeline: **Researcher → Generator → Designer → Scheduler → Analy
 | Agent | File | Job |
 |-------|------|-----|
 | Researcher | `agents/researcher.js` | Assembles a zero-API brief from `inspiration-sources.json`: evergreen themes, the seasonal angle, and VERIFIED data hooks (breast-cancer / women-in-trades stats). **Live data refresh:** also pulls fresh on-brand RSS headlines (free, no key) via `lib/sources.js` for both beats — paraphrasable angles only, fails silently offline. The Reeve "call for speakers" branch is disabled. |
-| Generator | `agents/generator.js` | Resolves the week's plan (planner) and writes ONE post per slot via the brand brain in `agents/generator-prompts.js`. Claude with quality gate → evergreen fallback on any miss. Appends hashtags. |
+| Generator | `agents/generator.js` | Resolves the week's plan (planner) and writes ONE post per slot via the brand brain in `agents/generator-prompts.js`. Claude with quality gate → evergreen fallback on any miss. Appends hashtags. Each Claude-generated post also carries `captionVariantB` (same post, different hook) for A/B testing. |
 | Designer | `agents/designer.js` | Renders 1080×1080 PNGs per post via skia-canvas. Product photo background (`assets/products/{key}.png`) when present, else the content-type gradient palette. |
-| Scheduler | `agents/scheduler.js` | Queue-first: writes posts + preview. Schedules to Buffer only when `FORCE_QUEUE` is off. |
+| Scheduler | `agents/scheduler.js` | Queue-first: writes posts + preview. Schedules to Buffer only when `FORCE_QUEUE` is off. Picks the week's A/B caption variant (`lib/ab-tracker.js`, alternates weekly) and records it. |
 | Analyst | `agents/analyst.js` | Instagram engagement → updates `brand-voice.json` `what_works` / `top_hashtags`. Skips gracefully without an Instagram token. |
 
 ## Library files

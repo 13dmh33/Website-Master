@@ -23,4 +23,16 @@ node scripts/test-pipeline.js  # full dry run, never posts
 
 Without `ANTHROPIC_API_KEY`, the pipeline uses the 36-post evergreen bank (zero spend). With a Claude key it generates fresh posts via `agents/generator-prompts.js` and falls back to evergreen on any quality miss.
 
+## Sales funnel
+
+The engine drives traffic to the shop and measures it (all free):
+
+```bash
+node scripts/build-linkpage.js                   # generate the link-in-bio hub (linkpage/)
+node scripts/dm-responder.js --simulate "PINK"   # preview the DM autoresponder
+node scripts/dm-responder.js --export-manychat   # no-code IG DM automation flow
+```
+
+Every product post carries a UTM-tagged `tracked_link`; the Analyst ingests click exports (`output/clicks/latest.json`) and ranks products by click-through. See the **Sales funnel** section in `CLAUDE.md` for one-time setup (host the linkpage, GA4/Pixel, email form, ManyChat).
+
 Full docs: `CLAUDE.md`. Weekly routine: `docs/review-workflow.md`.

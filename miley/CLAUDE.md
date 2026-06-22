@@ -31,7 +31,7 @@ Weekly pipeline: **Researcher → Generator → Designer → Scheduler → Analy
 | Generator | `agents/generator.js` | Resolves the week's plan (planner) and writes ONE post per slot via the brand brain in `agents/generator-prompts.js`. Claude with quality gate → evergreen fallback on any miss. Appends hashtags. Each Claude-generated post also carries `captionVariantB` (same post, different hook) for A/B testing. |
 | Designer | `agents/designer.js` | Renders 1080×1080 PNGs per post via skia-canvas. Product photo background (`assets/products/{key}.png`) when present, else the content-type gradient palette. |
 | Scheduler | `agents/scheduler.js` | Queue-first: writes posts + preview. Schedules to Buffer only when `FORCE_QUEUE` is off. Picks the week's A/B caption variant (`lib/ab-tracker.js`, alternates weekly) and records it. |
-| Analyst | `agents/analyst.js` | Instagram engagement → updates `brand-voice.json` `what_works` / `top_hashtags`. Skips gracefully without an Instagram token. |
+| Analyst | `agents/analyst.js` | Instagram engagement → updates `brand-voice.json` `what_works` / `top_hashtags`. **Sales signal:** also ingests UTM click data (`output/clicks/latest.json`) and ranks products by click-through, so the loop optimizes for revenue, not just likes. Runs the click report even without an Instagram token. |
 
 ## Library files
 
@@ -45,6 +45,8 @@ Weekly pipeline: **Researcher → Generator → Designer → Scheduler → Analy
 | `lib/buffer.js` | Buffer API v1 — image upload + scheduled post. |
 | `lib/instagram-insights.js` | Instagram Graph API (read-only) for the Analyst. |
 | `lib/sources.js` | Live data refresh — free RSS from the women-in-trades + breast-cancer beats, keyword-filtered, silent-fail. Headlines are paraphrasable angles only (never copied). |
+| `lib/links.js` | Single source of truth for trackable shop links. Builds UTM-tagged bio/DM/storefront URLs so clicks are attributable to source, campaign, and product. |
+| `lib/dm-autoresponder.js` | "DM PINK" → on-brand Riley reply + tracked link + soft email-capture. Pure logic; brand-safe (no freebies). Powers a ManyChat flow or Graph API webhook. |
 | `agents/generator-prompts.js` | **The brand brain** — SYSTEM_PROMPT, format/content-type instructions, October overlay, prompt builder, quality gate. |
 
 ---
@@ -67,6 +69,28 @@ Each maps to a render format, an evergreen fallback `type`, and a `visual-config
 HOOK → SCENE → DONATION (one line, varied) → ONE CTA. Hashtags are appended by the pipeline at posting time (kept out of the caption body), from `hashtag-master.json` (anchors + matching set + October additions).
 
 ---
+
+## Sales funnel (link attribution + DM capture)
+
+The engine drives traffic to the shop and **measures** it. The funnel:
+
+```
+IG bio link ─┐                          ┌─→ storefront (utm_content=<product>)
+DM "PINK"  ──┼─→ LINKPAGE (the hub) ─────┤
+             │   • UTM-tagged buttons    └─→ email capture (owned audience)
+             │   • GA4 / Meta Pixel (free)
+```
+
+- **`scripts/build-linkpage.js`** generates `linkpage/index.html` — a Linktree-style hub with a "Shop all" button, one button per catalog product (each UTM-tagged), an email-capture form, and optional GA4 / Meta Pixel snippets. Deploy the `linkpage/` folder to any free static host, then set `LINKPAGE_URL` + your Instagram bio to that URL. The weekly pipeline rebuilds it so featured products stay fresh.
+- **Every product/mission/awareness post** carries a `tracked_link` (shown in the review preview) with `utm_content=<product>` so the Analyst can later attribute clicks to the exact item.
+- **`scripts/dm-responder.js`** runs the "DM PINK" autoresponder: `--simulate "<msg>"` to preview a reply, `--capture "<email>"` to add a lead, `--export-manychat` to emit `config/manychat-flow.json`. Live IG DM automation runs via ManyChat (free tier — import the flow) or the Meta Graph API webhook **on the Mac** (must be publicly reachable, like the Trevo/Reeve webhooks). Replies are brand-safe: never free product/discounts.
+- **Attribution loop:** drop a GA4/Pixel/ManyChat export at `output/clicks/latest.json` (`{ linkpage_views, by_content: { <product>: clicks } }`) and the Analyst ranks products by click-through — the sales signal that should steer the content mix and A/B testing.
+
+### Setup checklist (one-time, all free)
+1. Host `linkpage/` (Netlify / GitHub Pages / Cloudflare Pages) → set `LINKPAGE_URL` + the IG bio link.
+2. Create a free GA4 property and/or Meta Pixel → set `GA_MEASUREMENT_ID` / `META_PIXEL_ID`.
+3. Create a free email form (Formspree / Buttondown) → set `EMAIL_CAPTURE_ACTION`.
+4. Wire "DM PINK" in ManyChat (free) using `config/manychat-flow.json`.
 
 ## Templates
 

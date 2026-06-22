@@ -12,7 +12,9 @@
     "generate": "node agents/generator.js",
     "design": "node agents/designer.js",
     "schedule": "node agents/scheduler.js",
-    "analyze": "node agents/analyst.js"
+    "analyze": "node agents/analyst.js",
+    "build-linkpage": "node scripts/build-linkpage.js",
+    "dm": "node scripts/dm-responder.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.37.0",

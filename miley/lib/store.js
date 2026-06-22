@@ -15,6 +15,9 @@ const PATHS = {
   images:    path.join(ROOT, 'output', 'images'),
   queue:     path.join(ROOT, 'output', 'queue'),
   archive:   path.join(ROOT, 'output', 'archive'),
+  leads:     path.join(ROOT, 'output', 'leads'),
+  clicks:    path.join(ROOT, 'output', 'clicks'),
+  linkpage:  path.join(ROOT, 'linkpage'),
   assets:        path.join(ROOT, 'assets'),
   brandVoice:    path.join(ROOT, 'templates', 'brand-voice.json'),
   postFormats:   path.join(ROOT, 'templates', 'post-formats.json'),
@@ -234,6 +237,39 @@ module.exports = {
     data.status = 'posted';
     data.postedAt = new Date().toISOString();
     writeJson(filePath, data);
+  },
+
+  // ─── leads (email capture from DMs) ─────────────────────────────────────────
+
+  // append a captured lead (dedup by email) → output/leads/leads.json
+  saveLead(lead) {
+    ensureDir(PATHS.leads);
+    const filePath = path.join(PATHS.leads, 'leads.json');
+    const data = readJson(filePath) || { leads: [] };
+    const email = (lead.email || '').toLowerCase();
+    if (email && data.leads.some(l => l.email === email)) return false; // already have them
+    data.leads.push({ ...lead, email, capturedAt: new Date().toISOString() });
+    writeJson(filePath, data);
+    return true;
+  },
+
+  getLeads() {
+    return readJson(path.join(PATHS.leads, 'leads.json')) || { leads: [] };
+  },
+
+  // ─── click data (UTM attribution, exported from GA4 / Pixel / ManyChat) ─────
+  // Drop a JSON file at output/clicks/latest.json shaped like:
+  //   { "weekOf": "...", "linkpage_views": 123, "by_content": { "snapback_hat": 14, ... } }
+  // The Analyst joins by_content to posts via each post's utm_content (product).
+  getClickData() {
+    const latest = path.join(PATHS.clicks, 'latest.json');
+    if (fs.existsSync(latest)) return readJson(latest);
+    ensureDir(PATHS.clicks);
+    const files = fs.readdirSync(PATHS.clicks)
+      .filter(f => f.startsWith('clicks-') && f.endsWith('.json'))
+      .sort()
+      .reverse();
+    return files.length ? readJson(path.join(PATHS.clicks, files[0])) : null;
   },
 
   // expose path helpers for agents that need to write images etc.

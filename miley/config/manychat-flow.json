@@ -1,0 +1,34 @@
+{
+  "_note": "Reference flow for ManyChat (or Meta Graph API). Keyword trigger → text bubbles below. Link is UTM-tagged for attribution.",
+  "keyword": "PINK",
+  "also_triggers_on": [
+    "link",
+    "shop",
+    "buy",
+    "🩷"
+  ],
+  "link": "https://techs4tatas.printify.me?utm_source=instagram&utm_medium=dm&utm_campaign=pink",
+  "flows": {
+    "shop": {
+      "trigger": "PINK",
+      "messages": [
+        "Hey babe! Here's the shop 👉 https://techs4tatas.printify.me?utm_source=instagram&utm_medium=dm&utm_campaign=pink",
+        "Every order sends 30% to breast cancer research — you're funding the fight just by repping it 🩷🔧",
+        "Want first dibs on new drops? Reply with your email and I'll add you to the list — no spam, just the good stuff."
+      ],
+      "then": "capture_email_optin"
+    },
+    "size_help": {
+      "trigger": "size/fit question",
+      "messages": [
+        "Hey babe! Great question 💪 Sizing's on each product page here 👉 https://techs4tatas.printify.me?utm_source=instagram&utm_medium=dm&utm_campaign=pink",
+        "Our tees run true to size (size up if you like room over the work layers). Tell me which piece you're eyeing and I'll point you to the chart 🩷"
+      ]
+    }
+  },
+  "email_capture": {
+    "prompt": "Reply with your email for first dibs on drops.",
+    "store_to": "newsletter list (Buttondown / Mailchimp free tier)"
+  },
+  "brand_safety": "Never promise free product, discounts, or giveaways in any reply."
+}

@@ -39,6 +39,32 @@ function guessNiche(caption) {
   return 'trades_humor';
 }
 
+// click attribution — joins exported UTM click data (output/clicks/latest.json)
+// to this week's posts by utm_content (product). Free GA4/Pixel/ManyChat export.
+// Returns a summary or null if no click data is present.
+function reportClicks() {
+  const clicks = store.getClickData();
+  if (!clicks) return null;
+
+  const byContent = clicks.by_content || {};
+  const ranked = Object.entries(byContent).sort((a, b) => b[1] - a[1]);
+
+  console.log('\nLink attribution (from exported UTM data):');
+  if (clicks.linkpage_views != null) console.log(`  Linkpage views: ${clicks.linkpage_views}`);
+  if (ranked.length) {
+    console.log('  Top products by clicks:');
+    ranked.slice(0, 5).forEach(([key, n]) => console.log(`    • ${key}: ${n}`));
+  } else {
+    console.log('  (no per-product clicks in the export yet)');
+  }
+  return {
+    weekOf:         clicks.weekOf || null,
+    linkpageViews:  clicks.linkpage_views || 0,
+    topProducts:    ranked.slice(0, 5).map(([key, clicks]) => ({ key, clicks })),
+    totalClicks:    ranked.reduce((s, [, n]) => s + n, 0),
+  };
+}
+
 // run pattern analysis with Claude after 4+ weeks of data
 async function runPatternAnalysis(analyticsHistory) {
   const summary = analyticsHistory.map(week => ({
@@ -79,9 +105,18 @@ Return as JSON with this structure:
 async function main() {
   const weekOf = weekStartDate();
 
+  // click attribution runs regardless of whether IG insights are configured —
+  // it's the sales signal (which products people actually click through to buy).
+  const clickSummary = reportClicks();
+
   if (!insights.isConfigured()) {
-    console.log('Instagram insights not configured — skipping analytics this week.');
-    console.log('To enable: add INSTAGRAM_ACCESS_TOKEN and INSTAGRAM_BUSINESS_ACCOUNT_ID to .env');
+    if (clickSummary) {
+      store.saveAnalytics({ weekOf, generatedAt: new Date().toISOString(), clicks: clickSummary });
+      console.log('\nInstagram insights not configured — saved click attribution only.');
+    } else {
+      console.log('Instagram insights not configured and no click data — nothing to analyze this week.');
+    }
+    console.log('To enable engagement analytics: add INSTAGRAM_ACCESS_TOKEN and INSTAGRAM_BUSINESS_ACCOUNT_ID to .env');
     process.exit(0);
   }
 
@@ -136,6 +171,7 @@ async function main() {
       permalink:      topPerformer.permalink,
     },
     highSignalCount:   highSignalPosts.length,
+    clicks:            clickSummary || null,
     posts:             enriched,
   };
 

@@ -20,6 +20,7 @@ const claude   = require('../lib/claude');
 const store    = require('../lib/store');
 const glossary = require('../lib/glossary');
 const planner  = require('../lib/planner');
+const links    = require('../lib/links');
 const prompts  = require('./generator-prompts');
 
 const USE_API = !!process.env.ANTHROPIC_API_KEY && process.env.FORCE_EVERGREEN !== '1';
@@ -180,6 +181,9 @@ async function main() {
 
     const hashtags = buildHashtags(content.hashtag_set, planPost.isOctober, master, week);
 
+    const product = content.product || planPost.product || null;
+    const tracked = links.forPost({ contentType: planPost.contentType, product, campaignMode: plan.mode });
+
     posts.push({
       slot:        planPost.day,
       day:         planPost.day,
@@ -187,9 +191,11 @@ async function main() {
       format:      planPost.format,
       contentType: planPost.contentType,
       paletteKey:  planPost.paletteKey,
-      product:     content.product || planPost.product || null,
+      product,
       isOctober:   planPost.isOctober,
       ctaStyle:    planPost.ctaStyle || '',
+      tracked_link: tracked.link,        // UTM-tagged bio link this post drives to (null for comment/tag posts)
+      utm_content:  tracked.product || null,
       source:      content.source,
       evergreenId: content.evergreenId || null,
       hook:             content.hook,

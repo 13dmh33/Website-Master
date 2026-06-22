@@ -232,6 +232,10 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - 2026-06-05: Enricher, CEO sprint, Scout v2, Configurator v2, Molly, Market Audit
 - 2026-06-05: HVAC excluded across all systems
 - 2026-06-10: Milly/Reeve/Strategy code added to main — GitHub Actions active for Milly pipeline
+- 2026-06-19: Aurora, CO scout run — 31 qualifying no-website plumber leads added to main
+- 2026-06-19: Live Stripe Payment Links wired for Website-only + Website+Nora in checkout
+- 2026-06-22: Has-website lead segment identified (~100+ CO plumbers); has-website pitcher scoped (not built); diagnostic-agent discovery questionnaire sent to design partner
+- 2026-06-22: Manual lead-quality cleanup underway (phone validation, DO NOT CALL tagging) in Google Sheets
 
 ## Twilio A2P 10DLC Status
 - Brand registration submitted: 2026-06-03
@@ -240,6 +244,24 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - Legal name for all Twilio/IRS submissions: David M Hettinger (DBA: Trevo Advisors)
 - Once approved: create Campaign (use case: Mixed) → link +1 720 number to Sender Pool
 - Until approved: SMS sends will hit error 30034 and be blocked by carriers
+
+## Has-Website Segment (new, scoping only — as of 2026-06-22)
+- A second lead segment has been identified: contractors who already HAVE a website + email (separate from Scout's no-website-only leads). ~100+ Colorado plumbers collected manually in a Google Sheet tab (Company name/URL/Phone/Email/All Emails).
+- Goal: a new email-only pitcher angle — "update/redesign your site" + "save money vs. your current hosting" — instead of the existing "you have no website" framing.
+- Status: **scoping only, nothing built.** Sent business partner (website design professional) a discovery prompt covering: conversion-killers checklist, quick-audit workflow, automatable vs. AI-vision-required checks, 2025-2026 design trend signals, realistic hosting/builder cost benchmarks (Wix/Squarespace/WordPress), audit output format (paragraph vs. mini-report), and tone/credibility guardrails.
+- "Name your price" for the basic website tier was discussed and explicitly tabled — keep in back pocket, not in current scope.
+- Open decisions before build: how rigorous the site diagnosis needs to be (free APIs only vs. AI vision/screenshot pass), whether savings claims are specific $ amounts or generic ranges, human-review gate or auto-send.
+- config/templates.json currently has ZERO templates for this angle — all 7 email + 8 SMS templates assume no existing website. New templates (e8+) would be email-only per current direction.
+
+## Lead Quality Cleanup (manual, in progress — as of 2026-06-22)
+- User is manually calling through Pueblo/Colorado Springs/Aurora/Denver leads in a Google Sheet, tagging each row: "Phone Good?" (Yes/No) and "Outcome" (VM, Not interested, DO NOT CALL, etc.).
+- Dead/disconnected numbers and DO-NOT-CALL flags should eventually map to the `Unsubscribe` field if/when these leads are merged into Trevo's automated `leads/*.json` pipeline — not yet automated, purely manual tracking today.
+- No automated phone-validation or lead-decay scoring has been built — explicitly deferred until volume justifies it.
+
+## Checkout — Live Stripe Links (as of 2026-06-19)
+- Website-only and Website+Nora Stripe Payment Links are LIVE in `website/checkout/index.html` (`STRIPE_LINK_WEBSITE`, `STRIPE_LINK_NORA`).
+- Atlas/Argus checkout UI and routing logic remain in the file intentionally (do not remove) — their Stripe links are still placeholders pending vetting; only 2 of 4 links are real right now.
+- Atlas/Argus are scoped as backend agents (would not live as static site pages) — building them is deferred, kept on the roadmap, no infra started.
 
 ## Action Items (as of 2026-06-10)
 

@@ -86,6 +86,9 @@ DM "PINK"  ──┼─→ LINKPAGE (the hub) ─────┤
 - **`scripts/dm-responder.js`** runs the "DM PINK" autoresponder: `--simulate "<msg>"` to preview a reply, `--capture "<email>"` to add a lead, `--export-manychat` to emit `config/manychat-flow.json`. Live IG DM automation runs via ManyChat (free tier — import the flow) or the Meta Graph API webhook **on the Mac** (must be publicly reachable, like the Trevo/Reeve webhooks). Replies are brand-safe: never free product/discounts.
 - **Attribution loop:** drop a GA4/Pixel/ManyChat export at `output/clicks/latest.json` (`{ linkpage_views, by_content: { <product>: clicks } }`) and the Analyst ranks products by click-through — the sales signal that should steer the content mix and A/B testing.
 
+### Keeping the catalog real
+The funnel's product list lives in two synced places: `PRODUCTS` in `lib/links.js` (key → display name) and `product_catalog_rotation` in `post-formats.json` (ordered keys). **`scripts/scrape-catalog.js`** pulls the live Techs4Tatas Printify listings and rewrites both in one shot (`--write`). The store host is blocked by the container's egress allowlist, so run it on the Mac or the GitHub runner — or feed it a saved page (`--html page.html`) or a pasted list (`--from "Unisex Tee, Snapback Hat, …"`). Re-run `build-linkpage.js` after to refresh the hub.
+
 ### Setup checklist (one-time, all free)
 1. Host `linkpage/` (Netlify / GitHub Pages / Cloudflare Pages) → set `LINKPAGE_URL` + the IG bio link.
 2. Create a free GA4 property and/or Meta Pixel → set `GA_MEASUREMENT_ID` / `META_PIXEL_ID`.

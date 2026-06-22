@@ -14,7 +14,8 @@
     "schedule": "node agents/scheduler.js",
     "analyze": "node agents/analyst.js",
     "build-linkpage": "node scripts/build-linkpage.js",
-    "dm": "node scripts/dm-responder.js"
+    "dm": "node scripts/dm-responder.js",
+    "scrape-catalog": "node scripts/scrape-catalog.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.37.0",

@@ -69,6 +69,16 @@ function briefTextFor(post, brief, idx) {
     parts.push(`Theme to riff on: ${t}.`);
   }
 
+  // fresh RSS angle (live data refresh) — match the beat to the content type.
+  // PARAPHRASE ONLY: never reproduce the headline; use it as a jumping-off idea.
+  const live = brief.liveHeadlines || {};
+  const beat = wantsFact ? (live.breast_cancer || []) : (live.women_in_trades || []);
+  const pool = beat.length ? beat : (live.women_in_trades || []);
+  if (pool.length) {
+    const h = pool[(brief.week + idx) % pool.length];
+    parts.push(`A current headline for inspiration (DO NOT quote or copy it — react to the idea in your own words): "${h}"`);
+  }
+
   if (post.goal)    parts.push(`Goal for this post: ${post.goal}.`);
   if (post.product) parts.push(`Featured product (use its catalog key, write it naturally): ${post.product}.`);
 

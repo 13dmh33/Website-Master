@@ -5,19 +5,21 @@
 //
 // Reeve's version scanned SerpApi for conference "call for speakers" signals.
 // Techs4Tatas has no equivalent (see inspiration-sources.json cfp_signal_note),
-// so that branch is disabled. The researcher now assembles a lightweight,
-// ZERO-API-COST brief from inspiration-sources.json: evergreen themes, the
-// seasonal angle, and VERIFIED breast-cancer / women-in-trades data hooks that
-// the generator can use for awareness posts.
+// so that branch is disabled. The researcher assembles a ZERO-API-COST brief
+// from inspiration-sources.json: evergreen themes, the seasonal angle, and
+// VERIFIED breast-cancer / women-in-trades data hooks for awareness posts.
 //
-// Live news scanning (BLS / ACS / NAWIC etc.) is a manual step in the weekly
-// review (see docs/review-workflow.md) — read a source, paraphrase the idea,
-// drop it into the brief. Never copy source text.
+// Live data refresh: it also pulls fresh RSS headlines (free, no key) from the
+// brand's two beats via lib/sources.js, keyword-filtered and on-brand. These
+// are paraphrasable ANGLES only — the Generator rewrites them in Riley's voice
+// (never copy source text). Fails silently offline → brief still ships with the
+// static themes + verified facts. Opt out with DISABLE_LIVE_RESEARCH=1.
 
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 
 const store   = require('../lib/store');
 const planner = require('../lib/planner');
+const sources = require('../lib/sources');
 
 // Monday of the current week as YYYY-MM-DD
 function weekStartDate() {
@@ -57,25 +59,40 @@ function pickVerifiedFacts(sources) {
 async function main() {
   const weekOf = weekStartDate();
   const now    = new Date();
-  const sources = store.getInspirationSources() || {};
+  const insp   = store.getInspirationSources() || {};
   const week   = store.getCurrentWeek();
   const mode   = planner.getCampaignMode(now);
 
   console.log(`Research starting for week of ${weekOf} (mode: ${mode}, week #${week}).`);
 
+  // live data refresh — free RSS, fails silently offline (no spend, no key)
+  let live = { women_in_trades: [], breast_cancer: [] };
+  if (process.env.DISABLE_LIVE_RESEARCH === '1') {
+    console.log('Live research disabled (DISABLE_LIVE_RESEARCH=1) — using static seeds only.');
+  } else {
+    console.log('Fetching live headlines (women in trades + breast cancer)...');
+    try {
+      live = await sources.fetchLiveHeadlines({ perBeat: 4 });
+    } catch {
+      console.log('Live fetch unavailable — continuing with static seeds.');
+    }
+  }
+  const liveCount = live.women_in_trades.length + live.breast_cancer.length;
+
   const brief = {
     weekOf,
     generatedAt:   new Date().toISOString(),
-    researchMode:  'evergreen',           // local seeds only — no API spend
+    researchMode:  liveCount ? 'hybrid' : 'evergreen', // hybrid = static seeds + fresh RSS angles
     campaignMode:  mode,
     week,
-    seasonalAngle: pickSeasonalAngle(sources, now),
-    themes:        (sources.evergreen_themes || []),
-    facts:         pickVerifiedFacts(sources),
+    seasonalAngle: pickSeasonalAngle(insp, now),
+    themes:        (insp.evergreen_themes || []),
+    facts:         pickVerifiedFacts(insp),
+    liveHeadlines: live,                  // paraphrasable angles only — never copy verbatim
   };
 
   const filePath = store.saveBrief(brief);
-  console.log(`Brief saved: themes ${brief.themes.length}, verified facts ${brief.facts.length}, seasonal angle "${brief.seasonalAngle}".`);
+  console.log(`Brief saved: themes ${brief.themes.length}, verified facts ${brief.facts.length}, live headlines ${liveCount}, mode ${brief.researchMode}.`);
   console.log(`Brief saved to: ${filePath}`);
 }
 

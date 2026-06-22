@@ -27,7 +27,7 @@ Weekly pipeline: **Researcher → Generator → Designer → Scheduler → Analy
 
 | Agent | File | Job |
 |-------|------|-----|
-| Researcher | `agents/researcher.js` | Assembles a zero-API brief from `inspiration-sources.json`: evergreen themes, the seasonal angle, and VERIFIED data hooks (breast-cancer / women-in-trades stats). The Reeve "call for speakers" branch is disabled. |
+| Researcher | `agents/researcher.js` | Assembles a zero-API brief from `inspiration-sources.json`: evergreen themes, the seasonal angle, and VERIFIED data hooks (breast-cancer / women-in-trades stats). **Live data refresh:** also pulls fresh on-brand RSS headlines (free, no key) via `lib/sources.js` for both beats — paraphrasable angles only, fails silently offline. The Reeve "call for speakers" branch is disabled. |
 | Generator | `agents/generator.js` | Resolves the week's plan (planner) and writes ONE post per slot via the brand brain in `agents/generator-prompts.js`. Claude with quality gate → evergreen fallback on any miss. Appends hashtags. |
 | Designer | `agents/designer.js` | Renders 1080×1080 PNGs per post via skia-canvas. Product photo background (`assets/products/{key}.png`) when present, else the content-type gradient palette. |
 | Scheduler | `agents/scheduler.js` | Queue-first: writes posts + preview. Schedules to Buffer only when `FORCE_QUEUE` is off. |
@@ -44,6 +44,7 @@ Weekly pipeline: **Researcher → Generator → Designer → Scheduler → Analy
 | `lib/canvas-render.js` | skia-canvas renderer driven by `visual-config.json` palettes; product-photo + gradient backgrounds; optional drop-in fonts. |
 | `lib/buffer.js` | Buffer API v1 — image upload + scheduled post. |
 | `lib/instagram-insights.js` | Instagram Graph API (read-only) for the Analyst. |
+| `lib/sources.js` | Live data refresh — free RSS from the women-in-trades + breast-cancer beats, keyword-filtered, silent-fail. Headlines are paraphrasable angles only (never copied). |
 | `agents/generator-prompts.js` | **The brand brain** — SYSTEM_PROMPT, format/content-type instructions, October overlay, prompt builder, quality gate. |
 
 ---
@@ -148,6 +149,6 @@ Workflows live at repo root: `.github/workflows/miley-weekly-pipeline.yml` (Thu,
 
 ## Not yet built / future
 
-- Live news scanning (BLS/ACS/NAWIC) is currently a manual review-time step — paraphrase an idea into the brief. Could be automated later.
+- Live news scanning is now automated (`lib/sources.js` — free RSS, both beats). Remaining manual step: skim a feed at review time for anything the keyword filter missed and paraphrase it in. Tune feed URLs/keywords in `lib/sources.js`.
 - Airtable swap (replace `lib/store.js` internals only).
 - Twilio alert when the weekly queue is ready for review.

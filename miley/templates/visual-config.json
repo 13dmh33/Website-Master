@@ -1,0 +1,43 @@
+{
+  "_purpose": "Drives the Designer agent's auto-rendered 1080x1080 cards (lib/canvas-render.js DESIGN_CONFIG / NICHE_PALETTES). Defines brand colors, fonts, and a palette per content type. NOTE: hex values below are a sensible starting set — Dave should confirm/replace them with the exact hex codes from his Canva brand kit so generated cards match his hand-made ones.",
+  "ACTION_NEEDED": "Replace placeholder hex values with your real Canva brand-kit colors before going live.",
+  "brand_colors": {
+    "hot_pink": "#FF2E88",
+    "deep_charcoal": "#1A1A1D",
+    "off_white": "#F7F4F0",
+    "safety_yellow": "#FFC400",
+    "steel_blue": "#3A5A78",
+    "soft_pink": "#FFB3D1"
+  },
+  "fonts": {
+    "headline": {"family": "Anton or Bebas Neue", "style": "bold condensed all-caps", "use": "hooks / big statements"},
+    "body": {"family": "Inter or Work Sans", "style": "regular/medium", "use": "scene + donation lines"},
+    "accent": {"family": "Caveat or a handwritten script", "style": "script", "use": "occasional warm signature touches — use sparingly"},
+    "note": "Use fonts available to skia-canvas in the container, or bundle the .ttf files. Bebas Neue + Inter are both free and render cleanly server-side."
+  },
+  "image_dimensions": {"width": 1080, "height": 1080},
+  "text_overlay": {
+    "dark_overlay_rgba": "rgba(8, 15, 30, 0.62)",
+    "note": "Applied over stock/lifestyle photos for text legibility — same approach Milly uses for Reeve."
+  },
+  "palettes_by_type": {
+    "trades_humor": {"bg": "#1A1A1D", "headline": "#FFC400", "body": "#F7F4F0", "accent": "#FF2E88", "gradient": ["#1A1A1D", "#2B2B30"]},
+    "product_feature": {"bg": "#F7F4F0", "headline": "#1A1A1D", "body": "#3A5A78", "accent": "#FF2E88", "gradient": ["#FFB3D1", "#FF2E88"], "note": "Prefer real product photo background where available; gradient is fallback."},
+    "mission": {"bg": "#FF2E88", "headline": "#F7F4F0", "body": "#F7F4F0", "accent": "#1A1A1D", "gradient": ["#FF2E88", "#C71F66"]},
+    "engagement": {"bg": "#3A5A78", "headline": "#F7F4F0", "body": "#FFB3D1", "accent": "#FFC400", "gradient": ["#3A5A78", "#243B4F"]},
+    "motivational": {"bg": "#1A1A1D", "headline": "#FF2E88", "body": "#F7F4F0", "accent": "#FFB3D1", "gradient": ["#1A1A1D", "#3A1A2A"]},
+    "awareness": {"bg": "#FFB3D1", "headline": "#C71F66", "body": "#1A1A1D", "accent": "#FF2E88", "gradient": ["#FFB3D1", "#FF2E88"], "note": "October-only palette. Ribbon motif on."}
+  },
+  "image_sources": {
+    "priority_order": ["dave_product_mockups", "dave_lifestyle_photos", "ai_generated_lifestyle", "stock_photo", "gradient_fallback"],
+    "dave_product_mockups": {"source": "Printify mockup generator + local laptop", "note": "Drop into milly/assets/products/ named by catalog key (e.g. unisex_tee.png). Designer agent picks by the post's product field."},
+    "dave_lifestyle_photos": {"source": "Dave's own photos of people wearing products", "note": "milly/assets/lifestyle/ — used for product_feature_lifestyle posts."},
+    "ai_generated_lifestyle": {"source": "AI-generated images of people wearing products", "note": "Generate externally (your image tool of choice), drop into milly/assets/lifestyle/. Keep faces non-identifiable to protect anonymity if any real likeness is involved; AI-generated avoids that entirely."},
+    "stock_photo": {"source": "Unsplash (optional UNSPLASH_ACCESS_KEY)", "note": "Niche-matched trade photos as overlay backgrounds for non-product posts."},
+    "gradient_fallback": {"source": "Always available, no network", "note": "Uses palettes_by_type gradients. Guarantees a render even with zero external calls."}
+  },
+  "_meta": {
+    "maps_to": "milly/lib/canvas-render.js -> DESIGN_CONFIG / NICHE_PALETTES",
+    "note": "canvas-render.js currently has 6 hand-tuned palettes for Reeve. Replace its palette object with palettes_by_type above (keys must match the content types the Generator emits). Adding the product-image lookup is a small Designer change — flagged in CONFIG_README.md."
+  }
+}

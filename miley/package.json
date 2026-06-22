@@ -1,0 +1,28 @@
+{
+  "name": "miley",
+  "version": "1.0.0",
+  "description": "Miley — automated Instagram content engine for Techs4Tatas (apparel for women in the trades; 30% of profit funds breast cancer research)",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "setup": "node scripts/setup.js",
+    "test-pipeline": "node scripts/test-pipeline.js",
+    "push-queue": "node scripts/push-queue.js",
+    "research": "node agents/researcher.js",
+    "generate": "node agents/generator.js",
+    "design": "node agents/designer.js",
+    "schedule": "node agents/scheduler.js",
+    "analyze": "node agents/analyst.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.37.0",
+    "dotenv": "^16.4.5",
+    "node-fetch": "^2.7.0",
+    "skia-canvas": "^1.0.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "Dave",
+  "license": "UNLICENSED"
+}

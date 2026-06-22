@@ -1,0 +1,104 @@
+{
+  "current_week": 0,
+  "review_workflow": {
+    "enabled": true,
+    "mode": "queue_first",
+    "env_flag": "FORCE_QUEUE=1",
+    "description": "Nothing auto-posts. Every run renders the week and writes it to output/queue/ with an HTML preview. Dave reviews once a week, edits if needed, then approves by running scripts/push-queue.js, which hands the approved week to Buffer for scheduled posting at the POST_SCHEDULE times.",
+    "generation_day": "THU",
+    "generation_note": "Run the weekly pipeline on Thursday for the FOLLOWING week. This gives a relaxed Thu-Sun review window instead of a rushed same-day approval.",
+    "review_window": "Thursday through Sunday",
+    "approval_action": "scripts/push-queue.js",
+    "posts_go_live": "The following week at the POST_SCHEDULE slots",
+    "october_note": "In October (daily), one weekly review covers all 7 posts at once - generate a week ahead and batch-approve.",
+    "see": "review-workflow.md"
+  },
+  "_schedule_logic": "Weekdays = community/relationship content (humor, motivation, engagement, mission) to grow reach when engagement is highest. Weekends = product/commerce content, when the audience has time and intent to actually shop. Times are tuned to the trades audience: early lunch, after-work evening, relaxed weekend browsing.",
+  "base_week": {
+    "description": "Default 4x/week cadence used Jan-Aug. Activated by POST_SCHEDULE env var.",
+    "post_schedule_env": "TUE:12:00,THU:19:00,SAT:10:00,SUN:18:00",
+    "slots": [
+      {
+        "day": "TUE",
+        "time": "12:00",
+        "format": "carousel",
+        "content_pool": "weekday_community",
+        "cta_style": "engagement_or_dm",
+        "rationale": "Lunch scroll. Tradeswomen take early lunch; Tuesday afternoon is a strong, reliable engagement window."
+      },
+      {
+        "day": "THU",
+        "time": "19:00",
+        "format": "reel_or_caption",
+        "content_pool": "weekday_community",
+        "cta_style": "engagement_or_dm",
+        "rationale": "Thursday evening has a confirmed 2026 engagement spike and is the best window for Reels (after-work wind-down)."
+      },
+      {
+        "day": "SAT",
+        "time": "10:00",
+        "format": "product_feature",
+        "content_pool": "product",
+        "cta_style": "shop_link",
+        "rationale": "Saturday late-morning = relaxed, high-INTENT browsing. Engagement is lower than midweek, but buying intent is higher. This is the money slot."
+      },
+      {
+        "day": "SUN",
+        "time": "18:00",
+        "format": "product_or_mission",
+        "content_pool": "product_mission",
+        "cta_style": "shop_link",
+        "rationale": "Sunday early evening is the wind-down + week-planning window. Good for a softer product/mission combo."
+      }
+    ]
+  },
+  "september_ramp": {
+    "description": "Activated Sept 1. Adds a 5th post (Wednesday, the single strongest engagement day) to build audience momentum heading into October.",
+    "post_schedule_env": "TUE:12:00,WED:12:00,THU:19:00,SAT:10:00,SUN:18:00",
+    "added_slot": {
+      "day": "WED",
+      "time": "12:00",
+      "format": "carousel",
+      "content_pool": "mission_buildup",
+      "cta_style": "engagement",
+      "rationale": "Wednesday noon is the single highest-engagement slot of the week. Use it to seed breast cancer awareness storytelling before October."
+    }
+  },
+  "october_daily": {
+    "description": "Activated Oct 1. Daily posting for Breast Cancer Awareness Month. Full schedule and content mix live in october-campaign.json.",
+    "post_schedule_env": "MON:12:00,TUE:12:00,WED:12:00,THU:19:00,FRI:12:00,SAT:10:00,SUN:18:00",
+    "see": "october-campaign.json"
+  },
+  "content_pools": {
+    "weekday_community": {
+      "rotation": ["trades_humor", "motivational", "engagement", "mission"],
+      "rotation_note": "Advance one step per post using current_week modulo rotation length. Humor and motivation should appear most often; mission roughly every 4th community post so it never feels preachy."
+    },
+    "product": {
+      "rotation": ["product_feature_single", "product_feature_lifestyle", "product_social_proof"],
+      "rotation_note": "Rotate which product is featured across the 8-product catalog so no single item dominates. Lifestyle = a person wearing/using the product; social_proof = review/order-screenshot style once real sales exist."
+    },
+    "product_mission": {
+      "rotation": ["product_feature_lifestyle", "mission_product_combo"],
+      "rotation_note": "Alternates a straight lifestyle product shot with a product post that leans harder on the 30% donation angle."
+    },
+    "mission_buildup": {
+      "rotation": ["awareness_stat", "mission", "trades_humor"],
+      "rotation_note": "September-only pool to warm the audience toward October. awareness_stat uses real data from inspiration-sources.json."
+    }
+  },
+  "product_catalog_rotation": [
+    "unisex_tee",
+    "pocket_back_graphic_tee",
+    "snapback_hat",
+    "trucker_cap",
+    "boxer_briefs",
+    "kiss_cut_sticker_1",
+    "kiss_cut_sticker_2",
+    "magnet"
+  ],
+  "_meta": {
+    "maps_to": "milly/templates/post-formats.json",
+    "note": "current_week is a single incrementing counter advanced once per pipeline run. Adding/removing items from any rotation array requires no code change. To switch cadence (base -> september -> october), change the POST_SCHEDULE env var to the matching post_schedule_env value above."
+  }
+}

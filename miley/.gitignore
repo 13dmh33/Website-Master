@@ -1,0 +1,7 @@
+.env
+node_modules/
+output/briefs/
+output/content/
+output/images/
+output/queue/
+output/archive/

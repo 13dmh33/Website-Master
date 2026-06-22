@@ -1,0 +1,37 @@
+{
+  "_purpose": "The Generator appends the matching set to each post by content type. Anchor tags go on EVERY post. Keep total tags per post around 8-15 (quality over stuffing). The Analyst's top_hashtags feedback in brand-voice.json can promote winners over time.",
+  "anchor_tags": ["#techs4tatas", "#womenintrades", "#breastcancerawareness"],
+  "sets": {
+    "product": [
+      "#tradeswomen", "#womenwhobuild", "#bluecollarwomen", "#tradielife",
+      "#womenintheskilledtrades", "#supportsmallbusiness", "#shopwithpurpose", "#pinkribbon"
+    ],
+    "trades_humor": [
+      "#tradeswomen", "#constructionhumor", "#jobsitehumor", "#bluecollar",
+      "#womeninconstruction", "#tradielife", "#sparky", "#plumberlife"
+    ],
+    "mission": [
+      "#breastcancerresearch", "#shopforacause", "#givingback", "#pinkribbon",
+      "#womensupportingwomen", "#causebrand", "#wearitpink", "#donate"
+    ],
+    "engagement": [
+      "#tradeswomen", "#womenintrades", "#womenwhobuild", "#tradielife",
+      "#bluecollarwomen", "#skilledtrades", "#womeninconstruction", "#tradecommunity"
+    ],
+    "motivational": [
+      "#womenintrades", "#tradeswomen", "#womenempowerment", "#sheworkshard",
+      "#bluecollarwomen", "#strongwomen", "#womenwhobuild", "#mondaymotivation"
+    ]
+  },
+  "october_additions": ["#breastcancerawarenessmonth", "#pinkoctober", "#thinkpink", "#wearitpink", "#bcam"],
+  "usage_rules": {
+    "every_post": "3 anchor tags + the matching set (8 tags) = 11 total. Good baseline.",
+    "october": "Add 2-3 from october_additions, trim a couple of the weaker set tags to stay ~13-15.",
+    "rotation": "Don't post the identical tag block every single time — Instagram can dampen reach for repetitive blocks. Vary 2-3 tags per post within the set's theme.",
+    "placement": "First comment OR end of caption — pick one and stay consistent."
+  },
+  "_meta": {
+    "maps_to": "NEW FILE — milly/templates/hashtag-master.json",
+    "note": "Generator reads anchor_tags + sets[post_type]. Small addition to generator.js prompt/assembly step — flagged in CONFIG_README.md."
+  }
+}

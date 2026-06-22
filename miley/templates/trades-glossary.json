@@ -1,0 +1,62 @@
+{
+  "_purpose": "lib/glossary.js picks 2-3 terms per week and injects them into Generator prompts so captions use real trade language and never read like generic AI copy. Organized by trade. Use terms naturally — do not force every one in.",
+  "inject_per_week": 3,
+  "categories": {
+    "plumbing": [
+      {"term": "PEX", "meaning": "flexible cross-linked polyethylene tubing used for water lines"},
+      {"term": "P-trap", "meaning": "the curved pipe under a sink that holds water to block sewer gas"},
+      {"term": "snake / auger", "meaning": "tool run down a drain to clear a clog"},
+      {"term": "flux", "meaning": "paste used to prep copper joints before soldering"},
+      {"term": "shutoff valve", "meaning": "the valve that kills water to a fixture"},
+      {"term": "rough-in", "meaning": "the stage where pipes are set before walls close up"},
+      {"term": "Fernco", "meaning": "rubber coupling that joins two pipes of different materials"},
+      {"term": "blue glue / primer", "meaning": "solvent cement and primer for PVC joints"},
+      {"term": "compression fitting", "meaning": "a no-solder fitting tightened with a nut and ferrule"},
+      {"term": "backflow", "meaning": "unwanted reverse flow of water; prevented by a backflow preventer"}
+    ],
+    "electrical": [
+      {"term": "wire nut", "meaning": "twist-on connector that joins wires"},
+      {"term": "romex / NM cable", "meaning": "common sheathed residential wiring"},
+      {"term": "GFCI", "meaning": "ground-fault outlet that trips to prevent shock"},
+      {"term": "panel / breaker box", "meaning": "the box housing the circuit breakers"},
+      {"term": "homerun", "meaning": "a dedicated cable run straight back to the panel"},
+      {"term": "kill the breaker", "meaning": "shut the power at the panel before working"},
+      {"term": "amperage / amps", "meaning": "the current a circuit carries"},
+      {"term": "conduit / EMT", "meaning": "metal tubing that protects and routes wire"},
+      {"term": "fish tape", "meaning": "flexible tool used to pull wire through walls or conduit"},
+      {"term": "neutral / hot / ground", "meaning": "the three conductors in a standard circuit"},
+      {"term": "voltage tester", "meaning": "tool that confirms a wire is dead before you touch it"}
+    ],
+    "hvac": [
+      {"term": "condenser", "meaning": "the outdoor unit that releases heat from the system"},
+      {"term": "evaporator coil", "meaning": "the indoor coil that absorbs heat to cool air"},
+      {"term": "refrigerant / charge", "meaning": "the fluid an AC system circulates; 'charging' means adding it"},
+      {"term": "ductwork", "meaning": "the channels that move conditioned air through a building"},
+      {"term": "manifold gauge", "meaning": "the gauge set used to read system pressures"},
+      {"term": "static pressure", "meaning": "resistance to airflow in a duct system"},
+      {"term": "BTU", "meaning": "unit of heating/cooling capacity"},
+      {"term": "thermostat", "meaning": "the control that calls for heat or cool"},
+      {"term": "txv", "meaning": "thermostatic expansion valve that meters refrigerant flow"},
+      {"term": "brazing", "meaning": "joining refrigerant lines with a high-temp filler metal"},
+      {"term": "filter drier", "meaning": "component that removes moisture and debris from refrigerant"}
+    ],
+    "construction": [
+      {"term": "stud", "meaning": "the vertical framing member in a wall"},
+      {"term": "level / plumb", "meaning": "perfectly horizontal / perfectly vertical"},
+      {"term": "chalk line", "meaning": "string tool that snaps a straight reference line"},
+      {"term": "speed square", "meaning": "triangular layout and marking tool"},
+      {"term": "joist", "meaning": "horizontal framing member that supports a floor or ceiling"},
+      {"term": "header", "meaning": "the beam over a door or window opening"},
+      {"term": "subfloor", "meaning": "the structural floor layer under the finish floor"},
+      {"term": "torque", "meaning": "rotational force; how tight a fastener is driven"},
+      {"term": "impact driver", "meaning": "high-torque tool for driving screws and fasteners"},
+      {"term": "tape out / measure twice", "meaning": "laying out measurements before cutting"},
+      {"term": "PPE", "meaning": "personal protective equipment — gloves, glasses, ears, steel toes"},
+      {"term": "punch list", "meaning": "the final to-do list of fixes before a job closes"}
+    ]
+  },
+  "_meta": {
+    "maps_to": "milly/templates/speaking-glossary.json (rename file) + referenced by lib/glossary.js",
+    "note": "44 terms across 4 categories. lib/glossary.js may need a one-line change if it expects a flat term list instead of this categorized structure — flagged in CONFIG_README.md."
+  }
+}

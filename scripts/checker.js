@@ -24,6 +24,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.loc
 
 const fs        = require('fs');
 const path      = require('path');
+const stateStore = require('./state-store');
 const Anthropic = require('@anthropic-ai/sdk');
 const { writeLog }        = require('./logger');
 const { recordAnthropic } = require('./cost-tracker');
@@ -104,7 +105,17 @@ function checkLimits(config) {
     process.exit(1);
   }
 
-  let effective = config.daily_limit - config.processed_today;
+  // Pre-flight projection: cap batch size so this run can't blow through the
+  // remaining monthly budget, mirroring diagnoser.js's budgetLeads throttle.
+  const budgetRemaining = config.monthly_cap - config.spent_this_month;
+  const estimatedCostPerMessage = 0.0015; // rewrite loop can call Claude up to 3x
+  const budgetMessages = Math.floor(budgetRemaining / estimatedCostPerMessage);
+  if (budgetMessages <= 0) {
+    console.error(`MONTHLY CAP: $${budgetRemaining.toFixed(4)} remaining — not enough budget for another message.`);
+    process.exit(1);
+  }
+
+  let effective = Math.min(config.daily_limit - config.processed_today, budgetMessages);
   if (limitArg > 0) effective = Math.min(effective, limitArg);
   return effective;
 }
@@ -330,13 +341,13 @@ Rewrite the message to fix all issues.`;
 // ── STATE UPDATE ──────────────────────────────────────────────────────────────
 
 function updateState(leadId, status) {
-  const state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+  const state = stateStore.loadState();
   const entry = state.queue.find(l => l.lead_id === leadId);
   if (entry) {
     entry.status     = status;
     entry.checked_at = new Date().toISOString();
   }
-  fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
+  stateStore.saveState(state);
 }
 
 // ── MAIN ──────────────────────────────────────────────────────────────────────

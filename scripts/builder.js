@@ -21,6 +21,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.loc
 
 const fs   = require('fs');
 const path = require('path');
+const stateStore = require('./state-store');
 const { writeLog } = require('./logger');
 
 // ── PATHS ─────────────────────────────────────────────────────────────────────
@@ -149,7 +150,7 @@ Output: single-page HTML deploy URL`;
 
 function updateState(leadId, status) {
   try {
-    const state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+    const state = stateStore.loadState();
     const entry = state.queue.find(l => l.lead_id === leadId);
     if (entry) {
       entry.status   = status;
@@ -157,7 +158,7 @@ function updateState(leadId, status) {
     }
     state.daily_stats = state.daily_stats || {};
     state.daily_stats.mockups_built = (state.daily_stats.mockups_built || 0) + 1;
-    fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
+    stateStore.saveState(state);
   } catch (e) {
     console.warn(`  Could not update state.json for ${leadId}: ${e.message}`);
   }
@@ -175,10 +176,10 @@ function handleSubmit() {
   fs.writeFileSync(path.join(MOCKUPS_DIR, `${submitLead}-v1.txt`), submitUrl.trim());
 
   try {
-    const state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+    const state = stateStore.loadState();
     const entry = state.queue.find(l => l.lead_id === submitLead);
     if (entry) { entry.status = 'mockup_ready'; entry.built_at = new Date().toISOString(); }
-    fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
+    stateStore.saveState(state);
   } catch (e) {
     console.warn(`Could not update state.json: ${e.message}`);
   }

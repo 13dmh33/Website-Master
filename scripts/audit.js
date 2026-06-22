@@ -18,9 +18,9 @@
 
 const fs   = require('fs');
 const path = require('path');
+const stateStore = require('./state-store');
 
 const ROOT         = path.join(__dirname, '..');
-const STATE_PATH   = path.join(ROOT, 'state.json');
 const QUEUE_DIR    = path.join(ROOT, 'queue');
 const MESSAGES_DIR = path.join(ROOT, 'messages');
 
@@ -38,9 +38,11 @@ function readJson(p) {
   catch { return null; }
 }
 
-const state = readJson(STATE_PATH);
-if (!state) {
-  console.error('✗ Cannot read state.json — is the repo root correct?');
+let state;
+try {
+  state = stateStore.loadState();
+} catch (e) {
+  console.error(`✗ Cannot read state.json — ${e.message}`);
   process.exit(1);
 }
 
@@ -145,7 +147,7 @@ for (const id of sentFiles) {
 // ── APPLY FIXES ───────────────────────────────────────────────────────────────
 
 if (doFix && fixes.length > 0) {
-  fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
+  stateStore.saveState(state);
 }
 
 // ── REPORT ───────────────────────────────────────────────────────────────────

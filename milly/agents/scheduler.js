@@ -112,6 +112,18 @@ async function main() {
   console.log(`Scheduler running for week of ${content.weekOf}.`);
   console.log(`Buffer configured: ${buffer.isConfigured()}`);
 
+  const isDryRun = process.argv.includes('--dry-run');
+  if (isDryRun) {
+    console.log(`\n[DRY RUN] No Buffer calls, no queue files written.\n`);
+    for (const post of postObjects) {
+      console.log(`  ${post.format.padEnd(10)} scheduled for ${post.scheduledFor}`);
+      console.log(`    images: ${post.images.length ? post.images.join(', ') : '(none)'}`);
+      console.log(`    caption: ${(post.caption || '').slice(0, 100)}${(post.caption || '').length > 100 ? '...' : ''}`);
+    }
+    console.log(`\n[DRY RUN] ${postObjects.length} posts would be scheduled. Nothing was sent.`);
+    return;
+  }
+
   const forceQueue = process.env.FORCE_QUEUE === '1';
 
   if (buffer.isConfigured() && !forceQueue) {

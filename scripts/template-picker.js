@@ -21,6 +21,10 @@ const TEMPLATES_PATH = path.join(__dirname, '..', 'config', 'templates.json');
 const STATS_PATH     = path.join(__dirname, '..', 'config', 'template-stats.json');
 
 const EPSILON        = 0.20;
+// Bootstrap: every template must get MIN_SENDS sends (round-robin, ignoring
+// reply rate) before epsilon-greedy selection kicks in. This guarantees each
+// template has enough data to produce a meaningful reply rate before it can
+// be starved by the exploit phase.
 const MIN_SENDS      = 3;
 
 // Tone hints — steers explore/bootstrap toward tone-matched templates
@@ -54,6 +58,7 @@ function initStats() {
   const templates = loadTemplates();
   const stats = { email: {}, sms: {} };
   for (const [channel, list] of Object.entries(templates)) {
+    if (!Array.isArray(list)) continue;
     for (const t of list) stats[channel][t.id] = { sent: 0, replies: 0 };
   }
   saveStats(stats);
@@ -174,6 +179,7 @@ function printStats() {
   console.log('  ID   Channel  Name                         Sent  Replies  Rate');
   console.log('  ──   ───────  ────                         ────  ───────  ────');
   for (const [channel, list] of Object.entries(templates)) {
+    if (!Array.isArray(list)) continue;
     for (const t of list) {
       const s    = stats[channel]?.[t.id] || { sent: 0, replies: 0 };
       const rate = s.sent > 0 ? ((s.replies / s.sent) * 100).toFixed(1) + '%' : 'n/a';
@@ -185,3 +191,13 @@ function printStats() {
 }
 
 module.exports = { pickAndFill, recordSent, recordReply, printStats };
+
+// ── CLI ────────────────────────────────────────────────────────────────────
+// node scripts/template-picker.js --report
+if (require.main === module) {
+  if (process.argv.includes('--report')) {
+    printStats();
+  } else {
+    console.log('Usage: node scripts/template-picker.js --report');
+  }
+}

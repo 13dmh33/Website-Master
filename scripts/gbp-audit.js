@@ -62,7 +62,14 @@ function analyzeGaps(lead) {
   }
 
   const reviews = lead.review_count || 0;
-  if (reviews < 15) {
+  if (reviews < 10) {
+    gaps.push({
+      id:     'very_low_reviews',
+      label:  `Only ${reviews} Google reviews`,
+      detail: 'Under 10 reviews reads as brand new — most shoppers skip straight to a competitor with more proof.',
+      impact: 'high',
+    });
+  } else if (reviews < 15) {
     gaps.push({
       id:     'low_reviews',
       label:  `Only ${reviews} Google reviews`,
@@ -94,6 +101,27 @@ function analyzeGaps(lead) {
       label:  'No phone number on profile',
       detail: 'Direct click-to-call is the #1 conversion action for mobile searches.',
       impact: 'high',
+    });
+  }
+
+  // hours / photos aren't in the current Scout schema — only flag when the
+  // field is explicitly present and empty, so this is a no-op until Scout
+  // starts collecting them.
+  if (typeof lead.hours !== 'undefined' && !lead.hours) {
+    gaps.push({
+      id:     'no_hours',
+      label:  'No business hours listed',
+      detail: 'Customers can\'t tell if you\'re open right now, so they call the next listing that shows hours.',
+      impact: 'medium',
+    });
+  }
+
+  if (typeof lead.photo_count !== 'undefined' && (lead.photo_count || 0) === 0) {
+    gaps.push({
+      id:     'no_photos',
+      label:  'No photos on profile',
+      detail: 'Listings with photos get more clicks — an empty profile looks unfinished or inactive.',
+      impact: 'medium',
     });
   }
 

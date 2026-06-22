@@ -16,7 +16,7 @@
  *         config/pitcher-config.json (daily count tracking)
  *
  * Channel routing (set by Diagnoser, verified here):
- *   email  → plumbers, HVAC  (via Zoho SMTP — dave@trevoadvisors.com)
+ *   email  → plumbers, electricians  (via Zoho SMTP — dave@trevoadvisors.com)
  *   sms    → electricians, roofers  (via Twilio)
  *   ig_dm  → flagged as manual_send (no API — written to messages/ as draft)
  *   linkedin → flagged as manual_send
@@ -31,6 +31,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.loc
 
 const fs          = require('fs');
 const path        = require('path');
+const stateStore = require('./state-store');
 const https       = require('https');
 const nodemailer  = require('nodemailer');
 const { writeLog }              = require('./logger');
@@ -85,6 +86,8 @@ function loadConfig() {
       sms_sent_this_month: 0,
       sms_total_sent: 0,
       sms_followup_delay_hours: 4,
+      booking_link: 'https://cal.com/david-hettinger-g8qbdk/30min',
+      checkout_url: 'https://trevoadvisors.com/checkout/',
       last_run: null
     };
     fs.writeFileSync(CONFIG_PATH, JSON.stringify(defaults, null, 2));
@@ -103,6 +106,8 @@ function loadConfig() {
   cfg.sms_sent_this_month       = cfg.sms_sent_this_month       ?? 0;
   cfg.sms_total_sent            = cfg.sms_total_sent            ?? 0;
   cfg.sms_followup_delay_hours  = cfg.sms_followup_delay_hours  ?? 4;
+  cfg.booking_link              = cfg.booking_link              ?? 'https://cal.com/david-hettinger-g8qbdk/30min';
+  cfg.checkout_url              = cfg.checkout_url              ?? 'https://trevoadvisors.com/checkout/';
   return cfg;
 }
 
@@ -252,7 +257,14 @@ async function sendEmail(brief, config, videoUrl) {
     ps = `\n\nP.S. I put together a quick mockup of what a new site could look like — happy to share it on a call.`;
   }
 
-  const text = `${brief.final_message}${ps}`;
+  const cta = config.checkout_url
+    ? `\n\nReady to move forward? ${config.checkout_url}`
+    : '';
+  const bookCta = config.booking_link
+    ? `\nPrefer to talk first? Book a call: ${config.booking_link}`
+    : '';
+
+  const text = `${brief.final_message}${ps}${cta}${bookCta}`;
 
   const info = await transport.sendMail({
     from:    `${config.from_name} <${config.from_email}>`,
@@ -407,7 +419,7 @@ function logSend(brief, result, channel, videoUrl) {
 
 function updateState(leadId, status) {
   try {
-    const state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+    const state = stateStore.loadState();
     const entry = state.queue.find(l => l.lead_id === leadId);
     if (entry) {
       entry.status  = status;
@@ -417,7 +429,7 @@ function updateState(leadId, status) {
     }
     state.daily_stats = state.daily_stats || {};
     state.daily_stats.messages_sent = (state.daily_stats.messages_sent || 0) + 1;
-    fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
+    stateStore.saveState(state);
   } catch (e) {
     console.warn(`  Could not update state.json for ${leadId}: ${e.message}`);
   }

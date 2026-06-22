@@ -3,10 +3,10 @@
  * Scout — Google Maps lead finder via Outscraper
  *
  * Usage:
- *   node scripts/scout.js --suggest hvac            ← show top 5 markets for a trade, then exit
+ *   node scripts/scout.js --suggest plumbing         ← show top 5 markets for a trade, then exit
  *   node scripts/scout.js --suggest                 ← show top 5 across all trades
  *   node scripts/scout.js --city "Denver, CO" --trade plumber --force
- *   node scripts/scout.js --city "Austin, TX" --trade hvac --limit 20 --force
+ *   node scripts/scout.js --city "Austin, TX" --trade electrician --limit 20 --force
  *   node scripts/scout.js --city "Denver, CO" --trade electrician --multi --force
  *   node scripts/scout.js --city "Denver, CO" --trade plumber --budget 0.25 --force
  *   node scripts/scout.js --city "Denver, CO" --trade plumber --target 50 --force
@@ -28,6 +28,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.loc
 
 const fs    = require('fs');
 const path  = require('path');
+const stateStore = require('./state-store');
 const https = require('https');
 const { writeLog }         = require('./logger');
 const { recordOutscraper } = require('./cost-tracker');
@@ -472,7 +473,7 @@ function buildFilename(cityStr) {
 // ── STATE UPDATE ──────────────────────────────────────────────────────────────
 
 function updateState(leads) {
-  const state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+  const state = stateStore.loadState();
   const existingIds = new Set([
     ...state.queue.map(l => l.lead_id || l),
     ...state.active.map(l => l.lead_id || l),
@@ -485,7 +486,7 @@ function updateState(leads) {
   });
   state.daily_stats.leads_scouted = (state.daily_stats.leads_scouted || 0) + newLeads.length;
   state.last_run = new Date().toISOString();
-  fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
+  stateStore.saveState(state);
   return newLeads.length;
 }
 

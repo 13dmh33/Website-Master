@@ -31,6 +31,7 @@ const http       = require('http');
 const crypto     = require('crypto');
 const fs         = require('fs');
 const path       = require('path');
+const stateStore = require('./state-store');
 const querystring = require('querystring');
 
 const ROOT        = path.join(__dirname, '..');
@@ -97,12 +98,12 @@ function findLeadByPhone(fromNormalized) {
 
 function updateState(leadId, status) {
   try {
-    const state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+    const state = stateStore.loadState();
     const entry = state.queue.find(l => l.lead_id === leadId);
     if (entry) {
       entry.status = status;
       entry.reply_received_at = new Date().toISOString();
-      fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
+      stateStore.saveState(state);
     }
   } catch (e) {
     log(`WARN: could not update state.json — ${e.message}`);
@@ -157,6 +158,12 @@ function handleReply(from, body) {
 const server = http.createServer((req, res) => {
   const url = req.url.split('?')[0];
 
+  if (req.method === 'GET' && url === '/health') {
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ status: 'ok', timestamp: new Date().toISOString() }));
+    return;
+  }
+
   if (req.method !== 'POST' || url !== '/twilio/reply') {
     res.writeHead(404);
     res.end('Not found');
@@ -206,6 +213,7 @@ server.listen(PORT, () => {
   console.log('━'.repeat(50));
   console.log(`  Listening on port ${PORT}`);
   console.log(`  Endpoint: POST /twilio/reply`);
+  console.log(`  Health:   GET  /health`);
   console.log('');
   console.log('  Next steps:');
   console.log('    1. Run: ngrok http ' + PORT);

@@ -19,6 +19,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.loc
 
 const fs   = require('fs');
 const path = require('path');
+const stateStore = require('./state-store');
 const Anthropic = require('@anthropic-ai/sdk');
 const { writeLog }        = require('./logger');
 const { pickAndFill }     = require('./template-picker');
@@ -139,7 +140,7 @@ function saveConfig(config) {
 // ── LEAD LOADING ──────────────────────────────────────────────────────────────
 
 function loadScoutedLeads() {
-  const state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+  const state = stateStore.loadState();
 
   // Find lead IDs that are still in 'scouted' status
   const scoutedIds = new Set(
@@ -231,14 +232,14 @@ ${JSON.stringify(lead, null, 2)}`;
 // ── STATE UPDATE ──────────────────────────────────────────────────────────────
 
 function updateState(leadId, status) {
-  const state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+  const state = stateStore.loadState();
   const entry = state.queue.find(l => l.lead_id === leadId);
   if (entry) {
     entry.status = status;
     entry.diagnosed_at = new Date().toISOString();
   }
   state.daily_stats.briefs_written = (state.daily_stats.briefs_written || 0) + 1;
-  fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
+  stateStore.saveState(state);
 }
 
 function markTopPriority(briefs) {

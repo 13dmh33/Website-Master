@@ -23,6 +23,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.loc
 
 const fs         = require('fs');
 const path       = require('path');
+const stateStore = require('./state-store');
 const nodemailer = require('nodemailer');
 const twilio     = require('twilio');
 const { writeLog }             = require('./logger');
@@ -55,12 +56,17 @@ function loadConfig() {
       dead_after_days: 26, daily_limit: 20,
       email_stagger_min_s: 120, email_stagger_max_s: 300,
       sms_stagger_min_s: 20,   sms_stagger_max_s: 60,
+      booking_link: 'https://cal.com/david-hettinger-g8qbdk/30min',
+      checkout_url: 'https://trevoadvisors.com/checkout/',
       today: today(), sent_today: 0, last_run: null
     };
     fs.writeFileSync(CONFIG_PATH, JSON.stringify(defaults, null, 2));
     return defaults;
   }
-  return JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
+  const cfg = JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
+  cfg.booking_link = cfg.booking_link ?? 'https://cal.com/david-hettinger-g8qbdk/30min';
+  cfg.checkout_url = cfg.checkout_url ?? 'https://trevoadvisors.com/checkout/';
+  return cfg;
 }
 
 function saveConfig(cfg) { fs.writeFileSync(CONFIG_PATH, JSON.stringify(cfg, null, 2)); }
@@ -193,10 +199,10 @@ function markUnresponsive(cfg) {
 // ── STATE ──────────────────────────────────────────────────────────────────────
 
 function updateState(leadId, status) {
-  const state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+  const state = stateStore.loadState();
   const entry = state.queue.find(l => l.lead_id === leadId);
   if (entry) { entry.status = status; entry.drip_updated_at = new Date().toISOString(); }
-  fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
+  stateStore.saveState(state);
 }
 
 // ── SENDERS ────────────────────────────────────────────────────────────────────
@@ -261,8 +267,15 @@ async function main() {
     const { sentPath, sent: sentRecord, brief, leadId, channel, step, tmpl, to } = toSend[i];
     const label = `[${i + 1}/${toSend.length}] ${brief.business_name} (${step} / ${channel})`;
 
-    const body    = fill(tmpl.body, brief);
+    let body      = fill(tmpl.body, brief);
     const subject = tmpl.subject ? fill(tmpl.subject, brief) : null;
+
+    // Final email touch (d2) gets a direct payment + booking link.
+    // SMS bodies stay untouched to preserve the tuned 160-char/1-segment budget.
+    if (step === 'd2' && channel === 'email' && (cfg.checkout_url || cfg.booking_link)) {
+      if (cfg.checkout_url) body += `\n\nReady to move forward? ${cfg.checkout_url}`;
+      if (cfg.booking_link) body += `\nPrefer to talk first? Book a call: ${cfg.booking_link}`;
+    }
 
     if (isDryRun) {
       console.log(`${label} — DRY RUN`);

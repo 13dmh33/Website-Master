@@ -2,7 +2,8 @@
 
 // market-audit — ranks US metros by contractor website demand
 // reads config/market-data.json (static, zero API cost)
-// usage: node scripts/market-audit.js [--trade hvac|plumbing|electrical|roofing|handyman] [--top N] [--csv]
+// usage: node scripts/market-audit.js [--trade plumbing|electrical|roofing|handyman] [--top N] [--csv]
+// HVAC intentionally omitted — excluded trade, see CLAUDE.md
 // saves ranked report to reports/market-audit-{date}.json
 
 const fs   = require('fs');

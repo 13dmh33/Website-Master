@@ -3,6 +3,7 @@
 
 const fs         = require('fs');
 const path       = require('path');
+const stateStore = require('./state-store');
 const https      = require('https');
 const nodemailer = require('nodemailer');
 const { recordReply } = require('./template-picker');
@@ -30,12 +31,12 @@ function log(msg) {
 }
 
 function loadState() {
-  try { return JSON.parse(fs.readFileSync(STATE_PATH, 'utf8')); }
+  try { return stateStore.loadState(); }
   catch { return { queue: [], active: [], closed: [], nora_pipeline: [], daily_stats: {} }; }
 }
 
 function saveState(state) {
-  fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
+  stateStore.saveState(state);
 }
 
 // ── FIND POSITIVE REPLIES ─────────────────────────────────────────────────────

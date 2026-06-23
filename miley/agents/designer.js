@@ -48,18 +48,22 @@ function parseSlides(post) {
 async function renderCarousel(post, imageDir, idx) {
   const slides = parseSlides(post);
   const paletteKey = paletteFor(post);
+  // selectTemplate (#11) — no-op (always 'v1Gradient') unless TEMPLATES_ACTIVE=true.
+  const templateName = render.selectTemplate('carousel', { hasPhoto: !!post.product });
   const paths = [];
   for (let s = 0; s < slides.length; s++) {
     const outPath = path.join(imageDir, `${idx + 1}-${post.slot}-slide-0${s + 1}.png`);
     try {
-      const buf = await render.renderCarouselSlide({
-        headline: slides[s].headline,
-        body:     slides[s].body,
-        slideNum: s + 1,
-        total:    slides.length,
-        paletteKey,
-        productKey: post.product,
-      });
+      const buf = templateName === 'cleanCard'
+        ? await render.renderCleanCard(slides[s].headline, slides[s].body, s + 1, slides.length)
+        : await render.renderCarouselSlide({
+            headline: slides[s].headline,
+            body:     slides[s].body,
+            slideNum: s + 1,
+            total:    slides.length,
+            paletteKey,
+            productKey: post.product,
+          });
       saveBuffer(buf, outPath);
       paths.push(outPath);
     } catch (err) {
@@ -74,13 +78,24 @@ async function renderCarousel(post, imageDir, idx) {
 async function renderSingle(post, imageDir, idx) {
   const paletteKey = paletteFor(post);
   const outPath = path.join(imageDir, `${idx + 1}-${post.slot}-${post.format}.png`);
+  const hasPhoto = !!render.productImagePath(post.product);
+  // selectTemplate (#11) — no-op (always 'v1Gradient') unless TEMPLATES_ACTIVE=true.
+  const templateName = render.selectTemplate(post.format, { hasPhoto });
   try {
-    const buf = await render.renderSingle({
-      hook:       post.hook,
-      sub:        '— Riley, Techs4Tatas',
-      paletteKey,
-      productKey: post.product,
-    });
+    let buf;
+    if (templateName === 'cleanCard') {
+      buf = await render.renderCleanCard(post.hook, '', 0, 0);
+    } else if (templateName === 'photoCard' && hasPhoto) {
+      const photoBuffer = fs.readFileSync(render.productImagePath(post.product));
+      buf = await render.renderPhotoCard(post.hook, photoBuffer, '— Riley, Techs4Tatas');
+    } else {
+      buf = await render.renderSingle({
+        hook:       post.hook,
+        sub:        '— Riley, Techs4Tatas',
+        paletteKey,
+        productKey: post.product,
+      });
+    }
     saveBuffer(buf, outPath);
     return [outPath];
   } catch (err) {

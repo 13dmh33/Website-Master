@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
+    "test": "node --test test/",
     "setup": "node scripts/setup.js",
     "test-pipeline": "node scripts/test-pipeline.js",
     "push-queue": "node scripts/push-queue.js",

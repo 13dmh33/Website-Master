@@ -4,38 +4,45 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>AMT Plumbing and Excavation — Colorado Springs, CO</title>
-  <meta name="description" content="Colorado Springs plumbing and excavation contractor. Licensed & insured, residential & commercial, site prep to final fixture." />
+  <title>AMT Plumbing, Utilities &amp; Excavation — Colorado Springs, CO</title>
+  <meta name="description" content="Colorado Springs plumbing, utilities and excavation contractor. Licensed & insured, residential & commercial, site prep to final fixture." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --accent: #E8651E;
-      --dark:   #0E0E0E;
-      --light:  #FFF3EC;
+      --red:    #C8102E;
+      --gold:   #FFC72C;
+      --navy:   #002868;
+      --black:  #111111;
       --white:  #FFFFFF;
-      --muted:  #B0AFAF;
-      --border: rgba(255,255,255,0.1);
+      --offwhite: #F7F7F5;
+      --muted:  #6B6B6B;
+      --border: rgba(0,0,0,0.1);
     }
-    body { font-family: 'Barlow', sans-serif; background: var(--dark); color: var(--white); }
+    body { font-family: 'Barlow', sans-serif; background: var(--white); color: var(--black); }
     a { color: inherit; text-decoration: none; }
     .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-    img { display: block; }
+    img, svg { display: block; }
+
+    /* LOGO MARK (recreated from provided logo — Colorado-flag-themed mountain peaks) */
+    .logo-mark { height: 38px; width: auto; flex-shrink: 0; }
+    .logo-lockup { display: flex; align-items: center; gap: 10px; }
+    .logo-wordmark { font-weight: 800; line-height: 1.05; }
+    .logo-wordmark .line1 { font-size: 17px; letter-spacing: .01em; }
+    .logo-wordmark .line2 { font-size: 10px; letter-spacing: .04em; color: var(--muted); text-transform: uppercase; }
 
     /* NAV */
     nav {
-      background: var(--dark); border-bottom: 1px solid var(--border);
-      padding: 0 40px; height: 66px;
+      background: var(--white); border-bottom: 1px solid var(--border);
+      padding: 0 40px; height: 72px;
       display: flex; align-items: center; justify-content: space-between;
       position: sticky; top: 0; z-index: 100;
     }
-    .nav-biz { display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 700; }
-    .nav-biz .a { color: var(--accent); }
     .nav-right { display: flex; align-items: center; gap: 16px; }
     .nav-phone { font-size: 15px; font-weight: 600; color: var(--muted); }
     .nav-book {
-      background: var(--accent); color: var(--white);
+      background: var(--red); color: var(--white);
       padding: 10px 20px; border-radius: 6px;
       font-size: 14px; font-weight: 700; font-family: 'Barlow', sans-serif;
       transition: filter .2s;
@@ -46,44 +53,39 @@
     .hero {
       height: 560px; position: relative;
       display: flex; align-items: center; overflow: hidden;
+      background: var(--black);
     }
     .hero-bg {
       position: absolute; inset: 0;
-      /* PLACEHOLDER — replace with one of the AMT truck/fleet photos, see assets/README.md */
-      background-image: url('https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=1400&q=85&fit=crop');
+      /* PLACEHOLDER — replace with an AMT truck/fleet photo, see assets/README.md */
+      background-image: url('https://images.unsplash.com/photo-1576765608866-5b51046452be?w=1400&q=85&fit=crop');
       background-size: cover; background-position: center;
-      filter: brightness(0.32); z-index: 0;
+      filter: brightness(0.4) saturate(1.05); z-index: 0;
     }
     .hero-gradient {
       position: absolute; inset: 0;
-      background: linear-gradient(90deg, var(--dark) 30%, transparent);
+      background: linear-gradient(90deg, rgba(0,0,0,.88) 32%, transparent);
       z-index: 1;
     }
-    .hero-content {
-      position: relative; z-index: 2;
-      padding: 0 60px; max-width: 680px;
-    }
+    .hero-content { position: relative; z-index: 2; padding: 0 60px; max-width: 680px; color: var(--white); }
     .hero-badge {
       display: inline-block;
-      background: rgba(232,101,30,.3); border: 1px solid rgba(232,101,30,.5);
-      color: var(--white); padding: 6px 16px; border-radius: 100px;
+      background: rgba(255,199,44,.18); border: 1px solid rgba(255,199,44,.5);
+      color: var(--gold); padding: 6px 16px; border-radius: 100px;
       font-size: 12px; font-weight: 700; letter-spacing: .06em;
       text-transform: uppercase; margin-bottom: 20px;
     }
     .hero h1 {
       font-family: 'Barlow Condensed', sans-serif;
-      font-size: clamp(44px, 6.5vw, 68px); font-weight: 800;
-      text-transform: uppercase; line-height: 1;
+      font-size: clamp(40px, 6vw, 62px); font-weight: 800;
+      text-transform: uppercase; line-height: 1.02;
       margin-bottom: 16px;
     }
-    .hero h1 .accent { color: var(--accent); }
-    .hero-sub {
-      font-size: 16px; color: rgba(255,255,255,.7);
-      margin-bottom: 28px; line-height: 1.5;
-    }
+    .hero h1 .accent { color: var(--red); }
+    .hero-sub { font-size: 16px; color: rgba(255,255,255,.75); margin-bottom: 28px; line-height: 1.5; }
     .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 36px; }
     .btn-call {
-      background: var(--accent); color: var(--white);
+      background: var(--red); color: var(--white);
       padding: 14px 28px; border-radius: 6px;
       font-size: 16px; font-weight: 700;
       transition: filter .2s;
@@ -97,12 +99,12 @@
     }
     .btn-estimate:hover { border-color: rgba(255,255,255,.8); }
     .hero-stats { display: flex; gap: 32px; flex-wrap: wrap; }
-    .hero-stat-val { font-size: 26px; font-weight: 800; color: var(--accent); line-height: 1; }
-    .hero-stat-lbl { font-size: 12px; color: rgba(255,255,255,.5); margin-top: 2px; }
+    .hero-stat-val { font-size: 24px; font-weight: 800; color: var(--gold); line-height: 1; }
+    .hero-stat-lbl { font-size: 12px; color: rgba(255,255,255,.55); margin-top: 2px; }
 
     /* TRUST STRIP */
     .trust-strip {
-      background: var(--accent);
+      background: var(--navy);
       padding: 14px 40px;
       display: flex; align-items: center; justify-content: center;
       gap: 0; flex-wrap: wrap;
@@ -111,54 +113,56 @@
     .trust-item + .trust-item { border-left: 1px solid rgba(255,255,255,.3); }
 
     /* SERVICES */
-    .services-section { padding: 80px 0; }
+    .services-section { padding: 80px 0; background: var(--white); }
     .section-label {
       font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 10px;
+      color: var(--red); margin-bottom: 10px;
     }
     .section-h2 {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: clamp(28px, 4vw, 44px); font-weight: 800;
-      text-transform: uppercase; margin-bottom: 8px;
+      text-transform: uppercase; margin-bottom: 8px; color: var(--black);
     }
-    .section-sub { font-size: 16px; color: rgba(255,255,255,.6); margin-bottom: 32px; }
+    .section-sub { font-size: 16px; color: var(--muted); margin-bottom: 32px; }
 
     .service-groups { display: flex; flex-direction: column; gap: 48px; }
     .service-group-label {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: 22px; font-weight: 800; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 16px;
+      color: var(--navy); margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
     }
+    .service-group-label::before { content: ''; width: 28px; height: 4px; background: var(--gold); display: inline-block; }
     .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
     .service-card {
-      background: rgba(255,255,255,.04); border: 1px solid var(--border);
+      background: var(--offwhite); border: 1px solid var(--border);
       border-radius: 10px; overflow: hidden;
       transition: transform .2s, box-shadow .2s; cursor: default;
     }
-    .service-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,.35); }
+    .service-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,.12); }
     .service-img { width: 100%; height: 160px; object-fit: cover; }
     .service-info { padding: 16px; }
-    .service-name { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
-    .service-desc { font-size: 13px; color: rgba(255,255,255,.5); }
+    .service-name { font-size: 15px; font-weight: 700; margin-bottom: 4px; color: var(--black); }
+    .service-desc { font-size: 13px; color: var(--muted); }
 
     /* GALLERY */
-    .gallery-section { padding: 80px 0; background: var(--light); }
-    .gallery-section .section-label { color: var(--accent); }
-    .gallery-section .section-h2 { color: var(--dark); }
+    .gallery-section { padding: 80px 0; background: var(--black); }
+    .gallery-section .section-label { color: var(--gold); }
+    .gallery-section .section-h2 { color: var(--white); }
     .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 32px; }
     .gallery-img { width: 100%; height: 280px; object-fit: cover; border-radius: 10px; }
 
     /* CTA */
-    .cta-section { padding: 80px 24px; text-align: center; background: var(--dark); }
+    .cta-section { padding: 80px 24px; text-align: center; background: var(--offwhite); }
     .cta-section h2 {
       font-family: 'Barlow Condensed', sans-serif;
       font-size: clamp(32px, 5vw, 54px); font-weight: 800;
-      text-transform: uppercase; margin-bottom: 28px;
+      text-transform: uppercase; margin-bottom: 28px; color: var(--black);
     }
-    .cta-section h2 .accent { color: var(--accent); }
+    .cta-section h2 .accent { color: var(--red); }
     .cta-section .cta-note { color: var(--muted); font-size: 14px; margin-top: 18px; }
     .cta-phone {
-      display: inline-block; background: var(--accent); color: var(--white);
+      display: inline-block; background: var(--red); color: var(--white);
       padding: 18px 40px; border-radius: 8px;
       font-size: 22px; font-weight: 700;
       transition: filter .2s;
@@ -167,13 +171,13 @@
 
     /* FOOTER */
     footer {
-      background: #111; padding: 20px 40px;
+      background: var(--black); padding: 20px 40px;
       display: flex; align-items: center; justify-content: space-between;
-      font-size: 13px; color: rgba(255,255,255,.4);
+      font-size: 13px; color: rgba(255,255,255,.5);
     }
-    footer .biz-name { font-weight: 700; color: rgba(255,255,255,.7); }
-    footer a { color: rgba(255,255,255,.4); transition: color .2s; }
-    footer a:hover { color: var(--accent); }
+    footer .biz-name { font-weight: 700; color: rgba(255,255,255,.85); }
+    footer a { color: rgba(255,255,255,.5); transition: color .2s; }
+    footer a:hover { color: var(--gold); }
 
     /* MOBILE */
     @media (max-width: 768px) {
@@ -186,6 +190,7 @@
       .trust-item { font-size: 12px; padding: 3px 12px; }
       body { padding-bottom: 68px; }
       .mobile-cta-bar { display: flex !important; }
+      .logo-wordmark .line2 { display: none; }
     }
   </style>
 </head>
@@ -193,8 +198,29 @@
 
 <!-- NAV -->
 <nav>
-  <div class="nav-biz">
-    <span>A<span class="a">M</span>T </span><span>Plumbing &amp; Excavation</span>
+  <div class="logo-lockup">
+    <svg class="logo-mark" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <clipPath id="peakL"><polygon points="30,8 56,78 4,78" /></clipPath>
+        <clipPath id="peakR"><polygon points="62,8 88,78 36,78" /></clipPath>
+      </defs>
+      <g clip-path="url(#peakL)">
+        <rect x="0" y="0" width="60" height="90" fill="#002868" />
+        <circle cx="30" cy="45" r="26" fill="#C8102E" />
+        <rect x="14" y="0" width="32" height="90" fill="#FFC72C" />
+        <rect x="0" y="38" width="60" height="14" fill="#FFFFFF" />
+      </g>
+      <g clip-path="url(#peakR)">
+        <rect x="36" y="0" width="60" height="90" fill="#C8102E" />
+        <rect x="36" y="0" width="60" height="90" fill="#002868" opacity=".35" />
+      </g>
+      <polygon points="30,8 56,78 44,78 24,28" fill="#FFFFFF" />
+      <polygon points="62,8 88,78 76,78 56,28" fill="#FFFFFF" />
+    </svg>
+    <div class="logo-wordmark">
+      <div class="line1">AMT</div>
+      <div class="line2">Plumbing, Utilities &amp; Excavation</div>
+    </div>
   </div>
   <div class="nav-right">
     <span class="nav-phone">[Phone number]</span>
@@ -207,9 +233,9 @@
   <div class="hero-bg"></div>
   <div class="hero-gradient"></div>
   <div class="hero-content">
-    <div class="hero-badge">Plumbing &amp; Excavation · Colorado Springs, CO</div>
+    <div class="hero-badge">Plumbing · Utilities · Excavation — Colorado Springs, CO</div>
     <h1>Dig it. Pipe it. <span class="accent">Done right.</span></h1>
-    <p class="hero-sub">Licensed plumbing and excavation contractor serving Colorado Springs — from trenching and site prep to final fixture install.</p>
+    <p class="hero-sub">Licensed plumbing, utilities and excavation contractor serving Colorado Springs — from trenching and site prep to final fixture install.</p>
     <div class="hero-btns">
       <a href="#contact" class="btn-call">Get a Free Quote</a>
       <a href="#services" class="btn-estimate">See our services</a>
@@ -220,8 +246,8 @@
         <div class="hero-stat-lbl">&amp; insured</div>
       </div>
       <div>
-        <div class="hero-stat-val">2-in-1</div>
-        <div class="hero-stat-lbl">Plumbing + excavation</div>
+        <div class="hero-stat-val">3-in-1</div>
+        <div class="hero-stat-lbl">Plumbing, utilities, excavation</div>
       </div>
       <div>
         <div class="hero-stat-val">Local</div>
@@ -236,7 +262,7 @@
   <span class="trust-item">Licensed & Insured</span>
   <span class="trust-item">Residential & Commercial</span>
   <span class="trust-item">Free Estimates</span>
-  <span class="trust-item">Plumbing + Excavation Under One Roof</span>
+  <span class="trust-item">One Crew, Start to Finish</span>
 </div>
 
 <!-- SERVICES -->
@@ -275,20 +301,13 @@
       </div>
 
       <div>
-        <div class="service-group-label">Excavation</div>
+        <div class="service-group-label">Utilities</div>
         <div class="services-grid">
           <div class="service-card">
-            <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80&fit=crop" alt="Site Prep" class="service-img" loading="lazy" />
+            <img src="https://images.unsplash.com/photo-1581093458791-9f3c3900df7b?w=800&q=80&fit=crop" alt="Utility Line Installation" class="service-img" loading="lazy" />
             <div class="service-info">
-              <div class="service-name">Site Prep & Grading</div>
-              <div class="service-desc">New builds & additions</div>
-            </div>
-          </div>
-          <div class="service-card">
-            <img src="https://images.unsplash.com/photo-1581093458791-9f3c3900df7b?w=800&q=80&fit=crop" alt="Trenching" class="service-img" loading="lazy" />
-            <div class="service-info">
-              <div class="service-name">Trenching</div>
-              <div class="service-desc">Utility & pipe lines</div>
+              <div class="service-name">Utility Line Install</div>
+              <div class="service-desc">Water, sewer & gas hookups</div>
             </div>
           </div>
           <div class="service-card">
@@ -296,6 +315,40 @@
             <div class="service-info">
               <div class="service-name">Drainage Systems</div>
               <div class="service-desc">French drains & grading fixes</div>
+            </div>
+          </div>
+          <div class="service-card">
+            <img src="https://images.unsplash.com/photo-1581094271901-8022df4466f9?w=800&q=80&fit=crop" alt="Locates & Repairs" class="service-img" loading="lazy" />
+            <div class="service-info">
+              <div class="service-name">Locates &amp; Repairs</div>
+              <div class="service-desc">Underground utility service</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="service-group-label">Excavation</div>
+        <div class="services-grid">
+          <div class="service-card">
+            <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80&fit=crop" alt="Site Prep" class="service-img" loading="lazy" />
+            <div class="service-info">
+              <div class="service-name">Site Prep &amp; Grading</div>
+              <div class="service-desc">New builds & additions</div>
+            </div>
+          </div>
+          <div class="service-card">
+            <img src="https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=800&q=80&fit=crop" alt="Trenching" class="service-img" loading="lazy" />
+            <div class="service-info">
+              <div class="service-name">Trenching</div>
+              <div class="service-desc">Utility & pipe lines</div>
+            </div>
+          </div>
+          <div class="service-card">
+            <img src="https://images.unsplash.com/photo-1620121478247-ec786b9be2fa?w=800&q=80&fit=crop" alt="Demolition & Hauling" class="service-img" loading="lazy" />
+            <div class="service-info">
+              <div class="service-name">Demolition &amp; Hauling</div>
+              <div class="service-desc">Lot clearing & dirt removal</div>
             </div>
           </div>
         </div>
@@ -326,8 +379,8 @@
 
 <!-- FOOTER -->
 <footer>
-  <span class="biz-name">AMT Plumbing and Excavation</span>
-  <span>© 2026 AMT Plumbing and Excavation · Colorado Springs, CO · Powered by <a href="https://trevoadvisors.com">Trevo Advisors</a></span>
+  <span class="biz-name">AMT Plumbing, Utilities &amp; Excavation</span>
+  <span>© 2026 AMT Plumbing, Utilities &amp; Excavation · Colorado Springs, CO · Powered by <a href="https://trevoadvisors.com">Trevo Advisors</a></span>
 </footer>
 
 <script>
@@ -339,9 +392,9 @@
   });
 </script>
 <!-- MOBILE STICKY BAR -->
-<div class="mobile-cta-bar" style="display:none;position:fixed;bottom:0;left:0;right:0;background:var(--accent);z-index:200;padding:10px 16px;align-items:center;gap:8px;">
+<div class="mobile-cta-bar" style="display:none;position:fixed;bottom:0;left:0;right:0;background:var(--red);z-index:200;padding:10px 16px;align-items:center;gap:8px;">
   <a href="#contact" style="flex:1;background:rgba(0,0,0,.2);color:#fff;text-align:center;padding:11px;border-radius:6px;font-size:14px;font-weight:700;text-decoration:none;">Get a Quote</a>
-  <a href="#services" style="flex:1;background:#fff;color:var(--accent);text-align:center;padding:11px;border-radius:6px;font-size:14px;font-weight:700;text-decoration:none;">Our Services</a>
+  <a href="#services" style="flex:1;background:#fff;color:var(--red);text-align:center;padding:11px;border-radius:6px;font-size:14px;font-weight:700;text-decoration:none;">Our Services</a>
 </div>
 </body>
 </html>

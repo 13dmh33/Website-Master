@@ -8,7 +8,7 @@ multi-platform reflow (TikTok/Pinterest), live donation tracker post type.
 
 ---
 
-## 1. Generate-then-judge pipeline
+## 1. Generate-then-judge pipeline — ✅ BUILT (2026-06-23)
 
 **Problem today:** `agents/generator.js` asks Claude for one post per slot, runs it through
 `generator-prompts.passesQualityGate` (a hard pass/fail on freebie/donation/length/hashtag
@@ -39,7 +39,7 @@ prompt design for the judge to be meaningfully different from the quality gate.
 
 ---
 
-## 2. Self-critique loop using past top performers
+## 2. Self-critique loop using past top performers — ✅ BUILT (2026-06-23)
 
 **Problem today:** The Generator has no memory of what's actually worked. `brand-voice.json`
 has `what_works` / `top_hashtags` fields that the Analyst updates from engagement data, but
@@ -155,7 +155,7 @@ building — this is the most statistically involved item on the list.
 
 ---
 
-## 8. Sentiment mining from comments/DMs
+## 8. Sentiment mining from comments/DMs — ✅ BUILT (2026-06-23)
 
 **Problem today:** `agents/analyst.js`'s "sales signal" only reads UTM click data
 (`output/clicks/latest.json`) — it ranks products by click-through but has no visibility
@@ -184,7 +184,7 @@ per-comment).
 
 ---
 
-## 9. Dynamic product-rotation weighting
+## 9. Dynamic product-rotation weighting — ✅ BUILT (2026-06-23)
 
 **Problem today:** `lib/planner.js` rotates through `product_catalog_rotation`
 (an ordered list in `post-formats.json`) round-robin — every product gets equal airtime

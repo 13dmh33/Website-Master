@@ -70,10 +70,28 @@ Manual verification (this session, container — no Outscraper key available):
 - Mocked-data run of `filterAndFormatHasWebsite` against the fixture, piped through `exportAuditorCsv`/
   `exportNeedsEmailCsv`, confirmed correct CSV shape and routing.
 
+## Follow-up: domain dedup + Enricher hookup (this session, additive)
+
+- **Domain dedup**: `scout-shared.js` gained `normalizeDomain(url)` (lowercase host, strips
+  protocol/`www.`). `scout.js` gained `loadKnownDomains()` (reads `site_url` across all of
+  `leads-web/*.json`). `filterAndFormatHasWebsite` takes an optional 6th arg `knownDomains` and
+  also tracks domains seen earlier in the *same* run, so a franchise/relisted business sharing a
+  site across two different `place_id`s is caught either way. No-website mode is untouched (no
+  website field to dedup on). 3 new tests added (known-domain match, same-run duplicate, www/protocol
+  normalization) — 20/20 passing.
+- **Enricher hookup**: Scout's has-website mode now also writes `needs-email-*.json` (same basename
+  as the CSV) alongside the CSV, since Enricher works off JSON, not CSV. `scripts/enricher.js` gained
+  `--mode has-website`: scans `leads-web/needs-email-*.json`, runs the same Apollo `/v1/people/match`
+  lookup, and on a hit moves the record into the corresponding `leads-web/{basename}.json` (auditor-ready
+  array) and regenerates `leads-web/{basename}.csv` via `exportAuditorCsv` — no `queue/*-brief.json`
+  upgrade (has-website leads don't have one). On a miss, marks `enriched_at` in place to avoid repeat
+  credit burn, same as no-website mode. Default `--mode no-website` behavior is byte-for-byte unchanged.
+  Manually verified via a dry-run fixture in this container (no real Apollo key available).
+
 ## What's left
 
-- Not yet run against the real Outscraper API (no key in this container — same constraint documented
-  for Scout/Pitcher/Drip/Reporter/Webhook/Poller; must run on Mac).
+- Not yet run against the real Outscraper/Apollo APIs (no keys in this container — same constraint
+  documented for Scout/Pitcher/Drip/Reporter/Webhook/Poller/Enricher; must run on Mac).
 - `leads-web/` is a new directory, not yet `.gitignore`'d or explicitly tracked-by-rule — it will be
   tracked by default (same as `leads/`) the first time a real run writes into it.
 - Not merged to `main`. Not wired into Diagnoser/Pitcher/Mobile — has-website leads currently only feed

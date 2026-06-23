@@ -6,11 +6,16 @@
  *   node scripts/enricher.js --dry-run --force   # preview, no API calls
  *   node scripts/enricher.js --force             # run for real
  *   node scripts/enricher.js --limit 20 --force  # cap lookups this run
+ *   node scripts/enricher.js --mode has-website --force  # enrich needs-email-*.json from Scout's has-website mode
  *
- * Reads:  leads/*.json              (finds leads without email)
- *         queue/*-brief.json        (upgrades channel if lead already queued)
- * Writes: leads/*.json              (email + enriched_at)
- *         queue/*-brief.json        (channel: email, secondary_channel: sms)
+ * Reads:  leads/*.json              (no-website mode — finds leads without email)
+ *         queue/*-brief.json        (no-website mode — upgrades channel if lead already queued)
+ *         leads-web/needs-email-*.json  (has-website mode — real site, no scrapeable email)
+ * Writes: leads/*.json              (no-website mode — email + enriched_at)
+ *         queue/*-brief.json        (no-website mode — channel: email, secondary_channel: sms)
+ *         leads-web/needs-email-*.json     (has-website mode — email + enriched_at)
+ *         leads-web/{basename}.json        (has-website mode — found leads moved into auditor-ready array)
+ *         leads-web/{basename}.csv         (has-website mode — auditor CSV regenerated to include newly-found leads)
  *         config/enricher-config.json
  *         logs/{date}.log
  *
@@ -26,16 +31,24 @@ const path  = require('path');
 const https = require('https');
 const { writeLog }    = require('./logger');
 const { recordApollo } = require('./cost-tracker');
+const { exportAuditorCsv } = require('./lib/scout-has-website');
 
 const ROOT        = path.join(__dirname, '..');
 const CONFIG_PATH = path.join(ROOT, 'config', 'enricher-config.json');
 const LEADS_DIR   = path.join(ROOT, 'leads');
 const QUEUE_DIR   = path.join(ROOT, 'queue');
+const LEADS_WEB_DIR = path.join(ROOT, 'leads-web');
 
 const args     = process.argv.slice(2);
 const getArg   = (f) => { const i = args.indexOf(f); return i !== -1 ? args[i + 1] : null; };
 const isDry    = args.includes('--dry-run');
 const limitArg = parseInt(getArg('--limit') || '50', 10);
+const mode     = (getArg('--mode') || 'no-website').toLowerCase();
+if (mode !== 'no-website' && mode !== 'has-website') {
+  console.error(`--mode must be "no-website" or "has-website" (got "${mode}")`);
+  process.exit(1);
+}
+const isHasWebsiteMode = mode === 'has-website';
 
 // ── CONFIG ────────────────────────────────────────────────────────────────────
 
@@ -106,6 +119,79 @@ function findLeadsNeedingEmail() {
     } catch { /* skip malformed file */ }
   }
   return results;
+}
+
+// has-website mode only: scans leads-web/needs-email-*.json (real site, no
+// scrapeable email — written by Scout's has-website mode) instead of leads/*.json.
+function findHasWebsiteLeadsNeedingEmail() {
+  const results = [];
+  if (!fs.existsSync(LEADS_WEB_DIR)) return results;
+  const files = fs.readdirSync(LEADS_WEB_DIR).filter(f => f.startsWith('needs-email-') && f.endsWith('.json'));
+
+  for (const file of files) {
+    try {
+      const leads = JSON.parse(fs.readFileSync(path.join(LEADS_WEB_DIR, file), 'utf8'));
+      for (const lead of leads) {
+        if (!lead.email || lead.email.trim() === '') {
+          if (lead.enriched_at && !lead.email) continue;
+          results.push({ lead, file });
+        }
+      }
+    } catch { /* skip malformed file */ }
+  }
+  return results;
+}
+
+// has-website mode only: marks the needs-email record enriched in place,
+// then moves the found lead into the auditor-ready leads JSON + CSV
+// (same basename, "needs-email-" prefix stripped) so it feeds /audit just
+// like leads Scout found with an email already attached.
+function moveHasWebsiteLeadToAuditorReady(file, leadId, email, meta) {
+  const needsEmailPath = path.join(LEADS_WEB_DIR, file);
+  const needsEmailLeads = JSON.parse(fs.readFileSync(needsEmailPath, 'utf8'));
+
+  let movedLead = null;
+  const remaining = [];
+  for (const lead of needsEmailLeads) {
+    if (lead.lead_id === leadId) {
+      lead.email          = email;
+      lead.email_status   = meta.email_status;
+      lead.enriched_name  = meta.name  || null;
+      lead.enriched_title = meta.title || null;
+      lead.enriched_at    = new Date().toISOString();
+      movedLead = lead;
+    } else {
+      remaining.push(lead);
+    }
+  }
+  fs.writeFileSync(needsEmailPath, JSON.stringify(needsEmailLeads, null, 2));
+  if (!movedLead) return false;
+
+  const baseName   = file.replace(/^needs-email-/, '').replace(/\.json$/, '');
+  const leadsPath  = path.join(LEADS_WEB_DIR, `${baseName}.json`);
+  const csvPath    = path.join(LEADS_WEB_DIR, `${baseName}.csv`);
+
+  const existingLeads = fs.existsSync(leadsPath) ? JSON.parse(fs.readFileSync(leadsPath, 'utf8')) : [];
+  existingLeads.push(movedLead);
+  existingLeads.sort((a, b) => b.fit_score - a.fit_score);
+  fs.writeFileSync(leadsPath, JSON.stringify(existingLeads, null, 2));
+  fs.writeFileSync(csvPath, exportAuditorCsv(existingLeads));
+
+  return true;
+}
+
+function markHasWebsiteNoEmail(file, leadId) {
+  const filePath = path.join(LEADS_WEB_DIR, file);
+  const leads    = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+
+  for (const lead of leads) {
+    if (lead.lead_id === leadId) {
+      lead.enriched_at = new Date().toISOString();
+      break;
+    }
+  }
+
+  fs.writeFileSync(filePath, JSON.stringify(leads, null, 2));
 }
 
 // ── APOLLO API ────────────────────────────────────────────────────────────────
@@ -251,7 +337,7 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 // ── MAIN ──────────────────────────────────────────────────────────────────────
 
 async function main() {
-  console.log(`\nEnricher starting${isDry ? ' [DRY RUN]' : ''}`);
+  console.log(`\nEnricher starting${isDry ? ' [DRY RUN]' : ''} [mode: ${mode}]`);
   console.log('─'.repeat(50));
 
   const apiKey = process.env.APOLLO_API_KEY;
@@ -265,7 +351,7 @@ async function main() {
   const cfg        = loadConfig();
   checkAutoRun(cfg);
   const budget     = checkBudget(cfg);
-  const candidates = findLeadsNeedingEmail();
+  const candidates = isHasWebsiteMode ? findHasWebsiteLeadsNeedingEmail() : findLeadsNeedingEmail();
   const toProcess  = candidates.slice(0, budget);
 
   console.log(`Leads needing email:     ${candidates.length}`);
@@ -294,20 +380,27 @@ async function main() {
       const result = await lookupEmail(lead, apiKey);
 
       if (result?.email) {
-        updateLeadFile(file, lead.lead_id, result.email, result);
-        const upgraded = upgradeBriefToEmail(lead.lead_id, result.email);
-        if (upgraded) briefsUpgraded++;
+        let upgraded = false;
+        if (isHasWebsiteMode) {
+          moveHasWebsiteLeadToAuditorReady(file, lead.lead_id, result.email, result);
+        } else {
+          updateLeadFile(file, lead.lead_id, result.email, result);
+          upgraded = upgradeBriefToEmail(lead.lead_id, result.email);
+          if (upgraded) briefsUpgraded++;
+        }
 
         recordApollo(1, 'enricher');
         cfg.credits_used++;
         saveConfig(cfg);
         found++;
 
-        const upgradedNote = upgraded ? ' → brief upgraded to email' : '';
+        const upgradedNote = upgraded ? ' → brief upgraded to email'
+          : isHasWebsiteMode ? ' → moved to auditor-ready CSV' : '';
         console.log(`  ✓  ${label}`);
         console.log(`     ${result.email}  [${result.email_status}]  ${result.name || ''}${upgradedNote}`);
       } else {
-        markNoEmail(file, lead.lead_id);
+        if (isHasWebsiteMode) markHasWebsiteNoEmail(file, lead.lead_id);
+        else markNoEmail(file, lead.lead_id);
         noMatch++;
         console.log(`  —  ${label}  (no match)`);
       }
@@ -348,7 +441,9 @@ async function main() {
 
   if (found > 0) {
     console.log('');
-    if (briefsUpgraded > 0) {
+    if (isHasWebsiteMode) {
+      console.log(`Next: ${found} lead(s) moved to leads-web auditor-ready CSV — feed into /audit/input/leads.csv.`);
+    } else if (briefsUpgraded > 0) {
       console.log(`Next: run Pitcher — ${briefsUpgraded} brief(s) upgraded to email channel, ready to send.`);
     } else {
       console.log(`Next: run Diagnoser → Checker → Personalizer → Pitcher for ${found} newly enriched lead(s).`);

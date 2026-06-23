@@ -6,7 +6,7 @@
  * Does NOT touch scout-no-website.js's filters/scoring/output — additive only.
  */
 
-const { slugify } = require('./scout-shared');
+const { slugify, normalizeDomain } = require('./scout-shared');
 
 // Broader than no-website's isSocialOnlySite on purpose: this mode needs to
 // reject Linktree/Google-Business/Yelp-profile "sites" too, since a site
@@ -45,11 +45,16 @@ function scoreFit(result) {
  * Returns { leads, needsEmail, disc }.
  * `leads` = auditor-ready (has email). `needsEmail` = real site, no scrapeable
  * email — routed for manual lookup, never discarded.
+ *
+ * `knownDomains` (optional) catches the same business listed under a
+ * different place_id (franchise relist, duplicate GBP listing) by matching
+ * on normalized site domain — place_id dedup alone misses these.
  */
-function filterAndFormatHasWebsite(results, tradeStr, cityStr, knownIds, minScore) {
+function filterAndFormatHasWebsite(results, tradeStr, cityStr, knownIds, minScore, knownDomains) {
   let disc = { reviews: 0, rating: 0, noWebsite: 0, noPhone: 0, duplicate: 0, lowScore: 0 };
   const leads = [];
   const needsEmail = [];
+  const seenDomainsThisRun = new Set();
 
   for (const r of results) {
     const pid = r.place_id;
@@ -60,8 +65,15 @@ function filterAndFormatHasWebsite(results, tradeStr, cityStr, knownIds, minScor
     if (!r.phone   || r.phone.trim() === '') { disc.noPhone++; continue; }
     if (!isRealWebsite(r.site)) { disc.noWebsite++; continue; }
 
+    const domain = normalizeDomain(r.site);
+    if (domain && (
+      (knownDomains && knownDomains.has(domain)) || seenDomainsThisRun.has(domain)
+    )) { disc.duplicate++; continue; }
+
     const fit = scoreFit(r);
     if (fit < minScore) { disc.lowScore++; continue; }
+
+    if (domain) seenDomainsThisRun.add(domain);
 
     const record = {
       lead_id:       r.place_id || `${slugify(r.name)}-${slugify(cityStr)}`,

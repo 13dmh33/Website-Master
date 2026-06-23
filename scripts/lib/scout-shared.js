@@ -27,4 +27,19 @@ function isSocialOnlySite(site) {
   return /facebook\.com|instagram\.com|yelp\.com\/biz|nextdoor\.com|thumbtack\.com/i.test(site);
 }
 
-module.exports = { slugify, channelForTrade, isSocialOnlySite };
+// Normalizes a site URL down to its registrable domain (lowercase, no
+// protocol/www/path/query) so the same business listed under two different
+// place_ids (franchise relist, duplicate GBP listing, etc.) is still caught
+// as a duplicate by has-website mode's domain dedup.
+function normalizeDomain(url) {
+  if (!url) return null;
+  try {
+    const withProto = /^https?:\/\//i.test(url) ? url : `http://${url}`;
+    const host = new URL(withProto).hostname.toLowerCase();
+    return host.replace(/^www\./, '');
+  } catch {
+    return null;
+  }
+}
+
+module.exports = { slugify, channelForTrade, isSocialOnlySite, normalizeDomain };

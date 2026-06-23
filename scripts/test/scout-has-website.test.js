@@ -99,6 +99,33 @@ test('filterAndFormatHasWebsite — real site with no email routes to needsEmail
   assert.equal(needsEmail[0].place_id, 'pX');
 });
 
+test('filterAndFormatHasWebsite — domain dedup catches same site under a different place_id', () => {
+  const knownDomains = new Set(['establishedplumbing.com']);
+  const { leads } = filterAndFormatHasWebsite(raw, 'plumber', 'Denver, CO', new Set(), 0, knownDomains);
+  assert.ok(!leads.find(l => l.place_id === 'p3'));
+});
+
+test('filterAndFormatHasWebsite — domain dedup catches same site appearing twice within one run', () => {
+  const fixture = [
+    { name: 'Acme Plumbing', email: 'a@acme.com', phone: '555-0100', site: 'https://www.acmeplumbing.com', full_address: '1 St', rating: 4.5, reviews: 50, place_id: 'd1' },
+    { name: 'Acme Plumbing (Relisted)', email: 'a@acme.com', phone: '555-0100', site: 'https://acmeplumbing.com', full_address: '1 St', rating: 4.5, reviews: 50, place_id: 'd2' }
+  ];
+  const { leads, disc } = filterAndFormatHasWebsite(fixture, 'plumber', 'Denver, CO', new Set(), 0);
+  assert.equal(leads.length, 1);
+  assert.equal(leads[0].place_id, 'd1');
+  assert.equal(disc.duplicate, 1);
+});
+
+test('filterAndFormatHasWebsite — domain dedup is www-insensitive and protocol-insensitive', () => {
+  const knownDomains = new Set(['acmeplumbing.com']);
+  const fixture = [
+    { name: 'Acme Plumbing', email: 'a@acme.com', phone: '555-0100', site: 'http://www.acmeplumbing.com/', full_address: '1 St', rating: 4.5, reviews: 50, place_id: 'd3' }
+  ];
+  const { leads, disc } = filterAndFormatHasWebsite(fixture, 'plumber', 'Denver, CO', new Set(), 0, knownDomains);
+  assert.equal(leads.length, 0);
+  assert.equal(disc.duplicate, 1);
+});
+
 test('exportAuditorCsv — emits exactly business_name,trade,city,url,email', () => {
   const { leads } = filterAndFormatHasWebsite(raw, 'plumber', 'Denver, CO', new Set(), 0);
   const csv = exportAuditorCsv(leads);

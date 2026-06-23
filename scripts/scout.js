@@ -42,7 +42,7 @@ const path  = require('path');
 const https = require('https');
 const { writeLog }         = require('./logger');
 const { recordOutscraper } = require('./cost-tracker');
-const { slugify } = require('./lib/scout-shared');
+const { slugify, normalizeDomain } = require('./lib/scout-shared');
 const { filterAndFormatNoWebsite, exportToCsv } = require('./lib/scout-no-website');
 const { filterAndFormatHasWebsite, exportAuditorCsv, exportNeedsEmailCsv } = require('./lib/scout-has-website');
 
@@ -293,6 +293,29 @@ function loadKnownIds() {
   return new Set([...webKnown, ...noWebsiteKnown]);
 }
 
+// has-website mode only: catches the same business under a different
+// place_id (franchise relist, duplicate GBP listing) via normalized
+// site_url domain. No-website mode has no website field, so n/a there.
+function loadKnownDomainsFromDir(dir) {
+  const known = new Set();
+  if (!fs.existsSync(dir)) return known;
+  for (const file of fs.readdirSync(dir)) {
+    if (!file.endsWith('.json')) continue;
+    try {
+      const leads = JSON.parse(fs.readFileSync(path.join(dir, file), 'utf8'));
+      for (const l of leads) {
+        const domain = normalizeDomain(l.site_url);
+        if (domain) known.add(domain);
+      }
+    } catch { /* skip malformed files */ }
+  }
+  return known;
+}
+
+function loadKnownDomains() {
+  return loadKnownDomainsFromDir(LEADS_WEB_DIR);
+}
+
 // ── OUTSCRAPER API ────────────────────────────────────────────────────────────
 
 function pollTask(resultsUrl, apiKey) {
@@ -520,7 +543,8 @@ async function main() {
   if (isMulti) console.log(`\n  Deduped: ${allRaw.length} raw → ${flat.length} unique`);
 
   if (isHasWebsiteMode) {
-    await runHasWebsiteMode(config, flat, knownIds);
+    const knownDomains = loadKnownDomains();
+    await runHasWebsiteMode(config, flat, knownIds, knownDomains);
   } else {
     await runNoWebsiteMode(config, flat, knownIds);
   }
@@ -582,8 +606,8 @@ async function runNoWebsiteMode(config, flat, knownIds) {
   });
 }
 
-async function runHasWebsiteMode(config, flat, knownIds) {
-  const { leads, needsEmail, disc } = filterAndFormatHasWebsite(flat, trade, city, knownIds, minScore);
+async function runHasWebsiteMode(config, flat, knownIds, knownDomains) {
+  const { leads, needsEmail, disc } = filterAndFormatHasWebsite(flat, trade, city, knownIds, minScore, knownDomains);
   logHasWebsiteBreakdown(flat.length, leads.length, needsEmail.length, disc);
 
   if (leads.length === 0 && needsEmail.length === 0) {
@@ -606,6 +630,10 @@ async function runHasWebsiteMode(config, flat, knownIds) {
   if (needsEmail.length > 0) {
     needsEmailFilename = buildFilename(city, LEADS_WEB_DIR, 'csv', 'needs-email-');
     fs.writeFileSync(path.join(LEADS_WEB_DIR, needsEmailFilename), exportNeedsEmailCsv(needsEmail));
+    // Also persist as JSON (same basename) so Enricher can read/update records
+    // by lead_id — the CSV alone has no machine-friendly write-back target.
+    const needsEmailJsonFilename = needsEmailFilename.replace(/\.csv$/, '.json');
+    fs.writeFileSync(path.join(LEADS_WEB_DIR, needsEmailJsonFilename), JSON.stringify(needsEmail, null, 2));
   }
 
   const qualifyingTotal = leads.length + needsEmail.length;

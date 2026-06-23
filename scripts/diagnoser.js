@@ -21,6 +21,7 @@ const fs   = require('fs');
 const path = require('path');
 const Anthropic = require('@anthropic-ai/sdk');
 const { writeLog }        = require('./logger');
+const sheetsClient         = require('./sheets-client');
 const { pickAndFill }     = require('./template-picker');
 const { recordAnthropic } = require('./cost-tracker');
 
@@ -239,6 +240,7 @@ function updateState(leadId, status) {
   }
   state.daily_stats.briefs_written = (state.daily_stats.briefs_written || 0) + 1;
   fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
+  sheetsClient.upsertStatus(leadId, { status }).catch(() => {});
 }
 
 function markTopPriority(briefs) {

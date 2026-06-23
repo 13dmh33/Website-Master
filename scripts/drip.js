@@ -26,6 +26,7 @@ const path       = require('path');
 const nodemailer = require('nodemailer');
 const twilio     = require('twilio');
 const { writeLog }             = require('./logger');
+const sheetsClient              = require('./sheets-client');
 const { recordTwilio, recordEmail } = require('./cost-tracker');
 
 const ROOT           = path.join(__dirname, '..');
@@ -197,6 +198,7 @@ function updateState(leadId, status) {
   const entry = state.queue.find(l => l.lead_id === leadId);
   if (entry) { entry.status = status; entry.drip_updated_at = new Date().toISOString(); }
   fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
+  sheetsClient.upsertStatus(leadId, { status }).catch(() => {});
 }
 
 // ── SENDERS ────────────────────────────────────────────────────────────────────

@@ -3,6 +3,7 @@
 
 const fs         = require('fs');
 const path       = require('path');
+const sheetsClient = require('./sheets-client');
 const https      = require('https');
 const nodemailer = require('nodemailer');
 const { recordReply } = require('./template-picker');
@@ -247,6 +248,7 @@ async function checkNoraPipeline() {
       entry.nora_pitched    = true;
       entry.nora_pitched_at = new Date().toISOString();
       saveState(state);
+      sheetsClient.upsertStatus(entry.lead_id, { status: 'nora_pitched' }).catch(() => {});
     } catch (err) {
       console.error(`  Error: ${err.message}`);
       log(`Nora pitch error for ${record.business_name}: ${err.message}`);
@@ -314,6 +316,7 @@ async function main() {
         });
       }
       saveState(state);
+      sheetsClient.upsertStatus(record.lead_id, { status: 'hot' }).catch(() => {});
 
     } catch (err) {
       console.error(`  Error sending reply: ${err.message}`);

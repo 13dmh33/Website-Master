@@ -31,6 +31,7 @@ const path  = require('path');
 const https = require('https');
 const { writeLog }         = require('./logger');
 const { recordOutscraper } = require('./cost-tracker');
+const sheetsClient          = require('./sheets-client');
 
 // ── CONFIG ────────────────────────────────────────────────────────────────────
 
@@ -486,7 +487,7 @@ function updateState(leads) {
   state.daily_stats.leads_scouted = (state.daily_stats.leads_scouted || 0) + newLeads.length;
   state.last_run = new Date().toISOString();
   fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
-  return newLeads.length;
+  return newLeads;
 }
 
 // ── MAIN ──────────────────────────────────────────────────────────────────────
@@ -579,8 +580,10 @@ async function main() {
   fs.writeFileSync(outPath, JSON.stringify(leads, null, 2));
 
   const { cost: actualCost, effectiveCpp } = updateSpend(config, flat.length, leads.length);
-  const newCount = updateState(leads);
+  const newLeads = updateState(leads);
+  const newCount = newLeads.length;
   if (exportCsv) exportToCsv(leads);
+  if (!isDryRun) await sheetsClient.appendLeads(newLeads);
 
   writeLog('scout', [
     `city: ${city}  trade: ${trade}${isMulti ? '  [multi]' : ''}`,

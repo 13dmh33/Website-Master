@@ -34,6 +34,7 @@ const path        = require('path');
 const https       = require('https');
 const nodemailer  = require('nodemailer');
 const { writeLog }              = require('./logger');
+const sheetsClient               = require('./sheets-client');
 const { recordSent }            = require('./template-picker');
 const { recordTwilio, recordEmail } = require('./cost-tracker');
 
@@ -418,6 +419,7 @@ function updateState(leadId, status) {
     state.daily_stats = state.daily_stats || {};
     state.daily_stats.messages_sent = (state.daily_stats.messages_sent || 0) + 1;
     fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
+    sheetsClient.upsertStatus(leadId, { status }).catch(() => {});
   } catch (e) {
     console.warn(`  Could not update state.json for ${leadId}: ${e.message}`);
   }

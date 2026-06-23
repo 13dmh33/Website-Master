@@ -1,5 +1,6 @@
 # Secrets
 .env.local
+config/google-sheets-key.json
 
 # Dependencies
 node_modules/

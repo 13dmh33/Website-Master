@@ -14,9 +14,17 @@
 // Usage:
 //   node scripts/scrape-catalog.js                 # fetch live store, DRY RUN (prints what it found)
 //   node scripts/scrape-catalog.js --write         # fetch live store, then update both files
+//   node scripts/scrape-catalog.js --render        # like above, but render JS first (needs puppeteer — see below)
 //   node scripts/scrape-catalog.js --html page.html        # parse a saved page instead of fetching
 //   node scripts/scrape-catalog.js --from "Unisex Tee, Snapback Hat"   # use a pasted comma list
 //   node scripts/scrape-catalog.js --from "..." --write
+//
+// Printify pop-up stores render their product grid client-side, so a plain
+// fetch often returns an empty shell. --render launches a real headless
+// browser (Puppeteer) and reads the DOM after it loads — the most reliable
+// option, but it's a one-time ~300MB Chromium download:
+//   npm install --no-save puppeteer
+//   node scripts/scrape-catalog.js --render --write
 //
 // Env: STOREFRONT_URL (defaults to techs4tatas.printify.me).
 
@@ -90,15 +98,18 @@ function extractProductNames(html) {
   }
   tried.push(['JSON-LD', ldNames]);
 
-  // 2) embedded state blobs (Next/Nuxt/Redux) — grab "title":"..." inside a products array
+  // 2) embedded state blobs — Next.js (__NEXT_DATA__, app-router streaming via
+  // self.__next_f.push), Nuxt, Redux, Remix — grab "title"/"name" inside any
+  // of them. These ship the product list as JSON even when the visible DOM
+  // is still an empty shell pre-hydration.
   const stateNames = [];
-  const stateRe = /__(?:NEXT_DATA__|INITIAL_STATE__|NUXT__)/.test(html);
-  if (stateRe) {
-    const titleRe = /"(?:title|name)"\s*:\s*"((?:[^"\\]|\\.){2,120})"/g;
+  const hasEmbeddedState = /__NEXT_DATA__|__INITIAL_STATE__|__NUXT__|self\.__next_f|__remixContext/.test(html);
+  if (hasEmbeddedState) {
+    const titleRe = /"(?:title|name|productTitle)"\s*:\s*"((?:[^"\\]|\\.){2,120})"/g;
     let t;
     while ((t = titleRe.exec(html))) {
-      const v = t[1].replace(/\\"/g, '"').replace(/\\\//g, '/').trim();
-      if (v && !/^https?:/i.test(v)) stateNames.push(v);
+      const v = t[1].replace(/\\"/g, '"').replace(/\\\//g, '/').replace(/\\n/g, ' ').trim();
+      if (v && !/^https?:/i.test(v) && !/^\d+(\.\d+)?$/.test(v)) stateNames.push(v);
     }
   }
   tried.push(['embedded-state', dedupePreserveOrder(stateNames)]);
@@ -164,12 +175,38 @@ async function fetchHtml(url) {
   return res.text();
 }
 
+// renders the page in a real headless browser and reads the DOM after JS
+// runs — handles stores that fetch their product list via XHR with nothing
+// embedded in the initial HTML at all.
+async function fetchRenderedHtml(url) {
+  let puppeteer;
+  try {
+    puppeteer = require('puppeteer');
+  } catch (_) {
+    throw new Error(
+      'puppeteer is not installed. Run: npm install --no-save puppeteer\n' +
+      '  (one-time ~300MB Chromium download, then re-run with --render)'
+    );
+  }
+  const browser = await puppeteer.launch({ headless: 'new' });
+  try {
+    const page = await browser.newPage();
+    await page.goto(url, { waitUntil: 'networkidle2', timeout: 30000 });
+    // give lazy-loaded product grids a moment past the network-idle event
+    await new Promise((r) => setTimeout(r, 1500));
+    return await page.content();
+  } finally {
+    await browser.close();
+  }
+}
+
 async function main() {
   let names = [];
   let source = '';
 
   const fromList = flag('--from');
   const htmlFile = flag('--html');
+  const RENDER   = args.includes('--render');
 
   if (fromList) {
     names = fromList.split(/\s*[,\n]\s*/).filter(Boolean);
@@ -178,6 +215,11 @@ async function main() {
     const html = fs.readFileSync(htmlFile, 'utf8');
     const r = extractProductNames(html);
     names = r.names; source = `saved file (${htmlFile}) via ${r.strategy || 'no match'}`;
+  } else if (RENDER) {
+    console.log(`Rendering ${STOREFRONT} in headless Chrome …`);
+    const html = await fetchRenderedHtml(STOREFRONT);
+    const r = extractProductNames(html);
+    names = r.names; source = `rendered store via ${r.strategy || 'no match'}`;
   } else {
     console.log(`Fetching ${STOREFRONT} …`);
     const html = await fetchHtml(STOREFRONT);
@@ -189,6 +231,7 @@ async function main() {
     console.error('\n✗ No products found.');
     console.error('  The store may render via JS the parser did not catch.');
     console.error('  Workarounds:');
+    console.error('   • Render it in a real browser: npm install --no-save puppeteer && node scripts/scrape-catalog.js --render --write');
     console.error('   • Save the page (or its source) and pass: --html page.html');
     console.error('   • Or paste the names:  --from "Unisex Tee, Snapback Hat, …"');
     process.exit(1);

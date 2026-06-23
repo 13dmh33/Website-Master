@@ -28,6 +28,9 @@ const PATHS = {
   october:       path.join(ROOT, 'templates', 'october-campaign.json'),
   visualConfig:  path.join(ROOT, 'templates', 'visual-config.json'),
   calendar:      path.join(ROOT, 'templates', 'calendar.json'),
+  topPerformers: path.join(ROOT, 'templates', 'top-performers.json'),
+  comments:      path.join(ROOT, 'output', 'comments'),
+  productWeights:path.join(ROOT, 'output', 'product-weights.json'),
 };
 
 // ensure a directory exists before writing to it
@@ -140,6 +143,23 @@ module.exports = {
   getOctoberCampaign()    { return readJson(PATHS.october); },
   getVisualConfig()       { return readJson(PATHS.visualConfig); },
   getCalendar()           { return readJson(PATHS.calendar); },
+
+  // ─── top performers (self-critique loop, #2) ───────────────────────────────
+  // { byType: { <contentType>: [ {caption, engagementRate, weekOf}, ... up to 5 ] } }
+  getTopPerformers() { return readJson(PATHS.topPerformers) || { byType: {} }; },
+  saveTopPerformers(data) { writeJson(PATHS.topPerformers, data); },
+
+  // ─── comments / DM sentiment ingestion (#8) ────────────────────────────────
+  // Drop a JSON file at output/comments/latest.json shaped like:
+  //   { "weekOf": "...", "comments": [ { "text": "...", "postId": "..." }, ... ] }
+  getComments() {
+    const latest = path.join(PATHS.comments, 'latest.json');
+    return readJson(latest);
+  },
+
+  // ─── product-rotation weights (#9) ─────────────────────────────────────────
+  getProductWeights() { return readJson(PATHS.productWeights); },
+  saveProductWeights(data) { writeJson(PATHS.productWeights, data); },
 
   // update brand voice — typically called by analyst after weekly review
   // NOTE: what_works and top_hashtags are analyst-owned (auto-filled). Do not hand-edit.

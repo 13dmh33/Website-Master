@@ -10,8 +10,9 @@
 // agree on the same plan. Driven by templates/post-formats.json and
 // templates/october-campaign.json.
 
-const store    = require('./store');
-const calendar = require('./calendar');
+const store     = require('./store');
+const calendar  = require('./calendar');
+const weights   = require('./product-weights');
 
 // ── content-type → downstream mappings ─────────────────────────────────────
 
@@ -130,10 +131,15 @@ function buildWeekPlan(date = new Date(), week = 0) {
   const pools   = (formats.content_pools) || {};
   const catalog = (formats.product_catalog_rotation) || [];
 
+  // dynamic product-rotation weighting (#9): expands the catalog so products
+  // with higher click-through appear more often; identical to plain round-robin
+  // when no click data exists yet (see lib/product-weights.js).
+  const weightedRotation = weights.weightedCatalog(catalog);
+
   let productCounter = 0;
   const nextProduct = () => {
-    if (!catalog.length) return null;
-    const p = catalog[(week + productCounter) % catalog.length];
+    if (!weightedRotation.length) return null;
+    const p = weightedRotation[(week + productCounter) % weightedRotation.length];
     productCounter += 1;
     return p;
   };

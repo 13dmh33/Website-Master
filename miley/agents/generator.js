@@ -25,6 +25,11 @@ const prompts  = require('./generator-prompts');
 
 const USE_API = !!process.env.ANTHROPIC_API_KEY && process.env.FORCE_EVERGREEN !== '1';
 
+// generate-then-judge (#1): how many variants to request per slot in one call,
+// and whether to run the judge pass at all. Cost control — set VARIANT_COUNT=1
+// to fall back to the old single-shot behavior (one Claude call, no judge).
+const VARIANT_COUNT = Math.max(1, parseInt(process.env.VARIANT_COUNT || '3', 10));
+
 // assemble the hashtag block for a post (anchors + matching set [+ October]).
 // varies the set order by week so we don't post an identical block every time.
 function buildHashtags(hashtagSet, isOctober, master, week) {
@@ -113,24 +118,19 @@ function fromEvergreen(ev) {
   };
 }
 
-// generate one post via Claude; throws on parse/gate failure so caller falls back
-async function generateViaApi(planPost, brief, idx, weeklyTerms) {
-  const userPrompt = prompts.buildUserPrompt({
-    format:        planPost.format,
-    contentType:   planPost.contentType,
-    brief:         briefTextFor(planPost, brief, idx),
-    glossaryTerms: weeklyTerms,
-    product:       planPost.product || '',
-    isOctober:     planPost.isOctober,
-  });
+// past top performers of the same content type, as few-shot examples (#2).
+// top-performers.json is keyed by the same broad bucket analyst.js's guessNiche
+// uses (trades_humor | motivational | engagement | mission | product_feature),
+// so narrow content types collapse onto evergreenTypeFor's bucket to match.
+function topPerformersFor(contentType) {
+  const bucket = planner.evergreenTypeFor(contentType);
+  const data = store.getTopPerformers();
+  const list = (data.byType && data.byType[bucket]) || [];
+  return list.slice(0, 3);
+}
 
-  const maxTokens = (planPost.format === 'carousel' || planPost.format === 'reel') ? 1400 : 900;
-  const raw  = await claude.call({ prompt: userPrompt, systemPrompt: prompts.SYSTEM_PROMPT, maxTokens });
-  const post = claude.parseJson(raw);
-
-  if (!prompts.passesQualityGate(post)) {
-    throw new Error('quality gate failed');
-  }
+// shape a raw variant object (one element of the N-variant array) into our post shape
+function shapeVariant(post, planPost) {
   return {
     source:           'claude',
     hook:             post.hook,
@@ -144,6 +144,63 @@ async function generateViaApi(planPost, brief, idx, weeklyTerms) {
     extra:            post.extra || '',
     product:          planPost.product || null,
   };
+}
+
+// ask the judge to score compliant variants and pick the best one (#1).
+// Only ever sees variants that already passed passesQualityGate — judge can
+// break ties among compliant posts, never override brand-safety rules.
+async function judgeVariants(variants) {
+  const judgePrompt = prompts.buildJudgePrompt(variants);
+  const raw = await claude.call({ prompt: judgePrompt, systemPrompt: prompts.JUDGE_SYSTEM_PROMPT, maxTokens: 600 });
+  const result = claude.parseJson(raw);
+  const winnerIndex = (result && Number.isInteger(result.winnerIndex)) ? result.winnerIndex : 0;
+  const scoreEntry = (result.scores || []).find(s => s.index === winnerIndex);
+  return {
+    winnerIndex: variants[winnerIndex] ? winnerIndex : 0,
+    judge: {
+      scores:     result.scores || [],
+      winnerScore: scoreEntry ? scoreEntry.score : null,
+      reasoning:   scoreEntry ? scoreEntry.reasoning : null,
+    },
+  };
+}
+
+// generate one post via Claude: request N variants in one call, pre-filter with the
+// hard quality gate, judge the survivors to pick the best (generate-then-judge, #1).
+// Throws if zero variants pass the gate, so the caller falls back to evergreen.
+async function generateViaApi(planPost, brief, idx, weeklyTerms) {
+  const userPrompt = prompts.buildUserPrompt({
+    format:        planPost.format,
+    contentType:   planPost.contentType,
+    brief:         briefTextFor(planPost, brief, idx),
+    glossaryTerms: weeklyTerms,
+    product:       planPost.product || '',
+    isOctober:     planPost.isOctober,
+    variantCount:  VARIANT_COUNT,
+    topPerformers: topPerformersFor(planPost.contentType),
+  });
+
+  const maxTokens = ((planPost.format === 'carousel' || planPost.format === 'reel') ? 1400 : 900) * VARIANT_COUNT;
+  const raw = await claude.call({ prompt: userPrompt, systemPrompt: prompts.SYSTEM_PROMPT, maxTokens });
+  const parsed = claude.parseJson(raw);
+  const rawVariants = Array.isArray(parsed) ? parsed : [parsed];
+
+  const compliant = rawVariants.filter(v => prompts.passesQualityGate(v));
+  if (!compliant.length) throw new Error('quality gate failed for all variants');
+
+  if (compliant.length === 1) {
+    return shapeVariant(compliant[0], planPost);
+  }
+
+  try {
+    const { winnerIndex, judge } = await judgeVariants(compliant);
+    const shaped = shapeVariant(compliant[winnerIndex], planPost);
+    shaped.judge = { ...judge, variantsConsidered: compliant.length };
+    return shaped;
+  } catch (err) {
+    console.warn(`  judge call failed (${err.message}) — using the first compliant variant.`);
+    return shapeVariant(compliant[0], planPost);
+  }
 }
 
 async function main() {
@@ -217,6 +274,7 @@ async function main() {
       suggested_visual: content.suggested_visual,
       extra:            content.extra,
       hashtags,
+      judge: content.judge || null, // generate-then-judge scoring (#1), null for evergreen/single-variant posts
       status: 'pending',
     });
   }

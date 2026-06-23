@@ -1,0 +1,5 @@
+{
+  "_purpose": "Analyst-owned (do not hand-edit). Top 3-5 actual posts per content type, ranked by engagement rate, re-ranked weekly. Generator injects 2-3 same-content-type entries as few-shot examples so it learns from what's actually worked instead of starting fresh every week. Entries older than 90 days are dropped on each Analyst write (decay/rotation).",
+  "updatedAt": null,
+  "byType": {}
+}

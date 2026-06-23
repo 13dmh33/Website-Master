@@ -27,6 +27,7 @@ const PATHS = {
   hashtagMaster: path.join(ROOT, 'templates', 'hashtag-master.json'),
   october:       path.join(ROOT, 'templates', 'october-campaign.json'),
   visualConfig:  path.join(ROOT, 'templates', 'visual-config.json'),
+  calendar:      path.join(ROOT, 'templates', 'calendar.json'),
 };
 
 // ensure a directory exists before writing to it
@@ -138,6 +139,7 @@ module.exports = {
   getHashtagMaster()      { return readJson(PATHS.hashtagMaster); },
   getOctoberCampaign()    { return readJson(PATHS.october); },
   getVisualConfig()       { return readJson(PATHS.visualConfig); },
+  getCalendar()           { return readJson(PATHS.calendar); },
 
   // update brand voice — typically called by analyst after weekly review
   // NOTE: what_works and top_hashtags are analyst-owned (auto-filled). Do not hand-edit.

@@ -266,6 +266,7 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - 2026-06-22: Confirmed pending merges (trevo-advisors-review-Sjewy, molly-ui-polish, scout-refinement) already landed on main; handyman demo already exists
 - 2026-06-22: Miley verified end-to-end (pipeline dry-run, linkpage, DM responder); real Bebas Neue + Inter fonts added; breast-cancer stats re-verified current
 - 2026-06-22: Miley content-quality roadmap specced — see miley/docs/roadmap-specs.md
+- 2026-06-23: Miley calendar engine (#10) built — `templates/calendar.json` + `lib/calendar.js` inject date-specific observances (WIC Week, Skilled Trades Day, Mother's Day, National Apprenticeship Week, monthly self-exam reminder) into base/september weeks; October unaffected
 
 ## Twilio A2P 10DLC Status
 - Brand registration submitted: 2026-06-03

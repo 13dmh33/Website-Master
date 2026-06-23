@@ -80,6 +80,15 @@ function briefTextFor(post, brief, idx) {
     parts.push(`A current headline for inspiration (DO NOT quote or copy it — react to the idea in your own words): "${h}"`);
   }
 
+  // calendar.json overrides this specific slot — takes priority as the post's angle
+  if (post.calendarAngle) parts.push(`Today's observance (${post.calendarName}): ${post.calendarAngle}`);
+
+  // calendar.json supplements (no slot override) — extra context, not the headline angle
+  if (brief.calendarAngles && brief.calendarAngles.length) {
+    const c = brief.calendarAngles[(brief.week + idx) % brief.calendarAngles.length];
+    parts.push(`Also relevant this week: ${c}`);
+  }
+
   if (post.goal)    parts.push(`Goal for this post: ${post.goal}.`);
   if (post.product) parts.push(`Featured product (use its catalog key, write it naturally): ${post.product}.`);
 

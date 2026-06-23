@@ -10,7 +10,8 @@
 // agree on the same plan. Driven by templates/post-formats.json and
 // templates/october-campaign.json.
 
-const store = require('./store');
+const store    = require('./store');
+const calendar = require('./calendar');
 
 // ── content-type → downstream mappings ─────────────────────────────────────
 
@@ -163,7 +164,7 @@ function buildWeekPlan(date = new Date(), week = 0) {
         ctaStyle:    slot.cta || '',
       }));
     }
-    return { mode, scheduleEnv: oct.daily_schedule_env, posts };
+    return { mode, scheduleEnv: oct.daily_schedule_env, posts, calendarAngles: [] };
   }
 
   // ── base / september: slots from post-formats.json ─────────────────────────
@@ -190,7 +191,25 @@ function buildWeekPlan(date = new Date(), week = 0) {
     });
   });
 
-  return { mode, scheduleEnv, posts };
+  // ── calendar engine: date-specific observances (skipped in October — see
+  // calendar.json's _purpose note; this branch never runs for mode === 'october') ──
+  const calendarEntries = calendar.getActiveEntries(date);
+  const override = calendarEntries.find(e => e.match_mode === 'override');
+  const calendarAngles = calendarEntries
+    .filter(entry => entry !== override)
+    .map(entry => entry.angle);
+
+  if (override && posts.length) {
+    posts[0] = finalize({
+      ...posts[0],
+      contentType: override.contentType,
+      format:      DEFAULT_FORMAT[override.contentType] || posts[0].format,
+      calendarName:  override.name,
+      calendarAngle: override.angle,
+    });
+  }
+
+  return { mode, scheduleEnv, posts, calendarAngles };
 }
 
 module.exports = {

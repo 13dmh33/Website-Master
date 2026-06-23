@@ -214,7 +214,17 @@ of the pipeline since it's a drop-in replacement for the existing rotation funct
 
 ---
 
-## 10. Cultural/seasonal calendar engine
+## 10. Cultural/seasonal calendar engine — ✅ BUILT (2026-06-23)
+
+`templates/calendar.json` (5 entries, real-world-verified dates), `lib/calendar.js` (rule
+evaluator: `nth_weekday_of_month` / `first_full_week_of_month` / `monthly_day` /
+`explicit_range`), `lib/planner.js` (base/september branch only — October still fully owned
+by `october-campaign.json`), `agents/researcher.js` + `agents/generator.js` (brief/prompt
+injection). Tested: WIC Week, Skilled Trades Day, Mother's Day, National Apprenticeship Week,
+monthly self-exam reminder all fire on the correct weeks; non-matching weeks fall through to
+normal rotation unchanged.
+
+<details><summary>Original spec</summary>
 
 **Problem today:** Seasonal awareness is fully static — `october-campaign.json` hardcodes
 the one big seasonal overlay (Pink October), and `lib/planner.js` checks `isOctober` as
@@ -241,6 +251,8 @@ unless Dave manually adds an evergreen post for it.
 observance-date data, no account dependencies. Good candidate to build before the
 account-gated items above.
 
+</details>
+
 **Effort:** Medium (~half day) — mostly data entry (researching the right observance dates)
 plus a moderate `lib/planner.js` extension.
 
@@ -250,7 +262,7 @@ plus a moderate `lib/planner.js` extension.
 
 Given the dependencies called out above, a sensible order for a future session:
 
-1. **#10 (calendar engine)** — no account dependencies, pure offline build, ships value immediately.
+1. **#10 (calendar engine)** — ✅ built 2026-06-23.
 2. **#3 (personas)** — no account dependencies, but get Dave's brand-voice decision first.
 3. **#5 (visual templates)** — no account dependencies, but wait on real brand colors.
 4. **#1 (generate-then-judge)** — needs an ANTHROPIC_API_KEY to test for real, but can be built/dry-run with evergreen stand-ins.

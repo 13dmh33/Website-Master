@@ -56,6 +56,25 @@ async function renderSingleImage(text, attribution, outPath, niche = 'mindset') 
   }
 }
 
+// render a vertical Story image with graceful fallback
+async function renderStoryImage(text, outPath, niche = 'mindset') {
+  try {
+    const buf = await render.renderStorySlide(text, niche);
+    saveBuffer(buf, outPath);
+    return true;
+  } catch (err) {
+    console.warn(`Story render failed (${err.message}) — using fallback.`);
+    try {
+      const fallback = await render.renderFallback(text, niche);
+      saveBuffer(fallback, outPath);
+      return true;
+    } catch (e2) {
+      console.error(`Story fallback render also failed: ${e2.message}`);
+      return false;
+    }
+  }
+}
+
 async function main() {
   const content = store.getLatestContent();
   if (!content) {
@@ -104,6 +123,14 @@ async function main() {
   await renderSingleImage(posts.reel.hookLine, '— Reeve', reelHookPath, niches.reel || 'reel');
   imagePaths.reel = [reelHookPath];
   console.log('Reel hook image rendered.');
+
+  // 5. Story — vertical 1080x1920, only rendered if generator produced one
+  if (posts.story) {
+    const storyPath = path.join(imageDir, 'story.png');
+    await renderStoryImage(posts.story.text, storyPath, posts.story.niche || 'mindset');
+    imagePaths.story = [storyPath];
+    console.log('Story image rendered.');
+  }
 
   // save image paths back to the content file so scheduler can find them
   const updatedContent = { ...content, imagePaths };

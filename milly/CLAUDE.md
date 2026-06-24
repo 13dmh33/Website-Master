@@ -2,7 +2,7 @@
 
 ## What Milly is
 
-Milly is the automated Instagram content engine for the Reeve speaker booking agency. It runs a weekly pipeline: research speaking industry angles → generate 4 posts via Claude → render branded PNG images via skia-canvas → schedule via Buffer.
+Milly is the automated Instagram content engine for the Reeve speaker booking agency. It runs a weekly pipeline: research speaking industry angles → generate 5 posts via Claude → render branded PNG images via skia-canvas → schedule via Buffer (Story format always goes to the manual queue).
 
 Milly is internal. It posts to @reeve.agency (Reeve's brand account). No human persona.
 
@@ -29,7 +29,7 @@ Every post is a lead gen asset. Each piece of content exists to make an emerging
 | Agent | File | Trigger | Job |
 |-------|------|---------|-----|
 | Researcher | `agents/researcher.js` | Mon 6am MT | Live SerpApi search for speaking angles + conference CFPs. Falls back to evergreen if search fails. |
-| Generator | `agents/generator.js` | Mon 8am MT | Brief → 4 Claude API calls → carousel, caption, reevefound/clarity, reel content. |
+| Generator | `agents/generator.js` | Mon 8am MT | Brief → 5 Claude API calls → carousel, caption, reevefound/clarity, reel, story content. |
 | Designer | `agents/designer.js` | Mon 9am MT | Content → PNG images via skia-canvas. Unsplash photos + niche gradient fallback. |
 | Scheduler | `agents/scheduler.js` | Tue 6am MT | Images + captions → Buffer API → scheduled Instagram posts. Falls back to /output/queue/. |
 | Analyst | `agents/analyst.js` | Sun 10pm MT | Instagram engagement data → updates brand-voice.json with what's working. |
@@ -49,14 +49,19 @@ Every post is a lead gen asset. Each piece of content exists to make an emerging
 
 ---
 
-## The 4 weekly post formats
+## The 5 weekly post formats
 
 | Format | Schedule | Niche | CTA |
 |--------|----------|-------|-----|
 | Carousel | Tue 7am | booking | DM "stages" |
 | Caption | Thu 12pm | mindset / automation / business (rotating) | link in bio |
 | Reeve Found / Clarity | Sat 9am | booking | DM "stages" |
+| Story | Fri 3pm | mindset / booking (alternating) | DM stages or bio link |
 | Reel script | Sun 6pm | automation / mindset (alternating) | DM "stages" |
+
+### Story format
+Vertical 1080x1920, single short line (under 20 words), informal behind-the-scenes tone — no hashtags, no sign-off.
+Always routes to the manual queue (`output/queue/`) regardless of Buffer config — Buffer's classic API v1 has no Stories endpoint, only feed posts via `/updates/create.json`. Dave posts it by hand from his phone. See `lib/canvas-render.js#renderStorySlide` and `agents/generator.js#generateStory`.
 
 ### Caption niche rotation (3-week cycle)
 Week 0 → mindset · Week 1 → automation · Week 2 → business → repeats.
@@ -205,7 +210,7 @@ DAVE_NOTIFY_EMAIL=          # optional — high-signal post alerts
 
 ### Core pipeline (all ✅)
 - Researcher with live SerpApi + evergreen fallback
-- Generator: carousel, caption, reevefound/clarity, reel — all with sharp prompts and glossary injection
+- Generator: carousel, caption, reevefound/clarity, reel, story — all with sharp prompts and glossary injection
 - Designer: Unsplash photos + niche gradient fallbacks; niche passthrough from generator
 - Scheduler: Buffer API v1 (replaced PostPeer which had no Instagram support)
 - Analyst: engagement tracking + brand-voice.json updates
@@ -287,7 +292,7 @@ milly/
   .env.example
   agents/
     researcher.js         # Mon 6am — brief generation
-    generator.js          # Mon 8am — 4 posts via Claude
+    generator.js          # Mon 8am — 5 posts via Claude
     designer.js           # Mon 9am — PNG rendering
     scheduler.js          # Tue 6am — Buffer scheduling (run on Mac)
     analyst.js            # Sun 10pm — engagement feedback loop
@@ -336,9 +341,16 @@ aren't re-sent. Wired into `.github/workflows/milly-weekly-analytics.yml` right 
 Needs `ZOHO_EMAIL` / `ZOHO_APP_PASSWORD` / `DAVE_NOTIFY_EMAIL` secrets set — without them it
 logs to console only and leaves entries unmarked, so they retry every run once secrets are added.
 
+## Stories format ✅ BUILT
+
+5th weekly post — vertical 1080x1920, behind-the-scenes, Fri 3pm. `generator.js#generateStory` writes a short
+informal line (alternates mindset/booking niche by week parity); `canvas-render.js#renderStorySlide` renders it
+at 1080x1920 reusing the existing niche palettes/brand bar; `designer.js` renders it conditionally when
+`posts.story` exists; `scheduler.js` always routes it to `output/queue/` via a `manualOnly` flag since Buffer's
+classic API v1 has no Stories endpoint — Dave posts it by hand from his phone.
+
 ## Phase 2 items (not yet built)
 
 1. **Twilio alerts** — SMS to Dave when Scheduler or Analyst completes
 2. **Airtable swap** — replace local JSON with Airtable in `lib/store.js`; no agent changes
 3. **A/B visual testing** — swap overlay opacity and/or NICHE_PALETTES for design experiments
-4. **Stories format** — vertical (1080x1920) behind-the-scenes content

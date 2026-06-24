@@ -224,7 +224,7 @@ DAVE_NOTIFY_EMAIL=          # optional — high-signal post alerts
 - Caption A/B variants via `lib/ab-tracker.js` (2 hooks/week, same angle)
 - Hashtag performance tracking in `brand-voice.json`
 - Content archive pattern analysis after 4+ weeks of data
-- `lib/reeve-handoff.js` stub — fires when profile visits >2x average
+- `lib/reeve-handoff.js` — fires when profile visits >2x average; consumed by `reeve/scripts/check-high-signal.js` (see "Reeve handoff" below)
 
 ---
 
@@ -323,10 +323,22 @@ milly/
     generate-evergreen.js # generate evergreen batch via Claude
 ```
 
+## Reeve handoff ✅ BUILT
+
+Reeve has no automated outbound DM campaign to "increase volume" on — the DM agent only
+responds to inbound `stages` triggers — so the real handoff is alerting Dave to a 3-day
+manual-outreach window. `reeve/scripts/check-high-signal.js` reads
+`milly/output/archive/high-signal-*.json` (Milly and Reeve are sibling directories in the
+same monorepo checkout, so no live webhook is needed) and emails Dave via the same
+Zoho/nodemailer pattern `dm-agent.js` uses, then marks entries `reeveNotifiedAt` so they
+aren't re-sent. Wired into `.github/workflows/milly-weekly-analytics.yml` right after
+`analyst.js` runs, so the handoff happens within the same CI job. `--dry-run` flag available.
+Needs `ZOHO_EMAIL` / `ZOHO_APP_PASSWORD` / `DAVE_NOTIFY_EMAIL` secrets set — without them it
+logs to console only and leaves entries unmarked, so they retry every run once secrets are added.
+
 ## Phase 2 items (not yet built)
 
 1. **Twilio alerts** — SMS to Dave when Scheduler or Analyst completes
 2. **Airtable swap** — replace local JSON with Airtable in `lib/store.js`; no agent changes
 3. **A/B visual testing** — swap overlay opacity and/or NICHE_PALETTES for design experiments
-4. **Reeve webhook** — wire `lib/reeve-handoff.js` to POST to Reeve's Watcher agent
-5. **Stories format** — vertical (1080x1920) behind-the-scenes content
+4. **Stories format** — vertical (1080x1920) behind-the-scenes content

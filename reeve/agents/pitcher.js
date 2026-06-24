@@ -183,6 +183,8 @@ async function main() {
         conference:     opp.conference,
         cfpDeadline:    opp.cfpDeadline || null,
         opportunityUrl: opp.url || null,
+        fee:            opp.fee || null,
+        feeAmount:      opp.feeAmount || null,
         to:             opp.organizerEmail || null,   // best-effort from scout; Dave fills in on review if still null
         subject:        pitchContent.subject,
         body:           pitchContent.body,

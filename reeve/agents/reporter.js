@@ -108,7 +108,10 @@ function buildClientSummary(speaker, allDrafts) {
     sentThisWeekList:  sentThisWeek.map(d => d.conference).slice(0, 5),
     pendingList:       pending.map(d => d.conference).slice(0, 5),
     urgentList:        urgentOpps.map(o => `${o.conference} (deadline ${o.cfpDeadline})`).slice(0, 3),
-    upcomingMatchesList: rankedUnpitched.slice(0, 3).map(({ opp }) => opp.conference),
+    upcomingMatchesList: rankedUnpitched.slice(0, 3).map(({ opp }) => {
+      const fee = opp.feeAmount?.raw || (opp.fee !== 'unknown' ? opp.fee : null);
+      return fee ? `${opp.conference} (${fee})` : opp.conference;
+    }),
   };
 }
 

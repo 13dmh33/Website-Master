@@ -112,6 +112,9 @@ function printList() {
       console.log(`    To: ${to}`);
       console.log(`    Subject: ${d.subject}`);
       if (d.cfpDeadline) console.log(`    CFP deadline: ${d.cfpDeadline}`);
+      const fee = d.feeAmount?.raw || d.fee;
+      if (fee) console.log(`    Fee: ${fee}`);
+      if (d.opportunityUrl) console.log(`    Apply: ${d.opportunityUrl}`);
     }
   }
 
@@ -138,7 +141,9 @@ function printDraft(draft, index, total) {
   if (draft.type === 'pitch' || draft.type === 'followup') {
     console.log(`  Conference:  ${draft.conference || '—'}`);
     if (draft.cfpDeadline) console.log(`  CFP deadline: ${draft.cfpDeadline}`);
-    if (draft.opportunityUrl) console.log(`  CFP URL:     ${draft.opportunityUrl}`);
+    const fee = draft.feeAmount?.raw || draft.fee;
+    if (fee) console.log(`  Fee:         ${fee}`);
+    if (draft.opportunityUrl) console.log(`  Apply here:  ${draft.opportunityUrl}`);
     console.log(`  Client:      ${draft.clientName}`);
     console.log(`  To:          ${draft.to || '⚠  NOT SET — enter organizer email below'}`);
   }

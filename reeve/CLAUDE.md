@@ -54,14 +54,17 @@ Milly posts 4x/week → speaker sees content → DMs "stages"
 `agents/pitcher.js` — topic-matches clients to open opportunities, Claude drafts pitch emails. All output saved as drafts. Dave reviews via `scripts/review-drafts.js`.
 - Opportunities whose extracted `feeAmount.max` falls below a client's fee floor are deprioritized (not excluded — visibility gigs can still be worth pitching), via `feeFitMultiplier()`.
 - Draft `to` field auto-fills from `opp.organizerEmail` when Scout found one; otherwise still `null` for Dave to fill in.
+- Pitch drafts now carry `fee`, `feeAmount`, and `opportunityUrl` straight from the opportunity, so Dave sees the price and application link in `review-drafts.js` without cross-referencing the opportunity file.
 
 ### Phase 4: Follower ✅ BUILT
 `agents/follower.js` — finds sent pitches >14 days old with no response, Claude drafts follow-up emails. Dave reviews before send.
 - Skips drafting a follow-up if the opportunity's `status` is no longer `open` (CFP deadline passed or otherwise closed) — avoids asking an organizer "is this still on your radar?" for a CFP that's already dead.
+- Follow-up drafts now also carry `cfpDeadline`, `opportunityUrl`, `fee`, `feeAmount` (previously only on pitch drafts — review-drafts.js showed nothing for these on follow-ups).
 
 ### Phase 5: Reporter ✅ BUILT
 `agents/reporter.js` — weekly digest per active client (pitches sent/pending/accepted, pipeline totals). Claude writes the email. Dave reviews before send.
 - Shares the same topic/fee ranking as Pitcher (`lib/matching.js` → `rankOpportunities()`), so the digest previews the actual matching opportunities Pitcher will draft next, not just a raw count.
+- Upcoming-match previews include the fee/price inline (e.g. "Exec Summit ($2,500, $5,000)") when known.
 - Flags `noFitInPipeline` when Scout has open opportunities but none match the client's topics — surfaces the niche-matching gap per client instead of letting it stay invisible.
 
 ### Phase 6: Closer ✅ BUILT

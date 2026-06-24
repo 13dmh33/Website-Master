@@ -1,0 +1,68 @@
+[
+  {
+    "lead_id": "p1",
+    "business_name": "Joe's Plumbing",
+    "trade": "plumber",
+    "city": "Denver, CO",
+    "years_on_maps": null,
+    "review_count": 22,
+    "rating": 4.9,
+    "website": null,
+    "email": "joe@example.com",
+    "phone": "555-0101",
+    "address": "1 Main St, Denver, CO",
+    "place_id": "p1",
+    "subtypes": [
+      "Plumber"
+    ],
+    "latitude": 39.7,
+    "longitude": -104.9,
+    "gap_score": 10,
+    "channel": "sms",
+    "notes": ""
+  },
+  {
+    "lead_id": "p7",
+    "business_name": "Mid Tier Plumbing",
+    "trade": "plumber",
+    "city": "Denver, CO",
+    "years_on_maps": null,
+    "review_count": 90,
+    "rating": 4.5,
+    "website": null,
+    "email": "mid@example.com",
+    "phone": "555-0107",
+    "address": "7 Main St, Denver, CO",
+    "place_id": "p7",
+    "subtypes": [
+      "Plumber"
+    ],
+    "latitude": 39.7,
+    "longitude": -104.9,
+    "gap_score": 7,
+    "channel": "sms",
+    "notes": ""
+  },
+  {
+    "lead_id": "p2",
+    "business_name": "ACME Drains",
+    "trade": "plumber",
+    "city": "Denver, CO",
+    "years_on_maps": null,
+    "review_count": 60,
+    "rating": 4.6,
+    "website": "https://www.facebook.com/acmedrains",
+    "email": "",
+    "phone": "555-0102",
+    "address": "2 Main St, Denver, CO",
+    "place_id": "p2",
+    "subtypes": [
+      "Plumber"
+    ],
+    "latitude": 39.7,
+    "longitude": -104.9,
+    "gap_score": 4,
+    "channel": "sms",
+    "notes": ""
+  }
+]

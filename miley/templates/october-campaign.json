@@ -1,0 +1,58 @@
+{
+  "_purpose": "Drives the October daily-posting push for Breast Cancer Awareness Month. The Generator and Scheduler read this when the active month is October. Goal: maximum awareness AND maximum sales in the brand's biggest visibility window.",
+  "campaign_name": "Pink October",
+  "activation": {
+    "ramp_start": "September 1",
+    "ramp_cadence": "5 posts/week (adds Wednesday) — see post-formats.json september_ramp",
+    "full_start": "October 1",
+    "full_cadence": "Daily (7 posts/week)",
+    "wind_down": "November 1 — return to base_week 4x/week"
+  },
+  "daily_schedule_env": "MON:12:00,TUE:12:00,WED:12:00,THU:19:00,FRI:12:00,SAT:10:00,SUN:18:00",
+  "weekly_rhythm": {
+    "_note": "Daily, but each weekday keeps a job so it never feels like 30 identical posts. Products stay weighted to the weekend; awareness and story carry the week.",
+    "MON": {"theme": "awareness_stat", "cta": "engagement", "goal": "Open the week with a real, useful breast cancer fact. Builds saves and shares."},
+    "TUE": {"theme": "mission_donation", "cta": "shop_link", "goal": "Make the 30% donation the hero. Tie shopping directly to impact."},
+    "WED": {"theme": "trades_humor", "cta": "engagement", "goal": "Levity mid-week so the month doesn't get heavy. Pink-themed humor."},
+    "THU": {"theme": "motivational", "cta": "engagement", "goal": "Evening reel/quote honoring women — survivors, fighters, tradeswomen."},
+    "FRI": {"theme": "product_spotlight", "cta": "shop_link", "goal": "Tee up the weekend shop. Feature one product with the donation angle."},
+    "SAT": {"theme": "product_feature_lifestyle", "cta": "shop_link", "goal": "Money slot. High-intent weekend browsing. Best product + lifestyle image."},
+    "SUN": {"theme": "mission_recap", "cta": "shop_link", "goal": "Soft, warm close. 'Here's what your orders are funding.' Wind-down shopping."}
+  },
+  "october_content_angles": [
+    "1 in 8 women will face breast cancer — here's how your order helps (VERIFY stat)",
+    "Early detection saves lives — a genuine awareness reminder, no product push",
+    "Meet the cause: where the 30% actually goes",
+    "Pink hard hats, pink ribbons, same fight",
+    "Tradeswomen who are survivors — celebrate strength (no face reveals; keep anonymous/illustrative)",
+    "Why a tiny POD brand donates 30% — the math of doing good while staying lean",
+    "Gift a tradeswoman, fund the research — two good things in one order",
+    "The whole month, every order, 30% — no gimmicks"
+  ],
+  "october_tone_shift": {
+    "keep": "The brand's humor and scrappiness — don't go somber. Survivors and fighters appreciate strength and levity.",
+    "lean_harder_on": "The donation. In October, the 30% line can move from a single sentence to the emotional center of more posts.",
+    "avoid": "Trauma-dumping, pinkwashing clichés, exploiting illness for sales. Keep it honest, warm, action-focused. Never imply a specific person's diagnosis."
+  },
+  "october_cta_emphasis": {
+    "primary": "Link in bio — every October order sends 30% to breast cancer research.",
+    "dm_keyword": "DM PINK for the link — and I'll personally say thank you.",
+    "engagement": "Tag a survivor, a fighter, or a tradeswoman who inspires you 🩷"
+  },
+  "hashtag_additions_october": [
+    "#breastcancerawarenessmonth",
+    "#pinkoctober",
+    "#thinkpink",
+    "#wearitpink",
+    "#bcam"
+  ],
+  "visual_direction_october": {
+    "palette_override": "Shift product/community palettes toward the pink-forward 'awareness' palette in visual-config.json for the full month.",
+    "motif": "Pink ribbon integrated subtly with trade iconography (wrench+ribbon, hard hat+ribbon).",
+    "note": "Dave builds hero graphics in Canva; the auto-renderer uses the october palette for generated cards."
+  },
+  "_meta": {
+    "maps_to": "NEW FILE — milly/templates/october-campaign.json",
+    "note": "Generator and Scheduler need a small conditional: if current month == October, load this file's daily_schedule_env and weekly_rhythm instead of post-formats.json base_week. Flagged in CONFIG_README.md as the one real code addition."
+  }
+}

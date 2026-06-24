@@ -1,0 +1,58 @@
+{
+  "_purpose": "The Researcher reads these as fallback themes AND as a live news watchlist. Use sources for ANGLES, TOPICS, and VERIFIED STATS only. NEVER copy article text into captions. Read a source, extract the idea, then write original Techs4Tatas copy. Treat all source text as copyrighted.",
+  "researcher_usage": {
+    "how_to_use": "Each week, the Researcher (or Dave, manually) scans 1-3 news_sources for fresh, relevant items: a new stat, a tradeswoman milestone, a seasonal hook, an awareness angle. It extracts the IDEA and feeds it to the Generator as a brief. The Generator writes original copy.",
+    "copyright_rule": "Do not reproduce headlines, sentences, or paragraphs from any source. Paraphrase facts; rewrite everything in brand voice. Cite a stat's origin in your own words (e.g. 'per the American Cancer Society') without quoting.",
+    "cadence": "Pairs with the weekly review workflow — scan sources when you review the queue (see review-workflow.md)."
+  },
+  "news_sources": {
+    "women_in_trades": [
+      {"name": "U.S. Bureau of Labor Statistics", "url": "https://www.bls.gov", "use": "Authoritative employment + wage data by trade and gender. The source of truth for any % stat.", "update_frequency": "periodic / annual data releases"},
+      {"name": "NAWIC (National Association of Women in Construction)", "url": "https://www.nawic.org", "use": "News, events, Women in Construction (WIC) Week (early March), member milestones.", "update_frequency": "ongoing"},
+      {"name": "Chicago Women in Trades", "url": "https://chicagowomenintrades.org", "use": "Advocacy news, Tradeswomen Build Nations conference, policy + culture angles.", "update_frequency": "ongoing"},
+      {"name": "DOL Women's Bureau", "url": "https://www.dol.gov/agencies/wb", "use": "Federal data + initiatives on women in apprenticeship and trades.", "update_frequency": "periodic"},
+      {"name": "Bluebeam 'Built' blog", "url": "https://blog.bluebeam.com", "use": "Construction-industry articles, including women-in-construction data roundups.", "update_frequency": "weekly-ish"},
+      {"name": "CNBC (work / trades coverage)", "url": "https://www.cnbc.com", "use": "Mainstream features on women entering skilled trades — relatable story angles.", "update_frequency": "daily"},
+      {"name": "NPR", "url": "https://www.npr.org", "use": "In-depth tradeswomen stories and policy context.", "update_frequency": "daily"}
+    ],
+    "breast_cancer": [
+      {"name": "American Cancer Society", "url": "https://www.cancer.org", "use": "Gold-standard stats (Cancer Facts & Figures, updated annually). Use for any awareness number.", "update_frequency": "annual + ongoing news"},
+      {"name": "National Breast Cancer Foundation", "url": "https://www.nationalbreastcancer.org", "use": "Clear, shareable awareness facts + early-detection messaging.", "update_frequency": "ongoing"},
+      {"name": "breastcancer.org", "url": "https://www.breastcancer.org", "use": "Patient-friendly facts and trends; good for plain-language awareness posts.", "update_frequency": "ongoing"},
+      {"name": "Breast Cancer Research Foundation", "url": "https://www.bcrf.org", "use": "Research-focused — strong fit for the brand's 'fund the research' angle.", "update_frequency": "ongoing"}
+    ]
+  },
+  "evergreen_themes": [
+    "Women breaking into a male-dominated trade — relatable wins and pushback",
+    "The double-standard of being underestimated on a jobsite",
+    "Strength + femininity as complements, not opposites",
+    "Apprentice-to-pro journeys and mentorship between women",
+    "Tool obsessions and gear loyalty",
+    "Jobsite humor only tradeswomen will get",
+    "The 30% donation as proof the brand walks the walk",
+    "Trade pride: the skill, the paycheck, the independence"
+  ],
+  "data_hooks": [
+    {"claim": "Women are roughly 3% of electricians, plumbers, and carpenters on the tools — still rare, still growing.", "source": "U.S. Bureau of Labor Statistics (2025 occupational data)", "note": "Use as 'rare and rising' framing. RE-VERIFY before posting — BLS updates yearly."},
+    {"claim": "Women are about 11-12% of the overall construction workforce (much lower for on-site trade roles specifically).", "source": "BLS / industry reports", "note": "Distinguish 'industry' (includes office roles) vs 'on the tools' (low single digits) for an honest hook."},
+    {"claim": "Skilled-trade demand is surging as retirements outpace new entrants.", "source": "industry workforce reports", "note": "Great hook for 'the trades need more women' angle."},
+    {"claim": "About 1 in 8 women (~13%) in the US will develop invasive breast cancer in her lifetime.", "source": "American Cancer Society (2026)", "note": "VERIFIED for 2026. Core awareness stat — strong for mission posts + October."},
+    {"claim": "An estimated 321,910 US women will be diagnosed with invasive breast cancer in 2026; about 42,140 will die.", "source": "American Cancer Society (Cancer Facts & Figures 2026)", "note": "VERIFIED for 2026. Use sparingly — heavy stat, best for awareness/October."},
+    {"claim": "On average, a woman in the US is diagnosed with breast cancer every 2 minutes.", "source": "National Breast Cancer Foundation (2026)", "note": "VERIFIED. Punchy, emotionally resonant — good single-line hook."},
+    {"claim": "When breast cancer is caught early (localized), the 5-year relative survival rate is over 99%.", "source": "American Cancer Society / NBCF (2026)", "note": "VERIFIED. Pairs the donation with a genuinely useful early-detection reminder. Hopeful tone."},
+    {"claim": "Breast cancer death rates have fallen ~44% since 1989, thanks to early detection and better treatment.", "source": "American Cancer Society (2026)", "note": "VERIFIED. Use to show donations/research actually move the needle — optimistic, mission-aligned."}
+  ],
+  "seasonal_angles": [
+    {"window": "Year-round", "angle": "Everyday trade pride + humor"},
+    {"window": "Early March", "angle": "Women in Construction (WIC) Week — NAWIC's annual spotlight. Plan a mini-push."},
+    {"window": "Spring", "angle": "Busy season ramp-up — new-jobsite energy, gear refresh"},
+    {"window": "Summer", "angle": "Heat on the deck — HVAC season, breathable gear (trucker cap, tees)"},
+    {"window": "September", "angle": "Awareness build-up — warm the audience toward October (see october-campaign.json)"},
+    {"window": "October", "angle": "Breast Cancer Awareness Month — heavy donation emphasis, daily posting"},
+    {"window": "November-December", "angle": "Gift angle — 'funny work gifts for the tradeswoman in your life'"}
+  ],
+  "cfp_signal_note": "Reeve's Researcher scanned for conference 'call for speakers' signals. Techs4Tatas has no equivalent. Repoint that branch to scan news_sources (women_in_trades + breast_cancer) for fresh items, or disable it so the agent falls back to evergreen_themes. See CONFIG_README.md.",
+  "_meta": {
+    "maps_to": "milly/templates/inspiration-sources.json"
+  }
+}

@@ -1,0 +1,50 @@
+name: Miley weekly analytics (Techs4Tatas)
+
+on:
+  schedule:
+    - cron: '0 4 * * 1'   # Monday ~10pm MT Sunday — engagement feedback loop
+  workflow_dispatch:
+
+jobs:
+  run-analytics:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write   # commit brand-voice.json (what_works / top_hashtags)
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: cd miley && npm install
+
+      - name: Run analyst
+        run: cd miley && node agents/analyst.js
+        env:
+          ANTHROPIC_API_KEY:             ${{ secrets.ANTHROPIC_API_KEY }}
+          INSTAGRAM_ACCESS_TOKEN:        ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          INSTAGRAM_BUSINESS_ACCOUNT_ID: ${{ secrets.INSTAGRAM_BUSINESS_ACCOUNT_ID }}
+
+      - name: Commit updated brand voice
+        run: |
+          git config user.name  "miley-agent"
+          git config user.email "miley@techs4tatas.com"
+          git add miley/templates/brand-voice.json miley/output/archive/ || true
+          git diff --cached --quiet || git commit -m "analyst: update brand voice for week of $(date +%Y-%m-%d)"
+          git push origin main || true
+
+      - name: Upload analytics artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: miley-analytics-${{ github.run_id }}
+          path: miley/output/archive/
+          retention-days: 90

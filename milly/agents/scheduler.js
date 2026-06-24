@@ -13,7 +13,7 @@ const buffer    = require('../lib/buffer');
 const abTracker = require('../lib/ab-tracker');
 
 const TIMEZONE = process.env.TIMEZONE || 'America/Denver';
-const SCHEDULE_STR = process.env.POST_SCHEDULE || 'TUE:07:00,THU:12:00,SAT:09:00,SUN:18:00';
+const SCHEDULE_STR = process.env.POST_SCHEDULE || 'TUE:07:00,THU:12:00,SAT:09:00,SUN:18:00,FRI:15:00';
 
 // parse POST_SCHEDULE env var into a map of day → HH:MM
 function parseSchedule() {
@@ -89,11 +89,24 @@ function buildPostObjects(content, schedule) {
     },
   ];
 
+  // Story — vertical format, Buffer's classic API has no Stories endpoint,
+  // so it's always manual-only and routes straight to the queue
+  if (posts.story && imagePaths && imagePaths.story) {
+    postDefs.push({
+      format:      'story',
+      caption:     posts.story.text,
+      images:      imagePaths.story,
+      scheduleDay: 'FRI',
+      manualOnly:  true,
+    });
+  }
+
   return postDefs.map(def => ({
     weekOf,
     format:       def.format,
     images:       def.images,
     caption:      def.caption,
+    manualOnly:   !!def.manualOnly,
     scheduledFor: nextOccurrence(def.scheduleDay, schedule[def.scheduleDay] || '09:00'),
     status:       'pending',
   }));
@@ -114,10 +127,20 @@ async function main() {
 
   const forceQueue = process.env.FORCE_QUEUE === '1';
 
+  // manual-only posts (e.g. Stories — Buffer's classic API has no Stories endpoint)
+  // always go straight to the queue regardless of Buffer config
+  const manualPosts     = postObjects.filter(p => p.manualOnly);
+  const schedulablePosts = postObjects.filter(p => !p.manualOnly);
+
+  for (const post of manualPosts) {
+    const filePath = store.saveToQueue(post);
+    console.log(`Saved ${post.format} → ${path.basename(filePath)} (scheduled for ${post.scheduledFor}) — manual-only, no Buffer Stories support.`);
+  }
+
   if (buffer.isConfigured() && !forceQueue) {
     // primary path: schedule via Buffer → Instagram
     let successCount = 0;
-    for (const post of postObjects) {
+    for (const post of schedulablePosts) {
       try {
         const result = await buffer.schedulePost({
           imagePaths:  post.images,
@@ -133,18 +156,18 @@ async function main() {
         store.saveToQueue(post);
       }
     }
-    if (successCount === postObjects.length) {
-      console.log(`4 posts scheduled via Buffer.`);
+    if (successCount === schedulablePosts.length) {
+      console.log(`${successCount} posts scheduled via Buffer.`);
     } else {
-      console.log(`${successCount} posts scheduled via Buffer. ${postObjects.length - successCount} saved to queue.`);
+      console.log(`${successCount} posts scheduled via Buffer. ${schedulablePosts.length - successCount} saved to queue.`);
     }
   } else {
     // fallback path: write to /output/queue/
-    for (const post of postObjects) {
+    for (const post of schedulablePosts) {
       const filePath = store.saveToQueue(post);
       console.log(`Saved ${post.format} → ${path.basename(filePath)} (scheduled for ${post.scheduledFor})`);
     }
-    console.log(`Buffer not configured — 4 posts saved to queue. Run: node scripts/push-queue.js`);
+    console.log(`Buffer not configured — ${schedulablePosts.length} posts saved to queue. Run: node scripts/push-queue.js`);
   }
 
   // generate HTML preview for Dave to review
@@ -189,6 +212,7 @@ async function generatePreview(postObjects, weekOf) {
     caption:    'Thursday 12pm — caption',
     reevefound: 'Saturday 9am — Reeve found this',
     reel:       'Sunday 6pm — reel',
+    story:      'Friday 3pm — Story (manual post — Buffer has no Stories support)',
   };
 
   for (const post of postObjects) {

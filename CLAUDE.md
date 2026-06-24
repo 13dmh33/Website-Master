@@ -261,6 +261,7 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - [ ] **Apollo.io**: sign up ($49/mo) → add `APOLLO_API_KEY=` to `.env.local`
 - [ ] **Buffer classic token** → add to `milly/.env` (for Milly auto-posting to @reeve.agency)
 - [ ] **Reeve**: Meta App setup + Railway deploy + Cal.com link (see `reeve/CLAUDE.md`)
+- [ ] **Reeve Scout cron**: add `SERPAPI_KEY` as a GitHub Actions secret so `.github/workflows/reeve-weekly-scout.yml` can run (Monday 6am MT)
 
 ### Next Claude session — container tasks
 - [x] Merge `claude/trevo-advisors-review-Sjewy` → main (already merged as of 2026-06-24 check)

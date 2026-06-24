@@ -2,7 +2,7 @@
 
 ## What Milly is
 
-Milly is the automated Instagram content engine for the Reeve speaker booking agency. It runs a weekly pipeline: research speaking industry angles → generate 4 posts via Claude → render branded PNG images via skia-canvas → schedule via Buffer.
+Milly is the automated Instagram content engine for the Reeve speaker booking agency. It runs a weekly pipeline: research speaking industry angles → generate 5 posts via Claude → render branded PNG images via skia-canvas → schedule via Buffer (Story format always goes to the manual queue).
 
 Milly is internal. It posts to @reeve.agency (Reeve's brand account). No human persona.
 
@@ -29,7 +29,7 @@ Every post is a lead gen asset. Each piece of content exists to make an emerging
 | Agent | File | Trigger | Job |
 |-------|------|---------|-----|
 | Researcher | `agents/researcher.js` | Mon 6am MT | Live SerpApi search for speaking angles + conference CFPs. Falls back to evergreen if search fails. |
-| Generator | `agents/generator.js` | Mon 8am MT | Brief → 4 Claude API calls → carousel, caption, reevefound/clarity, reel content. |
+| Generator | `agents/generator.js` | Mon 8am MT | Brief → 5 Claude API calls → carousel, caption, reevefound/clarity, reel, story content. |
 | Designer | `agents/designer.js` | Mon 9am MT | Content → PNG images via skia-canvas. Unsplash photos + niche gradient fallback. |
 | Scheduler | `agents/scheduler.js` | Tue 6am MT | Images + captions → Buffer API → scheduled Instagram posts. Falls back to /output/queue/. |
 | Analyst | `agents/analyst.js` | Sun 10pm MT | Instagram engagement data → updates brand-voice.json with what's working. |
@@ -49,14 +49,19 @@ Every post is a lead gen asset. Each piece of content exists to make an emerging
 
 ---
 
-## The 4 weekly post formats
+## The 5 weekly post formats
 
 | Format | Schedule | Niche | CTA |
 |--------|----------|-------|-----|
 | Carousel | Tue 7am | booking | DM "stages" |
 | Caption | Thu 12pm | mindset / automation / business (rotating) | link in bio |
 | Reeve Found / Clarity | Sat 9am | booking | DM "stages" |
+| Story | Fri 3pm | mindset / booking (alternating) | DM stages or bio link |
 | Reel script | Sun 6pm | automation / mindset (alternating) | DM "stages" |
+
+### Story format
+Vertical 1080x1920, single short line (under 20 words), informal behind-the-scenes tone — no hashtags, no sign-off.
+Always routes to the manual queue (`output/queue/`) regardless of Buffer config — Buffer's classic API v1 has no Stories endpoint, only feed posts via `/updates/create.json`. Dave posts it by hand from his phone. See `lib/canvas-render.js#renderStorySlide` and `agents/generator.js#generateStory`.
 
 ### Caption niche rotation (3-week cycle)
 Week 0 → mindset · Week 1 → automation · Week 2 → business → repeats.
@@ -205,7 +210,7 @@ DAVE_NOTIFY_EMAIL=          # optional — high-signal post alerts
 
 ### Core pipeline (all ✅)
 - Researcher with live SerpApi + evergreen fallback
-- Generator: carousel, caption, reevefound/clarity, reel — all with sharp prompts and glossary injection
+- Generator: carousel, caption, reevefound/clarity, reel, story — all with sharp prompts and glossary injection
 - Designer: Unsplash photos + niche gradient fallbacks; niche passthrough from generator
 - Scheduler: Buffer API v1 (replaced PostPeer which had no Instagram support)
 - Analyst: engagement tracking + brand-voice.json updates
@@ -222,9 +227,10 @@ DAVE_NOTIFY_EMAIL=          # optional — high-signal post alerts
 
 ### A/B and analytics (built, pending data)
 - Caption A/B variants via `lib/ab-tracker.js` (2 hooks/week, same angle)
+- Image design A/B variants via `lib/ab-tracker.js#getCurrentImageVariant` — alternates weekly, independent of caption test (see "A/B visual testing" below)
 - Hashtag performance tracking in `brand-voice.json`
 - Content archive pattern analysis after 4+ weeks of data
-- `lib/reeve-handoff.js` stub — fires when profile visits >2x average
+- `lib/reeve-handoff.js` — fires when profile visits >2x average; consumed by `reeve/scripts/check-high-signal.js` (see "Reeve handoff" below)
 
 ---
 
@@ -287,7 +293,7 @@ milly/
   .env.example
   agents/
     researcher.js         # Mon 6am — brief generation
-    generator.js          # Mon 8am — 4 posts via Claude
+    generator.js          # Mon 8am — 5 posts via Claude
     designer.js           # Mon 9am — PNG rendering
     scheduler.js          # Tue 6am — Buffer scheduling (run on Mac)
     analyst.js            # Sun 10pm — engagement feedback loop
@@ -323,10 +329,41 @@ milly/
     generate-evergreen.js # generate evergreen batch via Claude
 ```
 
+## Reeve handoff ✅ BUILT
+
+Reeve has no automated outbound DM campaign to "increase volume" on — the DM agent only
+responds to inbound `stages` triggers — so the real handoff is alerting Dave to a 3-day
+manual-outreach window. `reeve/scripts/check-high-signal.js` reads
+`milly/output/archive/high-signal-*.json` (Milly and Reeve are sibling directories in the
+same monorepo checkout, so no live webhook is needed) and emails Dave via the same
+Zoho/nodemailer pattern `dm-agent.js` uses, then marks entries `reeveNotifiedAt` so they
+aren't re-sent. Wired into `.github/workflows/milly-weekly-analytics.yml` right after
+`analyst.js` runs, so the handoff happens within the same CI job. `--dry-run` flag available.
+Needs `ZOHO_EMAIL` / `ZOHO_APP_PASSWORD` / `DAVE_NOTIFY_EMAIL` secrets set — without them it
+logs to console only and leaves entries unmarked, so they retry every run once secrets are added.
+
+## Stories format ✅ BUILT
+
+5th weekly post — vertical 1080x1920, behind-the-scenes, Fri 3pm. `generator.js#generateStory` writes a short
+informal line (alternates mindset/booking niche by week parity); `canvas-render.js#renderStorySlide` renders it
+at 1080x1920 reusing the existing niche palettes/brand bar; `designer.js` renders it conditionally when
+`posts.story` exists; `scheduler.js` always routes it to `output/queue/` via a `manualOnly` flag since Buffer's
+classic API v1 has no Stories endpoint — Dave posts it by hand from his phone.
+
+## A/B visual testing ✅ BUILT
+
+Independent of the caption A/B test — swaps overlay opacity to test photo-forward (variant B, lighter
+overlay) vs the current text-forward production default (variant A). `lib/canvas-render.js#DESIGN_VARIANTS`
+holds the two overlay configs; `getOverlay(variant)` resolves them. `renderCarouselSlide`, `renderQuotePost`,
+and `renderStorySlide` all take an optional `variant` param threaded through to `drawBackground`.
+`designer.js` picks the week's variant via `abTracker.getCurrentImageVariant()` (alternates weekly), applies
+it to every image rendered that week, records it via `recordImageVariant()`, and saves it on
+`content.imageVariant`. `analyst.js` reads `content.imageVariant` back onto each week's `analyticsData` so
+`abTracker.getImageVariantHistory()` can compare engagement across variant-A vs variant-B weeks once enough
+data exists — same "built, pending data" pattern as the caption A/B test (`recordVariantResult` exists but
+isn't called automatically; a human or future automation calls it once there's enough signal to declare a winner).
+
 ## Phase 2 items (not yet built)
 
 1. **Twilio alerts** — SMS to Dave when Scheduler or Analyst completes
 2. **Airtable swap** — replace local JSON with Airtable in `lib/store.js`; no agent changes
-3. **A/B visual testing** — swap overlay opacity and/or NICHE_PALETTES for design experiments
-4. **Reeve webhook** — wire `lib/reeve-handoff.js` to POST to Reeve's Watcher agent
-5. **Stories format** — vertical (1080x1920) behind-the-scenes content

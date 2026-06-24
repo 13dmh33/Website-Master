@@ -124,12 +124,17 @@ async function main() {
     }
   }
 
+  // pull this week's image design variant (set by designer.js) for A/B comparison over time
+  const weekContent = store.getLatestContent();
+  const imageVariant = weekContent?.weekOf === weekOf ? weekContent.imageVariant : undefined;
+
   // save analytics
   const analyticsData = {
     weekOf,
     generatedAt:       new Date().toISOString(),
     postsAnalyzed:     enriched.length,
     avgEngagementRate: avgRate,
+    imageVariant,
     topPerformer:      {
       format:         topPerformer.format,
       niche:          topPerformer.niche,

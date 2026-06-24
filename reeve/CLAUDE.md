@@ -40,16 +40,33 @@ Milly posts 4x/week → speaker sees content → DMs "stages"
 | `scripts/test-qualify.js` | 3 test scenarios — high/mid/low fit |
 
 ### Phase 2: Conference Scout ✅ BUILT
-`agents/conference-scout.js` — weekly SerpApi search for open CFPs (papercall.io, sessionize.com, Google). Deduplicates against existing pipeline. `--dry-run` and `--summary` flags.
+`agents/conference-scout.js` — weekly SerpApi search for open CFPs across 4 aggregators (papercall.io, sessionize.com, speakerhub.com, confs.tech) plus generic Google queries, rotated phrasing, and a query per active-client topic (capped at 5). Deduplicates against existing pipeline. `--dry-run`, `--summary`, `--query-stats` flags.
+- **Cost cap:** `reeve/config/scout-config.json` + `lib/cost-tracker.js` — `$5/mo` SerpApi cap, `$0.015/search` estimate, tracked per-search and reset monthly (mirrors Trevo's `config/scout-config.json` pattern). Scout stops searching mid-run if the cap is hit. Current query mix (~19-24 queries/run) runs ≈$1.44/mo — well inside the cap.
+- **Geographic targeting (US-only):** `US_REGIONS` in `conference-scout.js` rotates one US city/state per run on a deterministic weekly clock (`Date.now()` / 7-day buckets, no persisted state needed) — cycles the full 12-region list roughly every 12 weeks. Two extra queries/run put the region directly in the query text (e.g. `"call for speakers" conference "Austin, Texas" 2026`). SerpApi's `location`/`gl`/`hl` params were deliberately **not** used — those bias results toward the *searcher's* locale (like "near me" personalization), not the conference's location, so they don't filter by where an event is held. Putting the city/state in the query text matches against the conference page's own content instead. Results from a region query get tagged `opportunity.location` with that region as a fallback if no explicit "City, State" is found in the snippet itself (`extractLocation()`).
+- **Auto-close:** `lib/opportunity-store.js#closeExpiredOpportunities()` runs at the start of every scout run and `--summary` call — flips any `open` opportunity past its `cfpDeadline` to `closed` (`closedReason: "deadline_passed"`) so Pitcher never pitches a dead CFP. Stale listings (deadline already past at scout time) are skipped entirely instead of being saved-then-closed; listings that explicitly say "CFP closed" are also skipped.
+- **Niche topic tagging:** topics are tagged against the generic 14-word list **and** every active client's real (free-text) niche keywords — fixes the original gap where speakers in non-tech niches (wellness, DEI, faith, real estate, etc.) never matched anything.
+- **Freshness filter:** SerpApi `tbs=qdr:m` biases results to the past month so old/dead CFP posts rank lower.
+- **Year coverage:** aggregator queries run for both the current year and next year — CFPs for next year's event often open mid-this-year and were previously missed.
+- **Extra fields captured (best-effort, snippet-only — often null):** `feeAmount {min,max,raw}` (actual $ figures, not just paid/unpaid), `organizerEmail`, `sourceType` (papercall/sessionize/speakerhub/confs.tech/direct), `query` (which search produced this opportunity — feeds `--query-stats`).
+- **Query effectiveness loop:** `node agents/conference-scout.js --query-stats` aggregates found/pitched/accepted counts per query, so weak queries can be dropped and productive ones expanded.
+- **Cron:** `.github/workflows/reeve-weekly-scout.yml` — Monday 6am MT (same slot as Milly), `workflow_dispatch` for manual runs, commits new opportunities + cost-cap state back to `main`. **Needs `SERPAPI_KEY` added as a GitHub Actions secret before this will run successfully.**
 
 ### Phase 3: Pitcher ✅ BUILT
 `agents/pitcher.js` — topic-matches clients to open opportunities, Claude drafts pitch emails. All output saved as drafts. Dave reviews via `scripts/review-drafts.js`.
+- Opportunities whose extracted `feeAmount.max` falls below a client's fee floor are deprioritized (not excluded — visibility gigs can still be worth pitching), via `feeFitMultiplier()`.
+- Draft `to` field auto-fills from `opp.organizerEmail` when Scout found one; otherwise still `null` for Dave to fill in.
+- Pitch drafts now carry `fee`, `feeAmount`, and `opportunityUrl` straight from the opportunity, so Dave sees the price and application link in `review-drafts.js` without cross-referencing the opportunity file.
 
 ### Phase 4: Follower ✅ BUILT
 `agents/follower.js` — finds sent pitches >14 days old with no response, Claude drafts follow-up emails. Dave reviews before send.
+- Skips drafting a follow-up if the opportunity's `status` is no longer `open` (CFP deadline passed or otherwise closed) — avoids asking an organizer "is this still on your radar?" for a CFP that's already dead.
+- Follow-up drafts now also carry `cfpDeadline`, `opportunityUrl`, `fee`, `feeAmount` (previously only on pitch drafts — review-drafts.js showed nothing for these on follow-ups).
 
 ### Phase 5: Reporter ✅ BUILT
 `agents/reporter.js` — weekly digest per active client (pitches sent/pending/accepted, pipeline totals). Claude writes the email. Dave reviews before send.
+- Shares the same topic/fee ranking as Pitcher (`lib/matching.js` → `rankOpportunities()`), so the digest previews the actual matching opportunities Pitcher will draft next, not just a raw count.
+- Upcoming-match previews include the fee/price inline (e.g. "Exec Summit ($2,500, $5,000)") when known.
+- Flags `noFitInPipeline` when Scout has open opportunities but none match the client's topics — surfaces the niche-matching gap per client instead of letting it stay invisible.
 
 ### Phase 6: Closer ✅ BUILT
 `agents/closer.js` — when a conference accepts a pitch (`scripts/record-response.js` → accepted), Claude drafts two emails: (1) logistics confirmation to the conference organizer, (2) good-news update to the client/speaker. Also increments `bookings_confirmed` on the client profile.
@@ -292,7 +309,11 @@ reeve/
     qualifier.js          ✅ Phase 1 — Claude scoring + response generation
     state.js              ✅ Phase 1 — DM conversation persistence
     client-store.js       ✅ Phase 2 — client profiles CRUD
-    opportunity-store.js  ✅ Phase 2 — conference/CFP pipeline CRUD
+    opportunity-store.js  ✅ Phase 2 — conference/CFP pipeline CRUD + auto-close on deadline
+    cost-tracker.js       ✅ Phase 2 — SerpApi monthly spend cap
+    matching.js           ✅ Phase 3 — shared topic/fee scoring (matchScore, feeFitMultiplier, rankOpportunities) used by pitcher.js + reporter.js
+  config/
+    scout-config.json     ✅ Phase 2 — SerpApi cap state ($5/mo default, resets monthly)
   templates/
     qualification.json    ✅ Phase 1 — trigger words, questions, messages, routing
     client-profile.json   ✅ Phase 2 — client schema reference + example
@@ -333,22 +354,32 @@ reeve/
 }
 ```
 
-### Opportunity (`output/opportunities/{conferenceId}.json`)
+### Opportunity (`output/opportunities/{opportunityId}.json`) — actual schema, lib/opportunity-store.js
 ```json
 {
-  "id": "opp-001",
-  "conference": "SaaStr Annual 2027",
+  "id": "opp-mqrc7w1u-wskm",
+  "conference": "SaaStr Annual 2027 — Call for Speakers",
   "url": "https://papercall.io/saastr-2027",
   "cfpDeadline": "2026-09-15",
-  "topic": "SaaS, leadership, growth",
-  "fee": "unpaid/honorarium",
-  "clientsTargeted": ["client-001"],
+  "eventDate": null,
+  "topics": ["leadership", "executive presence"],
+  "audienceSize": null,
+  "fee": "paid",
+  "feeAmount": { "min": 2500, "max": 5000, "raw": "$2,500, $5,000" },
+  "organizerEmail": "cfp@saastr.com",
+  "sourceType": "papercall",
+  "location": "Austin, Texas",
+  "virtual": false,
+  "source": "https://papercall.io/saastr-2027",
+  "query": "site:papercall.io \"call for speakers\" open 2026 -jobs -hiring -recap",
+  "notes": "We are now accepting proposals on executive presence...",
   "status": "open",
-  "foundAt": "2026-06-09",
-  "pitchedAt": null,
-  "response": null
+  "pitches": [],
+  "foundAt": "2026-06-09T00:00:00.000Z",
+  "updatedAt": "2026-06-09T00:00:00.000Z"
 }
 ```
+`eventDate` and `audienceSize` are declared in the schema but **not yet populated by Scout** — snippet-only extraction rarely contains this data reliably; would need a page-fetch step to fill these in. `location` is now best-effort populated (explicit "City, State" mention in the snippet, falling back to the queried US region — see "Geographic targeting" above); `feeAmount`, `organizerEmail`, and `sourceType` remain best-effort and often `null`.
 
 ---
 

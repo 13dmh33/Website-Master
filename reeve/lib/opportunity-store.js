@@ -89,9 +89,13 @@ function createOpportunity(data) {
     topics:       data.topics       || [],       // e.g. ["leadership", "technology"]
     audienceSize: data.audienceSize || null,
     fee:          data.fee          || 'unknown', // "paid" | "honorarium" | "unpaid" | "unknown"
+    feeAmount:    data.feeAmount    || { min: null, max: null, raw: null }, // best-effort $ extraction
+    organizerEmail: data.organizerEmail || null, // best-effort — usually null, Dave fills in on review
+    sourceType:   data.sourceType   || 'unknown', // "papercall" | "sessionize" | "speakerhub" | "confs.tech" | "direct"
     location:     data.location     || null,
     virtual:      data.virtual      || false,
     source:       data.source       || null,     // URL where the CFP was found
+    query:        data.query        || null,     // search query that produced this opportunity (see --query-stats)
     notes:        data.notes        || '',
     status:       'open',
     pitches:      [],                            // array of pitch records (added by pitcher.js)
@@ -128,6 +132,20 @@ function closeOpportunity(oppId) {
   return saveOpportunity(Object.assign({}, opp, { status: 'closed' }));
 }
 
+// Close any opportunity whose CFP deadline has passed and is still marked open.
+// Run this at the start of each scout cycle so pitcher.js never sees stale CFPs.
+// Returns the list of opportunities that were closed.
+function closeExpiredOpportunities() {
+  const today = new Date().toISOString().split('T')[0];
+  const expired = getAllOpportunities().filter(o =>
+    o.status === 'open' && o.cfpDeadline && o.cfpDeadline < today
+  );
+  for (const o of expired) {
+    saveOpportunity(Object.assign({}, o, { status: 'closed', closedReason: 'deadline_passed' }));
+  }
+  return expired;
+}
+
 // ── Deduplication ─────────────────────────────────────────────────────────────
 
 // Check if a conference URL has already been indexed this cycle.
@@ -148,5 +166,6 @@ module.exports = {
   recordPitch,
   recordResponse,
   closeOpportunity,
+  closeExpiredOpportunities,
   isDuplicate,
 };

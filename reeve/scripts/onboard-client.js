@@ -39,11 +39,11 @@ function ask(question, defaultValue = '') {
   });
 }
 
-function askRequired(question) {
+function askRequired(question, defaultValue = '') {
   return new Promise(async resolve => {
     let answer = '';
     while (!answer) {
-      answer = (await ask(question)).trim();
+      answer = (await ask(question, defaultValue)).trim();
       if (!answer) console.log('  This field is required.');
     }
     resolve(answer);
@@ -120,8 +120,7 @@ async function runWizard() {
   console.log('Press Enter to accept the default value shown in [brackets].\n');
 
   // ── Basic info ────────────────────────────────────────────────────────────
-  const name           = await askRequired(`Full name${prefill.name ? ` [${prefill.name}]` : ''}`  );
-  const finalName      = name || prefill.name;
+  const finalName      = await askRequired('Full name', prefill.name || '');
   const email          = await askRequired('Email address');
   const phone          = await ask('Phone number (optional)');
   const instagramHandle = await ask('Instagram handle (e.g. @janedoe)');

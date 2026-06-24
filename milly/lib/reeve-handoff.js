@@ -1,12 +1,14 @@
 'use strict';
 
-// reeve handoff stub
+// reeve handoff
 // called by analyst when a post shows unusually high profile visits (>2x weekly average)
-// these are high-signal weeks where Reeve's DM agent should increase outreach activity
+// these are high-signal weeks where Dave should increase manual outreach activity
 //
-// TODO (Phase 2): wire this to Reeve's Watcher agent
-// when notifyReeve is called, Reeve should increase DM volume for the following 3 days
-// integration point: Reeve reads /output/archive/high-signal-[date].json or receives webhook
+// Wired to Reeve via the shared archive file (Milly and Reeve are sibling
+// directories in the same monorepo) — reeve/scripts/check-high-signal.js reads
+// this file and emails Dave. Run in the same CI job as analyst.js (see
+// .github/workflows/milly-weekly-analytics.yml) since neither service is
+// deployed yet for a live webhook between them.
 
 const fs   = require('fs');
 const path = require('path');
@@ -36,9 +38,6 @@ function notifyReeve(postId, metrics) {
 
   fs.writeFileSync(filePath, JSON.stringify(existing, null, 2));
   console.log(`High-signal post flagged for Reeve: ${postId} (${metrics.engagementRate}% engagement)`);
-
-  // TODO: send webhook to Reeve's Watcher agent here in Phase 2
-  // example: POST https://reeve.agency/api/signal { postId, metrics }
 }
 
 module.exports = { notifyReeve };

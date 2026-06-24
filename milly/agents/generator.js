@@ -263,6 +263,29 @@ Return as plain text script only. No JSON, no markdown.`;
   return claude.call({ prompt, maxTokens: 1000 });
 }
 
+// call 5 — Story text — short, informal, behind-the-scenes line (vertical format)
+async function generateStory(angle, niche, voiceContext) {
+  const prompt = `You are writing a single line of text for a Reeve Instagram Story — a speaker booking agency.
+
+Voice and rules:
+${voiceContext}
+
+Angle: ${angle.angle}
+Niche: ${niche}
+
+FORMAT: Instagram Story. Informal, fast, behind-the-scenes — not a polished feed post.
+This should feel like Reeve jotted down a real observation mid-workday, not crafted a caption.
+
+IMPORTANT — quality bar:
+- Under 20 words. One line, maybe two short ones.
+- No hashtags, no "— Reeve" sign-off, no full sentences of setup — get straight to the observation.
+- Should read like a screenshot of a thought, not an ad.
+
+Return only the line of text. No quotes, no markdown, no explanation.`;
+
+  return claude.call({ prompt, maxTokens: 200 });
+}
+
 // extract the hook line from a reel script
 // Claude sometimes puts content on the same line as [HOOK - 2 sec]: and sometimes on the next
 function extractReelHook(script) {
@@ -369,6 +392,19 @@ async function main() {
   }
   console.log('Reel script done.');
 
+  // Stories niche alternates weekly between mindset and booking — keeps it casual, not always service-pitch
+  const storyNiche = weekNiches.weekNumber % 2 === 0 ? 'mindset' : 'booking';
+  const storyAngle  = angles.find(a => a.niche === storyNiche) || angles[0];
+
+  console.log(`Generating Story text (niche: ${storyNiche})...`);
+  let storyText;
+  if (storyAngle.prewrittenContent) {
+    storyText = storyAngle.prewrittenContent.hook;
+  } else {
+    storyText = await generateStory(storyAngle, storyNiche, voiceContext);
+  }
+  console.log('Story text done.');
+
   // advance the weekly rotation counter so next week alternates niches
   store.advanceWeekRotation();
 
@@ -381,6 +417,7 @@ async function main() {
       caption1:   { body: caption1A, variantA: caption1A, variantB: caption1B },
       reevefound: { body: reeveFound },
       reel:       { script: reelScript, hookLine: extractReelHook(reelScript) },
+      story:      { text: storyText.trim(), niche: storyNiche },
     },
   };
 

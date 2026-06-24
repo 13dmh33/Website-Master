@@ -18,6 +18,7 @@ const path        = require('path');
 const Anthropic   = require('@anthropic-ai/sdk');
 const clientStore = require('../lib/client-store');
 const oppStore    = require('../lib/opportunity-store');
+const { matchScore, feeFitMultiplier } = require('../lib/matching');
 
 const isDryRun    = process.argv.includes('--dry-run');
 const clientArg   = (() => { const i = process.argv.indexOf('--client'); return i !== -1 ? process.argv[i + 1] : null; })();
@@ -53,21 +54,6 @@ function draftAlreadyExists(clientId, oppId) {
     });
 }
 
-// ── Topic matching ────────────────────────────────────────────────────────────
-
-// Score how well a client's topics overlap with an opportunity's topics.
-// Returns 0–1 (1 = strong match). Simple keyword overlap for now.
-function matchScore(clientTopics, oppTopics) {
-  if (!clientTopics?.length || !oppTopics?.length) return 0.3; // neutral if no data
-  const clientSet = new Set(clientTopics.map(t => t.toLowerCase()));
-  const oppSet    = new Set(oppTopics.map(t => t.toLowerCase()));
-  let hits = 0;
-  for (const t of oppSet) {
-    if ([...clientSet].some(ct => ct.includes(t) || t.includes(ct))) hits++;
-  }
-  return hits / Math.max(oppSet.size, 1);
-}
-
 // ── Claude pitch generation ───────────────────────────────────────────────────
 
 async function draftPitch(speaker, opportunity) {
@@ -85,7 +71,7 @@ CONFERENCE / OPPORTUNITY:
 Name: ${opportunity.conference}
 Topics they want: ${opportunity.topics?.join(', ') || 'not specified'}
 CFP deadline: ${opportunity.cfpDeadline || 'not listed'}
-Fee offered: ${opportunity.fee || 'unknown'}
+Fee offered: ${opportunity.feeAmount?.raw || opportunity.fee || 'unknown'}
 URL: ${opportunity.url || 'not available'}
 Notes: ${opportunity.notes || 'none'}
 
@@ -150,9 +136,9 @@ async function main() {
   for (const speaker of clients) {
     console.log(`\n── ${speaker.name} (${speaker.id}) ──`);
 
-    // Score and sort opportunities by topic match
+    // Score and sort opportunities by topic match, deprioritized by fee fit
     const ranked = opportunities
-      .map(opp => ({ opp, score: matchScore(speaker.topics, opp.topics) }))
+      .map(opp => ({ opp, score: matchScore(speaker.topics, opp.topics) * feeFitMultiplier(speaker.fee, opp.feeAmount) }))
       .filter(({ score }) => score > 0)
       .sort((a, b) => b.score - a.score)
       .slice(0, 5); // max 5 pitches per client per run
@@ -197,7 +183,9 @@ async function main() {
         conference:     opp.conference,
         cfpDeadline:    opp.cfpDeadline || null,
         opportunityUrl: opp.url || null,
-        to:             null,   // conference organizer email — Dave fills in on review
+        fee:            opp.fee || null,
+        feeAmount:      opp.feeAmount || null,
+        to:             opp.organizerEmail || null,   // best-effort from scout; Dave fills in on review if still null
         subject:        pitchContent.subject,
         body:           pitchContent.body,
         matchScore:     score,

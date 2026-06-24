@@ -31,6 +31,21 @@ const DESIGN_CONFIG = {
   fallbackBg:    '#0B1120',                  // used if Unsplash fails
 };
 
+// vertical canvas for Stories — same palette/brand system, taller frame
+const STORY_WIDTH  = 1080;
+const STORY_HEIGHT = 1920;
+
+// A/B visual design variants — swap overlay opacity to test photo-forward vs text-forward legibility
+// 'A' is the current production default; 'B' is the experiment
+const DESIGN_VARIANTS = {
+  A: { overlay: DESIGN_CONFIG.overlay },
+  B: { overlay: 'rgba(8, 15, 30, 0.42)' }, // lighter overlay — more photo visible, tests legibility tradeoff
+};
+
+function getOverlay(variant) {
+  return (DESIGN_VARIANTS[variant] || DESIGN_VARIANTS.A).overlay;
+}
+
 // niche → Unsplash search terms that produce editorial-quality images
 const NICHE_PHOTO_QUERIES = {
   booking:    ['conference stage spotlight', 'auditorium empty seats', 'keynote speaker stage', 'microphone stage lights'],
@@ -44,12 +59,12 @@ const NICHE_PHOTO_QUERIES = {
 
 // fetch a photo from Unsplash and return it as a loadable image
 // falls back to null if Unsplash is not configured or request fails
-async function fetchUnsplashPhoto(query) {
+async function fetchUnsplashPhoto(query, orientation = 'squarish') {
   const key = process.env.UNSPLASH_ACCESS_KEY;
   if (!key) return null;
 
   try {
-    const url = `https://api.unsplash.com/photos/random?query=${encodeURIComponent(query)}&orientation=squarish&content_filter=high&client_id=${key}`;
+    const url = `https://api.unsplash.com/photos/random?query=${encodeURIComponent(query)}&orientation=${orientation}&content_filter=high&client_id=${key}`;
     const res  = await fetch(url, { timeout: 8000 });
     if (!res.ok) return null;
 
@@ -190,9 +205,10 @@ function drawGradientBackground(ctx, width, height, niche) {
 }
 
 // draw background: Unsplash photo + dark overlay, or niche gradient fallback
-async function drawBackground(ctx, width, height, niche) {
+async function drawBackground(ctx, width, height, niche, variant = 'A') {
   const query = getPhotoQuery(niche);
-  const photo = await fetchUnsplashPhoto(query);
+  const orientation = height > width ? 'portrait' : 'squarish';
+  const photo = await fetchUnsplashPhoto(query, orientation);
 
   if (photo) {
     // cover-fit the photo into the square canvas
@@ -203,8 +219,8 @@ async function drawBackground(ctx, width, height, niche) {
     const drawY  = (height - drawH) / 2;
     ctx.drawImage(photo, drawX, drawY, drawW, drawH);
 
-    // dark overlay for text legibility
-    ctx.fillStyle = DESIGN_CONFIG.overlay;
+    // dark overlay for text legibility — opacity varies by A/B design variant
+    ctx.fillStyle = getOverlay(variant);
     ctx.fillRect(0, 0, width, height);
 
     // bottom grounding gradient
@@ -260,12 +276,12 @@ function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
 }
 
 // render a single carousel slide
-async function renderCarouselSlide(headline, body, slideNum, totalSlides, niche = 'booking') {
+async function renderCarouselSlide(headline, body, slideNum, totalSlides, niche = 'booking', variant = 'A') {
   const { width, height, padding } = DESIGN_CONFIG;
   const canvas = new Canvas(width, height);
   const ctx    = canvas.getContext('2d');
 
-  await drawBackground(ctx, width, height, niche);
+  await drawBackground(ctx, width, height, niche, variant);
   renderTopBar(ctx, width);
   renderReeveBrand(ctx, width);
 
@@ -302,12 +318,12 @@ async function renderCarouselSlide(headline, body, slideNum, totalSlides, niche 
 }
 
 // render a quote/caption post
-async function renderQuotePost(mainText, attribution, niche = 'mindset') {
+async function renderQuotePost(mainText, attribution, niche = 'mindset', variant = 'A') {
   const { width, height, padding } = DESIGN_CONFIG;
   const canvas = new Canvas(width, height);
   const ctx    = canvas.getContext('2d');
 
-  await drawBackground(ctx, width, height, niche);
+  await drawBackground(ctx, width, height, niche, variant);
   renderTopBar(ctx, width);
   renderReeveBrand(ctx, width);
 
@@ -357,12 +373,46 @@ async function renderFallback(text, niche = 'mindset') {
   return canvas.toBuffer('png');
 }
 
+// behind-the-scenes Story — vertical 1080x1920, big centered text + sticker-style CTA
+async function renderStorySlide(text, niche = 'mindset', cta = null, variant = 'A') {
+  const width  = STORY_WIDTH;
+  const height = STORY_HEIGHT;
+  const padding = DESIGN_CONFIG.padding;
+  const canvas = new Canvas(width, height);
+  const ctx    = canvas.getContext('2d');
+
+  await drawBackground(ctx, width, height, niche, variant);
+  renderTopBar(ctx, width);
+  renderReeveBrand(ctx, width);
+
+  // centered headline-style text, mid-frame (Stories are read top-down with thumb near bottom)
+  ctx.font      = `bold ${DESIGN_CONFIG.headlineSize}px ${DESIGN_CONFIG.fontFamily}`;
+  ctx.fillStyle = DESIGN_CONFIG.headline;
+  const endY = wrapText(ctx, text, padding, height * 0.42, width - padding * 2, DESIGN_CONFIG.headlineSize + 16);
+
+  // CTA pill near the bottom, clear of Instagram's native sticker tray
+  if (cta) {
+    ctx.font      = `bold ${DESIGN_CONFIG.bodySize - 2}px ${DESIGN_CONFIG.fontFamily}`;
+    ctx.fillStyle = DESIGN_CONFIG.accent;
+    ctx.fillText(cta.toUpperCase(), padding, height * 0.84);
+  }
+
+  ctx.fillStyle = DESIGN_CONFIG.accent;
+  ctx.fillRect(padding, height - 220, 44, 4);
+
+  return canvas.toBuffer('png');
+}
+
 module.exports = {
   renderCarouselSlide,
   renderQuotePost,
   renderFallback,
+  renderStorySlide,
   renderReeveBrand,
   wrapText,
   DESIGN_CONFIG,
   NICHE_PHOTO_QUERIES,
+  STORY_WIDTH,
+  STORY_HEIGHT,
+  DESIGN_VARIANTS,
 };

@@ -44,6 +44,17 @@
       "cta": "DM us the word stages",
       "notes": "hook 2 sec, body 12 sec, cta 6 sec. include b-roll notes inline.",
       "image_type": "reel_hook — just the hook line as a quote-style image"
+    },
+    "story": {
+      "description": "behind-the-scenes Story — informal, single line of text, no carousel structure",
+      "slides": 1,
+      "image_size": "1080x1920",
+      "schedule_slot": "FRI:15:00",
+      "niche": "mindset or booking (alternates weekly)",
+      "caption_length": "under 20 words",
+      "hook_purpose": "feel like a peek behind the curtain, not a polished post — builds familiarity between feed posts",
+      "cta": "DM stages or swipe up to bio link",
+      "notes": "Buffer's classic API has no Stories endpoint — always routes to the manual queue (output/queue/) for Dave to post by hand from his phone."
     }
   },
   "weekly_rotation": {

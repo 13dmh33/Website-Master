@@ -168,11 +168,9 @@
     .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
     .photo-thumb {
       width: 100%; height: 56px; object-fit: cover;
-      border-radius: 4px; cursor: pointer;
-      border: 2px solid transparent; transition: all .2s; opacity: .7;
+      border-radius: 4px;
+      border: 2px solid transparent; opacity: .9;
     }
-    .photo-thumb.selected { border-color: var(--teal); opacity: 1; }
-    .photo-thumb:hover { opacity: 1; }
     .shuffle-btn {
       width: 100%; margin-top: 6px;
       background: rgba(255,255,255,.04); border: 1px solid var(--border);
@@ -181,6 +179,7 @@
       cursor: pointer; font-family: 'Outfit', sans-serif; transition: all .2s;
     }
     .shuffle-btn:hover { border-color: var(--teal); color: var(--teal); }
+    #photoGridNote.warn { color: #E8A33D; }
     .upload-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px; }
     .upload-slot {
       height: 56px; border: 1.5px dashed rgba(255,255,255,.12);
@@ -563,6 +562,7 @@
       <div id="stockPhotos">
         <div class="photo-grid" id="photoGrid"></div>
         <button class="shuffle-btn" id="shuffleBtn">↺ Shuffle photos</button>
+        <div id="photoGridNote" style="font-size:10px;color:rgba(255,255,255,.3);margin-top:6px;line-height:1.4;"></div>
       </div>
       <div id="uploadPhotos" style="display:none;">
         <div class="upload-grid">
@@ -570,6 +570,9 @@
           <div class="upload-slot" id="slotSvc1"><input type="file" accept="image/*" data-slot="svc1" /><div class="upload-slot-label">Service 1</div></div>
           <div class="upload-slot" id="slotSvc2"><input type="file" accept="image/*" data-slot="svc2" /><div class="upload-slot-label">Service 2</div></div>
           <div class="upload-slot" id="slotSvc3"><input type="file" accept="image/*" data-slot="svc3" /><div class="upload-slot-label">Service 3</div></div>
+          <div class="upload-slot" id="slotSvc4"><input type="file" accept="image/*" data-slot="svc4" /><div class="upload-slot-label">Service 4</div></div>
+          <div class="upload-slot" id="slotSvc5"><input type="file" accept="image/*" data-slot="svc5" /><div class="upload-slot-label">Service 5</div></div>
+          <div class="upload-slot" id="slotSvc6"><input type="file" accept="image/*" data-slot="svc6" /><div class="upload-slot-label">Service 6</div></div>
         </div>
         <div style="font-size:10px;color:rgba(255,255,255,.25);margin-top:6px;">Uploaded photos replace stock photos in the preview.</div>
         <div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.06);">
@@ -754,24 +757,24 @@ const TRADE_PHOTOS = {
 function getPhotos(trade) {
   const all = TRADE_PHOTOS[trade] || TRADE_PHOTOS.default;
   const offset = (photoSetIndex * 3) % all.length;
-  return all.slice(offset).concat(all.slice(0, offset)).slice(0, 6);
+  return all.slice(offset).concat(all.slice(0, offset)).slice(0, 7);
 }
 
 /* ── PHOTO GRID ── */
-let selectedPhotos = new Set([0,1,2,3,4,5]);
 function renderPhotoGrid() {
+  const hasCurated = !!TRADE_PHOTOS[config.trade];
   const photos = getPhotos(config.trade);
   const grid = document.getElementById('photoGrid');
-  grid.innerHTML = photos.map((url, i) =>
-    `<img src="${url}" class="photo-thumb${selectedPhotos.has(i)?' selected':''}" data-idx="${i}" alt="" loading="lazy" />`
+  const note = document.getElementById('photoGridNote');
+  grid.innerHTML = photos.map(url =>
+    `<img src="${url}" class="photo-thumb" alt="" loading="lazy" />`
   ).join('');
-  grid.querySelectorAll('.photo-thumb').forEach(img => {
-    img.addEventListener('click', () => {
-      const idx = parseInt(img.dataset.idx);
-      if (selectedPhotos.has(idx)) selectedPhotos.delete(idx); else selectedPhotos.add(idx);
-      img.classList.toggle('selected', selectedPhotos.has(idx));
-    });
-  });
+  if (note) {
+    note.textContent = hasCurated
+      ? 'These photos will appear on your site (1 hero + 6 service photos). Shuffle to see other options, or upload your own.'
+      : `We don't have curated stock photos for ${config.trade || 'this trade'} yet — showing generic placeholders. Switch to "Upload own" for photos that actually match your business.`;
+    note.classList.toggle('warn', !hasCurated);
+  }
 }
 
 /* ── STEP UPDATER ── */
@@ -793,6 +796,7 @@ document.getElementById('tradePills').addEventListener('click', e => {
   btn.classList.add('active');
   config.trade = btn.dataset.trade;
   photoSetIndex = 0; renderPhotoGrid(); updateSteps(); scheduleLivePreview();
+  switchPhotoTab(TRADE_PHOTOS[config.trade] ? 'stock' : 'upload');
 });
 
 /* ── TEXT INPUTS ── */
@@ -850,14 +854,14 @@ document.getElementById('toggleGrid').addEventListener('click', e => {
 });
 
 /* ── PHOTO TABS ── */
-document.getElementById('tabStock').addEventListener('click', () => {
-  document.getElementById('tabStock').classList.add('active'); document.getElementById('tabUpload').classList.remove('active');
-  document.getElementById('stockPhotos').style.display = ''; document.getElementById('uploadPhotos').style.display = 'none';
-});
-document.getElementById('tabUpload').addEventListener('click', () => {
-  document.getElementById('tabUpload').classList.add('active'); document.getElementById('tabStock').classList.remove('active');
-  document.getElementById('uploadPhotos').style.display = ''; document.getElementById('stockPhotos').style.display = 'none';
-});
+function switchPhotoTab(tab) {
+  document.getElementById('tabStock').classList.toggle('active', tab === 'stock');
+  document.getElementById('tabUpload').classList.toggle('active', tab === 'upload');
+  document.getElementById('stockPhotos').style.display  = tab === 'stock'  ? '' : 'none';
+  document.getElementById('uploadPhotos').style.display  = tab === 'upload' ? '' : 'none';
+}
+document.getElementById('tabStock').addEventListener('click', () => switchPhotoTab('stock'));
+document.getElementById('tabUpload').addEventListener('click', () => switchPhotoTab('upload'));
 document.getElementById('shuffleBtn').addEventListener('click', () => { photoSetIndex++; renderPhotoGrid(); scheduleLivePreview(); });
 
 /* ── UPLOAD PHOTOS ── */
@@ -982,8 +986,9 @@ function generateHTML(cfg) {
     up.svc1 || stockPhotos[1],
     up.svc2 || stockPhotos[2],
     up.svc3 || stockPhotos[3],
-    stockPhotos[4],
-    stockPhotos[5],
+    up.svc4 || stockPhotos[4],
+    up.svc5 || stockPhotos[5],
+    up.svc6 || stockPhotos[6],
   ];
   const svcList = (ai?.services?.map(s => s.name)) || SERVICES[trade] || SERVICES['default'] || ['Service 1','Service 2','Service 3','Service 4','Service 5','Service 6'];
   const svcDescs = ai?.services ? Object.fromEntries(ai.services.map(s => [s.name, s.desc])) : {};
@@ -1149,7 +1154,7 @@ ${reviewsSection}
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
       ${svcList.map((svc,i)=>`
         <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:9px;overflow:hidden;">
-          <div style="height:130px;background:url(${svcPhotos[i%svcPhotos.length]}) center/cover;"></div>
+          <div style="height:130px;background:url(${svcPhotos[i]}) center/cover;"></div>
           <div style="padding:12px;">
             <div style="font-size:13px;font-weight:700;margin-bottom:2px;">${svc}</div>
             <div style="font-size:11px;color:rgba(255,255,255,.4);">${svcDescs[svc] || 'Call for availability'}</div>

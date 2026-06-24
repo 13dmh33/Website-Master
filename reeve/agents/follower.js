@@ -151,6 +151,12 @@ async function main() {
       continue;
     }
 
+    if (opportunity.status !== 'open') {
+      console.log(`  ${opportunity.conference.slice(0, 50)} — CFP no longer open (${opportunity.status}), skipping follow-up`);
+      skipped++;
+      continue;
+    }
+
     const daysSent = Math.round(daysSince(pitch.sentAt));
     console.log(`  → ${opportunity.conference.slice(0, 60)} (sent ${daysSent}d ago)`);
 

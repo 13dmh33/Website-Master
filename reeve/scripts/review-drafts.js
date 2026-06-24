@@ -277,7 +277,7 @@ async function main() {
 
   if (!isDryRun && !getTransport()) {
     console.log('\n⚠  ZOHO_EMAIL / ZOHO_APP_PASSWORD not set — emails cannot be sent.');
-    console.log('   You can still approve (marks status=sent) but nothing will transmit.');
+    console.log('   Approving will mark drafts status=approved (send will fail and they\'ll stay queued for retry).');
     console.log('   Add credentials to .env to enable sending.\n');
   }
 

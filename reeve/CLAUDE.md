@@ -57,6 +57,7 @@ Milly posts 4x/week → speaker sees content → DMs "stages"
 
 ### Phase 4: Follower ✅ BUILT
 `agents/follower.js` — finds sent pitches >14 days old with no response, Claude drafts follow-up emails. Dave reviews before send.
+- Skips drafting a follow-up if the opportunity's `status` is no longer `open` (CFP deadline passed or otherwise closed) — avoids asking an organizer "is this still on your radar?" for a CFP that's already dead.
 
 ### Phase 5: Reporter ✅ BUILT
 `agents/reporter.js` — weekly digest per active client (pitches sent/pending/accepted, pipeline totals). Claude writes the email. Dave reviews before send.

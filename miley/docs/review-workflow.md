@@ -41,6 +41,6 @@ October is daily (7 posts/week). Generate a week ahead and approve all 7 in one 
 ## One-time setup checklist
 
 - [ ] `FORCE_QUEUE=1` set as a repo secret / env var (keeps everything review-first)
-- [ ] Buffer **classic** token connected (not the MCP/OIDC one — it silently fails)
+- [ ] Buffer **GraphQL personal API key** connected (from developers.buffer.com → Get an API Key — Buffer no longer issues classic v1 tokens)
 - [ ] You know how to open the HTML preview and run `push-queue.js` (Claude Code will document the exact command)
 - [ ] Confirm with Claude Code that `push-queue.js` preserves the scheduled times (posts later) rather than posting immediately on approval

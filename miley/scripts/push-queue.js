@@ -28,7 +28,7 @@ async function main() {
   if (DRY_RUN) console.log('Dry run — nothing will be sent.\n');
 
   if (!DRY_RUN && !buffer.isConfigured()) {
-    console.error('Buffer is not configured. Add BUFFER_ACCESS_TOKEN (classic token, NOT OIDC) to .env.');
+    console.error('Buffer is not configured. Add BUFFER_ACCESS_TOKEN (GraphQL personal API key from developers.buffer.com) to .env.');
     process.exit(1);
   }
 

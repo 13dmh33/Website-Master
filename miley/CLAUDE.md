@@ -135,8 +135,8 @@ Open `output/queue/preview-{weekOf}.html` in a browser to review the week.
 ```
 ANTHROPIC_API_KEY=             # content generation; blank → evergreen (free)
 FORCE_QUEUE=1                  # keep set — review-first, nothing auto-posts
-BUFFER_ACCESS_TOKEN=           # CLASSIC token from buffer.com/developers (NOT OIDC — it 401s)
-BUFFER_INSTAGRAM_PROFILE_ID=   # GET /1/profiles.json once the token is valid
+BUFFER_ACCESS_TOKEN=           # GraphQL personal API key from developers.buffer.com (classic v1 tokens are no longer issued)
+BUFFER_INSTAGRAM_PROFILE_ID=   # optional — auto-looked-up via GraphQL channels query if blank
 INSTAGRAM_ACCESS_TOKEN=        # analytics only (Analyst)
 INSTAGRAM_BUSINESS_ACCOUNT_ID= # analytics only
 INSTAGRAM_HANDLE=@techs4tatas
@@ -170,7 +170,8 @@ Workflows live at repo root: `.github/workflows/miley-weekly-pipeline.yml` (Thu,
 - [ ] Re-verify breast-cancer stats in `inspiration-sources.json` (figures move yearly).
 - [ ] Drop Printify mockups into `assets/products/` (named by catalog key).
 - [ ] (Optional) Drop Bebas Neue + Inter `.ttf` into `assets/fonts/` for exact brand match.
-- [ ] Buffer **classic** token + Instagram Business profile ID as repo secrets.
+- [ ] Buffer **GraphQL API key** (developers.buffer.com) + Instagram Business profile ID as repo secrets.
+- [ ] `LINKPAGE_URL` set to the hosted linkpage site — `lib/buffer.js` also copies each rendered post PNG into `linkpage/posts/` and builds its public URL off this same origin (Buffer requires a public URL per image, no direct upload).
 - [ ] Keep `FORCE_QUEUE=1` so week one (and every week) lands in the review queue first.
 - [ ] Run `node scripts/test-pipeline.js` and review the HTML preview.
 

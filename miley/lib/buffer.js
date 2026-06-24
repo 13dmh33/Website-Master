@@ -1,20 +1,30 @@
 'use strict';
 
-// Buffer API v1 helpers
-// docs: buffer.com/developers/api
-// auth: access token from buffer.com/developers (Generate Access Token)
-// free tier covers scheduling to 3 channels including Instagram
+// Buffer GraphQL API helpers (Techs4Tatas / Miley).
 //
-// image upload uses Node 18+ built-in fetch + FormData (no extra dependency)
-// falls back to text-only post if image upload fails
+// Buffer retired issuance of classic v1 REST tokens — every token minted
+// today (even from the "Legacy Apps" page) comes back as an OIDC token that
+// the v1 REST API rejects. The only working surface now is the GraphQL API
+// at https://api.buffer.com, authenticated with a personal API key from
+// developers.buffer.com ("Get an API Key" — the key used here is the one
+// named e.g. "Miley", scoped with at least posts:read/posts:write).
+//
+// Buffer (REST or GraphQL, always has) never accepts direct file uploads —
+// media must already be a public URL. publishImage() below copies each
+// rendered PNG into linkpage/posts/ so it's served by whatever static host
+// LINKPAGE_URL points at, then hands that public URL to Buffer.
+//
+// Schema details (channels/organizations/createPost field names) are taken
+// from developers.buffer.com docs as of this writing — if Buffer returns a
+// "field not found" GraphQL error, paste it back so the mutation can be
+// corrected against the live schema.
 
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 
-const nodeFetch = require('node-fetch');
-const fs        = require('fs');
-const path      = require('path');
+const fs   = require('fs');
+const path = require('path');
 
-const BASE_URL = 'https://api.bufferapp.com/1';
+const GRAPHQL_URL = 'https://api.buffer.com';
 
 function isConfigured() {
   return !!process.env.BUFFER_ACCESS_TOKEN;
@@ -22,102 +32,122 @@ function isConfigured() {
 
 function getToken() {
   const token = process.env.BUFFER_ACCESS_TOKEN;
-  if (!token) throw new Error('BUFFER_ACCESS_TOKEN is not set.');
+  if (!token) throw new Error('BUFFER_ACCESS_TOKEN is not set (Buffer GraphQL personal API key from developers.buffer.com).');
   return token;
 }
 
-// list Buffer connected profiles and return the Instagram profile ID
-// caches in BUFFER_INSTAGRAM_PROFILE_ID env var if set (avoids extra API call)
+async function gql(query, variables) {
+  const res = await globalThis.fetch(GRAPHQL_URL, {
+    method:  'POST',
+    headers: {
+      'Content-Type':  'application/json',
+      'Authorization': `Bearer ${getToken()}`,
+    },
+    body: JSON.stringify({ query, variables }),
+  });
+
+  const body = await res.json().catch(() => null);
+
+  if (!res.ok || !body || body.errors) {
+    const detail = body?.errors ? JSON.stringify(body.errors) : `HTTP ${res.status}`;
+    throw new Error(`Buffer GraphQL request failed: ${detail}`);
+  }
+
+  return body.data;
+}
+
+let cachedOrganizationId = null;
+
+async function getOrganizationId() {
+  if (cachedOrganizationId) return cachedOrganizationId;
+
+  const data = await gql(`query GetOrganizations {
+    account { organizations { id name } }
+  }`);
+
+  const org = data?.account?.organizations?.[0];
+  if (!org) throw new Error('No Buffer organization found on this account.');
+
+  cachedOrganizationId = org.id;
+  return cachedOrganizationId;
+}
+
+// returns the @techs4tatas Instagram channel ID
+// caches in BUFFER_INSTAGRAM_PROFILE_ID env var if set (avoids extra API calls)
 async function getInstagramProfileId() {
   if (process.env.BUFFER_INSTAGRAM_PROFILE_ID) {
     return process.env.BUFFER_INSTAGRAM_PROFILE_ID;
   }
 
-  const token = getToken();
-  const res   = await nodeFetch(`${BASE_URL}/profiles.json?access_token=${token}`);
-  if (!res.ok) {
-    const body = await res.text();
-    throw new Error(`Buffer profiles fetch failed (${res.status}): ${body}`);
-  }
+  const organizationId = await getOrganizationId();
+  const data = await gql(`query GetChannels($organizationId: OrganizationId!) {
+    channels(input: { organizationId: $organizationId }) {
+      id
+      service
+      displayName
+    }
+  }`, { organizationId });
 
-  const profiles  = await res.json();
-  const instagram = Array.isArray(profiles) && profiles.find(p =>
-    p.service === 'instagram' || p.service_type === 'instagram'
-  );
+  const channels = data?.channels || [];
+  const instagram = channels.find(c => c.service === 'instagram');
   if (!instagram) {
-    throw new Error('No Instagram profile found in Buffer. Connect Instagram at buffer.com/channels.');
+    throw new Error('No Instagram channel found in Buffer. Connect @techs4tatas at buffer.com/channels first.');
   }
 
   return instagram.id;
 }
 
-// upload a local PNG to Buffer — returns the hosted image URL
-// uses Node 18 built-in FormData + Blob (no form-data package needed)
-async function uploadImage(imagePath) {
-  const token = getToken();
-
-  const imageBuffer = fs.readFileSync(imagePath);
-  const blob        = new Blob([imageBuffer], { type: 'image/png' });
-  const form        = new FormData(); // Node 18+ global
-  form.append('access_token', token);
-  form.append('photo', blob, path.basename(imagePath));
-
-  // use Node 18 built-in fetch — handles FormData natively
-  const res = await globalThis.fetch(`${BASE_URL}/media/upload.json`, {
-    method: 'POST',
-    body:   form,
-  });
-
-  if (!res.ok) {
-    const body = await res.text();
-    throw new Error(`Buffer image upload failed (${res.status}): ${body}`);
+// copies a locally rendered PNG into linkpage/posts/ so it's served by the
+// same static host as LINKPAGE_URL, and returns the public URL Buffer needs
+function publishImage(imagePath) {
+  const linkpageUrl = process.env.LINKPAGE_URL;
+  if (!linkpageUrl) {
+    throw new Error('LINKPAGE_URL is not set — host the linkpage/ folder first, then set LINKPAGE_URL so post images have a public base URL.');
   }
 
-  const data = await res.json();
-  // Buffer returns { media: { picture: "url", thumbnail: "url" } }
-  return data?.media?.picture || data?.picture || null;
+  const postsDir = path.join(__dirname, '..', 'linkpage', 'posts');
+  fs.mkdirSync(postsDir, { recursive: true });
+
+  const filename = path.basename(imagePath);
+  fs.copyFileSync(imagePath, path.join(postsDir, filename));
+
+  const origin = new URL(linkpageUrl).origin;
+  return `${origin}/posts/${filename}`;
 }
 
-// schedule one post via Buffer
+// schedule one post via Buffer's GraphQL createPost mutation
 // imagePaths: local file paths (uses first image; Buffer handles carousel scheduling)
 // caption: full caption text
 // scheduledAt: ISO 8601 UTC string
 async function schedulePost({ imagePaths, caption, scheduledAt }) {
-  const token     = getToken();
-  const profileId = await getInstagramProfileId();
+  const channelId = await getInstagramProfileId();
 
-  // upload cover image — warn and continue if upload fails
-  let photoUrl = null;
+  const assets = [];
   if (imagePaths && imagePaths.length > 0) {
     try {
-      photoUrl = await uploadImage(imagePaths[0]);
+      assets.push({ url: publishImage(imagePaths[0]) });
     } catch (err) {
-      console.warn(`  Image upload skipped (${err.message}) — post will be text-only.`);
+      console.warn(`  Image publish skipped (${err.message}) — post will be text-only.`);
     }
   }
 
-  // Buffer v1 create-update endpoint uses URL-encoded form body
-  const params = new URLSearchParams();
-  params.append('access_token', token);
-  params.append('profile_ids[]', profileId);
-  params.append('text', caption);
-  if (photoUrl)    params.append('media[photo]', photoUrl);
-  if (scheduledAt) params.append('scheduled_at', scheduledAt);
-
-  const res = await nodeFetch(`${BASE_URL}/updates/create.json`, {
-    method:  'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body:    params.toString(),
+  const data = await gql(`mutation CreatePost($input: CreatePostInput!) {
+    createPost(input: $input) {
+      post { id }
+    }
+  }`, {
+    input: {
+      channelId,
+      text:           caption,
+      assets,
+      schedulingType: 'automatic',
+      mode:           'customScheduled',
+      dueAt:          scheduledAt,
+    },
   });
 
-  if (!res.ok) {
-    const body = await res.text();
-    throw new Error(`Buffer create update failed (${res.status}): ${body}`);
-  }
-
-  const data     = await res.json();
-  const updateId = data?.updates?.[0]?.id || data?.update?.id || data?.id;
-  return { success: true, updateId };
+  const postId = data?.createPost?.post?.id;
+  return { success: true, updateId: postId };
 }
 
 module.exports = { isConfigured, schedulePost, getInstagramProfileId };

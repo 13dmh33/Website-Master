@@ -11,8 +11,8 @@ const path = require('path');
 
 const OPTIONAL = [
   { key: 'ANTHROPIC_API_KEY', label: 'Claude API key', help: 'console.anthropic.com → API keys. Without it, the pipeline uses evergreen.json content (zero spend).' },
-  { key: 'BUFFER_ACCESS_TOKEN', label: 'Buffer classic token', help: 'buffer.com/developers → Generate Access Token (NOT the MCP/OIDC token — it 401s). Needed only to auto-post; otherwise posts wait in the review queue.' },
-  { key: 'BUFFER_INSTAGRAM_PROFILE_ID', label: 'Buffer Instagram profile ID', help: 'GET https://api.bufferapp.com/1/profiles.json?access_token=YOUR_TOKEN → the Instagram profile id.' },
+  { key: 'BUFFER_ACCESS_TOKEN', label: 'Buffer GraphQL API key', help: 'developers.buffer.com → Get an API Key (grant posts:read/posts:write). Needed only to auto-post; otherwise posts wait in the review queue.' },
+  { key: 'BUFFER_INSTAGRAM_PROFILE_ID', label: 'Buffer Instagram channel ID (optional)', help: 'Looked up automatically via the GraphQL channels query — set this to skip that lookup call.' },
   { key: 'FORCE_QUEUE', label: 'Review-first flag (FORCE_QUEUE=1)', help: 'Keep this set to 1 so nothing auto-posts — everything lands in the review queue (see docs/review-workflow.md).' },
   { key: 'INSTAGRAM_ACCESS_TOKEN', label: 'Instagram Graph token', help: 'Analytics only. Analyst skips gracefully without it.' },
   { key: 'INSTAGRAM_BUSINESS_ACCOUNT_ID', label: 'Instagram Business account ID', help: 'Analytics only.' },

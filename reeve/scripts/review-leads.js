@@ -127,7 +127,11 @@ function printList(leads) {
 
 // ── Interactive review ────────────────────────────────────────────────────────
 
-const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
+function newReadline() {
+  return readline.createInterface({ input: process.stdin, output: process.stdout });
+}
+
+let rl = newReadline();
 function ask(prompt) { return new Promise(resolve => rl.question(prompt, resolve)); }
 
 async function reviewLeads(leads) {
@@ -166,36 +170,14 @@ async function reviewLeads(leads) {
         console.error(`  Onboarding exited: ${err.message}`);
       }
 
-      // Re-open readline for remaining leads
-      const newRl = readline.createInterface({ input: process.stdin, output: process.stdout });
-      const newAsk = (p) => new Promise(r => newRl.question(p, r));
-
-      // Continue with remaining leads
-      for (let j = i + 1; j < leads.length; j++) {
-        const next = leads[j];
-        printLead(next, j + 1, leads.length);
-        const nextAnswer = await newAsk('\n  [o] Onboard  [s] Skip  [q] Quit: ');
-        const nextChoice = nextAnswer.trim().toLowerCase();
-
-        if (nextChoice === 'q') break;
-        if (nextChoice === 's') { skipped++; continue; }
-        if (nextChoice === 'o') {
-          newRl.close();
-          try {
-            const scriptPath = path.join(__dirname, 'onboard-client.js');
-            execSync(`node "${scriptPath}" --from-dm ${next.senderId}`, { stdio: 'inherit', cwd: path.join(__dirname, '..') });
-            onboarded++;
-          } catch (e) { console.error(`  Onboarding exited: ${e.message}`); }
-          // Re-open once more if still more leads
-          if (j < leads.length - 1) {
-            const rl3 = readline.createInterface({ input: process.stdin, output: process.stdout });
-            rl3.close(); // simplified — just break after second onboard for now
-          }
-          break;
-        }
-      }
-      break; // done
+      // Re-open readline so the loop can keep prompting for remaining leads
+      rl = newReadline();
+      continue;
     }
+
+    // Unrecognized input — re-prompt next iteration counts as skip
+    console.log('  Unrecognized — skipping.');
+    skipped++;
   }
 
   try { rl.close(); } catch {}

@@ -20,8 +20,10 @@
 
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 
-const fetch    = require('node-fetch');
-const oppStore = require('../lib/opportunity-store');
+const fetch       = require('node-fetch');
+const oppStore     = require('../lib/opportunity-store');
+const clientStore  = require('../lib/client-store');
+const costTracker  = require('../lib/cost-tracker');
 
 const isDryRun = process.argv.includes('--dry-run');
 const isSummary = process.argv.includes('--summary');
@@ -93,32 +95,54 @@ function extractOpportunity(result) {
 
 // ── Search queries ────────────────────────────────────────────────────────────
 
+// Pull real client niches from output/clients/ so the search isn't limited to
+// the generic tech-conference angle. Capped to keep query count (and SerpApi
+// spend) bounded regardless of how many clients are active.
+function activeClientTopics(maxTopics = 3) {
+  const clients = clientStore.getActiveClients();
+  const topics  = new Set();
+  for (const c of clients) {
+    for (const t of c.topics || []) topics.add(t);
+  }
+  return Array.from(topics).slice(0, maxTopics);
+}
+
 function buildQueries() {
   const now   = new Date();
   const month = now.toLocaleString('en-US', { month: 'long' });
   const year  = now.getFullYear();
 
-  return [
+  const generic = [
     `site:papercall.io "call for speakers" open ${year}`,
     `site:sessionize.com "call for speakers" ${year}`,
     `"call for speakers" conference ${month} ${year} deadline`,
     `speaking opportunity submit proposal conference ${year}`,
     `keynote speaker application conference open ${year}`,
   ];
+
+  const topicQueries = activeClientTopics().map(topic =>
+    `"call for speakers" "${topic}" conference ${year}`
+  );
+
+  return generic.concat(topicQueries);
 }
 
 // ── Summary ───────────────────────────────────────────────────────────────────
 
 function printSummary() {
+  const closed = oppStore.closeExpiredOpportunities();
   const all    = oppStore.getAllOpportunities();
   const open   = oppStore.getOpenOpportunities();
   const today  = new Date().toISOString().split('T')[0];
   const urgent = open.filter(o => o.cfpDeadline && o.cfpDeadline <= new Date(Date.now() + 7 * 86400000).toISOString().split('T')[0]);
+  const { config: budget } = costTracker.checkBudget();
 
   console.log('\n═══ Reeve Conference Pipeline ═══');
   console.log(`Total indexed:  ${all.length}`);
   console.log(`Open (active):  ${open.length}`);
   console.log(`Deadline <7d:   ${urgent.length}`);
+  if (closed.length > 0) console.log(`Auto-closed (deadline passed): ${closed.length}`);
+  console.log(`SerpApi spend:  $${budget.spent_this_month.toFixed(2)} / $${budget.monthly_cap.toFixed(2)} this month`);
   console.log('');
 
   if (urgent.length > 0) {
@@ -161,12 +185,26 @@ async function main() {
     process.exit(1);
   }
 
+  const closedExpired = oppStore.closeExpiredOpportunities();
+  if (closedExpired.length > 0) {
+    console.log(`Auto-closed ${closedExpired.length} opportunity(ies) past their CFP deadline.`);
+  }
+
+  let budgetConfig = costTracker.loadConfig();
   const queries   = buildQueries();
-  let found = 0, saved = 0, skipped = 0;
+  let found = 0, saved = 0, skipped = 0, budgetExhausted = false;
 
   for (const query of queries) {
+    const { ok, remaining } = costTracker.checkBudget();
+    if (!ok) {
+      console.log(`\nSerpApi monthly cap reached ($${budgetConfig.monthly_cap.toFixed(2)}, $${remaining.toFixed(3)} remaining) — stopping search.`);
+      budgetExhausted = true;
+      break;
+    }
+
     console.log(`\nSearching: ${query}`);
     const results = await searchSerpApi(query);
+    budgetConfig = costTracker.recordSearch(budgetConfig);
 
     for (const result of results) {
       found++;
@@ -194,12 +232,17 @@ async function main() {
 
   const open = oppStore.getOpenOpportunities();
 
+  if (!isDryRun) {
+    budgetConfig = costTracker.recordRunSummary(budgetConfig, { found, saved });
+  }
+
   console.log('\n' + '─'.repeat(50));
   console.log(`Scout complete.`);
   console.log(`  Results scanned:  ${found}`);
   console.log(`  New opportunities: ${isDryRun ? `${saved} (dry run)` : saved}`);
   console.log(`  Skipped (dup/non-CFP): ${skipped}`);
   console.log(`  Pipeline total (open): ${open.length}`);
+  console.log(`  SerpApi spend: $${budgetConfig.spent_this_month.toFixed(3)} / $${budgetConfig.monthly_cap.toFixed(2)} this month${budgetExhausted ? ' (cap reached — search stopped early)' : ''}`);
   console.log('─'.repeat(50));
 
   // Surface urgent deadlines

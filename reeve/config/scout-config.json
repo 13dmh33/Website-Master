@@ -1,0 +1,11 @@
+{
+  "monthly_cap": 5.00,
+  "cost_per_search": 0.015,
+  "current_month": null,
+  "spent_this_month": 0,
+  "total_runs": 0,
+  "total_found": 0,
+  "total_saved": 0,
+  "last_run": null,
+  "auto_run": false
+}

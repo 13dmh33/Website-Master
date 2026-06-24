@@ -40,7 +40,10 @@ Milly posts 4x/week → speaker sees content → DMs "stages"
 | `scripts/test-qualify.js` | 3 test scenarios — high/mid/low fit |
 
 ### Phase 2: Conference Scout ✅ BUILT
-`agents/conference-scout.js` — weekly SerpApi search for open CFPs (papercall.io, sessionize.com, Google). Deduplicates against existing pipeline. `--dry-run` and `--summary` flags.
+`agents/conference-scout.js` — weekly SerpApi search for open CFPs (papercall.io, sessionize.com, Google, plus a query per distinct topic across active clients, capped at 3). Deduplicates against existing pipeline. `--dry-run` and `--summary` flags.
+- **Cost cap:** `reeve/config/scout-config.json` + `lib/cost-tracker.js` — `$5/mo` SerpApi cap, `$0.015/search` estimate, tracked per-search and reset monthly (mirrors Trevo's `config/scout-config.json` pattern). Scout stops searching mid-run if the cap is hit.
+- **Auto-close:** `lib/opportunity-store.js#closeExpiredOpportunities()` runs at the start of every scout run and `--summary` call — flips any `open` opportunity past its `cfpDeadline` to `closed` (`closedReason: "deadline_passed"`) so Pitcher never pitches a dead CFP.
+- **Cron:** `.github/workflows/reeve-weekly-scout.yml` — Monday 6am MT (same slot as Milly), `workflow_dispatch` for manual runs, commits new opportunities + cost-cap state back to `main`. **Needs `SERPAPI_KEY` added as a GitHub Actions secret before this will run successfully.**
 
 ### Phase 3: Pitcher ✅ BUILT
 `agents/pitcher.js` — topic-matches clients to open opportunities, Claude drafts pitch emails. All output saved as drafts. Dave reviews via `scripts/review-drafts.js`.
@@ -292,7 +295,10 @@ reeve/
     qualifier.js          ✅ Phase 1 — Claude scoring + response generation
     state.js              ✅ Phase 1 — DM conversation persistence
     client-store.js       ✅ Phase 2 — client profiles CRUD
-    opportunity-store.js  ✅ Phase 2 — conference/CFP pipeline CRUD
+    opportunity-store.js  ✅ Phase 2 — conference/CFP pipeline CRUD + auto-close on deadline
+    cost-tracker.js       ✅ Phase 2 — SerpApi monthly spend cap
+  config/
+    scout-config.json     ✅ Phase 2 — SerpApi cap state ($5/mo default, resets monthly)
   templates/
     qualification.json    ✅ Phase 1 — trigger words, questions, messages, routing
     client-profile.json   ✅ Phase 2 — client schema reference + example

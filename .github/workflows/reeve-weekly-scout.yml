@@ -1,0 +1,51 @@
+name: Reeve weekly conference scout
+
+on:
+  schedule:
+    - cron: '0 13 * * 1'  # Monday 6am MDT (UTC-6) = 1pm UTC — same slot as Milly's pipeline
+  workflow_dispatch:       # manual trigger for testing
+
+jobs:
+  run-scout:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write  # needed to commit new opportunities + cost-cap config
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: cd reeve && npm install
+
+      - name: Run conference scout
+        run: cd reeve && node agents/conference-scout.js
+        env:
+          SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
+
+      - name: Print pipeline summary
+        run: cd reeve && node agents/conference-scout.js --summary
+
+      - name: Commit new opportunities + cost-cap update
+        run: |
+          git config user.name  "reeve-agent"
+          git config user.email "reeve@reeve.agency"
+          git add reeve/output/opportunities/ reeve/config/scout-config.json || true
+          git diff --cached --quiet || git commit -m "reeve: weekly conference scout $(date +%Y-%m-%d)"
+          git push origin main || true
+
+      - name: Upload output as artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reeve-scout-output-${{ github.run_id }}
+          path: reeve/output/opportunities/
+          retention-days: 14

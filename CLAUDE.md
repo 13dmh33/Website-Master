@@ -262,10 +262,11 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - [ ] **Reeve**: Meta App setup + Railway deploy + Cal.com link (see `reeve/CLAUDE.md`)
 
 ### Next Claude session — container tasks
-- [ ] Merge `claude/trevo-advisors-review-Sjewy` → main (website + demos)
-- [ ] Merge `claude/molly-ui-polish` → main (Configurator v2 + Molly sources)
-- [ ] Merge `claude/scout-refinement` → main (Scout v2 + market audit)
-- [ ] Add handyman demo site to website/demos/ (plumbing + electrical exist; handyman missing)
+- [x] Merge `claude/trevo-advisors-review-Sjewy` → main (already merged as of 2026-06-24 check)
+- [x] Merge `claude/molly-ui-polish` → main (already merged as of 2026-06-24 check)
+- [x] Merge `claude/scout-refinement` → main (already merged as of 2026-06-24 check)
+- [x] Handyman demo site exists at website/demos/handyman/
+- [x] 2026-06-24: Removed HVAC from all public-facing pages (/start/, /for/, /proposal/) — HVAC is excluded per conflict-of-interest policy but was still being marketed/linked publicly. website/demos/hvac/ left in place but no longer linked.
 
 ### Milly — first run (Mac, after Buffer token setup)
 1. Add `BUFFER_ACCESS_TOKEN` + `BUFFER_INSTAGRAM_PROFILE_ID` to `milly/.env`

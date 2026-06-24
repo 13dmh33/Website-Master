@@ -227,6 +227,7 @@ DAVE_NOTIFY_EMAIL=          # optional — high-signal post alerts
 
 ### A/B and analytics (built, pending data)
 - Caption A/B variants via `lib/ab-tracker.js` (2 hooks/week, same angle)
+- Image design A/B variants via `lib/ab-tracker.js#getCurrentImageVariant` — alternates weekly, independent of caption test (see "A/B visual testing" below)
 - Hashtag performance tracking in `brand-voice.json`
 - Content archive pattern analysis after 4+ weeks of data
 - `lib/reeve-handoff.js` — fires when profile visits >2x average; consumed by `reeve/scripts/check-high-signal.js` (see "Reeve handoff" below)
@@ -349,8 +350,20 @@ at 1080x1920 reusing the existing niche palettes/brand bar; `designer.js` render
 `posts.story` exists; `scheduler.js` always routes it to `output/queue/` via a `manualOnly` flag since Buffer's
 classic API v1 has no Stories endpoint — Dave posts it by hand from his phone.
 
+## A/B visual testing ✅ BUILT
+
+Independent of the caption A/B test — swaps overlay opacity to test photo-forward (variant B, lighter
+overlay) vs the current text-forward production default (variant A). `lib/canvas-render.js#DESIGN_VARIANTS`
+holds the two overlay configs; `getOverlay(variant)` resolves them. `renderCarouselSlide`, `renderQuotePost`,
+and `renderStorySlide` all take an optional `variant` param threaded through to `drawBackground`.
+`designer.js` picks the week's variant via `abTracker.getCurrentImageVariant()` (alternates weekly), applies
+it to every image rendered that week, records it via `recordImageVariant()`, and saves it on
+`content.imageVariant`. `analyst.js` reads `content.imageVariant` back onto each week's `analyticsData` so
+`abTracker.getImageVariantHistory()` can compare engagement across variant-A vs variant-B weeks once enough
+data exists — same "built, pending data" pattern as the caption A/B test (`recordVariantResult` exists but
+isn't called automatically; a human or future automation calls it once there's enough signal to declare a winner).
+
 ## Phase 2 items (not yet built)
 
 1. **Twilio alerts** — SMS to Dave when Scheduler or Analyst completes
 2. **Airtable swap** — replace local JSON with Airtable in `lib/store.js`; no agent changes
-3. **A/B visual testing** — swap overlay opacity and/or NICHE_PALETTES for design experiments

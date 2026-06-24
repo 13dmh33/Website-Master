@@ -35,6 +35,17 @@ const DESIGN_CONFIG = {
 const STORY_WIDTH  = 1080;
 const STORY_HEIGHT = 1920;
 
+// A/B visual design variants — swap overlay opacity to test photo-forward vs text-forward legibility
+// 'A' is the current production default; 'B' is the experiment
+const DESIGN_VARIANTS = {
+  A: { overlay: DESIGN_CONFIG.overlay },
+  B: { overlay: 'rgba(8, 15, 30, 0.42)' }, // lighter overlay — more photo visible, tests legibility tradeoff
+};
+
+function getOverlay(variant) {
+  return (DESIGN_VARIANTS[variant] || DESIGN_VARIANTS.A).overlay;
+}
+
 // niche → Unsplash search terms that produce editorial-quality images
 const NICHE_PHOTO_QUERIES = {
   booking:    ['conference stage spotlight', 'auditorium empty seats', 'keynote speaker stage', 'microphone stage lights'],
@@ -194,7 +205,7 @@ function drawGradientBackground(ctx, width, height, niche) {
 }
 
 // draw background: Unsplash photo + dark overlay, or niche gradient fallback
-async function drawBackground(ctx, width, height, niche) {
+async function drawBackground(ctx, width, height, niche, variant = 'A') {
   const query = getPhotoQuery(niche);
   const orientation = height > width ? 'portrait' : 'squarish';
   const photo = await fetchUnsplashPhoto(query, orientation);
@@ -208,8 +219,8 @@ async function drawBackground(ctx, width, height, niche) {
     const drawY  = (height - drawH) / 2;
     ctx.drawImage(photo, drawX, drawY, drawW, drawH);
 
-    // dark overlay for text legibility
-    ctx.fillStyle = DESIGN_CONFIG.overlay;
+    // dark overlay for text legibility — opacity varies by A/B design variant
+    ctx.fillStyle = getOverlay(variant);
     ctx.fillRect(0, 0, width, height);
 
     // bottom grounding gradient
@@ -265,12 +276,12 @@ function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
 }
 
 // render a single carousel slide
-async function renderCarouselSlide(headline, body, slideNum, totalSlides, niche = 'booking') {
+async function renderCarouselSlide(headline, body, slideNum, totalSlides, niche = 'booking', variant = 'A') {
   const { width, height, padding } = DESIGN_CONFIG;
   const canvas = new Canvas(width, height);
   const ctx    = canvas.getContext('2d');
 
-  await drawBackground(ctx, width, height, niche);
+  await drawBackground(ctx, width, height, niche, variant);
   renderTopBar(ctx, width);
   renderReeveBrand(ctx, width);
 
@@ -307,12 +318,12 @@ async function renderCarouselSlide(headline, body, slideNum, totalSlides, niche 
 }
 
 // render a quote/caption post
-async function renderQuotePost(mainText, attribution, niche = 'mindset') {
+async function renderQuotePost(mainText, attribution, niche = 'mindset', variant = 'A') {
   const { width, height, padding } = DESIGN_CONFIG;
   const canvas = new Canvas(width, height);
   const ctx    = canvas.getContext('2d');
 
-  await drawBackground(ctx, width, height, niche);
+  await drawBackground(ctx, width, height, niche, variant);
   renderTopBar(ctx, width);
   renderReeveBrand(ctx, width);
 
@@ -363,14 +374,14 @@ async function renderFallback(text, niche = 'mindset') {
 }
 
 // behind-the-scenes Story — vertical 1080x1920, big centered text + sticker-style CTA
-async function renderStorySlide(text, niche = 'mindset', cta = null) {
+async function renderStorySlide(text, niche = 'mindset', cta = null, variant = 'A') {
   const width  = STORY_WIDTH;
   const height = STORY_HEIGHT;
   const padding = DESIGN_CONFIG.padding;
   const canvas = new Canvas(width, height);
   const ctx    = canvas.getContext('2d');
 
-  await drawBackground(ctx, width, height, niche);
+  await drawBackground(ctx, width, height, niche, variant);
   renderTopBar(ctx, width);
   renderReeveBrand(ctx, width);
 
@@ -403,4 +414,5 @@ module.exports = {
   NICHE_PHOTO_QUERIES,
   STORY_WIDTH,
   STORY_HEIGHT,
+  DESIGN_VARIANTS,
 };

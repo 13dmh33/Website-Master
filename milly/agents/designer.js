@@ -9,8 +9,9 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') }
 
 const fs   = require('fs');
 const path = require('path');
-const render = require('../lib/canvas-render');
-const store  = require('../lib/store');
+const render    = require('../lib/canvas-render');
+const store     = require('../lib/store');
+const abTracker = require('../lib/ab-tracker');
 
 // save a buffer to a file, creating the directory if needed
 function saveBuffer(buffer, filePath) {
@@ -19,9 +20,9 @@ function saveBuffer(buffer, filePath) {
 }
 
 // render one carousel slide with graceful fallback on failure
-async function renderSlide(headline, body, slideNum, totalSlides, outPath, niche = 'booking') {
+async function renderSlide(headline, body, slideNum, totalSlides, outPath, niche = 'booking', variant = 'A') {
   try {
-    const buf = await render.renderCarouselSlide(headline, body, slideNum, totalSlides, niche);
+    const buf = await render.renderCarouselSlide(headline, body, slideNum, totalSlides, niche, variant);
     saveBuffer(buf, outPath);
     return true;
   } catch (err) {
@@ -38,9 +39,9 @@ async function renderSlide(headline, body, slideNum, totalSlides, outPath, niche
 }
 
 // render a single-image post with graceful fallback
-async function renderSingleImage(text, attribution, outPath, niche = 'mindset') {
+async function renderSingleImage(text, attribution, outPath, niche = 'mindset', variant = 'A') {
   try {
-    const buf = await render.renderQuotePost(text, attribution, niche);
+    const buf = await render.renderQuotePost(text, attribution, niche, variant);
     saveBuffer(buf, outPath);
     return true;
   } catch (err) {
@@ -57,9 +58,9 @@ async function renderSingleImage(text, attribution, outPath, niche = 'mindset') 
 }
 
 // render a vertical Story image with graceful fallback
-async function renderStoryImage(text, outPath, niche = 'mindset') {
+async function renderStoryImage(text, outPath, niche = 'mindset', variant = 'A') {
   try {
-    const buf = await render.renderStorySlide(text, niche);
+    const buf = await render.renderStorySlide(text, niche, null, variant);
     saveBuffer(buf, outPath);
     return true;
   } catch (err) {
@@ -86,8 +87,12 @@ async function main() {
   const imageDir = path.join(store.paths.images, weekOf);
   store.ensureDir(imageDir);
 
+  // A/B visual design test — alternates weekly, independent of the caption A/B test
+  const imageVariant = abTracker.getCurrentImageVariant();
+
   console.log(`Rendering images for week of ${weekOf}.`);
   console.log(`Output directory: ${imageDir}`);
+  console.log(`Design variant this week: ${imageVariant}`);
 
   const imagePaths = {};
 
@@ -98,7 +103,7 @@ async function main() {
   for (let i = 0; i < slides.length; i++) {
     const slide   = slides[i];
     const outPath = path.join(imageDir, `carousel-slide-0${i + 1}.png`);
-    const ok      = await renderSlide(slide.headline, slide.body || '', i + 1, slides.length, outPath, 'carousel');
+    const ok      = await renderSlide(slide.headline, slide.body || '', i + 1, slides.length, outPath, 'carousel', imageVariant);
     if (ok) carouselPaths.push(outPath);
   }
   imagePaths.carousel = carouselPaths;
@@ -107,33 +112,35 @@ async function main() {
   // 2. caption-1 (pain-point) — extract hook line for image
   const captionHook = posts.caption1.body.split('\n').find(l => l.trim().length > 10) || posts.caption1.body.slice(0, 60);
   const caption1Path = path.join(imageDir, 'caption-1.png');
-  await renderSingleImage(captionHook, '— Reeve', caption1Path, niches.caption || 'mindset');
+  await renderSingleImage(captionHook, '— Reeve', caption1Path, niches.caption || 'mindset', imageVariant);
   imagePaths.caption1 = [caption1Path];
   console.log('Caption-1 image rendered.');
 
   // 3. Reeve found — extract hook line
   const rfHook = posts.reevefound.body.split('\n').find(l => l.trim().length > 10) || posts.reevefound.body.slice(0, 60);
   const rf2Path = path.join(imageDir, 'caption-2-reeve-found.png');
-  await renderSingleImage(rfHook, 'That\'s the job. — Reeve', rf2Path, 'reevefound');
+  await renderSingleImage(rfHook, 'That\'s the job. — Reeve', rf2Path, 'reevefound', imageVariant);
   imagePaths.reevefound = [rf2Path];
   console.log('Reeve found image rendered.');
 
   // 4. reel hook image (just the hook line as a bold quote-style image)
   const reelHookPath = path.join(imageDir, 'reel-hook.png');
-  await renderSingleImage(posts.reel.hookLine, '— Reeve', reelHookPath, niches.reel || 'reel');
+  await renderSingleImage(posts.reel.hookLine, '— Reeve', reelHookPath, niches.reel || 'reel', imageVariant);
   imagePaths.reel = [reelHookPath];
   console.log('Reel hook image rendered.');
 
   // 5. Story — vertical 1080x1920, only rendered if generator produced one
   if (posts.story) {
     const storyPath = path.join(imageDir, 'story.png');
-    await renderStoryImage(posts.story.text, storyPath, posts.story.niche || 'mindset');
+    await renderStoryImage(posts.story.text, storyPath, posts.story.niche || 'mindset', imageVariant);
     imagePaths.story = [storyPath];
     console.log('Story image rendered.');
   }
 
+  abTracker.recordImageVariant(weekOf, imageVariant);
+
   // save image paths back to the content file so scheduler can find them
-  const updatedContent = { ...content, imagePaths };
+  const updatedContent = { ...content, imagePaths, imageVariant };
   store.savePost(updatedContent);
 
   const totalImages = Object.values(imagePaths).flat().length;

@@ -1,6 +1,6 @@
 # Website-Master — Project Overview
 
-This repo contains four product systems. Trevo is the main system (root directory). Milly, Reeve, and Strategy are in subdirectories with their own CLAUDE.md files.
+This repo contains five product systems. Trevo is the main system (root directory). Milly, Molly, Miley, Reeve, and Strategy are in subdirectories with their own CLAUDE.md files.
 
 ---
 
@@ -15,9 +15,9 @@ Your goal: 47 clients/month at $150/site + $65/mo hosting; AI bundles (Nora/Atla
 **Trade focus: Plumbing (40%) · Electrical (35%) · Handyman (25%) · Roofing (secondary)**
 **HVAC is excluded** — owner works for an HVAC manufacturer (conflict of interest). Never scout, pitch, or generate content targeting HVAC contractors.
 
-## Build Status (as of 2026-06-05 — updated session 3, final)
-- Scout v2: ✅ scripts/scout.js — --budget/--target/--min-score/--dry-run/--csv/--suggest flags; pre-dedup; social-only detection; qualify_rate; ROI estimate; **HVAC blocked**; **on claude/scout-refinement**
-- Market Audit: ✅ scripts/market-audit.js — 65 US metros scored; --trade/--top/--csv; zero API cost; **on claude/scout-refinement**
+## Build Status (as of 2026-06-24 — all branches below confirmed merged to main)
+- Scout v2: ✅ scripts/scout.js — --budget/--target/--min-score/--dry-run/--csv/--suggest flags; pre-dedup; social-only detection; qualify_rate; ROI estimate; **HVAC blocked**
+- Market Audit: ✅ scripts/market-audit.js — 65 US metros scored; --trade/--top/--csv; zero API cost
 - Enricher: ✅ scripts/enricher.js — Apollo.io People Match, 200 credit/mo cap; finds owner email; upgrades sms→email
 - Diagnoser: ✅ scripts/diagnoser.js — Claude Haiku, prompt caching, $5/mo cap; dual-channel routing
 - Checker: ✅ scripts/checker.js — 5 evals + Claude rewrite loop, $3/mo cap
@@ -38,10 +38,10 @@ Your goal: 47 clients/month at $150/site + $65/mo hosting; AI bundles (Nora/Atla
 - LinkedIn: ✅ scripts/linkedin.js — connection request + DM generator; CSV
 - Referral: ✅ scripts/referral.js — partner outreach (realtors/inspectors/PMs); LinkedIn + email
 - Brief: ✅ scripts/brief.js — daily morning briefing; pipeline stats; prioritized action list
-- Website/Demo: ✅ website/ — demos (plumbing/electrical/handyman), proposal, intake, checkout, /start, /atlas, /argus; **on claude/trevo-advisors-review-Sjewy**
-- Configurator v2: ✅ website/preview/index.html — 4-step flow, font picker, 6 color presets, 8 toggles, AI Enhance; **on claude/molly-ui-polish**
-- Netlify Enhance Fn: ✅ netlify/functions/enhance.js — POST → Claude Haiku; **on claude/molly-ui-polish**
-- Molly: ✅ molly/ — Instagram/LinkedIn content engine for Trevo; **on main (merged)**
+- Website/Demo: ✅ website/ — demos (plumbing/electrical/handyman/roofing/hvac), proposal, intake, checkout, /start, /atlas, /argus
+- Configurator v2: ✅ website/preview/index.html — 4-step flow, font picker, 6 color presets, 8 toggles, AI Enhance
+- Netlify Enhance Fn: ✅ netlify/functions/enhance.js — POST → Claude Haiku
+- Molly: ✅ molly/ — Instagram/LinkedIn content engine for Trevo's own brand; see `molly/CLAUDE.md`
 - Atlas: ✅ website/atlas/index.html — AI lead follow-up product; $200 + $65/mo
 - Argus: ✅ website/argus/index.html — AI review responder product; $200 + $65/mo
 
@@ -67,6 +67,17 @@ Weekly pipeline: Researcher → Generator → Designer → Scheduler (Mon–Tue 
 DM qualification agent + full outreach pipeline. When speaker DMs "stages" → 3-question qualification → 4-tier scoring → routes to Dave or declines. Phases 2–6: conference scout, pitcher, follower, reporter, closer.
 
 **Status:** All 6 phases built. Pending: Meta App setup + Railway deploy + Cal.com link.
+
+---
+
+## Miley — Instagram content engine for Techs4Tatas
+
+**Directory:** `/miley`
+**See:** `miley/CLAUDE.md` for full detail
+
+Posts to @techs4tatas — apparel for women in the trades, 30% of profit funds breast cancer research. Brand voice "Riley Brooks" (anonymous, warm, funny). Same Researcher → Generator → Designer → Scheduler → Analyst pipeline as Milly/Molly, plus a sales funnel (UTM-tracked link-in-bio hub, "DM PINK" autoresponder) and a Printify catalog scraper that keeps the product list in the funnel in sync with the live store.
+
+**Status:** Fully built and merged to main, including the headless-render fallback for the Printify catalog scraper (store renders client-side with no public API). Review-first workflow — nothing auto-posts; Dave approves via `scripts/push-queue.js`.
 
 ---
 
@@ -232,6 +243,8 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - 2026-06-05: Enricher, CEO sprint, Scout v2, Configurator v2, Molly, Market Audit
 - 2026-06-05: HVAC excluded across all systems
 - 2026-06-10: Milly/Reeve/Strategy code added to main — GitHub Actions active for Milly pipeline
+- 2026-06-23: Miley built — Techs4Tatas content engine, sales funnel (linkpage + DM PINK), Printify catalog scraper with headless-render fallback; merged to main
+- 2026-06-24: Root CLAUDE.md and molly/CLAUDE.md synced to reflect all 5 systems on main (Trevo, Milly, Molly, Miley, Reeve, Strategy)
 
 ## Twilio A2P 10DLC Status
 - Brand registration submitted: 2026-06-03
@@ -258,16 +271,20 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - [ ] **Netlify deploy**: confirm trevoadvisors.com/start/ + /for/ + /atlas/ + /argus/ + /demos/ all live
 - [ ] **Webhook**: `node scripts/webhook.js` + ngrok → register URL in Twilio console
 - [ ] **Apollo.io**: sign up ($49/mo) → add `APOLLO_API_KEY=` to `.env.local`
-- [ ] **Buffer classic token** → add to `milly/.env` (for Milly auto-posting to @reeve.agency)
+- [ ] **Buffer classic token** → add to `milly/.env` (for Milly auto-posting to @reeve.agency) and `miley/.env` (for Miley auto-posting to @techs4tatas)
 - [ ] **Reeve**: Meta App setup + Railway deploy + Cal.com link (see `reeve/CLAUDE.md`)
+- [ ] **Miley funnel**: host `linkpage/`, create GA4/Meta Pixel, email-capture form, wire "DM PINK" in ManyChat (see `miley/CLAUDE.md` setup checklist)
+- [ ] **Miley catalog scraper**: run `miley/scripts/scrape-catalog.js --write` on Mac/GitHub runner (Printify store host is blocked from container egress)
 
 ### Next Claude session — container tasks
-- [ ] Merge `claude/trevo-advisors-review-Sjewy` → main (website + demos)
-- [ ] Merge `claude/molly-ui-polish` → main (Configurator v2 + Molly sources)
-- [ ] Merge `claude/scout-refinement` → main (Scout v2 + market audit)
-- [ ] Add handyman demo site to website/demos/ (plumbing + electrical exist; handyman missing)
+- [ ] Add `molly/README.md` and a GitHub Actions cron workflow for Molly (Milly and Miley both have scheduled cron; Molly currently runs manually)
 
 ### Milly — first run (Mac, after Buffer token setup)
 1. Add `BUFFER_ACCESS_TOKEN` + `BUFFER_INSTAGRAM_PROFILE_ID` to `milly/.env`
 2. GitHub Actions cron is active on main — Mon 6am MT pipeline, Sun 10pm analytics
 3. Manual test: `cd milly && node scripts/test-pipeline.js`
+
+### Miley — first run (after Buffer token + funnel setup)
+1. Add `BUFFER_ACCESS_TOKEN` + `BUFFER_INSTAGRAM_PROFILE_ID` to `miley/.env`
+2. `FORCE_QUEUE=1` is the standing setting — review the Thu–Sun queue before approving with `node miley/scripts/push-queue.js`
+3. Manual test: `cd miley && node scripts/test-pipeline.js`

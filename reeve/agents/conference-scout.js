@@ -137,6 +137,13 @@ function extractOpportunity(result, { clientTopics = [], query = null } = {}) {
 
   const virtual = /virtual|online|remote/i.test(text);
 
+  // Location: try to read an explicit "City, State" mention out of the
+  // snippet first; if the snippet doesn't say, fall back to whichever US
+  // region this result came from a region-targeted query (see buildQueries) —
+  // a result returned for "conference Austin, Texas" is far more likely to
+  // be Austin-relevant than not, even if the snippet itself is silent on it.
+  const location = extractLocation(text) || (query?.region && !virtual ? query.region : null);
+
   return {
     conference:      (result.title || '').slice(0, 120),
     url,
@@ -147,10 +154,17 @@ function extractOpportunity(result, { clientTopics = [], query = null } = {}) {
     organizerEmail:  extractOrganizerEmail(text),
     sourceType:      sourceTypeFromUrl(url),
     virtual,
+    location,
     source:          url,
-    query,
+    query:           query?.text || query,
     notes:           (result.snippet || '').slice(0, 200),
   };
+}
+
+// Matches a US "City, ST" or "City, State" mention in title/snippet text.
+function extractLocation(text) {
+  const match = text.match(/\b([A-Z][a-zA-Z.]+(?:\s[A-Z][a-zA-Z.]+){0,2}),\s(Alabama|Alaska|Arizona|Arkansas|California|Colorado|Connecticut|Delaware|Florida|Georgia|Hawaii|Idaho|Illinois|Indiana|Iowa|Kansas|Kentucky|Louisiana|Maine|Maryland|Massachusetts|Michigan|Minnesota|Mississippi|Missouri|Montana|Nebraska|Nevada|New Hampshire|New Jersey|New Mexico|New York|North Carolina|North Dakota|Ohio|Oklahoma|Oregon|Pennsylvania|Rhode Island|South Carolina|South Dakota|Tennessee|Texas|Utah|Vermont|Virginia|Washington|West Virginia|Wisconsin|Wyoming|D\.?C\.?)\b/);
+  return match ? `${match[1]}, ${match[2]}` : null;
 }
 
 // ── Search queries ────────────────────────────────────────────────────────────
@@ -178,7 +192,24 @@ const SITES          = ['papercall.io', 'sessionize.com', 'speakerhub.com', 'con
 const PHRASE_VARIANTS = ['"call for speakers"', '"speaker submissions"', '"now accepting proposals"', '"apply to speak"'];
 const EXCLUDE         = '-jobs -hiring -recap';
 
-// Budget math: ~17-22 queries/run at $0.015/search ≈ $0.30/run, ~$1.20/mo at
+// US-only region rotation (see CLAUDE.md "Geographic targeting"). One region
+// is picked per run on a deterministic weekly clock so a scheduled run
+// naturally cycles through the whole list over ~12 weeks without needing any
+// persisted state. Adds 2 queries/run — keep this list's length reasonable
+// or the rotation period (and thus per-region coverage frequency) grows.
+const US_REGIONS = [
+  'Austin, Texas', 'San Francisco, California', 'New York, New York',
+  'Seattle, Washington', 'Chicago, Illinois', 'Boston, Massachusetts',
+  'Denver, Colorado', 'Atlanta, Georgia', 'Washington, D.C.',
+  'Los Angeles, California', 'Portland, Oregon', 'Nashville, Tennessee',
+];
+
+function currentRegion() {
+  const weekIndex = Math.floor(Date.now() / (7 * 86400000));
+  return US_REGIONS[weekIndex % US_REGIONS.length];
+}
+
+// Budget math: ~19-24 queries/run at $0.015/search ≈ $0.36/run, ~$1.44/mo at
 // a weekly cadence — well inside the $5/mo cap in config/scout-config.json,
 // so the per-query budget check in main() is the real backstop, not this count.
 function buildQueries() {
@@ -186,29 +217,39 @@ function buildQueries() {
   const month    = now.toLocaleString('en-US', { month: 'long' });
   const year     = now.getFullYear();
   const nextYear = year + 1;
+  const region   = currentRegion();
 
   const queries = [];
+  const push = (text, opts = {}) => queries.push({ text, region: null, ...opts });
 
   // Aggregator-specific — current year and next year (CFPs for next year's
   // event often open mid-this-year, so a year-only filter misses them).
   for (const site of SITES) {
-    queries.push(`site:${site} "call for speakers" open ${year} ${EXCLUDE}`);
-    queries.push(`site:${site} "call for speakers" ${nextYear} ${EXCLUDE}`);
+    push(`site:${site} "call for speakers" open ${year} ${EXCLUDE}`);
+    push(`site:${site} "call for speakers" ${nextYear} ${EXCLUDE}`);
   }
 
   // Generic phrasing — rotated wording since real listings don't all say
   // "call for speakers" verbatim ("submissions open", "apply to speak", etc.)
-  queries.push(`"call for speakers" conference ${month} ${year} deadline ${EXCLUDE}`);
-  queries.push(`speaking opportunity submit proposal conference ${year} ${EXCLUDE}`);
-  queries.push(`keynote speaker application conference open ${year} ${EXCLUDE}`);
-  queries.push(`"now accepting proposals" conference speaker ${year} ${EXCLUDE}`);
-  queries.push(`"apply to speak" conference ${nextYear} ${EXCLUDE}`);
+  push(`"call for speakers" conference ${month} ${year} deadline ${EXCLUDE}`);
+  push(`speaking opportunity submit proposal conference ${year} ${EXCLUDE}`);
+  push(`keynote speaker application conference open ${year} ${EXCLUDE}`);
+  push(`"now accepting proposals" conference speaker ${year} ${EXCLUDE}`);
+  push(`"apply to speak" conference ${nextYear} ${EXCLUDE}`);
+
+  // US region targeting — one region/run, rotated weekly. These queries put
+  // the city/state directly in the search text (Google's organic search has
+  // no location-radius filter; SerpApi's location/gl/hl params only bias
+  // results toward the *searcher's* locale, not the conference's, so they
+  // don't help here — see CLAUDE.md for why this approach was chosen instead).
+  push(`"call for speakers" conference "${region}" ${year} ${EXCLUDE}`, { region });
+  push(`speaker submissions conference "${region}" ${nextYear} ${EXCLUDE}`, { region });
 
   // Client-topic queries — capped (see activeClientTopics), phrasing rotated
   // per topic so the same niche isn't always searched with the same wording.
   activeClientTopics().forEach((topic, i) => {
     const phrase = PHRASE_VARIANTS[i % PHRASE_VARIANTS.length];
-    queries.push(`${phrase} "${topic}" conference ${year} ${EXCLUDE}`);
+    push(`${phrase} "${topic}" conference ${year} ${EXCLUDE}`);
   });
 
   return queries;
@@ -325,8 +366,8 @@ async function main() {
       break;
     }
 
-    console.log(`\nSearching: ${query}`);
-    const results = await searchSerpApi(query);
+    console.log(`\nSearching: ${query.text}`);
+    const results = await searchSerpApi(query.text);
     budgetConfig = costTracker.recordSearch(budgetConfig);
 
     for (const result of results) {

@@ -41,7 +41,8 @@ Milly posts 4x/week → speaker sees content → DMs "stages"
 
 ### Phase 2: Conference Scout ✅ BUILT
 `agents/conference-scout.js` — weekly SerpApi search for open CFPs across 4 aggregators (papercall.io, sessionize.com, speakerhub.com, confs.tech) plus generic Google queries, rotated phrasing, and a query per active-client topic (capped at 5). Deduplicates against existing pipeline. `--dry-run`, `--summary`, `--query-stats` flags.
-- **Cost cap:** `reeve/config/scout-config.json` + `lib/cost-tracker.js` — `$5/mo` SerpApi cap, `$0.015/search` estimate, tracked per-search and reset monthly (mirrors Trevo's `config/scout-config.json` pattern). Scout stops searching mid-run if the cap is hit. Current query mix (~16-20 queries/run) runs ≈$1.20/mo — well inside the cap.
+- **Cost cap:** `reeve/config/scout-config.json` + `lib/cost-tracker.js` — `$5/mo` SerpApi cap, `$0.015/search` estimate, tracked per-search and reset monthly (mirrors Trevo's `config/scout-config.json` pattern). Scout stops searching mid-run if the cap is hit. Current query mix (~19-24 queries/run) runs ≈$1.44/mo — well inside the cap.
+- **Geographic targeting (US-only):** `US_REGIONS` in `conference-scout.js` rotates one US city/state per run on a deterministic weekly clock (`Date.now()` / 7-day buckets, no persisted state needed) — cycles the full 12-region list roughly every 12 weeks. Two extra queries/run put the region directly in the query text (e.g. `"call for speakers" conference "Austin, Texas" 2026`). SerpApi's `location`/`gl`/`hl` params were deliberately **not** used — those bias results toward the *searcher's* locale (like "near me" personalization), not the conference's location, so they don't filter by where an event is held. Putting the city/state in the query text matches against the conference page's own content instead. Results from a region query get tagged `opportunity.location` with that region as a fallback if no explicit "City, State" is found in the snippet itself (`extractLocation()`).
 - **Auto-close:** `lib/opportunity-store.js#closeExpiredOpportunities()` runs at the start of every scout run and `--summary` call — flips any `open` opportunity past its `cfpDeadline` to `closed` (`closedReason: "deadline_passed"`) so Pitcher never pitches a dead CFP. Stale listings (deadline already past at scout time) are skipped entirely instead of being saved-then-closed; listings that explicitly say "CFP closed" are also skipped.
 - **Niche topic tagging:** topics are tagged against the generic 14-word list **and** every active client's real (free-text) niche keywords — fixes the original gap where speakers in non-tech niches (wellness, DEI, faith, real estate, etc.) never matched anything.
 - **Freshness filter:** SerpApi `tbs=qdr:m` biases results to the past month so old/dead CFP posts rank lower.
@@ -367,7 +368,7 @@ reeve/
   "feeAmount": { "min": 2500, "max": 5000, "raw": "$2,500, $5,000" },
   "organizerEmail": "cfp@saastr.com",
   "sourceType": "papercall",
-  "location": null,
+  "location": "Austin, Texas",
   "virtual": false,
   "source": "https://papercall.io/saastr-2027",
   "query": "site:papercall.io \"call for speakers\" open 2026 -jobs -hiring -recap",
@@ -378,7 +379,7 @@ reeve/
   "updatedAt": "2026-06-09T00:00:00.000Z"
 }
 ```
-`eventDate`, `audienceSize`, and `location` are declared in the schema but **not yet populated by Scout** — snippet-only extraction rarely contains this data reliably; would need a page-fetch step to fill these in. `feeAmount`, `organizerEmail`, and `sourceType` are best-effort and often `null`.
+`eventDate` and `audienceSize` are declared in the schema but **not yet populated by Scout** — snippet-only extraction rarely contains this data reliably; would need a page-fetch step to fill these in. `location` is now best-effort populated (explicit "City, State" mention in the snippet, falling back to the queried US region — see "Geographic targeting" above); `feeAmount`, `organizerEmail`, and `sourceType` remain best-effort and often `null`.
 
 ---
 

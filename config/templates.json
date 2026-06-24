@@ -150,14 +150,14 @@
         "id": "d1-sms",
         "name": "Follow-up 1 - soft check-in",
         "requires": [],
-        "body": "Hey - Dave from Trevo. Sent a note about your website a few days back. No pressure, just wanted to make sure it landed. Worth a quick look? trevoadvisors.com"
+        "body": "Hey - Dave from Trevo. Sent a note about your website a few days back. $100 flat, live in days. Grab 15 min: [Schedule Link]"
       },
       "email": {
         "id": "d1-email",
         "name": "Follow-up 1 - referral objection",
         "requires": [],
         "subject": "Do you actually need a website if referrals keep you busy?",
-        "body": "Hey,\n\nWanted to follow up on my last note.\n\nOne thing we hear a lot from [trade] businesses: \"We get most of our work from referrals — do we really need a website?\"\n\nShort answer: yes, because that referral is Googling you before they call. If nothing shows up, or what shows up looks old, you lose the job before it starts.\n\nWe fix that for $100 flat. No monthly fee.\n\nWorth 15 minutes? trevoadvisors.com/start/\n\n- Dave\ndave@trevoadvisors.com"
+        "body": "Hey,\n\nWanted to follow up on my last note.\n\nOne thing we hear a lot from [trade] businesses: \"We get most of our work from referrals — do we really need a website?\"\n\nShort answer: yes, because that referral is Googling you before they call. If nothing shows up, or what shows up looks old, you lose the job before it starts.\n\nWe fix that for $100 flat. No monthly fee.\n\nReady to go? Grab 15 minutes here: [Schedule Link]\n\n- Dave\ndave@trevoadvisors.com"
       }
     },
     "d1b": {
@@ -165,14 +165,14 @@
         "id": "d1b-sms",
         "name": "Follow-up 1b - ROI angle",
         "requires": [],
-        "body": "Dave @ Trevo - 2-3 [trade] jobs go to competitors with websites every week. At $400+ each, that adds up. $100 to fix it. trevoadvisors.com"
+        "body": "Dave @ Trevo - 2-3 [trade] jobs go to competitors with websites every week. At $400+ each, that adds up. $100 fixes it: [Schedule Link]"
       },
       "email": {
         "id": "d1b-email",
         "name": "Follow-up 1b - missed call angle",
         "requires": [],
         "subject": "Who's answering your phone when you're on a job?",
-        "body": "Hey,\n\nHere's a problem almost every [trade] owner tells us about: a customer calls while you're elbow-deep in a job. You can't answer. They hang up and call the next guy.\n\nThat's a $500-$2,000 job walking out the door.\n\nNora — our AI voice agent — answers calls, qualifies the job, and books the appointment while you're working. No hiring, no training.\n\nBundled with a website: $65/month.\n\n15 minutes: trevoadvisors.com/start/\n\n- Dave\ndave@trevoadvisors.com"
+        "body": "Hey,\n\nHere's a problem almost every [trade] owner tells us about: a customer calls while you're elbow-deep in a job. You can't answer. They hang up and call the next guy.\n\nThat's a $500-$2,000 job walking out the door.\n\nNora — our AI voice agent — answers calls, qualifies the job, and books the appointment while you're working. No hiring, no training.\n\nBundled with a website: $65/month.\n\nGrab 15 minutes here: [Schedule Link]\n\n- Dave\ndave@trevoadvisors.com"
       }
     },
     "d1c": {
@@ -180,14 +180,14 @@
         "id": "d1c-sms",
         "name": "Follow-up 1c - competitor visibility",
         "requires": [],
-        "body": "Dave @ Trevo. Searched [trade] in [City] today - competitors are showing up. If you're not there, you're invisible. trevoadvisors.com"
+        "body": "Dave @ Trevo. Searched [trade] in [City] today - competitors are showing up, you're not. Fix it this week: [Schedule Link]"
       },
       "email": {
         "id": "d1c-email",
         "name": "Follow-up 1c - competitor visibility",
         "requires": [],
         "subject": "Searched \"[trade] [City]\" — here's what I found",
-        "body": "Hey,\n\nI ran a quick Google search for [trade] services in [City].\n\nA few competitors have clean sites, Google reviews, and show up immediately. If [Business Name] isn't there, anyone searching right now isn't finding you — they're finding them.\n\nA website doesn't have to be complicated. Ours go live fast and cost $100 flat — no monthly fee.\n\nIf you want to be in that search result next week: trevoadvisors.com/start/\n\n- Dave\ndave@trevoadvisors.com"
+        "body": "Hey,\n\nI ran a quick Google search for [trade] services in [City].\n\nA few competitors have clean sites, Google reviews, and show up immediately. If [Business Name] isn't there, anyone searching right now isn't finding you — they're finding them.\n\nA website doesn't have to be complicated. Ours go live fast and cost $100 flat — no monthly fee.\n\nWant in next week's search results? Grab a slot: [Schedule Link]\n\n- Dave\ndave@trevoadvisors.com"
       }
     },
     "d2": {
@@ -195,14 +195,14 @@
         "id": "d2-sms",
         "name": "Final touch - breakup",
         "requires": [],
-        "body": "Last note from Dave at Trevo. If the timing's off, no worries - happy to revisit whenever. trevoadvisors.com"
+        "body": "Last note from Dave at Trevo. No pressure - if it's ever a priority, here's a direct link, no forms: [Schedule Link]"
       },
       "email": {
         "id": "d2-email",
         "name": "Final touch - breakup",
         "requires": [],
         "subject": "Closing the loop — [Business Name]",
-        "body": "Hey,\n\nI won't keep filling your inbox — this is my last note.\n\nIf the timing isn't right or you've already handled the website situation, genuinely glad to hear it.\n\nIf it ever becomes a priority — new site, or an AI agent that answers calls and books jobs while you're on a job — we're easy to find.\n\nWishing [Business Name] a busy season.\n\n- Dave\ndave@trevoadvisors.com | trevoadvisors.com"
+        "body": "Hey,\n\nI won't keep filling your inbox — this is my last note.\n\nIf the timing isn't right or you've already handled the website situation, genuinely glad to hear it.\n\nIf it ever becomes a priority — new site, or an AI agent that answers calls and books jobs while you're on a job — here's a direct link to grab time, no forms or back-and-forth: [Schedule Link]\n\nWishing [Business Name] a busy season.\n\n- Dave\ndave@trevoadvisors.com"
       }
     }
   }

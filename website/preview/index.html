@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Site Configurator — Trevo Advisors</title>
-  <meta name="description" content="Configure your contractor website and see a live preview. Start for $150." />
+  <meta name="description" content="Configure your contractor website and see a live preview. Start for $100." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <style>
@@ -168,11 +168,9 @@
     .photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; }
     .photo-thumb {
       width: 100%; height: 56px; object-fit: cover;
-      border-radius: 4px; cursor: pointer;
-      border: 2px solid transparent; transition: all .2s; opacity: .7;
+      border-radius: 4px;
+      border: 2px solid transparent; opacity: .9;
     }
-    .photo-thumb.selected { border-color: var(--teal); opacity: 1; }
-    .photo-thumb:hover { opacity: 1; }
     .shuffle-btn {
       width: 100%; margin-top: 6px;
       background: rgba(255,255,255,.04); border: 1px solid var(--border);
@@ -181,6 +179,7 @@
       cursor: pointer; font-family: 'Outfit', sans-serif; transition: all .2s;
     }
     .shuffle-btn:hover { border-color: var(--teal); color: var(--teal); }
+    #photoGridNote.warn { color: #E8A33D; }
     .upload-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px; }
     .upload-slot {
       height: 56px; border: 1.5px dashed rgba(255,255,255,.12);
@@ -437,7 +436,6 @@
       <div class="section-head"><span class="section-icon">🔧</span> Trade</div>
       <div class="trade-pills" id="tradePills">
         <button class="trade-pill" data-trade="Plumbing">Plumbing</button>
-        <button class="trade-pill" data-trade="HVAC">HVAC</button>
         <button class="trade-pill" data-trade="Electrical">Electrical</button>
         <button class="trade-pill" data-trade="Handyman">Handyman</button>
         <button class="trade-pill" data-trade="Roofing">Roofing</button>
@@ -564,6 +562,7 @@
       <div id="stockPhotos">
         <div class="photo-grid" id="photoGrid"></div>
         <button class="shuffle-btn" id="shuffleBtn">↺ Shuffle photos</button>
+        <div id="photoGridNote" style="font-size:10px;color:rgba(255,255,255,.3);margin-top:6px;line-height:1.4;"></div>
       </div>
       <div id="uploadPhotos" style="display:none;">
         <div class="upload-grid">
@@ -571,6 +570,9 @@
           <div class="upload-slot" id="slotSvc1"><input type="file" accept="image/*" data-slot="svc1" /><div class="upload-slot-label">Service 1</div></div>
           <div class="upload-slot" id="slotSvc2"><input type="file" accept="image/*" data-slot="svc2" /><div class="upload-slot-label">Service 2</div></div>
           <div class="upload-slot" id="slotSvc3"><input type="file" accept="image/*" data-slot="svc3" /><div class="upload-slot-label">Service 3</div></div>
+          <div class="upload-slot" id="slotSvc4"><input type="file" accept="image/*" data-slot="svc4" /><div class="upload-slot-label">Service 4</div></div>
+          <div class="upload-slot" id="slotSvc5"><input type="file" accept="image/*" data-slot="svc5" /><div class="upload-slot-label">Service 5</div></div>
+          <div class="upload-slot" id="slotSvc6"><input type="file" accept="image/*" data-slot="svc6" /><div class="upload-slot-label">Service 6</div></div>
         </div>
         <div style="font-size:10px;color:rgba(255,255,255,.25);margin-top:6px;">Uploaded photos replace stock photos in the preview.</div>
         <div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.06);">
@@ -626,7 +628,7 @@
 
     <!-- CTA BAR -->
     <div class="cta-bar" id="ctaBar">
-      <span class="cta-bar-text">Get this site live — starting at $150</span>
+      <span class="cta-bar-text">Get this site live — starting at $100</span>
       <button class="cta-bar-btn" id="ctaBarBtn">Get started →</button>
     </div>
 
@@ -648,7 +650,7 @@
             <div class="order-swatches"><div class="order-swatch" id="swatchAccent"></div><div class="order-swatch" id="swatchDark"></div></div>
           </div>
           <div class="order-row"><span class="order-label">Plan</span><span class="order-value" id="summaryPlan">Website + Hosting</span></div>
-          <div class="order-row"><span class="order-label">One-time</span><span class="order-value" id="summaryOneTime">$150</span></div>
+          <div class="order-row"><span class="order-label">One-time</span><span class="order-value" id="summaryOneTime">$100</span></div>
           <div class="order-row"><span class="order-label">Monthly</span><span class="order-value">$65/mo</span></div>
         </div>
 
@@ -659,7 +661,7 @@
               <div class="plan-radio" id="radioBasic"></div>
               <div class="plan-badge">Website Only</div>
               <h4>Site + Hosting</h4>
-              <div class="plan-price">$150</div>
+              <div class="plan-price">$100</div>
               <div class="plan-cadence">one-time, then $65/mo</div>
               <div class="plan-desc">Custom site, live in 48h, hosted + managed.</div>
             </div>
@@ -667,7 +669,7 @@
               <div class="plan-radio" id="radioNora"></div>
               <div class="plan-badge rec">★ Recommended</div>
               <h4>Site + Nora AI</h4>
-              <div class="plan-price">$200</div>
+              <div class="plan-price">$100</div>
               <div class="plan-cadence">one-time, then $65/mo</div>
               <div class="plan-desc">Nora answers calls, books jobs, texts missed leads 24/7.</div>
             </div>
@@ -675,7 +677,7 @@
               <div class="plan-radio" id="radioAtlas"></div>
               <div class="plan-badge ai-atlas">⚡ Atlas AI</div>
               <h4>Site + Atlas</h4>
-              <div class="plan-price">$200</div>
+              <div class="plan-price">$100</div>
               <div class="plan-cadence">one-time, then $65/mo</div>
               <div class="plan-desc">Atlas follows up every lead by text — automatically.</div>
             </div>
@@ -683,7 +685,7 @@
               <div class="plan-radio" id="radioArgus"></div>
               <div class="plan-badge ai-argus">⭐ Argus AI</div>
               <h4>Site + Argus</h4>
-              <div class="plan-price">$200</div>
+              <div class="plan-price">$100</div>
               <div class="plan-cadence">one-time, then $65/mo</div>
               <div class="plan-desc">Argus replies to every Google review — builds trust.</div>
             </div>
@@ -693,9 +695,9 @@
         <div style="display:flex;flex-direction:column;gap:10px;">
           <div>
             <div style="font-size:11px;color:var(--muted);margin-bottom:3px;">Total today</div>
-            <div class="checkout-total" id="checkoutTotal">$150 <span>+ $65/mo after</span></div>
+            <div class="checkout-total" id="checkoutTotal">$100 <span>+ $65/mo after</span></div>
           </div>
-          <button class="checkout-btn" id="checkoutBtn">Get started — pay $150</button>
+          <button class="checkout-btn" id="checkoutBtn">Get started — pay $100</button>
           <div class="checkout-guarantee">
             <span>✓</span> Satisfaction guaranteed &nbsp;·&nbsp;
             <span>✓</span> No contracts &nbsp;·&nbsp;
@@ -746,33 +748,33 @@ const FONTS = {
 
 /* ── TRADE PHOTOS ── */
 const TRADE_PHOTOS = {
-  Plumbing:   [['https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1534349762230-e0cadf78f5da?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&q=70&fit=crop']],
-  HVAC:       [['https://images.unsplash.com/photo-1629136916853-0b84b4a77a63?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1558002038-1055907df827?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1635048424329-a9bfb146d7aa?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1592503254549-d83d24a4dfab?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1609081219090-a6d81d3085bf?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=300&q=70&fit=crop']],
-  Electrical: [['https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=300&q=70&fit=crop']],
-  Handyman:   [['https://images.unsplash.com/photo-1513694203232-719a280e022f?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=300&q=70&fit=crop']],
-  Roofing:    [['https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1559767948-7a02e30c5b45?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1518640467707-6811f4a6ab73?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1612539465863-3d9ca1869e64?w=300&q=70&fit=crop']],
-  default:    [['https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1513694203232-719a280e022f?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=300&q=70&fit=crop','https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=300&q=70&fit=crop']]
+  Plumbing:   ['https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1534349762230-e0cadf78f5da?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1612539465863-3d9ca1869e64?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=300&q=78&fit=crop&auto=format'],
+  Electrical: ['https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1518640467707-6811f4a6ab73?w=300&q=78&fit=crop&auto=format'],
+  Handyman:   ['https://images.unsplash.com/photo-1513694203232-719a280e022f?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1559767948-7a02e30c5b45?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8?w=300&q=78&fit=crop&auto=format'],
+  Roofing:    ['https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1559767948-7a02e30c5b45?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1518640467707-6811f4a6ab73?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1612539465863-3d9ca1869e64?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=300&q=78&fit=crop&auto=format'],
+  default:    ['https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1530124566582-a618bc2615dc?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1513694203232-719a280e022f?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=300&q=78&fit=crop&auto=format','https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?w=300&q=78&fit=crop&auto=format']
 };
 function getPhotos(trade) {
-  const sets = TRADE_PHOTOS[trade] || TRADE_PHOTOS.default;
-  return sets[photoSetIndex % sets.length];
+  const all = TRADE_PHOTOS[trade] || TRADE_PHOTOS.default;
+  const offset = (photoSetIndex * 3) % all.length;
+  return all.slice(offset).concat(all.slice(0, offset)).slice(0, 7);
 }
 
 /* ── PHOTO GRID ── */
-let selectedPhotos = new Set([0,1,2,3,4,5]);
 function renderPhotoGrid() {
+  const hasCurated = !!TRADE_PHOTOS[config.trade];
   const photos = getPhotos(config.trade);
   const grid = document.getElementById('photoGrid');
-  grid.innerHTML = photos.map((url, i) =>
-    `<img src="${url}" class="photo-thumb${selectedPhotos.has(i)?' selected':''}" data-idx="${i}" alt="" loading="lazy" />`
+  const note = document.getElementById('photoGridNote');
+  grid.innerHTML = photos.map(url =>
+    `<img src="${url}" class="photo-thumb" alt="" loading="lazy" />`
   ).join('');
-  grid.querySelectorAll('.photo-thumb').forEach(img => {
-    img.addEventListener('click', () => {
-      const idx = parseInt(img.dataset.idx);
-      if (selectedPhotos.has(idx)) selectedPhotos.delete(idx); else selectedPhotos.add(idx);
-      img.classList.toggle('selected', selectedPhotos.has(idx));
-    });
-  });
+  if (note) {
+    note.textContent = hasCurated
+      ? 'These photos will appear on your site (1 hero + 6 service photos). Shuffle to see other options, or upload your own.'
+      : `We don't have curated stock photos for ${config.trade || 'this trade'} yet — showing generic placeholders. Switch to "Upload own" for photos that actually match your business.`;
+    note.classList.toggle('warn', !hasCurated);
+  }
 }
 
 /* ── STEP UPDATER ── */
@@ -794,6 +796,7 @@ document.getElementById('tradePills').addEventListener('click', e => {
   btn.classList.add('active');
   config.trade = btn.dataset.trade;
   photoSetIndex = 0; renderPhotoGrid(); updateSteps(); scheduleLivePreview();
+  switchPhotoTab(TRADE_PHOTOS[config.trade] ? 'stock' : 'upload');
 });
 
 /* ── TEXT INPUTS ── */
@@ -851,14 +854,14 @@ document.getElementById('toggleGrid').addEventListener('click', e => {
 });
 
 /* ── PHOTO TABS ── */
-document.getElementById('tabStock').addEventListener('click', () => {
-  document.getElementById('tabStock').classList.add('active'); document.getElementById('tabUpload').classList.remove('active');
-  document.getElementById('stockPhotos').style.display = ''; document.getElementById('uploadPhotos').style.display = 'none';
-});
-document.getElementById('tabUpload').addEventListener('click', () => {
-  document.getElementById('tabUpload').classList.add('active'); document.getElementById('tabStock').classList.remove('active');
-  document.getElementById('uploadPhotos').style.display = ''; document.getElementById('stockPhotos').style.display = 'none';
-});
+function switchPhotoTab(tab) {
+  document.getElementById('tabStock').classList.toggle('active', tab === 'stock');
+  document.getElementById('tabUpload').classList.toggle('active', tab === 'upload');
+  document.getElementById('stockPhotos').style.display  = tab === 'stock'  ? '' : 'none';
+  document.getElementById('uploadPhotos').style.display  = tab === 'upload' ? '' : 'none';
+}
+document.getElementById('tabStock').addEventListener('click', () => switchPhotoTab('stock'));
+document.getElementById('tabUpload').addEventListener('click', () => switchPhotoTab('upload'));
 document.getElementById('shuffleBtn').addEventListener('click', () => { photoSetIndex++; renderPhotoGrid(); scheduleLivePreview(); });
 
 /* ── UPLOAD PHOTOS ── */
@@ -958,7 +961,6 @@ function buildAndShowPreview() {
 /* ── SERVICE LISTS ── */
 const SERVICES = {
   Plumbing:    ['Drain Cleaning','Water Heaters','Leak Repair','Pipe Replacement','Sewer Lines','Fixture Install'],
-  HVAC:        ['AC Repair','Furnace Service','New Installations','Heat Pumps','Air Quality','Maintenance Plans'],
   Electrical:  ['Panel Upgrades','Outlet & Wiring','EV Chargers','Lighting','Safety Inspections','Emergency Calls'],
   Handyman:    ['Drywall & Patching','Painting','Fixture Hanging','Door & Window','Deck & Fence','Honey-do Lists'],
   Roofing:     ['Roof Replacement','Leak Repair','Storm Damage','Gutters','Inspections','Flat Roofs'],
@@ -984,8 +986,9 @@ function generateHTML(cfg) {
     up.svc1 || stockPhotos[1],
     up.svc2 || stockPhotos[2],
     up.svc3 || stockPhotos[3],
-    stockPhotos[4],
-    stockPhotos[5],
+    up.svc4 || stockPhotos[4],
+    up.svc5 || stockPhotos[5],
+    up.svc6 || stockPhotos[6],
   ];
   const svcList = (ai?.services?.map(s => s.name)) || SERVICES[trade] || SERVICES['default'] || ['Service 1','Service 2','Service 3','Service 4','Service 5','Service 6'];
   const svcDescs = ai?.services ? Object.fromEntries(ai.services.map(s => [s.name, s.desc])) : {};
@@ -1151,7 +1154,7 @@ ${reviewsSection}
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
       ${svcList.map((svc,i)=>`
         <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:9px;overflow:hidden;">
-          <div style="height:130px;background:url(${svcPhotos[i%svcPhotos.length]}) center/cover;"></div>
+          <div style="height:130px;background:url(${svcPhotos[i]}) center/cover;"></div>
           <div style="padding:12px;">
             <div style="font-size:13px;font-weight:700;margin-bottom:2px;">${svc}</div>
             <div style="font-size:11px;color:rgba(255,255,255,.4);">${svcDescs[svc] || 'Call for availability'}</div>
@@ -1201,7 +1204,7 @@ document.getElementById('purchaseClose').addEventListener('click', () => {
 });
 
 /* ── PLAN SELECTOR ── */
-const planPrices = { basic: '$150', nora: '$200', atlas: '$200', argus: '$200' };
+const planPrices = { basic: '$100', nora: '$100', atlas: '$100', argus: '$100' };
 const planLabels = { basic: 'Website + Hosting', nora: 'Website + Nora', atlas: 'Website + Atlas', argus: 'Website + Argus' };
 function updatePlanUI() {
   ['planBasic','planNora','planAtlas','planArgus'].forEach(id => {
@@ -1212,7 +1215,7 @@ function updatePlanUI() {
     el.querySelector('.plan-radio').style.background = selected ? 'var(--teal)' : '';
     el.querySelector('.plan-radio').style.borderColor = selected ? 'var(--teal)' : '';
   });
-  const price = planPrices[config.plan] || '$150';
+  const price = planPrices[config.plan] || '$100';
   document.getElementById('summaryPlan').textContent = planLabels[config.plan] || 'Website + Hosting';
   document.getElementById('summaryOneTime').textContent = price;
   document.getElementById('checkoutTotal').innerHTML = `${price} <span>+ $65/mo after</span>`;

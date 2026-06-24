@@ -219,37 +219,23 @@
     <div class="line-item">
       <div class="line-desc">
         <h4>Website Design & Build</h4>
-        <p>Custom 5–7 page site for your trade · Delivered in 3 business days · Mobile-ready</p>
+        <p>Custom 5–7 page site for your trade · Delivered in 3 business days · Mobile-ready · One-time, no monthly fee</p>
       </div>
-      <div class="line-price" id="build-price">$150</div>
-    </div>
-    <div class="line-item">
-      <div class="line-desc">
-        <h4>First Month Hosting</h4>
-        <p>SSL · fast servers · maintenance included</p>
-      </div>
-      <div class="line-price" style="color:var(--green);">FREE</div>
+      <div class="line-price" id="build-price">$100</div>
     </div>
     <div class="line-item" id="nora-line" style="display:none;">
       <div class="line-desc">
-        <h4>Nora AI Phone Agent Setup</h4>
-        <p>Included in your build — Dave configures after launch</p>
-      </div>
-      <div class="line-price" style="color:var(--blue);">+$50</div>
-    </div>
-    <div class="line-item">
-      <div class="line-desc">
-        <h4>Hosting — Month 2+</h4>
-        <p>Cancel anytime · No long-term commitment</p>
+        <h4>Nora AI Phone Agent</h4>
+        <p>Hosting + AI agent included — Dave configures after launch</p>
       </div>
       <div class="line-price monthly">$65/mo</div>
     </div>
 
     <div class="total-row">
       <div class="label">Due today</div>
-      <div class="amount" id="total-display">$150</div>
+      <div class="amount" id="total-display">$100</div>
     </div>
-    <div class="recurring-note">$65/mo billing starts after your site launches. Cancel anytime.</div>
+    <div class="recurring-note" id="recurring-note" style="display:none;">$65/mo billing starts after your site launches. Cancel anytime.</div>
 
     <div class="included">
       <h4>What's included</h4>
@@ -361,13 +347,13 @@
   // ── CONFIG ───────────────────────────────────────────────────────────────────
   // Create THREE Payment Links at https://dashboard.stripe.com/payment-links
   // All success URLs → https://trevoadvisors.com/thankyou/
-  // Website only ($150):
+  // Website only ($100):
   const STRIPE_LINK_WEBSITE = 'https://buy.stripe.com/YOUR_WEBSITE_LINK_ID';
-  // Website + Nora ($200):
+  // Website + Nora ($100):
   const STRIPE_LINK_NORA    = 'https://buy.stripe.com/YOUR_NORA_LINK_ID';
-  // Website + Atlas ($200) — same price, different setup:
+  // Website + Atlas ($100) — same price, different setup:
   const STRIPE_LINK_ATLAS   = 'https://buy.stripe.com/YOUR_ATLAS_LINK_ID';
-  // Website + Argus ($200) — review response agent:
+  // Website + Argus ($100) — review response agent:
   const STRIPE_LINK_ARGUS   = 'https://buy.stripe.com/YOUR_ARGUS_LINK_ID';
 
   // ── PLAN PRE-SELECT ───────────────────────────────────────────────────────────
@@ -386,13 +372,14 @@
     document.getElementById('noraAddon').classList.toggle('selected', nora);
     document.getElementById('atlasAddon').classList.toggle('selected', atlas);
     document.getElementById('argusAddon').classList.toggle('selected', argus);
-    document.getElementById('nora-line').style.display   = hasAddon ? 'flex' : 'none';
-    document.getElementById('build-price').textContent   = hasAddon ? '$200' : '$150';
-    document.getElementById('total-display').textContent  = hasAddon ? '$200' : '$150';
+    document.getElementById('nora-line').style.display      = hasAddon ? 'flex' : 'none';
+    document.getElementById('recurring-note').style.display = hasAddon ? 'block' : 'none';
+    document.getElementById('build-price').textContent      = '$100';
+    document.getElementById('total-display').textContent    = '$100';
     if (hasAddon) {
-      const label = argus ? 'Argus AI Review Response Setup'
-        : atlas ? 'Atlas AI Lead Follow-Up Setup'
-        : 'Nora AI Phone Agent Setup';
+      const label = argus ? 'Argus AI Review Agent'
+        : atlas ? 'Atlas AI Lead Follow-Up'
+        : 'Nora AI Phone Agent';
       document.querySelector('#nora-line .line-desc h4').textContent = label;
     }
   }

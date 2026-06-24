@@ -590,7 +590,7 @@ async function main() {
   ]);
 
   // ROI estimate based on historical conversion rate
-  const estimatedRevenue = leads.length * 0.05 * 150; // 5% close rate × $150
+  const estimatedRevenue = leads.length * 0.05 * 150; // 5% close rate × $100
 
   console.log('\n─'.repeat(50));
   console.log(`Done.`);
@@ -601,7 +601,7 @@ async function main() {
     console.log(`  Cost per lead:    $${effectiveCpp.toFixed(4)}`);
   console.log(`  Monthly spend:    $${config.spent_this_month.toFixed(4)} / $${config.monthly_cap.toFixed(2)}`);
   if (leads.length > 0)
-    console.log(`  Est. revenue:     $${estimatedRevenue.toFixed(0)} (5% close × $150)`);
+    console.log(`  Est. revenue:     $${estimatedRevenue.toFixed(0)} (5% close × $100)`);
   console.log(`  Saved to:         leads/${filename}`);
   console.log('─'.repeat(50));
 

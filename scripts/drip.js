@@ -88,12 +88,24 @@ function loadDripTemplates() {
   return JSON.parse(fs.readFileSync(TEMPLATES_PATH, 'utf8')).drip || {};
 }
 
+function scheduleLink() {
+  return process.env.CALCOM_LINK || process.env.SITE_START_URL || 'https://trevoadvisors.com/start/';
+}
+
+function cleanBusinessName(name) {
+  if (!name) return '';
+  let clean = name.split('|')[0].trim();
+  if (clean.length > 40) clean = clean.slice(0, 37).trimEnd() + '…';
+  return clean;
+}
+
 function fill(text, lead) {
   const cityDisplay = (lead.city || '').replace(/,\s*[A-Z]{2}$/, '');
   return text
-    .replace(/\[Business Name\]/g, lead.business_name || '')
-    .replace(/\[City\]/g,          cityDisplay)
-    .replace(/\[trade\]/g,         lead.trade          || '');
+    .replace(/\[Business Name\]/g,   cleanBusinessName(lead.business_name))
+    .replace(/\[City\]/g,            cityDisplay)
+    .replace(/\[trade\]/g,           lead.trade          || '')
+    .replace(/\[Schedule Link\]/g,   scheduleLink());
 }
 
 // ── QUEUE BUILDER ──────────────────────────────────────────────────────────────

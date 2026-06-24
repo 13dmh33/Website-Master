@@ -107,6 +107,10 @@ function loadConfig() {
 }
 
 function checkAutoRun(config) {
+  if (config.enabled === false) {
+    console.log('Pitcher is disabled (enabled = false in pitcher-config.json). Set it to true to resume sending.');
+    process.exit(0);
+  }
   if (hasFlag('--force')) return;
   if (!config.auto_run) {
     console.log('Pitcher is in manual mode (auto_run = false).');

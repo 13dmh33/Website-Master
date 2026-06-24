@@ -86,7 +86,7 @@ ${forUrl}
 
 ${reviewLine} A website turns that into actual calls instead of missed opportunities.
 
-$150 flat, live in 3 days. If you want to move forward, just reply and I'll send you the intake form. No pressure either way. — Dave @ Trevo Advisors`;
+$100 flat, live in 3 days. If you want to move forward, just reply and I'll send you the intake form. No pressure either way. — Dave @ Trevo Advisors`;
 }
 
 function buildFollowUpEmail(toEmail) {
@@ -112,12 +112,12 @@ What's included:
 - SEO foundation built in
 - Live in 3 business days
 
-One-time cost: $150. Hosting after that: $65/mo. No contracts.
+One-time cost: $100 flat. No monthly fee, no contracts.
 
 If you'd like to go ahead, here's the checkout link:
 https://trevoadvisors.com/checkout/
 
-And if you want to add an AI agent (auto-replies to texts/leads 24/7), that's $200 total instead of $150:
+And if you want to add an AI agent (auto-replies to texts/leads 24/7), same $100 build plus $65/mo:
 https://trevoadvisors.com/atlas/
 
 Happy to jump on a quick call to answer any questions. Just reply here.

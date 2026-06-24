@@ -1,4 +1,5 @@
 {
+  "enabled": false,
   "daily_limit": 30,
   "auto_run": false,
   "from_email": "dave@trevoadvisors.com",

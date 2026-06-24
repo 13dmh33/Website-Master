@@ -106,14 +106,29 @@ function selectTemplate(channel, lead) {
 
 // ── PLACEHOLDER FILLING ───────────────────────────────────────────────────────
 
+function scheduleLink() {
+  return process.env.CALCOM_LINK || process.env.SITE_START_URL || 'https://trevoadvisors.com/start/';
+}
+
+// Google Maps listings are often keyword-stuffed, e.g.
+// "Acacias Plumbing | Emergency Plumber, Drain Cleaning, Sewer Repair..." (108 chars).
+// Strip to the actual name before "|" and cap length so SMS stays in one segment.
+function cleanBusinessName(name) {
+  if (!name) return '';
+  let clean = name.split('|')[0].trim();
+  if (clean.length > 40) clean = clean.slice(0, 37).trimEnd() + '…';
+  return clean;
+}
+
 function fill(text, lead) {
-  const firstName   = (lead.business_name || '').split(/[\s,]+/)[0] || lead.business_name;
+  const businessName = cleanBusinessName(lead.business_name);
+  const firstName   = businessName.split(/[\s,]+/)[0] || businessName;
   const phone       = process.env.CONTACT_PHONE || 'trevoadvisors.com';
   const cityDisplay = (lead.city || '').replace(/,\s*[A-Z]{2}$/, '');
 
   return text
     .replace(/\[First Name\]/g,        firstName)
-    .replace(/\[Business Name\]/g,     lead.business_name       || '')
+    .replace(/\[Business Name\]/g,     businessName)
     .replace(/\[City\]/g,              cityDisplay)
     .replace(/\[trade\]/g,             lead.trade               || '')
     .replace(/\[X\]/g,                 String(lead.review_count || ''))
@@ -121,7 +136,8 @@ function fill(text, lead) {
     .replace(/\[Phone\]/g,             phone)
     .replace(/\[referral_name\]/gi,    lead.referral_name       || '')
     .replace(/\[competitor_name\]/gi,  lead.competitor_name     || '')
-    .replace(/\[website_observation\]/gi, lead.website_observation || '');
+    .replace(/\[website_observation\]/gi, lead.website_observation || '')
+    .replace(/\[Schedule Link\]/g,     scheduleLink());
 }
 
 function hasUnfilledPlaceholder(text) {

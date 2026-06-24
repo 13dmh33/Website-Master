@@ -89,9 +89,13 @@ function createOpportunity(data) {
     topics:       data.topics       || [],       // e.g. ["leadership", "technology"]
     audienceSize: data.audienceSize || null,
     fee:          data.fee          || 'unknown', // "paid" | "honorarium" | "unpaid" | "unknown"
+    feeAmount:    data.feeAmount    || { min: null, max: null, raw: null }, // best-effort $ extraction
+    organizerEmail: data.organizerEmail || null, // best-effort — usually null, Dave fills in on review
+    sourceType:   data.sourceType   || 'unknown', // "papercall" | "sessionize" | "speakerhub" | "confs.tech" | "direct"
     location:     data.location     || null,
     virtual:      data.virtual      || false,
     source:       data.source       || null,     // URL where the CFP was found
+    query:        data.query        || null,     // search query that produced this opportunity (see --query-stats)
     notes:        data.notes        || '',
     status:       'open',
     pitches:      [],                            // array of pitch records (added by pitcher.js)

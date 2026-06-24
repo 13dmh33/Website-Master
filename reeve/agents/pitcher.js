@@ -68,6 +68,15 @@ function matchScore(clientTopics, oppTopics) {
   return hits / Math.max(oppSet.size, 1);
 }
 
+// Deprioritize (don't hard-exclude — visibility-building gigs can still be
+// worth pitching) opportunities whose extracted fee ceiling falls below the
+// client's stated floor. Most opportunities have no feeAmount data at all
+// (snippet-only extraction), so this only fires when we actually know the fee.
+function feeFitMultiplier(clientFee, oppFeeAmount) {
+  if (!clientFee?.min || !oppFeeAmount?.max) return 1;
+  return oppFeeAmount.max < clientFee.min ? 0.3 : 1;
+}
+
 // ── Claude pitch generation ───────────────────────────────────────────────────
 
 async function draftPitch(speaker, opportunity) {
@@ -85,7 +94,7 @@ CONFERENCE / OPPORTUNITY:
 Name: ${opportunity.conference}
 Topics they want: ${opportunity.topics?.join(', ') || 'not specified'}
 CFP deadline: ${opportunity.cfpDeadline || 'not listed'}
-Fee offered: ${opportunity.fee || 'unknown'}
+Fee offered: ${opportunity.feeAmount?.raw || opportunity.fee || 'unknown'}
 URL: ${opportunity.url || 'not available'}
 Notes: ${opportunity.notes || 'none'}
 
@@ -150,9 +159,9 @@ async function main() {
   for (const speaker of clients) {
     console.log(`\n── ${speaker.name} (${speaker.id}) ──`);
 
-    // Score and sort opportunities by topic match
+    // Score and sort opportunities by topic match, deprioritized by fee fit
     const ranked = opportunities
-      .map(opp => ({ opp, score: matchScore(speaker.topics, opp.topics) }))
+      .map(opp => ({ opp, score: matchScore(speaker.topics, opp.topics) * feeFitMultiplier(speaker.fee, opp.feeAmount) }))
       .filter(({ score }) => score > 0)
       .sort((a, b) => b.score - a.score)
       .slice(0, 5); // max 5 pitches per client per run
@@ -197,7 +206,7 @@ async function main() {
         conference:     opp.conference,
         cfpDeadline:    opp.cfpDeadline || null,
         opportunityUrl: opp.url || null,
-        to:             null,   // conference organizer email — Dave fills in on review
+        to:             opp.organizerEmail || null,   // best-effort from scout; Dave fills in on review if still null
         subject:        pitchContent.subject,
         body:           pitchContent.body,
         matchScore:     score,

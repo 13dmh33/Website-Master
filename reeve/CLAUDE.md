@@ -40,13 +40,20 @@ Milly posts 4x/week → speaker sees content → DMs "stages"
 | `scripts/test-qualify.js` | 3 test scenarios — high/mid/low fit |
 
 ### Phase 2: Conference Scout ✅ BUILT
-`agents/conference-scout.js` — weekly SerpApi search for open CFPs (papercall.io, sessionize.com, Google, plus a query per distinct topic across active clients, capped at 3). Deduplicates against existing pipeline. `--dry-run` and `--summary` flags.
-- **Cost cap:** `reeve/config/scout-config.json` + `lib/cost-tracker.js` — `$5/mo` SerpApi cap, `$0.015/search` estimate, tracked per-search and reset monthly (mirrors Trevo's `config/scout-config.json` pattern). Scout stops searching mid-run if the cap is hit.
-- **Auto-close:** `lib/opportunity-store.js#closeExpiredOpportunities()` runs at the start of every scout run and `--summary` call — flips any `open` opportunity past its `cfpDeadline` to `closed` (`closedReason: "deadline_passed"`) so Pitcher never pitches a dead CFP.
+`agents/conference-scout.js` — weekly SerpApi search for open CFPs across 4 aggregators (papercall.io, sessionize.com, speakerhub.com, confs.tech) plus generic Google queries, rotated phrasing, and a query per active-client topic (capped at 5). Deduplicates against existing pipeline. `--dry-run`, `--summary`, `--query-stats` flags.
+- **Cost cap:** `reeve/config/scout-config.json` + `lib/cost-tracker.js` — `$5/mo` SerpApi cap, `$0.015/search` estimate, tracked per-search and reset monthly (mirrors Trevo's `config/scout-config.json` pattern). Scout stops searching mid-run if the cap is hit. Current query mix (~16-20 queries/run) runs ≈$1.20/mo — well inside the cap.
+- **Auto-close:** `lib/opportunity-store.js#closeExpiredOpportunities()` runs at the start of every scout run and `--summary` call — flips any `open` opportunity past its `cfpDeadline` to `closed` (`closedReason: "deadline_passed"`) so Pitcher never pitches a dead CFP. Stale listings (deadline already past at scout time) are skipped entirely instead of being saved-then-closed; listings that explicitly say "CFP closed" are also skipped.
+- **Niche topic tagging:** topics are tagged against the generic 14-word list **and** every active client's real (free-text) niche keywords — fixes the original gap where speakers in non-tech niches (wellness, DEI, faith, real estate, etc.) never matched anything.
+- **Freshness filter:** SerpApi `tbs=qdr:m` biases results to the past month so old/dead CFP posts rank lower.
+- **Year coverage:** aggregator queries run for both the current year and next year — CFPs for next year's event often open mid-this-year and were previously missed.
+- **Extra fields captured (best-effort, snippet-only — often null):** `feeAmount {min,max,raw}` (actual $ figures, not just paid/unpaid), `organizerEmail`, `sourceType` (papercall/sessionize/speakerhub/confs.tech/direct), `query` (which search produced this opportunity — feeds `--query-stats`).
+- **Query effectiveness loop:** `node agents/conference-scout.js --query-stats` aggregates found/pitched/accepted counts per query, so weak queries can be dropped and productive ones expanded.
 - **Cron:** `.github/workflows/reeve-weekly-scout.yml` — Monday 6am MT (same slot as Milly), `workflow_dispatch` for manual runs, commits new opportunities + cost-cap state back to `main`. **Needs `SERPAPI_KEY` added as a GitHub Actions secret before this will run successfully.**
 
 ### Phase 3: Pitcher ✅ BUILT
 `agents/pitcher.js` — topic-matches clients to open opportunities, Claude drafts pitch emails. All output saved as drafts. Dave reviews via `scripts/review-drafts.js`.
+- Opportunities whose extracted `feeAmount.max` falls below a client's fee floor are deprioritized (not excluded — visibility gigs can still be worth pitching), via `feeFitMultiplier()`.
+- Draft `to` field auto-fills from `opp.organizerEmail` when Scout found one; otherwise still `null` for Dave to fill in.
 
 ### Phase 4: Follower ✅ BUILT
 `agents/follower.js` — finds sent pitches >14 days old with no response, Claude drafts follow-up emails. Dave reviews before send.
@@ -339,22 +346,32 @@ reeve/
 }
 ```
 
-### Opportunity (`output/opportunities/{conferenceId}.json`)
+### Opportunity (`output/opportunities/{opportunityId}.json`) — actual schema, lib/opportunity-store.js
 ```json
 {
-  "id": "opp-001",
-  "conference": "SaaStr Annual 2027",
+  "id": "opp-mqrc7w1u-wskm",
+  "conference": "SaaStr Annual 2027 — Call for Speakers",
   "url": "https://papercall.io/saastr-2027",
   "cfpDeadline": "2026-09-15",
-  "topic": "SaaS, leadership, growth",
-  "fee": "unpaid/honorarium",
-  "clientsTargeted": ["client-001"],
+  "eventDate": null,
+  "topics": ["leadership", "executive presence"],
+  "audienceSize": null,
+  "fee": "paid",
+  "feeAmount": { "min": 2500, "max": 5000, "raw": "$2,500, $5,000" },
+  "organizerEmail": "cfp@saastr.com",
+  "sourceType": "papercall",
+  "location": null,
+  "virtual": false,
+  "source": "https://papercall.io/saastr-2027",
+  "query": "site:papercall.io \"call for speakers\" open 2026 -jobs -hiring -recap",
+  "notes": "We are now accepting proposals on executive presence...",
   "status": "open",
-  "foundAt": "2026-06-09",
-  "pitchedAt": null,
-  "response": null
+  "pitches": [],
+  "foundAt": "2026-06-09T00:00:00.000Z",
+  "updatedAt": "2026-06-09T00:00:00.000Z"
 }
 ```
+`eventDate`, `audienceSize`, and `location` are declared in the schema but **not yet populated by Scout** — snippet-only extraction rarely contains this data reliably; would need a page-fetch step to fill these in. `feeAmount`, `organizerEmail`, and `sourceType` are best-effort and often `null`.
 
 ---
 

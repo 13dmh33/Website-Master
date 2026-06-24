@@ -56,10 +56,10 @@ const PARTNER_TYPES = {
     connect_note: (city) =>
       `Hi — I build contractor websites in ${city}. You probably know every plumber and electrician in the area — I'd love to connect and compare notes. Mutual referrals?`,
     followup_dm: (city) =>
-      `Hey — thanks for connecting. I work with home service contractors in ${city} who need a professional web presence. Your world and mine overlap a lot.\n\nIf you ever have a contractor client who asks about getting a website, send them my way — I'll do the same when contractors mention needing inspection referrals.\n\n$150 flat, live in 3 days. No pressure. Just want to be on your radar. — Dave`,
+      `Hey — thanks for connecting. I work with home service contractors in ${city} who need a professional web presence. Your world and mine overlap a lot.\n\nIf you ever have a contractor client who asks about getting a website, send them my way — I'll do the same when contractors mention needing inspection referrals.\n\n$100 flat, live in 3 days. No pressure. Just want to be on your radar. — Dave`,
     email_subject: (city) => `Inspector + contractor website referrals — ${city}`,
     email_body: (city) =>
-      `Hi,\n\nI'm Dave with Trevo Advisors. I build affordable websites for contractors in ${city} — $150 flat.\n\nI'm guessing you interact with plumbers, electricians, and HVAC techs regularly. If any of them ask about getting a website, I'd love the introduction. I'm happy to refer you when homeowners mention needing an inspection.\n\nSimple, low-pressure mutual referral arrangement. Interested? — Dave\ndave@trevoadvisors.com`,
+      `Hi,\n\nI'm Dave with Trevo Advisors. I build affordable websites for contractors in ${city} — $100 flat.\n\nI'm guessing you interact with plumbers, electricians, and HVAC techs regularly. If any of them ask about getting a website, I'd love the introduction. I'm happy to refer you when homeowners mention needing an inspection.\n\nSimple, low-pressure mutual referral arrangement. Interested? — Dave\ndave@trevoadvisors.com`,
   },
   property_manager: {
     label:       'Property Manager',
@@ -70,10 +70,10 @@ const PARTNER_TYPES = {
     connect_note: (city) =>
       `Hi — I build contractor websites in ${city} — plumbers, HVAC, electricians. Property managers use these trades constantly. Curious if you'd want to share referrals. Worth connecting?`,
     followup_dm: (city) =>
-      `Hey — thanks for the connection. I work with home service contractors in ${city} and I'm looking to build relationships with property managers.\n\nI build contractor websites ($150 flat) and can help contractors you already work with look more professional online. Sometimes that helps them get more work from other sources, which means more capacity for your properties too.\n\nAny contractors in your vendor network who might want a site? Happy to offer your referrals a discount. — Dave`,
+      `Hey — thanks for the connection. I work with home service contractors in ${city} and I'm looking to build relationships with property managers.\n\nI build contractor websites ($100 flat) and can help contractors you already work with look more professional online. Sometimes that helps them get more work from other sources, which means more capacity for your properties too.\n\nAny contractors in your vendor network who might want a site? Happy to offer your referrals a discount. — Dave`,
     email_subject: (city) => `Contractor website referral — ${city} property managers`,
     email_body: (city) =>
-      `Hi,\n\nI'm Dave with Trevo Advisors. I build contractor websites in ${city} — $150 flat, 3 days turnaround.\n\nProperty managers interact with contractors constantly. If any of your vendors mention needing a website, I'd appreciate the referral. I offer a $25 referral credit for any client you send.\n\nI can also build landing pages for your vendor relationships at a discount if that's useful. — Dave\ndave@trevoadvisors.com | trevoadvisors.com`,
+      `Hi,\n\nI'm Dave with Trevo Advisors. I build contractor websites in ${city} — $100 flat, 3 days turnaround.\n\nProperty managers interact with contractors constantly. If any of your vendors mention needing a website, I'd appreciate the referral. I offer a $25 referral credit for any client you send.\n\nI can also build landing pages for your vendor relationships at a discount if that's useful. — Dave\ndave@trevoadvisors.com | trevoadvisors.com`,
   },
   designer: {
     label:       'Interior Designer',
@@ -84,10 +84,10 @@ const PARTNER_TYPES = {
     connect_note: (city) =>
       `Hi — I build contractor websites in ${city}. Plumbers, electricians, general contractors. You probably recommend contractors constantly — worth a quick connection?`,
     followup_dm: (city) =>
-      `Hey — thanks for connecting! I build websites for home service contractors in ${city}. I imagine you refer plumbers, electricians, or general contractors to clients fairly often.\n\nIf they ever mention needing a website, I'd love the intro — $150 flat, 3 days, looks like it cost $3,000+. And if I have contractor clients who mention needing design help, I'll send them your way.\n\n— Dave @ Trevo Advisors`,
+      `Hey — thanks for connecting! I build websites for home service contractors in ${city}. I imagine you refer plumbers, electricians, or general contractors to clients fairly often.\n\nIf they ever mention needing a website, I'd love the intro — $100 flat, 3 days, looks like it cost $3,000+. And if I have contractor clients who mention needing design help, I'll send them your way.\n\n— Dave @ Trevo Advisors`,
     email_subject: (city) => `Contractor referral partnership — ${city}`,
     email_body: (city) =>
-      `Hi,\n\nI'm Dave with Trevo Advisors. I build websites for contractors in ${city} (plumbers, electricians, HVAC, general contractors) — $150 flat.\n\nI know designers recommend contractors to renovation clients regularly. I'd love to be a resource for your clients — and refer design clients your way when contractors mention needing design help.\n\nSimple mutual arrangement. Worth a quick chat? — Dave\ndave@trevoadvisors.com`,
+      `Hi,\n\nI'm Dave with Trevo Advisors. I build websites for contractors in ${city} (plumbers, electricians, HVAC, general contractors) — $100 flat.\n\nI know designers recommend contractors to renovation clients regularly. I'd love to be a resource for your clients — and refer design clients your way when contractors mention needing design help.\n\nSimple mutual arrangement. Worth a quick chat? — Dave\ndave@trevoadvisors.com`,
   }
 };
 

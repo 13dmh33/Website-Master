@@ -205,7 +205,7 @@ function main() {
   console.log('\nCall tips:');
   console.log('  • Best time: Tue–Thu 10am–12pm or 2–4pm local time');
   console.log('  • Opener: "Hey, is this [name]? I\'m Dave — I build websites for [trade]s in [city]. Quick question — do you have a site?"');
-  console.log('  • If no: "I can have one live this week for $150 flat. Worth a 15-minute call?"');
+  console.log('  • If no: "I can have one live this week for $100 flat. Worth a 15-minute call?"');
   console.log('  • If yes: "Got it — we also do AI chatbots that follow up on quote requests 24/7. Five minutes to show you?"');
   console.log('  • Close: "I\'ll send you a link to see what it looks like before you decide anything."');
   console.log();

@@ -41,16 +41,16 @@ const TRADE_LABELS = {
 
 // Variant pool — we rotate to avoid pattern detection
 const CONNECT_VARIANTS = [
-  (b) => `Hi — I saw ${b.business_name} on Google Maps. ${b.review_count} reviews and no website is a gap I help fix. I build sites for ${TRADE_LABELS[b.trade] || b.trade}s — $150 flat. Worth connecting? — Dave`,
-  (b) => `Hey — noticed ${b.business_name} has great Google reviews but no site. I build contractor websites that convert that traffic into calls. $150, live in a week. Happy to connect — Dave @ Trevo`,
-  (b) => `Hi — I help ${TRADE_LABELS[b.trade] || b.trade}s in ${cityShort(b.city)} turn their Google reputation into real leads with a simple $150 website. Saw ${b.business_name} and thought it'd be a fit. — Dave`,
+  (b) => `Hi — I saw ${b.business_name} on Google Maps. ${b.review_count} reviews and no website is a gap I help fix. I build sites for ${TRADE_LABELS[b.trade] || b.trade}s — $100 flat. Worth connecting? — Dave`,
+  (b) => `Hey — noticed ${b.business_name} has great Google reviews but no site. I build contractor websites that convert that traffic into calls. $100, live in a week. Happy to connect — Dave @ Trevo`,
+  (b) => `Hi — I help ${TRADE_LABELS[b.trade] || b.trade}s in ${cityShort(b.city)} turn their Google reputation into real leads with a simple $100 website. Saw ${b.business_name} and thought it'd be a fit. — Dave`,
 ];
 
 // ── FOLLOW-UP DM (sent 3–5 days after connection) ────────────────────────────
 
 const FOLLOWUP_VARIANTS = [
-  (b) => `Hey — thanks for connecting. Quick context: I saw ${b.business_name} has ${b.review_count} Google reviews (great!) but no website. Right now those reviews aren't turning into calls the way they could.\n\nI built sites for ${TRADE_LABELS[b.trade] || b.trade}s in similar spots — $150 flat, I handle everything, live in 3 days. Would it be worth a 15-min call this week? I can show you what it looks like before you decide anything.\n\n— Dave @ Trevo Advisors\ntrevoadvisors.com`,
-  (b) => `Hi — just following up from my connection request. I specialize in websites for home service contractors — specifically ones like ${b.business_name} that have strong Google reviews but aren't capturing that traffic yet.\n\nI keep it simple: $150 flat, custom to your trade, live within a week. I can send a demo first so you see it before committing.\n\nWorth a quick chat? — Dave`,
+  (b) => `Hey — thanks for connecting. Quick context: I saw ${b.business_name} has ${b.review_count} Google reviews (great!) but no website. Right now those reviews aren't turning into calls the way they could.\n\nI built sites for ${TRADE_LABELS[b.trade] || b.trade}s in similar spots — $100 flat, I handle everything, live in 3 days. Would it be worth a 15-min call this week? I can show you what it looks like before you decide anything.\n\n— Dave @ Trevo Advisors\ntrevoadvisors.com`,
+  (b) => `Hi — just following up from my connection request. I specialize in websites for home service contractors — specifically ones like ${b.business_name} that have strong Google reviews but aren't capturing that traffic yet.\n\nI keep it simple: $100 flat, custom to your trade, live within a week. I can send a demo first so you see it before committing.\n\nWorth a quick chat? — Dave`,
 ];
 
 function cityShort(city) { return (city || '').split(',')[0].trim(); }

@@ -10,7 +10,7 @@ This repo contains four product systems. Trevo is the main system (root director
 
 Brand colors: Navy #0A1228 (background) · Teal #00C8AF (primary accent) · Deep Teal #008870 (logo iris) · White #FFFFFF · Muted #8BA8C4 · Border rgba(255,255,255,0.08)
 
-Your goal: 47 clients/month at $150/site + $65/mo hosting; AI bundles (Nora/Atlas/Argus) add $200 build + $65/mo. Three AI products, one price point.
+Your goal: 47 clients/month at $100/site one-time (no monthly fee); AI bundles (Nora/Atlas/Argus) are $100 build + $65/mo. Three AI products, one price point.
 
 **Trade focus: Plumbing (40%) · Electrical (35%) · Handyman (25%) · Roofing (secondary)**
 **HVAC is excluded** — owner works for an HVAC manufacturer (conflict of interest). Never scout, pitch, or generate content targeting HVAC contractors.
@@ -42,8 +42,8 @@ Your goal: 47 clients/month at $150/site + $65/mo hosting; AI bundles (Nora/Atla
 - Configurator v2: ✅ website/preview/index.html — 4-step flow, font picker, 6 color presets, 8 toggles, AI Enhance; **on claude/molly-ui-polish**
 - Netlify Enhance Fn: ✅ netlify/functions/enhance.js — POST → Claude Haiku; **on claude/molly-ui-polish**
 - Molly: ✅ molly/ — Instagram/LinkedIn content engine for Trevo; **on main (merged)**
-- Atlas: ✅ website/atlas/index.html — AI lead follow-up product; $200 + $65/mo
-- Argus: ✅ website/argus/index.html — AI review responder product; $200 + $65/mo
+- Atlas: ✅ website/atlas/index.html — AI lead follow-up product; $100 + $65/mo
+- Argus: ✅ website/argus/index.html — AI review responder product; $100 + $65/mo
 
 ---
 
@@ -146,7 +146,7 @@ Manual order:
 - Website deal closes → set nora_pitch_due = closed_date + 7 days in state.json
 - Mobile agent sends Nora pitch message on due date
 - Bundle price: $65/mo (website hosting + Nora)
-- Build fee with Nora included: $200 (vs $150 website-only)
+- Build fee with Nora included: $100, same as website-only (no monthly fee on website-only)
 
 ## Cost Controls
 - Scout: $10/mo Outscraper cap (config/scout-config.json)
@@ -224,6 +224,7 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - 2026-06-02: website/ directory built — 3 demos + proposal + intake + checkout + thankyou + /start funnel
 - 2026-06-02: mobile.js updated — sends /start URL in positive reply, Zoho SMTP fix confirmed
 - 2026-06-02: Global pricing update — $150/$200 build + $65/mo
+- 2026-06-24: Global pricing update — flat $100 build (basic and AI bundles); basic has no monthly fee; AI bundles (Nora/Atlas/Argus) add $65/mo
 - 2026-06-03: 30 Denver/Englewood plumbers sent via SMS; 48 total MTD
 - 2026-06-03: Diagnoser channel routing bug fixed; webhook/poller crash fixes
 - 2026-06-03: EIN obtained; Twilio A2P 10DLC Brand registration submitted
@@ -253,7 +254,7 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 
 ### Setup blockers (Mac)
 - [ ] **Twilio A2P**: check status at console.twilio.com — once approved, create Campaign, link +1 720, run pitcher
-- [ ] **Stripe**: create 4 payment links ($150 website / $200 Nora / $200 Atlas / $200 Argus) → paste IDs into `website/checkout/index.html`
+- [ ] **Stripe**: create payment links ($100 website-only / $100 + $65/mo for Nora / Atlas / Argus bundles) → paste IDs into `website/checkout/index.html`
 - [ ] **Formspree**: create form at formspree.io → paste form ID into `website/intake/index.html`
 - [ ] **Netlify deploy**: confirm trevoadvisors.com/start/ + /for/ + /atlas/ + /argus/ + /demos/ all live
 - [ ] **Webhook**: `node scripts/webhook.js` + ngrok → register URL in Twilio console

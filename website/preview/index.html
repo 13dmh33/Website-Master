@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Site Configurator — Trevo Advisors</title>
-  <meta name="description" content="Configure your contractor website and see a live preview. Start for $150." />
+  <meta name="description" content="Configure your contractor website and see a live preview. Start for $100." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <style>
@@ -625,7 +625,7 @@
 
     <!-- CTA BAR -->
     <div class="cta-bar" id="ctaBar">
-      <span class="cta-bar-text">Get this site live — starting at $150</span>
+      <span class="cta-bar-text">Get this site live — starting at $100</span>
       <button class="cta-bar-btn" id="ctaBarBtn">Get started →</button>
     </div>
 
@@ -647,7 +647,7 @@
             <div class="order-swatches"><div class="order-swatch" id="swatchAccent"></div><div class="order-swatch" id="swatchDark"></div></div>
           </div>
           <div class="order-row"><span class="order-label">Plan</span><span class="order-value" id="summaryPlan">Website + Hosting</span></div>
-          <div class="order-row"><span class="order-label">One-time</span><span class="order-value" id="summaryOneTime">$150</span></div>
+          <div class="order-row"><span class="order-label">One-time</span><span class="order-value" id="summaryOneTime">$100</span></div>
           <div class="order-row"><span class="order-label">Monthly</span><span class="order-value">$65/mo</span></div>
         </div>
 
@@ -658,7 +658,7 @@
               <div class="plan-radio" id="radioBasic"></div>
               <div class="plan-badge">Website Only</div>
               <h4>Site + Hosting</h4>
-              <div class="plan-price">$150</div>
+              <div class="plan-price">$100</div>
               <div class="plan-cadence">one-time, then $65/mo</div>
               <div class="plan-desc">Custom site, live in 48h, hosted + managed.</div>
             </div>
@@ -666,7 +666,7 @@
               <div class="plan-radio" id="radioNora"></div>
               <div class="plan-badge rec">★ Recommended</div>
               <h4>Site + Nora AI</h4>
-              <div class="plan-price">$200</div>
+              <div class="plan-price">$100</div>
               <div class="plan-cadence">one-time, then $65/mo</div>
               <div class="plan-desc">Nora answers calls, books jobs, texts missed leads 24/7.</div>
             </div>
@@ -674,7 +674,7 @@
               <div class="plan-radio" id="radioAtlas"></div>
               <div class="plan-badge ai-atlas">⚡ Atlas AI</div>
               <h4>Site + Atlas</h4>
-              <div class="plan-price">$200</div>
+              <div class="plan-price">$100</div>
               <div class="plan-cadence">one-time, then $65/mo</div>
               <div class="plan-desc">Atlas follows up every lead by text — automatically.</div>
             </div>
@@ -682,7 +682,7 @@
               <div class="plan-radio" id="radioArgus"></div>
               <div class="plan-badge ai-argus">⭐ Argus AI</div>
               <h4>Site + Argus</h4>
-              <div class="plan-price">$200</div>
+              <div class="plan-price">$100</div>
               <div class="plan-cadence">one-time, then $65/mo</div>
               <div class="plan-desc">Argus replies to every Google review — builds trust.</div>
             </div>
@@ -692,9 +692,9 @@
         <div style="display:flex;flex-direction:column;gap:10px;">
           <div>
             <div style="font-size:11px;color:var(--muted);margin-bottom:3px;">Total today</div>
-            <div class="checkout-total" id="checkoutTotal">$150 <span>+ $65/mo after</span></div>
+            <div class="checkout-total" id="checkoutTotal">$100 <span>+ $65/mo after</span></div>
           </div>
-          <button class="checkout-btn" id="checkoutBtn">Get started — pay $150</button>
+          <button class="checkout-btn" id="checkoutBtn">Get started — pay $100</button>
           <div class="checkout-guarantee">
             <span>✓</span> Satisfaction guaranteed &nbsp;·&nbsp;
             <span>✓</span> No contracts &nbsp;·&nbsp;
@@ -1198,7 +1198,7 @@ document.getElementById('purchaseClose').addEventListener('click', () => {
 });
 
 /* ── PLAN SELECTOR ── */
-const planPrices = { basic: '$150', nora: '$200', atlas: '$200', argus: '$200' };
+const planPrices = { basic: '$100', nora: '$100', atlas: '$100', argus: '$100' };
 const planLabels = { basic: 'Website + Hosting', nora: 'Website + Nora', atlas: 'Website + Atlas', argus: 'Website + Argus' };
 function updatePlanUI() {
   ['planBasic','planNora','planAtlas','planArgus'].forEach(id => {
@@ -1209,7 +1209,7 @@ function updatePlanUI() {
     el.querySelector('.plan-radio').style.background = selected ? 'var(--teal)' : '';
     el.querySelector('.plan-radio').style.borderColor = selected ? 'var(--teal)' : '';
   });
-  const price = planPrices[config.plan] || '$150';
+  const price = planPrices[config.plan] || '$100';
   document.getElementById('summaryPlan').textContent = planLabels[config.plan] || 'Website + Hosting';
   document.getElementById('summaryOneTime').textContent = price;
   document.getElementById('checkoutTotal').innerHTML = `${price} <span>+ $65/mo after</span>`;

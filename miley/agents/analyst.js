@@ -10,6 +10,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') }
 const insights      = require('../lib/instagram-insights');
 const store         = require('../lib/store');
 const claude        = require('../lib/claude');
+const sentiment     = require('../lib/sentiment');
 
 // get the Monday of the current week as YYYY-MM-DD
 function weekStartDate() {
@@ -32,11 +33,41 @@ function guessFormat(caption) {
 // identify which content type based on caption content (Techs4Tatas pillars)
 function guessNiche(caption) {
   if (!caption) return 'unknown';
-  if (/link in bio|shop|grab yours|tee|hat|sticker|snapback/i.test(caption)) return 'product';
+  if (/link in bio|shop|grab yours|tee|hat|sticker|snapback/i.test(caption)) return 'product_feature';
   if (/comment|tag a|drop your|finish the sentence|vote/i.test(caption)) return 'engagement';
   if (/30%|breast cancer|fund the fight|wear it, fund/i.test(caption)) return 'mission';
   if (/earned|she didn't|strong|the next girl|hard days/i.test(caption)) return 'motivational';
   return 'trades_humor';
+}
+
+// self-critique loop (#2): tag and store the actual top posts per content type
+// (capped at 5, decayed to the last 90 days) so the Generator can read real
+// past performance back in as few-shot examples instead of starting fresh.
+function updateTopPerformers(enriched, weekOf) {
+  const data = store.getTopPerformers();
+  const byType = data.byType || {};
+  const cutoff = Date.now() - 90 * 24 * 60 * 60 * 1000;
+
+  const byNiche = {};
+  for (const post of enriched) {
+    if (!post.caption) continue;
+    (byNiche[post.niche] = byNiche[post.niche] || []).push(post);
+  }
+
+  for (const [niche, posts] of Object.entries(byNiche)) {
+    const existing = (byType[niche] || []).filter(p => new Date(p.recordedAt || p.weekOf).getTime() >= cutoff);
+    const fresh = posts.map(p => ({
+      caption:        p.caption,
+      engagementRate: p.engagementRate,
+      weekOf,
+      recordedAt:     new Date().toISOString(),
+    }));
+    byType[niche] = [...existing, ...fresh]
+      .sort((a, b) => b.engagementRate - a.engagementRate)
+      .slice(0, 5);
+  }
+
+  store.saveTopPerformers({ updatedAt: new Date().toISOString(), byType });
 }
 
 // click attribution — joins exported UTM click data (output/clicks/latest.json)
@@ -63,6 +94,31 @@ function reportClicks() {
     topProducts:    ranked.slice(0, 5).map(([key, clicks]) => ({ key, clicks })),
     totalClicks:    ranked.reduce((s, [, n]) => s + n, 0),
   };
+}
+
+// sentiment mining (#8): classify exported comments/DMs and feed aggregated
+// sentiment back into brand-voice.json, alongside (not replacing) the
+// click-based sales signal — so tone evolution isn't purely revenue-driven.
+// No-ops gracefully if no export exists or no API key is set.
+async function runSentimentMining() {
+  const data = store.getComments();
+  if (!data || !data.comments || !data.comments.length) return null;
+
+  if (!process.env.ANTHROPIC_API_KEY) {
+    console.log(`\nFound ${data.comments.length} exported comments but no ANTHROPIC_API_KEY — skipping sentiment classification.`);
+    return null;
+  }
+
+  console.log(`\nClassifying ${data.comments.length} exported comments/DMs...`);
+  try {
+    const classified = await sentiment.classifyComments(data.comments);
+    const summary = sentiment.summarize(classified);
+    console.log(`  Sentiment: ${summary.bySentiment.positive} positive / ${summary.bySentiment.neutral} neutral / ${summary.bySentiment.negative} negative`);
+    return { weekOf: data.weekOf || null, ...summary };
+  } catch (err) {
+    console.warn(`Sentiment classification failed: ${err.message}`);
+    return null;
+  }
 }
 
 // run pattern analysis with Claude after 4+ weeks of data
@@ -109,12 +165,18 @@ async function main() {
   // it's the sales signal (which products people actually click through to buy).
   const clickSummary = reportClicks();
 
+  // sentiment mining (#8) also runs regardless of IG token — manual export path.
+  const sentimentSummary = await runSentimentMining();
+  if (sentimentSummary) {
+    store.updateBrandVoice({ sentiment_signal: sentimentSummary });
+  }
+
   if (!insights.isConfigured()) {
-    if (clickSummary) {
-      store.saveAnalytics({ weekOf, generatedAt: new Date().toISOString(), clicks: clickSummary });
-      console.log('\nInstagram insights not configured — saved click attribution only.');
+    if (clickSummary || sentimentSummary) {
+      store.saveAnalytics({ weekOf, generatedAt: new Date().toISOString(), clicks: clickSummary, sentiment: sentimentSummary });
+      console.log('\nInstagram insights not configured — saved click/sentiment signals only.');
     } else {
-      console.log('Instagram insights not configured and no click data — nothing to analyze this week.');
+      console.log('Instagram insights not configured and no click/comment data — nothing to analyze this week.');
     }
     console.log('To enable engagement analytics: add INSTAGRAM_ACCESS_TOKEN and INSTAGRAM_BUSINESS_ACCOUNT_ID to .env');
     process.exit(0);
@@ -141,6 +203,8 @@ async function main() {
     format: guessFormat(p.caption),
     niche:  guessNiche(p.caption),
   }));
+
+  updateTopPerformers(enriched, weekOf);
 
   // find top performer by engagement rate
   const sorted       = [...enriched].sort((a, b) => b.engagementRate - a.engagementRate);
@@ -172,6 +236,7 @@ async function main() {
     },
     highSignalCount:   highSignalPosts.length,
     clicks:            clickSummary || null,
+    sentiment:         sentimentSummary || null,
     posts:             enriched,
   };
 

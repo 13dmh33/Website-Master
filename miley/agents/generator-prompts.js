@@ -182,6 +182,41 @@ OCTOBER MODE (Breast Cancer Awareness Month):
 // =====================================================================
 // 6) PROMPT BUILDER — the Generator calls this once per post.
 // =====================================================================
+
+// contract for requesting N variants in one call (generate-then-judge, #1)
+function variantsContract(n) {
+  return `
+Return ONLY valid JSON (no markdown, no commentary, no code fences) — a JSON ARRAY of exactly ${n}
+DIFFERENT variants, each shaped like this:
+
+{
+  "type": "<content type you were given>",
+  "hook": "<the hook line>",
+  "body": "<the scene lines, may contain line breaks>",
+  "donation": "<the single donation line>",
+  "cta": "<the single call to action>",
+  "caption": "<the FULL assembled post: hook + blank line + body + blank line + donation + blank line + cta>",
+  "captionVariantB": "<the SAME post rewritten with a DIFFERENT opening hook (same body/donation/cta, same formula) — for A/B testing>",
+  "hashtag_set": "<one of: product | trades_humor | mission | engagement | motivational>",
+  "suggested_visual": "<one short sentence describing the ideal image for the Designer/Canva>",
+  "extra": "<OPTIONAL: for carousel = slide-by-slide text; for reel = the spoken script + on-screen text. Empty string if not needed.>"
+}
+
+The ${n} variants must take genuinely different angles on the hook/scene — not the same joke reworded.
+Same rules apply to every variant: "caption" is what actually posts, "captionVariantB" differs only in
+the hook, no hashtags inside the caption, no placeholders, copy-paste ready.
+`.trim();
+}
+
+// few-shot block of past top performers for the same content type (#2)
+function fewShotBlock(topPerformers = []) {
+  if (!topPerformers.length) return '';
+  const examples = topPerformers
+    .map((p, i) => `Example ${i + 1} (engagement rate ${p.engagementRate ?? 'n/a'}%):\n${p.caption}`)
+    .join('\n\n');
+  return `What's actually landed recently for this content type — match this energy and quality bar, but do NOT repeat any of these verbatim or rework the same joke:\n\n${examples}`;
+}
+
 /**
  * @param {Object} ctx
  * @param {string} ctx.format        one of FORMAT_INSTRUCTIONS keys (single_image | carousel | reel | caption)
@@ -190,6 +225,8 @@ OCTOBER MODE (Breast Cancer Awareness Month):
  * @param {string[]} ctx.glossaryTerms  2-3 trade terms (each "term: meaning") from trades-glossary.json
  * @param {string} [ctx.product]     product name to feature (product types only), e.g. "snapback hat"
  * @param {boolean} [ctx.isOctober]  true during the October campaign
+ * @param {number} [ctx.variantCount] when > 1, request that many variants as a JSON array instead of one post
+ * @param {Object[]} [ctx.topPerformers] past top posts of the same content type, injected as few-shot examples
  * @returns {string} the user prompt to send alongside SYSTEM_PROMPT
  */
 function buildUserPrompt(ctx) {
@@ -199,7 +236,9 @@ function buildUserPrompt(ctx) {
     brief = '',
     glossaryTerms = [],
     product = '',
-    isOctober = false
+    isOctober = false,
+    variantCount = 1,
+    topPerformers = [],
   } = ctx;
 
   const formatBlock = FORMAT_INSTRUCTIONS[format] || FORMAT_INSTRUCTIONS.single_image;
@@ -228,8 +267,40 @@ function buildUserPrompt(ctx) {
     productLine,
     isOctober ? '\n' + OCTOBER_OVERLAY : '',
     '',
-    OUTPUT_CONTRACT
+    fewShotBlock(topPerformers),
+    '',
+    variantCount > 1 ? variantsContract(variantCount) : OUTPUT_CONTRACT
   ].filter(Boolean).join('\n');
+}
+
+// =====================================================================
+// 6b) JUDGE PROMPT — second Claude call that scores compliant variants
+//     to pick the best one (generate-then-judge, #1). Only ever sees
+//     variants that already passed passesQualityGate — it breaks ties
+//     among compliant posts, never overrides brand-safety rules.
+// =====================================================================
+const JUDGE_SYSTEM_PROMPT = `
+You are an editor for Techs4Tatas social content. You will be shown several already brand-safe
+caption variants for the same post slot and must judge which ONE is best.
+
+Score each on:
+- Hook strength (does it stop the scroll in the first line?)
+- Whether the donation line lands naturally vs. feels bolted-on
+- Humor/voice fit with "Riley Brooks" (warm, scrappy, proud — never preachy or corporate)
+- CTA clarity (exactly one, easy to act on)
+
+Return ONLY valid JSON, no markdown, no commentary:
+{
+  "scores": [ { "index": 0, "score": <1-10>, "reasoning": "<one sentence>" }, ... ],
+  "winnerIndex": <index of the best variant>
+}
+`.trim();
+
+function buildJudgePrompt(variants) {
+  const listed = variants
+    .map((v, i) => `--- Variant ${i} ---\n${v.caption}`)
+    .join('\n\n');
+  return `Judge these ${variants.length} variants for the same post slot:\n\n${listed}`;
 }
 
 // =====================================================================
@@ -263,10 +334,12 @@ function passesQualityGate(post) {
 
 module.exports = {
   SYSTEM_PROMPT,
+  JUDGE_SYSTEM_PROMPT,
   OUTPUT_CONTRACT,
   FORMAT_INSTRUCTIONS,
   CONTENT_TYPE_INSTRUCTIONS,
   OCTOBER_OVERLAY,
   buildUserPrompt,
+  buildJudgePrompt,
   passesQualityGate
 };

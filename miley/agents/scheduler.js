@@ -88,6 +88,7 @@ async function main() {
       images:      post.images || [],
       suggested_visual: post.suggested_visual || '',
       extra:       post.extra || '',
+      judge:       post.judge || null, // generate-then-judge scoring (#1) — null for evergreen/single-variant
       status:      'pending',
     };
 
@@ -130,6 +131,7 @@ async function generatePreview(records, weekOf, campaignMode) {
     const extra = r.extra ? `<div class="extra"><span class="lbl">slides / reel script</span><pre>${escapeHtml(r.extra)}</pre></div>` : '';
     const vis   = r.suggested_visual ? `<div class="vis">📷 ${escapeHtml(r.suggested_visual)}</div>` : '';
     const link  = r.tracked_link ? `<div class="link">🔗 drives to: <a href="${escapeHtml(r.tracked_link)}" target="_blank" rel="noopener">${escapeHtml(r.tracked_link)}</a></div>` : '';
+    const judge = r.judge ? `<div class="judge">⚖️ judge: ${r.judge.winnerScore ?? '?'}/10 of ${r.judge.variantsConsidered} compliant variants${r.judge.reasoning ? ` — "${escapeHtml(r.judge.reasoning)}"` : ''}</div>` : '';
     return `
     <div class="post">
       <h2>${r.day} ${r.time} · ${r.contentType} <span class="fmt">${r.format}</span>${r.product ? ` · <span class="prod">${r.product}</span>` : ''}</h2>
@@ -138,6 +140,7 @@ async function generatePreview(records, weekOf, campaignMode) {
       ${vis}
       <pre class="cap">${escapeHtml(r.postText)}</pre>
       ${link}
+      ${judge}
       ${extra}
     </div>`;
   }).join('\n');
@@ -157,6 +160,7 @@ async function generatePreview(records, weekOf, campaignMode) {
   .post img { max-width:100%; border-radius:10px; display:block; margin-bottom:.75rem; }
   .vis { color:#FFB3D1; font-size:.85rem; margin:.5rem 0; }
   .link { font-size:.8rem; margin:.5rem 0; color:#FFC400; word-break:break-all; } .link a { color:#FFC400; }
+  .judge { font-size:.8rem; margin:.5rem 0; color:#9be29b; }
   pre.cap { white-space:pre-wrap; font-family:inherit; font-size:.95rem; line-height:1.6; color:#F7F4F0; background:#1A1A1D; padding:1rem; border-radius:8px; }
   .extra { margin-top:.75rem; } .extra .lbl { color:#FFC400; font-size:.75rem; text-transform:uppercase; }
   .extra pre { white-space:pre-wrap; font-family:inherit; font-size:.85rem; color:#cfcfd4; background:#1A1A1D; padding:.75rem; border-radius:8px; }

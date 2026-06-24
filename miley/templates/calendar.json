@@ -1,0 +1,65 @@
+{
+  "_purpose": "Date-specific observances (trades + breast-cancer beats) that the Researcher and Planner check each week. October is fully owned by october-campaign.json and is never matched here. Each entry is either 'override' (forces one slot's contentType + injects the angle into that post's brief) or 'supplement' (no slot change — just adds context to the week's brief).",
+  "_rule_types": {
+    "nth_weekday_of_month": "{ month: 1-12, weekday: 'SUN'..'SAT', n: 1-5 } — e.g. n:1, weekday:'WED', month:5 = first Wednesday in May.",
+    "first_full_week_of_month": "{ month: 1-12 } — the first Mon-Sun week fully contained in that month.",
+    "monthly_day": "{ day: 1-28 } — fires every month on that calendar day (skipped automatically in October, see _purpose).",
+    "explicit_range": "{ start: 'YYYY-MM-DD', end: 'YYYY-MM-DD' } — hardcoded for a single year. Source-announced dates (e.g. DOL apprenticeship week) move yearly — re-verify and update before each occurrence; see 'reverify_note'."
+  },
+  "entries": [
+    {
+      "id": "wic-week",
+      "name": "Women in Construction Week (NAWIC)",
+      "beat": "women_in_trades",
+      "rule": { "type": "first_full_week_of_month", "month": 3 },
+      "match_mode": "override",
+      "contentType": "mission",
+      "angle": "NAWIC's Women in Construction Week — the one week a year the whole industry spotlights tradeswomen. Lean into pride + visibility, not just humor.",
+      "source": "NAWIC.org (confirmed annual: first full Mon-Sun week of March)",
+      "priority": 10
+    },
+    {
+      "id": "skilled-trades-day",
+      "name": "National Skilled Trades Day",
+      "beat": "women_in_trades",
+      "rule": { "type": "nth_weekday_of_month", "month": 5, "weekday": "WED", "n": 1 },
+      "match_mode": "override",
+      "contentType": "trades_humor",
+      "angle": "National Skilled Trades Day (first Wednesday in May) — a built-in excuse to celebrate the trades loudly. Good day for a humor or pride post, not a sales push.",
+      "source": "National Day Calendar (confirmed annual: first Wednesday in May)",
+      "priority": 8
+    },
+    {
+      "id": "mothers-day",
+      "name": "Mother's Day",
+      "beat": "general",
+      "rule": { "type": "nth_weekday_of_month", "month": 5, "weekday": "SUN", "n": 2 },
+      "match_mode": "override",
+      "contentType": "product_feature_lifestyle",
+      "angle": "Mother's Day — gift angle for the tradeswoman (or trade-mom) in someone's life. Same framing as the existing Nov-Dec gift angle in inspiration-sources.json, just earlier in the year.",
+      "source": "Fixed US observance (2nd Sunday of May) — no re-verification needed.",
+      "priority": 6
+    },
+    {
+      "id": "national-apprenticeship-week-2026",
+      "name": "National Apprenticeship Week",
+      "beat": "women_in_trades",
+      "rule": { "type": "explicit_range", "start": "2026-04-26", "end": "2026-05-02" },
+      "match_mode": "supplement",
+      "angle": "National Apprenticeship Week — good context for posts about earning a trade rather than student debt, or shouting out apprentices.",
+      "source": "U.S. Dept. of Labor (DOL moved this from November to spring starting 2026 — dates are announced fresh each year)",
+      "reverify_note": "DOL announces new dates annually. This entry is hardcoded for 2026 only — confirm next year's dates at apprenticeship.gov before reusing.",
+      "priority": 5
+    },
+    {
+      "id": "monthly-self-exam-reminder",
+      "name": "Monthly self-exam reminder",
+      "beat": "breast_cancer",
+      "rule": { "type": "monthly_day", "day": 1 },
+      "match_mode": "supplement",
+      "angle": "The 1st of the month is a common, low-key reminder day for breast self-exams (used by self-exam apps like Know Your Lemons). A gentle 'hey, it's the 1st' early-detection nudge — not a hard sell, genuinely useful.",
+      "source": "General early-detection guidance (premenopausal self-exam timing) — Mayo Clinic / Komen.org",
+      "priority": 4
+    }
+  ]
+}

@@ -62,8 +62,12 @@ async function main() {
   const insp   = store.getInspirationSources() || {};
   const week   = store.getCurrentWeek();
   const mode   = planner.getCampaignMode(now);
+  const plan   = planner.buildWeekPlan(now, week);
 
   console.log(`Research starting for week of ${weekOf} (mode: ${mode}, week #${week}).`);
+  if (plan.calendarAngles && plan.calendarAngles.length) {
+    console.log(`Calendar supplements this week: ${plan.calendarAngles.length}.`);
+  }
 
   // live data refresh — free RSS, fails silently offline (no spend, no key)
   let live = { women_in_trades: [], breast_cancer: [] };
@@ -89,6 +93,7 @@ async function main() {
     themes:        (insp.evergreen_themes || []),
     facts:         pickVerifiedFacts(insp),
     liveHeadlines: live,                  // paraphrasable angles only — never copy verbatim
+    calendarAngles: plan.calendarAngles || [], // supplement-mode calendar.json matches for this week
   };
 
   const filePath = store.saveBrief(brief);

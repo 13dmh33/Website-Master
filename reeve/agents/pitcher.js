@@ -18,6 +18,7 @@ const path        = require('path');
 const Anthropic   = require('@anthropic-ai/sdk');
 const clientStore = require('../lib/client-store');
 const oppStore    = require('../lib/opportunity-store');
+const { matchScore, feeFitMultiplier } = require('../lib/matching');
 
 const isDryRun    = process.argv.includes('--dry-run');
 const clientArg   = (() => { const i = process.argv.indexOf('--client'); return i !== -1 ? process.argv[i + 1] : null; })();
@@ -51,30 +52,6 @@ function draftAlreadyExists(clientId, oppId) {
                ['draft', 'approved', 'sent'].includes(d.status);
       } catch { return false; }
     });
-}
-
-// ── Topic matching ────────────────────────────────────────────────────────────
-
-// Score how well a client's topics overlap with an opportunity's topics.
-// Returns 0–1 (1 = strong match). Simple keyword overlap for now.
-function matchScore(clientTopics, oppTopics) {
-  if (!clientTopics?.length || !oppTopics?.length) return 0.3; // neutral if no data
-  const clientSet = new Set(clientTopics.map(t => t.toLowerCase()));
-  const oppSet    = new Set(oppTopics.map(t => t.toLowerCase()));
-  let hits = 0;
-  for (const t of oppSet) {
-    if ([...clientSet].some(ct => ct.includes(t) || t.includes(ct))) hits++;
-  }
-  return hits / Math.max(oppSet.size, 1);
-}
-
-// Deprioritize (don't hard-exclude — visibility-building gigs can still be
-// worth pitching) opportunities whose extracted fee ceiling falls below the
-// client's stated floor. Most opportunities have no feeAmount data at all
-// (snippet-only extraction), so this only fires when we actually know the fee.
-function feeFitMultiplier(clientFee, oppFeeAmount) {
-  if (!clientFee?.min || !oppFeeAmount?.max) return 1;
-  return oppFeeAmount.max < clientFee.min ? 0.3 : 1;
 }
 
 // ── Claude pitch generation ───────────────────────────────────────────────────

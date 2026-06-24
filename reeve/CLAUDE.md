@@ -60,6 +60,8 @@ Milly posts 4x/week → speaker sees content → DMs "stages"
 
 ### Phase 5: Reporter ✅ BUILT
 `agents/reporter.js` — weekly digest per active client (pitches sent/pending/accepted, pipeline totals). Claude writes the email. Dave reviews before send.
+- Shares the same topic/fee ranking as Pitcher (`lib/matching.js` → `rankOpportunities()`), so the digest previews the actual matching opportunities Pitcher will draft next, not just a raw count.
+- Flags `noFitInPipeline` when Scout has open opportunities but none match the client's topics — surfaces the niche-matching gap per client instead of letting it stay invisible.
 
 ### Phase 6: Closer ✅ BUILT
 `agents/closer.js` — when a conference accepts a pitch (`scripts/record-response.js` → accepted), Claude drafts two emails: (1) logistics confirmation to the conference organizer, (2) good-news update to the client/speaker. Also increments `bookings_confirmed` on the client profile.
@@ -304,6 +306,7 @@ reeve/
     client-store.js       ✅ Phase 2 — client profiles CRUD
     opportunity-store.js  ✅ Phase 2 — conference/CFP pipeline CRUD + auto-close on deadline
     cost-tracker.js       ✅ Phase 2 — SerpApi monthly spend cap
+    matching.js           ✅ Phase 3 — shared topic/fee scoring (matchScore, feeFitMultiplier, rankOpportunities) used by pitcher.js + reporter.js
   config/
     scout-config.json     ✅ Phase 2 — SerpApi cap state ($5/mo default, resets monthly)
   templates/

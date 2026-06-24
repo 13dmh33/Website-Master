@@ -23,6 +23,7 @@ const path        = require('path');
 const Anthropic   = require('@anthropic-ai/sdk');
 const clientStore = require('../lib/client-store');
 const oppStore    = require('../lib/opportunity-store');
+const { rankOpportunities } = require('../lib/matching');
 
 const isDryRun  = process.argv.includes('--dry-run');
 const clientArg = (() => { const i = process.argv.indexOf('--client'); return i !== -1 ? process.argv[i + 1] : null; })();
@@ -81,6 +82,11 @@ function buildClientSummary(speaker, allDrafts) {
     !sentPitches.some(d => d.opportunityId === opp.id)
   );
 
+  // Rank unpitched opps the same way pitcher.js will when it next runs, so
+  // the client sees a preview of what's coming rather than a raw count.
+  const rankedUnpitched = rankOpportunities(speaker, unpitched);
+  const noFitInPipeline = openOpps.length > 0 && rankedUnpitched.length === 0;
+
   // Upcoming deadlines (next 14 days) in their open pipeline
   const twoWeeksOut = new Date(Date.now() + 14 * 86400000).toISOString().split('T')[0];
   const urgentOpps  = pending
@@ -95,12 +101,14 @@ function buildClientSummary(speaker, allDrafts) {
     declined:          declined.length,
     waitlisted:        waitlisted.length,
     pendingTotal:      pending.length,
-    unpitchedOpps:     unpitched.length,
+    unpitchedOpps:     rankedUnpitched.length,
+    noFitInPipeline,
     urgentDeadlines:   urgentOpps.length,
     // detail lists for Claude to narrate
     sentThisWeekList:  sentThisWeek.map(d => d.conference).slice(0, 5),
     pendingList:       pending.map(d => d.conference).slice(0, 5),
     urgentList:        urgentOpps.map(o => `${o.conference} (deadline ${o.cfpDeadline})`).slice(0, 3),
+    upcomingMatchesList: rankedUnpitched.slice(0, 3).map(({ opp }) => opp.conference),
   };
 }
 
@@ -122,6 +130,8 @@ PIPELINE STATS THIS WEEK:
 - Total declined: ${summary.declined}
 - Awaiting response: ${summary.pendingTotal}
 ${summary.urgentList.length ? `- Urgent deadlines (14 days): ${summary.urgentList.join('; ')}` : ''}
+${summary.upcomingMatchesList.length ? `- Matching opportunities lined up to pitch next: ${summary.upcomingMatchesList.join('; ')}` : ''}
+${summary.noFitInPipeline ? `- NOTE: scout currently has open opportunities in the pipeline, but none match this client's topics well — mention scout is actively widening its search for their niche, do NOT say pipeline is empty` : ''}
 
 Write a brief weekly update email from Dave to ${speaker.name}. Guidelines:
 - Subject: "Your Reeve pipeline — week of [current week]" (use the real date)
@@ -129,6 +139,7 @@ Write a brief weekly update email from Dave to ${speaker.name}. Guidelines:
 - Body: 2–3 short bullets covering: what was submitted, what's pending, what's next
 - If accepted opportunities exist: one line of genuine congratulations
 - If no pitches sent: acknowledge it, explain next steps (scout is finding new conferences)
+- If there are matching opportunities lined up to pitch next, name one or two
 - Closing: confident and forward-looking. "We'll be pitching [X] next week" if there are open opps
 - Sign off: "Dave | Reeve"
 - Tone: professional, warm, brief. Client should feel like their pipeline is being actively managed.

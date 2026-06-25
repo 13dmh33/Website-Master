@@ -1,8 +1,7 @@
 {
-  "_purpose": "Drives the Designer agent's auto-rendered 1080x1080 cards (lib/canvas-render.js DESIGN_CONFIG / NICHE_PALETTES). Defines brand colors, fonts, and a palette per content type. NOTE: hex values below are a sensible starting set — Dave should confirm/replace them with the exact hex codes from his Canva brand kit so generated cards match his hand-made ones.",
-  "ACTION_NEEDED": "Replace placeholder hex values with your real Canva brand-kit colors before going live.",
+  "_purpose": "Drives the Designer agent's auto-rendered 1080x1080 cards (lib/canvas-render.js DESIGN_CONFIG / NICHE_PALETTES). Defines brand colors, fonts, and a palette per content type. Brand pink is logo-matched magenta (#EC008C); Dave can fine-tune against the exact Canva brand-kit hex later if needed.",
   "brand_colors": {
-    "hot_pink": "#FF2E88",
+    "hot_pink": "#EC008C",
     "deep_charcoal": "#1A1A1D",
     "off_white": "#F7F4F0",
     "safety_yellow": "#FFC400",
@@ -21,12 +20,12 @@
     "note": "Applied over stock/lifestyle photos for text legibility — same approach Milly uses for Reeve."
   },
   "palettes_by_type": {
-    "trades_humor": {"bg": "#1A1A1D", "headline": "#FFC400", "body": "#F7F4F0", "accent": "#FF2E88", "gradient": ["#1A1A1D", "#2B2B30"]},
-    "product_feature": {"bg": "#F7F4F0", "headline": "#1A1A1D", "body": "#3A5A78", "accent": "#FF2E88", "gradient": ["#FFB3D1", "#FF2E88"], "note": "Prefer real product photo background where available; gradient is fallback."},
-    "mission": {"bg": "#FF2E88", "headline": "#F7F4F0", "body": "#F7F4F0", "accent": "#1A1A1D", "gradient": ["#FF2E88", "#C71F66"]},
+    "trades_humor": {"bg": "#1A1A1D", "headline": "#FFC400", "body": "#F7F4F0", "accent": "#EC008C", "gradient": ["#1A1A1D", "#2B2B30"]},
+    "product_feature": {"bg": "#F7F4F0", "headline": "#1A1A1D", "body": "#3A5A78", "accent": "#EC008C", "gradient": ["#FFB3D1", "#EC008C"], "note": "Prefer real product photo background where available; gradient is fallback."},
+    "mission": {"bg": "#EC008C", "headline": "#F7F4F0", "body": "#F7F4F0", "accent": "#1A1A1D", "gradient": ["#EC008C", "#B0006B"]},
     "engagement": {"bg": "#3A5A78", "headline": "#F7F4F0", "body": "#FFB3D1", "accent": "#FFC400", "gradient": ["#3A5A78", "#243B4F"]},
-    "motivational": {"bg": "#1A1A1D", "headline": "#FF2E88", "body": "#F7F4F0", "accent": "#FFB3D1", "gradient": ["#1A1A1D", "#3A1A2A"]},
-    "awareness": {"bg": "#FFB3D1", "headline": "#C71F66", "body": "#1A1A1D", "accent": "#FF2E88", "gradient": ["#FFB3D1", "#FF2E88"], "note": "October-only palette. Ribbon motif on."}
+    "motivational": {"bg": "#1A1A1D", "headline": "#EC008C", "body": "#F7F4F0", "accent": "#FFB3D1", "gradient": ["#1A1A1D", "#3A1A2A"]},
+    "awareness": {"bg": "#FFB3D1", "headline": "#B0006B", "body": "#1A1A1D", "accent": "#EC008C", "gradient": ["#FFB3D1", "#EC008C"], "note": "October-only palette. Ribbon motif on."}
   },
   "image_sources": {
     "priority_order": ["dave_product_mockups", "dave_lifestyle_photos", "ai_generated_lifestyle", "stock_photo", "gradient_fallback"],

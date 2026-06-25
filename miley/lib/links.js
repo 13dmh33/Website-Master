@@ -18,13 +18,13 @@ const LINKPAGE   = normalizeUrl(process.env.LINKPAGE_URL || STOREFRONT); // unti
 
 // catalog key → display name (keys come from post-formats.json product_catalog_rotation)
 const PRODUCTS = {
-  unisex_tee:              'Unisex Tee',
+  unisex_tee:              'Unisex Black Tee',
   pocket_back_graphic_tee: 'Pocket & Back Graphic Tee',
-  snapback_hat:            'Snapback Hat',
-  trucker_cap:             'Trucker Cap',
+  snapback_hat:            'Snapback',
+  trucker_cap:             'Trucker Cap (pink logo)',
   boxer_briefs:            'Boxer Briefs',
   kiss_cut_sticker_1:      'Kiss-Cut Sticker',
-  kiss_cut_sticker_2:      'Kiss-Cut Sticker (v2)',
+  kiss_cut_sticker_2:      'Sticker',
   magnet:                  'Magnet',
 };
 

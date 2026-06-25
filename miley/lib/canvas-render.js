@@ -393,6 +393,11 @@ async function renderPhotoCard(headline, photoBuffer, attribution) {
 function selectTemplate(format, context = {}) {
   if (process.env.TEMPLATES_ACTIVE !== 'true') return 'v1Gradient';
 
+  // FORCE_TEMPLATE pins the template for testing/preview (e.g. confirm a
+  // product mockup renders). photoCard is only honored when a photo exists.
+  const forced = process.env.FORCE_TEMPLATE;
+  if (forced && (forced !== 'photoCard' || context.hasPhoto)) return forced;
+
   const weights = DESIGN.templateWeights[format] || { v1Gradient: 1 };
   // photoCard only makes sense when there's an actual product/photo to show
   const eligible = Object.entries(weights).filter(([name]) => name !== 'photoCard' || context.hasPhoto);

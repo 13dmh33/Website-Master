@@ -150,4 +150,4 @@ async function schedulePost({ imagePaths, caption, scheduledAt }) {
   return { success: true, updateId: postId };
 }
 
-module.exports = { isConfigured, schedulePost, getInstagramProfileId };
+module.exports = { isConfigured, schedulePost, getInstagramProfileId, publishImage };

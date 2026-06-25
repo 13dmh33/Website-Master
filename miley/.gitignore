@@ -7,3 +7,6 @@ output/queue/
 output/archive/
 output/leads/
 output/clicks/
+
+# Staged post images (copied here for deploy, served from Netlify — not source)
+linkpage/posts/

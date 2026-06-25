@@ -2,11 +2,67 @@
   "_purpose": "Date-specific observances (trades + breast-cancer beats) that the Researcher and Planner check each week. October is fully owned by october-campaign.json and is never matched here. Each entry is either 'override' (forces one slot's contentType + injects the angle into that post's brief) or 'supplement' (no slot change — just adds context to the week's brief).",
   "_rule_types": {
     "nth_weekday_of_month": "{ month: 1-12, weekday: 'SUN'..'SAT', n: 1-5 } — e.g. n:1, weekday:'WED', month:5 = first Wednesday in May.",
+    "last_weekday_of_month": "{ month: 1-12, weekday: 'SUN'..'SAT' } — e.g. month:5, weekday:'MON' = Memorial Day (last Monday in May).",
+    "fixed_date": "{ month: 1-12, day: 1-31 } — same calendar date every year (e.g. month:7, day:4 = July 4th). Use for holidays that don't drift year to year.",
     "first_full_week_of_month": "{ month: 1-12 } — the first Mon-Sun week fully contained in that month.",
     "monthly_day": "{ day: 1-28 } — fires every month on that calendar day (skipped automatically in October, see _purpose).",
     "explicit_range": "{ start: 'YYYY-MM-DD', end: 'YYYY-MM-DD' } — hardcoded for a single year. Source-announced dates (e.g. DOL apprenticeship week) move yearly — re-verify and update before each occurrence; see 'reverify_note'."
   },
+  "_matched_day": "getActiveEntries() annotates each entry with matchedDay (MON..SUN) — the actual day in the week the rule landed on. The planner overrides the post slot on that day (not always the week's first slot).",
   "entries": [
+    {
+      "id": "independence-day",
+      "name": "Independence Day (July 4th)",
+      "beat": "general",
+      "rule": { "type": "fixed_date", "month": 7, "day": 4 },
+      "match_mode": "override",
+      "contentType": "product_feature_lifestyle",
+      "angle": "July 4th — red/white/blue, cookouts, day off (if you're not on call). Pride-in-the-trades angle: the country runs on people who show up and fix things. Product post, not a flag-waving lecture — keep it Riley-voiced and a little funny.",
+      "source": "Fixed US federal holiday (July 4th) — no re-verification needed.",
+      "priority": 9
+    },
+    {
+      "id": "memorial-day",
+      "name": "Memorial Day",
+      "beat": "general",
+      "rule": { "type": "last_weekday_of_month", "month": 5, "weekday": "MON" },
+      "match_mode": "supplement",
+      "angle": "Memorial Day weekend — respectful, brief mention if it lands on a post day. Not a sales-driven holiday for this brand; keep any reference low-key.",
+      "source": "Fixed US federal holiday (last Monday in May) — no re-verification needed.",
+      "priority": 5
+    },
+    {
+      "id": "labor-day",
+      "name": "Labor Day",
+      "beat": "women_in_trades",
+      "rule": { "type": "nth_weekday_of_month", "month": 9, "weekday": "MON", "n": 1 },
+      "match_mode": "override",
+      "contentType": "trades_humor",
+      "angle": "Labor Day — literally the trades' day. Loud, proud, funny shoutout to the people who build/fix everything, not just a generic 'long weekend' post.",
+      "source": "Fixed US federal holiday (1st Monday in September) — no re-verification needed.",
+      "priority": 9
+    },
+    {
+      "id": "thanksgiving",
+      "name": "Thanksgiving",
+      "beat": "general",
+      "rule": { "type": "nth_weekday_of_month", "month": 11, "weekday": "THU", "n": 4 },
+      "match_mode": "override",
+      "contentType": "mission",
+      "angle": "Thanksgiving — gratitude angle. Thankful for the trades community + everyone who's supported the mission this year. Warm, not salesy.",
+      "source": "Fixed US federal holiday (4th Thursday in November) — no re-verification needed.",
+      "priority": 9
+    },
+    {
+      "id": "new-years-day",
+      "name": "New Year's Day",
+      "beat": "general",
+      "rule": { "type": "fixed_date", "month": 1, "day": 1 },
+      "match_mode": "supplement",
+      "angle": "New Year's — fresh-start energy if it lands on a post day. Good context for a 'new year, same grind' trades angle, not generic resolutions copy.",
+      "source": "Fixed US federal holiday (January 1st) — no re-verification needed.",
+      "priority": 5
+    },
     {
       "id": "wic-week",
       "name": "Women in Construction Week (NAWIC)",

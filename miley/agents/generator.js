@@ -20,6 +20,7 @@ const claude   = require('../lib/claude');
 const store    = require('../lib/store');
 const glossary = require('../lib/glossary');
 const planner  = require('../lib/planner');
+const calendar = require('../lib/calendar');
 const links    = require('../lib/links');
 const prompts  = require('./generator-prompts');
 
@@ -212,7 +213,11 @@ async function main() {
 
   const master = store.getHashtagMaster();
   const week   = store.getCurrentWeek();
-  const plan   = planner.buildWeekPlan(new Date(), week);
+  // plan against the week these posts will actually go out in (next week,
+  // per the Thu-generate-for-following-week design), not the current week —
+  // otherwise calendar/holiday overrides and campaign mode (month) check
+  // against the wrong week.
+  const plan   = planner.buildWeekPlan(calendar.nextWeekDate(), week);
 
   console.log(`Generating content for week of ${brief.weekOf} — mode: ${plan.mode}, ${plan.posts.length} posts.`);
   console.log(USE_API ? 'Using Claude API for generation.' : 'No API key / FORCE_EVERGREEN — using evergreen content (zero spend).');

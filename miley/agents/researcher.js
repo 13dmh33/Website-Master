@@ -17,18 +17,15 @@
 
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 
-const store   = require('../lib/store');
-const planner = require('../lib/planner');
-const sources = require('../lib/sources');
+const store    = require('../lib/store');
+const planner  = require('../lib/planner');
+const sources  = require('../lib/sources');
+const calendar = require('../lib/calendar');
 
-// Monday of the current week as YYYY-MM-DD
+// Monday of the week these posts will actually go out in (next week — see
+// header note: generated Thursday for the FOLLOWING week) as YYYY-MM-DD
 function weekStartDate() {
-  const now = new Date();
-  const day = now.getDay();
-  const diff = day === 0 ? -6 : 1 - day;
-  const monday = new Date(now);
-  monday.setDate(now.getDate() + diff);
-  return monday.toISOString().split('T')[0];
+  return calendar.nextWeekDate().toISOString().split('T')[0];
 }
 
 // pick the seasonal angle whose window matches the current month
@@ -57,12 +54,12 @@ function pickVerifiedFacts(sources) {
 }
 
 async function main() {
-  const weekOf = weekStartDate();
-  const now    = new Date();
-  const insp   = store.getInspirationSources() || {};
-  const week   = store.getCurrentWeek();
-  const mode   = planner.getCampaignMode(now);
-  const plan   = planner.buildWeekPlan(now, week);
+  const weekOf   = weekStartDate();
+  const nextWeek = calendar.nextWeekDate();
+  const insp     = store.getInspirationSources() || {};
+  const week     = store.getCurrentWeek();
+  const mode     = planner.getCampaignMode(nextWeek);
+  const plan     = planner.buildWeekPlan(nextWeek, week);
 
   console.log(`Research starting for week of ${weekOf} (mode: ${mode}, week #${week}).`);
   if (plan.calendarAngles && plan.calendarAngles.length) {
@@ -89,7 +86,7 @@ async function main() {
     researchMode:  liveCount ? 'hybrid' : 'evergreen', // hybrid = static seeds + fresh RSS angles
     campaignMode:  mode,
     week,
-    seasonalAngle: pickSeasonalAngle(insp, now),
+    seasonalAngle: pickSeasonalAngle(insp, nextWeek),
     themes:        (insp.evergreen_themes || []),
     facts:         pickVerifiedFacts(insp),
     liveHeadlines: live,                  // paraphrasable angles only — never copy verbatim

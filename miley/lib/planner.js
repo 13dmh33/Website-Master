@@ -206,10 +206,17 @@ function buildWeekPlan(date = new Date(), week = 0) {
     .map(entry => entry.angle);
 
   if (override && posts.length) {
-    posts[0] = finalize({
-      ...posts[0],
+    // target the slot on the holiday's actual day; fall back to the closest
+    // later slot, then the first slot, if there's no post that day.
+    const onDay = posts.findIndex(p => p.day === override.matchedDay);
+    const targetIdx = onDay !== -1
+      ? onDay
+      : Math.max(0, posts.findIndex(p => DAY_ORDER.indexOf(p.day) >= DAY_ORDER.indexOf(override.matchedDay)));
+
+    posts[targetIdx] = finalize({
+      ...posts[targetIdx],
       contentType: override.contentType,
-      format:      DEFAULT_FORMAT[override.contentType] || posts[0].format,
+      format:      DEFAULT_FORMAT[override.contentType] || posts[targetIdx].format,
       calendarName:  override.name,
       calendarAngle: override.angle,
     });

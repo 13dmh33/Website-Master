@@ -1,5 +1,5 @@
 {
-  "current_week": 0,
+  "current_week": 1,
   "review_workflow": {
     "enabled": true,
     "mode": "queue_first",
@@ -71,19 +71,35 @@
   },
   "content_pools": {
     "weekday_community": {
-      "rotation": ["trades_humor", "motivational", "engagement", "mission"],
+      "rotation": [
+        "trades_humor",
+        "motivational",
+        "engagement",
+        "mission"
+      ],
       "rotation_note": "Advance one step per post using current_week modulo rotation length. Humor and motivation should appear most often; mission roughly every 4th community post so it never feels preachy."
     },
     "product": {
-      "rotation": ["product_feature_single", "product_feature_lifestyle", "product_social_proof"],
+      "rotation": [
+        "product_feature_single",
+        "product_feature_lifestyle",
+        "product_social_proof"
+      ],
       "rotation_note": "Rotate which product is featured across the 8-product catalog so no single item dominates. Lifestyle = a person wearing/using the product; social_proof = review/order-screenshot style once real sales exist."
     },
     "product_mission": {
-      "rotation": ["product_feature_lifestyle", "mission_product_combo"],
+      "rotation": [
+        "product_feature_lifestyle",
+        "mission_product_combo"
+      ],
       "rotation_note": "Alternates a straight lifestyle product shot with a product post that leans harder on the 30% donation angle."
     },
     "mission_buildup": {
-      "rotation": ["awareness_stat", "mission", "trades_humor"],
+      "rotation": [
+        "awareness_stat",
+        "mission",
+        "trades_humor"
+      ],
       "rotation_note": "September-only pool to warm the audience toward October. awareness_stat uses real data from inspiration-sources.json."
     }
   },

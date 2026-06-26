@@ -111,8 +111,8 @@ TWILIO_WEBHOOK_SECRET=   # same value as TWILIO_AUTH_TOKEN
 ## 6. Stripe Payment Links
 
 Create two payment links at [dashboard.stripe.com](https://dashboard.stripe.com) → Products → Payment Links:
-- **Website only**: $150 one-time + $65/mo
-- **Website + Nora**: $200 one-time + $65/mo
+- **Website only**: $100 one-time, no monthly fee
+- **Website + Nora**: $100 one-time + $65/mo
 
 Paste link IDs into `website/checkout/index.html`:
 - Replace `YOUR_WEBSITE_LINK_ID` with the website-only link ID

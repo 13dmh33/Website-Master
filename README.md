@@ -9,9 +9,9 @@ Solo AI agency system for selling websites + Nora voice agent bundles to home se
 
 ## Revenue Model
 
-- Website build: $150 one-time + $65/mo hosting
-- Website + Nora bundle: $200 build + $65/mo
-- Target: 47 clients/mo = ~$7K/mo recurring
+- Website build: $100 one-time, no monthly fee
+- Website + Nora bundle: $100 build + $65/mo
+- Target: 47 clients/mo
 
 ---
 
@@ -56,11 +56,11 @@ See daily workflow below.
 - [x] `website/demo/` — 3 demo sites: plumber, electrician, HVAC
 - [x] `website/proposal/` — sales proposal page with trade-specific demo link
 - [x] `website/intake/` — 4-step client intake form (Formspree)
-- [x] `website/checkout/` — Stripe Payment Link checkout ($150 website / $200 +Nora)
+- [x] `website/checkout/` — Stripe Payment Link checkout ($100 website / $100 +Nora +$65mo)
 - [x] `website/thankyou/` — post-payment confirmation + next steps
 
 ### Tomorrow — Mac setup (do before next run)
-- [ ] Create **2 Stripe Payment Links**: $150 (website-only) + $200 (website+Nora) → paste into `website/checkout/index.html`
+- [ ] Create **2 Stripe Payment Links**: $100 (website-only) + $100 +$65/mo (website+Nora) → paste into `website/checkout/index.html`
 - [ ] Create Formspree form → paste ID into `website/intake/index.html` replacing `YOUR_FORM_ID`
 - [ ] Add `SITE_START_URL=https://trevoadvisors.com/start/` to `.env.local`
 - [ ] `npm install imapflow` (for poller.js)

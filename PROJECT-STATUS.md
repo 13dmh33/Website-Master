@@ -80,7 +80,7 @@
 
 | Priority | Item | What to do |
 |---|---|---|
-| 🔴 HIGH | **Wire Stripe Payment Links** | Stripe is currently down. When back up: create 2 payment links at dashboard.stripe.com/payment-links ($150 website, $200 Nora bundle) → paste into `website/checkout/index.html` lines 345–347 replacing `YOUR_WEBSITE_LINK_ID` and `YOUR_NORA_LINK_ID` |
+| 🔴 HIGH | **Wire Stripe Payment Links** | Stripe is currently down. When back up: create 2 payment links at dashboard.stripe.com/payment-links ($100 website, $100 + $65/mo Nora bundle) → paste into `website/checkout/index.html` lines 345–347 replacing `YOUR_WEBSITE_LINK_ID` and `YOUR_NORA_LINK_ID` |
 | 🔴 HIGH | Twilio A2P 10DLC approval | Awaiting carrier approval (Bundle SID: BUb725ec9662f0dc3da58ed24117df8684). SMS sends hit error 30034 until approved. Monitor Twilio console. |
 | 🔴 HIGH | **Finish Nora-Agent push** | Commit 3bb0755 is ready locally at ~/Nora-Agent. Terminal stopped at GitHub credentials prompt. Run: `cd ~/Nora-Agent && git push origin main` then enter username `13dmh33` and a GitHub PAT (repo scope) as the password. Vercel auto-deploys in ~60s. |
 | 🔴 HIGH | Set Nora-Agent env vars on Vercel | Add `CONTRACTOR_TRADE` + `CONTRACTOR_BUSINESS_NAME` per deployment in Vercel dashboard (vercel.com → Nora-Agent → Settings → Environment Variables) |

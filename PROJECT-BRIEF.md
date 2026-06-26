@@ -44,10 +44,9 @@ Everything else is automated.
 
 | Product | Price | Type |
 |---|---|---|
-| Website build | $150 | One-time |
-| Hosting | $65/mo | Recurring |
-| Website + Nora build | $200 | One-time |
-| Bundle (hosting + Nora) | $65/mo | Recurring |
+| Website build | $100 | One-time, no monthly fee |
+| Website + Nora/Atlas/Argus build | $100 | One-time |
+| AI bundle hosting (Nora/Atlas/Argus) | $65/mo | Recurring |
 
 **Target:** 47 clients/month → ~$7,050/mo recurring at scale
 
@@ -180,7 +179,7 @@ Full client-facing funnel. Lives on claude/demo-site branch (not yet merged to m
 - `/demo/` — 3 live demo sites (plumber, electrician, HVAC)
 - `/proposal/` — personalized sales proposal with trade-specific demo
 - `/intake/` — 4-step client intake form (Formspree)
-- `/checkout/` — Stripe Payment Link checkout ($150 website / $200 + Nora)
+- `/checkout/` — Stripe Payment Link checkout ($100 website / $100 + Nora +$65mo)
 - `/thankyou/` — post-payment confirmation + next steps
 
 ---
@@ -262,7 +261,7 @@ Morning report aggregates by day and month.
 | Twilio (SMS) | ~$5–10/mo |
 | **Total infrastructure** | **~$25–30/mo** |
 
-At $150/site × 47 = $7,050/mo revenue, infrastructure is <0.5% of revenue.
+At $100/site × 47 = $4,700/mo build revenue, infrastructure is <1% of revenue.
 
 ---
 
@@ -272,7 +271,7 @@ At $150/site × 47 = $7,050/mo revenue, infrastructure is <0.5% of revenue.
 
 | Item | Priority | Notes |
 |---|---|---|
-| Create 2 Stripe Payment Links | 🔴 High | $150 (website-only) + $200 (website+Nora) → paste into `website/checkout/index.html` |
+| Create 2 Stripe Payment Links | 🔴 High | $100 (website-only) + $100 +$65/mo (website+Nora) → paste into `website/checkout/index.html` |
 | Create Formspree form | 🔴 High | Paste form ID into `website/intake/index.html` replacing `YOUR_FORM_ID` |
 | Merge claude/demo-site → main | 🔴 High | All 6 website pages built and priced; ready to merge |
 | Deploy website/ to trevoadvisors.com | 🔴 High | After merge — /start, /demo, /proposal, /intake, /checkout, /thankyou |

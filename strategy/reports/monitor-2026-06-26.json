@@ -1,0 +1,30 @@
+{
+  "metrics": {
+    "timestamp": "2026-06-26T03:00:15.517Z",
+    "mrr": 0,
+    "arr": 0,
+    "total_clients": 0,
+    "active_clients": 0,
+    "conversion_rate": null,
+    "pitch_acceptance_rate": null,
+    "avg_bookings_per_client": 0,
+    "churn_risk_clients": [],
+    "total_conversations": 0,
+    "routed_conversations": 0,
+    "pipeline": {
+      "open_opps": 0,
+      "urgent_cfps": 0,
+      "pitches_sent": 0,
+      "pending_review": 0
+    }
+  },
+  "alerts": [
+    {
+      "severity": "INFO",
+      "metric": "mrr",
+      "value": "$0 MRR",
+      "threshold": "any revenue",
+      "action": "No paying clients yet. Run Phase 1: onboard 3 free/performance clients to validate booking success before charging retainers. See strategy/reports/pricing-analysis-2026-06-05.md"
+    }
+  ]
+}

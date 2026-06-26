@@ -5,7 +5,7 @@
 
 ## What This Is
 
-Trevo Advisors is a solo AI-powered agency that sells websites and voice agents to home service contractors (plumbers, HVAC, electricians, roofers, handymen). The business model is $150–$200 one-time build fee + $65/month hosting. Target: 47 clients/month.
+Trevo Advisors is a solo AI-powered agency that sells websites and voice agents to home service contractors (plumbers, electricians, roofers, handymen — HVAC excluded due to owner's conflict of interest). The business model is a $100 one-time build fee (no monthly fee), or $100 build + $65/month for an AI agent bundle (Nora/Atlas/Argus). Target: 47 clients/month.
 
 The system is a fully automated outbound sales pipeline built in Node.js. It finds contractor leads, diagnoses their website gaps, writes personalized outreach messages, sends them via email and SMS, follows up automatically, and handles replies — all with minimal human input. A customer-facing website at trevoadvisors.com handles the inbound side: demos, proposals, and checkout.
 
@@ -19,12 +19,12 @@ The system is a fully automated outbound sales pipeline built in Node.js. It fin
 
 | Product | One-Time | Monthly |
 |---|---|---|
-| Website + Hosting | $150 | $65/mo |
-| Website + Nora (AI agent) | $200 | $65/mo |
+| Website only | $100 | none |
+| Website + Nora/Atlas/Argus (AI agent) | $100 | $65/mo |
 
 Nora is a 24/7 AI phone agent that answers calls, books appointments, and texts back missed callers. It's the upsell offered 7 days after a website deal closes.
 
-**Target:** 47 clients/month = ~$7,050/mo recurring at full capacity
+**Target:** 47 clients/month = $4,700/mo build revenue; recurring revenue scales with AI-bundle attach rate
 
 ---
 
@@ -270,10 +270,10 @@ Deployed to trevoadvisors.com via Netlify. Static HTML + inline CSS. No framewor
 
 **`/start/`** — Main marketing page
 - Hero with H1, trust signals, two CTAs (→ checkout)
-- Stats bar: 60% mobile / $150 flat / 24/7 Nora / 0 contracts
+- Stats bar: 60% mobile / $100 flat / 24/7 Nora / 0 contracts
 - Interactive demo tabs (Plumbing / Electrical / HVAC / Roofing) with live browser mockup
 - 6-feature grid (mobile-first, click-to-call, forms, reviews, SEO, maintenance)
-- Two pricing cards: $150 Hosting vs $200 Hosting + Nora
+- Two pricing cards: $100 website-only vs $100 + $65/mo with Nora
 - Sub-nav linking to all 4 demo sites and the configurator
 - Phone: (720) 902-7555
 
@@ -299,7 +299,7 @@ Each demo site includes:
   - emergency / 24/7 → red emergency availability bar at top
   - about / team / who we are → About Us section
   - area / service map / suburb → service area section with map placeholder
-- Purchase panel: slides up with order summary, plan toggle ($150 vs $200), checkout button
+- Purchase panel: slides up with order summary, plan toggle ($100 website-only vs $100 + $65/mo with Nora), checkout button
 - Checkout opens `https://trevoadvisors.com/checkout/` with URL params: biz, city, phone, trade, accent, dark, plan, notes
 
 **`/intake/`** — Client intake form
@@ -307,7 +307,7 @@ Each demo site includes:
 - Formspree backend (form ID: xbdbneej) — submissions email to dave@trevoadvisors.com
 
 **`/checkout/`** — Payment page
-- Two Stripe payment links (one-time $150 or $200)
+- Two Stripe payment links (one-time $100 website-only, or $100 + $65/mo with Nora)
 - **NOTE: Stripe link IDs are currently placeholders** — must be replaced when Stripe is back up
 - File: `website/checkout/index.html` lines 345–347
 
@@ -474,7 +474,7 @@ US carriers require business registration for bulk SMS. Status as of 2026-06-03:
 
 1. **Stripe payment links** — Stripe is currently down. When restored:
    - Go to dashboard.stripe.com/payment-links
-   - Create "$150 — Website Build" and "$200 — Website + Nora" links
+   - Create "$100 — Website Build" and "$100 + $65/mo — Website + Nora" links
    - Paste IDs into `website/checkout/index.html` at lines 345–347 (replace `YOUR_WEBSITE_LINK_ID` and `YOUR_NORA_LINK_ID`)
    - Commit and push → Netlify deploys automatically
 
@@ -524,7 +524,7 @@ US carriers require business registration for bulk SMS. Status as of 2026-06-03:
 - First revenue opportunity: focus on closing the leads currently in the `sent` state
 - Website is live at trevoadvisors.com — demos at /demos/plumbing, /demos/hvac, /demos/electrical, /demos/handyman
 - The /preview configurator lets prospects build their own preview before paying
-- Pricing is $150 one-time + $65/mo — upsell to Nora ($200 + $65/mo) after close
+- Pricing is $100 one-time, no monthly fee — upsell to Nora ($100 + $65/mo) after close
 - No employees, no recurring payroll — all AI and automation
 
 **If investor/operator:**

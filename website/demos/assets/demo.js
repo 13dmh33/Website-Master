@@ -28,6 +28,17 @@
     if (cfg.theme.muted)      root.style.setProperty('--muted', cfg.theme.muted);
   }
 
+  /* ---- 1b. FORMAT ADDONS ----
+     cfg.addons picks which website FORMAT this site uses:
+       funnel       — format 1, single-page conversion funnel (the default hero)
+       bookingFirst — format 3, compact booking form replaces the marketing hero
+       locationPages— format 2, programmatic service×city pages (see generate-location-pages.js)
+     These resolve to ordinary feature flags so the same toggle loop drives them. */
+  var addons = cfg.addons || {};
+  features.heroFunnel = !addons.bookingFirst;
+  features.bookingHero = !!addons.bookingFirst;
+  features.locationPages = !!(addons.locationPages && addons.locationPages.length);
+
   /* ---- 2. FEATURE TOGGLES ----
      Every optional block carries data-feature="name".
      A feature is OFF only when explicitly set false in SiteConfig.features. */
@@ -43,6 +54,23 @@
     }
   }
   applyFeatures();
+
+  /* ---- 2b. LOCATION LINKS ----
+     Renders one link per entry in addons.locationPages into #locationLinksList.
+     Slugs must match generate-location-pages.js's slugify() exactly. */
+  function slugify(s) {
+    return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+  }
+  function renderLocationLinks() {
+    var list = document.getElementById('locationLinksList');
+    if (!list || !features.locationPages) return;
+    var locs = addons.locationPages || [];
+    list.innerHTML = locs.map(function (loc) {
+      var slug = loc.slug || slugify(loc.service + '-' + loc.city);
+      return '<a class="location-link" href="' + slug + '/">' + loc.service + ' in ' + loc.city + '</a>';
+    }).join('');
+  }
+  renderLocationLinks();
 
   /* ---- 3. JSON-LD STRUCTURED DATA ---- */
   function injectSchema() {

@@ -45,7 +45,7 @@
   </div>
 </nav>
 
-<section class="hero">
+<section class="hero" data-feature="heroFunnel">
   <div class="hero-bg" style="background-image:url('https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=1400&q=85&fit=crop');"></div>
   <div class="hero-gradient"></div>
   <div class="hero-content">
@@ -64,6 +64,33 @@
       <div><div class="hero-stat-val">11</div><div class="hero-stat-lbl">Years in business</div></div>
       <div><div class="hero-stat-val">24/7</div><div class="hero-stat-lbl">Emergency service</div></div>
     </div>
+  </div>
+</section>
+
+<!-- BOOKING-FIRST HERO — format 3: minimal copy, form replaces marketing hero -->
+<section class="booking-hero" data-feature="bookingHero">
+  <div class="container booking-hero-grid">
+    <div class="booking-hero-copy">
+      <span class="hero-badge">HVAC · Nashville, TN</span>
+      <h1>Book your <span class="accent">HVAC tech</span> in 30 seconds.</h1>
+      <p class="hero-sub">Heating · Cooling · Emergency repair · 4.8★ (94 Google reviews)</p>
+    </div>
+    <form class="booking-form" novalidate>
+      <div class="row">
+        <div class="field"><label>Name</label><input type="text" name="name" placeholder="Jane Smith" required /></div>
+        <div class="field"><label>Phone</label><input type="tel" name="phone" placeholder="(615) 555-0000" required /></div>
+      </div>
+      <div class="field">
+        <label>Service needed</label>
+        <select name="service">
+          <option>AC repair</option>
+          <option>Furnace service</option>
+          <option>New installation</option>
+          <option>Other / not sure</option>
+        </select>
+      </div>
+      <button type="submit" class="lead-submit">Get my appointment time →</button>
+    </form>
   </div>
 </section>
 
@@ -230,6 +257,16 @@
   </div>
 </section>
 
+<!-- LOCATION PAGES — format 2: programmatic service×city pages (see ../assets/generate-location-pages.js) -->
+<section class="section" data-feature="locationPages">
+  <div class="container">
+    <div class="section-label">Service area pages</div>
+    <h2 class="section-h2">Popular services by city</h2>
+    <p class="section-sub">Looking for something specific? Jump straight to your service and city.</p>
+    <div class="location-links" id="locationLinksList"></div>
+  </div>
+</section>
+
 <section class="veteran-section" data-feature="veteran">
   <div class="section-label" style="color:var(--accent);">Veteran-owned</div>
   <h2>10% discount for military &amp; veterans</h2>
@@ -348,6 +385,14 @@
     theme: { accent: "#C0392B", accentDark: "#992d22", dark: "#1A0A08", light: "#FDF3F2" },
     plan: "nora",
     nora: { trade: "hvac", enabledTrades: ["hvac"] },
+    addons: {
+      funnel: true,
+      bookingFirst: false,
+      locationPages: [
+        { service: "AC Repair", city: "Brentwood" },
+        { service: "Furnace Service", city: "Franklin" }
+      ]
+    },
     features: {
       emergency: true, urgency: true, ratingBadge: true, clickToText: true,
       badges: true, financing: true, gallery: true, about: true,

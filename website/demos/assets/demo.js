@@ -150,4 +150,34 @@
     }
   }
   wireForms();
+
+  /* ---- 5. CONTACT CHANNEL ----
+     plan: "basic" sites have no AI agent — show a floating call/text
+     widget instead. plan: "nora"/"atlas"/"argus" load the Nora chat
+     widget. Controlled by cfg.plan so it follows the purchased tier. */
+  function wireContactChannel() {
+    var plan = cfg.plan || 'nora';
+    if (plan === 'basic') {
+      var fc = document.getElementById('floatingContact');
+      if (!fc) return;
+      fc.hidden = false;
+      var toggle = fc.querySelector('.fc-toggle');
+      if (toggle) {
+        toggle.addEventListener('click', function () { fc.classList.toggle('open'); });
+      }
+      return;
+    }
+    if (!cfg.nora || cfg.nora.enabled === false) return;
+    window.NoraConfig = {
+      apiUrl: cfg.nora.apiUrl || 'https://nora-agent-lemon.vercel.app',
+      trade: cfg.nora.trade,
+      businessName: biz.name,
+      enabledTrades: cfg.nora.enabledTrades || [cfg.nora.trade],
+      accentColor: (cfg.theme && cfg.theme.accent) || '#1B6CA8'
+    };
+    var s = document.createElement('script');
+    s.src = (cfg.nora.apiUrl || 'https://nora-agent-lemon.vercel.app') + '/widget.js';
+    document.body.appendChild(s);
+  }
+  wireContactChannel();
 })();

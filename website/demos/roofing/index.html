@@ -320,6 +320,15 @@
   <a href="#contact" class="m-quote">Free Inspection</a>
 </div>
 
+<!-- FLOATING CONTACT WIDGET — shown instead of the AI chat widget on the basic plan -->
+<div class="floating-contact" id="floatingContact" hidden>
+  <div class="fc-menu">
+    <a href="tel:+13035550174" class="fc-item">📞 Call now</a>
+    <a href="sms:+13035550174" class="fc-item">💬 Text us</a>
+  </div>
+  <button class="fc-toggle" aria-label="Contact us">📞</button>
+</div>
+
 <script>
   window.SiteConfig = {
     business: {
@@ -337,6 +346,8 @@
       image: "https://images.unsplash.com/photo-1622050756792-5b1180bec78e?w=1200&q=85&fit=crop&auto=format"
     },
     theme: { accent: "#C0922A", accentDark: "#9a7420", dark: "#141A1A", light: "#F2EDEA" },
+    plan: "nora",
+    nora: { trade: "roofer", enabledTrades: ["roofer"] },
     features: {
       emergency: true, urgency: true, ratingBadge: true, clickToText: true,
       badges: true, financing: true, gallery: true, about: true,
@@ -344,17 +355,6 @@
     }
   };
 </script>
-
-<script>
-  window.NoraConfig = {
-    apiUrl:       "https://nora-agent-lemon.vercel.app",
-    trade:        "roofer",
-    businessName: "Summit Shield Roofing",
-    enabledTrades: ["roofer"],
-    accentColor:  "#C0922A"
-  };
-</script>
-<script src="https://nora-agent-lemon.vercel.app/widget.js"></script>
 <script src="../assets/demo.js"></script>
 </body>
 </html>

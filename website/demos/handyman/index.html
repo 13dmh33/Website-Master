@@ -320,6 +320,15 @@
   <a href="#contact" class="m-quote">Free Quote</a>
 </div>
 
+<!-- FLOATING CONTACT WIDGET — shown instead of the AI chat widget on the basic plan -->
+<div class="floating-contact" id="floatingContact" hidden>
+  <div class="fc-menu">
+    <a href="tel:+17045550471" class="fc-item">📞 Call now</a>
+    <a href="sms:+17045550471" class="fc-item">💬 Text us</a>
+  </div>
+  <button class="fc-toggle" aria-label="Contact us">📞</button>
+</div>
+
 <script>
   window.SiteConfig = {
     business: {
@@ -336,6 +345,8 @@
       image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=85&fit=crop&auto=format"
     },
     theme: { accent: "#7B4F2E", accentDark: "#5e3c22", dark: "#1C0F06", light: "#FAF5F0" },
+    plan: "nora",
+    nora: { trade: "handyman", enabledTrades: ["handyman"] },
     features: {
       emergency: true, urgency: true, ratingBadge: true, clickToText: true,
       badges: true, financing: true, gallery: true, about: true,
@@ -343,17 +354,6 @@
     }
   };
 </script>
-
-<script>
-  window.NoraConfig = {
-    apiUrl:        "https://nora-agent-lemon.vercel.app",
-    trade:         "handyman",
-    businessName:  "Square Deal Handyman",
-    enabledTrades: ["handyman"],
-    accentColor:   "#7B4F2E"
-  };
-</script>
-<script src="https://nora-agent-lemon.vercel.app/widget.js"></script>
 <script src="../assets/demo.js"></script>
 </body>
 </html>

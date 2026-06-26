@@ -320,6 +320,15 @@
   <a href="#contact" class="m-quote">Free Quote</a>
 </div>
 
+<!-- FLOATING CONTACT WIDGET — shown instead of the AI chat widget on the basic plan -->
+<div class="floating-contact" id="floatingContact" hidden>
+  <div class="fc-menu">
+    <a href="tel:+16155550247" class="fc-item">📞 Call now</a>
+    <a href="sms:+16155550247" class="fc-item">💬 Text us</a>
+  </div>
+  <button class="fc-toggle" aria-label="Contact us">📞</button>
+</div>
+
 <script>
   window.SiteConfig = {
     business: {
@@ -337,6 +346,8 @@
       image: "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=1200&q=85&fit=crop"
     },
     theme: { accent: "#C0392B", accentDark: "#992d22", dark: "#1A0A08", light: "#FDF3F2" },
+    plan: "nora",
+    nora: { trade: "hvac", enabledTrades: ["hvac"] },
     features: {
       emergency: true, urgency: true, ratingBadge: true, clickToText: true,
       badges: true, financing: true, gallery: true, about: true,
@@ -344,17 +355,6 @@
     }
   };
 </script>
-
-<script>
-  window.NoraConfig = {
-    apiUrl:        "https://nora-agent-lemon.vercel.app",
-    trade:         "hvac",
-    businessName:  "Comfort Pro HVAC",
-    enabledTrades: ["hvac"],
-    accentColor:   "#C0392B"
-  };
-</script>
-<script src="https://nora-agent-lemon.vercel.app/widget.js"></script>
 <script src="../assets/demo.js"></script>
 </body>
 </html>

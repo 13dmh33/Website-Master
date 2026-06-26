@@ -361,6 +361,15 @@
   <a href="#contact" class="m-quote">Free Quote</a>
 </div>
 
+<!-- FLOATING CONTACT WIDGET — shown instead of the AI chat widget on the basic plan -->
+<div class="floating-contact" id="floatingContact" hidden>
+  <div class="fc-menu">
+    <a href="tel:+13035550192" class="fc-item">📞 Call now</a>
+    <a href="sms:+13035550192" class="fc-item">💬 Text us</a>
+  </div>
+  <button class="fc-toggle" aria-label="Contact us">📞</button>
+</div>
+
 <!-- ============================================================
      SITE CONFIG — single control surface for this site.
      Flip any feature to false to hide that section everywhere.
@@ -387,6 +396,13 @@
       dark: "#0D2235",
       light: "#E8F4FD"
     },
+    // Package tier — "basic" shows the floating call/text widget below
+    // instead of the Nora AI chat widget. "nora"/"atlas"/"argus" load Nora.
+    plan: "nora",
+    nora: {
+      trade: "plumber",
+      enabledTrades: ["plumber"]
+    },
     // Every feature below is configurable — set to false to remove it.
     features: {
       emergency:    true,
@@ -406,19 +422,7 @@
   };
 </script>
 
-<!-- AI assistant widget (Nora) -->
-<script>
-  window.NoraConfig = {
-    apiUrl:       "https://nora-agent-lemon.vercel.app",
-    trade:        "plumber",
-    businessName: "Peak Flow Plumbing",
-    enabledTrades: ["plumber"],
-    accentColor:  "#1B6CA8"
-  };
-</script>
-<script src="https://nora-agent-lemon.vercel.app/widget.js"></script>
-
-<!-- Demo engine: features, schema, interactions -->
+<!-- Demo engine: features, schema, interactions, contact channel (Nora or floating widget) -->
 <script src="../assets/demo.js"></script>
 </body>
 </html>

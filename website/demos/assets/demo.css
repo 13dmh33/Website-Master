@@ -377,6 +377,38 @@ footer a:hover { color: var(--accent); }
 .mobile-cta-bar .m-text { background: rgba(255,255,255,.15); color: #fff; }
 .mobile-cta-bar .m-quote { background: #fff; color: var(--accent); }
 
+/* ── FLOATING CONTACT WIDGET (basic plan — replaces AI chat widget) ── */
+.floating-contact {
+  position: fixed; right: 22px; bottom: 22px; z-index: 300;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
+}
+.fc-menu {
+  display: flex; flex-direction: column; gap: 8px; opacity: 0; pointer-events: none;
+  transform: translateY(6px); transition: opacity .18s, transform .18s;
+}
+.floating-contact.open .fc-menu,
+.floating-contact:hover .fc-menu { opacity: 1; pointer-events: auto; transform: translateY(0); }
+.fc-item {
+  background: var(--white); color: var(--dark); font-size: 14px; font-weight: 700;
+  padding: 10px 16px; border-radius: 999px; box-shadow: 0 4px 14px rgba(0,0,0,.25);
+  white-space: nowrap;
+}
+.fc-item:hover { background: var(--light); }
+.fc-toggle {
+  width: 60px; height: 60px; border-radius: 50%; background: var(--accent); color: #fff;
+  display: flex; align-items: center; justify-content: center; font-size: 26px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.35); border: none; cursor: pointer;
+  animation: fc-pulse 2.4s infinite;
+}
+@keyframes fc-pulse {
+  0%, 100% { box-shadow: 0 6px 18px rgba(0,0,0,.35), 0 0 0 0 rgba(255,255,255,0); }
+  50% { box-shadow: 0 6px 18px rgba(0,0,0,.35), 0 0 0 8px rgba(255,255,255,.12); }
+}
+@media (max-width: 768px) {
+  .floating-contact { right: 14px; bottom: 84px; }
+  .fc-toggle { width: 52px; height: 52px; font-size: 22px; }
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
   nav { padding: 0 18px; }

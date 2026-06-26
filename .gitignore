@@ -18,5 +18,10 @@ logs/*.log
 reports/*.csv
 reports/*.json
 
+# Aggregator outreach — leads/queue JSON tracked (same convention as
+# leads/ and queue/ above); generated PDFs are local build output, not tracked
+aggregator/pdfs/*.pdf
+aggregator/leads/needs-email-*.csv
+
 # OS
 .DS_Store

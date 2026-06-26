@@ -1,0 +1,137 @@
+{
+  "merge_fields": ["org_name", "city", "program_type", "role", "signer_name", "track_link"],
+  "lanes": {
+    "license_prep": {
+      "label": "License prep / exam-prep schools",
+      "pdf": "pdf_license_prep.pdf",
+      "sequence": [
+        {
+          "step": "e1",
+          "day_offset": 0,
+          "subject_variants": [
+            "A free handout for your students",
+            "Something free for your {{org_name}} graduates"
+          ],
+          "body": "Hello,\n\nI put together a one-page handout called \"Launching your trade business: first 5 steps\" for people finishing license prep — the kind of thing that's useful the week they pass the exam and start looking for their first jobs. I'd like to send it to {{org_name}} for free, no strings attached.\n\nReply \"send it\" and I'll email the PDF, or I'll mail printed copies to your office, free.\n\n{{signer_name}}"
+        },
+        {
+          "step": "e2",
+          "day_offset": 7,
+          "subject_variants": [
+            "Adding the handout to your completion packet",
+            "One more thing for {{org_name}}'s graduates"
+          ],
+          "body": "Hello,\n\nThe \"Launching your trade business\" handout (attached again here) is built to slot straight into a completion packet — one page, nothing for {{org_name}} to maintain. If it's useful, I'd also like to set up a small per-referral fee for any graduate who books a site build through it, so this is a revenue add for {{org_name}}, not a favor.\n\nReply and I'll set up an affiliate code for your program.\n\n{{signer_name}}"
+        },
+        {
+          "step": "e3",
+          "day_offset": 18,
+          "subject_variants": [
+            "Quick one — who handles student resources at {{org_name}}?",
+            "Setting up the affiliate code"
+          ],
+          "body": "Hello,\n\nFollowing up in case this landed with the wrong person — who handles student resources or completion packets at {{org_name}}? Happy to set up the affiliate code directly with them.\n\nNo worries at all if this isn't a fit right now.\n\n{{signer_name}}"
+        }
+      ]
+    },
+    "bonding_insurance": {
+      "label": "Surety bond / contractor insurance agents",
+      "pdf": "pdf_bonding_partner.pdf",
+      "sequence": [
+        {
+          "step": "e1",
+          "day_offset": 0,
+          "subject_variants": [
+            "A referral partner for new contractors in {{city}}",
+            "Sending new contractor clients your way"
+          ],
+          "body": "Hello,\n\nI build websites for new home-service contractors in {{city}}, and almost every one of them needs a bond or insurance agent right around the same time. I'd like to send those clients your way and see if {{org_name}} would do the same for new contractors who need a site.\n\nReply \"send it\" and I'll send over a one-pager on how the referral would work, or I'll mail a printed copy, free.\n\n{{signer_name}}"
+        },
+        {
+          "step": "e2",
+          "day_offset": 7,
+          "subject_variants": [
+            "How the referral would work",
+            "The partner one-pager for {{org_name}}"
+          ],
+          "body": "Hello,\n\nHere's the one-pager: we send new contractor clients to {{org_name}} for bonding and insurance, and we'd ask {{org_name}} to mention us to new contractors who ask about getting online. No fees, no contract — just a two-way referral.\n\nReply if {{org_name}} wants in.\n\n{{signer_name}}"
+        },
+        {
+          "step": "e3",
+          "day_offset": 18,
+          "subject_variants": [
+            "15 minutes to set up the referral handshake?",
+            "Following up on the referral partnership"
+          ],
+          "body": "Hello,\n\nWould a quick 15-minute call work to set up the referral handshake? Here's a link if so: {{track_link}}\n\nIf now isn't the right time, no worries — just let me know and I'll check back later.\n\n{{signer_name}}"
+        }
+      ]
+    },
+    "sbdc_score": {
+      "label": "SBDC centers / SCORE chapters",
+      "pdf": "pdf_sbdc_handout.pdf",
+      "sequence": [
+        {
+          "step": "e1",
+          "day_offset": 0,
+          "subject_variants": [
+            "Free handout for your advising packet",
+            "A resource for clients launching trade businesses"
+          ],
+          "body": "Hello,\n\nI put together a free one-page handout, \"Launching your trade business: first 5 steps,\" for people in the trades who are about to go out on their own — the kind of thing that fits well in an advising packet. I'd like to send it to {{org_name}} at no cost.\n\nReply \"send it\" and I'll email the PDF, or I'll mail printed copies, free.\n\n{{signer_name}}"
+        },
+        {
+          "step": "e2",
+          "day_offset": 7,
+          "subject_variants": [
+            "Adding this to {{org_name}}'s resources page",
+            "Free resource, no catch"
+          ],
+          "body": "Hello,\n\nThe handout I sent over is free to use however's useful — print it, hand it out, or link it. If {{org_name}} keeps a resources page or vendor list for clients, I'd appreciate being added to it.\n\nReply and I'll send whatever format works best.\n\n{{signer_name}}"
+        },
+        {
+          "step": "e3",
+          "day_offset": 18,
+          "subject_variants": [
+            "Who maintains {{org_name}}'s resources list?",
+            "Quick follow-up"
+          ],
+          "body": "Hello,\n\nJust following up in case this reached the wrong person — who maintains {{org_name}}'s resources list or advising materials?\n\nNo worries if this isn't useful right now.\n\n{{signer_name}}"
+        }
+      ]
+    },
+    "trade_school": {
+      "label": "Vocational / trade schools",
+      "pdf": "pdf_trade_school.pdf",
+      "sequence": [
+        {
+          "step": "e1",
+          "day_offset": 0,
+          "subject_variants": [
+            "A free launch guide for your {{program_type}} graduates",
+            "Something useful for {{org_name}} students before they graduate"
+          ],
+          "body": "Hello,\n\nI put together a free one-page handout, \"Launching your trade business: first 5 steps,\" for students who are about to graduate and go out on their own. It's the kind of resource that makes {{org_name}} look good for handing students something useful right before they leave.\n\nReply \"send it\" and I'll email the PDF, or I'll mail printed copies to your office, free.\n\n{{signer_name}}"
+        },
+        {
+          "step": "e2",
+          "day_offset": 7,
+          "subject_variants": [
+            "Adding the launch guide to career resources",
+            "A small follow-up on the student handout"
+          ],
+          "body": "Hello,\n\nThe handout I sent over is free to add to {{org_name}}'s startup or career resources, or to hand out as printed copies — whatever's easiest. If it's ever useful, I'm also happy to do a short guest session for {{program_type}} students on getting found online.\n\nReply and let me know which format works best.\n\n{{signer_name}}"
+        },
+        {
+          "step": "e3",
+          "day_offset": 18,
+          "subject_variants": [
+            "Who handles student resources at {{org_name}}?",
+            "Following up — happy to mail printed copies"
+          ],
+          "body": "Hello,\n\nFollowing up in case this reached the wrong person — who handles student or career resources at {{org_name}}? Happy to mail printed copies of the handout directly to them.\n\nNo worries at all if this isn't a fit.\n\n{{signer_name}}"
+        }
+      ]
+    }
+  }
+}

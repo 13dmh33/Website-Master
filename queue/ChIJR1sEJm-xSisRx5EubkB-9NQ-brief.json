@@ -11,7 +11,7 @@
   "diagnosis": "No website despite 13 five-star reviews and diverse service offerings (HVAC, remodeling, handyman). Missing online presence to capture high-intent local searches and convert reputation into leads.",
   "hero_angle": "Perfect 5-star rating across handyman, HVAC, and remodeling services—ready to showcase proven expertise online.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -25,7 +25,7 @@
   "secondary_template_name": null,
   "checker_approved": true,
   "diagnosed_at": "2026-06-05T22:07:12.492Z",
-  "final_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "final_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "checker_flag": "",
   "rewrite_count": 0,
   "checker_score": {
@@ -35,5 +35,6 @@
   },
   "checked_at": "2026-06-05T22:25:31.054Z",
   "demo_url": "https://trevoadvisors.com/for/?b=Avanelle+Homes&t=handyman&c=San+Antonio&r=13",
-  "demo_url_created_at": "2026-06-05T22:26:08.282Z"
+  "demo_url_created_at": "2026-06-05T22:26:08.282Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.407Z"
 }

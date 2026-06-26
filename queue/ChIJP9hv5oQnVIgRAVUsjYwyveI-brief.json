@@ -11,7 +11,7 @@
   "diagnosis": "Strong 4.9-star reputation with 86 reviews but zero web presence. Missing website, email, and address listing means customers can't easily book, check credentials, or share their info—leaving money on the table despite excellent reviews.",
   "hero_angle": "Carolina Premier Handyman has earned 86 five-star reviews; a professional website would turn that trust into consistent bookings.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -24,5 +24,6 @@
   "secondary_template_id": null,
   "secondary_template_name": null,
   "checker_approved": false,
-  "diagnosed_at": "2026-06-05T22:08:04.920Z"
+  "diagnosed_at": "2026-06-05T22:08:04.920Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.406Z"
 }

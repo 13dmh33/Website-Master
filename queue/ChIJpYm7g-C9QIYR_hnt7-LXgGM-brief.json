@@ -11,7 +11,7 @@
   "diagnosis": "No website despite 27 reviews and 4.2 rating. Established plumber losing credibility and lead capture opportunities. Missing email, incomplete profile hurting local search visibility and customer trust.",
   "hero_angle": "27 verified reviews prove their quality—a professional website would convert that trust into consistent lead flow.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -24,5 +24,6 @@
   "secondary_template_id": null,
   "secondary_template_name": null,
   "checker_approved": false,
-  "diagnosed_at": "2026-06-05T22:08:31.700Z"
+  "diagnosed_at": "2026-06-05T22:08:31.700Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.421Z"
 }

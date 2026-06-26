@@ -11,7 +11,7 @@
   "diagnosis": "No website despite 18 Google reviews and 4.4 rating. Missing digital storefront to convert local search traffic and showcase handyman expertise. Reviews alone won't drive enough qualified leads.",
   "hero_angle": "18 genuine reviews prove reliability—a website turns that social proof into consistent job inquiries.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -25,7 +25,7 @@
   "secondary_template_name": null,
   "checker_approved": true,
   "diagnosed_at": "2026-06-05T22:08:47.570Z",
-  "final_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "final_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "checker_flag": "",
   "rewrite_count": 0,
   "checker_score": {
@@ -35,5 +35,6 @@
   },
   "checked_at": "2026-06-05T22:25:31.065Z",
   "demo_url": "https://trevoadvisors.com/for/?b=Juan+In+A+Million+Handyman+Services&t=handyman&c=Las+Vegas&r=18",
-  "demo_url_created_at": "2026-06-05T22:26:08.233Z"
+  "demo_url_created_at": "2026-06-05T22:26:08.233Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.371Z"
 }

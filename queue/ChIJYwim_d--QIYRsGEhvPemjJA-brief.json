@@ -11,7 +11,7 @@
   "diagnosis": "No website despite 70 reviews and 4.4 rating. Supply business losing credibility and online visibility. Customers can't verify inventory, pricing, or hours. Strong local reputation not leveraged digitally.",
   "hero_angle": "70 verified reviews prove City Supply's reliability—a professional website will convert that trust into consistent online orders and quote requests.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -24,5 +24,6 @@
   "secondary_template_id": null,
   "secondary_template_name": null,
   "checker_approved": false,
-  "diagnosed_at": "2026-06-05T22:10:08.674Z"
+  "diagnosed_at": "2026-06-05T22:10:08.674Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.411Z"
 }

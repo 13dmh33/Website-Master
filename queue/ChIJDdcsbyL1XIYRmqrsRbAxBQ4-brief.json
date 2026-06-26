@@ -11,7 +11,7 @@
   "diagnosis": "No website despite strong 4.9★ rating and 12 reviews. Missing digital storefront costs them visibility and inquiry capture. Wide service range (handyman to roofing/electrical) needs consolidation online.",
   "hero_angle": "Highly-rated generalist with proven track record across roofing, electrical, and remodeling—positioned as the one-stop contractor.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -25,7 +25,7 @@
   "secondary_template_name": null,
   "checker_approved": true,
   "diagnosed_at": "2026-06-05T22:07:10.564Z",
-  "final_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "final_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "checker_flag": "",
   "rewrite_count": 0,
   "checker_score": {
@@ -35,5 +35,6 @@
   },
   "checked_at": "2026-06-05T22:25:31.052Z",
   "demo_url": "https://trevoadvisors.com/for/?b=San+Antonio+Constructors+%26+Consulting&t=handyman&c=San+Antonio&r=12",
-  "demo_url_created_at": "2026-06-05T22:26:08.267Z"
+  "demo_url_created_at": "2026-06-05T22:26:08.267Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.399Z"
 }

@@ -11,7 +11,7 @@
   "diagnosis": "Strong Google presence (136 reviews, 4.7★) but zero web footprint. Missing website means no independent lead capture, no SEO traffic, no credibility outside Maps. Customers can't learn about services, pricing, or booking online.",
   "hero_angle": "136 verified reviews and 4.7★ rating prove trust—now amplify with a real website to convert that reputation into direct leads.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -24,5 +24,6 @@
   "secondary_template_id": null,
   "secondary_template_name": null,
   "checker_approved": false,
-  "diagnosed_at": "2026-06-05T22:09:42.668Z"
+  "diagnosed_at": "2026-06-05T22:09:42.668Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.419Z"
 }

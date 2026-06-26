@@ -200,4 +200,4 @@ function printStats() {
   console.log('─'.repeat(52));
 }
 
-module.exports = { pickAndFill, recordSent, recordReply, printStats };
+module.exports = { pickAndFill, recordSent, recordReply, printStats, fill, loadTemplates };

@@ -11,7 +11,7 @@
   "diagnosis": "Strong local reputation (55 reviews, 4.7★) but zero web presence—no website, no email listed. Losing potential customers who search online before calling. Competitors with sites are capturing jobs they should win.",
   "hero_angle": "55 verified reviews and 4.7-star rating prove reliability; a website transforms that trust into lead capture.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -24,5 +24,6 @@
   "secondary_template_id": null,
   "secondary_template_name": null,
   "checker_approved": false,
-  "diagnosed_at": "2026-06-05T22:09:16.616Z"
+  "diagnosed_at": "2026-06-05T22:09:16.616Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.418Z"
 }

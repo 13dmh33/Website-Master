@@ -11,7 +11,7 @@
   "diagnosis": "No website despite strong Google presence (15 reviews, 4.7 rating). Metal fabrication specialist losing credibility and inquiry capture—customers can't learn services, pricing, or portfolio online.",
   "hero_angle": "Specialized metal fabrication expertise (welding, CNC, laser cutting) with proven customer satisfaction (4.7★) that deserves a professional online presence.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -24,5 +24,6 @@
   "secondary_template_id": null,
   "secondary_template_name": null,
   "checker_approved": false,
-  "diagnosed_at": "2026-06-05T22:08:00.394Z"
+  "diagnosed_at": "2026-06-05T22:08:00.394Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.407Z"
 }

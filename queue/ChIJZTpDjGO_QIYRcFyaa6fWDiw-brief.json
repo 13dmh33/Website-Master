@@ -11,7 +11,7 @@
   "diagnosis": "Strong local reputation (4.8★, 18 reviews) but zero web presence—no website or email. Losing discovery traffic to competitors with online storefronts. Plumbing, HVAC, gas, and water services all bundled but invisible beyond Maps.",
   "hero_angle": "Established Houston plumber with exceptional reviews who's invisible online and losing jobs to less-qualified competitors with websites.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -25,7 +25,7 @@
   "secondary_template_name": null,
   "checker_approved": true,
   "diagnosed_at": "2026-06-05T21:49:42.980Z",
-  "final_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "final_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "checker_flag": "",
   "rewrite_count": 0,
   "checker_score": {
@@ -35,5 +35,6 @@
   },
   "checked_at": "2026-06-05T22:25:31.032Z",
   "demo_url": "https://trevoadvisors.com/for/?b=Master+Plumber+Services&t=plumber&c=Houston&r=18",
-  "demo_url_created_at": "2026-06-05T22:26:08.290Z"
+  "demo_url_created_at": "2026-06-05T22:26:08.290Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.411Z"
 }

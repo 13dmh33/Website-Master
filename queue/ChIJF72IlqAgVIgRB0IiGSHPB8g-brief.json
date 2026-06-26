@@ -11,7 +11,7 @@
   "diagnosis": "Eager Beaver has strong local reviews (27, 5-star) but zero web presence—no website to convert inquiry traffic or showcase work. Missing critical trust signals beyond Maps listing. Losing visibility and lead volume to competitors with online portfolios.",
   "hero_angle": "Perfect 5-star rating with 27 reviews proves reliability; a simple website turns that social proof into consistent leads.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -25,7 +25,7 @@
   "secondary_template_name": null,
   "checker_approved": true,
   "diagnosed_at": "2026-06-05T22:06:41.451Z",
-  "final_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "final_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "checker_flag": "",
   "rewrite_count": 0,
   "checker_score": {
@@ -35,5 +35,6 @@
   },
   "checked_at": "2026-06-05T22:25:31.024Z",
   "demo_url": "https://trevoadvisors.com/for/?b=Eager+Beaver+Handyman+Service&t=handyman&c=Charlotte&r=27",
-  "demo_url_created_at": "2026-06-05T22:26:08.270Z"
+  "demo_url_created_at": "2026-06-05T22:26:08.270Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.400Z"
 }

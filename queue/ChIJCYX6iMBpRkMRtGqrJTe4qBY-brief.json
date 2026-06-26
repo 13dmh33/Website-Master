@@ -11,7 +11,7 @@
   "diagnosis": "131 five-star reviews on Google Maps but zero web presence—Kenneth's is invisible beyond Maps. No website means lost calls from prospects who search first, no lead capture, no SEO authority.",
   "hero_angle": "Trusted plumber with 131 five-star reviews ready to convert online searchers into booked jobs.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -24,5 +24,6 @@
   "secondary_template_id": null,
   "secondary_template_name": null,
   "checker_approved": false,
-  "diagnosed_at": "2026-06-05T21:50:42.756Z"
+  "diagnosed_at": "2026-06-05T21:50:42.756Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.398Z"
 }

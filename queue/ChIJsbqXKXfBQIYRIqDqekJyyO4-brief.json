@@ -11,7 +11,7 @@
   "diagnosis": "Strong reputation (33 reviews, 4.8★) but zero online presence beyond Google Maps. No website means lost conversion opportunities and limited credibility signals for new customers searching online.",
   "hero_angle": "Trusted Houston plumber with 33+ verified reviews—ready to convert that reputation into a professional online storefront.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -24,5 +24,6 @@
   "secondary_template_id": null,
   "secondary_template_name": null,
   "checker_approved": false,
-  "diagnosed_at": "2026-06-05T21:50:10.242Z"
+  "diagnosed_at": "2026-06-05T21:50:10.242Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.421Z"
 }

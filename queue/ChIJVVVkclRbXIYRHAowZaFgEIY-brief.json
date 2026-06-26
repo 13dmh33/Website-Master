@@ -11,7 +11,7 @@
   "diagnosis": "28 reviews on Maps but no website—losing credibility and job leads to competitors with online presence. 4-star rating needs showcasing. No email contact option limits inquiries.",
   "hero_angle": "28 verified customer reviews show trust; a simple website converts that social proof into steady jobs.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -24,5 +24,6 @@
   "secondary_template_id": null,
   "secondary_template_name": null,
   "checker_approved": false,
-  "diagnosed_at": "2026-06-05T22:09:09.652Z"
+  "diagnosed_at": "2026-06-05T22:09:09.652Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.409Z"
 }

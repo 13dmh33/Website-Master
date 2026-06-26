@@ -11,7 +11,7 @@
   "diagnosis": "Strong local reputation (103 reviews, 4.9★) but zero web presence. No website means lost inquiry volume—customers can't learn services, pricing, or book online. Missing conversion funnel despite excellent reviews.",
   "hero_angle": "Endurance Plumbing has earned 103 five-star reviews and should capture every inquiry they generate with a professional web presence.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -24,5 +24,6 @@
   "secondary_template_id": null,
   "secondary_template_name": null,
   "checker_approved": false,
-  "diagnosed_at": "2026-06-05T22:09:28.516Z"
+  "diagnosed_at": "2026-06-05T22:09:28.516Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.421Z"
 }

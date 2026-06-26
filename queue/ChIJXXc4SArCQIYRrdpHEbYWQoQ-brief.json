@@ -11,7 +11,7 @@
   "diagnosis": "Perfect 5-star rating with 16 reviews but zero web presence. No website to convert leads, capture service areas, or showcase expertise. Losing potential customers who search online before calling.",
   "hero_angle": "Speedway Plumbing has earned a flawless 5-star reputation—now they need a website to let that reputation work 24/7.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -25,7 +25,7 @@
   "secondary_template_name": null,
   "checker_approved": true,
   "diagnosed_at": "2026-06-05T21:49:45.047Z",
-  "final_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "final_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "checker_flag": "",
   "rewrite_count": 0,
   "checker_score": {
@@ -35,5 +35,6 @@
   },
   "checked_at": "2026-06-05T22:25:31.031Z",
   "demo_url": "https://trevoadvisors.com/for/?b=Speedway+Plumbing+Houston&t=plumber&c=Houston&r=16",
-  "demo_url_created_at": "2026-06-05T22:26:08.289Z"
+  "demo_url_created_at": "2026-06-05T22:26:08.289Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.410Z"
 }

@@ -11,7 +11,7 @@
   "diagnosis": "No website despite 10 solid reviews (4.6★). Invisible to search traffic, losing leads to competitors with online presence. Maps-only visibility limits credibility and inquiry volume.",
   "hero_angle": "10 verified reviews prove trusted local handyman—now needs a website to convert that reputation into steady job flow.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -24,5 +24,6 @@
   "secondary_template_id": null,
   "secondary_template_name": null,
   "checker_approved": false,
-  "diagnosed_at": "2026-06-05T22:07:40.999Z"
+  "diagnosed_at": "2026-06-05T22:07:40.999Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.405Z"
 }

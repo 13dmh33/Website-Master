@@ -11,7 +11,7 @@
   "diagnosis": "Strong Google presence (237 reviews, 4.8★) but no website—leaving money on the table. Prospects can't learn pricing, see portfolio, or book online. Missing email contact adds friction to inquiry process.",
   "hero_angle": "Ace has earned 237 five-star reviews; a simple website turns that trust into booked jobs 24/7.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -24,5 +24,6 @@
   "secondary_template_id": null,
   "secondary_template_name": null,
   "checker_approved": false,
-  "diagnosed_at": "2026-06-05T22:09:20.688Z"
+  "diagnosed_at": "2026-06-05T22:09:20.688Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.409Z"
 }

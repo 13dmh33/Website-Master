@@ -11,7 +11,7 @@
   "diagnosis": "Strong local reputation (21 reviews, 4.6★) but zero web presence—no website, email, or address listed. Losing qualified leads who search online before calling. Google Maps is their only digital footprint.",
   "hero_angle": "Trusted Charlotte handyman with proven customer reviews ready to capture local search traffic.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -24,5 +24,6 @@
   "secondary_template_id": null,
   "secondary_template_name": null,
   "checker_approved": false,
-  "diagnosed_at": "2026-06-05T22:07:22.650Z"
+  "diagnosed_at": "2026-06-05T22:07:22.650Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.419Z"
 }

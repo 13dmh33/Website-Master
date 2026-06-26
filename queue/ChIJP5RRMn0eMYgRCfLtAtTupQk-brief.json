@@ -11,7 +11,7 @@
   "diagnosis": "Strong 27-review profile (4.6★) with zero web presence. No website, missing email & address. Leaving customer research and booking friction entirely to Maps—losing qualified leads to competitors with even basic sites.",
   "hero_angle": "27 verified reviews prove your heating & plumbing work; a real website gives those customers a reason to pick up the phone.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -24,5 +24,6 @@
   "secondary_template_id": null,
   "secondary_template_name": null,
   "checker_approved": false,
-  "diagnosed_at": "2026-06-05T21:50:26.321Z"
+  "diagnosed_at": "2026-06-05T21:50:26.321Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.406Z"
 }

@@ -11,7 +11,7 @@
   "diagnosis": "Strong Google presence (62 reviews, 4.7★) but zero website—losing credibility and job inquiries to competitors with online footprints. No email listed. Missing opportunity to convert map traffic into booked jobs.",
   "hero_angle": "Acacias Plumbing has earned 62 five-star reviews on Google—proof of quality that a website would amplify.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -24,5 +24,6 @@
   "secondary_template_id": null,
   "secondary_template_name": null,
   "checker_approved": false,
-  "diagnosed_at": "2026-06-05T21:50:32.504Z"
+  "diagnosed_at": "2026-06-05T21:50:32.504Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.387Z"
 }

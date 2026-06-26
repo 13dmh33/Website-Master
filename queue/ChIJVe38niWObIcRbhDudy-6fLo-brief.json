@@ -11,7 +11,7 @@
   "diagnosis": "Strong Google presence (213 reviews, 4.9★) but zero web footprint—no website means lost calls, no lead capture, no proof of expertise beyond Maps. Converting reputation into revenue requires an owned digital asset.",
   "hero_angle": "213 verified reviews and 4.9★ rating prove their quality; a professional website transforms that reputation into booked jobs.",
   "tone": "direct",
-  "cold_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $150 flat. 15-min call? — Dave @ Trevo Advisors",
+  "cold_message": "Hey - no website means missing 3-5 plumber jobs a week to competitors who have one. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s2",
   "template_name": "The missed job",
   "template_based": true,
@@ -24,7 +24,7 @@
   "secondary_template_name": null,
   "checker_approved": true,
   "diagnosed_at": "2026-06-02T14:04:15.259Z",
-  "final_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $150 flat. 15-min call? — Dave @ Trevo Advisors",
+  "final_message": "Hey - no website means missing 3-5 plumber jobs a week to competitors who have one. $100 flat. Book here: https://trevoadvisors.com/start/",
   "checker_flag": "",
   "rewrite_count": 0,
   "checker_score": {
@@ -34,5 +34,6 @@
   },
   "checked_at": "2026-06-02T14:04:38.946Z",
   "demo_url": "https://trevoadvisors.com/for/?b=A+Clear+Choice+Plumbing+%26+Heating&t=plumber&c=Englewood&r=213",
-  "demo_url_created_at": "2026-06-05T04:21:12.978Z"
+  "demo_url_created_at": "2026-06-05T04:21:12.978Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.409Z"
 }

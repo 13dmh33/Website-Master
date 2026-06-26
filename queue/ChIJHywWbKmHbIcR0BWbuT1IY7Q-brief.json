@@ -11,7 +11,7 @@
   "diagnosis": "Strong local reputation (220 reviews, 4.8★) but zero web presence. No website to capture leads, verify services, or build trust beyond Google Maps. Missing opportunity to convert high-intent searches into calls.",
   "hero_angle": "220 5-star reviews prove your quality—a professional website would turn that reputation into predictable customer acquisition.",
   "tone": "direct",
-  "cold_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $150 flat. 15-min call? — Dave @ Trevo Advisors",
+  "cold_message": "Hey - no website means missing 3-5 plumber jobs a week to competitors who have one. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s2",
   "template_name": "The missed job",
   "template_based": true,
@@ -24,7 +24,7 @@
   "secondary_template_name": null,
   "checker_approved": true,
   "diagnosed_at": "2026-06-01T21:43:18.267Z",
-  "final_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $150 flat. 15-min call? — Dave @ Trevo Advisors",
+  "final_message": "Hey - no website means missing 3-5 plumber jobs a week to competitors who have one. $100 flat. Book here: https://trevoadvisors.com/start/",
   "checker_flag": "",
   "rewrite_count": 0,
   "checker_score": {
@@ -34,5 +34,6 @@
   },
   "checked_at": "2026-06-01T21:43:35.303Z",
   "demo_url": "https://trevoadvisors.com/for/?b=Professional+Plumbers+Denver&t=plumber&c=Denver&r=220",
-  "demo_url_created_at": "2026-06-05T04:21:12.976Z"
+  "demo_url_created_at": "2026-06-05T04:21:12.976Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.404Z"
 }

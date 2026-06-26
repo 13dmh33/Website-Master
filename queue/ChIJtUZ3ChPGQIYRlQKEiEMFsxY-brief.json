@@ -11,7 +11,7 @@
   "diagnosis": "TDT Plumbing has 94 reviews and a solid 4.5 rating but zero web presence—no website, email, or address listed. They're leaving money on the table: prospects can't learn about services, see pricing, or book online. Missing digital foundation is costing them job leads.",
   "hero_angle": "94 reviews prove TDT Plumbing delivers; a professional website would convert that reputation into consistent job flow.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -24,5 +24,6 @@
   "secondary_template_id": null,
   "secondary_template_name": null,
   "checker_approved": false,
-  "diagnosed_at": "2026-06-05T22:10:03.457Z"
+  "diagnosed_at": "2026-06-05T22:10:03.457Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.421Z"
 }

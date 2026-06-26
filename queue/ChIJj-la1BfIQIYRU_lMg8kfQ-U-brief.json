@@ -11,7 +11,7 @@
   "diagnosis": "Strong local reputation (107 reviews, 4.7★) but zero web presence. No website means lost leads during research phase, especially for bathroom remodeling queries. Missing digital credibility layer despite solid Maps footprint.",
   "hero_angle": "Trusted Houston plumber with 107 genuine reviews—ready to convert that reputation into consistent online discovery.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -24,5 +24,6 @@
   "secondary_template_id": null,
   "secondary_template_name": null,
   "checker_approved": false,
-  "diagnosed_at": "2026-06-05T22:09:54.523Z"
+  "diagnosed_at": "2026-06-05T22:09:54.523Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.419Z"
 }

@@ -11,7 +11,7 @@
   "diagnosis": "Strong Google presence (197 reviews, 4.7★) but zero web footprint—no website to convert search traffic or showcase services. Missing digital hub to capture high-intent local plumbing calls.",
   "hero_angle": "197 verified reviews prove your reputation; a website converts that trust into consistent jobs.",
   "tone": "direct",
-  "cold_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $150 flat. 15-min call? — Dave @ Trevo Advisors",
+  "cold_message": "Hey - no website means missing 3-5 plumber jobs a week to competitors who have one. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s2",
   "template_name": "The missed job",
   "template_based": true,
@@ -24,7 +24,7 @@
   "secondary_template_name": null,
   "checker_approved": true,
   "diagnosed_at": "2026-06-01T21:43:26.903Z",
-  "final_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $150 flat. 15-min call? — Dave @ Trevo Advisors",
+  "final_message": "Hey - no website means missing 3-5 plumber jobs a week to competitors who have one. $100 flat. Book here: https://trevoadvisors.com/start/",
   "checker_flag": "",
   "rewrite_count": 0,
   "checker_score": {
@@ -34,5 +34,6 @@
   },
   "checked_at": "2026-06-01T21:43:35.302Z",
   "demo_url": "https://trevoadvisors.com/for/?b=At+Your+Service+Plumbing+Company&t=plumber&c=Denver&r=197",
-  "demo_url_created_at": "2026-06-05T04:21:12.971Z"
+  "demo_url_created_at": "2026-06-05T04:21:12.971Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.389Z"
 }

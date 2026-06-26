@@ -11,7 +11,7 @@
   "diagnosis": "Handyman of South Charlotte has 61 five-star reviews proving reputation, but zero web presence. No website means they're invisible to searchers and can't capture leads beyond Google Maps. Missing email and full address compounds the problem.",
   "hero_angle": "61 five-star reviews prove your work—a website would turn that trust into 24/7 lead generation.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -24,5 +24,6 @@
   "secondary_template_id": null,
   "secondary_template_name": null,
   "checker_approved": false,
-  "diagnosed_at": "2026-06-05T22:07:16.399Z"
+  "diagnosed_at": "2026-06-05T22:07:16.399Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.413Z"
 }

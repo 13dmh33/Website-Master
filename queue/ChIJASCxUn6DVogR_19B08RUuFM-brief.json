@@ -11,7 +11,7 @@
   "diagnosis": "Strong 5-star reputation (22 reviews) but completely invisible online—no website, no email listed, no Google business profile optimization. Missing lead capture infrastructure despite proven local demand.",
   "hero_angle": "Perfect 5.0 rating with real customer proof—ready to convert word-of-mouth success into predictable lead flow.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -25,7 +25,7 @@
   "secondary_template_name": null,
   "checker_approved": true,
   "diagnosed_at": "2026-06-05T22:06:43.260Z",
-  "final_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "final_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "checker_flag": "",
   "rewrite_count": 0,
   "checker_score": {
@@ -35,5 +35,6 @@
   },
   "checked_at": "2026-06-05T22:25:31.018Z",
   "demo_url": "https://trevoadvisors.com/for/?b=The+Best+Handyman&t=handyman&c=Charlotte&r=22",
-  "demo_url_created_at": "2026-06-05T22:26:08.258Z"
+  "demo_url_created_at": "2026-06-05T22:26:08.258Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.397Z"
 }

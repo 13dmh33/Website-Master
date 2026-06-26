@@ -11,7 +11,7 @@
   "diagnosis": "No website despite 23 five-star reviews on Google Maps. Strong local reputation but invisible beyond maps—losing leads who search online before calling. Missing email, incomplete address listing.",
   "hero_angle": "23 five-star reviews prove you deliver quality work; a website captures the leads already looking for you.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -25,7 +25,7 @@
   "secondary_template_name": null,
   "checker_approved": true,
   "diagnosed_at": "2026-06-05T22:06:54.022Z",
-  "final_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "final_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "checker_flag": "",
   "rewrite_count": 0,
   "checker_score": {
@@ -35,5 +35,6 @@
   },
   "checked_at": "2026-06-05T22:25:31.053Z",
   "demo_url": "https://trevoadvisors.com/for/?b=AR+Handyman+Services+LLC&t=handyman&c=Las+Vegas&r=23",
-  "demo_url_created_at": "2026-06-05T22:26:08.273Z"
+  "demo_url_created_at": "2026-06-05T22:26:08.273Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.403Z"
 }

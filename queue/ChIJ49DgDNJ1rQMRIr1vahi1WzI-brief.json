@@ -11,7 +11,7 @@
   "diagnosis": "Strong 5-star reputation (70 reviews) but zero web presence. Missing website means no lead capture, service details, or SEO visibility. Losing potential customers who search online before calling.",
   "hero_angle": "70 five-star reviews prove your quality—a website converts that trust into steady lead flow.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -24,5 +24,6 @@
   "secondary_template_id": null,
   "secondary_template_name": null,
   "checker_approved": false,
-  "diagnosed_at": "2026-06-05T21:50:08.344Z"
+  "diagnosed_at": "2026-06-05T21:50:08.344Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.392Z"
 }

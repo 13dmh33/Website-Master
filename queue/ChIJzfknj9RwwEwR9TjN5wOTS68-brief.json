@@ -11,7 +11,7 @@
   "diagnosis": "Strong 5-star rating (33 reviews) but no website—leaving money on table. Prospects can't learn services, pricing, or booking details beyond Maps. Missing conversion funnel for local Charlotte search traffic.",
   "hero_angle": "Perfect-rated handyman with proven local trust; website will convert that reputation into predictable new jobs.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -24,5 +24,6 @@
   "secondary_template_id": null,
   "secondary_template_name": null,
   "checker_approved": false,
-  "diagnosed_at": "2026-06-05T22:07:25.077Z"
+  "diagnosed_at": "2026-06-05T22:07:25.077Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.424Z"
 }

@@ -11,7 +11,7 @@
   "diagnosis": "149 reviews, 4.7 rating—strong reputation but zero web presence. No website means lost calls to competitors, no credibility check for new customers, no way to showcase work or capture leads outside Google Maps.",
   "hero_angle": "Buddy's has earned 149 five-star reviews; a website turns that trust into 24/7 job capture.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -24,5 +24,6 @@
   "secondary_template_id": null,
   "secondary_template_name": null,
   "checker_approved": false,
-  "diagnosed_at": "2026-06-05T22:09:51.876Z"
+  "diagnosed_at": "2026-06-05T22:09:51.876Z",
+  "pricing_corrected_at": "2026-06-26T02:59:21.423Z"
 }

@@ -165,7 +165,15 @@ OR shop, depending on the brief. hashtag_set: "mission".`,
   mission_recap: `
 CONTENT TYPE: Mission recap (warm close, mostly October Sundays).
 Soft, grateful, "here's what your orders are funding" energy — without overclaiming specific dollar amounts.
-hashtag_set: "mission".`
+hashtag_set: "mission".`,
+
+  trades_stat: `
+CONTENT TYPE: Women-in-trades stat (year-round, low frequency — roughly 0-1x/week, not breast cancer).
+Open with ONE real, verified women-in-the-skilled-trades fact from the brief (you'll be given it). Restate it in
+your own words — never quote the source text. Tone: proud and defiant, not pitying — these numbers are why
+the brand exists, not a reason to feel sorry for anyone. Credit the source plainly in your own words (e.g.
+"per the BLS") without a citation-style footnote. The CTA is usually engagement (tag a tradeswoman / share) but
+can lean mission if the stat ties naturally to the donation. hashtag_set: "mission".`
 };
 
 // =====================================================================

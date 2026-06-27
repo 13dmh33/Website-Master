@@ -75,9 +75,10 @@
         "trades_humor",
         "motivational",
         "engagement",
-        "mission"
+        "mission",
+        "trades_stat"
       ],
-      "rotation_note": "Advance one step per post using current_week modulo rotation length. Humor and motivation should appear most often; mission roughly every 4th community post so it never feels preachy."
+      "rotation_note": "Advance one step per post using current_week modulo rotation length. Humor and motivation should appear most often; mission and trades_stat each land roughly every 5th community post. With 2 weekday community slots/week, trades_stat (women-in-trades data, see inspiration-sources.json) naturally lands 0-1x/week, never both slots same week."
     },
     "product": {
       "rotation": [

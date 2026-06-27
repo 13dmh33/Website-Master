@@ -58,12 +58,16 @@ function buildHashtags(hashtagSet, isOctober, master, week) {
 function briefTextFor(post, brief, idx) {
   const parts = [];
 
+  const wantsTradesFact = post.contentType === 'trades_stat';
   const wantsFact = post.contentType === 'awareness_stat' ||
                     post.contentType === 'mission' ||
                     post.contentType === 'mission_recap' ||
                     post.contentType === 'mission_product_combo';
 
-  if (wantsFact && brief.facts && brief.facts.length) {
+  if (wantsTradesFact && brief.tradeFacts && brief.tradeFacts.length) {
+    const f = brief.tradeFacts[(brief.week + idx) % brief.tradeFacts.length];
+    parts.push(`Use this women-in-trades stat — restate it in your OWN words, cite the source loosely (e.g. "per ${f.source.split('(')[0].trim()}"): "${f.claim}"`);
+  } else if (wantsFact && brief.facts && brief.facts.length) {
     const f = brief.facts[(brief.week + idx) % brief.facts.length];
     parts.push(`Use this VERIFIED fact — restate it in your OWN words, cite the source loosely (e.g. "per ${f.source.split('(')[0].trim()}"): "${f.claim}"`);
   }
@@ -78,7 +82,7 @@ function briefTextFor(post, brief, idx) {
   // fresh RSS angle (live data refresh) — match the beat to the content type.
   // PARAPHRASE ONLY: never reproduce the headline; use it as a jumping-off idea.
   const live = brief.liveHeadlines || {};
-  const beat = wantsFact ? (live.breast_cancer || []) : (live.women_in_trades || []);
+  const beat = (wantsFact && !wantsTradesFact) ? (live.breast_cancer || []) : (live.women_in_trades || []);
   const pool = beat.length ? beat : (live.women_in_trades || []);
   if (pool.length) {
     const h = pool[(brief.week + idx) % pool.length];

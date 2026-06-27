@@ -262,6 +262,80 @@ async function renderCarouselSlide({ headline, body, slideNum, total, paletteKey
   }, headline, paletteKey);
 }
 
+// ── new template: stat card ─────────────────────────────────────────────────
+// for trades_stat posts: the verified number is the hero, dead center and huge,
+// with a one-line context underneath and the source credited at the bottom.
+// statNumber/statContext/statSource come straight from inspiration-sources.json
+// data_hooks (lib/researcher.js → generator.js), never from Claude/evergreen
+// text — so the figure on the image always matches the verified hook.
+async function renderStatCard({ statNumber, statContext, source, paletteKey }) {
+  const { width, height, padding } = DESIGN;
+  const palette = getPalette(paletteKey);
+  const canvas  = new Canvas(width, height);
+  const ctx     = canvas.getContext('2d');
+
+  const { headlineColor, bodyColor } = await drawBackground(ctx, width, height, palette, null);
+  renderTopBar(ctx, width, palette);
+  renderBrand(ctx, width, palette, headlineColor);
+
+  // the number — huge, centered, the whole point of the card
+  ctx.textAlign = 'center';
+  let numSize = 220;
+  ctx.font = `bold ${numSize}px ${HEADLINE_FONT}`;
+  while (ctx.measureText(statNumber).width > width - padding * 1.5 && numSize > 100) {
+    numSize -= 10;
+    ctx.font = `bold ${numSize}px ${HEADLINE_FONT}`;
+  }
+  ctx.fillStyle = palette.accent || '#FF2E88';
+  ctx.fillText(statNumber, width / 2, height * 0.52);
+
+  // accent rule under the number
+  ctx.fillStyle = palette.accent || '#FF2E88';
+  ctx.fillRect(width / 2 - 60, height * 0.52 + 30, 120, 5);
+
+  // context line
+  ctx.font = `${DESIGN.headlineSize - 26}px ${BODY_FONT}`;
+  ctx.fillStyle = headlineColor;
+  ctx.textBaseline = 'alphabetic';
+  const wrapped = wrapTextCentered(ctx, statContext || '', width / 2, height * 0.52 + 80, width - padding * 2, DESIGN.headlineSize - 14);
+
+  // source credit, bottom
+  if (source) {
+    ctx.font = `${DESIGN.brandSize}px ${BODY_FONT}`;
+    ctx.fillStyle = palette.accent || bodyColor;
+    ctx.fillText(`— per ${source.split('(')[0].trim()}`, width / 2, height - padding);
+  }
+  ctx.textAlign = 'left';
+
+  const buffer = await canvas.toBuffer('png');
+  return gateOrFallback(buffer, 'statCard', {
+    backgroundColor: palette.bg,
+    allowedEdgeColors: [palette.accent || '#FF2E88', ...(palette.gradient || [])],
+    textRegions: [{ name: 'stat', x: padding, y: Math.round(height * 0.4), w: width - padding * 2, h: numSize, fg: palette.accent, bg: palette.bg, large: true }],
+  }, `${statNumber} ${statContext || ''}`.trim(), paletteKey);
+}
+
+// centered word-wrap variant of wrapText
+function wrapTextCentered(ctx, text, cx, y, maxWidth, lineHeight) {
+  const words = (text || '').split(' ');
+  let line = '', currentY = y;
+  const prevAlign = ctx.textAlign;
+  ctx.textAlign = 'center';
+  for (let i = 0; i < words.length; i++) {
+    const test = line + (line ? ' ' : '') + words[i];
+    if (ctx.measureText(test).width > maxWidth && i > 0) {
+      ctx.fillText(line, cx, currentY);
+      line = words[i];
+      currentY += lineHeight;
+    } else {
+      line = test;
+    }
+  }
+  if (line) { ctx.fillText(line, cx, currentY); currentY += lineHeight; }
+  ctx.textAlign = prevAlign;
+  return currentY;
+}
+
 // last-resort plain render
 async function renderFallback(text, paletteKey) {
   const { width, height, padding } = DESIGN;
@@ -411,6 +485,7 @@ module.exports = {
   renderCarouselSlide,
   renderCleanCard,
   renderPhotoCard,
+  renderStatCard,
   selectTemplate,
   renderFallback,
   getPalette,

@@ -104,6 +104,20 @@ function briefTextFor(post, brief, idx) {
   return parts.join('\n');
 }
 
+// the exact women-in-trades data hook this slot will cite — same index math as
+// briefTextFor's trades-fact pick, so the caption and the rendered stat card
+// (lib/canvas-render.js renderStatCard) always agree. Drawn straight from the
+// verified data hook, never from Claude/evergreen text, so the number on the
+// image is always correct even if the caption paraphrases it loosely.
+function tradeStatFor(post, brief, idx) {
+  if (post.contentType !== 'trades_stat') return null;
+  const facts = brief.tradeFacts || [];
+  if (!facts.length) return null;
+  const f = facts[(brief.week + idx) % facts.length];
+  if (!f.stat) return null; // caption-only hook, no clean numeral — standard card layout
+  return { statNumber: f.stat, statContext: f.context || '', statSource: f.source };
+}
+
 // normalize an evergreen.json post into our post shape
 function fromEvergreen(ev) {
   return {
@@ -253,6 +267,7 @@ async function main() {
 
     const product = content.product || planPost.product || null;
     const tracked = links.forPost({ contentType: planPost.contentType, product, campaignMode: plan.mode });
+    const statCard = tradeStatFor(planPost, brief, idx);
 
     posts.push({
       slot:        planPost.day,
@@ -279,6 +294,9 @@ async function main() {
       extra:            content.extra,
       hashtags,
       judge: content.judge || null, // generate-then-judge scoring (#1), null for evergreen/single-variant posts
+      statNumber:  statCard ? statCard.statNumber  : null, // drives renderStatCard — verified hook, not AI text
+      statContext: statCard ? statCard.statContext : null,
+      statSource:  statCard ? statCard.statSource  : null,
       status: 'pending',
     });
   }

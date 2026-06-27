@@ -83,7 +83,14 @@ async function renderSingle(post, imageDir, idx) {
   const templateName = render.selectTemplate(post.format, { hasPhoto });
   try {
     let buf;
-    if (templateName === 'cleanCard') {
+    if (post.contentType === 'trades_stat' && post.statNumber) {
+      buf = await render.renderStatCard({
+        statNumber:  post.statNumber,
+        statContext: post.statContext || '',
+        source:      post.statSource || '',
+        paletteKey,
+      });
+    } else if (templateName === 'cleanCard') {
       buf = await render.renderCleanCard(post.hook, '', 0, 0);
     } else if (templateName === 'photoCard' && hasPhoto) {
       const photoBuffer = fs.readFileSync(render.productImagePath(post.product));

@@ -62,7 +62,7 @@ function pickTradesFacts(sources) {
   const hooks = (sources && sources.data_hooks) || [];
   return hooks
     .filter(h => h.beat === 'women_in_trades')
-    .map(h => ({ claim: h.claim, source: h.source }));
+    .map(h => ({ claim: h.claim, source: h.source, stat: h.stat || null, context: h.context || null }));
 }
 
 async function main() {

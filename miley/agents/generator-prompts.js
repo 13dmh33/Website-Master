@@ -173,7 +173,23 @@ Open with ONE real, verified women-in-the-skilled-trades fact from the brief (yo
 your own words — never quote the source text. Tone: proud and defiant, not pitying — these numbers are why
 the brand exists, not a reason to feel sorry for anyone. Credit the source plainly in your own words (e.g.
 "per the BLS") without a citation-style footnote. The CTA is usually engagement (tag a tradeswoman / share) but
-can lean mission if the stat ties naturally to the donation. hashtag_set: "mission".`
+can lean mission if the stat ties naturally to the donation. hashtag_set: "mission".`,
+
+  '4thjuly': `
+CONTENT TYPE: 4th of July (holiday, one slot during the week of July 4th).
+Lean into red/white/blue, cookouts, fireworks, long-weekend-off-the-clock energy — while staying in the
+trades/merch lane (gear for the cookout, "off the clock for the weekend," summer jobsite heat). Keep it
+genuinely tied to the holiday, not just a generic summer post with a flag emoji. hashtag_set: "4thjuly".
+
+HOLIDAY CONTENT TYPE PATTERN — copy this block for future holidays:
+1. Add a CONTENT_TYPE_INSTRUCTIONS entry here (this one) with the holiday's specific angle.
+2. Add the contentType to lib/planner.js's DEFAULT_FORMAT / EVERGREEN_TYPE / PALETTE_KEY maps.
+3. Add a hashtag-master.json sets[<holiday>] block + add <holiday> to passesQualityGate's validSets below.
+4. Add 1-2 evergreen.json fallback posts with that type, so a Claude miss still has something on-brand.
+5. Add a palettes_by_type entry in visual-config.json for the holiday's color direction.
+6. Add/update the templates/calendar.json entry with match_mode: "override", rule: explicit_range pinned
+   to the holiday's actual date(s), and contentType set to the new type — the planner targets whichever
+   slot falls on that date (falls back to the first slot if no slot lands on it that week).`
 };
 
 // =====================================================================
@@ -334,7 +350,7 @@ function passesQualityGate(post) {
   if (caption.split(/\s+/).length > 120) return false;
 
   // Valid hashtag set name.
-  const validSets = ['product', 'trades_humor', 'mission', 'engagement', 'motivational'];
+  const validSets = ['product', 'trades_humor', 'mission', 'engagement', 'motivational', '4thjuly'];
   if (!validSets.includes(post.hashtag_set)) return false;
 
   return true;

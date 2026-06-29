@@ -55,9 +55,10 @@
       "id": "july-4th-2026",
       "name": "Independence Day (4th of July)",
       "beat": "general",
-      "rule": { "type": "explicit_range", "start": "2026-06-29", "end": "2026-07-05" },
-      "match_mode": "supplement",
-      "angle": "It's 4th of July week — lean into red/white/blue, cookouts, fireworks, long weekend energy. Keep the trades-humor/motivational/engagement/mission voice, just give it a patriotic/summer-holiday flavor. Product posts can riff on 'gear for the cookout' or 'off the clock for the weekend.'",
+      "rule": { "type": "explicit_range", "start": "2026-07-04", "end": "2026-07-04" },
+      "match_mode": "override",
+      "contentType": "4thjuly",
+      "angle": "It's 4th of July — lean into red/white/blue, cookouts, fireworks, long weekend energy. Product posts can riff on 'gear for the cookout' or 'off the clock for the weekend.'",
       "source": "Fixed US federal holiday (July 4) — no re-verification needed.",
       "priority": 7
     },

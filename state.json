@@ -1624,7 +1624,8 @@
       "added_at": "2026-06-29T15:40:28.192Z",
       "diagnosed_at": "2026-06-29T16:25:20.751Z",
       "checked_at": "2026-06-29T16:27:42.186Z",
-      "sent_at": "2026-06-29T16:40:07.420Z"
+      "sent_at": "2026-06-29T16:40:07.420Z",
+      "loggedToSheet": true
     },
     {
       "lead_id": "industrial-plumbing-heating-co-pueblo-co",
@@ -1662,7 +1663,8 @@
       "added_at": "2026-06-29T15:40:28.192Z",
       "diagnosed_at": "2026-06-29T16:25:35.858Z",
       "checked_at": "2026-06-29T16:27:42.178Z",
-      "sent_at": "2026-06-29T16:31:04.616Z"
+      "sent_at": "2026-06-29T16:31:04.616Z",
+      "loggedToSheet": true
     },
     {
       "lead_id": "olson-plumbing-heating-co-pueblo-co",
@@ -1772,7 +1774,8 @@
       "added_at": "2026-06-29T15:40:28.192Z",
       "diagnosed_at": "2026-06-29T16:26:23.044Z",
       "checked_at": "2026-06-29T16:27:42.179Z",
-      "sent_at": "2026-06-29T16:34:11.796Z"
+      "sent_at": "2026-06-29T16:34:11.796Z",
+      "loggedToSheet": true
     },
     {
       "lead_id": "anywhere-rooter-denver-co",
@@ -1798,7 +1801,8 @@
       "added_at": "2026-06-29T15:40:28.192Z",
       "diagnosed_at": "2026-06-29T16:26:32.504Z",
       "checked_at": "2026-06-29T16:27:42.184Z",
-      "sent_at": "2026-06-29T16:36:28.303Z"
+      "sent_at": "2026-06-29T16:36:28.303Z",
+      "loggedToSheet": true
     },
     {
       "lead_id": "king-rooter-plumbing-denver-co",
@@ -1818,7 +1822,8 @@
       "added_at": "2026-06-29T15:40:28.192Z",
       "diagnosed_at": "2026-06-29T16:26:40.868Z",
       "checked_at": "2026-06-29T16:27:42.176Z",
-      "sent_at": "2026-06-29T16:27:44.450Z"
+      "sent_at": "2026-06-29T16:27:44.450Z",
+      "loggedToSheet": true
     },
     {
       "lead_id": "defense-plumbing-denver-co",

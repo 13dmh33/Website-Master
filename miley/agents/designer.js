@@ -63,6 +63,7 @@ async function renderCarousel(post, imageDir, idx) {
             total:    slides.length,
             paletteKey,
             productKey: post.product,
+            contentType: post.contentType,
           });
       saveBuffer(buf, outPath);
       paths.push(outPath);
@@ -101,6 +102,7 @@ async function renderSingle(post, imageDir, idx) {
         sub:        '— Riley, Techs4Tatas',
         paletteKey,
         productKey: post.product,
+        contentType: post.contentType,
       });
     }
     saveBuffer(buf, outPath);

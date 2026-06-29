@@ -22,6 +22,7 @@ const path  = require('path');
 const fs    = require('fs');
 const store = require('./store');
 const { validateRender } = require('./render-validate');
+const unsplash = require('./unsplash');
 
 const DESIGN = {
   width:        1080,
@@ -125,25 +126,45 @@ function drawGradient(ctx, width, height, palette) {
   ctx.fillRect(0, 0, width, height);
 }
 
-// returns { headlineColor, bodyColor } actually used (photo bg forces light text)
-async function drawBackground(ctx, width, height, palette, productKey) {
+// draws `photo` full-bleed + the standard dark grounding overlay used for any
+// non-gradient background (product mockup or stock photo) so text always reads.
+function drawPhotoFill(ctx, width, height, photo) {
+  const scale = Math.max(width / photo.width, height / photo.height);
+  const dw = photo.width * scale, dh = photo.height * scale;
+  ctx.drawImage(photo, (width - dw) / 2, (height - dh) / 2, dw, dh);
+  ctx.fillStyle = DESIGN.overlay;
+  ctx.fillRect(0, 0, width, height);
+  const grad = ctx.createLinearGradient(0, height * 0.6, 0, height);
+  grad.addColorStop(0, 'rgba(0,0,0,0)');
+  grad.addColorStop(1, 'rgba(8,15,30,0.78)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, width, height);
+}
+
+// returns { headlineColor, bodyColor } actually used (photo bg forces light text).
+// Background priority: product mockup (assets/products/{key}.png) > Unsplash
+// stock photo (niche-matched, only if UNSPLASH_ACCESS_KEY is set) > gradient.
+async function drawBackground(ctx, width, height, palette, productKey, contentType) {
   const imgPath = productImagePath(productKey);
   if (imgPath) {
     try {
       const photo = await loadImage(imgPath);
-      const scale = Math.max(width / photo.width, height / photo.height);
-      const dw = photo.width * scale, dh = photo.height * scale;
-      ctx.drawImage(photo, (width - dw) / 2, (height - dh) / 2, dw, dh);
-      ctx.fillStyle = DESIGN.overlay;
-      ctx.fillRect(0, 0, width, height);
-      const grad = ctx.createLinearGradient(0, height * 0.6, 0, height);
-      grad.addColorStop(0, 'rgba(0,0,0,0)');
-      grad.addColorStop(1, 'rgba(8,15,30,0.78)');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, width, height);
+      drawPhotoFill(ctx, width, height, photo);
       return { headlineColor: '#FFFFFF', bodyColor: '#F7F4F0' };
+    } catch { /* fall through to stock photo / gradient */ }
+  }
+
+  if (contentType) {
+    try {
+      const buffer = await unsplash.fetchStockPhoto(contentType, productKey);
+      if (buffer) {
+        const photo = await loadImage(buffer);
+        drawPhotoFill(ctx, width, height, photo);
+        return { headlineColor: '#FFFFFF', bodyColor: '#F7F4F0' };
+      }
     } catch { /* fall through to gradient */ }
   }
+
   drawGradient(ctx, width, height, palette);
   return { headlineColor: palette.headline || '#FFFFFF', bodyColor: palette.body || '#E2E8F0' };
 }
@@ -183,13 +204,13 @@ function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
 // ── public renderers ─────────────────────────────────────────────────────────
 
 // single image / quote-style card (hook is the hero line)
-async function renderSingle({ hook, sub, paletteKey, productKey }) {
+async function renderSingle({ hook, sub, paletteKey, productKey, contentType }) {
   const { width, height, padding } = DESIGN;
   const palette = getPalette(paletteKey);
   const canvas  = new Canvas(width, height);
   const ctx     = canvas.getContext('2d');
 
-  const { headlineColor, bodyColor } = await drawBackground(ctx, width, height, palette, productKey);
+  const { headlineColor, bodyColor } = await drawBackground(ctx, width, height, palette, productKey, contentType);
   renderTopBar(ctx, width, palette);
   renderBrand(ctx, width, palette, headlineColor);
 
@@ -221,13 +242,13 @@ async function renderSingle({ hook, sub, paletteKey, productKey }) {
 }
 
 // one carousel slide
-async function renderCarouselSlide({ headline, body, slideNum, total, paletteKey, productKey }) {
+async function renderCarouselSlide({ headline, body, slideNum, total, paletteKey, productKey, contentType }) {
   const { width, height, padding } = DESIGN;
   const palette = getPalette(paletteKey);
   const canvas  = new Canvas(width, height);
   const ctx     = canvas.getContext('2d');
 
-  const { headlineColor, bodyColor } = await drawBackground(ctx, width, height, palette, slideNum === 1 ? productKey : null);
+  const { headlineColor, bodyColor } = await drawBackground(ctx, width, height, palette, slideNum === 1 ? productKey : null, slideNum === 1 ? contentType : null);
   renderTopBar(ctx, width, palette);
   renderBrand(ctx, width, palette, headlineColor);
 

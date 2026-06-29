@@ -214,13 +214,6 @@ async function renderSingle({ hook, sub, paletteKey, productKey, contentType }) 
   renderTopBar(ctx, width, palette);
   renderBrand(ctx, width, palette, headlineColor);
 
-  // big accent quote mark
-  ctx.font = `bold 120px ${HEADLINE_FONT}`;
-  ctx.fillStyle = palette.accent || '#FF2E88';
-  ctx.globalAlpha = 0.8;
-  ctx.fillText('"', padding - 8, height * 0.34);
-  ctx.globalAlpha = 1;
-
   ctx.font = `bold ${DESIGN.headlineSize}px ${HEADLINE_FONT}`;
   ctx.fillStyle = headlineColor;
   const endY = wrapText(ctx, hook, padding, height * 0.4, width - padding * 2, DESIGN.headlineSize + 12);

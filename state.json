@@ -1524,9 +1524,309 @@
     },
     {
       "lead_id": "ChIJaUbt7fefVogRVRa_TQt_kj4",
+<<<<<<< HEAD
       "status": "diagnosed",
       "added_at": "2026-06-05T22:03:16.288Z",
       "diagnosed_at": "2026-06-29T15:57:41.208Z"
+=======
+      "status": "scouted",
+      "added_at": "2026-06-05T22:03:16.288Z"
+    },
+    {
+      "lead_id": "wright-jones-plumbing-heating-pueblo-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "jess-plumbing-heating-inc-pueblo-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "industrial-plumbing-heating-co-pueblo-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "cut-rate-sewer-drain-services-llc-pueblo-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "cyclone-sewer-pueblo-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "drain-fix-team-pueblo-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "pumps-more-llc-pueblo-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "bill-s-plumbing-drain-service-pueblo-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "olson-plumbing-heating-co-pueblo-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "leo-s-sewer-drain-inc-pueblo-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "green-plumbing-inc-pueblo-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "the-rooter-guy-s-llc-pueblo-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "drain-plumber-pro-pueblo-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "always-plumbing-heating-inc-pueblo-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "allright-plumbing-heating-inc-pueblo-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "dan-s-drains-and-digs-pueblo-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "peak-demand-plumbing-colorado-springs-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "g-s-plumbing-colorado-springs-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "pipes-peak-plumbing-colorado-springs-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "regal-plumbers-colorado-springs-colorado-springs-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "homeland-plumbing-and-heating-llc-colorado-springs-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "andrews-home-repairs-san-antonio-tx",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "c4-plumbing-denver-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "clean-cut-plumbing-aurora-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "superior-mile-high-plumbing-denver-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "drains-great-metropolitan-drain-cleaning-denver-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "anywhere-rooter-denver-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "mac-s-plumbing-services-aurora-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "best-choice-plumbing-denver-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "emergency-plumbers-denver-llc-denver-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "king-rooter-plumbing-denver-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "time-plumbing-heating-electric-denver-denver-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "at-your-service-plumbing-company-denver-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "defense-plumbing-denver-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "christopher-s-plumbing-inc-denver-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "a-perfect-plumber-denver-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "a-better-plumber-denver-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "balkan-plumbing-littleton-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "waters-of-life-littleton-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "endurance-plumbing-denver-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "jdm-plumbing-denver-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "simply-sewers-denver-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "rex-plumbing-fort-collins-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "the-plumber-from-down-under-fort-collins-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "aspen-plumbing-services-fort-collins-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "jennys-plumbing-fort-collins-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "drain-doctors-fort-collins-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "a-to-zen-plumbing-fort-collins-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "top-notch-plumbing-llc-fort-collins-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "glynn-plumbing-fort-collins-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "revolutionary-kindness-plumbing-colorado-springs-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "st-joseph-plumbing-colorado-springs-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "affordable-plumbing-colorado-springs-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "rocky-mountain-plumbing-services-colorado-springs-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "acorn-plumbing-denver-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "peachtree-plumbing-denver-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "green-plumbing-solutions-denver-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "hanson-plumbing-solution-colorado-springs-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+    },
+    {
+      "lead_id": "r-buck-colorado-springs-co",
+      "status": "scouted",
+      "added_at": "2026-06-29T15:40:28.192Z"
+>>>>>>> 4680574 (sheet-import: add 59 curated plumber/handyman leads from Google Sheet)
     }
   ],
   "active": [],

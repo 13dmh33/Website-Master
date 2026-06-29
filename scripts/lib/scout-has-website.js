@@ -91,6 +91,7 @@ function filterAndFormatHasWebsite(results, tradeStr, cityStr, knownIds, minScor
       latitude:      r.latitude  || null,
       longitude:     r.longitude || null,
       fit_score:     fit,
+      gap_score:     fit, // alias — lets Diagnoser's existing sort/scoring work unmodified
       scraped_at:    new Date().toISOString()
     };
 

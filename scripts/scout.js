@@ -6,7 +6,9 @@
  *   --mode no-website  (default) — finds contractors with no real website.
  *   --mode has-website           — finds established contractors who DO have
  *                                   a real website + email, captures site_url,
- *                                   emits auditor-ready CSV for /audit.
+ *                                   emits auditor-ready CSV for /audit, and feeds
+ *                                   leads with an email into the pitcher pipeline
+ *                                   (mirrored to leads/, queued in state.json).
  *
  * Usage:
  *   node scripts/scout.js --suggest hvac            ← show top 5 markets for a trade, then exit
@@ -25,12 +27,14 @@
  *         .env.local                (OUTSCRAPER_API_KEY)
  *         leads/*.json              (no-website pre-dedup; also cross-checked by has-website)
  *         leads-web/*.json          (has-website pre-dedup)
- * Writes: leads/{city}-{trade}-{date}-{run}.json              (no-website mode)
+ * Writes: leads/{city}-{trade}-{date}-{run}.json              (no-website mode; also mirrors
+ *                                                               has-website's auditor-ready/email leads)
  *         leads-web/{city}-{trade}-{date}-{run}.json           (has-website mode)
  *         leads-web/{city}-{trade}-{date}-{run}.csv             (has-website mode, auditor-ready)
  *         leads-web/needs-email-{city}-{trade}-{date}-{run}.csv (has-website mode, manual lookup queue)
  *         reports/scout-{trade}-{date}.csv  (if --csv, no-website mode)
- *         state.json                (no-website mode only — has-website leads are not pitcher-pipeline leads yet)
+ *         state.json                (both modes — has-website's auditor-ready/email leads are
+ *                                     queued with status 'scouted' just like no-website leads)
  *         config/scout-config.json
  *         logs/{date}.log
  */
@@ -624,6 +628,14 @@ async function runHasWebsiteMode(config, flat, knownIds, knownDomains) {
   if (leads.length > 0) {
     csvFilename = buildFilename(city, LEADS_WEB_DIR, 'csv');
     fs.writeFileSync(path.join(LEADS_WEB_DIR, csvFilename), exportAuditorCsv(leads));
+
+    // Auditor-ready leads have a real email — also feed the pitcher pipeline.
+    // Mirror into leads/ (same filename, same content) so Diagnoser's leads/*.json
+    // scan picks them up, and register them in state.json as 'scouted'.
+    if (!fs.existsSync(LEADS_DIR)) fs.mkdirSync(LEADS_DIR, { recursive: true });
+    fs.writeFileSync(path.join(LEADS_DIR, jsonFilename), JSON.stringify(leads, null, 2));
+    const newToQueue = updateState(leads);
+    console.log(`  Queued for pitcher:  ${newToQueue}  (mirrored to leads/${jsonFilename}, state.json)`);
   }
 
   let needsEmailFilename = null;

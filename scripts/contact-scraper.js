@@ -71,7 +71,16 @@ const ROLE_RE   = /^(info|contact|admin|office|sales|support|hello|service|help|
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
-function websiteOf(rec) { return rec.site_url || rec.website || rec.site || null; }
+// Placeholder strings Scout/imports use for "no website" — must NOT be treated as a URL.
+const NO_SITE_VALUES = new Set(['none', 'n/a', 'na', 'null', 'nil', '-', '—', 'no website', 'n.a.']);
+function websiteOf(rec) {
+  const v = rec.site_url || rec.website || rec.site || null;
+  if (!v) return null;
+  const s = String(v).trim().toLowerCase();
+  if (!s || NO_SITE_VALUES.has(s)) return null;
+  if (!s.includes('.')) return null; // not domain-shaped (e.g. stray "none")
+  return v;
+}
 
 function normHost(url) {
   try {

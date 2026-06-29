@@ -120,7 +120,12 @@ function isJunk(email) {
 function pickBest(emails, leadHost) {
   const clean = [...new Set(emails)].filter(e => !isJunk(e));
   if (clean.length === 0) return null;
-  const domMatch = leadHost ? clean.filter(e => (e.split('@')[1] || '').includes(leadHost)) : [];
+  // Domain match must be exact or a real subdomain — substring matching would
+  // mis-match e.g. host "abc.com" against an unrelated "noabc.com".
+  const domMatch = leadHost ? clean.filter(e => {
+    const d = (e.split('@')[1] || '').toLowerCase();
+    return d === leadHost || d.endsWith('.' + leadHost);
+  }) : [];
   const pool = domMatch.length ? domMatch : clean;
   const personal = pool.filter(e => !ROLE_RE.test(e));
   return (personal.length ? personal : pool)[0];

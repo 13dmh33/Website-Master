@@ -11,7 +11,7 @@
   "diagnosis": "Pristine Plumbing has strong local reputation (229 reviews, 4.8★) but zero web presence. Missing website leaves money on the table—potential customers can't learn services, pricing, or book online. No email contact amplifies the problem.",
   "hero_angle": "229 five-star reviews prove your quality; a professional website will convert that trust into more jobs.",
   "tone": "direct",
-  "cold_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $150 flat. 15-min call? — Dave @ Trevo Advisors",
+  "cold_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $100 flat. 15-min call? — Dave @ Trevo Advisors",
   "template_id": "s2",
   "template_name": "The missed job",
   "template_based": true,
@@ -24,7 +24,7 @@
   "secondary_template_name": null,
   "checker_approved": true,
   "diagnosed_at": "2026-06-01T21:43:24.452Z",
-  "final_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $150 flat. 15-min call? — Dave @ Trevo Advisors",
+  "final_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $100 flat. 15-min call? — Dave @ Trevo Advisors",
   "checker_flag": "",
   "rewrite_count": 0,
   "checker_score": {

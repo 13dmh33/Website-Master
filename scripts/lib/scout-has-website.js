@@ -50,7 +50,7 @@ function scoreFit(result) {
  * different place_id (franchise relist, duplicate GBP listing) by matching
  * on normalized site domain — place_id dedup alone misses these.
  */
-function filterAndFormatHasWebsite(results, tradeStr, cityStr, knownIds, minScore, knownDomains) {
+function filterAndFormatHasWebsite(results, tradeStr, cityStr, knownIds, minScore, knownDomains, minReviews = 10, minRating = 4.0) {
   let disc = { reviews: 0, rating: 0, noWebsite: 0, noPhone: 0, duplicate: 0, lowScore: 0 };
   const leads = [];
   const needsEmail = [];
@@ -60,8 +60,8 @@ function filterAndFormatHasWebsite(results, tradeStr, cityStr, knownIds, minScor
     const pid = r.place_id;
     if (pid && knownIds.has(pid)) { disc.duplicate++; continue; }
 
-    if (!r.reviews || r.reviews < 10) { disc.reviews++; continue; }
-    if (!r.rating  || r.rating  < 4.0) { disc.rating++;  continue; }
+    if (!r.reviews || r.reviews < minReviews) { disc.reviews++; continue; }
+    if (!r.rating  || r.rating  < minRating)  { disc.rating++;  continue; }
     if (!r.phone   || r.phone.trim() === '') { disc.noPhone++; continue; }
     if (!isRealWebsite(r.site)) { disc.noWebsite++; continue; }
 

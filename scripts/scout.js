@@ -22,6 +22,8 @@
  *   node scripts/scout.js --city "Denver, CO" --trade plumber --csv --force
  *   node scripts/scout.js --dry-run --city "Denver, CO" --trade plumber
  *   node scripts/scout.js --city "Denver, CO" --trade plumber --mode has-website --csv --force
+ *   node scripts/scout.js --city "Denver, CO" --trade plumber --mode has-website --min-reviews 3 --min-rating 3.5 --force
+ *                                   (has-website mode only — loosen if a market returns 0 qualifying leads)
  *
  * Reads:  config/scout-config.json  (budget + settings, shared cap across modes)
  *         .env.local                (OUTSCRAPER_API_KEY)
@@ -83,6 +85,8 @@ const limitArg  = parseInt(get('--limit') || '30', 10);
 const budgetArg = parseFloat(get('--budget') || '0');      // --budget 0.25 caps this run
 const targetArg = parseInt(get('--target') || '0', 10);    // --target 50 → auto-calc limit
 const minScore  = parseInt(get('--min-score') || '3', 10); // --min-score 5 → only keep hot leads
+const minReviews = parseInt(get('--min-reviews') || '10', 10);  // has-website mode only
+const minRating  = parseFloat(get('--min-rating') || '4.0');    // has-website mode only
 const isDryRun  = hasFlag('--dry-run');
 const isMulti   = hasFlag('--multi');
 const exportCsv = hasFlag('--csv');
@@ -503,6 +507,7 @@ async function main() {
   if (budgetArg) console.log(`  Run cap:          $${budgetArg.toFixed(2)} (--budget)`);
   console.log(`  Queries:          ${queries.length} × ${perQueryLimit} = ~${totalLimit} raw (~$${estimatedCost.toFixed(3)})`);
   console.log(`  Min score:        ${minScore}`);
+  if (isHasWebsiteMode) console.log(`  Min reviews/rating: ${minReviews} / ${minRating}`);
   console.log('');
 
   if (isDryRun) {
@@ -611,7 +616,7 @@ async function runNoWebsiteMode(config, flat, knownIds) {
 }
 
 async function runHasWebsiteMode(config, flat, knownIds, knownDomains) {
-  const { leads, needsEmail, disc } = filterAndFormatHasWebsite(flat, trade, city, knownIds, minScore, knownDomains);
+  const { leads, needsEmail, disc } = filterAndFormatHasWebsite(flat, trade, city, knownIds, minScore, knownDomains, minReviews, minRating);
   logHasWebsiteBreakdown(flat.length, leads.length, needsEmail.length, disc);
 
   if (leads.length === 0 && needsEmail.length === 0) {

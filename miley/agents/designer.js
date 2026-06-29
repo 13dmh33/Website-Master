@@ -103,6 +103,7 @@ async function renderSingle(post, imageDir, idx) {
         paletteKey,
         productKey: post.product,
         contentType: post.contentType,
+        lifestyleImage: post.lifestyleImage,
       });
     }
     saveBuffer(buf, outPath);

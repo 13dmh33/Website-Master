@@ -123,10 +123,20 @@ function productImagePath(productKey) {
 // for variety (e.g. trades_humor-1.png, trades_humor-2.png); a generic-N.png
 // pool covers any content type without a dedicated photo. Random pick among
 // matches so repeat content types don't always show the same image.
-function lifestyleImagePath(contentType) {
+// `key` is normally the contentType, but a post can pin an exact file (or
+// file family) via post.lifestyleImage — e.g. "4thjuly-1" — overriding the
+// content-type-based match entirely.
+function lifestyleImagePath(contentType, lifestyleKey) {
   const dir = path.join(store.paths.assets, 'lifestyle');
-  if (!contentType || !fs.existsSync(dir)) return null;
+  if (!fs.existsSync(dir)) return null;
   const files = fs.readdirSync(dir).filter(f => /\.(png|jpe?g)$/i.test(f));
+
+  if (lifestyleKey) {
+    const pinned = files.filter(f => new RegExp(`^${lifestyleKey}\\.`, 'i').test(f));
+    if (pinned.length) return path.join(dir, pinned[0]);
+  }
+
+  if (!contentType) return null;
   const matches = files.filter(f => new RegExp(`^${contentType}(-\\d+)?\\.`, 'i').test(f));
   const pool = matches.length ? matches : files.filter(f => /^generic(-\d+)?\./i.test(f));
   if (!pool.length) return null;
@@ -171,7 +181,7 @@ function drawPhotoFill(ctx, width, height, photo) {
 // Background priority: product mockup (assets/products/{key}.png) > manual
 // lifestyle photo (assets/lifestyle/, dropped in by hand) > Unsplash stock
 // photo (niche-matched, only if UNSPLASH_ACCESS_KEY is set) > gradient.
-async function drawBackground(ctx, width, height, palette, productKey, contentType) {
+async function drawBackground(ctx, width, height, palette, productKey, contentType, lifestyleKey) {
   const imgPath = productImagePath(productKey);
   if (imgPath) {
     try {
@@ -181,7 +191,7 @@ async function drawBackground(ctx, width, height, palette, productKey, contentTy
     } catch { /* fall through to lifestyle / stock photo / gradient */ }
   }
 
-  const lifestylePath = lifestyleImagePath(contentType);
+  const lifestylePath = lifestyleImagePath(contentType, lifestyleKey);
   if (lifestylePath) {
     try {
       const photo = await loadImage(lifestylePath);
@@ -251,13 +261,13 @@ function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
 // ── public renderers ─────────────────────────────────────────────────────────
 
 // single image / quote-style card (hook is the hero line)
-async function renderSingle({ hook, sub, paletteKey, productKey, contentType }) {
+async function renderSingle({ hook, sub, paletteKey, productKey, contentType, lifestyleImage }) {
   const { width, height, padding } = DESIGN;
   const palette = getPalette(paletteKey);
   const canvas  = new Canvas(width, height);
   const ctx     = canvas.getContext('2d');
 
-  const { headlineColor, bodyColor } = await drawBackground(ctx, width, height, palette, productKey, contentType);
+  const { headlineColor, bodyColor } = await drawBackground(ctx, width, height, palette, productKey, contentType, lifestyleImage);
   renderTopBar(ctx, width, palette);
   await renderBrand(ctx, width, palette, headlineColor);
 

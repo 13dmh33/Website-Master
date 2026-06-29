@@ -23,6 +23,17 @@
   "secondary_message": null,
   "secondary_template_id": null,
   "secondary_template_name": null,
-  "checker_approved": false,
-  "diagnosed_at": "2026-06-29T15:57:07.678Z"
+  "checker_approved": true,
+  "diagnosed_at": "2026-06-29T15:57:07.678Z",
+  "final_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
+  "checker_flag": "",
+  "rewrite_count": 0,
+  "checker_score": {
+    "template_based": true,
+    "placeholders_filled": true,
+    "secondary_placeholders": true
+  },
+  "checked_at": "2026-06-29T16:27:42.247Z",
+  "demo_url": "https://trevoadvisors.com/for/?b=JK+Handyman+Service&t=handyman&c=Las+Vegas&r=7",
+  "demo_url_created_at": "2026-06-29T16:27:42.634Z"
 }

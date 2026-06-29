@@ -12,9 +12,9 @@
   "current_month": "2026-06",
   "spent_this_month": 0,
   "today": "2026-06-29",
-  "processed_today": 30,
-  "total_processed": 130,
-  "approved_total": 130,
+  "processed_today": 120,
+  "total_processed": 220,
+  "approved_total": 220,
   "flagged_total": 0,
-  "last_run": "2026-06-29T14:54:28.304Z"
+  "last_run": "2026-06-29T16:27:42.520Z"
 }

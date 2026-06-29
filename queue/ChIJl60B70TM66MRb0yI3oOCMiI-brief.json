@@ -23,6 +23,17 @@
   "secondary_message": null,
   "secondary_template_id": null,
   "secondary_template_name": null,
-  "checker_approved": false,
-  "diagnosed_at": "2026-06-05T22:07:50.479Z"
+  "checker_approved": true,
+  "diagnosed_at": "2026-06-05T22:07:50.479Z",
+  "final_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "checker_flag": "",
+  "rewrite_count": 0,
+  "checker_score": {
+    "template_based": true,
+    "placeholders_filled": true,
+    "secondary_placeholders": true
+  },
+  "checked_at": "2026-06-29T16:27:42.224Z",
+  "demo_url": "https://trevoadvisors.com/for/?b=Reliable+Handyman+Services&t=handyman&c=San+Antonio&r=25",
+  "demo_url_created_at": "2026-06-29T16:27:42.739Z"
 }

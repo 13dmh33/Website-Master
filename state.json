@@ -490,9 +490,10 @@
     },
     {
       "lead_id": "ChIJmbRI8w5_q4QRKaz39oSTzgM",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T21:49:56.140Z"
+      "diagnosed_at": "2026-06-05T21:49:56.140Z",
+      "checked_at": "2026-06-29T16:27:42.227Z"
     },
     {
       "lead_id": "ChIJEX_oFlpoWWQRbu_EZTgMFGU",
@@ -531,9 +532,10 @@
     },
     {
       "lead_id": "ChIJsbqXKXfBQIYRIqDqekJyyO4",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T21:50:10.243Z"
+      "diagnosed_at": "2026-06-05T21:50:10.243Z",
+      "checked_at": "2026-06-29T16:27:42.238Z"
     },
     {
       "lead_id": "ChIJIRxNjcDlt4kREQ8Vs3fIL5I",
@@ -572,9 +574,10 @@
     },
     {
       "lead_id": "ChIJcY3KGXagQ0kR-jnMd65corg",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T21:50:24.028Z"
+      "diagnosed_at": "2026-06-05T21:50:24.028Z",
+      "checked_at": "2026-06-29T16:27:42.208Z"
     },
     {
       "lead_id": "ChIJP5RRMn0eMYgRCfLtAtTupQk",
@@ -585,9 +588,10 @@
     },
     {
       "lead_id": "ChIJrx5huBC5QIYRTJzbTvmQGZk",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T21:50:28.212Z"
+      "diagnosed_at": "2026-06-05T21:50:28.212Z",
+      "checked_at": "2026-06-29T16:27:42.237Z"
     },
     {
       "lead_id": "ChIJ-SyE0yu_QIYRXJ3fyAMe9YE",
@@ -612,15 +616,17 @@
     },
     {
       "lead_id": "ChIJqyVBFx7jt4kRtqssnTjmB5E",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T21:50:36.621Z"
+      "diagnosed_at": "2026-06-05T21:50:36.621Z",
+      "checked_at": "2026-06-29T16:27:42.236Z"
     },
     {
       "lead_id": "ChIJRR0hhUQN7owRNgJT70xV--4",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T21:50:38.639Z"
+      "diagnosed_at": "2026-06-05T21:50:38.639Z",
+      "checked_at": "2026-06-29T16:27:42.496Z"
     },
     {
       "lead_id": "ChIJG7xPFnDHQIYRh-3bdgy7Ie4",
@@ -659,33 +665,38 @@
     },
     {
       "lead_id": "ChIJbzQ6irPFQIYR-Lq21B6LuOY",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T22:08:24.597Z"
+      "diagnosed_at": "2026-06-05T22:08:24.597Z",
+      "checked_at": "2026-06-29T16:27:42.206Z"
     },
     {
       "lead_id": "ChIJVcZgThLCQIYRkjcyaKtOciM",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T22:08:26.579Z"
+      "diagnosed_at": "2026-06-05T22:08:26.579Z",
+      "checked_at": "2026-06-29T16:27:42.193Z"
     },
     {
       "lead_id": "ChIJpYm7g-C9QIYR_hnt7-LXgGM",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T22:08:31.700Z"
+      "diagnosed_at": "2026-06-05T22:08:31.700Z",
+      "checked_at": "2026-06-29T16:27:42.235Z"
     },
     {
       "lead_id": "ChIJ_Zlk3wfpQIYRHKu4xqxztCg",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T22:08:34.309Z"
+      "diagnosed_at": "2026-06-05T22:08:34.309Z",
+      "checked_at": "2026-06-29T16:27:42.197Z"
     },
     {
       "lead_id": "ChIJg1HCcMPDQIYR-ZOuc4IGirM",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T22:08:36.616Z"
+      "diagnosed_at": "2026-06-05T22:08:36.616Z",
+      "checked_at": "2026-06-29T16:27:42.218Z"
     },
     {
       "lead_id": "ChIJ-QqVhzW4QIYRhkt8DTkcjU4",
@@ -703,27 +714,31 @@
     },
     {
       "lead_id": "ChIJF6ElMtLFQIYRqdF4qW7ruj0",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T22:09:33.104Z"
+      "diagnosed_at": "2026-06-05T22:09:33.104Z",
+      "checked_at": "2026-06-29T16:27:42.491Z"
     },
     {
       "lead_id": "ChIJYacqdKC8QIYR4R15JZBAVE8",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T22:09:35.129Z"
+      "diagnosed_at": "2026-06-05T22:09:35.129Z",
+      "checked_at": "2026-06-29T16:27:42.508Z"
     },
     {
       "lead_id": "ChIJHap9aYfCQIYRi-4g9FB1ad8",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T22:09:38.440Z"
+      "diagnosed_at": "2026-06-05T22:09:38.440Z",
+      "checked_at": "2026-06-29T16:27:42.493Z"
     },
     {
       "lead_id": "ChIJ83vDb2LcQIYRQEnXy1zQXs0",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T22:09:40.342Z"
+      "diagnosed_at": "2026-06-05T22:09:40.342Z",
+      "checked_at": "2026-06-29T16:27:42.386Z"
     },
     {
       "lead_id": "ChIJi_ZFXDG_M0ERpz8kfa9QFKM",
@@ -739,15 +754,17 @@
     },
     {
       "lead_id": "ChIJ0ZII2pfHQIYRuVGbTqeTAR4",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T22:09:46.926Z"
+      "diagnosed_at": "2026-06-05T22:09:46.926Z",
+      "checked_at": "2026-06-29T16:27:42.244Z"
     },
     {
       "lead_id": "ChIJ5-4IroPnQIYR3NkldTUhkb4",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T22:09:49.257Z"
+      "diagnosed_at": "2026-06-05T22:09:49.257Z",
+      "checked_at": "2026-06-29T16:27:42.378Z"
     },
     {
       "lead_id": "ChIJyXKSkxuvQIYRztpuCjO-4mE",
@@ -769,15 +786,17 @@
     },
     {
       "lead_id": "ChIJ_____2PCQIYRHVlpuQ3LbGY",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T22:09:59.217Z"
+      "diagnosed_at": "2026-06-05T22:09:59.217Z",
+      "checked_at": "2026-06-29T16:27:42.511Z"
     },
     {
       "lead_id": "ChIJ7S5qAC-XQIYRqEK-o9EnJj4",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T22:10:01.312Z"
+      "diagnosed_at": "2026-06-05T22:10:01.312Z",
+      "checked_at": "2026-06-29T16:27:42.384Z"
     },
     {
       "lead_id": "ChIJtUZ3ChPGQIYRlQKEiEMFsxY",
@@ -787,15 +806,17 @@
     },
     {
       "lead_id": "ChIJ12ny2f2-QIYRLINVRxHO6hQ",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T22:10:05.637Z"
+      "diagnosed_at": "2026-06-05T22:10:05.637Z",
+      "checked_at": "2026-06-29T16:27:42.245Z"
     },
     {
       "lead_id": "ChIJYwim_d--QIYRsGEhvPemjJA",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T22:10:08.675Z"
+      "diagnosed_at": "2026-06-05T22:10:08.675Z",
+      "checked_at": "2026-06-29T16:27:42.509Z"
     },
     {
       "lead_id": "ChIJtwivfuvAQIYRhuoCMygfW6w",
@@ -805,21 +826,24 @@
     },
     {
       "lead_id": "ChIJdbxK83a5QIYR2ATROEo67Pk",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T22:10:13.279Z"
+      "diagnosed_at": "2026-06-05T22:10:13.279Z",
+      "checked_at": "2026-06-29T16:27:42.514Z"
     },
     {
       "lead_id": "ChIJDZAdT3XDQIYR0w3Gh-MEguo",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T22:10:15.680Z"
+      "diagnosed_at": "2026-06-05T22:10:15.680Z",
+      "checked_at": "2026-06-29T16:27:42.490Z"
     },
     {
       "lead_id": "ChIJS9tVTi_rQIYR3fdRbq_reaA",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-29T15:56:24.849Z"
+      "diagnosed_at": "2026-06-29T15:56:24.849Z",
+      "checked_at": "2026-06-29T16:27:42.497Z"
     },
     {
       "lead_id": "ChIJq-9OhZbAQIYRmD5WySe0V-s",
@@ -841,27 +865,31 @@
     },
     {
       "lead_id": "ChIJHwk8yBPBQIYR1iOnnFEgeN4",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-29T15:56:38.816Z"
+      "diagnosed_at": "2026-06-29T15:56:38.816Z",
+      "checked_at": "2026-06-29T16:27:42.494Z"
     },
     {
       "lead_id": "ChIJZytSARm_QIYR93GPrTQ-25g",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-29T15:56:42.094Z"
+      "diagnosed_at": "2026-06-29T15:56:42.094Z",
+      "checked_at": "2026-06-29T16:27:42.510Z"
     },
     {
       "lead_id": "ChIJTTfWkHvHQIYRd-ZdjvH8NvY",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-29T15:56:44.329Z"
+      "diagnosed_at": "2026-06-29T15:56:44.329Z",
+      "checked_at": "2026-06-29T16:27:42.499Z"
     },
     {
       "lead_id": "ChIJD8oD3424QIYRgny_L-aq-DI",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-29T15:56:47.811Z"
+      "diagnosed_at": "2026-06-29T15:56:47.811Z",
+      "checked_at": "2026-06-29T16:27:42.489Z"
     },
     {
       "lead_id": "ChIJr5HGwYbDQIYRZ9KZn5gWHbA",
@@ -871,33 +899,38 @@
     },
     {
       "lead_id": "ChIJ2z-fQl_HQIYRFQdaeQye90s",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-29T15:56:53.663Z"
+      "diagnosed_at": "2026-06-29T15:56:53.663Z",
+      "checked_at": "2026-06-29T16:27:42.328Z"
     },
     {
       "lead_id": "ChIJ2WOPdp_NMCERRSzzLPeEXD0",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-29T15:56:56.712Z"
+      "diagnosed_at": "2026-06-29T15:56:56.712Z",
+      "checked_at": "2026-06-29T16:27:42.246Z"
     },
     {
       "lead_id": "ChIJAVBa2T8twVYRt-oSb6c_dz8",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-29T15:57:00.410Z"
+      "diagnosed_at": "2026-06-29T15:57:00.410Z",
+      "checked_at": "2026-06-29T16:27:42.474Z"
     },
     {
       "lead_id": "ChIJX80Mt8bFQIYRfahtMNUOIPc",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-29T15:57:30.818Z"
+      "diagnosed_at": "2026-06-29T15:57:30.818Z",
+      "checked_at": "2026-06-29T16:27:42.507Z"
     },
     {
       "lead_id": "ChIJWRhdFd24QIYRXvWwogCEexw",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-29T15:57:33.541Z"
+      "diagnosed_at": "2026-06-29T15:57:33.541Z",
+      "checked_at": "2026-06-29T16:27:42.506Z"
     },
     {
       "lead_id": "ChIJsRvKEP6VQIYRjTYSTLVDTAM",
@@ -971,21 +1004,24 @@
     },
     {
       "lead_id": "ChIJoSKWhULPyIARsSIyVsXSyvg",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:58:54.526Z",
-      "diagnosed_at": "2026-06-05T22:07:31.592Z"
+      "diagnosed_at": "2026-06-05T22:07:31.592Z",
+      "checked_at": "2026-06-29T16:27:42.230Z"
     },
     {
       "lead_id": "ChIJvX7rPQGh7CURGzb4oVsAf6k",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:58:54.526Z",
-      "diagnosed_at": "2026-06-05T22:07:33.857Z"
+      "diagnosed_at": "2026-06-05T22:07:33.857Z",
+      "checked_at": "2026-06-29T16:27:42.239Z"
     },
     {
       "lead_id": "ChIJTZm0RQ3qyIARZSgf-72FmoU",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:58:54.526Z",
-      "diagnosed_at": "2026-06-05T22:07:36.250Z"
+      "diagnosed_at": "2026-06-05T22:07:36.250Z",
+      "checked_at": "2026-06-29T16:27:42.188Z"
     },
     {
       "lead_id": "ChIJHxD-dT3ByIAR5tax2X0LLQ4",
@@ -1003,15 +1039,17 @@
     },
     {
       "lead_id": "ChIJnaMFdJ3RyIAROtpBUEWfVqk",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:58:54.526Z",
-      "diagnosed_at": "2026-06-05T22:07:43.951Z"
+      "diagnosed_at": "2026-06-05T22:07:43.951Z",
+      "checked_at": "2026-06-29T16:27:42.228Z"
     },
     {
       "lead_id": "ChIJhZ38hiHQyIAR7OakCp_OFqc",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:58:54.526Z",
-      "diagnosed_at": "2026-06-05T22:07:46.047Z"
+      "diagnosed_at": "2026-06-05T22:07:46.047Z",
+      "checked_at": "2026-06-29T16:27:42.221Z"
     },
     {
       "lead_id": "ChIJidz2qojPyIAR5zt2ClKPVjk",
@@ -1029,9 +1067,10 @@
     },
     {
       "lead_id": "ChIJozKqWhjByIAR6Em2Jd1leA0",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:58:54.526Z",
-      "diagnosed_at": "2026-06-05T22:08:45.340Z"
+      "diagnosed_at": "2026-06-05T22:08:45.340Z",
+      "checked_at": "2026-06-29T16:27:42.233Z"
     },
     {
       "lead_id": "ChIJ-8PB1AzqyIARNkFNsKMyAVs",
@@ -1042,33 +1081,38 @@
     },
     {
       "lead_id": "ChIJwS-Czs_CIKERyZVQSOx8xuY",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:58:54.526Z",
-      "diagnosed_at": "2026-06-05T22:08:49.624Z"
+      "diagnosed_at": "2026-06-05T22:08:49.624Z",
+      "checked_at": "2026-06-29T16:27:42.241Z"
     },
     {
       "lead_id": "ChIJWQGA1ArPyIAR7KdNJfZ0mkM",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:58:54.526Z",
-      "diagnosed_at": "2026-06-05T22:08:51.731Z"
+      "diagnosed_at": "2026-06-05T22:08:51.731Z",
+      "checked_at": "2026-06-29T16:27:42.194Z"
     },
     {
       "lead_id": "ChIJnzK62OrJyIARvPbwI5R-BN0",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:58:54.526Z",
-      "diagnosed_at": "2026-06-05T22:08:54.207Z"
+      "diagnosed_at": "2026-06-05T22:08:54.207Z",
+      "checked_at": "2026-06-29T16:27:42.229Z"
     },
     {
       "lead_id": "ChIJyWEKxcCV30wRaIXih16DqHM",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:58:54.526Z",
-      "diagnosed_at": "2026-06-05T22:08:56.344Z"
+      "diagnosed_at": "2026-06-05T22:08:56.344Z",
+      "checked_at": "2026-06-29T16:27:42.242Z"
     },
     {
       "lead_id": "ChIJgcDrZqXryIARjHMkyDDBzNA",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:58:54.526Z",
-      "diagnosed_at": "2026-06-05T22:10:17.825Z"
+      "diagnosed_at": "2026-06-05T22:10:17.825Z",
+      "checked_at": "2026-06-29T16:27:42.519Z"
     },
     {
       "lead_id": "ChIJjWZ8qYu_yIARPewfbxT6KD8",
@@ -1084,21 +1128,24 @@
     },
     {
       "lead_id": "ChIJ7a22i-y7xkARvX5i-Vp82qQ",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:58:54.526Z",
-      "diagnosed_at": "2026-06-05T22:10:24.792Z"
+      "diagnosed_at": "2026-06-05T22:10:24.792Z",
+      "checked_at": "2026-06-29T16:27:42.385Z"
     },
     {
       "lead_id": "ChIJaxMoL_LryIAR5w5pd_duHos",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:58:54.526Z",
-      "diagnosed_at": "2026-06-05T22:10:26.767Z"
+      "diagnosed_at": "2026-06-05T22:10:26.767Z",
+      "checked_at": "2026-06-29T16:27:42.512Z"
     },
     {
       "lead_id": "ChIJ___vFoXGyIARlzxS-6j6wSE",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:58:54.526Z",
-      "diagnosed_at": "2026-06-29T15:56:01.640Z"
+      "diagnosed_at": "2026-06-29T15:56:01.640Z",
+      "checked_at": "2026-06-29T16:27:42.175Z"
     },
     {
       "lead_id": "ChIJmVn58V8MhSURaHHcKmi6bsI",
@@ -1108,21 +1155,24 @@
     },
     {
       "lead_id": "ChIJVx4lcSbdyIARMWLi8A_WbH0",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:58:54.526Z",
-      "diagnosed_at": "2026-06-29T15:57:05.122Z"
+      "diagnosed_at": "2026-06-29T15:57:05.122Z",
+      "checked_at": "2026-06-29T16:27:42.504Z"
     },
     {
       "lead_id": "ChIJ2WQGKOPFyIAROhQHP5Y7LKk",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:58:54.526Z",
-      "diagnosed_at": "2026-06-29T15:57:07.679Z"
+      "diagnosed_at": "2026-06-29T15:57:07.679Z",
+      "checked_at": "2026-06-29T16:27:42.247Z"
     },
     {
       "lead_id": "ChIJ4T9jxPHFyIARKLy2rx_f5aA",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:58:54.526Z",
-      "diagnosed_at": "2026-06-29T15:57:35.963Z"
+      "diagnosed_at": "2026-06-29T15:57:35.963Z",
+      "checked_at": "2026-06-29T16:27:42.376Z"
     },
     {
       "lead_id": "ChIJjT25sXbbyIAR5lq5tk4xhz4",
@@ -1185,21 +1235,24 @@
     },
     {
       "lead_id": "ChIJl60B70TM66MRb0yI3oOCMiI",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:00:55.785Z",
-      "diagnosed_at": "2026-06-05T22:07:50.480Z"
+      "diagnosed_at": "2026-06-05T22:07:50.480Z",
+      "checked_at": "2026-06-29T16:27:42.225Z"
     },
     {
       "lead_id": "ChIJfQwiUR9DXIYR6-hOnX2U71A",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:00:55.785Z",
-      "diagnosed_at": "2026-06-05T22:07:52.751Z"
+      "diagnosed_at": "2026-06-05T22:07:52.751Z",
+      "checked_at": "2026-06-29T16:27:42.213Z"
     },
     {
       "lead_id": "ChIJi5mkoRpvXIYRQtIc6iioebc",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:00:55.785Z",
-      "diagnosed_at": "2026-06-05T22:07:55.913Z"
+      "diagnosed_at": "2026-06-05T22:07:55.913Z",
+      "checked_at": "2026-06-29T16:27:42.222Z"
     },
     {
       "lead_id": "ChIJJYWGXPtZXIYRghjVOoX9YmY",
@@ -1210,21 +1263,24 @@
     },
     {
       "lead_id": "ChIJTQNrgqFfXIYR2cBGHDlwfZ0",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:00:55.785Z",
-      "diagnosed_at": "2026-06-05T22:08:00.395Z"
+      "diagnosed_at": "2026-06-05T22:08:00.395Z",
+      "checked_at": "2026-06-29T16:27:42.187Z"
     },
     {
       "lead_id": "ChIJX03VNzSJXIYR3H3BAdR_lb4",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:00:55.785Z",
-      "diagnosed_at": "2026-06-05T22:08:58.456Z"
+      "diagnosed_at": "2026-06-05T22:08:58.456Z",
+      "checked_at": "2026-06-29T16:27:42.196Z"
     },
     {
       "lead_id": "ChIJU0IdFztdXIYRoN70WhnOryQ",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:00:55.785Z",
-      "diagnosed_at": "2026-06-05T22:09:00.497Z"
+      "diagnosed_at": "2026-06-05T22:09:00.497Z",
+      "checked_at": "2026-06-29T16:27:42.190Z"
     },
     {
       "lead_id": "ChIJ6UQJWYJhXIYRU7GKZRz3_dw",
@@ -1249,15 +1305,17 @@
     },
     {
       "lead_id": "ChIJVVVkclRbXIYRHAowZaFgEIY",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:00:55.785Z",
-      "diagnosed_at": "2026-06-05T22:09:09.653Z"
+      "diagnosed_at": "2026-06-05T22:09:09.653Z",
+      "checked_at": "2026-06-29T16:27:42.503Z"
     },
     {
       "lead_id": "ChIJG-RntkGNXIYR16uJmn4b9V0",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:00:55.785Z",
-      "diagnosed_at": "2026-06-05T22:09:12.172Z"
+      "diagnosed_at": "2026-06-05T22:09:12.172Z",
+      "checked_at": "2026-06-29T16:27:42.493Z"
     },
     {
       "lead_id": "ChIJMe2ZCTT2XIYRRv5P7tulrkk",
@@ -1268,39 +1326,45 @@
     },
     {
       "lead_id": "ChIJh0osCixfXIYRvRu3V_ZlJtE",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:00:55.785Z",
-      "diagnosed_at": "2026-06-05T22:09:16.617Z"
+      "diagnosed_at": "2026-06-05T22:09:16.617Z",
+      "checked_at": "2026-06-29T16:27:42.220Z"
     },
     {
       "lead_id": "ChIJ1xu3SY484AkR1miQYClUm6I",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:00:55.785Z",
-      "diagnosed_at": "2026-06-29T15:56:03.912Z"
+      "diagnosed_at": "2026-06-29T15:56:03.912Z",
+      "checked_at": "2026-06-29T16:27:42.173Z"
     },
     {
       "lead_id": "ChIJTdX1-w9hXIYRKVPigcitJdA",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:00:55.785Z",
-      "diagnosed_at": "2026-06-29T15:56:06.448Z"
+      "diagnosed_at": "2026-06-29T15:56:06.448Z",
+      "checked_at": "2026-06-29T16:27:42.500Z"
     },
     {
       "lead_id": "ChIJCfRyU5OKXIYRWAS9SQqWw1w",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:00:55.785Z",
-      "diagnosed_at": "2026-06-29T15:56:10.243Z"
+      "diagnosed_at": "2026-06-29T15:56:10.243Z",
+      "checked_at": "2026-06-29T16:27:42.488Z"
     },
     {
       "lead_id": "ChIJfcOiSrVdXIYRN7f-0fYjO74",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:00:55.785Z",
-      "diagnosed_at": "2026-06-29T15:56:13.766Z"
+      "diagnosed_at": "2026-06-29T15:56:13.766Z",
+      "checked_at": "2026-06-29T16:27:42.517Z"
     },
     {
       "lead_id": "ChIJdzwM2lxdXIYRoKncM4ZihTw",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:00:55.785Z",
-      "diagnosed_at": "2026-06-29T15:57:10.182Z"
+      "diagnosed_at": "2026-06-29T15:57:10.182Z",
+      "checked_at": "2026-06-29T16:27:42.516Z"
     },
     {
       "lead_id": "ChIJmSfvujJFXIYRUd0UMZNQe6c",
@@ -1310,15 +1374,17 @@
     },
     {
       "lead_id": "ChIJWYaAfJFfXIYRixB_DzLGA1k",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:00:55.785Z",
-      "diagnosed_at": "2026-06-29T15:57:15.715Z"
+      "diagnosed_at": "2026-06-29T15:57:15.715Z",
+      "checked_at": "2026-06-29T16:27:42.507Z"
     },
     {
       "lead_id": "ChIJAQC84oNgXIYRmxpltUug9n0",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:00:55.785Z",
-      "diagnosed_at": "2026-06-29T15:57:18.143Z"
+      "diagnosed_at": "2026-06-29T15:57:18.143Z",
+      "checked_at": "2026-06-29T16:27:42.388Z"
     },
     {
       "lead_id": "ChIJuZ4rJ4XzXIYRy36_xg7N81c",
@@ -1340,15 +1406,17 @@
     },
     {
       "lead_id": "ChIJ75DjQptfXIYRu2RBeW5h9IQ",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:00:55.785Z",
-      "diagnosed_at": "2026-06-29T15:57:27.992Z"
+      "diagnosed_at": "2026-06-29T15:57:27.992Z",
+      "checked_at": "2026-06-29T16:27:42.380Z"
     },
     {
       "lead_id": "ChIJ3QMdveH3XIYRS-NMX7e-zms",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:00:55.785Z",
-      "diagnosed_at": "2026-06-29T15:57:38.588Z"
+      "diagnosed_at": "2026-06-29T15:57:38.588Z",
+      "checked_at": "2026-06-29T16:27:42.375Z"
     },
     {
       "lead_id": "ChIJj0zzDEJhXIYRnMnkM_VsVr4",
@@ -1380,15 +1448,17 @@
     },
     {
       "lead_id": "ChIJbxyPbW2o2yoRm4hFoHKKuFo",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:03:16.288Z",
-      "diagnosed_at": "2026-06-05T22:07:16.399Z"
+      "diagnosed_at": "2026-06-05T22:07:16.399Z",
+      "checked_at": "2026-06-29T16:27:42.205Z"
     },
     {
       "lead_id": "ChIJfWi5QmRcNWIRho4U_-m19wQ",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:03:16.288Z",
-      "diagnosed_at": "2026-06-05T22:07:18.260Z"
+      "diagnosed_at": "2026-06-05T22:07:18.260Z",
+      "checked_at": "2026-06-29T16:27:42.214Z"
     },
     {
       "lead_id": "ChIJ1abTXV0gVIgRoKD0EOQdY9E",
@@ -1399,21 +1469,24 @@
     },
     {
       "lead_id": "ChIJiZEA1E2ZVogROKnqptnNNeQ",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:03:16.288Z",
-      "diagnosed_at": "2026-06-05T22:07:22.651Z"
+      "diagnosed_at": "2026-06-05T22:07:22.651Z",
+      "checked_at": "2026-06-29T16:27:42.224Z"
     },
     {
       "lead_id": "ChIJzfknj9RwwEwR9TjN5wOTS68",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:03:16.288Z",
-      "diagnosed_at": "2026-06-05T22:07:25.077Z"
+      "diagnosed_at": "2026-06-05T22:07:25.077Z",
+      "checked_at": "2026-06-29T16:27:42.243Z"
     },
     {
       "lead_id": "ChIJe5ZsTSgcVIgRMr5VcjxmO54",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:03:16.288Z",
-      "diagnosed_at": "2026-06-05T22:07:27.262Z"
+      "diagnosed_at": "2026-06-05T22:07:27.262Z",
+      "checked_at": "2026-06-29T16:27:42.211Z"
     },
     {
       "lead_id": "ChIJEdaDswefVogR0-BzdA5tFck",
@@ -1438,15 +1511,17 @@
     },
     {
       "lead_id": "ChIJb_yv0DqhVogRA5zN3gKgwHg",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:03:16.288Z",
-      "diagnosed_at": "2026-06-05T22:08:07.020Z"
+      "diagnosed_at": "2026-06-05T22:08:07.020Z",
+      "checked_at": "2026-06-29T16:27:42.204Z"
     },
     {
       "lead_id": "ChIJdzXz7IZknWMRyszLnrcgLTk",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:03:16.288Z",
-      "diagnosed_at": "2026-06-05T22:08:09.115Z"
+      "diagnosed_at": "2026-06-05T22:08:09.115Z",
+      "checked_at": "2026-06-29T16:27:42.210Z"
     },
     {
       "lead_id": "ChIJO8-WXAzjPqARhV4NIGUOE2k",
@@ -1464,39 +1539,45 @@
     },
     {
       "lead_id": "ChIJg9eWchoHfQIRKLvvOvAN73k",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:03:16.288Z",
-      "diagnosed_at": "2026-06-05T22:08:15.483Z"
+      "diagnosed_at": "2026-06-05T22:08:15.483Z",
+      "checked_at": "2026-06-29T16:27:42.219Z"
     },
     {
       "lead_id": "ChIJVVVVVTCgVogR2IB2eF6Cvo4",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:03:16.288Z",
-      "diagnosed_at": "2026-06-05T22:08:17.733Z"
+      "diagnosed_at": "2026-06-05T22:08:17.733Z",
+      "checked_at": "2026-06-29T16:27:42.192Z"
     },
     {
       "lead_id": "ChIJd26Qg_mfVogRZ-8nENDpT9A",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:03:16.288Z",
-      "diagnosed_at": "2026-06-05T22:08:20.141Z"
+      "diagnosed_at": "2026-06-05T22:08:20.141Z",
+      "checked_at": "2026-06-29T16:27:42.513Z"
     },
     {
       "lead_id": "ChIJfyvJv0MhVIgRFDERDV2m_jY",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:03:16.288Z",
-      "diagnosed_at": "2026-06-05T22:09:18.386Z"
+      "diagnosed_at": "2026-06-05T22:09:18.386Z",
+      "checked_at": "2026-06-29T16:27:42.518Z"
     },
     {
       "lead_id": "ChIJW1dRg_0lVIgRKEFOvAP-PcM",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:03:16.288Z",
-      "diagnosed_at": "2026-06-05T22:09:20.689Z"
+      "diagnosed_at": "2026-06-05T22:09:20.689Z",
+      "checked_at": "2026-06-29T16:27:42.505Z"
     },
     {
       "lead_id": "ChIJUfsIJYCdVogRN-f13o5D3yM",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:03:16.288Z",
-      "diagnosed_at": "2026-06-05T22:09:23.085Z"
+      "diagnosed_at": "2026-06-05T22:09:23.085Z",
+      "checked_at": "2026-06-29T16:27:42.502Z"
     },
     {
       "lead_id": "ChIJjX_r-o6fVogR46nDKP5cB_A",
@@ -1506,321 +1587,388 @@
     },
     {
       "lead_id": "ChIJF3KWcYKfVogRP-hqOcbSfMM",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:03:16.288Z",
-      "diagnosed_at": "2026-06-29T15:56:16.844Z"
+      "diagnosed_at": "2026-06-29T15:56:16.844Z",
+      "checked_at": "2026-06-29T16:27:42.491Z"
     },
     {
       "lead_id": "ChIJA_c3EqEeVIgRY7h_7X1549A",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:03:16.288Z",
-      "diagnosed_at": "2026-06-29T15:56:20.162Z"
+      "diagnosed_at": "2026-06-29T15:56:20.162Z",
+      "checked_at": "2026-06-29T16:27:42.478Z"
     },
     {
       "lead_id": "ChIJL9lJU18l6oQR2V_4uX5uwrc",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:03:16.288Z",
-      "diagnosed_at": "2026-06-29T15:56:22.794Z"
+      "diagnosed_at": "2026-06-29T15:56:22.794Z",
+      "checked_at": "2026-06-29T16:27:42.495Z"
     },
     {
       "lead_id": "ChIJaUbt7fefVogRVRa_TQt_kj4",
-<<<<<<< HEAD
       "status": "diagnosed",
       "added_at": "2026-06-05T22:03:16.288Z",
       "diagnosed_at": "2026-06-29T15:57:41.208Z"
-=======
-      "status": "scouted",
-      "added_at": "2026-06-05T22:03:16.288Z"
     },
     {
       "lead_id": "wright-jones-plumbing-heating-pueblo-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:25:15.301Z"
     },
     {
       "lead_id": "jess-plumbing-heating-inc-pueblo-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "sent",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:25:20.751Z",
+      "checked_at": "2026-06-29T16:27:42.186Z",
+      "sent_at": "2026-06-29T16:40:07.420Z"
     },
     {
       "lead_id": "industrial-plumbing-heating-co-pueblo-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:25:23.476Z"
     },
     {
       "lead_id": "cut-rate-sewer-drain-services-llc-pueblo-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:25:26.444Z"
     },
     {
       "lead_id": "cyclone-sewer-pueblo-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:25:28.812Z"
     },
     {
       "lead_id": "drain-fix-team-pueblo-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:25:31.350Z"
     },
     {
       "lead_id": "pumps-more-llc-pueblo-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:25:33.444Z"
     },
     {
       "lead_id": "bill-s-plumbing-drain-service-pueblo-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "sent",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:25:35.858Z",
+      "checked_at": "2026-06-29T16:27:42.178Z",
+      "sent_at": "2026-06-29T16:31:04.616Z"
     },
     {
       "lead_id": "olson-plumbing-heating-co-pueblo-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:25:38.355Z"
     },
     {
       "lead_id": "leo-s-sewer-drain-inc-pueblo-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:25:40.448Z"
     },
     {
       "lead_id": "green-plumbing-inc-pueblo-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:25:42.547Z"
     },
     {
       "lead_id": "the-rooter-guy-s-llc-pueblo-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:25:44.814Z"
     },
     {
       "lead_id": "drain-plumber-pro-pueblo-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:25:47.168Z"
     },
     {
       "lead_id": "always-plumbing-heating-inc-pueblo-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:25:49.489Z"
     },
     {
       "lead_id": "allright-plumbing-heating-inc-pueblo-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:25:51.805Z"
     },
     {
       "lead_id": "dan-s-drains-and-digs-pueblo-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:25:56.502Z"
     },
     {
       "lead_id": "peak-demand-plumbing-colorado-springs-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:25:58.330Z"
     },
     {
       "lead_id": "g-s-plumbing-colorado-springs-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:26:00.526Z"
     },
     {
       "lead_id": "pipes-peak-plumbing-colorado-springs-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:26:03.145Z"
     },
     {
       "lead_id": "regal-plumbers-colorado-springs-colorado-springs-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:26:05.216Z"
     },
     {
       "lead_id": "homeland-plumbing-and-heating-llc-colorado-springs-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:26:09.009Z"
     },
     {
       "lead_id": "andrews-home-repairs-san-antonio-tx",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:26:11.179Z"
     },
     {
       "lead_id": "c4-plumbing-denver-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:26:15.704Z"
     },
     {
       "lead_id": "clean-cut-plumbing-aurora-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:26:18.570Z"
     },
     {
       "lead_id": "superior-mile-high-plumbing-denver-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:26:20.679Z"
     },
     {
       "lead_id": "drains-great-metropolitan-drain-cleaning-denver-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "sent",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:26:23.044Z",
+      "checked_at": "2026-06-29T16:27:42.179Z",
+      "sent_at": "2026-06-29T16:34:11.796Z"
     },
     {
       "lead_id": "anywhere-rooter-denver-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:26:25.187Z"
     },
     {
       "lead_id": "mac-s-plumbing-services-aurora-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:26:27.650Z"
     },
     {
       "lead_id": "best-choice-plumbing-denver-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:26:29.869Z"
     },
     {
       "lead_id": "emergency-plumbers-denver-llc-denver-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "sent",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:26:32.504Z",
+      "checked_at": "2026-06-29T16:27:42.184Z",
+      "sent_at": "2026-06-29T16:36:28.303Z"
     },
     {
       "lead_id": "king-rooter-plumbing-denver-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:26:34.573Z"
     },
     {
       "lead_id": "time-plumbing-heating-electric-denver-denver-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:26:38.330Z"
     },
     {
       "lead_id": "at-your-service-plumbing-company-denver-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "sent",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:26:40.868Z",
+      "checked_at": "2026-06-29T16:27:42.176Z",
+      "sent_at": "2026-06-29T16:27:44.450Z"
     },
     {
       "lead_id": "defense-plumbing-denver-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:26:42.978Z"
     },
     {
       "lead_id": "christopher-s-plumbing-inc-denver-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:26:46.111Z"
     },
     {
       "lead_id": "a-perfect-plumber-denver-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:26:48.601Z"
     },
     {
       "lead_id": "a-better-plumber-denver-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:26:50.500Z"
     },
     {
       "lead_id": "balkan-plumbing-littleton-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:26:52.958Z"
     },
     {
       "lead_id": "waters-of-life-littleton-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:26:55.745Z"
     },
     {
       "lead_id": "endurance-plumbing-denver-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:26:58.255Z"
     },
     {
       "lead_id": "jdm-plumbing-denver-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:27:00.814Z"
     },
     {
       "lead_id": "simply-sewers-denver-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:27:02.990Z"
     },
     {
       "lead_id": "rex-plumbing-fort-collins-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:27:05.183Z"
     },
     {
       "lead_id": "the-plumber-from-down-under-fort-collins-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:27:07.096Z"
     },
     {
       "lead_id": "aspen-plumbing-services-fort-collins-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:27:09.248Z"
     },
     {
       "lead_id": "jennys-plumbing-fort-collins-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:27:11.379Z"
     },
     {
       "lead_id": "drain-doctors-fort-collins-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:27:14.110Z"
     },
     {
       "lead_id": "a-to-zen-plumbing-fort-collins-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:27:16.522Z"
     },
     {
       "lead_id": "top-notch-plumbing-llc-fort-collins-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:27:19.013Z"
     },
     {
       "lead_id": "glynn-plumbing-fort-collins-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:27:21.455Z"
     },
     {
       "lead_id": "revolutionary-kindness-plumbing-colorado-springs-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:27:24.626Z"
     },
     {
       "lead_id": "st-joseph-plumbing-colorado-springs-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:27:26.766Z"
     },
     {
       "lead_id": "affordable-plumbing-colorado-springs-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:27:29.103Z"
     },
     {
       "lead_id": "rocky-mountain-plumbing-services-colorado-springs-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:27:31.328Z"
     },
     {
       "lead_id": "acorn-plumbing-denver-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:27:34.021Z"
     },
     {
       "lead_id": "peachtree-plumbing-denver-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:27:35.920Z"
     },
     {
       "lead_id": "green-plumbing-solutions-denver-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:27:38.209Z"
     },
     {
       "lead_id": "hanson-plumbing-solution-colorado-springs-co",
-      "status": "scouted",
-      "added_at": "2026-06-29T15:40:28.192Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-29T15:40:28.192Z",
+      "diagnosed_at": "2026-06-29T16:27:41.836Z"
     },
     {
       "lead_id": "r-buck-colorado-springs-co",
@@ -1835,9 +1983,9 @@
   "last_run": "2026-06-05T22:03:16.288Z",
   "daily_stats": {
     "leads_scouted": 190,
-    "briefs_written": 242,
+    "briefs_written": 300,
     "mockups_built": 10,
-    "messages_sent": 48,
+    "messages_sent": 53,
     "replies_received": 0,
     "reply_rate": 0,
     "deals_closed": 0

@@ -6,6 +6,7 @@
  *   node scripts/pitcher.js --force
  *   node scripts/pitcher.js --limit 10 --force
  *   node scripts/pitcher.js --dry-run --force   (preview messages, send nothing)
+ *   node scripts/pitcher.js --force --channel email   (send only to email channel/secondary, ignores SMS delay gate)
  *
  * Reads:  queue/*-brief.json     (checker_approved = true, status != sent)
  *         mockups/*-video.txt    (video URL if available — attached to email)
@@ -53,6 +54,7 @@ const getArg  = (flag) => { const i = args.indexOf(flag); return i !== -1 ? args
 const hasFlag = (flag) => args.includes(flag);
 const limitArg  = parseInt(getArg('--limit') || '0', 10);
 const isDryRun  = hasFlag('--dry-run');
+const channelArg = getArg('--channel'); // e.g. 'email' — restrict send to this channel only
 
 // ── CONFIG ────────────────────────────────────────────────────────────────────
 
@@ -175,6 +177,17 @@ function loadApprovedBriefs(config) {
       if (!data.checker_approved) continue;
 
       const sentPath = path.join(MESSAGES_DIR, `${data.lead_id}-sent.json`);
+
+      if (channelArg) {
+        // Restrict to a single channel, bypassing primary/secondary delay gating
+        if (data.channel !== channelArg && data.secondary_channel !== channelArg) continue;
+        if (fs.existsSync(sentPath)) {
+          const sent = JSON.parse(fs.readFileSync(sentPath, 'utf8'));
+          if (sent[`${channelArg}_sent`]) continue; // already sent via this channel
+        }
+        briefs.push({ ...data, _pending_channel: channelArg });
+        continue;
+      }
 
       if (!fs.existsSync(sentPath)) {
         // Primary channel not yet sent

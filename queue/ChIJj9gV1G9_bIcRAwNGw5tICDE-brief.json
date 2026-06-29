@@ -11,7 +11,7 @@
   "diagnosis": "No website despite 11 reviews and 4.6 rating. Missing critical conversion point—customers can't learn about services, pricing, or book online. Strong local reputation trapped on Google Maps alone.",
   "hero_angle": "11 verified reviews and 4.6 rating prove Swift Plumbing delivers—a website unlocks that trust to drive calls and jobs.",
   "tone": "direct",
-  "cold_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $150 flat. 15-min call? — Dave @ Trevo Advisors",
+  "cold_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $100 flat. 15-min call? — Dave @ Trevo Advisors",
   "template_id": "s2",
   "template_name": "The missed job",
   "template_based": true,
@@ -24,7 +24,7 @@
   "secondary_template_name": null,
   "checker_approved": true,
   "diagnosed_at": "2026-06-02T14:09:43.995Z",
-  "final_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $150 flat. 15-min call? — Dave @ Trevo Advisors",
+  "final_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $100 flat. 15-min call? — Dave @ Trevo Advisors",
   "checker_flag": "",
   "rewrite_count": 0,
   "checker_score": {

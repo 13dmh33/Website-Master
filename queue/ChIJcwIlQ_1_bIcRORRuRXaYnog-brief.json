@@ -11,7 +11,7 @@
   "diagnosis": "91 reviews, solid 4.5 rating, but zero web presence—losing leads to competitors with websites. No email listed, no site to capture inquiries or showcase work.",
   "hero_angle": "91 verified reviews prove reliability; a simple website converts that trust into consistent booking.",
   "tone": "direct",
-  "cold_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $150 flat. 15-min call? — Dave @ Trevo Advisors",
+  "cold_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $100 flat. 15-min call? — Dave @ Trevo Advisors",
   "template_id": "s2",
   "template_name": "The missed job",
   "template_based": true,
@@ -24,7 +24,7 @@
   "secondary_template_name": null,
   "checker_approved": true,
   "diagnosed_at": "2026-06-02T14:09:50.488Z",
-  "final_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $150 flat. 15-min call? — Dave @ Trevo Advisors",
+  "final_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $100 flat. 15-min call? — Dave @ Trevo Advisors",
   "checker_flag": "",
   "rewrite_count": 0,
   "checker_score": {

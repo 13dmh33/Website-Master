@@ -107,6 +107,9 @@ function parseScheduleEnv(str) {
 
 // map a post-formats slot.format token → generator-prompts FORMAT key
 function mapSlotFormat(slotFormat, week, contentType) {
+  // trades_stat always renders as a single stat card — the verified number
+  // needs one focal image, not split across carousel slides.
+  if (contentType === 'trades_stat') return 'single_image';
   switch (slotFormat) {
     case 'carousel':          return 'carousel';
     case 'reel_or_caption':   return week % 2 === 0 ? 'reel' : 'caption';

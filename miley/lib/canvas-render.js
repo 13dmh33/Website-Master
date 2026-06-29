@@ -118,6 +118,21 @@ function productImagePath(productKey) {
   return fs.existsSync(p) ? p : null;
 }
 
+// resolve a manually-dropped lifestyle photo for `contentType` if one exists.
+// Files in assets/lifestyle/ are named `<contentType>.png` or `<contentType>-N.png`
+// for variety (e.g. trades_humor-1.png, trades_humor-2.png); a generic-N.png
+// pool covers any content type without a dedicated photo. Random pick among
+// matches so repeat content types don't always show the same image.
+function lifestyleImagePath(contentType) {
+  const dir = path.join(store.paths.assets, 'lifestyle');
+  if (!contentType || !fs.existsSync(dir)) return null;
+  const files = fs.readdirSync(dir).filter(f => /\.(png|jpe?g)$/i.test(f));
+  const matches = files.filter(f => new RegExp(`^${contentType}(-\\d+)?\\.`, 'i').test(f));
+  const pool = matches.length ? matches : files.filter(f => /^generic(-\d+)?\./i.test(f));
+  if (!pool.length) return null;
+  return path.join(dir, pool[Math.floor(Math.random() * pool.length)]);
+}
+
 // ── drawing helpers ──────────────────────────────────────────────────────────
 function drawGradient(ctx, width, height, palette) {
   const grad = ctx.createLinearGradient(0, 0, width, height);
@@ -153,13 +168,23 @@ function drawPhotoFill(ctx, width, height, photo) {
 }
 
 // returns { headlineColor, bodyColor } actually used (photo bg forces light text).
-// Background priority: product mockup (assets/products/{key}.png) > Unsplash
-// stock photo (niche-matched, only if UNSPLASH_ACCESS_KEY is set) > gradient.
+// Background priority: product mockup (assets/products/{key}.png) > manual
+// lifestyle photo (assets/lifestyle/, dropped in by hand) > Unsplash stock
+// photo (niche-matched, only if UNSPLASH_ACCESS_KEY is set) > gradient.
 async function drawBackground(ctx, width, height, palette, productKey, contentType) {
   const imgPath = productImagePath(productKey);
   if (imgPath) {
     try {
       const photo = await loadImage(imgPath);
+      drawPhotoFill(ctx, width, height, photo);
+      return { headlineColor: '#FFFFFF', bodyColor: '#F7F4F0' };
+    } catch { /* fall through to lifestyle / stock photo / gradient */ }
+  }
+
+  const lifestylePath = lifestyleImagePath(contentType);
+  if (lifestylePath) {
+    try {
+      const photo = await loadImage(lifestylePath);
       drawPhotoFill(ctx, width, height, photo);
       return { headlineColor: '#FFFFFF', bodyColor: '#F7F4F0' };
     } catch { /* fall through to stock photo / gradient */ }

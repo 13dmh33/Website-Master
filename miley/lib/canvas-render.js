@@ -47,9 +47,20 @@ const DESIGN = {
 };
 
 // wordmark bounding box for the visual gate — matches renderBrand()'s
-// right-aligned placement (DESIGN.brandSize text ending at width - padding).
+// right-aligned placement (DESIGN.brandSize text ending at width - padding,
+// or the logo image at the same height when assets/logo.png exists).
 function wordmarkRegion(width) {
-  return { x: width - DESIGN.padding - 280, y: DESIGN.padding - 6, w: 280, h: DESIGN.brandSize + 14 };
+  const h = DESIGN.brandSize + 32;
+  const w = logoImagePromise ? h * LOGO_ASPECT : 280;
+  return { x: width - DESIGN.padding - w, y: DESIGN.padding - 6, w, h };
+}
+
+const LOGO_PATH = path.join(__dirname, '..', 'assets', 'logo.png');
+let logoImagePromise = fs.existsSync(LOGO_PATH) ? loadImage(LOGO_PATH) : null;
+let LOGO_ASPECT = 720 / 434; // updated once the real image loads
+
+if (logoImagePromise) {
+  logoImagePromise.then(img => { LOGO_ASPECT = img.width / img.height; }).catch(() => { logoImagePromise = null; });
 }
 
 function brandColorList() {
@@ -174,7 +185,18 @@ function renderTopBar(ctx, width, palette) {
   ctx.fillRect(0, 0, width, 6);
 }
 
-function renderBrand(ctx, width, palette, color) {
+async function renderBrand(ctx, width, palette, color) {
+  if (logoImagePromise) {
+    try {
+      const img = await logoImagePromise;
+      const h = DESIGN.brandSize + 32;
+      const w = h * (img.width / img.height);
+      ctx.drawImage(img, width - DESIGN.padding - w, DESIGN.padding - 6, w, h);
+      return;
+    } catch {
+      logoImagePromise = null; // fall through to text wordmark
+    }
+  }
   ctx.font         = `bold ${DESIGN.brandSize}px ${HEADLINE_FONT}`;
   ctx.fillStyle    = color || palette.accent || '#FF2E88';
   ctx.textAlign    = 'right';
@@ -212,7 +234,7 @@ async function renderSingle({ hook, sub, paletteKey, productKey, contentType }) 
 
   const { headlineColor, bodyColor } = await drawBackground(ctx, width, height, palette, productKey, contentType);
   renderTopBar(ctx, width, palette);
-  renderBrand(ctx, width, palette, headlineColor);
+  await renderBrand(ctx, width, palette, headlineColor);
 
   ctx.font = `bold ${DESIGN.headlineSize}px ${HEADLINE_FONT}`;
   ctx.fillStyle = headlineColor;
@@ -243,7 +265,7 @@ async function renderCarouselSlide({ headline, body, slideNum, total, paletteKey
 
   const { headlineColor, bodyColor } = await drawBackground(ctx, width, height, palette, slideNum === 1 ? productKey : null, slideNum === 1 ? contentType : null);
   renderTopBar(ctx, width, palette);
-  renderBrand(ctx, width, palette, headlineColor);
+  await renderBrand(ctx, width, palette, headlineColor);
 
   // slide counter
   ctx.font = `${DESIGN.bodySize - 10}px ${BODY_FONT}`;
@@ -290,7 +312,7 @@ async function renderStatCard({ statNumber, statContext, source, paletteKey }) {
 
   const { headlineColor, bodyColor } = await drawBackground(ctx, width, height, palette, null);
   renderTopBar(ctx, width, palette);
-  renderBrand(ctx, width, palette, headlineColor);
+  await renderBrand(ctx, width, palette, headlineColor);
 
   // the number — huge, centered, the whole point of the card
   ctx.textAlign = 'center';
@@ -358,7 +380,7 @@ async function renderFallback(text, paletteKey) {
   const ctx = canvas.getContext('2d');
   drawGradient(ctx, width, height, palette);
   renderTopBar(ctx, width, palette);
-  renderBrand(ctx, width, palette, palette.headline);
+  await renderBrand(ctx, width, palette, palette.headline);
   ctx.font = `bold ${DESIGN.bodySize}px ${BODY_FONT}`;
   ctx.fillStyle = palette.headline || '#FFFFFF';
   wrapText(ctx, text, padding, padding + 90, width - padding * 2, 46);
@@ -387,7 +409,7 @@ async function renderCleanCard(headline, body, slideNum, totalSlides) {
   ctx.fillStyle = accent;
   ctx.fillRect(0, 0, 4, height);
 
-  renderBrand(ctx, width, { accent: headlineColor }, headlineColor);
+  await renderBrand(ctx, width, { accent: headlineColor }, headlineColor);
 
   let contentY = padding + 100;
   if (totalSlides && totalSlides > 1) {
@@ -448,7 +470,7 @@ async function renderPhotoCard(headline, photoBuffer, attribution) {
   ctx.fillStyle = 'rgba(10, 18, 40, 0.65)'; // navy at 65% — always-readable overlay
   ctx.fillRect(0, 0, width, height);
 
-  renderBrand(ctx, width, { accent: '#FFFFFF' }, '#FFFFFF');
+  await renderBrand(ctx, width, { accent: '#FFFFFF' }, '#FFFFFF');
 
   ctx.font = `bold ${DESIGN.headlineSize}px ${HEADLINE_FONT}`;
   ctx.fillStyle = '#FFFFFF';

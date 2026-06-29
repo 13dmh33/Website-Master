@@ -209,19 +209,21 @@
     },
     {
       "lead_id": "ChIJ7z702999bIcRLGI2hkDZpVk",
-      "status": "sent",
+      "status": "mockup_pending",
       "added_at": "2026-06-01T21:33:25.508Z",
       "diagnosed_at": "2026-06-01T21:43:04.873Z",
       "checked_at": "2026-06-01T21:43:35.299Z",
-      "sent_at": "2026-06-02T14:17:04.521Z"
+      "sent_at": "2026-06-02T14:17:04.521Z",
+      "built_at": "2026-06-29T14:58:15.390Z"
     },
     {
       "lead_id": "ChIJ48VL8uNLaYcRzDHX-rpmfQY",
-      "status": "sent",
+      "status": "mockup_pending",
       "added_at": "2026-06-01T21:33:25.508Z",
       "diagnosed_at": "2026-06-01T21:43:07.308Z",
       "checked_at": "2026-06-01T21:43:35.299Z",
-      "sent_at": "2026-06-02T14:16:25.027Z"
+      "sent_at": "2026-06-02T14:16:25.027Z",
+      "built_at": "2026-06-29T14:58:15.386Z"
     },
     {
       "lead_id": "ChIJE2E_MmJ5bIcRcUUSvcUScug",
@@ -459,10 +461,11 @@
     },
     {
       "lead_id": "ChIJCfIeyNHpQIYRVWwtEOiO0lQ",
-      "status": "checked",
+      "status": "mockup_pending",
       "added_at": "2026-06-05T21:45:17.290Z",
       "diagnosed_at": "2026-06-05T21:49:47.855Z",
-      "checked_at": "2026-06-05T22:25:31.023Z"
+      "checked_at": "2026-06-05T22:25:31.023Z",
+      "built_at": "2026-06-29T14:58:15.393Z"
     },
     {
       "lead_id": "ChIJU_Bc5MSXQIYRdGrlEWUDmw8",
@@ -493,21 +496,24 @@
     },
     {
       "lead_id": "ChIJEX_oFlpoWWQRbu_EZTgMFGU",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T21:49:58.666Z"
+      "diagnosed_at": "2026-06-05T21:49:58.666Z",
+      "checked_at": "2026-06-29T14:54:28.286Z"
     },
     {
       "lead_id": "ChIJFaUIYbFU_isRPJ6ROG1_RJQ",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T21:50:00.764Z"
+      "diagnosed_at": "2026-06-05T21:50:00.764Z",
+      "checked_at": "2026-06-29T14:54:28.289Z"
     },
     {
       "lead_id": "ChIJ-ekLSEDDQIYRmiQJv9_t1w0",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T21:50:02.861Z"
+      "diagnosed_at": "2026-06-05T21:50:02.861Z",
+      "checked_at": "2026-06-29T14:54:28.274Z"
     },
     {
       "lead_id": "ChIJo02nfVPFQIYR2rz56TRYLKQ",
@@ -518,9 +524,10 @@
     },
     {
       "lead_id": "ChIJ49DgDNJ1rQMRIr1vahi1WzI",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T21:50:08.345Z"
+      "diagnosed_at": "2026-06-05T21:50:08.345Z",
+      "checked_at": "2026-06-29T14:54:28.278Z"
     },
     {
       "lead_id": "ChIJsbqXKXfBQIYRIqDqekJyyO4",
@@ -530,27 +537,31 @@
     },
     {
       "lead_id": "ChIJIRxNjcDlt4kREQ8Vs3fIL5I",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T21:50:12.308Z"
+      "diagnosed_at": "2026-06-05T21:50:12.308Z",
+      "checked_at": "2026-06-29T14:54:28.293Z"
     },
     {
       "lead_id": "ChIJ4ZMNR6vHQIYRE1uY8uaMXNQ",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T21:50:14.593Z"
+      "diagnosed_at": "2026-06-05T21:50:14.593Z",
+      "checked_at": "2026-06-29T14:54:28.280Z"
     },
     {
       "lead_id": "ChIJJWjJN5e_QIYR8DjkdEcTn3o",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T21:50:17.786Z"
+      "diagnosed_at": "2026-06-05T21:50:17.786Z",
+      "checked_at": "2026-06-29T14:54:28.295Z"
     },
     {
       "lead_id": "ChIJI1oJa064QIYRUaEvkIolF9k",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T21:50:19.889Z"
+      "diagnosed_at": "2026-06-05T21:50:19.889Z",
+      "checked_at": "2026-06-29T14:54:28.292Z"
     },
     {
       "lead_id": "ChIJAxAo_Hm56k8RayD3tniW_A8",
@@ -567,9 +578,10 @@
     },
     {
       "lead_id": "ChIJP5RRMn0eMYgRCfLtAtTupQk",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T21:50:26.322Z"
+      "diagnosed_at": "2026-06-05T21:50:26.322Z",
+      "checked_at": "2026-06-29T14:54:28.301Z"
     },
     {
       "lead_id": "ChIJrx5huBC5QIYRTJzbTvmQGZk",
@@ -586,15 +598,17 @@
     },
     {
       "lead_id": "ChIJ-S3qXjrRQIYRUvzx9-_ZXtY",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T21:50:32.505Z"
+      "diagnosed_at": "2026-06-05T21:50:32.505Z",
+      "checked_at": "2026-06-29T14:54:28.273Z"
     },
     {
       "lead_id": "ChIJ9cDWyWHrQIYRNAoEDroWhlY",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T21:50:34.609Z"
+      "diagnosed_at": "2026-06-05T21:50:34.609Z",
+      "checked_at": "2026-06-29T14:54:28.283Z"
     },
     {
       "lead_id": "ChIJqyVBFx7jt4kRtqssnTjmB5E",
@@ -610,33 +624,38 @@
     },
     {
       "lead_id": "ChIJG7xPFnDHQIYRh-3bdgy7Ie4",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T21:50:40.806Z"
+      "diagnosed_at": "2026-06-05T21:50:40.806Z",
+      "checked_at": "2026-06-29T14:54:28.290Z"
     },
     {
       "lead_id": "ChIJCYX6iMBpRkMRtGqrJTe4qBY",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T21:50:42.756Z"
+      "diagnosed_at": "2026-06-05T21:50:42.756Z",
+      "checked_at": "2026-06-29T14:54:28.284Z"
     },
     {
       "lead_id": "ChIJGaOGaBHBQIYRAkgcG1muU9Q",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T21:50:44.804Z"
+      "diagnosed_at": "2026-06-05T21:50:44.804Z",
+      "checked_at": "2026-06-29T14:54:28.291Z"
     },
     {
       "lead_id": "ChIJDeRKRqndQIYRrDjCFh7vEnQ",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T21:50:46.908Z"
+      "diagnosed_at": "2026-06-05T21:50:46.908Z",
+      "checked_at": "2026-06-29T14:54:28.285Z"
     },
     {
       "lead_id": "ChIJJ7Ui2vWkQIYRTziIko5gqOY",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T22:08:22.274Z"
+      "diagnosed_at": "2026-06-05T22:08:22.274Z",
+      "checked_at": "2026-06-29T14:54:28.294Z"
     },
     {
       "lead_id": "ChIJbzQ6irPFQIYR-Lq21B6LuOY",
@@ -677,9 +696,10 @@
     },
     {
       "lead_id": "ChIJ5evFomC-QIYR69h2yXgyYrY",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:45:17.291Z",
-      "diagnosed_at": "2026-06-05T22:08:40.714Z"
+      "diagnosed_at": "2026-06-05T22:08:40.714Z",
+      "checked_at": "2026-06-29T14:54:28.281Z"
     },
     {
       "lead_id": "ChIJF6ElMtLFQIYRqdF4qW7ruj0",
@@ -797,85 +817,101 @@
     },
     {
       "lead_id": "ChIJS9tVTi_rQIYR3fdRbq_reaA",
-      "status": "scouted",
-      "added_at": "2026-06-05T21:45:17.291Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T21:45:17.291Z",
+      "diagnosed_at": "2026-06-29T15:56:24.849Z"
     },
     {
       "lead_id": "ChIJq-9OhZbAQIYRmD5WySe0V-s",
-      "status": "scouted",
-      "added_at": "2026-06-05T21:45:17.291Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T21:45:17.291Z",
+      "diagnosed_at": "2026-06-29T15:56:27.856Z"
     },
     {
       "lead_id": "ChIJhSCIUwzQQIYRtPNQIWdjtXc",
-      "status": "scouted",
-      "added_at": "2026-06-05T21:45:17.291Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T21:45:17.291Z",
+      "diagnosed_at": "2026-06-29T15:56:33.074Z"
     },
     {
       "lead_id": "ChIJu_T9WNPFQIYRatZlIoTKC5Q",
-      "status": "scouted",
-      "added_at": "2026-06-05T21:45:17.291Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T21:45:17.291Z",
+      "diagnosed_at": "2026-06-29T15:56:35.181Z"
     },
     {
       "lead_id": "ChIJHwk8yBPBQIYR1iOnnFEgeN4",
-      "status": "scouted",
-      "added_at": "2026-06-05T21:45:17.291Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T21:45:17.291Z",
+      "diagnosed_at": "2026-06-29T15:56:38.816Z"
     },
     {
       "lead_id": "ChIJZytSARm_QIYR93GPrTQ-25g",
-      "status": "scouted",
-      "added_at": "2026-06-05T21:45:17.291Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T21:45:17.291Z",
+      "diagnosed_at": "2026-06-29T15:56:42.094Z"
     },
     {
       "lead_id": "ChIJTTfWkHvHQIYRd-ZdjvH8NvY",
-      "status": "scouted",
-      "added_at": "2026-06-05T21:45:17.291Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T21:45:17.291Z",
+      "diagnosed_at": "2026-06-29T15:56:44.329Z"
     },
     {
       "lead_id": "ChIJD8oD3424QIYRgny_L-aq-DI",
-      "status": "scouted",
-      "added_at": "2026-06-05T21:45:17.291Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T21:45:17.291Z",
+      "diagnosed_at": "2026-06-29T15:56:47.811Z"
     },
     {
       "lead_id": "ChIJr5HGwYbDQIYRZ9KZn5gWHbA",
-      "status": "scouted",
-      "added_at": "2026-06-05T21:45:17.291Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T21:45:17.291Z",
+      "diagnosed_at": "2026-06-29T15:56:50.373Z"
     },
     {
       "lead_id": "ChIJ2z-fQl_HQIYRFQdaeQye90s",
-      "status": "scouted",
-      "added_at": "2026-06-05T21:45:17.291Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T21:45:17.291Z",
+      "diagnosed_at": "2026-06-29T15:56:53.663Z"
     },
     {
       "lead_id": "ChIJ2WOPdp_NMCERRSzzLPeEXD0",
-      "status": "scouted",
-      "added_at": "2026-06-05T21:45:17.291Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T21:45:17.291Z",
+      "diagnosed_at": "2026-06-29T15:56:56.712Z"
     },
     {
       "lead_id": "ChIJAVBa2T8twVYRt-oSb6c_dz8",
-      "status": "scouted",
-      "added_at": "2026-06-05T21:45:17.291Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T21:45:17.291Z",
+      "diagnosed_at": "2026-06-29T15:57:00.410Z"
     },
     {
       "lead_id": "ChIJX80Mt8bFQIYRfahtMNUOIPc",
-      "status": "scouted",
-      "added_at": "2026-06-05T21:45:17.291Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T21:45:17.291Z",
+      "diagnosed_at": "2026-06-29T15:57:30.818Z"
     },
     {
       "lead_id": "ChIJWRhdFd24QIYRXvWwogCEexw",
-      "status": "scouted",
-      "added_at": "2026-06-05T21:45:17.291Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T21:45:17.291Z",
+      "diagnosed_at": "2026-06-29T15:57:33.541Z"
     },
     {
       "lead_id": "ChIJsRvKEP6VQIYRjTYSTLVDTAM",
-      "status": "scouted",
-      "added_at": "2026-06-05T21:45:17.291Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T21:45:17.291Z",
+      "diagnosed_at": "2026-06-29T15:57:43.546Z"
     },
     {
       "lead_id": "ChIJ5QDsOlbHyIARQz0LdkQixu4",
-      "status": "checked",
+      "status": "mockup_pending",
       "added_at": "2026-06-05T21:58:54.526Z",
       "diagnosed_at": "2026-06-05T22:06:47.447Z",
-      "checked_at": "2026-06-05T22:25:31.014Z"
+      "checked_at": "2026-06-05T22:25:31.014Z",
+      "built_at": "2026-06-29T14:58:15.388Z"
     },
     {
       "lead_id": "ChIJM0K1dWfByIAREaA9R0hitAo",
@@ -953,15 +989,17 @@
     },
     {
       "lead_id": "ChIJHxD-dT3ByIAR5tax2X0LLQ4",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:58:54.526Z",
-      "diagnosed_at": "2026-06-05T22:07:38.924Z"
+      "diagnosed_at": "2026-06-05T22:07:38.924Z",
+      "checked_at": "2026-06-29T14:54:28.292Z"
     },
     {
       "lead_id": "ChIJJx992p1xgUcRDPBURhlo36U",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:58:54.526Z",
-      "diagnosed_at": "2026-06-05T22:07:41.000Z"
+      "diagnosed_at": "2026-06-05T22:07:41.000Z",
+      "checked_at": "2026-06-29T14:54:28.297Z"
     },
     {
       "lead_id": "ChIJnaMFdJ3RyIAROtpBUEWfVqk",
@@ -984,9 +1022,10 @@
     },
     {
       "lead_id": "ChIJ2xWsPnjGyIAREkXKFeSGJjE",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T21:58:54.526Z",
-      "diagnosed_at": "2026-06-05T22:08:43.095Z"
+      "diagnosed_at": "2026-06-05T22:08:43.095Z",
+      "checked_at": "2026-06-29T14:54:28.277Z"
     },
     {
       "lead_id": "ChIJozKqWhjByIAR6Em2Jd1leA0",
@@ -1057,48 +1096,57 @@
     },
     {
       "lead_id": "ChIJ___vFoXGyIARlzxS-6j6wSE",
-      "status": "scouted",
-      "added_at": "2026-06-05T21:58:54.526Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T21:58:54.526Z",
+      "diagnosed_at": "2026-06-29T15:56:01.640Z"
     },
     {
       "lead_id": "ChIJmVn58V8MhSURaHHcKmi6bsI",
-      "status": "scouted",
-      "added_at": "2026-06-05T21:58:54.526Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T21:58:54.526Z",
+      "diagnosed_at": "2026-06-29T15:57:02.805Z"
     },
     {
       "lead_id": "ChIJVx4lcSbdyIARMWLi8A_WbH0",
-      "status": "scouted",
-      "added_at": "2026-06-05T21:58:54.526Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T21:58:54.526Z",
+      "diagnosed_at": "2026-06-29T15:57:05.122Z"
     },
     {
       "lead_id": "ChIJ2WQGKOPFyIAROhQHP5Y7LKk",
-      "status": "scouted",
-      "added_at": "2026-06-05T21:58:54.526Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T21:58:54.526Z",
+      "diagnosed_at": "2026-06-29T15:57:07.679Z"
     },
     {
       "lead_id": "ChIJ4T9jxPHFyIARKLy2rx_f5aA",
-      "status": "scouted",
-      "added_at": "2026-06-05T21:58:54.526Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T21:58:54.526Z",
+      "diagnosed_at": "2026-06-29T15:57:35.963Z"
     },
     {
       "lead_id": "ChIJjT25sXbbyIAR5lq5tk4xhz4",
-      "status": "scouted",
-      "added_at": "2026-06-05T21:58:54.526Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T21:58:54.526Z",
+      "diagnosed_at": "2026-06-29T15:57:45.679Z"
     },
     {
       "lead_id": "ChIJrZBbEerEyIARjY8n-_cY6PE",
-      "status": "scouted",
-      "added_at": "2026-06-05T21:58:54.526Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T21:58:54.526Z",
+      "diagnosed_at": "2026-06-29T15:57:47.691Z"
     },
     {
       "lead_id": "ChIJ_R8CSnTcyIARbvCr-7fsa5c",
-      "status": "scouted",
-      "added_at": "2026-06-05T21:58:54.526Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T21:58:54.526Z",
+      "diagnosed_at": "2026-06-29T15:57:49.729Z"
     },
     {
       "lead_id": "ChIJGWWMBEHByIARgicg2mkZhDc",
-      "status": "scouted",
-      "added_at": "2026-06-05T21:58:54.526Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T21:58:54.526Z",
+      "diagnosed_at": "2026-06-29T15:57:51.938Z"
     },
     {
       "lead_id": "ChIJ8ddHmYn1XIYRcUXqdZMQOLE",
@@ -1155,9 +1203,10 @@
     },
     {
       "lead_id": "ChIJJYWGXPtZXIYRghjVOoX9YmY",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:00:55.785Z",
-      "diagnosed_at": "2026-06-05T22:07:57.975Z"
+      "diagnosed_at": "2026-06-05T22:07:57.975Z",
+      "checked_at": "2026-06-29T14:54:28.296Z"
     },
     {
       "lead_id": "ChIJTQNrgqFfXIYR2cBGHDlwfZ0",
@@ -1179,21 +1228,24 @@
     },
     {
       "lead_id": "ChIJ6UQJWYJhXIYRU7GKZRz3_dw",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:00:55.785Z",
-      "diagnosed_at": "2026-06-05T22:09:02.594Z"
+      "diagnosed_at": "2026-06-05T22:09:02.594Z",
+      "checked_at": "2026-06-29T14:54:28.282Z"
     },
     {
       "lead_id": "ChIJ-RxwkLL0XIYRGHwcFOBAWxU",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:00:55.785Z",
-      "diagnosed_at": "2026-06-05T22:09:04.989Z"
+      "diagnosed_at": "2026-06-05T22:09:04.989Z",
+      "checked_at": "2026-06-29T14:54:28.271Z"
     },
     {
       "lead_id": "ChIJMxpq8aZfXIYRLpmaeF5pnxU",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:00:55.785Z",
-      "diagnosed_at": "2026-06-05T22:09:07.419Z"
+      "diagnosed_at": "2026-06-05T22:09:07.419Z",
+      "checked_at": "2026-06-29T14:54:28.299Z"
     },
     {
       "lead_id": "ChIJVVVkclRbXIYRHAowZaFgEIY",
@@ -1209,9 +1261,10 @@
     },
     {
       "lead_id": "ChIJMe2ZCTT2XIYRRv5P7tulrkk",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:00:55.785Z",
-      "diagnosed_at": "2026-06-05T22:09:14.313Z"
+      "diagnosed_at": "2026-06-05T22:09:14.313Z",
+      "checked_at": "2026-06-29T14:54:28.298Z"
     },
     {
       "lead_id": "ChIJh0osCixfXIYRvRu3V_ZlJtE",
@@ -1221,73 +1274,87 @@
     },
     {
       "lead_id": "ChIJ1xu3SY484AkR1miQYClUm6I",
-      "status": "scouted",
-      "added_at": "2026-06-05T22:00:55.785Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T22:00:55.785Z",
+      "diagnosed_at": "2026-06-29T15:56:03.912Z"
     },
     {
       "lead_id": "ChIJTdX1-w9hXIYRKVPigcitJdA",
-      "status": "scouted",
-      "added_at": "2026-06-05T22:00:55.785Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T22:00:55.785Z",
+      "diagnosed_at": "2026-06-29T15:56:06.448Z"
     },
     {
       "lead_id": "ChIJCfRyU5OKXIYRWAS9SQqWw1w",
-      "status": "scouted",
-      "added_at": "2026-06-05T22:00:55.785Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T22:00:55.785Z",
+      "diagnosed_at": "2026-06-29T15:56:10.243Z"
     },
     {
       "lead_id": "ChIJfcOiSrVdXIYRN7f-0fYjO74",
-      "status": "scouted",
-      "added_at": "2026-06-05T22:00:55.785Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T22:00:55.785Z",
+      "diagnosed_at": "2026-06-29T15:56:13.766Z"
     },
     {
       "lead_id": "ChIJdzwM2lxdXIYRoKncM4ZihTw",
-      "status": "scouted",
-      "added_at": "2026-06-05T22:00:55.785Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T22:00:55.785Z",
+      "diagnosed_at": "2026-06-29T15:57:10.182Z"
     },
     {
       "lead_id": "ChIJmSfvujJFXIYRUd0UMZNQe6c",
-      "status": "scouted",
-      "added_at": "2026-06-05T22:00:55.785Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T22:00:55.785Z",
+      "diagnosed_at": "2026-06-29T15:57:12.372Z"
     },
     {
       "lead_id": "ChIJWYaAfJFfXIYRixB_DzLGA1k",
-      "status": "scouted",
-      "added_at": "2026-06-05T22:00:55.785Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T22:00:55.785Z",
+      "diagnosed_at": "2026-06-29T15:57:15.715Z"
     },
     {
       "lead_id": "ChIJAQC84oNgXIYRmxpltUug9n0",
-      "status": "scouted",
-      "added_at": "2026-06-05T22:00:55.785Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T22:00:55.785Z",
+      "diagnosed_at": "2026-06-29T15:57:18.143Z"
     },
     {
       "lead_id": "ChIJuZ4rJ4XzXIYRy36_xg7N81c",
-      "status": "scouted",
-      "added_at": "2026-06-05T22:00:55.785Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T22:00:55.785Z",
+      "diagnosed_at": "2026-06-29T15:57:21.000Z"
     },
     {
       "lead_id": "ChIJhbN34eznEKQRjLEfM9nvKG8",
-      "status": "scouted",
-      "added_at": "2026-06-05T22:00:55.785Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T22:00:55.785Z",
+      "diagnosed_at": "2026-06-29T15:57:23.383Z"
     },
     {
       "lead_id": "ChIJj6lm1elZXIYR1gqbxUlF8Q0",
-      "status": "scouted",
-      "added_at": "2026-06-05T22:00:55.785Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T22:00:55.785Z",
+      "diagnosed_at": "2026-06-29T15:57:25.873Z"
     },
     {
       "lead_id": "ChIJ75DjQptfXIYRu2RBeW5h9IQ",
-      "status": "scouted",
-      "added_at": "2026-06-05T22:00:55.785Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T22:00:55.785Z",
+      "diagnosed_at": "2026-06-29T15:57:27.992Z"
     },
     {
       "lead_id": "ChIJ3QMdveH3XIYRS-NMX7e-zms",
-      "status": "scouted",
-      "added_at": "2026-06-05T22:00:55.785Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T22:00:55.785Z",
+      "diagnosed_at": "2026-06-29T15:57:38.588Z"
     },
     {
       "lead_id": "ChIJj0zzDEJhXIYRnMnkM_VsVr4",
-      "status": "scouted",
-      "added_at": "2026-06-05T22:00:55.785Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T22:00:55.785Z",
+      "diagnosed_at": "2026-06-29T15:57:54.392Z"
     },
     {
       "lead_id": "ChIJF72IlqAgVIgRB0IiGSHPB8g",
@@ -1298,10 +1365,11 @@
     },
     {
       "lead_id": "ChIJASCxUn6DVogR_19B08RUuFM",
-      "status": "checked",
+      "status": "mockup_pending",
       "added_at": "2026-06-05T22:03:16.288Z",
       "diagnosed_at": "2026-06-05T22:06:43.261Z",
-      "checked_at": "2026-06-05T22:25:31.020Z"
+      "checked_at": "2026-06-05T22:25:31.020Z",
+      "built_at": "2026-06-29T14:58:15.391Z"
     },
     {
       "lead_id": "ChIJLTHT-HShVogRhw90EQB8k2c",
@@ -1349,21 +1417,24 @@
     },
     {
       "lead_id": "ChIJEdaDswefVogR0-BzdA5tFck",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:03:16.288Z",
-      "diagnosed_at": "2026-06-05T22:07:29.438Z"
+      "diagnosed_at": "2026-06-05T22:07:29.438Z",
+      "checked_at": "2026-06-29T14:54:28.288Z"
     },
     {
       "lead_id": "ChIJPYGdNRCdVogRUO56eb8gsVE",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:03:16.288Z",
-      "diagnosed_at": "2026-06-05T22:08:02.825Z"
+      "diagnosed_at": "2026-06-05T22:08:02.825Z",
+      "checked_at": "2026-06-29T14:54:28.303Z"
     },
     {
       "lead_id": "ChIJP9hv5oQnVIgRAVUsjYwyveI",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:03:16.288Z",
-      "diagnosed_at": "2026-06-05T22:08:04.920Z"
+      "diagnosed_at": "2026-06-05T22:08:04.920Z",
+      "checked_at": "2026-06-29T14:54:28.302Z"
     },
     {
       "lead_id": "ChIJb_yv0DqhVogRA5zN3gKgwHg",
@@ -1379,15 +1450,17 @@
     },
     {
       "lead_id": "ChIJO8-WXAzjPqARhV4NIGUOE2k",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:03:16.288Z",
-      "diagnosed_at": "2026-06-05T22:08:11.213Z"
+      "diagnosed_at": "2026-06-05T22:08:11.213Z",
+      "checked_at": "2026-06-29T14:54:28.300Z"
     },
     {
       "lead_id": "ChIJ05r00x6dVogRpcu-rPjpPD4",
-      "status": "diagnosed",
+      "status": "checked",
       "added_at": "2026-06-05T22:03:16.288Z",
-      "diagnosed_at": "2026-06-05T22:08:13.309Z"
+      "diagnosed_at": "2026-06-05T22:08:13.309Z",
+      "checked_at": "2026-06-29T14:54:28.275Z"
     },
     {
       "lead_id": "ChIJg9eWchoHfQIRKLvvOvAN73k",
@@ -1433,23 +1506,27 @@
     },
     {
       "lead_id": "ChIJF3KWcYKfVogRP-hqOcbSfMM",
-      "status": "scouted",
-      "added_at": "2026-06-05T22:03:16.288Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T22:03:16.288Z",
+      "diagnosed_at": "2026-06-29T15:56:16.844Z"
     },
     {
       "lead_id": "ChIJA_c3EqEeVIgRY7h_7X1549A",
-      "status": "scouted",
-      "added_at": "2026-06-05T22:03:16.288Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T22:03:16.288Z",
+      "diagnosed_at": "2026-06-29T15:56:20.162Z"
     },
     {
       "lead_id": "ChIJL9lJU18l6oQR2V_4uX5uwrc",
-      "status": "scouted",
-      "added_at": "2026-06-05T22:03:16.288Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T22:03:16.288Z",
+      "diagnosed_at": "2026-06-29T15:56:22.794Z"
     },
     {
       "lead_id": "ChIJaUbt7fefVogRVRa_TQt_kj4",
-      "status": "scouted",
-      "added_at": "2026-06-05T22:03:16.288Z"
+      "status": "diagnosed",
+      "added_at": "2026-06-05T22:03:16.288Z",
+      "diagnosed_at": "2026-06-29T15:57:41.208Z"
     }
   ],
   "active": [],
@@ -1458,8 +1535,8 @@
   "last_run": "2026-06-05T22:03:16.288Z",
   "daily_stats": {
     "leads_scouted": 190,
-    "briefs_written": 200,
-    "mockups_built": 5,
+    "briefs_written": 242,
+    "mockups_built": 10,
     "messages_sent": 48,
     "replies_received": 0,
     "reply_rate": 0,

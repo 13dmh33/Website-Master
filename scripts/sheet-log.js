@@ -11,7 +11,7 @@
  * Reads:  state.json            (leads with status 'sent' — how pitcher.js marks a send)
  *         messages/{id}-sent.json (confirms it was an EMAIL send: email_sent === true)
  *         queue/{id}-brief.json  (company, trade, email, demo_url)
- *         .env.local            (GOOGLE_SERVICE_ACCOUNT_JSON, SHEET_ID)
+ *         .env.local            (GOOGLE_SERVICE_ACCOUNT_JSON, SHEET_ID, optional SHEET_TAB)
  * Writes: the Google Sheet      (append one row per newly-sent email lead)
  *         state.json            (adds loggedToSheet:true to logged leads — additive)
  *
@@ -39,11 +39,16 @@ const MESSAGES_DIR = path.join(ROOT, 'messages');
 const DRY_RUN = process.argv.includes('--dry-run');
 
 const HEADER = ['company', 'email', 'trade', 'status', 'demo URL', 'sent date', 'reply', 'notes'];
-const TAB_RANGE = 'A1:H1';            // header range (8 columns)
-const APPEND_RANGE = 'A1';            // append finds the first empty row from here
+// Write to a dedicated tab so the curated-leads tab in the same spreadsheet is never touched.
+const TAB = process.env.SHEET_TAB || 'SentLog';
 const SHEETS_BASE = 'https://sheets.googleapis.com/v4/spreadsheets';
 const TOKEN_URL = 'https://oauth2.googleapis.com/token';
 const SCOPE = 'https://www.googleapis.com/auth/spreadsheets';
+
+// A1 ranges that reference a tab must quote the tab name (escape ' as '').
+function quoteTab(tab) { return "'" + String(tab).replace(/'/g, "''") + "'"; }
+const TAB_RANGE = `${quoteTab(TAB)}!A1:H1`;  // header range (8 columns) within the tab
+const APPEND_RANGE = `${quoteTab(TAB)}!A1`;  // append finds the first empty row in the tab
 
 // ── helpers ───────────────────────────────────────────────────────────────────
 function readJsonSafe(p) {
@@ -133,6 +138,29 @@ async function sheetsAppend(token, sheetId, rows) {
   return res.json();
 }
 
+/** List existing tab titles in the spreadsheet. */
+async function listTabs(token, sheetId) {
+  const res = await fetch(`${SHEETS_BASE}/${sheetId}?fields=sheets.properties.title`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error(`Could not read spreadsheet tabs (HTTP ${res.status}): ${await res.text()}`);
+  const json = await res.json();
+  return (json.sheets || []).map(s => s.properties && s.properties.title).filter(Boolean);
+}
+
+/** Create the target tab if it's not already there (leaves all other tabs untouched). */
+async function ensureTab(token, sheetId) {
+  const tabs = await listTabs(token, sheetId);
+  if (tabs.includes(TAB)) return false;
+  const res = await fetch(`${SHEETS_BASE}/${sheetId}:batchUpdate`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ requests: [{ addSheet: { properties: { title: TAB } } }] }),
+  });
+  if (!res.ok) throw new Error(`Could not create tab "${TAB}" (HTTP ${res.status}): ${await res.text()}`);
+  return true;
+}
+
 // ── main ────────────────────────────────────────────────────────────────────
 async function main() {
   console.log('\nSheet-Log' + (DRY_RUN ? '  [DRY RUN — nothing written]' : ''));
@@ -198,7 +226,10 @@ async function main() {
   }
 
   try {
-    // Write the header row first if the sheet has none yet.
+    // Make sure the dedicated tab exists (never touches other tabs in the file).
+    const created = await ensureTab(token, sheetId);
+    if (created) console.log(`Created tab "${TAB}".`);
+    // Write the header row first if the tab has none yet.
     const head = await sheetsGet(token, sheetId, TAB_RANGE);
     const hasHeader = Array.isArray(head.values) && head.values.length > 0 && head.values[0].length > 0;
     if (!hasHeader) {

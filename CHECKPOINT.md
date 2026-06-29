@@ -33,6 +33,15 @@ If the Sheet has no header row yet, the header is written first.
   (additive — no other field touched) so re-runs never duplicate rows. If the append fails,
   nothing is marked, so a re-run is safe.
 
+## Which sheet / which tab
+
+Writes to a **dedicated tab** (default name `SentLog`) inside whatever spreadsheet `SHEET_ID`
+points to. The tab is **auto-created** if missing, and **no other tab is touched** — so you can
+point this at the same spreadsheet you use for `sheet-import` (the curated-leads list,
+`1MNTg-WIT-NwwtOnP4QDs9M5QuG8UcDnmX8Jj8SxtTc8`) and the sent-log lands in its own `SentLog`
+tab, leaving your curated-leads tab alone. Override the tab name with the optional `SHEET_TAB`
+env var.
+
 ## How to run
 
 ```bash
@@ -55,11 +64,13 @@ You need a **service account** (a robot Google account) and you share your Sheet
    Move it somewhere stable, e.g. `~/trevo-sheet-key.json`.
 5. Open that JSON file and copy the value of **`client_email`** (looks like
    `sheet-logger@trevo-sheets.iam.gserviceaccount.com`).
-6. Open your target Google Sheet → click **Share** → paste that `client_email` → set it to
-   **Editor** → Send. (This is the step everyone forgets — the robot can't write until the
-   Sheet is shared with it.)
+6. Open your target Google Sheet (the curated-leads one is fine — the script writes to its own
+   `SentLog` tab and won't touch your leads tab) → click **Share** → paste that `client_email`
+   → set it to **Editor** → Send. (This is the step everyone forgets — the robot can't write
+   until the Sheet is shared with it.)
 7. Get the **Sheet ID** from the Sheet's URL: it's the long string between `/d/` and `/edit`
-   in `https://docs.google.com/spreadsheets/d/THIS_IS_THE_ID/edit`.
+   in `https://docs.google.com/spreadsheets/d/THIS_IS_THE_ID/edit`. For the curated-leads
+   sheet that's `1MNTg-WIT-NwwtOnP4QDs9M5QuG8UcDnmX8Jj8SxtTc8`.
 8. In the repo, open `.env.local` (same file Zoho/Twilio keys live in) and add two lines:
    ```
    GOOGLE_SERVICE_ACCOUNT_JSON=/Users/dave/trevo-sheet-key.json

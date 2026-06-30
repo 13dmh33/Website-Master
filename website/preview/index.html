@@ -663,13 +663,33 @@ function buildUrl(){
   return '/demos/?'+p.toString();
 }
 
+// heavy params: changes require a full iframe reload
+const HEAVY=['trade','biz','city','phone','rating','reviews','placeId','since','logo'];
+let prevHeavy={}; // snapshot of heavy params from last full load
+let prevSvcs=''; let prevExtra='';
+
+function heavyKey(){return HEAVY.map(k=>s[k]||'').join('|')+'|'+s.svcs.join(',')+'|'+s.extra.join(',');}
+
 function updatePreview(){
   if(!s.trade)return;
   clearTimeout(debounce);
   debounce=setTimeout(()=>{
-    const url=buildUrl();
+    const frame=document.getElementById('preview');
+    const hk=heavyKey();
+    const iframeLoaded=frame.src&&frame.src!=='about:blank';
     document.getElementById('prev-url').textContent='yourbizsite.com';
-    document.getElementById('preview').src=url;
+    if(iframeLoaded&&hk===prevHeavy._key){
+      // only cosmetic params changed — patch in place
+      const patch={type:'trevo:patch'};
+      if(s.accent)patch.accent=s.accent;
+      patch.layout=s.layout||'dark';
+      if(s.avail)patch.avail=s.avail;
+      if(s.hours)patch.hours=s.hours;
+      frame.contentWindow.postMessage(patch,'*');
+    } else {
+      frame.src=buildUrl();
+      prevHeavy._key=hk;
+    }
   },400);
 }
 

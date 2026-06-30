@@ -965,6 +965,27 @@ function handleDemoForm(btn) {
 // ── DEMO BAR CTA — pass current URL params through to checkout ────────────────
 const demoCta = document.getElementById('demo-bar-cta');
 if (demoCta) demoCta.href = '/checkout/?' + params.toString();
+
+// ── POSTMESSAGE PATCH — configurator sends cosmetic updates without a full reload ──
+// Accepts: { type:'trevo:patch', accent, layout, avail, hours }
+window.addEventListener('message', e => {
+  if (!e.data || e.data.type !== 'trevo:patch') return;
+  const p = e.data;
+  if ('accent' in p && /^#[0-9a-fA-F]{3,6}$/.test(p.accent)) {
+    document.documentElement.style.setProperty('--accent', p.accent);
+  }
+  if ('layout' in p) {
+    document.body.classList.toggle('layout-light', p.layout === 'light');
+  }
+  if ('avail' in p) {
+    const el = document.getElementById('stat-avail');
+    if (el) el.textContent = p.avail;
+  }
+  if ('hours' in p) {
+    const el = document.getElementById('contact-hours');
+    if (el) el.textContent = p.hours;
+  }
+});
 </script>
 </body>
 </html>

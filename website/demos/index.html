@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title id="page-title">Loading…</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700&family=Barlow+Condensed:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --accent:       #F5C518;
+      --accent-dark:  #D4A800;
+      --bg:           #0D1117;
+      --surface:      #161B22;
+      --surface2:     #21262D;
+      --white:        #FFFFFF;
+      --muted:        rgba(255,255,255,.55);
+      --border:       rgba(255,255,255,.09);
+      --text-dark:    #0D1117;
+      --reviews-bg:   #F4F6F8;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--white); line-height: 1.6; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 28px; }
+
+    /* ── DEMO BAR ──────────────────────────────────────────────────── */
+    .demo-bar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+      background: #0A1228; border-bottom: 1px solid rgba(0,200,175,.25);
+      height: 40px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 20px; font-size: 12px; font-weight: 600; color: #00C8AF;
+    }
+    .demo-bar-left { display: flex; align-items: center; gap: 8px; }
+    .demo-bar-dot { width: 7px; height: 7px; border-radius: 50%; background: #00C8AF; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+    .demo-bar-cta { background: #00C8AF; color: #0A1228; padding: 5px 14px; border-radius: 4px; font-weight: 700; font-size: 11px; cursor: pointer; transition: filter .2s; }
+    .demo-bar-cta:hover { filter: brightness(1.1); }
+
+    /* ── NAV ──────────────────────────────────────────────────────── */
+    nav {
+      position: sticky; top: 40px; z-index: 100;
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      padding: 0 32px; height: 68px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 12px; }
+    .nav-logo-img { width: 42px; height: 42px; border-radius: 8px; object-fit: cover; display: none; }
+    .nav-logo-img.visible { display: block; }
+    .nav-logo-icon { font-size: 26px; line-height: 1; }
+    .nav-biz-text { display: flex; flex-direction: column; }
+    .nav-biz-name { font-family: 'Barlow Condensed', sans-serif; font-size: 18px; font-weight: 800; letter-spacing: .02em; line-height: 1.1; }
+    .nav-biz-sub { font-size: 11px; color: var(--muted); font-weight: 500; letter-spacing: .04em; text-transform: uppercase; }
+    .nav-links { display: flex; align-items: center; gap: 28px; }
+    .nav-link { font-size: 14px; font-weight: 500; color: var(--muted); transition: color .2s; }
+    .nav-link:hover { color: var(--white); }
+    .nav-right { display: flex; align-items: center; gap: 14px; }
+    .nav-phone { font-size: 15px; font-weight: 700; color: var(--white); }
+    .nav-cta { background: var(--accent); color: var(--text-dark); padding: 10px 22px; border-radius: 6px; font-size: 14px; font-weight: 700; transition: filter .2s; }
+    .nav-cta:hover { filter: brightness(1.08); }
+
+    /* ── HERO ─────────────────────────────────────────────────────── */
+    .hero {
+      min-height: 580px; position: relative; display: flex; align-items: center; overflow: hidden;
+      padding: 60px 0 60px;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      filter: brightness(0.28); z-index: 0;
+    }
+    .hero-gradient { position: absolute; inset: 0; background: linear-gradient(90deg, var(--bg) 28%, transparent 70%); z-index: 1; }
+    .hero-gradient-bottom { position: absolute; bottom: 0; left: 0; right: 0; height: 120px; background: linear-gradient(to bottom, transparent, var(--bg)); z-index: 2; }
+    .hero-content { position: relative; z-index: 3; max-width: 640px; padding: 0 60px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14);
+      color: var(--accent); padding: 6px 14px; border-radius: 100px;
+      font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 22px;
+    }
+    .hero h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: clamp(42px, 6vw, 70px); font-weight: 800; text-transform: uppercase; line-height: 1.04;
+      margin-bottom: 18px;
+    }
+    .hero h1 .accent { color: var(--accent); }
+    .hero-sub { font-size: 17px; color: rgba(255,255,255,.68); margin-bottom: 30px; line-height: 1.55; max-width: 500px; }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
+    .btn-primary {
+      background: var(--accent); color: var(--text-dark); padding: 15px 30px;
+      border-radius: 7px; font-size: 16px; font-weight: 700; transition: filter .2s;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-primary:hover { filter: brightness(1.08); }
+    .btn-outline {
+      border: 2px solid rgba(255,255,255,.28); color: var(--white); padding: 13px 26px;
+      border-radius: 7px; font-size: 16px; font-weight: 600; transition: border-color .2s;
+    }
+    .btn-outline:hover { border-color: rgba(255,255,255,.7); }
+    .hero-stats { display: flex; gap: 36px; flex-wrap: wrap; }
+    .hero-stat { }
+    .stat-val { font-family: 'Barlow Condensed', sans-serif; font-size: 30px; font-weight: 800; color: var(--accent); line-height: 1; }
+    .stat-lbl { font-size: 12px; color: rgba(255,255,255,.45); margin-top: 3px; text-transform: uppercase; letter-spacing: .06em; }
+
+    /* ── TRUST STRIP ──────────────────────────────────────────────── */
+    .trust-strip {
+      background: var(--accent); padding: 14px 32px;
+      display: flex; align-items: center; justify-content: center; gap: 0; flex-wrap: wrap;
+    }
+    .trust-item {
+      font-size: 12px; font-weight: 800; color: var(--text-dark);
+      padding: 4px 22px; letter-spacing: .05em; text-transform: uppercase;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .trust-item + .trust-item { border-left: 2px solid rgba(0,0,0,.18); }
+    .trust-icon { font-size: 14px; }
+
+    /* ── SECTIONS ─────────────────────────────────────────────────── */
+    .section { padding: 88px 0; }
+    .section-label { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+    .section-h2 { font-family: 'Barlow Condensed', sans-serif; font-size: clamp(28px, 4vw, 46px); font-weight: 800; text-transform: uppercase; line-height: 1.1; margin-bottom: 8px; }
+    .section-sub { font-size: 16px; color: var(--muted); margin-bottom: 44px; max-width: 560px; }
+
+    /* ── SERVICES ─────────────────────────────────────────────────── */
+    .services-section { background: var(--bg); }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .service-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 26px 22px; cursor: default;
+      transition: transform .2s, box-shadow .2s, border-color .2s;
+      position: relative; overflow: hidden;
+    }
+    .service-card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(0,0,0,.4); border-color: rgba(255,255,255,.18); }
+    .service-card-accent { position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+    .service-icon-wrap { font-size: 28px; margin-bottom: 14px; }
+    .service-tag {
+      display: inline-block; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1);
+      color: var(--accent); font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 4px; margin-bottom: 10px;
+    }
+    .service-name { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    .service-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+    .service-add-custom {
+      border: 2px dashed rgba(255,255,255,.15); border-radius: 12px; padding: 26px 22px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+      cursor: pointer; transition: border-color .2s; text-align: center; min-height: 140px;
+    }
+    .service-add-custom:hover { border-color: var(--accent); }
+    .service-add-icon { font-size: 24px; color: rgba(255,255,255,.3); }
+    .service-add-text { font-size: 13px; color: rgba(255,255,255,.35); font-weight: 500; }
+
+    /* ── LAYOUT: LIGHT ────────────────────────────────────────────── */
+    body.layout-light {
+      --bg: #F8F9FA; --surface: #FFFFFF; --surface2: #F0F2F5;
+      --white: #1A1A2E; --muted: rgba(26,26,46,.55); --border: rgba(0,0,0,.09);
+      --text-dark: #1A1A2E; --reviews-bg: #FFFFFF;
+    }
+    body.layout-light nav { background: #FFFFFF; border-bottom: 1px solid rgba(0,0,0,.08); }
+    body.layout-light .hero-bg { filter: brightness(0.55) saturate(0.8); }
+    body.layout-light .hero-gradient { background: linear-gradient(90deg, rgba(248,249,250,0.97) 32%, rgba(248,249,250,0.5) 70%); }
+    body.layout-light .hero h1 { color: #1A1A2E; }
+    body.layout-light .hero-sub { color: rgba(26,26,46,.7); }
+    body.layout-light .hero-stat-lbl { color: rgba(26,26,46,.45); }
+    body.layout-light .trust-strip { border-top: 1px solid rgba(0,0,0,.1); }
+    body.layout-light .services-section { background: #F0F2F5; }
+    body.layout-light .service-card { background: #FFFFFF; border-color: rgba(0,0,0,.08); box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+    body.layout-light .service-card:hover { box-shadow: 0 16px 40px rgba(0,0,0,.12); }
+    body.layout-light .section-h2 { color: #1A1A2E; }
+    body.layout-light .section-sub { color: rgba(26,26,46,.6); }
+    body.layout-light .service-name { color: #1A1A2E; }
+    body.layout-light .service-desc { color: rgba(26,26,46,.6); }
+
+    /* ── WHY US ───────────────────────────────────────────────────── */
+    .why-section { background: var(--surface); }
+    .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+    .why-img-wrap { border-radius: 14px; overflow: hidden; height: 400px; }
+    .why-img { width: 100%; height: 100%; object-fit: cover; }
+    .why-points { display: flex; flex-direction: column; gap: 24px; }
+    .why-point { display: flex; gap: 18px; align-items: flex-start; }
+    .why-point-icon { width: 44px; height: 44px; border-radius: 10px; background: rgba(255,255,255,.06); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+    .why-point-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    .why-point-desc { font-size: 14px; color: var(--muted); line-height: 1.55; }
+
+    /* ── REVIEWS ──────────────────────────────────────────────────── */
+    .reviews-section { background: var(--reviews-bg); color: var(--text-dark); padding: 88px 0; }
+    body:not(.layout-light) .reviews-section { background: #F4F6F8; color: #0D1117; }
+    .reviews-header { margin-bottom: 44px; }
+    .reviews-header .section-label { color: var(--accent); }
+    .reviews-header .section-h2 { color: #0D1117; }
+    .reviews-avg { display: flex; align-items: center; gap: 16px; margin-top: 12px; }
+    .reviews-avg-score { font-family: 'Barlow Condensed', sans-serif; font-size: 52px; font-weight: 800; line-height: 1; color: #0D1117; }
+    .reviews-avg-stars { color: #F5A623; font-size: 22px; letter-spacing: 2px; }
+    .reviews-avg-count { font-size: 14px; color: rgba(13,17,23,.55); margin-top: 4px; }
+    .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .review-card {
+      background: #FFFFFF; border-radius: 12px; padding: 24px 20px;
+      border: 1px solid rgba(0,0,0,.07); box-shadow: 0 2px 12px rgba(0,0,0,.06);
+    }
+    .review-stars { color: #F5A623; font-size: 15px; letter-spacing: 2px; margin-bottom: 12px; }
+    .review-text { font-size: 14px; color: #2A3340; line-height: 1.68; font-style: italic; margin-bottom: 16px; }
+    .reviewer { display: flex; align-items: center; gap: 10px; }
+    .reviewer-av { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; color: #fff; flex-shrink: 0; }
+    .reviewer-name { font-size: 13px; font-weight: 700; color: #1A1A2E; }
+    .reviewer-time { font-size: 12px; color: rgba(26,26,46,.45); }
+    .google-badge { display: inline-flex; align-items: center; gap: 6px; margin-top: 24px; font-size: 12px; color: rgba(13,17,23,.45); font-weight: 600; }
+    .google-g { width: 16px; height: 16px; }
+
+    /* ── AREAS ────────────────────────────────────────────────────── */
+    .areas-section { background: var(--bg); padding: 72px 0; }
+    .areas-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+    .area-pill { background: var(--surface); border: 1px solid var(--border); border-radius: 100px; padding: 8px 20px; font-size: 14px; font-weight: 500; color: var(--muted); transition: all .2s; }
+    .area-pill:hover { border-color: var(--accent); color: var(--white); }
+
+    /* ── CONTACT FORM ─────────────────────────────────────────────── */
+    .contact-section { background: var(--surface); padding: 88px 0; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+    .contact-info h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 36px; font-weight: 800; text-transform: uppercase; margin-bottom: 14px; }
+    .contact-info p { font-size: 16px; color: var(--muted); margin-bottom: 28px; line-height: 1.55; }
+    .contact-detail { display: flex; align-items: center; gap: 12px; font-size: 15px; margin-bottom: 14px; font-weight: 600; }
+    .contact-detail-icon { font-size: 18px; }
+    .contact-form { background: var(--surface2); border-radius: 14px; padding: 32px; border: 1px solid var(--border); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+    .form-label { font-size: 13px; font-weight: 600; color: var(--muted); }
+    .form-input {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 7px;
+      padding: 12px 14px; font-size: 15px; color: var(--white); font-family: 'Inter', sans-serif;
+      transition: border-color .2s; outline: none; width: 100%;
+    }
+    .form-input:focus { border-color: var(--accent); }
+    .form-input::placeholder { color: rgba(255,255,255,.25); }
+    .form-submit {
+      width: 100%; background: var(--accent); color: var(--text-dark); border: none;
+      padding: 15px; border-radius: 7px; font-size: 16px; font-weight: 700;
+      cursor: pointer; font-family: 'Inter', sans-serif; transition: filter .2s;
+    }
+    .form-submit:hover { filter: brightness(1.08); }
+
+    /* layout-light form overrides */
+    body.layout-light .form-input { background: #fff; border-color: rgba(0,0,0,.12); color: #1A1A2E; }
+    body.layout-light .form-input::placeholder { color: rgba(26,26,46,.3); }
+    body.layout-light .contact-form { background: #F0F2F5; border-color: rgba(0,0,0,.08); }
+    body.layout-light .form-label { color: rgba(26,26,46,.6); }
+
+    /* ── FOOTER ───────────────────────────────────────────────────── */
+    footer { background: var(--bg); border-top: 1px solid var(--border); padding: 44px 0 32px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 36px; }
+    .footer-brand-name { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+    .footer-brand-desc { font-size: 14px; color: var(--muted); line-height: 1.6; max-width: 280px; }
+    .footer-col-title { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .footer-links li a { font-size: 14px; color: var(--muted); transition: color .2s; }
+    .footer-links li a:hover { color: var(--white); }
+    .footer-bottom { border-top: 1px solid var(--border); padding-top: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+    .footer-copy { font-size: 13px; color: rgba(255,255,255,.3); }
+    .footer-license { font-size: 13px; color: rgba(255,255,255,.3); }
+
+    /* ── MOBILE BAR ───────────────────────────────────────────────── */
+    .mobile-bar {
+      display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 500;
+      background: var(--bg); border-top: 1px solid var(--border);
+      padding: 10px 16px 16px;
+    }
+    .mobile-bar-inner { display: flex; gap: 10px; }
+    .mobile-btn { flex: 1; padding: 13px; border-radius: 8px; font-size: 15px; font-weight: 700; text-align: center; cursor: pointer; }
+    .mobile-call { background: var(--accent); color: var(--text-dark); }
+    .mobile-text { background: var(--surface); border: 1px solid var(--border); color: var(--white); }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 16px; }
+      .nav-links { display: none; }
+      .hero-content { padding: 0 24px; }
+      .hero-btns .btn-outline { display: none; }
+      .services-grid { grid-template-columns: 1fr; }
+      .why-grid { grid-template-columns: 1fr; }
+      .why-img-wrap { height: 250px; }
+      .reviews-grid { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+      .mobile-bar { display: block; }
+      body { padding-bottom: 80px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- DEMO BAR -->
+<div class="demo-bar">
+  <div class="demo-bar-left">
+    <div class="demo-bar-dot"></div>
+    <span>LIVE PREVIEW — This is your future website</span>
+  </div>
+  <a class="demo-bar-cta" href="/start/?from=demo" target="_blank">Get This Site — $100</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img class="nav-logo-img" id="nav-logo-img" src="" alt="Logo" />
+    <div class="nav-logo-icon" id="nav-logo-icon">⚡</div>
+    <div class="nav-biz-text">
+      <div class="nav-biz-name" id="nav-biz-name">Central Electrician</div>
+      <div class="nav-biz-sub" id="nav-biz-sub">Licensed Electrician</div>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a class="nav-link" href="#services">Services</a>
+    <a class="nav-link" href="#reviews">Reviews</a>
+    <a class="nav-link" href="#contact">Contact</a>
+  </div>
+  <div class="nav-right">
+    <a class="nav-phone" id="nav-phone" href="#">(555) 000-0000</a>
+    <a class="nav-cta" href="#contact">Book Now</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg" id="hero-bg"></div>
+  <div class="hero-gradient"></div>
+  <div class="hero-gradient-bottom"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span id="hero-badge-icon">⚡</span>
+      <span id="hero-badge-text">Licensed & Insured</span>
+    </div>
+    <h1 id="hero-h1"><span class="accent" id="hero-accent-text">Electrical</span><br>You Can Trust</h1>
+    <p class="hero-sub" id="hero-sub">Serving <span id="hero-city">Houston, TX</span> since 2010. Licensed, insured, and available for same-day service. From panel upgrades to EV chargers — we handle it all.</p>
+    <div class="hero-btns">
+      <a class="btn-primary" id="hero-call" href="#">📞 Call Now</a>
+      <a class="btn-outline" href="#contact">Get Free Estimate</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="stat-val" id="stat-rating">4.9</div>
+        <div class="stat-lbl">Star Rating</div>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-val" id="stat-reviews">142</div>
+        <div class="stat-lbl">Google Reviews</div>
+      </div>
+      <div class="hero-stat">
+        <div class="stat-val">Same Day</div>
+        <div class="stat-lbl">Service Available</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST STRIP -->
+<div class="trust-strip" id="trust-strip">
+  <!-- injected by JS -->
+</div>
+
+<!-- SERVICES -->
+<section class="section services-section" id="services">
+  <div class="container">
+    <div class="section-label">What We Do</div>
+    <h2 class="section-h2">Our Services</h2>
+    <p class="section-sub" id="services-sub">Everything your home or business needs — done right, done safe, done fast.</p>
+    <div class="services-grid" id="services-grid">
+      <!-- injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="section why-section">
+  <div class="container">
+    <div class="why-grid">
+      <div class="why-img-wrap">
+        <img class="why-img" id="why-img" src="" alt="Team at work" loading="lazy" />
+      </div>
+      <div>
+        <div class="section-label">Why Choose Us</div>
+        <h2 class="section-h2" id="why-h2">The <span class="accent" id="why-accent-name">Best</span> In <span id="why-city">Houston</span></h2>
+        <p class="section-sub" id="why-sub">We've been serving this community for years. Our customers trust us because we show up on time, do the job right, and stand behind our work.</p>
+        <div class="why-points" id="why-points">
+          <!-- injected by JS -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews-section" id="reviews">
+  <div class="container">
+    <div class="reviews-header">
+      <div class="section-label">What Customers Say</div>
+      <h2 class="section-h2" style="color:#0D1117;">Trusted by <span id="reviews-count">142</span> Homeowners</h2>
+      <div class="reviews-avg">
+        <div class="reviews-avg-score" id="avg-score">4.9</div>
+        <div>
+          <div class="reviews-avg-stars" id="avg-stars">★★★★★</div>
+          <div class="reviews-avg-count" id="avg-count">Based on 142 Google Reviews</div>
+        </div>
+      </div>
+    </div>
+    <div class="reviews-grid" id="reviews-grid">
+      <!-- injected by JS -->
+    </div>
+    <div class="google-badge">
+      <svg class="google-g" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615Z" fill="#4285F4"/>
+        <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18Z" fill="#34A853"/>
+        <path d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332Z" fill="#FBBC05"/>
+        <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58Z" fill="#EA4335"/>
+      </svg>
+      Reviews verified by Google
+    </div>
+  </div>
+</section>
+
+<!-- SERVICE AREAS -->
+<section class="areas-section">
+  <div class="container">
+    <div class="section-label">Where We Serve</div>
+    <h2 class="section-h2">Service Areas</h2>
+    <div class="areas-grid" id="areas-grid">
+      <!-- injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section contact-section" id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="section-label">Get In Touch</div>
+        <h3 id="contact-h3">Ready to Get Started?</h3>
+        <p id="contact-p">Fill out the form and we'll get back to you within an hour. Or call us directly — we answer 7 days a week.</p>
+        <div class="contact-detail"><span class="contact-detail-icon">📞</span><a id="contact-phone" href="#">(555) 000-0000</a></div>
+        <div class="contact-detail"><span class="contact-detail-icon">📍</span><span id="contact-city">Houston, TX</span></div>
+        <div class="contact-detail"><span class="contact-detail-icon">🕐</span><span id="contact-hours">Mon–Sat 7am–7pm · Emergency 24/7</span></div>
+      </div>
+      <div class="contact-form">
+        <div class="form-row">
+          <div class="form-group"><label class="form-label">First Name</label><input class="form-input" type="text" placeholder="John" /></div>
+          <div class="form-group"><label class="form-label">Last Name</label><input class="form-input" type="text" placeholder="Smith" /></div>
+        </div>
+        <div class="form-group"><label class="form-label">Phone Number</label><input class="form-input" type="tel" placeholder="(555) 000-0000" /></div>
+        <div class="form-group"><label class="form-label">Service Needed</label>
+          <select class="form-input" id="contact-service-select"></select>
+        </div>
+        <div class="form-group"><label class="form-label">Brief Description</label><textarea class="form-input" rows="3" placeholder="Tell us a bit about what you need..."></textarea></div>
+        <button class="form-submit" onclick="alert('This is a demo — form not active')">Request Free Estimate →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name" id="footer-biz">Central Electrician</div>
+        <p class="footer-brand-desc" id="footer-desc">Licensed and insured electrical contractor serving Houston, TX and surrounding areas. Call us for fast, reliable service.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Services</div>
+        <ul class="footer-links" id="footer-services-links"></ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <ul class="footer-links">
+          <li><a id="footer-phone" href="#">(555) 000-0000</a></li>
+          <li><a id="footer-city-link" href="#contact">Houston, TX</a></li>
+          <li><a href="#contact">Get Free Estimate</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy" id="footer-copy">© 2025 Central Electrician. All rights reserved.</div>
+      <div class="footer-license" id="footer-license">Licensed & Insured · <span id="footer-city-inline">Houston, TX</span></div>
+    </div>
+  </div>
+</footer>
+
+<!-- MOBILE BAR -->
+<div class="mobile-bar">
+  <div class="mobile-bar-inner">
+    <a class="mobile-btn mobile-call" id="mobile-call" href="#">📞 Call Now</a>
+    <a class="mobile-btn mobile-text" href="#contact">Free Estimate</a>
+  </div>
+</div>
+
+<script>
+// ── TRADE CONFIGS ──────────────────────────────────────────────────────────────
+const TRADES = {
+  electrician: {
+    accent: '#F5C518', accentDark: '#C9A100',
+    icon: '⚡', label: 'Electrician', sub: 'Licensed Electrician',
+    heroAccentText: 'Electrical', heroH1: 'Electrical<br>You Can Trust',
+    heroSub: 'Fast, licensed electrical work for homes and businesses. Panel upgrades, EV chargers, rewiring, and emergency repairs.',
+    badge: 'Licensed & Insured',
+    heroBg: 'https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=1400&q=80&fit=crop',
+    whyImg: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&fit=crop',
+    contactHours: 'Mon–Sat 7am–7pm · Emergency 24/7',
+    services: [
+      { icon: '⚡', name: 'Panel Upgrades', desc: '100A to 200A upgrades, subpanel installs. Required before most home sales.', tag: 'Most Requested' },
+      { icon: '🚗', name: 'EV Charger Installation', desc: 'Level 2 home chargers for all EV makes. Permit pulled, inspection passed.', tag: 'Growing Fast' },
+      { icon: '💡', name: 'Lighting & Fixtures', desc: 'Recessed lighting, ceiling fans, dimmer switches, outdoor lighting.', tag: '' },
+      { icon: '🔌', name: 'Outlet & Switch Repair', desc: 'Dead outlets, GFCI/AFCI installation, USB outlets, smart switches.', tag: '' },
+      { icon: '🏠', name: 'Whole-Home Rewiring', desc: 'Complete rewire for older homes with aluminum or knob-and-tube wiring.', tag: '' },
+      { icon: '🚨', name: 'Emergency Electrical', desc: 'No power? Tripping breakers? We respond same-day, 7 days a week.', tag: '24/7' },
+    ],
+    trustBadges: ['⚡ Master Electrician', '🔒 Licensed & Insured', '🚗 EV Certified', '⏱ Same-Day Available'],
+    whyPoints: [
+      { icon: '🏆', title: 'Master Electrician on Every Job', desc: 'Not trainees. Every job is run by a licensed master electrician — code compliance guaranteed.' },
+      { icon: '📋', title: 'Permits & Inspections Handled', desc: 'We pull every permit. You don\'t have to chase the city. Inspections passed or we fix it free.' },
+      { icon: '💰', title: 'Upfront Flat-Rate Pricing', desc: 'We quote before we start. No surprises on the bill. Price locked from the first call.' },
+    ],
+    defaultAreas: ['Heights', 'Midtown', 'Montrose', 'The Woodlands', 'Katy', 'Sugar Land', 'Pearland', 'Spring'],
+    defaultReviews: [
+      { stars: 5, text: 'Called at 8am about a breaker issue and they were at my house by noon. Fixed everything in under an hour. Very professional, explained the problem clearly.', name: 'Marcus T.', time: '2 weeks ago', avatarColor: '#1D5FA8' },
+      { stars: 5, text: 'Had them install a Level 2 EV charger in the garage. They handled the permit, passed inspection first try, and the install was clean. Highly recommend.', name: 'Sarah L.', time: '1 month ago', avatarColor: '#1A8A4A' },
+      { stars: 5, text: 'Panel upgrade went smoothly. They coordinated the power shutoff with the utility and had us back on in the same day. Worth every penny.', name: 'David K.', time: '3 weeks ago', avatarColor: '#8B2FC9' },
+    ],
+    defaultLayout: 'dark',
+    layouts: [
+      { id: 'dark', name: 'Professional Dark', desc: 'Dark background with bold accent color — projects confidence, authority, and premium quality' },
+      { id: 'light', name: 'Clean Light', desc: 'White background, airy and modern — approachable, welcoming, great for residential focus' },
+    ],
+  },
+  plumber: {
+    accent: '#2D6BE4', accentDark: '#1A50BF',
+    icon: '🔧', label: 'Plumber', sub: 'Licensed Plumber',
+    heroAccentText: 'Plumbing', heroH1: 'Plumbing<br>Done Right',
+    heroSub: 'Fast leak repairs, drain clearing, water heaters, and full remodels. Licensed, insured, same-day service available.',
+    badge: 'Licensed Plumber',
+    heroBg: 'https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=1400&q=80&fit=crop',
+    whyImg: 'https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=800&q=80&fit=crop',
+    contactHours: 'Mon–Sat 7am–8pm · Emergency 24/7',
+    services: [
+      { icon: '💧', name: 'Leak Detection & Repair', desc: 'Slab leaks, pipe bursts, hidden leaks found with camera equipment, no guessing.', tag: 'Emergency Ready' },
+      { icon: '🚿', name: 'Drain Cleaning', desc: 'Kitchen, bathroom, and main sewer line clogs cleared with hydro-jetting.', tag: 'Same Day' },
+      { icon: '🔥', name: 'Water Heater Services', desc: 'Tank and tankless install and repair. We carry units in the truck.', tag: 'Most Requested' },
+      { icon: '🏠', name: 'Bathroom Remodeling', desc: 'Full bathroom rough-in, toilet, shower, tub, and fixture installs.', tag: '' },
+      { icon: '🧰', name: 'Fixture Repair & Replace', desc: 'Faucets, toilets, garbage disposals, shut-off valves — all brands.', tag: '' },
+      { icon: '🌊', name: 'Sewer Line Service', desc: 'Camera inspection, rooter service, trenchless pipe replacement.', tag: '' },
+    ],
+    trustBadges: ['💧 Licensed Plumber', '🔒 Bonded & Insured', '📸 Camera Diagnostics', '⏱ Same-Day Available'],
+    whyPoints: [
+      { icon: '📷', title: 'Camera Diagnosis — No Guessing', desc: 'We run a camera before we dig. You see exactly what\'s wrong before we quote anything.' },
+      { icon: '🏆', title: 'Licensed & Bonded Master Plumber', desc: 'Every job is run by a licensed master plumber. Inspections passed, permits handled.' },
+      { icon: '💰', title: 'Flat-Rate Pricing Upfront', desc: 'You know the price before we start. No bait-and-switch, no hourly surprises.' },
+    ],
+    defaultAreas: ['Midtown', 'River Oaks', 'Bellaire', 'Pasadena', 'Baytown', 'League City', 'Friendswood', 'Clear Lake'],
+    defaultReviews: [
+      { stars: 5, text: 'Slab leak under the kitchen. They found it with a camera in 20 minutes and had it fixed by end of day. Other companies quoted me $3,000+. These guys were half that.', name: 'Jennifer M.', time: '1 week ago', avatarColor: '#C4382A' },
+      { stars: 5, text: 'Water heater died on a Friday night. Called at 7pm, they were here Saturday morning with a unit in the truck. Back to hot water by noon. Lifesavers.', name: 'Carlos R.', time: '3 weeks ago', avatarColor: '#1A8A4A' },
+      { stars: 5, text: 'Drain hydrojetting removed a clog nothing else would budge. They also did a camera scope and showed me the pipe condition. Very transparent.', name: 'Rachel H.', time: '2 months ago', avatarColor: '#1D5FA8' },
+    ],
+    defaultLayout: 'dark',
+    layouts: [
+      { id: 'dark', name: 'Professional Dark', desc: 'Dark and bold — great for emergency-focused plumbers who want to project reliability' },
+      { id: 'light', name: 'Clean Light', desc: 'Light and clean — works well for residential remodel and renovation focused businesses' },
+    ],
+  },
+  handyman: {
+    accent: '#22c55e', accentDark: '#16a34a',
+    icon: '🛠️', label: 'Handyman', sub: 'Professional Handyman',
+    heroAccentText: 'Handyman', heroH1: 'Home Repairs<br>Done Right',
+    heroSub: 'No job too small. Drywall, doors, decks, painting, furniture assembly, and everything in between. Reliable, insured, and affordable.',
+    badge: 'Fully Insured',
+    heroBg: 'https://images.unsplash.com/photo-1588854337115-1c67d9247e4d?w=1400&q=80&fit=crop',
+    whyImg: 'https://images.unsplash.com/photo-1504148455328-c376907d081c?w=800&q=80&fit=crop',
+    contactHours: 'Mon–Sat 8am–6pm',
+    services: [
+      { icon: '🏠', name: 'Drywall Repair', desc: 'Holes, cracks, water damage, and full panel replacements — smooth finish guaranteed.', tag: 'Most Requested' },
+      { icon: '🚪', name: 'Door & Window Service', desc: 'Sticking doors, broken hinges, new locks, window sash repair and weatherstripping.', tag: '' },
+      { icon: '🪚', name: 'Deck Repair & Building', desc: 'Board replacement, railing repair, full deck builds with permit.', tag: '' },
+      { icon: '🎨', name: 'Interior Painting', desc: 'Walls, ceilings, trim, doors. Clean, meticulous, no overspray.', tag: '' },
+      { icon: '📦', name: 'Furniture Assembly', desc: 'IKEA, Wayfair, Amazon — we assemble it all quickly and correctly.', tag: '' },
+      { icon: '🔨', name: 'Odd Jobs & Punch Lists', desc: 'Got a list? We work through it. Odd jobs, fixes, mounting, and installs.', tag: '' },
+    ],
+    trustBadges: ['🛠️ Fully Insured', '⭐ 5-Star Rated', '📋 Free Estimates', '⏱ Same-Week Available'],
+    whyPoints: [
+      { icon: '📋', title: 'One Call, Whole List Done', desc: 'We don\'t just fix one thing. Bring your punch list — we work through it all in one visit.' },
+      { icon: '🤝', title: 'We Show Up On Time', desc: 'No 4-hour windows. We give you a 30-minute arrival heads-up and we stick to it.' },
+      { icon: '🎨', title: 'Clean, Careful Work', desc: 'We protect your floors and furniture. We clean up everything before we leave.' },
+    ],
+    defaultAreas: ['Memorial', 'Galleria', 'West University', 'Meyerland', 'Braeswood', 'Stafford', 'Missouri City', 'Cypress'],
+    defaultReviews: [
+      { stars: 5, text: 'Fixed 3 drywall holes, rehung a door that wouldn\'t close right, and installed two ceiling fans. All in one visit, less than 4 hours. Will definitely use again.', name: 'Amy G.', time: '2 weeks ago', avatarColor: '#C4382A' },
+      { stars: 5, text: 'Finally found a handyman who actually shows up when they say. Arrived in the window, finished faster than quoted. My deck looks brand new.', name: 'Thomas P.', time: '1 month ago', avatarColor: '#8B2FC9' },
+      { stars: 5, text: 'Had a long list from my landlord inspection. He knocked everything out in half a day. Reasonable price, great work. Highly recommended.', name: 'Maria S.', time: '3 weeks ago', avatarColor: '#1A8A4A' },
+    ],
+    defaultLayout: 'light',
+    layouts: [
+      { id: 'light', name: 'Clean Light', desc: 'Friendly, approachable, and clean — perfect for residential handyman businesses' },
+      { id: 'dark', name: 'Professional Dark', desc: 'Bold and confident — great for larger handyman operations or commercial work' },
+    ],
+  },
+  roofer: {
+    accent: '#E47C2D', accentDark: '#C06020',
+    icon: '🏠', label: 'Roofer', sub: 'Licensed Roofing Contractor',
+    heroAccentText: 'Roofing', heroH1: 'Roofing That<br>Lasts Decades',
+    heroSub: 'Roof repairs, full replacements, insurance claims, and storm damage. Licensed contractor. Free inspection with every estimate.',
+    badge: 'Licensed Contractor',
+    heroBg: 'https://images.unsplash.com/photo-1632889369600-44e648e23f48?w=1400&q=80&fit=crop',
+    whyImg: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80&fit=crop',
+    contactHours: 'Mon–Sat 7am–6pm · Emergency Tarping 24/7',
+    services: [
+      { icon: '🔍', name: 'Free Roof Inspection', desc: 'Full inspection with photos and written report. No charge, no pressure.', tag: 'Free' },
+      { icon: '🏠', name: 'Roof Replacement', desc: 'Full tear-off and replacement. Shingle, metal, and flat roofing systems.', tag: 'Most Requested' },
+      { icon: '🔧', name: 'Roof Repair', desc: 'Missing shingles, flashing, valleys, and leak points — fixed fast.', tag: '' },
+      { icon: '⛈️', name: 'Storm Damage Claims', desc: 'We work directly with your insurance adjuster. Maximize your claim.', tag: '' },
+      { icon: '🛡️', name: 'Gutters & Drainage', desc: 'Gutter install, cleaning, seamless aluminum, and downspout extensions.', tag: '' },
+      { icon: '🏢', name: 'Commercial Roofing', desc: 'TPO, EPDM, and modified bitumen flat roofing for commercial buildings.', tag: '' },
+    ],
+    trustBadges: ['🏠 Licensed Contractor', '🛡️ 10-Year Workmanship Warranty', '⛈️ Insurance Claims Help', '🔍 Free Inspection'],
+    whyPoints: [
+      { icon: '📋', title: 'Free Inspection & Written Estimate', desc: 'We inspect the whole roof, take photos, and give you a line-item quote — at no cost.' },
+      { icon: '⛈️', title: 'Insurance Claim Specialists', desc: 'We\'ve helped hundreds of homeowners maximize storm damage claims. We speak the insurance language.' },
+      { icon: '🛡️', title: '10-Year Workmanship Warranty', desc: 'Our work is backed by a decade of workmanship guarantee — in writing, transferable if you sell.' },
+    ],
+    defaultAreas: ['The Woodlands', 'Humble', 'Kingwood', 'Conroe', 'Spring', 'Tomball', 'Cypress', 'Katy'],
+    defaultReviews: [
+      { stars: 5, text: 'They found hail damage I didn\'t even know I had, filed the insurance claim for me, and had a new roof on in 2 days. Insurance paid for nearly everything.', name: 'Brad W.', time: '1 month ago', avatarColor: '#C4382A' },
+      { stars: 5, text: 'Three other roofers said I needed a full replacement. These guys repaired the actual problem for a fraction of the cost. Honest company.', name: 'Linda C.', time: '3 weeks ago', avatarColor: '#1A8A4A' },
+      { stars: 5, text: 'Had a leak the night before heavy rains. They came out, tarped it that evening, and replaced the flashing section the next day. Saved my interior.', name: 'James T.', time: '2 months ago', avatarColor: '#1D5FA8' },
+    ],
+    defaultLayout: 'dark',
+    layouts: [
+      { id: 'dark', name: 'Storm Ready Dark', desc: 'Dark and authoritative — excellent for storm damage and insurance claim focused roofers' },
+      { id: 'light', name: 'Trust Builder Light', desc: 'Clean and clear — builds trust for inspection-first, family-owned roofing companies' },
+    ],
+  },
+};
+
+// ── PARAM PARSING ──────────────────────────────────────────────────────────────
+const params = new URLSearchParams(location.search);
+const tradeKey  = (params.get('trade') || 'electrician').toLowerCase().replace(/s$/, '');
+const bizName   = params.get('biz')    || '';
+const cityParam = params.get('city')   || '';
+const phone     = params.get('phone')  || '';
+const ratingP   = parseFloat(params.get('rating') || '4.9');
+const reviewsP  = parseInt(params.get('reviews')  || '0');
+const accentP   = params.get('accent') ? decodeURIComponent(params.get('accent')) : '';
+const logoUrl   = params.get('logo')   ? decodeURIComponent(params.get('logo'))   : '';
+const layoutP   = params.get('layout') || '';
+const servicesP = params.get('services') ? decodeURIComponent(params.get('services')).split('|').filter(Boolean) : [];
+const extraSvcs = params.get('extra')  ? decodeURIComponent(params.get('extra')).split('|').filter(Boolean) : [];
+
+// ── APPLY CONFIGS ──────────────────────────────────────────────────────────────
+const trade   = TRADES[tradeKey] || TRADES.electrician;
+const accent  = accentP || trade.accent;
+const layout  = layoutP || trade.defaultLayout;
+const bizDisp = bizName || (cityParam ? cityParam + ' ' + trade.label : trade.label + ' Co.');
+const city    = cityParam || 'Houston, TX';
+const fmtPhone = phone ? formatPhone(phone) : '(555) 000-0000';
+const rating  = ratingP || 4.9;
+const revCount = reviewsP || trade.defaultReviews.length;
+
+function formatPhone(p) {
+  const d = p.replace(/\D/g, '');
+  if (d.length === 10) return `(${d.slice(0,3)}) ${d.slice(3,6)}-${d.slice(6)}`;
+  if (d.length === 11) return `(${d.slice(1,4)}) ${d.slice(4,7)}-${d.slice(7)}`;
+  return p;
+}
+
+// Apply accent CSS var
+document.documentElement.style.setProperty('--accent', accent);
+document.documentElement.style.setProperty('--accent-dark', trade.accentDark);
+
+// Apply layout
+if (layout === 'light') document.body.classList.add('layout-light');
+
+// Logo
+if (logoUrl) {
+  const img = document.getElementById('nav-logo-img');
+  img.src = logoUrl;
+  img.classList.add('visible');
+  document.getElementById('nav-logo-icon').style.display = 'none';
+}
+
+// Trade icon
+document.getElementById('nav-logo-icon').textContent = trade.icon;
+
+// Business name everywhere
+document.getElementById('page-title').textContent = bizDisp + ' — ' + city;
+document.getElementById('nav-biz-name').textContent = bizDisp;
+document.getElementById('nav-biz-sub').textContent = trade.sub;
+document.getElementById('footer-biz').textContent = bizDisp;
+document.getElementById('footer-desc').textContent = `Licensed and insured ${trade.label.toLowerCase()} serving ${city} and surrounding areas.`;
+document.getElementById('footer-copy').textContent = `© ${new Date().getFullYear()} ${bizDisp}. All rights reserved.`;
+document.getElementById('footer-license').innerHTML = `Licensed & Insured · <span id="footer-city-inline">${city}</span>`;
+
+// Phone
+const phoneHref = 'tel:+1' + (phone.replace(/\D/g, '') || '5550000000');
+document.getElementById('nav-phone').textContent = fmtPhone;
+document.getElementById('nav-phone').href = phoneHref;
+document.getElementById('hero-call').textContent = '📞 ' + fmtPhone;
+document.getElementById('hero-call').href = phoneHref;
+document.getElementById('contact-phone').textContent = fmtPhone;
+document.getElementById('contact-phone').href = phoneHref;
+document.getElementById('footer-phone').textContent = fmtPhone;
+document.getElementById('footer-phone').href = phoneHref;
+document.getElementById('mobile-call').textContent = '📞 ' + fmtPhone;
+document.getElementById('mobile-call').href = phoneHref;
+
+// City
+document.querySelectorAll('#hero-city, #why-city, #contact-city, #footer-city-link').forEach(el => el.textContent = city);
+
+// Hero
+document.getElementById('hero-badge-icon').textContent = trade.icon;
+document.getElementById('hero-badge-text').textContent = trade.badge;
+document.getElementById('hero-h1').innerHTML = trade.heroH1.replace('<br>', '<br>');
+document.querySelector('#hero-h1 .accent') && (document.querySelector('#hero-h1 .accent').style.color = accent);
+document.getElementById('hero-sub').innerHTML = trade.heroSub.replace('Houston, TX', city);
+document.getElementById('hero-bg').style.backgroundImage = `url('${trade.heroBg}')`;
+
+// Rating / reviews
+document.getElementById('stat-rating').textContent = rating.toFixed(1);
+document.getElementById('stat-reviews').textContent = reviewsP > 0 ? reviewsP : '100+';
+document.getElementById('reviews-count').textContent = reviewsP > 0 ? reviewsP : '100+';
+document.getElementById('avg-score').textContent = rating.toFixed(1);
+const stars = Math.round(rating);
+document.getElementById('avg-stars').textContent = '★'.repeat(stars) + '☆'.repeat(5 - stars);
+document.getElementById('avg-count').textContent = `Based on ${reviewsP > 0 ? reviewsP : '100+'} Google Reviews`;
+
+// Why image
+document.getElementById('why-img').src = trade.whyImg;
+document.getElementById('why-img').alt = `${bizDisp} team at work`;
+document.getElementById('why-h2').innerHTML = `The <span class="accent" style="color:${accent}">${trade.label}</span> ${city} Trusts`;
+document.getElementById('why-sub').textContent = `We've served the ${city} community for years — showing up on time, doing the job right, and standing behind every project.`;
+
+// Contact
+document.getElementById('contact-h3').textContent = 'Ready to Get Started?';
+document.getElementById('contact-p').textContent = `Fill out the form and we'll get back to you within the hour. Or call us at ${fmtPhone} — we answer 7 days a week.`;
+document.getElementById('contact-hours').textContent = trade.contactHours;
+
+// Trust strip
+const trustHtml = trade.trustBadges.map(b => `<div class="trust-item"><span class="trust-icon">${b.split(' ')[0]}</span>${b.split(' ').slice(1).join(' ')}</div>`).join('');
+document.getElementById('trust-strip').innerHTML = trustHtml;
+
+// Services
+const activeSvcs = servicesP.length > 0
+  ? trade.services.filter(s => servicesP.includes(s.name))
+  : trade.services;
+
+const allSvcs = [
+  ...activeSvcs,
+  ...extraSvcs.map(name => ({ icon: '✅', name, desc: '', tag: 'Custom' })),
+];
+
+const grid = document.getElementById('services-grid');
+grid.innerHTML = allSvcs.map(s => `
+  <div class="service-card">
+    <div class="service-card-accent" style="background:${accent}"></div>
+    ${s.tag ? `<div class="service-tag">${s.tag}</div>` : '<div style="margin-top:14px"></div>'}
+    <div class="service-icon-wrap">${s.icon}</div>
+    <div class="service-name">${s.name}</div>
+    <div class="service-desc">${s.desc}</div>
+  </div>
+`).join('');
+
+// Service select in form
+document.getElementById('contact-service-select').innerHTML = [
+  '<option value="">Select a service…</option>',
+  ...allSvcs.map(s => `<option>${s.name}</option>`)
+].join('');
+
+// Footer services
+document.getElementById('footer-services-links').innerHTML = allSvcs.slice(0, 4).map(s => `<li><a href="#services">${s.name}</a></li>`).join('');
+
+// Why points
+document.getElementById('why-points').innerHTML = trade.whyPoints.map(p => `
+  <div class="why-point">
+    <div class="why-point-icon">${p.icon}</div>
+    <div>
+      <div class="why-point-title">${p.title}</div>
+      <div class="why-point-desc">${p.desc}</div>
+    </div>
+  </div>
+`).join('');
+
+// Reviews
+const reviewColors = ['#1D5FA8', '#1A8A4A', '#8B2FC9', '#C4382A', '#D97706'];
+document.getElementById('reviews-grid').innerHTML = trade.defaultReviews.map((r, i) => `
+  <div class="review-card">
+    <div class="review-stars">${'★'.repeat(r.stars)}</div>
+    <div class="review-text">"${r.text}"</div>
+    <div class="reviewer">
+      <div class="reviewer-av" style="background:${r.avatarColor}">${r.name[0]}</div>
+      <div>
+        <div class="reviewer-name">${r.name}</div>
+        <div class="reviewer-time">${r.time}</div>
+      </div>
+    </div>
+  </div>
+`).join('');
+
+// Areas
+const baseCity = city.split(',')[0].trim();
+document.getElementById('areas-grid').innerHTML = trade.defaultAreas.map(a => `<div class="area-pill">${a}</div>`).join('') + `<div class="area-pill" style="border-color:${accent};color:${accent}">${baseCity} (All Areas)</div>`;
+
+// ── GOOGLE PLACES API ENRICHMENT ───────────────────────────────────────────────
+const placeId = params.get('place_id');
+if (placeId) {
+  fetch(`/.netlify/functions/places?place_id=${encodeURIComponent(placeId)}`)
+    .then(r => r.json())
+    .then(data => {
+      if (data.unavailable) return;
+      if (data.phone) {
+        const fmt = formatPhone(data.phone.replace(/\D/g,''));
+        const href = 'tel:+1' + data.phone.replace(/\D/g,'');
+        ['nav-phone','contact-phone','footer-phone','hero-call','mobile-call'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) { el.textContent = (id === 'hero-call' || id === 'mobile-call' ? '📞 ' : '') + fmt; el.href = href; }
+        });
+      }
+      if (data.rating) {
+        const r = parseFloat(data.rating);
+        document.getElementById('stat-rating').textContent = r.toFixed(1);
+        document.getElementById('avg-score').textContent = r.toFixed(1);
+        const s = Math.round(r);
+        document.getElementById('avg-stars').textContent = '★'.repeat(s) + '☆'.repeat(5-s);
+      }
+      if (data.reviewCount) {
+        const rc = data.reviewCount;
+        document.getElementById('stat-reviews').textContent = rc;
+        document.getElementById('reviews-count').textContent = rc;
+        document.getElementById('avg-count').textContent = `Based on ${rc} Google Reviews`;
+      }
+      if (data.reviews && data.reviews.length > 0) {
+        const mapped = data.reviews.slice(0, 3).map((rv, i) => ({
+          stars: rv.rating || 5,
+          text: rv.text || 'Excellent service, highly recommend!',
+          name: rv.author_name || 'Google Reviewer',
+          time: rv.relative_time_description || 'recently',
+          avatarColor: reviewColors[i % reviewColors.length],
+        }));
+        document.getElementById('reviews-grid').innerHTML = mapped.map(r => `
+          <div class="review-card">
+            <div class="review-stars">${'★'.repeat(r.stars)}</div>
+            <div class="review-text">"${r.text}"</div>
+            <div class="reviewer">
+              <div class="reviewer-av" style="background:${r.avatarColor}">${r.name[0]}</div>
+              <div>
+                <div class="reviewer-name">${r.name}</div>
+                <div class="reviewer-time">${r.time}</div>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+      if (data.photoUrl) {
+        document.getElementById('hero-bg').style.backgroundImage = `url('${data.photoUrl}')`;
+        // Extract dominant color from photo
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          canvas.width = 50; canvas.height = 50;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, 50, 50);
+          const d = ctx.getImageData(0, 0, 50, 50).data;
+          let r=0, g=0, b=0, count=0;
+          for (let i=0; i<d.length; i+=4) {
+            const lum = (d[i]*0.299 + d[i+1]*0.587 + d[i+2]*0.114);
+            if (lum > 30 && lum < 220 && d[i+3] > 128) {
+              r += d[i]; g += d[i+1]; b += d[i+2]; count++;
+            }
+          }
+          if (count > 0 && !accentP) {
+            const hex = '#' + [r,g,b].map(v => Math.round(v/count).toString(16).padStart(2,'0')).join('');
+            document.documentElement.style.setProperty('--accent', hex);
+          }
+        };
+        img.src = data.photoUrl;
+      }
+    })
+    .catch(() => {}); // graceful fallback — demo still looks great
+}
+</script>
+</body>
+</html>

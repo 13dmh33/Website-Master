@@ -248,6 +248,34 @@
           <label class="field-label">Number of Google Reviews</label>
           <input class="field-input" id="f-reviews" type="text" placeholder="142" />
         </div>
+
+        <details style="margin-top:8px">
+          <summary style="font-size:13px;color:var(--muted);cursor:pointer;user-select:none;padding:6px 0">▸ More options (founded year, availability, hours)</summary>
+          <div style="padding-top:14px">
+            <div class="field-group">
+              <label class="field-label">Year Founded (optional)</label>
+              <input class="field-input" id="f-since" type="text" placeholder="e.g. 2015" maxlength="4" />
+              <div class="field-hint">Shows "Serving [city] since 2015" on your site</div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Availability Badge</label>
+              <select class="field-input" id="f-avail">
+                <option value="">Default for trade</option>
+                <option value="Same Day">Same Day</option>
+                <option value="Same Week">Same Week</option>
+                <option value="24/7 Emergency">24/7 Emergency</option>
+                <option value="By Appointment">By Appointment</option>
+                <option value="Free Inspection">Free Inspection</option>
+              </select>
+              <div class="field-hint">Shown as the third stat on your hero section</div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Business Hours</label>
+              <input class="field-input" id="f-hours" type="text" placeholder="Mon–Sat 7am–7pm · Emergency 24/7" />
+              <div class="field-hint">Shown in the contact section of your site</div>
+            </div>
+          </div>
+        </details>
       </div>
 
       <!-- STEP 3 -->
@@ -365,11 +393,12 @@ const TRADES = {
   roofer:{accent:'#E47C2D',svcs:[{i:'🔍',n:'Free Roof Inspection'},{i:'🏠',n:'Roof Replacement'},{i:'🔧',n:'Roof Repair'},{i:'⛈️',n:'Storm Damage Claims'},{i:'🛡️',n:'Gutters & Drainage'},{i:'🏢',n:'Commercial Roofing'}],layouts:[{id:'dark',nm:'Storm Ready Dark',desc:'Dark and authoritative — great for storm damage and insurance claim specialists.'},{id:'light',nm:'Trust Builder Light',desc:'Clean and clear — builds trust for inspection-first, family-owned roofers.'}]},
 };
 
-const s = { step:1, trade:'', biz:'', city:'', phone:'', rating:'', reviews:'', placeId:'', accent:'', layout:'dark', logo:'', svcs:[], extra:[] };
+const s = { step:1, trade:'', biz:'', city:'', phone:'', rating:'', reviews:'', placeId:'', accent:'', layout:'dark', logo:'', svcs:[], extra:[], since:'', avail:'', hours:'' };
 let debounce = null;
 
 function syncFields(){
   s.biz=v('f-biz'); s.city=v('f-city'); s.phone=v('f-phone'); s.rating=v('f-rating'); s.reviews=v('f-reviews');
+  s.since=v('f-since'); s.avail=document.getElementById('f-avail').value; s.hours=v('f-hours');
 }
 function v(id){ return document.getElementById(id).value.trim(); }
 
@@ -476,9 +505,10 @@ async function pickCandidate(i){
   }catch(e){}
 }
 
-['f-biz','f-city','f-phone','f-rating','f-reviews'].forEach(id=>{
+['f-biz','f-city','f-phone','f-rating','f-reviews','f-since','f-hours'].forEach(id=>{
   document.getElementById(id).addEventListener('input',()=>{syncFields();updateNext();updatePreview();});
 });
+document.getElementById('f-avail').addEventListener('change',()=>{syncFields();updatePreview();});
 
 // step 3
 function buildStep3(){
@@ -611,20 +641,25 @@ function extractColor(dataUrl,cb){
 }
 
 // preview
+function clampRating(v){const n=parseFloat(v);return(isNaN(n)||n<1)?'':Math.min(5,Math.max(1,Math.round(n*10)/10).toFixed(1));}
+function clampReviews(v){const n=parseInt(v);return(isNaN(n)||n<0)?'':Math.min(50000,n).toString();}
 function buildUrl(){
   const p=new URLSearchParams();
   p.set('trade',s.trade||'electrician');
   if(s.biz)p.set('biz',s.biz);
   if(s.city)p.set('city',s.city);
   if(s.phone)p.set('phone',s.phone.replace(/\D/g,''));
-  if(s.rating)p.set('rating',s.rating);
-  if(s.reviews)p.set('reviews',s.reviews);
+  const rv=clampRating(s.rating); if(rv)p.set('rating',rv);
+  const rc=clampReviews(s.reviews); if(rc)p.set('reviews',rc);
   if(s.accent)p.set('accent',encodeURIComponent(s.accent));
   if(s.layout)p.set('layout',s.layout);
   if(s.placeId)p.set('place_id',s.placeId);
   const td=TRADES[s.trade];
   if(td&&s.svcs.length!==td.svcs.length)p.set('services',encodeURIComponent(s.svcs.join('|')));
   if(s.extra.length)p.set('extra',encodeURIComponent(s.extra.join('|')));
+  if(s.since)p.set('since',s.since);
+  if(s.avail)p.set('avail',encodeURIComponent(s.avail));
+  if(s.hours)p.set('hours',encodeURIComponent(s.hours));
   return '/demos/?'+p.toString();
 }
 

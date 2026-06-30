@@ -304,7 +304,7 @@
     <div class="demo-bar-dot"></div>
     <span>LIVE PREVIEW — This is your future website</span>
   </div>
-  <a class="demo-bar-cta" href="/start/?from=demo" target="_blank">Get This Site — $100</a>
+  <a class="demo-bar-cta" id="demo-bar-cta" href="/checkout/" target="_blank">Get This Site — $100</a>
 </div>
 
 <!-- NAV -->
@@ -354,7 +354,7 @@
         <div class="stat-lbl">Google Reviews</div>
       </div>
       <div class="hero-stat">
-        <div class="stat-val">Same Day</div>
+        <div class="stat-val" id="stat-avail">Same Day</div>
         <div class="stat-lbl">Service Available</div>
       </div>
     </div>
@@ -402,7 +402,7 @@
   <div class="container">
     <div class="reviews-header">
       <div class="section-label">What Customers Say</div>
-      <h2 class="section-h2" style="color:#0D1117;">Trusted by <span id="reviews-count">142</span> Homeowners</h2>
+      <h2 class="section-h2" style="color:#0D1117;">What Our Customers Say</h2>
       <div class="reviews-avg">
         <div class="reviews-avg-score" id="avg-score">4.9</div>
         <div>
@@ -459,7 +459,8 @@
           <select class="form-input" id="contact-service-select"></select>
         </div>
         <div class="form-group"><label class="form-label">Brief Description</label><textarea class="form-input" rows="3" placeholder="Tell us a bit about what you need..."></textarea></div>
-        <button class="form-submit" onclick="alert('This is a demo — form not active')">Request Free Estimate →</button>
+        <button class="form-submit" id="demo-form-btn" onclick="handleDemoForm(this)">Request Free Estimate →</button>
+        <div id="demo-form-msg" style="display:none;margin-top:12px;padding:12px 16px;background:rgba(26,138,74,.12);border:1px solid rgba(26,138,74,.3);border-radius:8px;font-size:13px;color:#4ade80;line-height:1.5">✓ Thanks! On your live site, this form sends leads straight to your inbox — plus an instant text to the customer.</div>
       </div>
     </div>
   </div>
@@ -529,9 +530,9 @@ const TRADES = {
     ],
     defaultAreas: ['Heights', 'Midtown', 'Montrose', 'The Woodlands', 'Katy', 'Sugar Land', 'Pearland', 'Spring'],
     defaultReviews: [
-      { stars: 5, text: 'Called at 8am about a breaker issue and they were at my house by noon. Fixed everything in under an hour. Very professional, explained the problem clearly.', name: 'Marcus T.', time: '2 weeks ago', avatarColor: '#1D5FA8' },
-      { stars: 5, text: 'Had them install a Level 2 EV charger in the garage. They handled the permit, passed inspection first try, and the install was clean. Highly recommend.', name: 'Sarah L.', time: '1 month ago', avatarColor: '#1A8A4A' },
-      { stars: 5, text: 'Panel upgrade went smoothly. They coordinated the power shutoff with the utility and had us back on in the same day. Worth every penny.', name: 'David K.', time: '3 weeks ago', avatarColor: '#8B2FC9' },
+      { stars: 5, text: 'Called at 8am about a breaker issue and they were at my house by noon. Fixed everything in under an hour. Very professional, explained the problem clearly.', name: 'Marcus T.', daysAgo: 14, avatarColor: '#1D5FA8' },
+      { stars: 4, text: 'Had them install a Level 2 EV charger in the garage. They handled the permit, passed inspection first try, and the install was clean. Would use again.', name: 'Sarah L.', daysAgo: 38, avatarColor: '#1A8A4A' },
+      { stars: 5, text: 'Panel upgrade went smoothly. They coordinated the power shutoff with the utility and had us back on in the same day. Worth every penny.', name: 'David K.', daysAgo: 21, avatarColor: '#8B2FC9' },
     ],
     defaultLayout: 'dark',
     layouts: [
@@ -564,9 +565,9 @@ const TRADES = {
     ],
     defaultAreas: ['Midtown', 'River Oaks', 'Bellaire', 'Pasadena', 'Baytown', 'League City', 'Friendswood', 'Clear Lake'],
     defaultReviews: [
-      { stars: 5, text: 'Slab leak under the kitchen. They found it with a camera in 20 minutes and had it fixed by end of day. Other companies quoted me $3,000+. These guys were half that.', name: 'Jennifer M.', time: '1 week ago', avatarColor: '#C4382A' },
-      { stars: 5, text: 'Water heater died on a Friday night. Called at 7pm, they were here Saturday morning with a unit in the truck. Back to hot water by noon. Lifesavers.', name: 'Carlos R.', time: '3 weeks ago', avatarColor: '#1A8A4A' },
-      { stars: 5, text: 'Drain hydrojetting removed a clog nothing else would budge. They also did a camera scope and showed me the pipe condition. Very transparent.', name: 'Rachel H.', time: '2 months ago', avatarColor: '#1D5FA8' },
+      { stars: 5, text: 'Slab leak under the kitchen. They found it with a camera in 20 minutes and had it fixed by end of day. Other companies quoted me $3,000+. These guys were half that.', name: 'Jennifer M.', daysAgo: 9, avatarColor: '#C4382A' },
+      { stars: 4, text: 'Water heater died on a Friday night. Called at 7pm, they were here Saturday morning with a unit in the truck. Back to hot water by noon. Response time was great.', name: 'Carlos R.', daysAgo: 24, avatarColor: '#1A8A4A' },
+      { stars: 5, text: 'Drain hydrojetting removed a clog nothing else would budge. They also did a camera scope and showed me the pipe condition. Very transparent.', name: 'Rachel H.', daysAgo: 52, avatarColor: '#1D5FA8' },
     ],
     defaultLayout: 'dark',
     layouts: [
@@ -599,9 +600,9 @@ const TRADES = {
     ],
     defaultAreas: ['Memorial', 'Galleria', 'West University', 'Meyerland', 'Braeswood', 'Stafford', 'Missouri City', 'Cypress'],
     defaultReviews: [
-      { stars: 5, text: 'Fixed 3 drywall holes, rehung a door that wouldn\'t close right, and installed two ceiling fans. All in one visit, less than 4 hours. Will definitely use again.', name: 'Amy G.', time: '2 weeks ago', avatarColor: '#C4382A' },
-      { stars: 5, text: 'Finally found a handyman who actually shows up when they say. Arrived in the window, finished faster than quoted. My deck looks brand new.', name: 'Thomas P.', time: '1 month ago', avatarColor: '#8B2FC9' },
-      { stars: 5, text: 'Had a long list from my landlord inspection. He knocked everything out in half a day. Reasonable price, great work. Highly recommended.', name: 'Maria S.', time: '3 weeks ago', avatarColor: '#1A8A4A' },
+      { stars: 5, text: 'Fixed 3 drywall holes, rehung a door that wouldn\'t close right, and installed two ceiling fans. All in one visit, less than 4 hours. Will definitely use again.', name: 'Amy G.', daysAgo: 11, avatarColor: '#C4382A' },
+      { stars: 5, text: 'Finally found a handyman who actually shows up when they say. Arrived in the window, finished faster than quoted. My deck looks brand new.', name: 'Thomas P.', daysAgo: 33, avatarColor: '#8B2FC9' },
+      { stars: 4, text: 'Had a long list from my landlord inspection. He knocked everything out in half a day. Reasonable price, great work. Would recommend to neighbors.', name: 'Maria S.', daysAgo: 19, avatarColor: '#1A8A4A' },
     ],
     defaultLayout: 'light',
     layouts: [
@@ -611,7 +612,7 @@ const TRADES = {
   },
   roofer: {
     accent: '#E47C2D', accentDark: '#C06020',
-    icon: '🏠', label: 'Roofer', sub: 'Licensed Roofing Contractor',
+    icon: '🏗️', label: 'Roofer', sub: 'Licensed Roofing Contractor',
     heroAccentText: 'Roofing', heroH1: 'Roofing That<br>Lasts Decades',
     heroSub: 'Roof repairs, full replacements, insurance claims, and storm damage. Licensed contractor. Free inspection with every estimate.',
     badge: 'Licensed Contractor',
@@ -634,9 +635,9 @@ const TRADES = {
     ],
     defaultAreas: ['The Woodlands', 'Humble', 'Kingwood', 'Conroe', 'Spring', 'Tomball', 'Cypress', 'Katy'],
     defaultReviews: [
-      { stars: 5, text: 'They found hail damage I didn\'t even know I had, filed the insurance claim for me, and had a new roof on in 2 days. Insurance paid for nearly everything.', name: 'Brad W.', time: '1 month ago', avatarColor: '#C4382A' },
-      { stars: 5, text: 'Three other roofers said I needed a full replacement. These guys repaired the actual problem for a fraction of the cost. Honest company.', name: 'Linda C.', time: '3 weeks ago', avatarColor: '#1A8A4A' },
-      { stars: 5, text: 'Had a leak the night before heavy rains. They came out, tarped it that evening, and replaced the flashing section the next day. Saved my interior.', name: 'James T.', time: '2 months ago', avatarColor: '#1D5FA8' },
+      { stars: 5, text: 'They found hail damage I didn\'t even know I had, filed the insurance claim for me, and had a new roof on in 2 days. Insurance paid for nearly everything.', name: 'Brad W.', daysAgo: 29, avatarColor: '#C4382A' },
+      { stars: 4, text: 'Three other roofers said I needed a full replacement. These guys repaired the actual problem for a fraction of the cost. Honest and fair.', name: 'Linda C.', daysAgo: 17, avatarColor: '#1A8A4A' },
+      { stars: 5, text: 'Had a leak the night before heavy rains. They came out, tarped it that evening, and replaced the flashing section the next day. Saved my interior.', name: 'James T.', daysAgo: 61, avatarColor: '#1D5FA8' },
     ],
     defaultLayout: 'dark',
     layouts: [
@@ -659,16 +660,21 @@ const logoUrl   = params.get('logo')   ? decodeURIComponent(params.get('logo')) 
 const layoutP   = params.get('layout') || '';
 const servicesP = params.get('services') ? decodeURIComponent(params.get('services')).split('|').filter(Boolean) : [];
 const extraSvcs = params.get('extra')  ? decodeURIComponent(params.get('extra')).split('|').filter(Boolean) : [];
+const sinceYear = params.get('since')  || '';
+const availParam = params.get('avail') ? decodeURIComponent(params.get('avail')) : '';
+const hoursParam = params.get('hours') ? decodeURIComponent(params.get('hours')) : '';
 
 // ── APPLY CONFIGS ──────────────────────────────────────────────────────────────
 const trade   = TRADES[tradeKey] || TRADES.electrician;
 const accent  = accentP || trade.accent;
 const layout  = layoutP || trade.defaultLayout;
-const bizDisp = bizName || (cityParam ? cityParam + ' ' + trade.label : trade.label + ' Co.');
+const bizDisp = bizName || '[Your Business Name]';
 const city    = cityParam || 'Houston, TX';
-const fmtPhone = phone ? formatPhone(phone) : '(555) 000-0000';
+const hasPhone = Boolean(phone);
+const fmtPhone = hasPhone ? formatPhone(phone) : null;
 const rating  = ratingP || 4.9;
-const revCount = reviewsP || trade.defaultReviews.length;
+const availDefaults = { electrician: 'Same Day', plumber: 'Same Day', handyman: 'Same Week', roofer: 'Free Inspection' };
+const avail = availParam || availDefaults[tradeKey] || 'Same Day';
 
 function formatPhone(p) {
   const d = p.replace(/\D/g, '');
@@ -709,7 +715,7 @@ document.getElementById('footer-license').innerHTML = `Licensed & Insured · <sp
 
 // ── META DESCRIPTION + OG TAGS ─────────────────────────────────────────────────
 const topSvcs = (servicesP.length > 0 ? servicesP : trade.services.map(s => s.name)).slice(0, 3).join(', ');
-const metaDesc = `${bizDisp} — Licensed ${trade.label.toLowerCase()} in ${city}. ${topSvcs}. Call ${fmtPhone} for fast, same-day service.`;
+const metaDesc = `${bizDisp} — Licensed ${trade.label.toLowerCase()} in ${city}. ${topSvcs}. ${fmtPhone ? `Call ${fmtPhone} for fast, same-day service.` : 'Call for fast, same-day service.'}`;
 const pageUrl = location.href;
 document.getElementById('meta-desc').content = metaDesc;
 document.getElementById('og-title').content = titleText;
@@ -730,7 +736,7 @@ const schemaData = {
   '@type': schemaType,
   name: bizDisp,
   description: metaDesc,
-  telephone: fmtPhone,
+  ...(fmtPhone ? { telephone: fmtPhone } : {}),
   address: {
     '@type': 'PostalAddress',
     addressLocality: city.split(',')[0].trim(),
@@ -755,11 +761,18 @@ ldScript.textContent = JSON.stringify(schemaData);
 document.head.appendChild(ldScript);
 
 // ── PHONE — loop over all call elements ────────────────────────────────────────
-const phoneDigits = phone.replace(/\D/g, '') || '5550000000';
-const phoneHref = 'tel:+1' + phoneDigits;
+const phoneDigits = phone.replace(/\D/g, '');
 document.querySelectorAll('[data-phone]').forEach(el => {
-  el.href = phoneHref;
-  el.textContent = (el.dataset.phone === 'icon' ? '📞 ' : '') + fmtPhone;
+  if (fmtPhone) {
+    el.href = 'tel:+1' + phoneDigits;
+    el.textContent = (el.dataset.phone === 'icon' ? '📞 ' : '') + fmtPhone;
+  } else if (el.dataset.phone === 'nav') {
+    el.style.display = 'none';
+  } else if (el.dataset.phone === 'icon') {
+    el.href = '#contact'; el.textContent = '📞 Get Free Estimate';
+  } else {
+    el.href = '#contact'; el.textContent = 'Request a Quote';
+  }
 });
 
 // City
@@ -770,13 +783,14 @@ document.getElementById('hero-badge-icon').textContent = trade.icon;
 document.getElementById('hero-badge-text').textContent = trade.badge;
 document.getElementById('hero-h1').innerHTML = trade.heroH1.replace('<br>', '<br>');
 document.querySelector('#hero-h1 .accent') && (document.querySelector('#hero-h1 .accent').style.color = accent);
-document.getElementById('hero-sub').innerHTML = trade.heroSub.replace('Houston, TX', city);
+const heroSubBase = trade.heroSub.replace('Houston, TX', city);
+document.getElementById('hero-sub').innerHTML = sinceYear ? `Serving ${city} since ${sinceYear}. ${heroSubBase}` : heroSubBase;
+document.getElementById('stat-avail').textContent = avail;
 document.getElementById('hero-bg').style.backgroundImage = `url('${trade.heroBg}')`;
 
 // Rating / reviews
 document.getElementById('stat-rating').textContent = rating.toFixed(1);
 document.getElementById('stat-reviews').textContent = reviewsP > 0 ? reviewsP : '100+';
-document.getElementById('reviews-count').textContent = reviewsP > 0 ? reviewsP : '100+';
 document.getElementById('avg-score').textContent = rating.toFixed(1);
 const stars = Math.round(rating);
 document.getElementById('avg-stars').textContent = '★'.repeat(stars) + '☆'.repeat(5 - stars);
@@ -786,12 +800,13 @@ document.getElementById('avg-count').textContent = `Based on ${reviewsP > 0 ? re
 document.getElementById('why-img').src = trade.whyImg;
 document.getElementById('why-img').alt = `${bizDisp} — licensed ${trade.label.toLowerCase()} in ${city}`;
 document.getElementById('why-h2').innerHTML = `The <span class="accent" style="color:${accent}">${trade.label}</span> ${city} Trusts`;
-document.getElementById('why-sub').textContent = `We've served the ${city} community for years — showing up on time, doing the job right, and standing behind every project.`;
+const sincePhrase = sinceYear ? `since ${sinceYear}` : 'for years';
+document.getElementById('why-sub').textContent = `We've served the ${city} community ${sincePhrase} — showing up on time, doing the job right, and standing behind every project.`;
 
 // Contact
 document.getElementById('contact-h3').textContent = 'Ready to Get Started?';
-document.getElementById('contact-p').textContent = `Fill out the form and we'll get back to you within the hour. Or call us at ${fmtPhone} — we answer 7 days a week.`;
-document.getElementById('contact-hours').textContent = trade.contactHours;
+document.getElementById('contact-p').textContent = `Fill out the form and we'll get back to you within the hour.${fmtPhone ? ` Or call us at ${fmtPhone} — we answer 7 days a week.` : ''}`;
+document.getElementById('contact-hours').textContent = hoursParam || trade.contactHours;
 
 // Trust strip
 const trustHtml = trade.trustBadges.map(b => `<div class="trust-item"><span class="trust-icon">${b.split(' ')[0]}</span>${b.split(' ').slice(1).join(' ')}</div>`).join('');
@@ -839,24 +854,37 @@ document.getElementById('why-points').innerHTML = trade.whyPoints.map(p => `
 `).join('');
 
 // Reviews
-const reviewColors = ['#1D5FA8', '#1A8A4A', '#8B2FC9', '#C4382A', '#D97706'];
-document.getElementById('reviews-grid').innerHTML = trade.defaultReviews.map((r, i) => `
+function relTime(daysAgo) {
+  if (daysAgo < 8) return `${daysAgo} days ago`;
+  if (daysAgo < 14) return '1 week ago';
+  if (daysAgo < 25) return '2-3 weeks ago';
+  if (daysAgo < 45) return '1 month ago';
+  if (daysAgo < 75) return '2 months ago';
+  return '3 months ago';
+}
+function renderReviews(reviews) {
+  return reviews.map(r => `
   <div class="review-card">
-    <div class="review-stars">${'★'.repeat(r.stars)}</div>
+    <div class="review-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5-r.stars)}</div>
     <div class="review-text">"${r.text}"</div>
     <div class="reviewer">
       <div class="reviewer-av" style="background:${r.avatarColor}">${r.name[0]}</div>
       <div>
         <div class="reviewer-name">${r.name}</div>
-        <div class="reviewer-time">${r.time}</div>
+        <div class="reviewer-time">${'daysAgo' in r ? relTime(r.daysAgo) : (r.time || 'recently')}</div>
       </div>
     </div>
-  </div>
-`).join('');
+  </div>`).join('');
+}
+document.getElementById('reviews-grid').innerHTML = renderReviews(trade.defaultReviews);
 
-// Areas
+// Areas — generate from city name so they always match the prospect's city
 const baseCity = city.split(',')[0].trim();
-document.getElementById('areas-grid').innerHTML = trade.defaultAreas.map(a => `<div class="area-pill">${a}</div>`).join('') + `<div class="area-pill" style="border-color:${accent};color:${accent}">${baseCity} (All Areas)</div>`;
+const generatedAreas = [
+  `North ${baseCity}`, `South ${baseCity}`, `East ${baseCity}`, `West ${baseCity}`,
+  `Downtown ${baseCity}`, `${baseCity} Heights`, `Greater ${baseCity}`, `${baseCity} Suburbs`
+];
+document.getElementById('areas-grid').innerHTML = generatedAreas.map(a => `<div class="area-pill">${a}</div>`).join('') + `<div class="area-pill" style="border-color:${accent};color:${accent}">${baseCity} (All Areas)</div>`;
 
 // ── GOOGLE PLACES API ENRICHMENT ───────────────────────────────────────────────
 const placeId = params.get('place_id');
@@ -883,9 +911,9 @@ if (placeId) {
       if (data.reviewCount) {
         const rc = data.reviewCount;
         document.getElementById('stat-reviews').textContent = rc;
-        document.getElementById('reviews-count').textContent = rc;
         document.getElementById('avg-count').textContent = `Based on ${rc} Google Reviews`;
       }
+      const reviewColors = ['#1D5FA8', '#1A8A4A', '#8B2FC9', '#C4382A', '#D97706'];
       if (data.reviews && data.reviews.length > 0) {
         const mapped = data.reviews.slice(0, 3).map((rv, i) => ({
           stars: rv.rating || 5,
@@ -894,19 +922,7 @@ if (placeId) {
           time: rv.relative_time_description || 'recently',
           avatarColor: reviewColors[i % reviewColors.length],
         }));
-        document.getElementById('reviews-grid').innerHTML = mapped.map(r => `
-          <div class="review-card">
-            <div class="review-stars">${'★'.repeat(r.stars)}</div>
-            <div class="review-text">"${r.text}"</div>
-            <div class="reviewer">
-              <div class="reviewer-av" style="background:${r.avatarColor}">${r.name[0]}</div>
-              <div>
-                <div class="reviewer-name">${r.name}</div>
-                <div class="reviewer-time">${r.time}</div>
-              </div>
-            </div>
-          </div>
-        `).join('');
+        document.getElementById('reviews-grid').innerHTML = renderReviews(mapped);
       }
       if (data.photoUrl) {
         document.getElementById('hero-bg').style.backgroundImage = `url('${data.photoUrl}')`;
@@ -936,6 +952,18 @@ if (placeId) {
     })
     .catch(() => {}); // graceful fallback — demo still looks great
 }
+
+// ── DEMO FORM — soft inline message instead of alert ──────────────────────────
+function handleDemoForm(btn) {
+  btn.disabled = true;
+  btn.textContent = '✓ Request Received!';
+  btn.style.background = '#1A8A4A';
+  document.getElementById('demo-form-msg').style.display = 'block';
+}
+
+// ── DEMO BAR CTA — pass current URL params through to checkout ────────────────
+const demoCta = document.getElementById('demo-bar-cta');
+if (demoCta) demoCta.href = '/checkout/?' + params.toString();
 </script>
 </body>
 </html>

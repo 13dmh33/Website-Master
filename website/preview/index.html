@@ -49,7 +49,7 @@
     .google-lookup-title { font-size: 13px; font-weight: 700; color: var(--teal); margin-bottom: 6px; }
     .google-lookup-desc { font-size: 12px; color: var(--muted); margin-bottom: 12px; line-height: 1.5; }
     .google-lookup-row { display: flex; gap: 8px; }
-    .google-lookup-input { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 11px 14px; font-size: 14px; color: var(--white); font-family: 'Inter', sans-serif; outline: none; }
+    .google-lookup-input { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 11px 14px; font-size: 16px; color: var(--white); font-family: 'Inter', sans-serif; outline: none; }
     .google-lookup-input:focus { border-color: var(--teal); }
     .google-lookup-btn { background: var(--teal); color: #0A1228; border: none; border-radius: 8px; padding: 11px 16px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; }
     .google-candidates { margin-top: 10px; display: flex; flex-direction: column; gap: 6px; }
@@ -102,10 +102,10 @@
     .svc-check { width: 22px; height: 22px; border-radius: 6px; border: 2px solid rgba(255,255,255,.2); display: flex; align-items: center; justify-content: center; font-size: 12px; transition: all .2s; flex-shrink: 0; }
     .svc-toggle.active .svc-check { background: var(--teal); border-color: var(--teal); color: #0A1228; }
     .add-svc-row { display: flex; gap: 8px; }
-    .add-svc-input { flex: 1; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 11px 14px; font-size: 14px; color: var(--white); font-family: 'Inter', sans-serif; outline: none; }
+    .add-svc-input { flex: 1; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 11px 14px; font-size: 16px; color: var(--white); font-family: 'Inter', sans-serif; outline: none; }
     .add-svc-input:focus { border-color: var(--teal); }
     .add-svc-btn { background: var(--teal); color: #0A1228; border: none; border-radius: 8px; padding: 11px 16px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Inter', sans-serif; }
-    .wizard-footer { position: sticky; bottom: 0; background: linear-gradient(to top, var(--navy) 80%, transparent); padding: 20px 28px 24px; display: flex; gap: 10px; border-top: 1px solid var(--border); }
+    .wizard-footer { position: sticky; bottom: 0; z-index: 50; background: linear-gradient(to top, var(--navy) 85%, transparent); padding: 20px 28px 24px; display: flex; gap: 10px; border-top: 1px solid var(--border); }
     .btn-back { background: var(--surface2); border: 1px solid var(--border); color: var(--white); padding: 13px 20px; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; }
     .btn-next { flex: 1; background: var(--teal); color: #0A1228; border: none; padding: 15px; border-radius: 10px; font-size: 16px; font-weight: 800; cursor: pointer; font-family: 'Inter', sans-serif; display: flex; align-items: center; justify-content: center; gap: 8px; transition: filter .2s; }
     .btn-next:hover { filter: brightness(1.08); }
@@ -145,13 +145,25 @@
     .share-copy:hover { background: rgba(0,200,175,.1); }
     .share-note { font-size: 11px; color: var(--muted); margin-top: 8px; }
     @media (max-width: 900px) {
-      .main { flex-direction: column; }
-      .wizard-panel { width: 100%; border-right: none; overflow-y: visible; }
-      .preview-panel { height: 55vh; }
+      .main { flex-direction: column; overflow: visible; }
+      /* wizard panel scrolls with page on mobile — sticky footer needs overflow on a parent */
+      .wizard-panel { width: 100%; border-right: none; overflow-y: auto; max-height: none; }
+      .wizard-footer { position: fixed; bottom: 0; left: 0; right: 0; padding: 12px 16px 20px; }
+      .wizard-body { padding-bottom: 100px; } /* room for fixed footer */
+      .preview-panel { height: 50vh; order: -1; } /* show preview above wizard on mobile */
+    }
+    @media (max-width: 480px) {
+      .trade-cards { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .trade-card { padding: 14px 10px; }
+      .trade-card-icon { font-size: 28px; }
+      .wizard-body { padding: 20px 16px 100px; }
+      .wizard-footer { padding: 10px 16px 20px; }
     }
   </style>
 </head>
 <body>
+
+<noscript><div style="font-family:sans-serif;padding:40px;text-align:center;background:#0A1228;color:#fff;min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px"><h1 style="font-size:24px">JavaScript required</h1><p style="color:#8BA8C4">This website builder requires JavaScript. Please enable it and reload the page.<br>Need help? Call <a href="tel:+17205550100" style="color:#00C8AF">(720) 555-0100</a></p></div></noscript>
 
 <div class="top-bar">
   <div class="top-logo">TREVO ADVISORS</div>
@@ -347,9 +359,9 @@
 <script>
 const PRESETS = ['#F5C518','#2D6BE4','#22c55e','#E47C2D','#C4382A','#8B2FC9','#0891B2','#374151'];
 const TRADES = {
-  electrician:{accent:'#F5C518',svcs:[{i:'⚡',n:'Panel Upgrades'},{i:'🚗',n:'EV Charger Install'},{i:'💡',n:'Lighting & Fixtures'},{i:'🔌',n:'Outlet & Switch Repair'},{i:'🏠',n:'Whole-Home Rewiring'},{i:'🚨',n:'Emergency Electrical'}],layouts:[{id:'dark',nm:'Professional Dark',desc:'Dark with bold yellow — projects confidence and authority. Best for commercial and panel upgrade work.'},{id:'light',nm:'Clean Light',desc:'White background — friendly and approachable. Great for residential neighborhoods.'}]},
-  plumber:{accent:'#2D6BE4',svcs:[{i:'💧',n:'Leak Detection & Repair'},{i:'🚿',n:'Drain Cleaning'},{i:'🔥',n:'Water Heater Service'},{i:'🏠',n:'Bathroom Remodeling'},{i:'🧰',n:'Fixture Repair & Replace'},{i:'🌊',n:'Sewer Line Service'}],layouts:[{id:'dark',nm:'Professional Dark',desc:'Bold and reliable — great for 24/7 emergency plumbing.'},{id:'light',nm:'Clean Light',desc:'Approachable and modern — works well for remodel-focused plumbers.'}]},
-  handyman:{accent:'#22c55e',svcs:[{i:'🏠',n:'Drywall Repair'},{i:'🚪',n:'Door & Window Service'},{i:'🪚',n:'Deck Repair & Build'},{i:'🎨',n:'Interior Painting'},{i:'📦',n:'Furniture Assembly'},{i:'🔨',n:'Odd Jobs & Punch Lists'}],layouts:[{id:'light',nm:'Clean Light',desc:'Friendly and welcoming — most residential customers expect this look for handyman services.'},{id:'dark',nm:'Bold Dark',desc:'More serious — good for larger renovation or commercial handyman work.'}]},
+  electrician:{accent:'#F5C518',svcs:[{i:'⚡',n:'Panel Upgrades'},{i:'🚗',n:'EV Charger Installation'},{i:'💡',n:'Lighting & Fixtures'},{i:'🔌',n:'Outlet & Switch Repair'},{i:'🏠',n:'Whole-Home Rewiring'},{i:'🚨',n:'Emergency Electrical'}],layouts:[{id:'dark',nm:'Professional Dark',desc:'Dark with bold yellow — projects confidence and authority. Best for commercial and panel upgrade work.'},{id:'light',nm:'Clean Light',desc:'White background — friendly and approachable. Great for residential neighborhoods.'}]},
+  plumber:{accent:'#2D6BE4',svcs:[{i:'💧',n:'Leak Detection & Repair'},{i:'🚿',n:'Drain Cleaning'},{i:'🔥',n:'Water Heater Services'},{i:'🏠',n:'Bathroom Remodeling'},{i:'🧰',n:'Fixture Repair & Replace'},{i:'🌊',n:'Sewer Line Service'}],layouts:[{id:'dark',nm:'Professional Dark',desc:'Bold and reliable — great for 24/7 emergency plumbing.'},{id:'light',nm:'Clean Light',desc:'Approachable and modern — works well for remodel-focused plumbers.'}]},
+  handyman:{accent:'#22c55e',svcs:[{i:'🏠',n:'Drywall Repair'},{i:'🚪',n:'Door & Window Service'},{i:'🪚',n:'Deck Repair & Building'},{i:'🎨',n:'Interior Painting'},{i:'📦',n:'Furniture Assembly'},{i:'🔨',n:'Odd Jobs & Punch Lists'}],layouts:[{id:'light',nm:'Clean Light',desc:'Friendly and welcoming — most residential customers expect this look for handyman services.'},{id:'dark',nm:'Bold Dark',desc:'More serious — good for larger renovation or commercial handyman work.'}]},
   roofer:{accent:'#E47C2D',svcs:[{i:'🔍',n:'Free Roof Inspection'},{i:'🏠',n:'Roof Replacement'},{i:'🔧',n:'Roof Repair'},{i:'⛈️',n:'Storm Damage Claims'},{i:'🛡️',n:'Gutters & Drainage'},{i:'🏢',n:'Commercial Roofing'}],layouts:[{id:'dark',nm:'Storm Ready Dark',desc:'Dark and authoritative — great for storm damage and insurance claim specialists.'},{id:'light',nm:'Trust Builder Light',desc:'Clean and clear — builds trust for inspection-first, family-owned roofers.'}]},
 };
 
@@ -387,7 +399,7 @@ function updateNext(){
 }
 
 function next(){
-  if(s.step===2)syncFields();
+  syncFields();
   document.getElementById('step-'+s.step).classList.remove('active');
   s.step++;
   document.getElementById('step-'+s.step).classList.add('active');
@@ -516,16 +528,20 @@ function onHex(val){
 
 function buildSvcs(){
   const t=TRADES[s.trade];
-  const all=[...t.svcs.map(sv=>({icon:sv.i,name:sv.n,custom:false})),...s.extra.map(n=>({icon:'✅',name:n,custom:true}))];
-  document.getElementById('svc-list').innerHTML=all.map(sv=>`
-    <div class="svc-toggle${s.svcs.includes(sv.name)?' active':''}" onclick="toggleSvc('${sv.name.replace(/'/g,"\\'")}',this)">
+  const all=[...t.svcs.map(sv=>({icon:sv.i,name:sv.n})),...s.extra.map(n=>({icon:'✅',name:n}))];
+  document.getElementById('svc-list').innerHTML=all.map((sv,idx)=>`
+    <div class="svc-toggle${s.svcs.includes(sv.name)?' active':''}" onclick="toggleSvc(${idx},this)">
       <span class="svc-icon">${sv.icon}</span>
       <span class="svc-label">${sv.name}</span>
       <div class="svc-check">${s.svcs.includes(sv.name)?'✓':''}</div>
     </div>`).join('');
+  // store names array on the list element for index lookup
+  document.getElementById('svc-list').__names=all.map(sv=>sv.name);
 }
 
-function toggleSvc(name,el){
+function toggleSvc(idx,el){
+  const name=document.getElementById('svc-list').__names[idx];
+  if(!name)return;
   el.classList.toggle('active');
   const chk=el.querySelector('.svc-check');
   if(s.svcs.includes(name)){s.svcs=s.svcs.filter(n=>n!==name);chk.textContent='';}

@@ -262,7 +262,7 @@ async function sendEmail(brief, config, videoUrl) {
   // Demo URL (personalizer) > video URL (filmer) > generic fallback
   let ps;
   if (brief.demo_url) {
-    ps = `\n\nP.S. Here's a live demo of what your site could look like: ${brief.demo_url}`;
+    ps = `\n\nP.S. Here's a live demo of what ${brief.business_name}'s site could look like: ${brief.demo_url}`;
   } else if (videoUrl) {
     ps = `\n\nP.S. Built a quick mockup of what a new site could look like: ${videoUrl}`;
   } else {

@@ -56,6 +56,8 @@ function buildDemoUrl(brief) {
   const city = (brief.city || '').replace(/,\s*[A-Z]{2}$/, '').trim();
   if (city) params.set('c', city);
   if (brief.review_count) params.set('r', String(brief.review_count));
+  if (brief.rating)       params.set('s', String(brief.rating));
+  if (brief.hero_angle)   params.set('h', brief.hero_angle.slice(0, 120));
   return `${baseUrl()}?${params.toString()}`;
 }
 

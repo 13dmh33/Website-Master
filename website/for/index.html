@@ -84,6 +84,26 @@
     }
     .hero-sub strong { color: var(--white); font-weight: 600; }
 
+    .insight-callout {
+      display: none;
+      background: rgba(0,200,175,0.07);
+      border: 1px solid var(--border-teal);
+      border-radius: 8px;
+      padding: 12px 18px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.75);
+      max-width: 520px;
+      margin: -16px auto 24px;
+      text-align: left;
+      line-height: 1.55;
+    }
+    .insight-callout .insight-label {
+      display: block;
+      font-size: 10px; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--teal);
+      margin-bottom: 4px;
+    }
+
     .hero-ctas {
       display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
       margin-bottom: 24px;
@@ -409,14 +429,18 @@
       We matched your trade to our template — below is a live preview.
       Your business name, phone, and services replace the placeholder content.
     </p>
+    <div class="insight-callout" id="insight-callout">
+      <span class="insight-label">We noticed</span>
+      <span id="insight-text"></span>
+    </div>
     <div class="hero-ctas">
-      <a href="/checkout/" class="btn-primary" id="cta-hero">Claim this site — $100</a>
+      <a href="/checkout/" class="btn-primary" id="cta-hero">Get this site — $100</a>
       <a href="mailto:dave@trevoadvisors.com" class="btn-secondary">Questions? Email Dave</a>
     </div>
     <div class="hero-meta">
       <span>Live in 3-5 business days</span>
       <span class="sep">·</span>
-      <span>$65/mo hosting after</span>
+      <span>No monthly fee</span>
       <span class="sep">·</span>
       <span>Cancel anytime</span>
     </div>
@@ -458,7 +482,7 @@
         <div class="compare-tag">Right now — no website</div>
         <ul>
           <li>Invisible to homeowners searching at night</li>
-          <li>Leads go to whoever shows up on Google first</li>
+          <li id="cmp-leads">Leads go to whoever shows up on Google first</li>
           <li>Referrals can't find you — they move on</li>
           <li>Zero after-hours lead capture</li>
           <li>Competitors with worse reviews are winning jobs</li>
@@ -543,11 +567,22 @@
   </footer>
 
   <script>
-    const params  = new URLSearchParams(window.location.search);
-    const bizName = (params.get('b') || '').trim();
-    const trade   = (params.get('t') || '').toLowerCase().trim();
-    const city    = (params.get('c') || '').trim();
-    const reviews = parseInt(params.get('r') || '0', 10);
+    const params     = new URLSearchParams(window.location.search);
+    const bizName    = (params.get('b') || '').trim();
+    const trade      = (params.get('t') || '').toLowerCase().trim();
+    const city       = (params.get('c') || '').trim();
+    const reviews    = parseInt(params.get('r') || '0', 10);
+    const stars      = parseFloat(params.get('s') || '0');
+    const heroAngle  = (params.get('h') || '').trim();
+
+    // "25 reviews" vs "25 five-star reviews" vs "25 4.8-star reviews"
+    function reviewLabel(count, starRating) {
+      if (!count) return '';
+      if (starRating === 5)  return `${count} five-star reviews`;
+      if (starRating >= 4.5) return `${count} ${starRating}-star reviews`;
+      if (starRating > 0)    return `${count} reviews (${starRating}★)`;
+      return `${count} Google reviews`;
+    }
 
     // Trade → demo path and display label
     const TRADE_MAP = {
@@ -576,7 +611,8 @@
 
     // Trade tag — lead with the gap when review count is present
     if (reviews > 0) {
-      document.getElementById('hero-tag').textContent = `${reviews} Google reviews · no website yet`;
+      const rl = reviewLabel(reviews, stars);
+      document.getElementById('hero-tag').textContent = `${rl} · no website yet`;
     } else {
       document.getElementById('hero-tag').textContent = tradeLabel.toUpperCase();
     }
@@ -590,11 +626,18 @@
     // Hero subheadline — stronger when review count is present
     const heroSub = document.getElementById('hero-sub');
     if (bizName && city && reviews > 0) {
-      heroSub.innerHTML = `<strong>${bizName}</strong> has ${reviews} Google reviews. But right now, homeowners in ${city} searching "${trade} near me" are calling whoever comes up first — not whoever has the best reputation. This site changes that.`;
+      const rl = reviewLabel(reviews, stars);
+      heroSub.innerHTML = `<strong>${bizName}</strong> has ${rl}. But right now, homeowners in ${city} searching "${trade} near me" are calling whoever comes up first — not whoever has the best reputation. This site changes that.`;
     } else if (bizName && city) {
       heroSub.innerHTML = `We matched <strong>${bizName}</strong> to our ${tradeInfo.label.toLowerCase()} for ${city}. Your business name, phone, and services replace the placeholder content — live in 3-5 days.`;
     } else if (bizName) {
       heroSub.innerHTML = `We matched <strong>${bizName}</strong> to our ${tradeInfo.label.toLowerCase()}. Your business name, phone, and services replace the placeholder content — live in 3-5 days.`;
+    }
+
+    // Insight callout — shows the Diagnoser's specific finding about this business
+    if (heroAngle) {
+      document.getElementById('insight-text').textContent = heroAngle;
+      document.getElementById('insight-callout').style.display = 'block';
     }
 
     // Preview label and browser URL bar
@@ -607,9 +650,25 @@
     // Review count — shows social proof instead of generic note
     if (reviews > 0) {
       const loc = city || 'your area';
+      const rl  = reviewLabel(reviews, stars);
       document.getElementById('preview-note').textContent =
-        `Your ${reviews} Google reviews paired with a site like this puts you ahead of most competitors in ${loc}.`;
+        `Your ${rl} paired with a site like this puts you ahead of most competitors in ${loc}.`;
     }
+
+    // Personalize compare-before bullet with city when available
+    if (city) {
+      const el = document.getElementById('cmp-leads');
+      if (el) el.textContent = `In ${city}, leads go to whoever shows up on Google first`;
+    }
+
+    // Pass business context through to the checkout page
+    const checkoutBase = '/checkout/';
+    const checkoutParams = new URLSearchParams();
+    if (bizName) checkoutParams.set('b', bizName);
+    if (trade)   checkoutParams.set('t', trade);
+    const checkoutUrl = checkoutParams.toString() ? `${checkoutBase}?${checkoutParams}` : checkoutBase;
+    document.getElementById('cta-hero').href    = checkoutUrl;
+    document.getElementById('cta-preview').href = checkoutUrl;
 
     // Load the demo iframe
     document.getElementById('demo-frame').src = tradeInfo.path;

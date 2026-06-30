@@ -23,6 +23,17 @@
   "secondary_message": null,
   "secondary_template_id": null,
   "secondary_template_name": null,
-  "checker_approved": false,
-  "diagnosed_at": "2026-06-29T15:57:47.690Z"
+  "checker_approved": true,
+  "diagnosed_at": "2026-06-29T15:57:47.690Z",
+  "final_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
+  "checker_flag": "",
+  "rewrite_count": 0,
+  "checker_score": {
+    "template_based": true,
+    "placeholders_filled": true,
+    "secondary_placeholders": true
+  },
+  "checked_at": "2026-06-29T22:09:55.384Z",
+  "demo_url": "https://trevoadvisors.com/for/?b=Homer+the+Handyman+%7C+Las+Vegas+Handyman&t=handyman&c=Las+Vegas&r=6",
+  "demo_url_created_at": "2026-06-29T22:09:55.698Z"
 }

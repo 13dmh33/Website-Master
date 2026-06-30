@@ -20,6 +20,17 @@
   "secondary_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "secondary_template_id": "s3",
   "secondary_template_name": "The simple ask",
-  "checker_approved": false,
-  "diagnosed_at": "2026-06-29T16:27:24.625Z"
+  "checker_approved": true,
+  "diagnosed_at": "2026-06-29T16:27:24.625Z",
+  "final_message": "Hey,\n\nDo you get most of your work from referrals and word-of-mouth?\n\nIf so, I have something worth 2 minutes of your time. Grab a slot here: https://trevoadvisors.com/start/\n\n- Dave\nTrevo Advisors\ndave@trevoadvisors.com",
+  "checker_flag": "",
+  "rewrite_count": 0,
+  "checker_score": {
+    "template_based": true,
+    "placeholders_filled": true,
+    "secondary_placeholders": true
+  },
+  "checked_at": "2026-06-29T22:09:55.456Z",
+  "demo_url": "https://trevoadvisors.com/for/?b=Revolutionary+Kindness+Plumbing&t=plumber&c=Colorado+Springs",
+  "demo_url_created_at": "2026-06-29T22:09:55.716Z"
 }

@@ -14,6 +14,26 @@ const store     = require('./store');
 const calendar  = require('./calendar');
 const weights   = require('./product-weights');
 
+// ── persona selection (#3) ──────────────────────────────────────────────────
+// Build a contentType → personaId map from personas.json at call time.
+// Falls back gracefully to 'riley' (default) if the file is missing or empty.
+function buildPersonaMap() {
+  const data = store.getPersonas() || {};
+  const personas = data.personas || {};
+  const defaultId = data.default_persona_id || 'riley';
+  const map = {};
+  for (const [id, p] of Object.entries(personas)) {
+    for (const ct of (p.content_types || [])) {
+      if (!map[ct]) map[ct] = id; // first persona listed wins for a given contentType
+    }
+  }
+  return { map, defaultId };
+}
+
+function personaFor(contentType, personaMap, defaultId) {
+  return personaMap[contentType] || defaultId;
+}
+
 // ── content-type → downstream mappings ─────────────────────────────────────
 
 // generator-prompts FORMAT key to use when a slot doesn't pin one (October)
@@ -124,12 +144,13 @@ function pickFromPool(poolName, pools, week, poolCounters) {
 
 // ── main: build the week's plan ─────────────────────────────────────────────
 
-// returns { mode, scheduleEnv, posts: [ {day, time, format, contentType, product, isOctober, paletteKey} ] }
+// returns { mode, scheduleEnv, posts: [ {day, time, format, contentType, product, isOctober, paletteKey, persona} ] }
 function buildWeekPlan(date = new Date(), week = 0) {
   const mode = getCampaignMode(date);
   const formats = store.getPostFormats() || {};
   const pools   = (formats.content_pools) || {};
   const catalog = (formats.product_catalog_rotation) || [];
+  const { map: personaMap, defaultId: defaultPersona } = buildPersonaMap();
 
   // dynamic product-rotation weighting (#9): expands the catalog so products
   // with higher click-through appear more often; identical to plain round-robin
@@ -148,6 +169,7 @@ function buildWeekPlan(date = new Date(), week = 0) {
     ...p,
     paletteKey: paletteKeyFor(p.contentType),
     product:    needsProduct(p.contentType) ? (p.product || nextProduct()) : null,
+    persona:    personaFor(p.contentType, personaMap, defaultPersona),
   });
 
   // ── October: daily, driven by october-campaign.json weekly_rhythm ──────────

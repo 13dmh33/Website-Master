@@ -332,6 +332,17 @@ function passesQualityGate(post) {
   return true;
 }
 
+// =====================================================================
+// 8) PERSONA SYSTEM — builds a system prompt from a persona object.
+//    If the persona has a voice_override, it's appended after the base
+//    SYSTEM_PROMPT so hard brand rules are never overridden.
+//    Passing null / 'riley' / no-override persona → identical to SYSTEM_PROMPT.
+// =====================================================================
+function buildSystemPrompt(persona) {
+  if (!persona || !persona.voice_override) return SYSTEM_PROMPT;
+  return `${SYSTEM_PROMPT}\n\n---\n\n${persona.voice_override.trim()}`;
+}
+
 module.exports = {
   SYSTEM_PROMPT,
   JUDGE_SYSTEM_PROMPT,
@@ -341,5 +352,6 @@ module.exports = {
   OCTOBER_OVERLAY,
   buildUserPrompt,
   buildJudgePrompt,
+  buildSystemPrompt,
   passesQualityGate
 };

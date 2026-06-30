@@ -29,6 +29,7 @@ const PATHS = {
   visualConfig:  path.join(ROOT, 'templates', 'visual-config.json'),
   calendar:      path.join(ROOT, 'templates', 'calendar.json'),
   topPerformers: path.join(ROOT, 'templates', 'top-performers.json'),
+  personas:      path.join(ROOT, 'templates', 'personas.json'),
   comments:      path.join(ROOT, 'output', 'comments'),
   productWeights:path.join(ROOT, 'output', 'product-weights.json'),
 };
@@ -143,6 +144,7 @@ module.exports = {
   getOctoberCampaign()    { return readJson(PATHS.october); },
   getVisualConfig()       { return readJson(PATHS.visualConfig); },
   getCalendar()           { return readJson(PATHS.calendar); },
+  getPersonas()           { return readJson(PATHS.personas); },
 
   // ─── top performers (self-critique loop, #2) ───────────────────────────────
   // { byType: { <contentType>: [ {caption, engagementRate, weekOf}, ... up to 5 ] } }

@@ -784,7 +784,8 @@ document.getElementById('hero-badge-text').textContent = trade.badge;
 document.getElementById('hero-h1').innerHTML = trade.heroH1.replace('<br>', '<br>');
 document.querySelector('#hero-h1 .accent') && (document.querySelector('#hero-h1 .accent').style.color = accent);
 const heroSubBase = trade.heroSub.replace('Houston, TX', city);
-document.getElementById('hero-sub').innerHTML = sinceYear ? `Serving ${city} since ${sinceYear}. ${heroSubBase}` : heroSubBase;
+const safeSince = sinceYear.replace(/[<>"'&]/g, '');
+document.getElementById('hero-sub').innerHTML = safeSince ? `Serving ${city} since ${safeSince}. ${heroSubBase}` : heroSubBase;
 document.getElementById('stat-avail').textContent = avail;
 document.getElementById('hero-bg').style.backgroundImage = `url('${trade.heroBg}')`;
 
@@ -800,7 +801,7 @@ document.getElementById('avg-count').textContent = `Based on ${reviewsP > 0 ? re
 document.getElementById('why-img').src = trade.whyImg;
 document.getElementById('why-img').alt = `${bizDisp} — licensed ${trade.label.toLowerCase()} in ${city}`;
 document.getElementById('why-h2').innerHTML = `The <span class="accent" style="color:${accent}">${trade.label}</span> ${city} Trusts`;
-const sincePhrase = sinceYear ? `since ${sinceYear}` : 'for years';
+const sincePhrase = safeSince ? `since ${safeSince}` : 'for years';
 document.getElementById('why-sub').textContent = `We've served the ${city} community ${sincePhrase} — showing up on time, doing the job right, and standing behind every project.`;
 
 // Contact

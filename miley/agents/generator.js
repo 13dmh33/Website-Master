@@ -23,6 +23,10 @@ const planner  = require('../lib/planner');
 const links    = require('../lib/links');
 const prompts  = require('./generator-prompts');
 
+// load personas once per run; used by resolvePersona below
+const personasData = store.getPersonas() || {};
+const personaRegistry = personasData.personas || {};
+
 const USE_API = !!process.env.ANTHROPIC_API_KEY && process.env.FORCE_EVERGREEN !== '1';
 
 // generate-then-judge (#1): how many variants to request per slot in one call,
@@ -165,10 +169,19 @@ async function judgeVariants(variants) {
   };
 }
 
+// resolve a persona object (from personas.json) for a given persona id.
+// returns null if not found — buildSystemPrompt handles null → default SYSTEM_PROMPT.
+function resolvePersona(personaId) {
+  return personaRegistry[personaId] || null;
+}
+
 // generate one post via Claude: request N variants in one call, pre-filter with the
 // hard quality gate, judge the survivors to pick the best (generate-then-judge, #1).
 // Throws if zero variants pass the gate, so the caller falls back to evergreen.
 async function generateViaApi(planPost, brief, idx, weeklyTerms) {
+  const persona = resolvePersona(planPost.persona);
+  const systemPrompt = prompts.buildSystemPrompt(persona);
+
   const userPrompt = prompts.buildUserPrompt({
     format:        planPost.format,
     contentType:   planPost.contentType,
@@ -181,7 +194,7 @@ async function generateViaApi(planPost, brief, idx, weeklyTerms) {
   });
 
   const maxTokens = ((planPost.format === 'carousel' || planPost.format === 'reel') ? 1400 : 900) * VARIANT_COUNT;
-  const raw = await claude.call({ prompt: userPrompt, systemPrompt: prompts.SYSTEM_PROMPT, maxTokens });
+  const raw = await claude.call({ prompt: userPrompt, systemPrompt, maxTokens });
   const parsed = claude.parseJson(raw);
   const rawVariants = Array.isArray(parsed) ? parsed : [parsed];
 
@@ -228,7 +241,7 @@ async function main() {
     if (USE_API) {
       try {
         content = await generateViaApi(planPost, brief, idx, weeklyTerms);
-        console.log(`  ${planPost.day} ${planPost.contentType} (${planPost.format}) — generated via Claude.`);
+        console.log(`  ${planPost.day} ${planPost.contentType} (${planPost.format}) — generated via Claude [persona: ${planPost.persona || 'riley'}].`);
       } catch (err) {
         console.warn(`  ${planPost.day} ${planPost.contentType} — Claude miss (${err.message}); using evergreen.`);
       }
@@ -259,6 +272,7 @@ async function main() {
       paletteKey:  planPost.paletteKey,
       product,
       isOctober:   planPost.isOctober,
+      persona:     planPost.persona || 'riley',
       ctaStyle:    planPost.ctaStyle || '',
       tracked_link: tracked.link,        // UTM-tagged bio link this post drives to (null for comment/tag posts)
       utm_content:  tracked.product || null,

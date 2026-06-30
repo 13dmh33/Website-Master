@@ -398,7 +398,7 @@ let debounce = null;
 
 function syncFields(){
   s.biz=v('f-biz'); s.city=v('f-city'); s.phone=v('f-phone'); s.rating=v('f-rating'); s.reviews=v('f-reviews');
-  s.since=v('f-since'); s.avail=document.getElementById('f-avail').value; s.hours=v('f-hours');
+  s.since=v('f-since'); const avEl=document.getElementById('f-avail'); s.avail=avEl?avEl.value:''; s.hours=v('f-hours');
 }
 function v(id){ return document.getElementById(id).value.trim(); }
 
@@ -641,7 +641,7 @@ function extractColor(dataUrl,cb){
 }
 
 // preview
-function clampRating(v){const n=parseFloat(v);return(isNaN(n)||n<1)?'':Math.min(5,Math.max(1,Math.round(n*10)/10).toFixed(1));}
+function clampRating(v){const n=parseFloat(v);return(isNaN(n)||n<1)?'':Math.min(5,Math.max(1,Math.round(n*10)/10)).toFixed(1);}
 function clampReviews(v){const n=parseInt(v);return(isNaN(n)||n<0)?'':Math.min(50000,n).toString();}
 function buildUrl(){
   const p=new URLSearchParams();
@@ -681,12 +681,22 @@ function buildStep4(){
 }
 
 function copyLink(){
-  const url=document.getElementById('share-url').__url||document.getElementById('share-url').textContent;
-  navigator.clipboard.writeText(url).then(()=>{
-    const el=document.getElementById('share-url');
-    el.textContent='✓ Copied to clipboard!';
-    setTimeout(()=>el.textContent=url,2000);
-  });
+  const el=document.getElementById('share-url');
+  const url=el.__url||el.textContent;
+  const succeed=()=>{el.textContent='✓ Copied!';setTimeout(()=>el.textContent=url,2000);};
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(url).then(succeed).catch(()=>fallbackCopy(url,el));
+  } else {
+    fallbackCopy(url,el);
+  }
+}
+function fallbackCopy(url,el){
+  const ta=document.createElement('textarea');
+  ta.value=url; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.focus(); ta.select();
+  try{document.execCommand('copy');el.textContent='✓ Copied!';setTimeout(()=>el.textContent=url,2000);}
+  catch{el.textContent='Tap & hold to copy';}
+  document.body.removeChild(ta);
 }
 
 function goCheckout(plan){

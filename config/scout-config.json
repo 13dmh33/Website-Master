@@ -1,12 +1,14 @@
 {
-  "monthly_cap": 10.00,
+  "monthly_cap": 10,
   "cost_per_result": 0.001,
   "current_month": "2026-06",
-  "spent_this_month": 0.03,
-  "total_runs": 1,
-  "total_raw": 30,
-  "total_qualifying": 9,
-  "last_run": "2026-06-01T21:33:25.507Z",
+  "spent_this_month": 0.087,
+  "total_runs": 2,
+  "total_raw": 87,
+  "total_qualifying": 54,
+  "last_run": "2026-06-30T12:32:28.207Z",
   "auto_run": false,
-  "default_limit": 30
+  "default_limit": 30,
+  "total_raw_has_website": 0,
+  "total_qualifying_has_website": 0
 }

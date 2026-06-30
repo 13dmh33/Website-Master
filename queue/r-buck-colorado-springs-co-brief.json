@@ -5,15 +5,15 @@
   "city": "Colorado Springs, CO",
   "phone": "(719) 224-2800",
   "email": "office@callbuck.com",
-  "diagnosis": "R Buck has a live website but lacks visible review presence and social proof. No Google reviews detected, limited online visibility for a established plumber in competitive Colorado Springs market. Missing trust signals that drive local service calls.",
-  "hero_angle": "Established plumber with direct phone access and local Colorado Springs presence—ready to dominate review-based search visibility.",
+  "diagnosis": "R Buck has a functional website but lacks social proof—no visible review count, testimonials, or Google ratings displayed. Missing local SEO optimization and trust signals that competitors leverage to convert emergency calls.",
+  "hero_angle": "Established plumber with direct phone access; needs to amplify reputation and capture more emergency service calls through review visibility.",
   "tone": "direct",
-  "cold_message": "Hey,\n\nI ran a quick search for plumber in Colorado Springs this week.\n\nA handful of competitors show up right away - clean websites, Google reviews, booking links. Homeowners searching at 9pm are calling them.\n\nR Buck only comes up if someone already knows your exact name.\n\nA website fixes that. I build them for plumber contractors specifically - $100 flat, no monthly fee. Live in under a week.\n\nGrab 15 minutes here: https://trevoadvisors.com/start/\n\n- Dave\nTrevo Advisors\ndave@trevoadvisors.com",
-  "template_id": "e3",
-  "template_name": "The search result",
-  "template_subject": "Who shows up when someone searches for plumber in Colorado Springs",
+  "cold_message": "Hey,\n\nHere's a rough number: if a plumber job averages $500, and a basic Google search sends 2-3 jobs per week to contractors with websites instead of you, that's $4,000-6,000/month walking out the door.\n\nThe website costs $100 flat — no monthly fee.\n\nI build them for plumber contractors - done in under a week.\n\nGrab 15 minutes here: https://trevoadvisors.com/start/\n\n- Dave\nTrevo Advisors\ndave@trevoadvisors.com",
+  "template_id": "e4",
+  "template_name": "The real cost",
+  "template_subject": "What not having a website actually costs R Buck",
   "template_based": true,
-  "gap_score": 6,
+  "gap_score": 5,
   "priority": true,
   "channel": "email",
   "secondary_channel": "sms",
@@ -21,8 +21,8 @@
   "secondary_template_id": "s3",
   "secondary_template_name": "The simple ask",
   "checker_approved": true,
-  "diagnosed_at": "2026-06-29T22:09:55.061Z",
-  "final_message": "Hey,\n\nI ran a quick search for plumber in Colorado Springs this week.\n\nA handful of competitors show up right away - clean websites, Google reviews, booking links. Homeowners searching at 9pm are calling them.\n\nR Buck only comes up if someone already knows your exact name.\n\nA website fixes that. I build them for plumber contractors specifically - $100 flat, no monthly fee. Live in under a week.\n\nGrab 15 minutes here: https://trevoadvisors.com/start/\n\n- Dave\nTrevo Advisors\ndave@trevoadvisors.com",
+  "diagnosed_at": "2026-06-30T12:28:36.668Z",
+  "final_message": "Hey,\n\nHere's a rough number: if a plumber job averages $500, and a basic Google search sends 2-3 jobs per week to contractors with websites instead of you, that's $4,000-6,000/month walking out the door.\n\nThe website costs $100 flat — no monthly fee.\n\nI build them for plumber contractors - done in under a week.\n\nGrab 15 minutes here: https://trevoadvisors.com/start/\n\n- Dave\nTrevo Advisors\ndave@trevoadvisors.com",
   "checker_flag": "",
   "rewrite_count": 0,
   "checker_score": {
@@ -30,7 +30,7 @@
     "placeholders_filled": true,
     "secondary_placeholders": true
   },
-  "checked_at": "2026-06-29T22:09:55.356Z",
+  "checked_at": "2026-06-30T12:35:07.642Z",
   "demo_url": "https://trevoadvisors.com/for/?b=R+Buck&t=plumber&c=Colorado+Springs",
-  "demo_url_created_at": "2026-06-29T22:09:55.716Z"
+  "demo_url_created_at": "2026-06-30T12:35:37.182Z"
 }

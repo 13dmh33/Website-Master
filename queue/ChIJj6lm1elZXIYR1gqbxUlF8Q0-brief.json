@@ -23,17 +23,6 @@
   "secondary_message": null,
   "secondary_template_id": null,
   "secondary_template_name": null,
-  "checker_approved": true,
-  "diagnosed_at": "2026-06-29T15:57:25.872Z",
-  "final_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
-  "checker_flag": "",
-  "rewrite_count": 0,
-  "checker_score": {
-    "template_based": true,
-    "placeholders_filled": true,
-    "secondary_placeholders": true
-  },
-  "checked_at": "2026-06-29T22:09:55.368Z",
-  "demo_url": "https://trevoadvisors.com/for/?b=Geno%27s+Home+Repair+and+Maintenance&t=handyman&c=San+Antonio&r=8",
-  "demo_url_created_at": "2026-06-29T22:09:55.692Z"
+  "checker_approved": false,
+  "diagnosed_at": "2026-06-29T15:57:25.872Z"
 }

@@ -20,17 +20,6 @@
   "secondary_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $100 flat. Book here: https://trevoadvisors.com/start/",
   "secondary_template_id": "s3",
   "secondary_template_name": "The simple ask",
-  "checker_approved": true,
-  "diagnosed_at": "2026-06-29T16:26:03.144Z",
-  "final_message": "Hey,\n\nQuick stat: the average local plumber business misses 30-40% of after-hours leads — mostly because there's no website or no one answering chat.\n\n67% of those customers don't leave a voicemail. They just call your competitor.\n\nI build websites for local contractors that capture leads around the clock. Contact forms, booking links, mobile-ready. $100 flat, no monthly fee.\n\nIf you want to stop sending jobs to guys with worse reviews than yours, I'd love to show you what this looks like. Grab 15 minutes here: https://trevoadvisors.com/start/\n\n- Dave\nTrevo Advisors | AI agents built for the trades.\ntrevoadvisors.com | trevoadvisors.com",
-  "checker_flag": "",
-  "rewrite_count": 0,
-  "checker_score": {
-    "template_based": true,
-    "placeholders_filled": true,
-    "secondary_placeholders": true
-  },
-  "checked_at": "2026-06-29T22:09:55.452Z",
-  "demo_url": "https://trevoadvisors.com/for/?b=Pipes+Peak+Plumbing&t=plumber&c=Colorado+Springs",
-  "demo_url_created_at": "2026-06-29T22:09:55.715Z"
+  "checker_approved": false,
+  "diagnosed_at": "2026-06-29T16:26:03.144Z"
 }

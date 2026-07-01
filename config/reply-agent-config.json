@@ -1,0 +1,20 @@
+{
+  "enabled": true,
+  "autoSend": false,
+  "digestMode": "batched",
+  "model": "claude-haiku-4-5-20251001",
+  "costCapMonthly": 5.00,
+  "currentMonth": "2026-06",
+  "spentThisMonth": 0.00,
+  "rates": {
+    "input_per_mtok": 0.80,
+    "output_per_mtok": 4.00,
+    "cache_write_per_mtok": 1.00,
+    "cache_read_per_mtok": 0.08
+  },
+  "avgJobValue": null,
+  "missRatePct": null,
+  "proofPoint": null,
+  "bookingLink": "https://cal.com/david-hettinger-g8qbdk/30min",
+  "fromName": "Dave"
+}

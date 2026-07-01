@@ -1,0 +1,10 @@
+{
+  "monthly_cap": 10,
+  "cost_per_result": 0.001,
+  "current_month": "2026-06",
+  "spent_this_month": 0,
+  "total_runs": 0,
+  "total_orgs_found": 0,
+  "auto_run": false,
+  "last_run": null
+}

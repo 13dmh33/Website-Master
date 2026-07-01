@@ -15,12 +15,18 @@
     "webhook": "node scripts/webhook.js",
     "poll": "node scripts/poller.js",
     "daily": "bash run-daily.sh",
-    "daily:dry": "bash run-daily.sh --dry-run"
+    "daily:dry": "bash run-daily.sh --dry-run",
+    "agg:scrape": "node aggregator/scripts/scraper.js",
+    "agg:sequence": "node aggregator/scripts/email-sequences.js",
+    "agg:check": "node aggregator/scripts/checker.js",
+    "agg:pdf": "node aggregator/scripts/pdf-generator.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.37.0",
     "dotenv": "^16.0.0",
     "imapflow": "^1.0.0",
-    "nodemailer": "^6.9.0"
+    "nodemailer": "^6.9.0",
+    "pdfkit": "^0.19.1",
+    "qrcode": "^1.5.4"
   }
 }

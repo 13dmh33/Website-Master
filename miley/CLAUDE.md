@@ -124,9 +124,18 @@ node agents/generator.js         # uses Claude if ANTHROPIC_API_KEY set, else ev
 node agents/designer.js
 node agents/scheduler.js          # FORCE_QUEUE=1 → review queue + preview
 node scripts/push-queue.js        # APPROVAL step: release queue to Buffer at slot times
+
+# weekly revenue report (Mac only — Zoho SMTP blocked from container)
+node scripts/weekly-report.js              # print + email Monday summary
+node scripts/weekly-report.js --print      # print only, no email
 ```
 
 Open `output/queue/preview-{weekOf}.html` in a browser to review the week.
+
+### Recent additions (merged 2026-07-01)
+- **Weekly revenue report** (`scripts/weekly-report.js`) — Monday-morning email to Dave summarising the past week's content performance + UTM clicks + product weights. Reads `output/content/content-{weekOf}.json`, `output/clicks/latest.json`, `output/product-weights.json`. Mac cron: `0 8 * * 1`.
+- **Per-post lifestyle-image pinning** — a post can set a `lifestyleImage` field to pin an exact lifestyle photo instead of pulling one from Unsplash; honored by `agents/designer.js` + `lib/canvas-render.js`.
+- **Not merged (conflict, pending):** `claude/fervent-johnson-is5u42` (calendar general-holiday awareness + week-targeting fix) conflicts on `templates/evergreen.json`; needs a hand-resolve. `feature/configurator-v3` also touches `templates/evergreen.json` + `post-formats.json` — held back.
 
 ---
 

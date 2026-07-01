@@ -15,7 +15,7 @@ Your goal: 47 clients/month at $100/site one-time (no monthly fee); AI bundles (
 **Trade focus: Plumbing (40%) · Electrical (35%) · Handyman (25%) · Roofing (secondary)**
 **HVAC is excluded** — owner works for an HVAC manufacturer (conflict of interest). Never scout, pitch, or generate content targeting HVAC contractors.
 
-## Build Status (as of 2026-06-30)
+## Build Status (as of 2026-07-01)
 - Scout v2: ✅ scripts/scout.js — --budget/--target/--min-score/--dry-run/--csv/--suggest flags; pre-dedup; social-only detection; qualify_rate; ROI estimate; **HVAC blocked**; **on main (merged)**
 - Market Audit: ✅ scripts/market-audit.js — 65 US metros scored; --trade/--top/--csv; zero API cost; **on main (merged)**
 - Enricher: ✅ scripts/enricher.js — Apollo.io People Match, 200 credit/mo cap; finds owner email; upgrades sms→email. **Known gap (2026-06-29): no hit/miss stats persisted; Scout/Outscraper returns email empty ~95% of the time, so Enricher is the only systematic email source and its match rate is currently unmeasured.**
@@ -47,6 +47,11 @@ Your goal: 47 clients/month at $100/site one-time (no monthly fee); AI bundles (
 - Miley: ✅ miley/ — Instagram content engine for Techs4Tatas; **on main (merged)**; see Miley section below
 - Atlas: ✅ website/atlas/index.html — AI lead follow-up product; $100 + $65/mo
 - Argus: ✅ website/argus/index.html — AI review responder product; $100 + $65/mo
+- Reply Agent: ✅ scripts/reply-agent.js — gap-selling email drafter for inbound replies; polls Zoho IMAP, classifies intent + personality, drafts ONE reply per message into `messages/reply-drafts-queue.json`; `autoSend:false` (Dave sends every email); $5/mo Haiku cap in config/reply-agent-config.json; writes SentLog status back to Sheet; **merged to `claude/project-update-branches-smcxab` 2026-07-01 (was feature/gap-reply-agent)**; **run on Mac** (Zoho IMAP blocked from container)
+- Aggregator Outreach: ✅ aggregator/ — separate pipeline that finds aggregator orgs (license schools, bond/insurance agents, SBDC, SCORE, trade schools) to get Trevo onto recommended-vendor lists; scraper → email-sequences (3-email/3-week drip) → checker → pdf-generator; **draft/queue only, never sends**; **merged 2026-07-01 (was claude/aggregator-outreach-fvlmw8)**; scraper **runs on Mac** (Outscraper blocked); ⚠️ trade_school program filter default includes `hvac` — must exclude per conflict-of-interest policy (see Action Items)
+- Site Audit: ✅ audit/ — isolated diagnostic agent for the has-website lead segment; given a contractor URL → Module 1 (deterministic html/PageSpeed checks) → Module 2 (Claude vision on mobile screenshot) → Module 3 (bucket classifier: diy-builder/pro-maintained/unknown) → Module 4 (Claude composes email hook + mini-audit, brand-voice linter throws on violation); **draft-only, writes to audit/output/**; 37/37 unit tests pass (fully mocked); **merged 2026-07-01 (was feature/site-audit)**; not yet run against live APIs — **run on Mac** (needs PAGESPEED_API_KEY + ANTHROPIC_API_KEY; container blocks outbound fetch)
+- Miley Weekly Report: ✅ miley/scripts/weekly-report.js — Monday-morning revenue email for @techs4tatas (content perf + UTM clicks + product weights); **merged 2026-07-01 (was claude/weekly-email-revenue-plan-4ysmqx)**; **run on Mac** (Zoho SMTP blocked); cron Mon 8am
+- Miley lifestyle-image pinning: ✅ per-post `lifestyleImage` field lets a post pin an exact lifestyle photo (bypasses Unsplash fetch) — used by designer.js + canvas-render.js; **merged 2026-07-01 (was claude/women-trades-stats-posts-p2p7ob)**
 
 ---
 
@@ -277,6 +282,7 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - 2026-06-30: Sheet-log v1 live-tested — SentLog tab created, header written, 5 rows appended, 0 errors.
 - 2026-06-30: Sheet-log v2 built (feature/sheet-log-refine): 14-col CRM, update-in-place, drip timestamps, reply/unsubscribe columns, notes preserved, old-format migration handled.
 - 2026-06-30: Demo link personalization upgraded — pitcher P.S. names business, personalizer passes s= (rating) + h= (hero_angle), /for/ page shows insight callout + star-rated reviews + city-aware compare + checkout param pass-through; $65/mo pricing bug fixed.
+- 2026-07-01: Branch consolidation pass — reviewed all open feature/claude branches, merge-conflict-checked each against main, and merged the 5 that were clean (or CHECKPOINT.md-only) onto `claude/project-update-branches-smcxab`: **feature/site-audit** (audit/ diagnostic agent), **claude/weekly-email-revenue-plan** (Miley weekly report), **claude/women-trades-stats-posts** (Miley lifestyle-image pinning), **claude/aggregator-outreach** (aggregator/ outreach engine), **feature/gap-reply-agent** (reply-agent.js). CHECKPOINT.md add/add conflicts were union-resolved (scratch notes file). **4 branches held back for conflict resolution (see Action Items):** feature/configurator-v3 (miley evergreen.json + post-formats.json), claude/trusting-mayer-nvlz17 (scripts/scout.js + website/checkout/index.html), claude/session-planning-7wjtbv (163 queue/*-brief.json), claude/fervent-johnson-is5u42 (miley evergreen.json). NOTE: this work is on branch `claude/project-update-branches-smcxab`, not yet promoted to main.
 
 ## Twilio A2P 10DLC Status
 - Brand registration submitted: 2026-06-03
@@ -324,6 +330,18 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - [ ] **Persist Enricher hit/miss stats** — `scripts/enricher.js` currently prints found/noMatch/error counts to terminal but never saves them; add a per-run summary to `config/enricher-config.json` so Apollo's real success rate is visible over time instead of guessed.
 - [ ] **Check licensed-contractor registries** (state Chamber of Commerce / contractor licensing boards) as a free, ToS-clean public-data email source — untapped, not yet scoped per-state.
 - [ ] **Decide on Google Sheet write-back** — user wants to eventually move scraper output + pipeline run logs into the same Sheet used for sheet-import (not just read from it). Needs Google Sheets write API (only read-only Drive access used so far). Not scoped — needs a follow-up conversation on what "logs" should contain before building.
+
+### Branch consolidation (2026-07-01) — follow-ups
+- [ ] **Promote `claude/project-update-branches-smcxab` → main** — 5 branches were merged here (site-audit, aggregator, gap-reply-agent, Miley weekly-report, Miley lifestyle-pinning). Open a PR / fast-forward main once reviewed.
+- [ ] **⚠️ Aggregator HVAC exclusion** — `aggregator/lib/sources.js` / config trade_school program filter defaults to `plumbing/electrical/hvac/roofing`. HVAC must be removed (conflict-of-interest policy). Fix before the aggregator scraper is ever run.
+- [ ] **Run Site Audit for real (Mac)** — `cd audit && npm install && npx playwright install chromium`, fill `.env` (PAGESPEED_API_KEY, ANTHROPIC_API_KEY, TREVO_SIGNATURE_NAME), `npm run audit` against real has-website leads; spot-check output/*.email.txt + *.mini-audit.md by eye. Never run against live data unreviewed.
+- [ ] **Wire Reply Agent (Mac)** — `node scripts/reply-agent.js --dry-run` first; needs Zoho IMAP creds in .env.local. autoSend stays OFF until Dave has reviewed a batch of drafts (see CHECKPOINT.md §Graduation).
+- [ ] **Resolve held-back merge conflicts** (4 branches, need decisions):
+  - `feature/configurator-v3` — conflicts on `miley/templates/evergreen.json` + `post-formats.json` (overlaps Miley work already merged). Also carries configurator/preview v3 + `netlify/functions/places.js` + a duplicate reply-agent — decide which pieces are wanted; likely cherry-pick configurator + places.js only.
+  - `claude/trusting-mayer-nvlz17` — conflicts on `scripts/scout.js` + `website/checkout/index.html` (both moved a lot on main). Adds a Google Sheets lead mirror + a prospect page. Rebase onto current main and re-resolve, or re-implement the Sheets mirror against today's scout.js.
+  - `claude/session-planning-7wjtbv` — 163 `queue/*-brief.json` conflicts (stale lead briefs) plus 3 new configurable website formats (funnel / service×city / booking-first). Drop the queue churn; cherry-pick only the website-format work.
+  - `claude/fervent-johnson-is5u42` — conflicts on `miley/templates/evergreen.json`. Adds calendar general-holiday awareness + week-targeting fix. Small — re-resolve evergreen.json by hand (union the two evergreen pools).
+- [ ] **Prune stale/superseded branches** once the above lands: merged-content branches (`feature/contact-page-scraper`, `feature/scout-has-website`, `claude/molly-ui-polish`, `claude/scout-refinement`, `claude/trevo-advisors-review-Sjewy`, `claude/reeve-project-overview-vyo2yx`, `claude/miley-techs4tatas`, `claude/magical-davinci-cfrzy7`) and pre-merge single-feature branches (`claude/dashboard`, `demo-site`, `email-reply-poller`, `mobile-fixes`, `reply-classifier`, `twilio-reply-webhook`, `website`, `kind-hypatia-3YzM0`, `sweet-thompson-GOeA5`). Also `feature/sheet-log-refine` + `feature/sheet-writeback` (superseded by main's sheet-log + --csv) and stale PR #3 (Milly phase-1, superseded).
 
 ### Milly — first run (Mac, after Buffer token setup)
 1. Add `BUFFER_ACCESS_TOKEN` + `BUFFER_INSTAGRAM_PROFILE_ID` to `milly/.env`

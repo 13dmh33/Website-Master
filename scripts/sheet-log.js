@@ -2,8 +2,12 @@
 /**
  * Sheet-Log v3 — keeps a Google Sheet as a living CRM for email outreach
  *
- * Layout: 16 columns (A–P) + a ChangeLog tab for every create/update.
+ * Tabs written:
+ *   SentLog     — 16-col email-outreach CRM (email leads only, update-in-place)
+ *   ChangeLog   — append-only ledger of every create/update
+ *   AllContacts — every queued lead (SMS + email), rebuilt from scratch each run
  *
+ * SentLog layout (A–P):
  *  A  company           D  last send (email title)   H  email 1 sent
  *  B  email             E  date updated (auto)        I  email 2 sent
  *  C  trade             F  status  ← user-editable    J  email 3 sent
@@ -14,19 +18,23 @@
  *                                                     O  unsubscribe date
  *                                                     P  notes ← user-editable
  *
+ * AllContacts layout (A–K):
+ *  A  company   B  trade   C  city   D  phone   E  email   F  website
+ *  G  channel   H  status  I  rating  J  reviews  K  demo URL
+ *
  * Column F (status) allowed values: sent / replied / quoted / customer / lost / do not contact
- * Columns F and P are PRESERVED on every update — never overwritten by the script.
+ * Columns F and P are PRESERVED on every SentLog update — never overwritten by the script.
  *
  * ChangeLog tab (append-only ledger):
  *   A  timestamp | B  action | C  company | D  email | E  change
  *   Only appended when something meaningful changes (new drip, reply, unsub, new row).
  *
  * Usage:
- *   node scripts/sheet-log.js            # sync all email leads to Sheet
+ *   node scripts/sheet-log.js            # sync all tabs to Sheet
  *   node scripts/sheet-log.js --dry-run  # preview rows; nothing written
  *
  * Reads:  state.json  queue/*-brief.json  messages/*-sent.json  .env.local
- * Writes: Google Sheet (SentLog + ChangeLog tabs) — state.json NOT modified
+ * Writes: Google Sheet (SentLog + ChangeLog + AllContacts tabs) — state.json NOT modified
  */
 
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.local') });
@@ -63,9 +71,16 @@ const HEADER = [
 ];
 const COL = Object.fromEntries(HEADER.map((h, i) => [h, i]));
 
-const TAB           = process.env.SHEET_TAB || 'SentLog';
-const CHANGELOG_TAB = 'ChangeLog';
+const TAB              = process.env.SHEET_TAB || 'SentLog';
+const CHANGELOG_TAB    = 'ChangeLog';
+const ALLCONTACTS_TAB  = 'AllContacts';
 const CHANGELOG_HEADER = ['timestamp', 'action', 'company', 'email', 'change'];
+const ALLCONTACTS_HEADER = [
+  'company', 'trade', 'city', 'phone', 'email', 'website',
+  'channel', 'status', 'rating', 'reviews', 'demo URL',
+];
+// Hardcoded Sheet ID — override with SHEET_ID in .env.local if needed
+const DEFAULT_SHEET_ID = '1MNTg-WIT-NwwtOnP4QDs9M5QuG8UcDnmX8Jj8SxtTc8';
 const SHEETS_BASE   = 'https://sheets.googleapis.com/v4/spreadsheets';
 const TOKEN_URL     = 'https://oauth2.googleapis.com/token';
 const SCOPE         = 'https://www.googleapis.com/auth/spreadsheets';
@@ -301,18 +316,24 @@ async function main() {
   }
 
   if (DRY_RUN) {
-    console.log('\nRows that WOULD be synced:');
+    console.log('\n[SentLog] rows that WOULD be synced:');
     console.log('  ' + HEADER.join(' | '));
     for (const { entry, brief, sent } of pending) {
       const row = buildRow(entry, brief, sent, null, -1, -1);
       console.log('  ' + row.map(c => String(c || '—').slice(0, 18)).join(' | '));
     }
-    console.log(`\n[dry-run] ${pending.length} lead(s) not written.`);
+    // AllContacts preview
+    let acCount = 0;
+    for (const entry of state.queue) {
+      const brief = readJsonSafe(path.join(QUEUE_DIR, `${entry.lead_id}-brief.json`));
+      if (brief) acCount++;
+    }
+    console.log(`\n[AllContacts] ${acCount} leads would be written (all channels).`);
+    console.log(`\n[dry-run] nothing written. Sheet ID: ${process.env.SHEET_ID || DEFAULT_SHEET_ID}`);
     return;
   }
 
-  const sheetId = process.env.SHEET_ID;
-  if (!sheetId) { console.error('SHEET_ID not set in .env.local.'); process.exit(1); }
+  const sheetId = process.env.SHEET_ID || DEFAULT_SHEET_ID;
 
   let token;
   try {
@@ -407,14 +428,45 @@ async function main() {
     await sheetsAppend(token, sheetId, CHANGELOG_TAB, changeLog);
   }
 
+  // ── AllContacts tab — full rebuild every run (all queued leads, SMS + email) ──
+  const allContactsCreated = await ensureTab(token, sheetId, ALLCONTACTS_TAB);
+  if (allContactsCreated) console.log(`Created tab "${ALLCONTACTS_TAB}".`);
+
+  const allRows = [ALLCONTACTS_HEADER];
+  for (const entry of state.queue) {
+    const brief = readJsonSafe(path.join(QUEUE_DIR, `${entry.lead_id}-brief.json`));
+    if (!brief) continue;
+    allRows.push([
+      brief.business_name || entry.lead_id,
+      brief.trade         || '',
+      brief.city          || '',
+      brief.phone         || '',
+      brief.email         || '',
+      brief.website       || '',
+      brief.channel       || '',
+      entry.status        || '',
+      brief.rating        != null ? String(brief.rating)       : '',
+      brief.review_count  != null ? String(brief.review_count) : '',
+      brief.demo_url      || '',
+    ]);
+  }
+
+  // Clear and rewrite AllContacts from scratch (full snapshot every run)
+  await sheetsBatchUpdate(token, sheetId, [{
+    range:  `${quoteTab(ALLCONTACTS_TAB)}!A1:K${allRows.length + 200}`,
+    values: allRows,
+  }]);
+  console.log(`AllContacts: wrote ${allRows.length - 1} leads (all channels).`);
+
   console.log('─'.repeat(60));
   console.log('Summary');
-  console.log(`  new rows appended:    ${newRows.length}`);
-  console.log(`  rows updated:         ${updateData.length}`);
-  console.log(`  changelog entries:    ${changeLog.length}`);
-  console.log(`  leads skipped:        ${skipped}`);
-  console.log('\nDone. Edit columns F (status) and P (notes) in the Sheet by hand.');
-  console.log('      ChangeLog tab records every create and meaningful change.');
+  console.log(`  SentLog new rows:      ${newRows.length}`);
+  console.log(`  SentLog updates:       ${updateData.length}`);
+  console.log(`  changelog entries:     ${changeLog.length}`);
+  console.log(`  AllContacts rows:      ${allRows.length - 1}`);
+  console.log(`  skipped (no email):    ${skipped}`);
+  console.log('\nDone. Edit columns F (status) and P (notes) in SentLog by hand.');
+  console.log('      AllContacts tab rebuilds from scratch each run.');
 }
 
 main().catch(e => { console.error('Fatal:', e.message); process.exit(1); });

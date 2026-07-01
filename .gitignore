@@ -20,3 +20,5 @@ reports/*.json
 
 # OS
 .DS_Store
+AllContacts.csv
+SentLog.csv

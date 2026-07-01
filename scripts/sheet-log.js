@@ -48,7 +48,8 @@ const STATE_PATH   = path.join(ROOT, 'state.json');
 const QUEUE_DIR    = path.join(ROOT, 'queue');
 const MESSAGES_DIR = path.join(ROOT, 'messages');
 
-const DRY_RUN = process.argv.includes('--dry-run');
+const DRY_RUN  = process.argv.includes('--dry-run');
+const CSV_MODE = process.argv.includes('--csv');
 
 // ── Column schema ─────────────────────────────────────────────────────────────
 const HEADER = [
@@ -312,6 +313,50 @@ async function main() {
 
   if (pending.length === 0) {
     console.log('\nNothing to sync. Done.');
+    return;
+  }
+
+  if (CSV_MODE) {
+    // Export two CSV files — no Google auth needed. Import manually into Sheets.
+    const csvEscape = v => {
+      const s = String(v == null ? '' : v);
+      return s.includes(',') || s.includes('"') || s.includes('\n') ? `"${s.replace(/"/g, '""')}"` : s;
+    };
+    const toLine = row => row.map(csvEscape).join(',');
+
+    // AllContacts.csv — every queued lead
+    const acRows = [ALLCONTACTS_HEADER];
+    for (const entry of state.queue) {
+      const brief = readJsonSafe(path.join(QUEUE_DIR, `${entry.lead_id}-brief.json`));
+      if (!brief) continue;
+      acRows.push([
+        brief.business_name || entry.lead_id,
+        brief.trade         || '',
+        brief.city          || '',
+        brief.phone         || '',
+        brief.email         || '',
+        brief.website       || '',
+        brief.channel       || '',
+        entry.status        || '',
+        brief.rating        != null ? String(brief.rating)       : '',
+        brief.review_count  != null ? String(brief.review_count) : '',
+        brief.demo_url      || '',
+      ]);
+    }
+    const acPath = path.join(ROOT, 'AllContacts.csv');
+    fs.writeFileSync(acPath, acRows.map(toLine).join('\n'), 'utf8');
+    console.log(`✓ AllContacts.csv  — ${acRows.length - 1} leads  →  ${acPath}`);
+
+    // SentLog.csv — email-outreach leads only
+    const slRows = [HEADER];
+    for (const { entry, brief, sent } of pending) {
+      slRows.push(buildRow(entry, brief, sent, null, -1, -1));
+    }
+    const slPath = path.join(ROOT, 'SentLog.csv');
+    fs.writeFileSync(slPath, slRows.map(toLine).join('\n'), 'utf8');
+    console.log(`✓ SentLog.csv      — ${slRows.length - 1} email leads  →  ${slPath}`);
+
+    console.log('\nTo import: open your Sheet → File → Import → Upload each CSV → "Insert new sheet(s)".');
     return;
   }
 

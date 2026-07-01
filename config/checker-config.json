@@ -1,5 +1,5 @@
 {
-  "daily_limit": 120,
+  "daily_limit": 250,
   "monthly_cap": 3,
   "auto_run": false,
   "model": "claude-haiku-4-5-20251001",
@@ -11,10 +11,10 @@
   },
   "current_month": "2026-06",
   "spent_this_month": 0,
-  "today": "2026-06-29",
-  "processed_today": 120,
-  "total_processed": 220,
-  "approved_total": 220,
+  "today": "2026-06-30",
+  "processed_today": 46,
+  "total_processed": 345,
+  "approved_total": 345,
   "flagged_total": 0,
-  "last_run": "2026-06-29T16:27:42.520Z"
+  "last_run": "2026-06-30T12:35:07.695Z"
 }

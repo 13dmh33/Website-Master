@@ -135,3 +135,47 @@ by wiring `scripts/reply-classifier.js` into the poller.
   ("date updated") the next time the script runs after d2 fires.
 - **SMS-only leads excluded** — sheet-log only tracks email-channel leads. SMS-only
   outreach is not written to the Sheet.
+
+---
+
+# CHECKPOINT — Contact-Page Email Scraper
+
+Branch: `feature/contact-page-scraper` (merged to `main`)
+Date: 2026-06-29
+Status: ✅ Built, unit-tested. Needs a real run on the Mac for live email results.
+
+## What was built
+
+`scripts/contact-scraper.js` — a zero-API-cost script that visits the websites of
+has-website leads and extracts a publicly visible email, flipping SMS-only leads into
+email-capable leads so the existing email pipeline can use them. Free alternative to
+Apollo (Enricher): no paid API, no credit cap. New file only — **no existing pipeline
+file was modified.**
+
+## How it actually works
+
+- A lead's `email` lives in its record inside `leads/*.json`.
+- `channel` is **not stored** — `diagnoser.js` derives it at diagnose time.
+
+So to make an SMS-only lead email-capable, the scraper:
+
+1. Writes the scraped email into that lead's `leads/*.json` record — additive only.
+2. Resets that lead's `state.json` status to `scouted` so Diagnoser re-runs and
+   regenerates an email-appropriate brief. Prior status saved as `preScrapeStatus`.
+
+Run order: **scraper → Diagnoser → Checker → Pitcher**.
+
+## How to run
+
+```bash
+# On the Mac (container egress is proxy-blocked)
+node scripts/contact-scraper.js              # real run
+node scripts/contact-scraper.js --dry-run    # preview only
+node scripts/contact-scraper.js --limit 20   # cap sites visited
+```
+
+## Notes
+
+- 170 of current leads have no website — scraper can't help them (need Apollo/Enricher).
+- 11 has-website / no-email leads are the target set; run on Mac for real results.
+- No JS rendering — obfuscated emails won't be caught by design.

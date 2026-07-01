@@ -1,0 +1,24 @@
+{
+  "name": "trevo-site-audit",
+  "version": "0.1.0",
+  "description": "Diagnostic agent that audits an existing contractor website and drafts cold-outreach assets (email hook + mini-audit) for Trevo's has-website lead segment. Draft-only — never sends anything.",
+  "private": true,
+  "type": "module",
+  "main": "scripts/run.js",
+  "scripts": {
+    "audit": "node scripts/run.js",
+    "test": "node --test test/",
+    "lint": "node scripts/lint.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.37.0",
+    "csv-parse": "^5.5.6",
+    "dotenv": "^16.4.5",
+    "playwright": "^1.48.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "author": "Trevo Advisors",
+  "license": "UNLICENSED"
+}

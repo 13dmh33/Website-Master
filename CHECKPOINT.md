@@ -179,3 +179,86 @@ node scripts/contact-scraper.js --limit 20   # cap sites visited
 - 170 of current leads have no website — scraper can't help them (need Apollo/Enricher).
 - 11 has-website / no-email leads are the target set; run on Mac for real results.
 - No JS rendering — obfuscated emails won't be caught by design.
+
+---
+
+# CHECKPOINT — Directory Scout (public-directory lead sourcing)
+
+Date: 2026-07-01
+Status: ✅ Built + tested (20 tests: 15 unit + 5 offline end-to-end). The full
+logic chain (YP HTML → lead → contractor-site HTML → email) is proven offline;
+the licensing (CSV) source is verified end-to-end with a real write/dedup cycle.
+Live YP/BBB fetch could NOT be validated from the container — its egress proxy
+403s every external host (confirmed via curl, proxy status, and WebFetch), and
+policy denials must not be retried. Those two sources need one Mac run to confirm
+live selectors; the tooling below makes that a one-command check.
+
+## Why this exists
+
+Google Maps (Outscraper, via Scout `--mode has-website`) only returns a website URL
+for ~35% of listings — the other ~65% leave it blank, so the contact-scraper has
+nothing to visit. This is what wall-ed the email pipeline: repeated has-website Scout
+runs across Denver/Houston/Atlanta returned 0 usable leads (`No real site: 65` etc.).
+Public directories list the contractor's own website far more reliably. Directory Scout
+turns those directories into Scout-shaped leads so the existing pipeline
+(contact-scraper → Diagnoser → Checker → Pitcher) works unchanged.
+
+## Architecture
+
+One shared foundation + thin per-source adapters + one runner:
+
+- `scripts/lib/directory-scout.js` — shared: lead formatting (scout-has-website shape),
+  dedup (by lead_id + site domain, against state.json + leads/ + leads-web/),
+  CSV export, state.json queue writes (additive, mirrors Scout's `updateState`),
+  needs-email CSV. Pure functions (`formatLead`, `dedupAndFormat`, `toCsv`,
+  `hostFromUrl`) are separated from I/O so they unit-test without network/disk.
+- `scripts/lib/dir-yellowpages.js` — parses YP search HTML → name + **site_url** +
+  phone + review count + address. Best source (exposes the contractor's own domain).
+- `scripts/lib/dir-bbb.js` — parses BBB's JSON search API (their HTML is JS-rendered).
+  Some site_urls, all name/phone. Established/accredited businesses.
+- `scripts/lib/dir-licensing.js` — ingests a state board's CSV export (TDLR/DORA/DOPL/
+  CSLB). State-agnostic fuzzy header mapping; add a state by exporting its CSV, no code.
+  Yields name/phone/address (+ email if the board includes it) — rarely websites.
+- `scripts/directory-scout.js` — CLI runner tying adapters to the shared lib.
+- `scripts/test/directory-scout.test.js` — 15 unit tests (formatters, dedup, all 3 parsers).
+
+## How to run (Mac — container egress is proxy-gated, same as Scout)
+
+```bash
+node scripts/directory-scout.js --source yellowpages --trade plumber   --city "Denver, CO"
+node scripts/directory-scout.js --source bbb         --trade electrician --city "Austin, TX" --pages 3
+node scripts/directory-scout.js --source licensing   --file exports/tdlr.csv --trade plumber --city "Austin, TX"
+#   --pages N   pages to fetch (yellowpages/bbb; default 2)
+#   --limit N   cap usable leads written this run
+#   --dry-run   parse + dedup + print, write nothing
+#   --csv       also write a leads-web/ CSV of the usable leads
+```
+
+Usable leads (with a site_url or email) land in `leads/dir-<source>-<city>-<trade>-<date>-runN.json`
+and are queued in `state.json` as `scouted`. Leads with only name/phone route to a
+`leads-web/needs-email-…csv` for Apollo/manual. **Run order after:**
+`contact-scraper.js` (fills emails from the new site_urls) → `diagnoser.js` →
+`checker.js` → `pitcher.js`.
+
+## Notes / honest limits
+
+- **Yellow Pages** = the workhorse (most site_urls per run). **BBB** = fewer site_urls,
+  all phone (feeds Apollo when no site). **Licensing** = a verified roster, but mostly
+  name/phone (feeds Apollo/manual, not contact-scraper) — its value is ToS-clean coverage
+  of every licensed contractor, not websites.
+- HVAC is blocked in the runner (conflict-of-interest policy), same as Scout.
+- Additive to state.json (never removes/rewrites existing entries). Idempotent — re-runs
+  dedup against prior output. Verified: a real licensing run wrote 2 leads + queued them,
+  a re-run skipped both as duplicates, state restored cleanly.
+- Network parsers (YP HTML, BBB JSON) are written against current markup and are defensive
+  (YP has THREE website-extraction strategies incl. a fallback that survives a class rename),
+  but confirm selectors on the first live Mac run — if a site reshuffles its HTML, only the
+  adapter's regex changes; the rest of the pipeline is untouched.
+- **Safety net if a live run parses 0 despite HTTP 200:** the runner says so LOUDLY and
+  points you at the offline path. Save the results page from your browser and run
+  `--html <file> --dry-run` to validate the parser without a fetch (`--save-html <dir>`
+  dumps what a live fetch received). If it still parses 0, that saved file is exactly what
+  to hand back for a regex fix — a one-round turnaround, not a stuck morning.
+- Plain `fetch` (no browser), matching contact-scraper. If a directory's anti-bot blocks
+  plain fetch on the Mac, the pre-installed Playwright/Chromium is the fallback (swap
+  `fetchBody` for a headless fetch in the adapter — interface stays the same).

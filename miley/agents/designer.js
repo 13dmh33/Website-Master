@@ -63,6 +63,7 @@ async function renderCarousel(post, imageDir, idx) {
             total:    slides.length,
             paletteKey,
             productKey: post.product,
+            contentType: post.contentType,
           });
       saveBuffer(buf, outPath);
       paths.push(outPath);
@@ -83,17 +84,26 @@ async function renderSingle(post, imageDir, idx) {
   const templateName = render.selectTemplate(post.format, { hasPhoto });
   try {
     let buf;
-    if (templateName === 'cleanCard') {
+    if (post.contentType === 'trades_stat' && post.statNumber) {
+      buf = await render.renderStatCard({
+        statNumber:  post.statNumber,
+        statContext: post.statContext || '',
+        source:      post.statSource || '',
+        paletteKey,
+      });
+    } else if (templateName === 'cleanCard') {
       buf = await render.renderCleanCard(post.hook, '', 0, 0);
     } else if (templateName === 'photoCard' && hasPhoto) {
       const photoBuffer = fs.readFileSync(render.productImagePath(post.product));
-      buf = await render.renderPhotoCard(post.hook, photoBuffer, '— Riley, Techs4Tatas');
+      buf = await render.renderPhotoCard(post.hook, photoBuffer, 'Techs4Tatas');
     } else {
       buf = await render.renderSingle({
         hook:       post.hook,
-        sub:        '— Riley, Techs4Tatas',
+        sub:        'Techs4Tatas',
         paletteKey,
         productKey: post.product,
+        contentType: post.contentType,
+        lifestyleImage: post.lifestyleImage,
       });
     }
     saveBuffer(buf, outPath);

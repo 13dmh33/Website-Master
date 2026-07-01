@@ -26,7 +26,8 @@
     "mission": {"bg": "#FF2E88", "headline": "#F7F4F0", "body": "#F7F4F0", "accent": "#1A1A1D", "gradient": ["#FF2E88", "#C71F66"]},
     "engagement": {"bg": "#3A5A78", "headline": "#F7F4F0", "body": "#FFB3D1", "accent": "#FFC400", "gradient": ["#3A5A78", "#243B4F"]},
     "motivational": {"bg": "#1A1A1D", "headline": "#FF2E88", "body": "#F7F4F0", "accent": "#FFB3D1", "gradient": ["#1A1A1D", "#3A1A2A"]},
-    "awareness": {"bg": "#FFB3D1", "headline": "#C71F66", "body": "#1A1A1D", "accent": "#FF2E88", "gradient": ["#FFB3D1", "#FF2E88"], "note": "October-only palette. Ribbon motif on."}
+    "awareness": {"bg": "#FFB3D1", "headline": "#C71F66", "body": "#1A1A1D", "accent": "#FF2E88", "gradient": ["#FFB3D1", "#FF2E88"], "note": "October-only palette. Ribbon motif on."},
+    "fourth_of_july": {"bg": "#1A1A4D", "headline": "#FFFFFF", "body": "#F7F4F0", "accent": "#B22234", "gradient": ["#1A1A4D", "#B22234"], "note": "Red/white/blue holiday palette for the 4thjuly content type."}
   },
   "image_sources": {
     "priority_order": ["dave_product_mockups", "dave_lifestyle_photos", "ai_generated_lifestyle", "stock_photo", "gradient_fallback"],

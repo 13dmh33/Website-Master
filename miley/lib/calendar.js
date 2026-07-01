@@ -65,28 +65,44 @@ function firstFullWeekMonday(date, month) {
   return d;
 }
 
-function matchesRule(rule, days) {
+// the subset of `days` that satisfy `rule` (empty array = no match)
+function matchedDates(rule, days) {
   switch (rule.type) {
     case 'nth_weekday_of_month': {
       const target = nthWeekdayDate(days[0], rule.month, rule.weekday, rule.n);
-      if (!target) return false;
-      return days.some(d => isoDay(d) === isoDay(target));
+      if (!target) return [];
+      return days.filter(d => isoDay(d) === isoDay(target));
     }
     case 'first_full_week_of_month': {
       const monday = firstFullWeekMonday(days[0], rule.month);
-      return isoDay(mondayOf(days[0])) === isoDay(monday);
+      return isoDay(mondayOf(days[0])) === isoDay(monday) ? days : [];
     }
     case 'monthly_day': {
-      return days.some(d => d.getMonth() !== 9 && d.getDate() === rule.day); // skip October (month idx 9)
+      return days.filter(d => d.getMonth() !== 9 && d.getDate() === rule.day); // skip October (month idx 9)
     }
     case 'explicit_range': {
       const start = new Date(rule.start);
       const end = new Date(rule.end);
-      return days.some(d => d >= start && d <= end);
+      return days.filter(d => d >= start && d <= end);
     }
     default:
-      return false;
+      return [];
   }
+}
+
+function matchesRule(rule, days) {
+  return matchedDates(rule, days).length > 0;
+}
+
+// MON/TUE/.../SUN abbreviation for the first day of `days` that the rule
+// actually matches (e.g. the literal date of a one-day holiday) — lets the
+// planner target the right slot for an 'override' entry instead of always posts[0].
+const DAY_ABBR = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+function matchedDayAbbr(rule, days) {
+  const matches = matchedDates(rule, days);
+  if (!matches.length) return null;
+  const dow = (matches[0].getDay() + 6) % 7; // JS Sun=0..Sat=6 → Mon=0..Sun=6
+  return DAY_ABBR[dow];
 }
 
 // returns calendar entries active for the Mon-Sun week containing `date`,
@@ -98,6 +114,7 @@ function getActiveEntries(date = new Date()) {
 
   return calendar.entries
     .filter(entry => matchesRule(entry.rule, days))
+    .map(entry => ({ ...entry, matchedDay: matchedDayAbbr(entry.rule, days) }))
     .sort((a, b) => (b.priority || 0) - (a.priority || 0));
 }
 

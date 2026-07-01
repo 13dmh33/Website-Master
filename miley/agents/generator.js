@@ -58,12 +58,16 @@ function buildHashtags(hashtagSet, isOctober, master, week) {
 function briefTextFor(post, brief, idx) {
   const parts = [];
 
+  const wantsTradesFact = post.contentType === 'trades_stat';
   const wantsFact = post.contentType === 'awareness_stat' ||
                     post.contentType === 'mission' ||
                     post.contentType === 'mission_recap' ||
                     post.contentType === 'mission_product_combo';
 
-  if (wantsFact && brief.facts && brief.facts.length) {
+  if (wantsTradesFact && brief.tradeFacts && brief.tradeFacts.length) {
+    const f = brief.tradeFacts[(brief.week + idx) % brief.tradeFacts.length];
+    parts.push(`Use this women-in-trades stat — restate it in your OWN words, cite the source loosely (e.g. "per ${f.source.split('(')[0].trim()}"): "${f.claim}"`);
+  } else if (wantsFact && brief.facts && brief.facts.length) {
     const f = brief.facts[(brief.week + idx) % brief.facts.length];
     parts.push(`Use this VERIFIED fact — restate it in your OWN words, cite the source loosely (e.g. "per ${f.source.split('(')[0].trim()}"): "${f.claim}"`);
   }
@@ -78,7 +82,7 @@ function briefTextFor(post, brief, idx) {
   // fresh RSS angle (live data refresh) — match the beat to the content type.
   // PARAPHRASE ONLY: never reproduce the headline; use it as a jumping-off idea.
   const live = brief.liveHeadlines || {};
-  const beat = wantsFact ? (live.breast_cancer || []) : (live.women_in_trades || []);
+  const beat = (wantsFact && !wantsTradesFact) ? (live.breast_cancer || []) : (live.women_in_trades || []);
   const pool = beat.length ? beat : (live.women_in_trades || []);
   if (pool.length) {
     const h = pool[(brief.week + idx) % pool.length];
@@ -98,6 +102,20 @@ function briefTextFor(post, brief, idx) {
   if (post.product) parts.push(`Featured product (use its catalog key, write it naturally): ${post.product}.`);
 
   return parts.join('\n');
+}
+
+// the exact women-in-trades data hook this slot will cite — same index math as
+// briefTextFor's trades-fact pick, so the caption and the rendered stat card
+// (lib/canvas-render.js renderStatCard) always agree. Drawn straight from the
+// verified data hook, never from Claude/evergreen text, so the number on the
+// image is always correct even if the caption paraphrases it loosely.
+function tradeStatFor(post, brief, idx) {
+  if (post.contentType !== 'trades_stat') return null;
+  const facts = brief.tradeFacts || [];
+  if (!facts.length) return null;
+  const f = facts[(brief.week + idx) % facts.length];
+  if (!f.stat) return null; // caption-only hook, no clean numeral — standard card layout
+  return { statNumber: f.stat, statContext: f.context || '', statSource: f.source };
 }
 
 // normalize an evergreen.json post into our post shape
@@ -249,6 +267,7 @@ async function main() {
 
     const product = content.product || planPost.product || null;
     const tracked = links.forPost({ contentType: planPost.contentType, product, campaignMode: plan.mode });
+    const statCard = tradeStatFor(planPost, brief, idx);
 
     posts.push({
       slot:        planPost.day,
@@ -275,6 +294,9 @@ async function main() {
       extra:            content.extra,
       hashtags,
       judge: content.judge || null, // generate-then-judge scoring (#1), null for evergreen/single-variant posts
+      statNumber:  statCard ? statCard.statNumber  : null, // drives renderStatCard — verified hook, not AI text
+      statContext: statCard ? statCard.statContext : null,
+      statSource:  statCard ? statCard.statSource  : null,
       status: 'pending',
     });
   }

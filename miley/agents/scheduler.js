@@ -19,13 +19,18 @@ const abTracker = require('../lib/ab-tracker');
 
 const DAY_IDX = { MON: 0, TUE: 1, WED: 2, THU: 3, FRI: 4, SAT: 5, SUN: 6 };
 
-// next week's occurrence of dayAbbr at HH:MM (Mountain Time ≈ UTC-6), as ISO UTC
+// next week's occurrence of dayAbbr at HH:MM (Mountain Time ≈ UTC-6), as ISO UTC.
+// SCHEDULE_THIS_WEEK=1 targets the CURRENT week's Monday instead — for one-off
+// catch-up runs (e.g. generating mid-week for a holiday that's already this week).
 function nextWeekOccurrence(dayAbbr, time) {
   const now = new Date();
   const dow = now.getUTCDay(); // 0 Sun .. 6 Sat
-  const daysToNextMonday = ((1 - dow + 7) % 7) || 7;
+  const thisWeek = process.env.SCHEDULE_THIS_WEEK === '1';
+  const daysToMonday = thisWeek
+    ? (dow === 0 ? -6 : 1 - dow)
+    : (((1 - dow + 7) % 7) || 7);
   const nextMonday = new Date(now);
-  nextMonday.setUTCDate(now.getUTCDate() + daysToNextMonday);
+  nextMonday.setUTCDate(now.getUTCDate() + daysToMonday);
   nextMonday.setUTCHours(0, 0, 0, 0);
 
   const d = new Date(nextMonday);

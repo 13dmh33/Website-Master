@@ -8,7 +8,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') }
 
 const Anthropic = require('@anthropic-ai/sdk');
 
-const MODEL   = 'claude-sonnet-4-20250514';
+const MODEL   = 'claude-sonnet-4-5-20250929';
 const RETRY_DELAY_MS = 3000;
 
 let _client = null;

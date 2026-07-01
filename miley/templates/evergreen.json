@@ -24,7 +24,9 @@
       "cta": "Link in bio if you've heard this one too.",
       "caption": "'Is your husband the electrician?'\n\nNo, Karen. The amps don't care about my gender.\nKill the breaker and watch me work.\n\nBuy the shirt, fund the fight — 30% to breast cancer research.\n\nLink in bio if you've heard this one too ⚡",
       "hashtag_set": "trades_humor",
-      "suggested_visual": "Speech-bubble layout, safety-yellow accent."
+      "suggested_visual": "Speech-bubble layout, safety-yellow accent.",
+      "used": true,
+      "lastUsed": "2026-06-29T13:00:27.176Z"
     },
     {
       "id": "hum-03",
@@ -35,7 +37,9 @@
       "cta": "Comment your trade below 👇",
       "caption": "Steel toes and a soft heart.\n\nShe'll torque the bolt to spec AND remember everyone's coffee order.\nRange. It's called range.\n\nEvery order sends 30% to breast cancer research.\n\nComment your trade below 👇",
       "hashtag_set": "trades_humor",
-      "suggested_visual": "Split layout, boot icon + heart icon."
+      "suggested_visual": "Split layout, boot icon + heart icon.",
+      "used": true,
+      "lastUsed": "2026-06-29T14:47:42.844Z"
     },
     {
       "id": "hum-04",
@@ -130,7 +134,9 @@
       "cta": "Link in bio to grab yours.",
       "caption": "Bad hair, hard day, still showing up.\n\nThe snapback that survives the jobsite and the after-work tacos.\nClean fit, structured front, zero fuss.\n\n30% of every profit funds breast cancer research.\n\nLink in bio to grab yours 🧢",
       "hashtag_set": "product",
-      "suggested_visual": "Snapback on a person, outdoor light."
+      "suggested_visual": "Snapback on a person, outdoor light.",
+      "used": true,
+      "lastUsed": "2026-06-29T13:00:27.176Z"
     },
     {
       "id": "prod-04",
@@ -142,7 +148,9 @@
       "cta": "Shop it — link in bio.",
       "caption": "Mesh back. No sweat. Literally.\n\nBuilt for the hot deck and the long shift.\nBreathable, broken-in feel from day one.\n\nEvery sale sends 30% to breast cancer research.\n\nShop it — link in bio.",
       "hashtag_set": "product",
-      "suggested_visual": "Trucker cap lifestyle shot, jobsite background."
+      "suggested_visual": "Trucker cap lifestyle shot, jobsite background.",
+      "used": true,
+      "lastUsed": "2026-06-29T13:00:27.176Z"
     },
     {
       "id": "prod-05",
@@ -154,7 +162,9 @@
       "cta": "Link in bio.",
       "caption": "Comfort that doesn't quit before you do.\n\nSoft, no-ride-up, all-day wear.\nBecause the unglamorous basics deserve to be good too.\n\n30% of profit backs breast cancer research.\n\nLink in bio 🩷",
       "hashtag_set": "product",
-      "suggested_visual": "Flat product shot, clean pink/charcoal bg."
+      "suggested_visual": "Flat product shot, clean pink/charcoal bg.",
+      "used": true,
+      "lastUsed": "2026-06-29T14:47:42.844Z"
     },
     {
       "id": "prod-06",
@@ -166,7 +176,9 @@
       "cta": "Grab a pack — link in bio.",
       "caption": "Slap it on the toolbox. Start the conversation.\n\nWeatherproof, scratch-resistant, loud about the cause.\nThe cheapest way to rep the movement.\n\nEvery order sends 30% to breast cancer research.\n\nGrab a pack — link in bio.",
       "hashtag_set": "product",
-      "suggested_visual": "Sticker on a hard hat / toolbox / water bottle."
+      "suggested_visual": "Sticker on a hard hat / toolbox / water bottle.",
+      "used": true,
+      "lastUsed": "2026-06-29T14:47:42.844Z"
     },
     {
       "id": "prod-07",
@@ -178,7 +190,9 @@
       "cta": "Link in bio.",
       "caption": "Hard hat real estate, sorted.\n\nBold, clean, built to survive the elements.\nEvery sticker is a tiny billboard for women in trades.\n\n30% of every profit funds breast cancer research.\n\nLink in bio 🔧",
       "hashtag_set": "product",
-      "suggested_visual": "Sticker design close-up + on-helmet shot."
+      "suggested_visual": "Sticker design close-up + on-helmet shot.",
+      "used": true,
+      "lastUsed": "2026-06-29T14:49:46.741Z"
     },
     {
       "id": "prod-08",
@@ -201,7 +215,9 @@
       "cta": "Wear it, fund it — link in bio.",
       "caption": "This isn't just merch.\n\nEvery shirt, hat, and sticker sends 30% of profit straight to breast cancer research.\nYou wear it. It funds the fight. Simple as that.\n\n30% of every profit. Every single order.\n\nWear it, fund it — link in bio 🩷",
       "hashtag_set": "mission",
-      "suggested_visual": "Pink ribbon woven into brand mark."
+      "suggested_visual": "Pink ribbon woven into brand mark.",
+      "used": true,
+      "lastUsed": "2026-06-29T13:00:27.176Z"
     },
     {
       "id": "mis-02",
@@ -212,7 +228,9 @@
       "cta": "DM PINK and I'll send the link.",
       "caption": "Tough hands. Soft hearts. Big mission.\n\nWe make merch for women who build the world AND look out for each other.\n30% of profit goes where it matters most.\n\nFunding breast cancer research, one order at a time.\n\nDM PINK and I'll send the link 🩷",
       "hashtag_set": "mission",
-      "suggested_visual": "Hands + ribbon motif."
+      "suggested_visual": "Hands + ribbon motif.",
+      "used": true,
+      "lastUsed": "2026-06-29T14:47:42.844Z"
     },
     {
       "id": "mis-03",
@@ -413,6 +431,28 @@
       "caption": "To every woman who took the harder road on purpose.\n\nYou could've picked easy. You picked real.\nThe trades are better because you showed up.\n\n30% of every profit funds breast cancer research.\n\nTag a woman who took the hard road 💪",
       "hashtag_set": "motivational",
       "suggested_visual": "Open-road / horizon tone."
+    },
+    {
+      "id": "jul4-01",
+      "type": "4thjuly",
+      "hook": "Off the clock. Still on brand.",
+      "body": "Fireworks, cookout, red-white-and-blue gear that actually fits right.\nEnjoy the long weekend — you earned it.",
+      "donation": "30% of every profit funds breast cancer research.",
+      "cta": "Shop the 4th of July favorites — link in bio.",
+      "caption": "Off the clock. Still on brand.\n\nFireworks, cookout, red-white-and-blue gear that actually fits right.\nEnjoy the long weekend — you earned it.\n\n30% of every profit funds breast cancer research.\n\nShop the 4th of July favorites — link in bio 🎆",
+      "hashtag_set": "4thjuly",
+      "suggested_visual": "Red/white/blue palette, cookout or flag motif."
+    },
+    {
+      "id": "jul4-02",
+      "type": "4thjuly",
+      "hook": "Independence looks good on her.",
+      "body": "She builds it, wires it, fixes it — and still throws the best backyard cookout on the block.\nHappy 4th from one tradeswoman crew to another.",
+      "donation": "Buy the shirt, fund the fight — 30% to breast cancer research.",
+      "cta": "Tag your cookout crew 🇺🇸",
+      "caption": "Independence looks good on her.\n\nShe builds it, wires it, fixes it — and still throws the best backyard cookout on the block.\nHappy 4th from one tradeswoman crew to another.\n\nBuy the shirt, fund the fight — 30% to breast cancer research.\n\nTag your cookout crew 🇺🇸",
+      "hashtag_set": "4thjuly",
+      "suggested_visual": "Flag-stripe accent, summer cookout tone."
     }
   ],
   "_meta": {

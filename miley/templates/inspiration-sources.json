@@ -13,7 +13,12 @@
       {"name": "DOL Women's Bureau", "url": "https://www.dol.gov/agencies/wb", "use": "Federal data + initiatives on women in apprenticeship and trades.", "update_frequency": "periodic"},
       {"name": "Bluebeam 'Built' blog", "url": "https://blog.bluebeam.com", "use": "Construction-industry articles, including women-in-construction data roundups.", "update_frequency": "weekly-ish"},
       {"name": "CNBC (work / trades coverage)", "url": "https://www.cnbc.com", "use": "Mainstream features on women entering skilled trades — relatable story angles.", "update_frequency": "daily"},
-      {"name": "NPR", "url": "https://www.npr.org", "use": "In-depth tradeswomen stories and policy context.", "update_frequency": "daily"}
+      {"name": "NPR", "url": "https://www.npr.org", "use": "In-depth tradeswomen stories and policy context.", "update_frequency": "daily"},
+      {"name": "DOL Apprenticeship USA", "url": "https://www.apprenticeship.gov", "use": "Federal apprenticeship demographics by gender — the apprentice-pipeline number behind the 'still rare' hook.", "update_frequency": "periodic"},
+      {"name": "Women in HVACR", "url": "https://www.womeninhvacr.org", "use": "Mentoring/networking org; HVACR-specific workforce + woman-owned-company stats.", "update_frequency": "ongoing"},
+      {"name": "Tradeswomen, Inc.", "url": "https://www.tradeswomen.org", "use": "One of the oldest US tradeswomen advocacy nonprofits — retention + culture angles.", "update_frequency": "ongoing"},
+      {"name": "Skillit", "url": "https://www.skillit.com/blog", "use": "Industry research blog — pushes back on inflated 'women are 5% of trades' claims with sharper field data.", "update_frequency": "ongoing"},
+      {"name": "Manufacturers Alliance", "url": "https://www.manufacturersalliance.org", "use": "'Women in the Trades: Closing the Talent Gap' report — growth-rate stats (tradeswomen count surging since 2015).", "update_frequency": "periodic"}
     ],
     "breast_cancer": [
       {"name": "American Cancer Society", "url": "https://www.cancer.org", "use": "Gold-standard stats (Cancer Facts & Figures, updated annually). Use for any awareness number.", "update_frequency": "annual + ongoing news"},
@@ -30,17 +35,35 @@
     "Tool obsessions and gear loyalty",
     "Jobsite humor only tradeswomen will get",
     "The 30% donation as proof the brand walks the walk",
-    "Trade pride: the skill, the paycheck, the independence"
+    "Trade pride: the skill, the paycheck, the independence",
+    "Real, verified women-in-trades numbers — proof of how rare (and how needed) we still are"
   ],
+  "_data_hooks_note": "Each hook carries a 'beat' field (women_in_trades | breast_cancer) so the Researcher can route the right stat to the right content type (trades_stat vs awareness_stat/mission). 'note' starting with VERIFIED is fully cite-ready; RE-VERIFY items are good drafts but Dave should spot-check the live figure before it posts (BLS/industry numbers move yearly). women_in_trades hooks also carry 'stat' (the short numeral/label rendered BIG on the image card) and 'context' (one short line under it) so the Designer can draw the number directly — it never depends on Claude/evergreen text matching the verified figure. A null 'stat' means the hook is caption-only (no clean numeral) and the post falls back to the standard hook-card layout.",
   "data_hooks": [
-    {"claim": "Women are roughly 3% of electricians, plumbers, and carpenters on the tools — still rare, still growing.", "source": "U.S. Bureau of Labor Statistics (2025 occupational data)", "note": "Use as 'rare and rising' framing. RE-VERIFY before posting — BLS updates yearly."},
-    {"claim": "Women are about 11-12% of the overall construction workforce (much lower for on-site trade roles specifically).", "source": "BLS / industry reports", "note": "Distinguish 'industry' (includes office roles) vs 'on the tools' (low single digits) for an honest hook."},
-    {"claim": "Skilled-trade demand is surging as retirements outpace new entrants.", "source": "industry workforce reports", "note": "Great hook for 'the trades need more women' angle."},
-    {"claim": "About 1 in 8 women (~13%) in the US will develop invasive breast cancer in her lifetime.", "source": "American Cancer Society (2026)", "note": "VERIFIED for 2026. Core awareness stat — strong for mission posts + October."},
-    {"claim": "An estimated 321,910 US women will be diagnosed with invasive breast cancer in 2026; about 42,140 will die.", "source": "American Cancer Society (Cancer Facts & Figures 2026)", "note": "VERIFIED for 2026. Use sparingly — heavy stat, best for awareness/October."},
-    {"claim": "On average, a woman in the US is diagnosed with breast cancer every 2 minutes.", "source": "National Breast Cancer Foundation (2026)", "note": "VERIFIED. Punchy, emotionally resonant — good single-line hook."},
-    {"claim": "When breast cancer is caught early (localized), the 5-year relative survival rate is over 99%.", "source": "American Cancer Society / NBCF (2026)", "note": "VERIFIED. Pairs the donation with a genuinely useful early-detection reminder. Hopeful tone."},
-    {"claim": "Breast cancer death rates have fallen ~44% since 1989, thanks to early detection and better treatment.", "source": "American Cancer Society (2026)", "note": "VERIFIED. Use to show donations/research actually move the needle — optimistic, mission-aligned."}
+    {"beat": "women_in_trades", "claim": "Women are roughly 3% of electricians, plumbers, and carpenters on the tools — still rare, still growing.", "source": "U.S. Bureau of Labor Statistics (2025 occupational data)", "stat": "~3%", "context": "of electricians, plumbers & carpenters on the tools are women", "note": "Use as 'rare and rising' framing. RE-VERIFY before posting — BLS updates yearly."},
+    {"beat": "women_in_trades", "claim": "Women are about 11-12% of the overall construction workforce (much lower for on-site trade roles specifically).", "source": "BLS / industry reports", "stat": "11-12%", "context": "of the overall construction workforce is women (most off the tools)", "note": "Distinguish 'industry' (includes office roles) vs 'on the tools' (low single digits) for an honest hook."},
+    {"beat": "women_in_trades", "claim": "Skilled-trade demand is surging as retirements outpace new entrants.", "source": "industry workforce reports", "stat": null, "context": null, "note": "Great hook for 'the trades need more women' angle. No clean numeral — caption-only, falls back to standard hook card."},
+    {"beat": "women_in_trades", "claim": "Women make up only about 3.1% of plumbers and 3.5% of electricians nationally.", "source": "U.S. Bureau of Labor Statistics, Current Population Survey occupational data (2025)", "stat": "3.5%", "context": "of US electricians are women (plumbers: 3.1%)", "note": "RE-VERIFY before posting (BLS updates the table yearly). Sharpest 'on the tools' framing — pair with a proud, defiant tone, not a pity-party one."},
+    {"beat": "women_in_trades", "claim": "Only about 8% of registered apprentices nationwide are women.", "source": "U.S. Dept. of Labor, Apprenticeship USA data", "stat": "8%", "context": "of registered trade apprentices nationwide are women", "note": "RE-VERIFY before posting. Good for an 'apprentice to pro' / mentorship hook."},
+    {"beat": "women_in_trades", "claim": "The U.S. Dept. of Commerce's 'Million Women in Construction' initiative aims to double women's share of the construction workforce from about 5% to 10% within a decade.", "source": "U.S. Dept. of Commerce", "stat": "5% → 10%", "context": "the federal goal: double women's share of construction workers", "note": "RE-VERIFY before posting. Frame as 'the industry itself says it needs more of us' — institutional backup for the brand's mission."},
+    {"beat": "women_in_trades", "claim": "Tradeswomen in construction/extraction occupations grew roughly 77% between 2015 and 2024, topping 366,000.", "source": "Manufacturers Alliance, 'Women in the Trades: Closing the Talent Gap'", "stat": "+77%", "context": "growth in tradeswomen since 2015 — 366,000+ and counting", "note": "RE-VERIFY before posting. Best 'rising fast' growth-stat hook — pairs well with a hype/momentum tone."},
+    {"beat": "women_in_trades", "claim": "Roughly 7% of HVACR companies are woman-owned.", "source": "Women in HVACR / ITI Technical College", "stat": "7%", "context": "of HVACR companies are woman-owned", "note": "RE-VERIFY before posting. Use for an 'owning the business, not just the tools' entrepreneurship angle."},
+    {"beat": "women_in_trades", "claim": "Some industry trackers argue the real on-the-tools share of women in skilled trades is closer to 3%, not the often-quoted 5%.", "source": "Skillit research", "stat": "~3%", "context": "is the real on-the-tools number — not the often-quoted 5%", "note": "RE-VERIFY before posting. Honest-numbers angle — 'don't believe the rounded-up stat, we know how rare we still are.'"},
+    {"beat": "women_in_trades", "claim": "Women hold around 11% of all construction-industry jobs once office and support roles are counted — far higher than the on-the-tools trade-specific share.", "source": "National Center for Women's Equity in Apprenticeship & Employment", "stat": "11%", "context": "of all construction-industry jobs are held by women (incl. office roles)", "note": "RE-VERIFY before posting. Use to draw an honest line between 'industry' and 'on the tools' so the brand never overstates progress."},
+    {"beat": "breast_cancer", "claim": "About 1 in 8 women (~13%) in the US will develop invasive breast cancer in her lifetime.", "source": "American Cancer Society (2026)", "note": "VERIFIED for 2026. Core awareness stat — strong for mission posts + October."},
+    {"beat": "breast_cancer", "claim": "An estimated 321,910 US women will be diagnosed with invasive breast cancer in 2026; about 42,140 will die.", "source": "American Cancer Society (Cancer Facts & Figures 2026)", "note": "VERIFIED for 2026. Use sparingly — heavy stat, best for awareness/October."},
+    {"beat": "breast_cancer", "claim": "On average, a woman in the US is diagnosed with breast cancer every 2 minutes.", "source": "National Breast Cancer Foundation (2026)", "note": "VERIFIED. Punchy, emotionally resonant — good single-line hook."},
+    {"beat": "breast_cancer", "claim": "When breast cancer is caught early (localized), the 5-year relative survival rate is over 99%.", "source": "American Cancer Society / NBCF (2026)", "note": "VERIFIED. Pairs the donation with a genuinely useful early-detection reminder. Hopeful tone."},
+    {"beat": "breast_cancer", "claim": "Breast cancer death rates have fallen ~44% since 1989, thanks to early detection and better treatment.", "source": "American Cancer Society (2026)", "note": "VERIFIED. Use to show donations/research actually move the needle — optimistic, mission-aligned."}
+  ],
+  "women_in_trades_orgs_to_credit": [
+    "NAWIC (National Association of Women in Construction)",
+    "Women in HVACR",
+    "DOL Women's Bureau",
+    "Chicago Women in Trades",
+    "Oregon Tradeswomen",
+    "Tradeswomen, Inc.",
+    "Nontraditional Employment for Women (NEW)"
   ],
   "seasonal_angles": [
     {"window": "Year-round", "angle": "Everyday trade pride + humor"},

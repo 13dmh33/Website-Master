@@ -48,12 +48,21 @@ function pickSeasonalAngle(sources, date) {
   return (matched || yearRound || { angle: 'Everyday trade pride + humor' }).angle;
 }
 
-// VERIFIED facts only — the data_hooks the generator may cite (in its own words)
+// VERIFIED breast-cancer facts only — cited as-is, no re-checking needed
 function pickVerifiedFacts(sources) {
   const hooks = (sources && sources.data_hooks) || [];
   return hooks
-    .filter(h => /verified/i.test(h.note || ''))
+    .filter(h => h.beat === 'breast_cancer' && /verified/i.test(h.note || ''))
     .map(h => ({ claim: h.claim, source: h.source }));
+}
+
+// women-in-trades stats — best-current draft numbers (most still flagged
+// RE-VERIFY; Dave spot-checks the live figure before a trades_stat post ships)
+function pickTradesFacts(sources) {
+  const hooks = (sources && sources.data_hooks) || [];
+  return hooks
+    .filter(h => h.beat === 'women_in_trades')
+    .map(h => ({ claim: h.claim, source: h.source, stat: h.stat || null, context: h.context || null }));
 }
 
 async function main() {
@@ -92,12 +101,13 @@ async function main() {
     seasonalAngle: pickSeasonalAngle(insp, now),
     themes:        (insp.evergreen_themes || []),
     facts:         pickVerifiedFacts(insp),
+    tradeFacts:    pickTradesFacts(insp),
     liveHeadlines: live,                  // paraphrasable angles only — never copy verbatim
     calendarAngles: plan.calendarAngles || [], // supplement-mode calendar.json matches for this week
   };
 
   const filePath = store.saveBrief(brief);
-  console.log(`Brief saved: themes ${brief.themes.length}, verified facts ${brief.facts.length}, live headlines ${liveCount}, mode ${brief.researchMode}.`);
+  console.log(`Brief saved: themes ${brief.themes.length}, verified facts ${brief.facts.length}, trade facts ${brief.tradeFacts.length}, live headlines ${liveCount}, mode ${brief.researchMode}.`);
   console.log(`Brief saved to: ${filePath}`);
 }
 

@@ -22,6 +22,7 @@ const path  = require('path');
 const fs    = require('fs');
 const store = require('./store');
 const { validateRender } = require('./render-validate');
+const unsplash = require('./unsplash');
 
 const DESIGN = {
   width:        1080,
@@ -46,9 +47,20 @@ const DESIGN = {
 };
 
 // wordmark bounding box for the visual gate — matches renderBrand()'s
-// right-aligned placement (DESIGN.brandSize text ending at width - padding).
+// right-aligned placement (DESIGN.brandSize text ending at width - padding,
+// or the logo image at the same height when assets/logo.png exists).
 function wordmarkRegion(width) {
-  return { x: width - DESIGN.padding - 280, y: DESIGN.padding - 6, w: 280, h: DESIGN.brandSize + 14 };
+  const h = DESIGN.brandSize + 32;
+  const w = logoImagePromise ? h * LOGO_ASPECT : 280;
+  return { x: width - DESIGN.padding - w, y: DESIGN.padding - 6, w, h };
+}
+
+const LOGO_PATH = path.join(__dirname, '..', 'assets', 'logo.png');
+let logoImagePromise = fs.existsSync(LOGO_PATH) ? loadImage(LOGO_PATH) : null;
+let LOGO_ASPECT = 720 / 434; // updated once the real image loads
+
+if (logoImagePromise) {
+  logoImagePromise.then(img => { LOGO_ASPECT = img.width / img.height; }).catch(() => { logoImagePromise = null; });
 }
 
 function brandColorList() {
@@ -106,6 +118,31 @@ function productImagePath(productKey) {
   return fs.existsSync(p) ? p : null;
 }
 
+// resolve a manually-dropped lifestyle photo for `contentType` if one exists.
+// Files in assets/lifestyle/ are named `<contentType>.png` or `<contentType>-N.png`
+// for variety (e.g. trades_humor-1.png, trades_humor-2.png); a generic-N.png
+// pool covers any content type without a dedicated photo. Random pick among
+// matches so repeat content types don't always show the same image.
+// `key` is normally the contentType, but a post can pin an exact file (or
+// file family) via post.lifestyleImage — e.g. "4thjuly-1" — overriding the
+// content-type-based match entirely.
+function lifestyleImagePath(contentType, lifestyleKey) {
+  const dir = path.join(store.paths.assets, 'lifestyle');
+  if (!fs.existsSync(dir)) return null;
+  const files = fs.readdirSync(dir).filter(f => /\.(png|jpe?g)$/i.test(f));
+
+  if (lifestyleKey) {
+    const pinned = files.filter(f => new RegExp(`^${lifestyleKey}\\.`, 'i').test(f));
+    if (pinned.length) return path.join(dir, pinned[0]);
+  }
+
+  if (!contentType) return null;
+  const matches = files.filter(f => new RegExp(`^${contentType}(-\\d+)?\\.`, 'i').test(f));
+  const pool = matches.length ? matches : files.filter(f => /^generic(-\d+)?\./i.test(f));
+  if (!pool.length) return null;
+  return path.join(dir, pool[Math.floor(Math.random() * pool.length)]);
+}
+
 // ── drawing helpers ──────────────────────────────────────────────────────────
 function drawGradient(ctx, width, height, palette) {
   const grad = ctx.createLinearGradient(0, 0, width, height);
@@ -125,25 +162,55 @@ function drawGradient(ctx, width, height, palette) {
   ctx.fillRect(0, 0, width, height);
 }
 
-// returns { headlineColor, bodyColor } actually used (photo bg forces light text)
-async function drawBackground(ctx, width, height, palette, productKey) {
+// draws `photo` full-bleed + the standard dark grounding overlay used for any
+// non-gradient background (product mockup or stock photo) so text always reads.
+function drawPhotoFill(ctx, width, height, photo) {
+  const scale = Math.max(width / photo.width, height / photo.height);
+  const dw = photo.width * scale, dh = photo.height * scale;
+  ctx.drawImage(photo, (width - dw) / 2, (height - dh) / 2, dw, dh);
+  ctx.fillStyle = DESIGN.overlay;
+  ctx.fillRect(0, 0, width, height);
+  const grad = ctx.createLinearGradient(0, height * 0.6, 0, height);
+  grad.addColorStop(0, 'rgba(0,0,0,0)');
+  grad.addColorStop(1, 'rgba(8,15,30,0.78)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, width, height);
+}
+
+// returns { headlineColor, bodyColor } actually used (photo bg forces light text).
+// Background priority: product mockup (assets/products/{key}.png) > manual
+// lifestyle photo (assets/lifestyle/, dropped in by hand) > Unsplash stock
+// photo (niche-matched, only if UNSPLASH_ACCESS_KEY is set) > gradient.
+async function drawBackground(ctx, width, height, palette, productKey, contentType, lifestyleKey) {
   const imgPath = productImagePath(productKey);
   if (imgPath) {
     try {
       const photo = await loadImage(imgPath);
-      const scale = Math.max(width / photo.width, height / photo.height);
-      const dw = photo.width * scale, dh = photo.height * scale;
-      ctx.drawImage(photo, (width - dw) / 2, (height - dh) / 2, dw, dh);
-      ctx.fillStyle = DESIGN.overlay;
-      ctx.fillRect(0, 0, width, height);
-      const grad = ctx.createLinearGradient(0, height * 0.6, 0, height);
-      grad.addColorStop(0, 'rgba(0,0,0,0)');
-      grad.addColorStop(1, 'rgba(8,15,30,0.78)');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, width, height);
+      drawPhotoFill(ctx, width, height, photo);
       return { headlineColor: '#FFFFFF', bodyColor: '#F7F4F0' };
+    } catch { /* fall through to lifestyle / stock photo / gradient */ }
+  }
+
+  const lifestylePath = lifestyleImagePath(contentType, lifestyleKey);
+  if (lifestylePath) {
+    try {
+      const photo = await loadImage(lifestylePath);
+      drawPhotoFill(ctx, width, height, photo);
+      return { headlineColor: '#FFFFFF', bodyColor: '#F7F4F0' };
+    } catch { /* fall through to stock photo / gradient */ }
+  }
+
+  if (contentType) {
+    try {
+      const buffer = await unsplash.fetchStockPhoto(contentType, productKey);
+      if (buffer) {
+        const photo = await loadImage(buffer);
+        drawPhotoFill(ctx, width, height, photo);
+        return { headlineColor: '#FFFFFF', bodyColor: '#F7F4F0' };
+      }
     } catch { /* fall through to gradient */ }
   }
+
   drawGradient(ctx, width, height, palette);
   return { headlineColor: palette.headline || '#FFFFFF', bodyColor: palette.body || '#E2E8F0' };
 }
@@ -153,7 +220,18 @@ function renderTopBar(ctx, width, palette) {
   ctx.fillRect(0, 0, width, 6);
 }
 
-function renderBrand(ctx, width, palette, color) {
+async function renderBrand(ctx, width, palette, color) {
+  if (logoImagePromise) {
+    try {
+      const img = await logoImagePromise;
+      const h = DESIGN.brandSize + 32;
+      const w = h * (img.width / img.height);
+      ctx.drawImage(img, width - DESIGN.padding - w, DESIGN.padding - 6, w, h);
+      return;
+    } catch {
+      logoImagePromise = null; // fall through to text wordmark
+    }
+  }
   ctx.font         = `bold ${DESIGN.brandSize}px ${HEADLINE_FONT}`;
   ctx.fillStyle    = color || palette.accent || '#FF2E88';
   ctx.textAlign    = 'right';
@@ -183,22 +261,15 @@ function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
 // ── public renderers ─────────────────────────────────────────────────────────
 
 // single image / quote-style card (hook is the hero line)
-async function renderSingle({ hook, sub, paletteKey, productKey }) {
+async function renderSingle({ hook, sub, paletteKey, productKey, contentType, lifestyleImage }) {
   const { width, height, padding } = DESIGN;
   const palette = getPalette(paletteKey);
   const canvas  = new Canvas(width, height);
   const ctx     = canvas.getContext('2d');
 
-  const { headlineColor, bodyColor } = await drawBackground(ctx, width, height, palette, productKey);
+  const { headlineColor, bodyColor } = await drawBackground(ctx, width, height, palette, productKey, contentType, lifestyleImage);
   renderTopBar(ctx, width, palette);
-  renderBrand(ctx, width, palette, headlineColor);
-
-  // big accent quote mark
-  ctx.font = `bold 120px ${HEADLINE_FONT}`;
-  ctx.fillStyle = palette.accent || '#FF2E88';
-  ctx.globalAlpha = 0.8;
-  ctx.fillText('"', padding - 8, height * 0.34);
-  ctx.globalAlpha = 1;
+  await renderBrand(ctx, width, palette, headlineColor);
 
   ctx.font = `bold ${DESIGN.headlineSize}px ${HEADLINE_FONT}`;
   ctx.fillStyle = headlineColor;
@@ -221,15 +292,15 @@ async function renderSingle({ hook, sub, paletteKey, productKey }) {
 }
 
 // one carousel slide
-async function renderCarouselSlide({ headline, body, slideNum, total, paletteKey, productKey }) {
+async function renderCarouselSlide({ headline, body, slideNum, total, paletteKey, productKey, contentType }) {
   const { width, height, padding } = DESIGN;
   const palette = getPalette(paletteKey);
   const canvas  = new Canvas(width, height);
   const ctx     = canvas.getContext('2d');
 
-  const { headlineColor, bodyColor } = await drawBackground(ctx, width, height, palette, slideNum === 1 ? productKey : null);
+  const { headlineColor, bodyColor } = await drawBackground(ctx, width, height, palette, slideNum === 1 ? productKey : null, slideNum === 1 ? contentType : null);
   renderTopBar(ctx, width, palette);
-  renderBrand(ctx, width, palette, headlineColor);
+  await renderBrand(ctx, width, palette, headlineColor);
 
   // slide counter
   ctx.font = `${DESIGN.bodySize - 10}px ${BODY_FONT}`;
@@ -262,6 +333,80 @@ async function renderCarouselSlide({ headline, body, slideNum, total, paletteKey
   }, headline, paletteKey);
 }
 
+// ── new template: stat card ─────────────────────────────────────────────────
+// for trades_stat posts: the verified number is the hero, dead center and huge,
+// with a one-line context underneath and the source credited at the bottom.
+// statNumber/statContext/statSource come straight from inspiration-sources.json
+// data_hooks (lib/researcher.js → generator.js), never from Claude/evergreen
+// text — so the figure on the image always matches the verified hook.
+async function renderStatCard({ statNumber, statContext, source, paletteKey }) {
+  const { width, height, padding } = DESIGN;
+  const palette = getPalette(paletteKey);
+  const canvas  = new Canvas(width, height);
+  const ctx     = canvas.getContext('2d');
+
+  const { headlineColor, bodyColor } = await drawBackground(ctx, width, height, palette, null);
+  renderTopBar(ctx, width, palette);
+  await renderBrand(ctx, width, palette, headlineColor);
+
+  // the number — huge, centered, the whole point of the card
+  ctx.textAlign = 'center';
+  let numSize = 220;
+  ctx.font = `bold ${numSize}px ${HEADLINE_FONT}`;
+  while (ctx.measureText(statNumber).width > width - padding * 1.5 && numSize > 100) {
+    numSize -= 10;
+    ctx.font = `bold ${numSize}px ${HEADLINE_FONT}`;
+  }
+  ctx.fillStyle = palette.accent || '#FF2E88';
+  ctx.fillText(statNumber, width / 2, height * 0.52);
+
+  // accent rule under the number
+  ctx.fillStyle = palette.accent || '#FF2E88';
+  ctx.fillRect(width / 2 - 60, height * 0.52 + 30, 120, 5);
+
+  // context line
+  ctx.font = `${DESIGN.headlineSize - 26}px ${BODY_FONT}`;
+  ctx.fillStyle = headlineColor;
+  ctx.textBaseline = 'alphabetic';
+  const wrapped = wrapTextCentered(ctx, statContext || '', width / 2, height * 0.52 + 80, width - padding * 2, DESIGN.headlineSize - 14);
+
+  // source credit, bottom
+  if (source) {
+    ctx.font = `${DESIGN.brandSize}px ${BODY_FONT}`;
+    ctx.fillStyle = palette.accent || bodyColor;
+    ctx.fillText(`— per ${source.split('(')[0].trim()}`, width / 2, height - padding);
+  }
+  ctx.textAlign = 'left';
+
+  const buffer = await canvas.toBuffer('png');
+  return gateOrFallback(buffer, 'statCard', {
+    backgroundColor: palette.bg,
+    allowedEdgeColors: [palette.accent || '#FF2E88', ...(palette.gradient || [])],
+    textRegions: [{ name: 'stat', x: padding, y: Math.round(height * 0.4), w: width - padding * 2, h: numSize, fg: palette.accent, bg: palette.bg, large: true }],
+  }, `${statNumber} ${statContext || ''}`.trim(), paletteKey);
+}
+
+// centered word-wrap variant of wrapText
+function wrapTextCentered(ctx, text, cx, y, maxWidth, lineHeight) {
+  const words = (text || '').split(' ');
+  let line = '', currentY = y;
+  const prevAlign = ctx.textAlign;
+  ctx.textAlign = 'center';
+  for (let i = 0; i < words.length; i++) {
+    const test = line + (line ? ' ' : '') + words[i];
+    if (ctx.measureText(test).width > maxWidth && i > 0) {
+      ctx.fillText(line, cx, currentY);
+      line = words[i];
+      currentY += lineHeight;
+    } else {
+      line = test;
+    }
+  }
+  if (line) { ctx.fillText(line, cx, currentY); currentY += lineHeight; }
+  ctx.textAlign = prevAlign;
+  return currentY;
+}
+
 // last-resort plain render
 async function renderFallback(text, paletteKey) {
   const { width, height, padding } = DESIGN;
@@ -270,7 +415,7 @@ async function renderFallback(text, paletteKey) {
   const ctx = canvas.getContext('2d');
   drawGradient(ctx, width, height, palette);
   renderTopBar(ctx, width, palette);
-  renderBrand(ctx, width, palette, palette.headline);
+  await renderBrand(ctx, width, palette, palette.headline);
   ctx.font = `bold ${DESIGN.bodySize}px ${BODY_FONT}`;
   ctx.fillStyle = palette.headline || '#FFFFFF';
   wrapText(ctx, text, padding, padding + 90, width - padding * 2, 46);
@@ -299,7 +444,7 @@ async function renderCleanCard(headline, body, slideNum, totalSlides) {
   ctx.fillStyle = accent;
   ctx.fillRect(0, 0, 4, height);
 
-  renderBrand(ctx, width, { accent: headlineColor }, headlineColor);
+  await renderBrand(ctx, width, { accent: headlineColor }, headlineColor);
 
   let contentY = padding + 100;
   if (totalSlides && totalSlides > 1) {
@@ -360,7 +505,7 @@ async function renderPhotoCard(headline, photoBuffer, attribution) {
   ctx.fillStyle = 'rgba(10, 18, 40, 0.65)'; // navy at 65% — always-readable overlay
   ctx.fillRect(0, 0, width, height);
 
-  renderBrand(ctx, width, { accent: '#FFFFFF' }, '#FFFFFF');
+  await renderBrand(ctx, width, { accent: '#FFFFFF' }, '#FFFFFF');
 
   ctx.font = `bold ${DESIGN.headlineSize}px ${HEADLINE_FONT}`;
   ctx.fillStyle = '#FFFFFF';
@@ -411,6 +556,7 @@ module.exports = {
   renderCarouselSlide,
   renderCleanCard,
   renderPhotoCard,
+  renderStatCard,
   selectTemplate,
   renderFallback,
   getPalette,

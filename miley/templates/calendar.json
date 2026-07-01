@@ -52,6 +52,17 @@
       "priority": 5
     },
     {
+      "id": "july-4th-2026",
+      "name": "Independence Day (4th of July)",
+      "beat": "general",
+      "rule": { "type": "explicit_range", "start": "2026-07-04", "end": "2026-07-04" },
+      "match_mode": "override",
+      "contentType": "4thjuly",
+      "angle": "It's 4th of July — lean into red/white/blue, cookouts, fireworks, long weekend energy. Product posts can riff on 'gear for the cookout' or 'off the clock for the weekend.'",
+      "source": "Fixed US federal holiday (July 4) — no re-verification needed.",
+      "priority": 7
+    },
+    {
       "id": "monthly-self-exam-reminder",
       "name": "Monthly self-exam reminder",
       "beat": "breast_cancer",

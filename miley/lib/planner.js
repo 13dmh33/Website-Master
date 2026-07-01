@@ -24,10 +24,12 @@ const DEFAULT_FORMAT = {
   mission:                  'single_image',
   mission_recap:            'single_image',
   awareness_stat:           'single_image',
+  trades_stat:              'single_image',
   product_feature_single:   'single_image',
   product_feature_lifestyle:'single_image',
   product_social_proof:     'single_image',
   mission_product_combo:    'single_image',
+  '4thjuly':                'single_image',
 };
 
 // content type → evergreen.json `type` for fallback selection
@@ -39,9 +41,11 @@ const EVERGREEN_TYPE = {
   mission_product_combo:    'mission',
   mission_recap:            'mission',
   awareness_stat:           'mission',
+  trades_stat:              'mission',
   product_feature_single:   'product_feature',
   product_feature_lifestyle:'product_feature',
   product_social_proof:     'product_feature',
+  '4thjuly':                '4thjuly',
 };
 
 // content type → visual-config palettes_by_type key
@@ -53,9 +57,11 @@ const PALETTE_KEY = {
   mission_product_combo:    'mission',
   mission_recap:            'mission',
   awareness_stat:           'awareness',
+  trades_stat:              'mission',
   product_feature_single:   'product_feature',
   product_feature_lifestyle:'product_feature',
   product_social_proof:     'product_feature',
+  '4thjuly':                'fourth_of_july',
 };
 
 const PRODUCT_TYPES = [
@@ -104,6 +110,9 @@ function parseScheduleEnv(str) {
 
 // map a post-formats slot.format token → generator-prompts FORMAT key
 function mapSlotFormat(slotFormat, week, contentType) {
+  // trades_stat always renders as a single stat card — the verified number
+  // needs one focal image, not split across carousel slides.
+  if (contentType === 'trades_stat') return 'single_image';
   switch (slotFormat) {
     case 'carousel':          return 'carousel';
     case 'reel_or_caption':   return week % 2 === 0 ? 'reel' : 'caption';
@@ -206,10 +215,16 @@ function buildWeekPlan(date = new Date(), week = 0) {
     .map(entry => entry.angle);
 
   if (override && posts.length) {
-    posts[0] = finalize({
-      ...posts[0],
+    // target the slot whose day actually matches the holiday's date (e.g. the
+    // SAT post when July 4th falls on a Saturday); fall back to posts[0] if
+    // the holiday's day has no post that week (no slot scheduled that day).
+    const targetIdx = (override.matchedDay && posts.some(p => p.day === override.matchedDay))
+      ? posts.findIndex(p => p.day === override.matchedDay)
+      : 0;
+    posts[targetIdx] = finalize({
+      ...posts[targetIdx],
       contentType: override.contentType,
-      format:      DEFAULT_FORMAT[override.contentType] || posts[0].format,
+      format:      DEFAULT_FORMAT[override.contentType] || posts[targetIdx].format,
       calendarName:  override.name,
       calendarAngle: override.angle,
     });

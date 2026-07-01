@@ -11,7 +11,7 @@
   "diagnosis": "All American Plumbing has solid local presence (27 reviews, 4.7 rating on Google Maps) but zero web presence—no website, email, or address listed. Missing digital storefront for lead capture and service details.",
   "hero_angle": "27 verified reviews and 4.7 rating prove their quality; a website converts that trust into booked jobs.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $100 flat. Worth a quick call? - Dave @ Trevo Advisors",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -23,6 +23,17 @@
   "secondary_message": null,
   "secondary_template_id": null,
   "secondary_template_name": null,
-  "checker_approved": false,
-  "diagnosed_at": "2026-06-05T21:50:02.861Z"
+  "checker_approved": true,
+  "diagnosed_at": "2026-06-05T21:50:02.861Z",
+  "final_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $100 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "checker_flag": "",
+  "rewrite_count": 0,
+  "checker_score": {
+    "template_based": true,
+    "placeholders_filled": true,
+    "secondary_placeholders": true
+  },
+  "checked_at": "2026-06-29T14:54:28.274Z",
+  "demo_url": "https://trevoadvisors.com/for/?b=All+American+Plumbing&t=plumber&c=Houston&r=27",
+  "demo_url_created_at": "2026-06-29T15:00:44.044Z"
 }

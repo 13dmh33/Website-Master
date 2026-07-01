@@ -11,7 +11,7 @@
   "diagnosis": "Strong local reputation (148 reviews, 4.9★) but completely invisible online—no website captures this credibility. Competitors with sites are converting inquiries they're losing.",
   "hero_angle": "Top-rated Houston plumber with 148 five-star reviews—just needs a digital storefront to match their reputation.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $100 flat. Worth a quick call? - Dave @ Trevo Advisors",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -23,6 +23,17 @@
   "secondary_message": null,
   "secondary_template_id": null,
   "secondary_template_name": null,
-  "checker_approved": false,
-  "diagnosed_at": "2026-06-05T21:50:40.806Z"
+  "checker_approved": true,
+  "diagnosed_at": "2026-06-05T21:50:40.806Z",
+  "final_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $100 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "checker_flag": "",
+  "rewrite_count": 0,
+  "checker_score": {
+    "template_based": true,
+    "placeholders_filled": true,
+    "secondary_placeholders": true
+  },
+  "checked_at": "2026-06-29T14:54:28.289Z",
+  "demo_url": "https://trevoadvisors.com/for/?b=Pilix+Plumbing&t=plumber&c=Houston&r=148",
+  "demo_url_created_at": "2026-06-29T15:00:44.052Z"
 }

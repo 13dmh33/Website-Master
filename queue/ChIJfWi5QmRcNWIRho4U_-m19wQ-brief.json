@@ -11,7 +11,7 @@
   "diagnosis": "Strong Google presence (36 reviews, 4.9★) but zero online conversion funnel—no website means lost leads to competitors with proper digital infrastructure. Missing email capture and service documentation.",
   "hero_angle": "Trusted Charlotte handyman with exceptional reviews who's ready to convert digital interest into booked jobs.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Worth a quick call? - Dave @ Trevo Advisors",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -23,6 +23,17 @@
   "secondary_message": null,
   "secondary_template_id": null,
   "secondary_template_name": null,
-  "checker_approved": false,
-  "diagnosed_at": "2026-06-05T22:07:18.260Z"
+  "checker_approved": true,
+  "diagnosed_at": "2026-06-05T22:07:18.260Z",
+  "final_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "checker_flag": "",
+  "rewrite_count": 0,
+  "checker_score": {
+    "template_based": true,
+    "placeholders_filled": true,
+    "secondary_placeholders": true
+  },
+  "checked_at": "2026-06-29T16:27:42.213Z",
+  "demo_url": "https://trevoadvisors.com/for/?b=Handyman+CLT&t=handyman&c=Charlotte&r=36",
+  "demo_url_created_at": "2026-06-29T16:27:42.728Z"
 }

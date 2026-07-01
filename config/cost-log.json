@@ -818,6 +818,1251 @@
       "meta": {
         "messages": 1
       }
+    },
+    {
+      "ts": "2026-06-29T15:56:01.629Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000972,
+      "meta": {
+        "input_tokens": 555,
+        "output_tokens": 132,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:56:03.908Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.001004,
+      "meta": {
+        "input_tokens": 560,
+        "output_tokens": 139,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:56:06.447Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000997,
+      "meta": {
+        "input_tokens": 566,
+        "output_tokens": 136,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:56:10.241Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000903,
+      "meta": {
+        "input_tokens": 539,
+        "output_tokens": 118,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:56:13.762Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000997,
+      "meta": {
+        "input_tokens": 541,
+        "output_tokens": 141,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:56:16.843Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000927,
+      "meta": {
+        "input_tokens": 534,
+        "output_tokens": 125,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:56:20.161Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000989,
+      "meta": {
+        "input_tokens": 561,
+        "output_tokens": 135,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:56:22.793Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000907,
+      "meta": {
+        "input_tokens": 539,
+        "output_tokens": 119,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:56:24.848Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000909,
+      "meta": {
+        "input_tokens": 516,
+        "output_tokens": 124,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:56:27.854Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.00092,
+      "meta": {
+        "input_tokens": 525,
+        "output_tokens": 125,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:56:33.073Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000911,
+      "meta": {
+        "input_tokens": 519,
+        "output_tokens": 124,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:56:35.180Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000911,
+      "meta": {
+        "input_tokens": 519,
+        "output_tokens": 124,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:56:38.815Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000861,
+      "meta": {
+        "input_tokens": 516,
+        "output_tokens": 112,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:56:42.092Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000868,
+      "meta": {
+        "input_tokens": 510,
+        "output_tokens": 115,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:56:44.328Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.0009,
+      "meta": {
+        "input_tokens": 540,
+        "output_tokens": 117,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:56:47.809Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000881,
+      "meta": {
+        "input_tokens": 516,
+        "output_tokens": 117,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:56:50.370Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000941,
+      "meta": {
+        "input_tokens": 536,
+        "output_tokens": 128,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:56:53.662Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000907,
+      "meta": {
+        "input_tokens": 539,
+        "output_tokens": 119,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:56:56.710Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000884,
+      "meta": {
+        "input_tokens": 515,
+        "output_tokens": 118,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:57:00.409Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000924,
+      "meta": {
+        "input_tokens": 515,
+        "output_tokens": 128,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:57:02.803Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000885,
+      "meta": {
+        "input_tokens": 526,
+        "output_tokens": 116,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:57:05.120Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000914,
+      "meta": {
+        "input_tokens": 542,
+        "output_tokens": 120,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:57:07.678Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000898,
+      "meta": {
+        "input_tokens": 532,
+        "output_tokens": 118,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:57:10.181Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000992,
+      "meta": {
+        "input_tokens": 545,
+        "output_tokens": 139,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:57:12.371Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000902,
+      "meta": {
+        "input_tokens": 533,
+        "output_tokens": 119,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:57:15.713Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000898,
+      "meta": {
+        "input_tokens": 528,
+        "output_tokens": 119,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:57:18.142Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000913,
+      "meta": {
+        "input_tokens": 511,
+        "output_tokens": 126,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:57:20.999Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.001044,
+      "meta": {
+        "input_tokens": 555,
+        "output_tokens": 150,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:57:23.381Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000895,
+      "meta": {
+        "input_tokens": 524,
+        "output_tokens": 119,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:57:25.872Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000926,
+      "meta": {
+        "input_tokens": 552,
+        "output_tokens": 121,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:57:27.991Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.00091,
+      "meta": {
+        "input_tokens": 538,
+        "output_tokens": 120,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:57:30.817Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000827,
+      "meta": {
+        "input_tokens": 514,
+        "output_tokens": 104,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:57:33.540Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000878,
+      "meta": {
+        "input_tokens": 518,
+        "output_tokens": 116,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:57:35.962Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000907,
+      "meta": {
+        "input_tokens": 529,
+        "output_tokens": 121,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:57:38.587Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000886,
+      "meta": {
+        "input_tokens": 528,
+        "output_tokens": 116,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:57:41.206Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000983,
+      "meta": {
+        "input_tokens": 559,
+        "output_tokens": 134,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:57:43.545Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000873,
+      "meta": {
+        "input_tokens": 521,
+        "output_tokens": 114,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:57:45.678Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.00088,
+      "meta": {
+        "input_tokens": 525,
+        "output_tokens": 115,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:57:47.690Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.0009,
+      "meta": {
+        "input_tokens": 540,
+        "output_tokens": 117,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:57:49.727Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000876,
+      "meta": {
+        "input_tokens": 525,
+        "output_tokens": 114,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:57:51.937Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.00097,
+      "meta": {
+        "input_tokens": 597,
+        "output_tokens": 123,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T15:57:54.391Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000919,
+      "meta": {
+        "input_tokens": 539,
+        "output_tokens": 122,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:25:15.299Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000786,
+      "meta": {
+        "input_tokens": 393,
+        "output_tokens": 118,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:25:20.749Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.00078,
+      "meta": {
+        "input_tokens": 405,
+        "output_tokens": 114,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:25:23.474Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000729,
+      "meta": {
+        "input_tokens": 391,
+        "output_tokens": 104,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:25:26.443Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000778,
+      "meta": {
+        "input_tokens": 402,
+        "output_tokens": 114,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:25:28.811Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000813,
+      "meta": {
+        "input_tokens": 391,
+        "output_tokens": 125,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:25:31.348Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000725,
+      "meta": {
+        "input_tokens": 386,
+        "output_tokens": 104,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:25:33.443Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000769,
+      "meta": {
+        "input_tokens": 391,
+        "output_tokens": 114,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:25:35.856Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000808,
+      "meta": {
+        "input_tokens": 405,
+        "output_tokens": 121,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:25:38.354Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000791,
+      "meta": {
+        "input_tokens": 394,
+        "output_tokens": 119,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:25:40.446Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000757,
+      "meta": {
+        "input_tokens": 396,
+        "output_tokens": 110,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:25:42.546Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000772,
+      "meta": {
+        "input_tokens": 390,
+        "output_tokens": 115,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:25:44.812Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000839,
+      "meta": {
+        "input_tokens": 399,
+        "output_tokens": 130,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:25:47.166Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000771,
+      "meta": {
+        "input_tokens": 394,
+        "output_tokens": 114,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:25:49.487Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000819,
+      "meta": {
+        "input_tokens": 394,
+        "output_tokens": 126,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:25:51.803Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000838,
+      "meta": {
+        "input_tokens": 408,
+        "output_tokens": 128,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:25:56.500Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000766,
+      "meta": {
+        "input_tokens": 403,
+        "output_tokens": 111,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:25:58.329Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000714,
+      "meta": {
+        "input_tokens": 397,
+        "output_tokens": 99,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:26:00.525Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000829,
+      "meta": {
+        "input_tokens": 396,
+        "output_tokens": 128,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:26:03.144Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000759,
+      "meta": {
+        "input_tokens": 399,
+        "output_tokens": 110,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:26:05.215Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000796,
+      "meta": {
+        "input_tokens": 400,
+        "output_tokens": 119,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:26:09.007Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000784,
+      "meta": {
+        "input_tokens": 405,
+        "output_tokens": 115,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:26:11.178Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000747,
+      "meta": {
+        "input_tokens": 389,
+        "output_tokens": 109,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:26:15.702Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000774,
+      "meta": {
+        "input_tokens": 388,
+        "output_tokens": 116,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:26:18.569Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000729,
+      "meta": {
+        "input_tokens": 391,
+        "output_tokens": 104,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:26:20.677Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.00078,
+      "meta": {
+        "input_tokens": 395,
+        "output_tokens": 116,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:26:23.042Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000767,
+      "meta": {
+        "input_tokens": 394,
+        "output_tokens": 113,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:26:25.186Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.00079,
+      "meta": {
+        "input_tokens": 387,
+        "output_tokens": 120,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:26:27.647Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000754,
+      "meta": {
+        "input_tokens": 398,
+        "output_tokens": 109,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:26:29.867Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000762,
+      "meta": {
+        "input_tokens": 398,
+        "output_tokens": 111,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:26:32.502Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000782,
+      "meta": {
+        "input_tokens": 397,
+        "output_tokens": 116,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:26:34.572Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000795,
+      "meta": {
+        "input_tokens": 399,
+        "output_tokens": 119,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:26:38.328Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000777,
+      "meta": {
+        "input_tokens": 396,
+        "output_tokens": 115,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:26:40.866Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000771,
+      "meta": {
+        "input_tokens": 404,
+        "output_tokens": 112,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:26:42.976Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000757,
+      "meta": {
+        "input_tokens": 386,
+        "output_tokens": 112,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:26:46.109Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000731,
+      "meta": {
+        "input_tokens": 394,
+        "output_tokens": 104,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:26:48.599Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000739,
+      "meta": {
+        "input_tokens": 389,
+        "output_tokens": 107,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:26:50.498Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000757,
+      "meta": {
+        "input_tokens": 386,
+        "output_tokens": 112,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:26:52.957Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000774,
+      "meta": {
+        "input_tokens": 398,
+        "output_tokens": 114,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:26:55.744Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000806,
+      "meta": {
+        "input_tokens": 393,
+        "output_tokens": 123,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:26:58.253Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000831,
+      "meta": {
+        "input_tokens": 389,
+        "output_tokens": 130,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:27:00.813Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000757,
+      "meta": {
+        "input_tokens": 396,
+        "output_tokens": 110,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:27:02.989Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.00081,
+      "meta": {
+        "input_tokens": 388,
+        "output_tokens": 125,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:27:05.181Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000776,
+      "meta": {
+        "input_tokens": 390,
+        "output_tokens": 116,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:27:07.094Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000744,
+      "meta": {
+        "input_tokens": 400,
+        "output_tokens": 106,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:27:09.246Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000806,
+      "meta": {
+        "input_tokens": 397,
+        "output_tokens": 122,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:27:11.377Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000798,
+      "meta": {
+        "input_tokens": 392,
+        "output_tokens": 121,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:27:14.108Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000762,
+      "meta": {
+        "input_tokens": 388,
+        "output_tokens": 113,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:27:16.520Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.00077,
+      "meta": {
+        "input_tokens": 398,
+        "output_tokens": 113,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:27:19.010Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.00079,
+      "meta": {
+        "input_tokens": 407,
+        "output_tokens": 116,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:27:21.453Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000816,
+      "meta": {
+        "input_tokens": 400,
+        "output_tokens": 124,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:27:24.624Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000827,
+      "meta": {
+        "input_tokens": 399,
+        "output_tokens": 127,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:27:26.764Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000764,
+      "meta": {
+        "input_tokens": 400,
+        "output_tokens": 111,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:27:29.101Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000734,
+      "meta": {
+        "input_tokens": 393,
+        "output_tokens": 105,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:27:31.326Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000742,
+      "meta": {
+        "input_tokens": 403,
+        "output_tokens": 105,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:27:34.019Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000761,
+      "meta": {
+        "input_tokens": 391,
+        "output_tokens": 112,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:27:35.918Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000788,
+      "meta": {
+        "input_tokens": 395,
+        "output_tokens": 118,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:27:38.208Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000798,
+      "meta": {
+        "input_tokens": 393,
+        "output_tokens": 121,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:27:41.834Z",
+      "service": "anthropic",
+      "script": "diagnoser",
+      "cost_usd": 0.000772,
+      "meta": {
+        "input_tokens": 400,
+        "output_tokens": 113,
+        "cache_read": 0,
+        "cache_write": 0
+      }
+    },
+    {
+      "ts": "2026-06-29T16:27:44.452Z",
+      "service": "email",
+      "script": "pitcher",
+      "cost_usd": 0,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-29T16:31:04.619Z",
+      "service": "email",
+      "script": "pitcher",
+      "cost_usd": 0,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-29T16:34:11.806Z",
+      "service": "email",
+      "script": "pitcher",
+      "cost_usd": 0,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-29T16:36:28.305Z",
+      "service": "email",
+      "script": "pitcher",
+      "cost_usd": 0,
+      "meta": {
+        "messages": 1
+      }
+    },
+    {
+      "ts": "2026-06-29T16:40:07.421Z",
+      "service": "email",
+      "script": "pitcher",
+      "cost_usd": 0,
+      "meta": {
+        "messages": 1
+      }
     }
   ]
 }

@@ -1,0 +1,592 @@
+[
+  {
+    "business_name": "Wright-Jones Plumbing & Heating",
+    "trade": "plumber",
+    "city": "Pueblo, CO",
+    "email": "tina@wrightjones.com",
+    "phone": "(719) 543-0055",
+    "site_url": "http://wright-jones.com",
+    "lead_id": "wright-jones-plumbing-heating-pueblo-co",
+    "scraped_at": "2026-06-29T15:40:21.915Z"
+  },
+  {
+    "business_name": "Jess' Plumbing & Heating, Inc.",
+    "trade": "plumber",
+    "city": "Pueblo, CO",
+    "email": "jesslbaca@jessplumbing.com",
+    "phone": "(719) 564-1688",
+    "site_url": "https://jessplumbingheatingincco.com/",
+    "lead_id": "jess-plumbing-heating-inc-pueblo-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Industrial Plumbing & Heating Co.",
+    "trade": "plumber",
+    "city": "Pueblo, CO",
+    "email": "service@industrialph.com",
+    "phone": "(719) 546-1730",
+    "site_url": "https://industrialph.com/",
+    "lead_id": "industrial-plumbing-heating-co-pueblo-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Cut Rate Sewer & Drain Services LLC",
+    "trade": "plumber",
+    "city": "Pueblo, CO",
+    "email": "cutratesewer@outlook.com",
+    "phone": "(719) 564-2221",
+    "site_url": "https://cutrateseweranddrain.com/",
+    "lead_id": "cut-rate-sewer-drain-services-llc-pueblo-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Cyclone Sewer",
+    "trade": "plumber",
+    "city": "Pueblo, CO",
+    "email": "rm833276@gmail.com",
+    "phone": "(719) 545-2380",
+    "site_url": "https://cyclone-sewer.ueniweb.com/",
+    "lead_id": "cyclone-sewer-pueblo-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Drain Fix Team",
+    "trade": "plumber",
+    "city": "Pueblo, CO",
+    "email": "info@drainfixteam.com",
+    "phone": "(657) 695-2762",
+    "site_url": "https://drainfixteam.com/",
+    "lead_id": "drain-fix-team-pueblo-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Pumps & More LLC",
+    "trade": "plumber",
+    "city": "Pueblo, CO",
+    "email": "edpumpsnmore@questoffice.net",
+    "phone": "(719) 547-8910",
+    "site_url": "http://pumpsnmore.net/",
+    "lead_id": "pumps-more-llc-pueblo-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Bill's Plumbing & Drain Service",
+    "trade": "plumber",
+    "city": "Pueblo, CO",
+    "email": "billsplumbing719@gmail.com",
+    "phone": "(719) 598-4775",
+    "site_url": "http://www.billsplumbinganddrainservice.com/",
+    "lead_id": "bill-s-plumbing-drain-service-pueblo-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Olson Plumbing & Heating Co",
+    "trade": "plumber",
+    "city": "Pueblo, CO",
+    "email": "service@olsonph.com",
+    "phone": "(719) 635-3563",
+    "site_url": "https://olsonph.com/",
+    "lead_id": "olson-plumbing-heating-co-pueblo-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Leo's Sewer & Drain Inc.",
+    "trade": "plumber",
+    "city": "Pueblo, CO",
+    "email": "service@leosdrains.com",
+    "phone": "(719) 550-0837",
+    "site_url": "https://www.leosdrains.com/",
+    "lead_id": "leo-s-sewer-drain-inc-pueblo-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Green Plumbing Inc",
+    "trade": "plumber",
+    "city": "Pueblo, CO",
+    "email": "greenplumbing8@gmail.com",
+    "phone": "(719) 477-3217",
+    "site_url": "https://begreenplumbing.com/",
+    "lead_id": "green-plumbing-inc-pueblo-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "The Rooter Guy's LLC",
+    "trade": "plumber",
+    "city": "Pueblo, CO",
+    "email": "office@therooterguysllc.com",
+    "phone": "(719) 626-9503",
+    "site_url": "https://therooterguysllc.com/",
+    "lead_id": "the-rooter-guy-s-llc-pueblo-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Drain Plumber Pro",
+    "trade": "plumber",
+    "city": "Pueblo, CO",
+    "email": "mightydrainpro@gmail.com",
+    "phone": "(719) 639-4137",
+    "site_url": "https://www.drainplumberpro.com/",
+    "lead_id": "drain-plumber-pro-pueblo-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Always Plumbing & Heating, Inc",
+    "trade": "plumber",
+    "city": "Pueblo, CO",
+    "email": "info@alwaysph.com",
+    "phone": "(719) 510-1306",
+    "site_url": "https://alwaysph.com/",
+    "lead_id": "always-plumbing-heating-inc-pueblo-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Allright Plumbing & Heating, Inc",
+    "trade": "plumber",
+    "city": "Pueblo, CO",
+    "email": "aallrightplumbing@gmail.com",
+    "phone": "(719) 597-1099",
+    "site_url": "https://www.allrightplumbingandhvac.com/",
+    "lead_id": "allright-plumbing-heating-inc-pueblo-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Dan's Drains and Digs",
+    "trade": "plumber",
+    "city": "Pueblo, CO",
+    "email": "dansdrainsanddigs@gmail.com",
+    "phone": "(719) 375-8181",
+    "site_url": "https://www.dansdrainsanddigs.com/",
+    "lead_id": "dan-s-drains-and-digs-pueblo-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Peak Demand Plumbing",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "email": "peakdemandplumbing@outlook.com",
+    "phone": "(719) 205-0830",
+    "site_url": "https://peakdemandplumbing.com/",
+    "lead_id": "peak-demand-plumbing-colorado-springs-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "G.S. Plumbing",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "email": "contact@gsplumbingpros.com",
+    "phone": "(719) 747-6165",
+    "site_url": "http://gsplumbingpros.com/",
+    "lead_id": "g-s-plumbing-colorado-springs-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Pipes Peak Plumbing",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "email": "pipespeakplumbing@gmail.com",
+    "phone": "(719) 499-5753",
+    "site_url": "https://www.pipespeakplumbing.com/",
+    "lead_id": "pipes-peak-plumbing-colorado-springs-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Regal Plumbers Colorado Springs",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "email": "info@regalplumbers.com",
+    "phone": "(719) 722-3826",
+    "site_url": "https://regalplumbers.com/colorado-springs-co/",
+    "lead_id": "regal-plumbers-colorado-springs-colorado-springs-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "HomeLand Plumbing and Heating, LLC",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "email": "shannon@homelandmech.com",
+    "phone": "(719) 337-9709",
+    "site_url": "http://homelandplumbingandheating.com/",
+    "lead_id": "homeland-plumbing-and-heating-llc-colorado-springs-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Andrews Home Repairs",
+    "trade": "handyman",
+    "city": "San Antonio, TX",
+    "email": "aperezjr479@gmail.com",
+    "phone": "(210) 374-6909",
+    "site_url": "http://andrewshomerepair.com/",
+    "lead_id": "andrews-home-repairs-san-antonio-tx",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "C4 Plumbing",
+    "trade": "plumber",
+    "city": "Denver, CO",
+    "email": "r102@live.com",
+    "phone": "(720) 585-1471",
+    "site_url": "https://c4emergencyplumbing.com/",
+    "lead_id": "c4-plumbing-denver-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Clean Cut Plumbing",
+    "trade": "plumber",
+    "city": "Aurora, CO",
+    "email": "info@cleancutplumbing.com",
+    "phone": "(720) 990-0677",
+    "site_url": "https://cleancutplumbing.com/",
+    "lead_id": "clean-cut-plumbing-aurora-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Superior Mile High Plumbing",
+    "trade": "plumber",
+    "city": "Denver, CO",
+    "email": "superiormilehigh@gmail.com",
+    "phone": "(303) 304-0784",
+    "site_url": "https://superiormilehighplumbing.com/",
+    "lead_id": "superior-mile-high-plumbing-denver-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Drains Great - Metropolitan Drain Cleaning",
+    "trade": "plumber",
+    "city": "Denver, CO",
+    "email": "john@drainsgreat.com",
+    "phone": "(303) 359-8566",
+    "site_url": "http://drainsgreat.com/",
+    "lead_id": "drains-great-metropolitan-drain-cleaning-denver-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Anywhere Rooter",
+    "trade": "plumber",
+    "city": "Denver, CO",
+    "email": "dispatch@anywhererooter.com",
+    "phone": "(720) 664-6875",
+    "site_url": "https://www.anywhererooter.com/",
+    "lead_id": "anywhere-rooter-denver-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Mac's Plumbing Services",
+    "trade": "plumber",
+    "city": "Aurora, CO",
+    "email": "macsplumbingservices@gmail.com",
+    "phone": "(501) 658-1257",
+    "site_url": "https://www.macsplumbingservices.com/",
+    "lead_id": "mac-s-plumbing-services-aurora-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Best Choice Plumbing",
+    "trade": "plumber",
+    "city": "Denver, CO",
+    "email": "mikhail@bestchoiceplumbingdenver.com",
+    "phone": "(720) 288-9294",
+    "site_url": "https://bestchoiceplumbingdenver.com/",
+    "lead_id": "best-choice-plumbing-denver-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Emergency Plumbers Denver LLC",
+    "trade": "plumber",
+    "city": "Denver, CO",
+    "email": "emergency.plumbers.denver2000@gmail.com",
+    "phone": "(720) 215-8600",
+    "site_url": "http://www.emergency-plumber-denver.com/",
+    "lead_id": "emergency-plumbers-denver-llc-denver-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "King Rooter & Plumbing",
+    "trade": "plumber",
+    "city": "Denver, CO",
+    "email": "kingrooterplumbing@gmail.com",
+    "phone": "(303) 502-5651",
+    "site_url": "https://www.kingrooterandplumbing.com/",
+    "lead_id": "king-rooter-plumbing-denver-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Time Plumbing, Heating & Electric Denver",
+    "trade": "plumber",
+    "city": "Denver, CO",
+    "email": "service@303plumber.com",
+    "phone": "(303) 758-6237",
+    "site_url": "https://www.303plumber.com/",
+    "lead_id": "time-plumbing-heating-electric-denver-denver-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "At Your Service Plumbing Company",
+    "trade": "plumber",
+    "city": "Denver, CO",
+    "email": "atyourserviceplumbing@yahoo.com",
+    "phone": "(303) 986-5325",
+    "site_url": "http://www.atyourserviceplumbingco.com/",
+    "lead_id": "at-your-service-plumbing-company-denver-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Defense Plumbing",
+    "trade": "plumber",
+    "city": "Denver, CO",
+    "email": "office@defenseplumbing.com",
+    "phone": "(303) 842-4799",
+    "site_url": "https://www.defenseplumbing.com/",
+    "lead_id": "defense-plumbing-denver-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Christopher's Plumbing Inc",
+    "trade": "plumber",
+    "city": "Denver, CO",
+    "email": "info@christophersplumbing.com",
+    "phone": "(303) 789-2268",
+    "site_url": "https://christophersplumbing.com/",
+    "lead_id": "christopher-s-plumbing-inc-denver-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "A Perfect Plumber",
+    "trade": "plumber",
+    "city": "Denver, CO",
+    "email": "office@aperfectplumber.com",
+    "phone": "(720) 375-3900",
+    "site_url": "https://www.aperfectplumber.com/",
+    "lead_id": "a-perfect-plumber-denver-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "A Better Plumber",
+    "trade": "plumber",
+    "city": "Denver, CO",
+    "email": "booking@absolutefix.com",
+    "phone": "(720) 642-7377",
+    "site_url": "https://abetterplumberco.com/",
+    "lead_id": "a-better-plumber-denver-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Balkan Plumbing",
+    "trade": "plumber",
+    "city": "Littleton, CO",
+    "email": "balkanplumbing.littleton@gmail.com",
+    "phone": "(720) 421-1331",
+    "site_url": "http://balkanplumbinglittleton.com/",
+    "lead_id": "balkan-plumbing-littleton-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Waters of Life",
+    "trade": "plumber",
+    "city": "Littleton, CO",
+    "email": "office@watersoflifeplumbing.com",
+    "phone": "(720) 276-3137",
+    "site_url": "https://www.watersoflifeplumbing.com/",
+    "lead_id": "waters-of-life-littleton-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Endurance Plumbing",
+    "trade": "plumber",
+    "city": "Denver, CO",
+    "email": "info@enduranceplumb.com",
+    "phone": "(720) 830-5594",
+    "site_url": "http://enduranceplumb.com/",
+    "lead_id": "endurance-plumbing-denver-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "JDM Plumbing",
+    "trade": "plumber",
+    "city": "Denver, CO",
+    "email": "info@jdmplumbing5280.com",
+    "phone": "(720) 595-7544",
+    "site_url": "https://jdmplumbing5280.com/",
+    "lead_id": "jdm-plumbing-denver-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Simply Sewers",
+    "trade": "plumber",
+    "city": "Denver, CO",
+    "email": "info@simplysewersdenver.com",
+    "phone": "(720) 434-4106",
+    "site_url": "https://www.simplysewersdenver.com/",
+    "lead_id": "simply-sewers-denver-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Rex Plumbing",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "email": "info@rexsplumbing.com",
+    "phone": "(970) 225-1122",
+    "site_url": "http://rexplumbing.com/",
+    "lead_id": "rex-plumbing-fort-collins-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "The Plumber from Down Under",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "email": "zadkovicjoe@pduhome.net",
+    "phone": "(970) 378-0022",
+    "site_url": "https://theplumberfromdownunder.com/",
+    "lead_id": "the-plumber-from-down-under-fort-collins-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Aspen Plumbing Services",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "email": "aspenplumbingservices@gmail.com",
+    "phone": "(970) 817-2004",
+    "site_url": "https://aspenplumbing.co/",
+    "lead_id": "aspen-plumbing-services-fort-collins-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Jennys Plumbing",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "email": "jennysplumbing@gmail.com",
+    "phone": "(970) 690-7244",
+    "site_url": "https://jennysplumbing.com/",
+    "lead_id": "jennys-plumbing-fort-collins-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Drain Doctors",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "email": "draindoctors@gmail.com",
+    "phone": "(970) 222-6001",
+    "site_url": "https://www.draindoctorsnoco.com/",
+    "lead_id": "drain-doctors-fort-collins-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "A to Zen Plumbing",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "email": "atozenplumbing@gmail.com",
+    "phone": "(970) 402-6935",
+    "site_url": "https://atozenplumbing.com/",
+    "lead_id": "a-to-zen-plumbing-fort-collins-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Top Notch Plumbing LLC",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "email": "office@TopNotchPlumbingLLC.com",
+    "phone": "(970) 404-7586",
+    "site_url": "https://www.topnotchplumbingllc.com/",
+    "lead_id": "top-notch-plumbing-llc-fort-collins-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Glynn Plumbing",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "email": "Jason@glynnplumbingandheating.com",
+    "phone": "(970) 222-1126",
+    "site_url": "https://glynnplumbingandheating.com/",
+    "lead_id": "glynn-plumbing-fort-collins-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Revolutionary Kindness Plumbing",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "email": "info@r-k-plumbing.com",
+    "phone": "(719) 354-7988",
+    "site_url": "https://r-k-plumbing.com/",
+    "lead_id": "revolutionary-kindness-plumbing-colorado-springs-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "St Joseph Plumbing",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "email": "office@saintjosephplumbing.com",
+    "phone": "(719) 421-8007",
+    "site_url": "https://www.saintjosephplumbing.com/",
+    "lead_id": "st-joseph-plumbing-colorado-springs-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Affordable Plumbing",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "email": "contact@aphinc.net",
+    "phone": "(719) 771-3489",
+    "site_url": "https://www.affordableplumbingandheat.com/",
+    "lead_id": "affordable-plumbing-colorado-springs-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Rocky Mountain Plumbing Services",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "email": "rockymountainplumbingservices@gmail.com",
+    "phone": "(719) 428-9555",
+    "site_url": "https://rockymountainplumbingservices.com/",
+    "lead_id": "rocky-mountain-plumbing-services-colorado-springs-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Acorn Plumbing",
+    "trade": "plumber",
+    "city": "Denver, CO",
+    "email": "info@acornplumbingservice.com",
+    "phone": "(720) 429-3778",
+    "site_url": "https://acornplumbingservice.com/",
+    "lead_id": "acorn-plumbing-denver-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Peachtree Plumbing",
+    "trade": "plumber",
+    "city": "Denver, CO",
+    "email": "PTP5280@gmail.com",
+    "phone": "(720) 298-1900",
+    "site_url": "https://www.peachtreeplumbing5280.com/",
+    "lead_id": "peachtree-plumbing-denver-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Green Plumbing Solutions",
+    "trade": "plumber",
+    "city": "Denver, CO",
+    "email": "info@yourgreenplumbingsolutions.com",
+    "phone": "(303) 472-3652",
+    "site_url": "https://yourgreenplumbingsolutions.com/",
+    "lead_id": "green-plumbing-solutions-denver-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "Hanson Plumbing Solution",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "email": "kizurira@hansonplumbingsolutions.com",
+    "phone": "(719) 696-4551",
+    "site_url": "https://hansonplumbingsolutions.com/",
+    "lead_id": "hanson-plumbing-solution-colorado-springs-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  },
+  {
+    "business_name": "R Buck",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "email": "office@callbuck.com",
+    "phone": "(719) 224-2800",
+    "site_url": "https://callbuck.com/",
+    "lead_id": "r-buck-colorado-springs-co",
+    "scraped_at": "2026-06-29T15:40:21.926Z"
+  }
+]

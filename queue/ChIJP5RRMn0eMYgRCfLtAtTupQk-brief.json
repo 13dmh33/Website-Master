@@ -11,7 +11,7 @@
   "diagnosis": "Strong 27-review profile (4.6★) with zero web presence. No website, missing email & address. Leaving customer research and booking friction entirely to Maps—losing qualified leads to competitors with even basic sites.",
   "hero_angle": "27 verified reviews prove your heating & plumbing work; a real website gives those customers a reason to pick up the phone.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $100 flat. Worth a quick call? - Dave @ Trevo Advisors",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -23,6 +23,17 @@
   "secondary_message": null,
   "secondary_template_id": null,
   "secondary_template_name": null,
-  "checker_approved": false,
-  "diagnosed_at": "2026-06-05T21:50:26.321Z"
+  "checker_approved": true,
+  "diagnosed_at": "2026-06-05T21:50:26.321Z",
+  "final_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $100 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "checker_flag": "",
+  "rewrite_count": 0,
+  "checker_score": {
+    "template_based": true,
+    "placeholders_filled": true,
+    "secondary_placeholders": true
+  },
+  "checked_at": "2026-06-29T14:54:28.301Z",
+  "demo_url": "https://trevoadvisors.com/for/?b=Hot+Water+-+Heater+Group.&t=plumber&c=Houston&r=27",
+  "demo_url_created_at": "2026-06-29T15:00:44.057Z"
 }

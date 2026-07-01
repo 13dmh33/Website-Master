@@ -94,9 +94,12 @@ Manual verification (this session, container — no Outscraper key available):
   documented for Scout/Pitcher/Drip/Reporter/Webhook/Poller/Enricher; must run on Mac).
 - `leads-web/` is a new directory, not yet `.gitignore`'d or explicitly tracked-by-rule — it will be
   tracked by default (same as `leads/`) the first time a real run writes into it.
-- Not merged to `main`. Not wired into Diagnoser/Pitcher/Mobile — has-website leads currently only feed
-  `/audit` via the CSV; they don't enter `state.json`'s queue (`updateState` is still no-website-only,
-  intentionally, since the has-website pitch path isn't built yet).
+- Not merged to `main`.
+- **Update (2026-06-29): wired into the pitcher pipeline.** Auditor-ready has-website leads (the
+  ones with a real email — `leads` array in `filterAndFormatHasWebsite`) are now also mirrored into
+  `leads/{basename}.json` and pushed into `state.json`'s queue via `updateState`, same as no-website
+  leads. They picked up a `gap_score` alias (= `fit_score`) so Diagnoser's existing sort/scoring works
+  unmodified. `needsEmail` leads still only feed `/audit` + Enricher — no brief until they get an email.
 
 ## How to resume
 

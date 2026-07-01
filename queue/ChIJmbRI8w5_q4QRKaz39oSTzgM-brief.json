@@ -11,7 +11,7 @@
   "diagnosis": "53 reviews, 4.9 rating—strong reputation, zero web presence. Potential customers can't learn services, pricing, or booking details. Lost inquiry volume to competitors with websites.",
   "hero_angle": "Exceptional Google reputation (4.9★, 53 reviews) proves quality; website captures that trust and converts it to jobs.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $100 flat. Worth a quick call? - Dave @ Trevo Advisors",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -23,6 +23,17 @@
   "secondary_message": null,
   "secondary_template_id": null,
   "secondary_template_name": null,
-  "checker_approved": false,
-  "diagnosed_at": "2026-06-05T21:49:56.140Z"
+  "checker_approved": true,
+  "diagnosed_at": "2026-06-05T21:49:56.140Z",
+  "final_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $100 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "checker_flag": "",
+  "rewrite_count": 0,
+  "checker_score": {
+    "template_based": true,
+    "placeholders_filled": true,
+    "secondary_placeholders": true
+  },
+  "checked_at": "2026-06-29T16:27:42.226Z",
+  "demo_url": "https://trevoadvisors.com/for/?b=First+Aid+Plumbing+Specialist+INC&t=plumber&c=Houston&r=53",
+  "demo_url_created_at": "2026-06-29T16:27:42.740Z"
 }

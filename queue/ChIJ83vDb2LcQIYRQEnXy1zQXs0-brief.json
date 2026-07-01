@@ -11,7 +11,7 @@
   "diagnosis": "Strong local reputation (104 reviews, 4.7★) but zero web presence. No website means lost calls from searches, inability to showcase work, and customers defaulting to competitors with online portfolios.",
   "hero_angle": "Established Houston plumber with 100+ verified reviews—ready to capture the search traffic they're leaving on the table.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $100 flat. Worth a quick call? - Dave @ Trevo Advisors",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -23,6 +23,17 @@
   "secondary_message": null,
   "secondary_template_id": null,
   "secondary_template_name": null,
-  "checker_approved": false,
-  "diagnosed_at": "2026-06-05T22:09:40.342Z"
+  "checker_approved": true,
+  "diagnosed_at": "2026-06-05T22:09:40.342Z",
+  "final_message": "Hey - I build websites for local plumber contractors. Clean, fast, live in a week. $100 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "checker_flag": "",
+  "rewrite_count": 0,
+  "checker_score": {
+    "template_based": true,
+    "placeholders_filled": true,
+    "secondary_placeholders": true
+  },
+  "checked_at": "2026-06-29T16:27:42.386Z",
+  "demo_url": "https://trevoadvisors.com/for/?b=Get+It+Done+Plumbing&t=plumber&c=Houston&r=104",
+  "demo_url_created_at": "2026-06-29T16:27:42.650Z"
 }

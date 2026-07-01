@@ -15,14 +15,15 @@ Your goal: 47 clients/month at $100/site one-time (no monthly fee); AI bundles (
 **Trade focus: Plumbing (40%) · Electrical (35%) · Handyman (25%) · Roofing (secondary)**
 **HVAC is excluded** — owner works for an HVAC manufacturer (conflict of interest). Never scout, pitch, or generate content targeting HVAC contractors.
 
-## Build Status (as of 2026-06-22)
+## Build Status (as of 2026-06-30)
 - Scout v2: ✅ scripts/scout.js — --budget/--target/--min-score/--dry-run/--csv/--suggest flags; pre-dedup; social-only detection; qualify_rate; ROI estimate; **HVAC blocked**; **on main (merged)**
 - Market Audit: ✅ scripts/market-audit.js — 65 US metros scored; --trade/--top/--csv; zero API cost; **on main (merged)**
-- Enricher: ✅ scripts/enricher.js — Apollo.io People Match, 200 credit/mo cap; finds owner email; upgrades sms→email
+- Enricher: ✅ scripts/enricher.js — Apollo.io People Match, 200 credit/mo cap; finds owner email; upgrades sms→email. **Known gap (2026-06-29): no hit/miss stats persisted; Scout/Outscraper returns email empty ~95% of the time, so Enricher is the only systematic email source and its match rate is currently unmeasured.**
+- Contact Scraper: ✅ scripts/contact-scraper.js — zero-API email discovery from has-website leads; additive state.json writes; resets to 'scouted' for re-diagnosis; **on branch feature/contact-page-scraper (not merged)**
 - Diagnoser: ✅ scripts/diagnoser.js — Claude Haiku, prompt caching, $5/mo cap; dual-channel routing
 - Checker: ✅ scripts/checker.js — 5 evals + Claude rewrite loop, $3/mo cap
-- Personalizer: ✅ scripts/personalizer.js — generates demo_url per approved lead; --write to save
-- Pitcher: ✅ scripts/pitcher.js — dual-channel (email first, SMS +4h); --dry-run; uses demo_url P.S.
+- Personalizer: ✅ scripts/personalizer.js — generates demo_url per approved lead; now includes star rating (s=) and hero_angle (h=) params for richer /for/ page personalization; --write to save
+- Pitcher: ✅ scripts/pitcher.js — dual-channel (email first, SMS +4h); --dry-run; P.S. now names the business: "Here's a live demo of what [BizName]'s site could look like"
 - Builder: ✅ scripts/builder.js — Lovable prompt generator, --submit, 5/day
 - Filmer: ✅ scripts/filmer.js — Loom instructions + ScreenshotOne, --submit, 5/day
 - Mobile: ✅ scripts/mobile.js — positive reply handler; slot suggestions; Nora upsell; sends /start link
@@ -39,6 +40,7 @@ Your goal: 47 clients/month at $100/site one-time (no monthly fee); AI bundles (
 - Referral: ✅ scripts/referral.js — partner outreach (realtors/inspectors/PMs); LinkedIn + email
 - Brief: ✅ scripts/brief.js — daily morning briefing; pipeline stats; prioritized action list
 - Website/Demo: ✅ website/ — demos (plumbing/electrical/handyman/roofing/hvac), proposal, intake, checkout, /start, /atlas, /argus; **on main (merged)**
+- /for/ demo page: ✅ website/for/index.html — personalization upgraded 2026-06-30: uses s= (star rating), h= (hero_angle insight callout), city-aware compare section, params pass through to checkout; pricing bug fixed ($65/mo removed from website-only hero strip)
 - Configurator v2: ✅ website/preview/index.html — 4-step flow, font picker, 6 color presets, 8 toggles, AI Enhance; **on main (merged)**
 - Netlify Enhance Fn: ✅ netlify/functions/enhance.js — POST → Claude Haiku; **on main (merged)**
 - Molly: ✅ molly/ — Instagram/LinkedIn content engine for Trevo; **on main (merged)**
@@ -268,6 +270,13 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - 2026-06-22: Miley verified end-to-end (pipeline dry-run, linkpage, DM responder); real Bebas Neue + Inter fonts added; breast-cancer stats re-verified current
 - 2026-06-22: Miley content-quality roadmap specced — see miley/docs/roadmap-specs.md
 - 2026-06-23: Miley calendar engine (#10) built — `templates/calendar.json` + `lib/calendar.js` inject date-specific observances (WIC Week, Skilled Trades Day, Mother's Day, National Apprenticeship Week, monthly self-exam reminder) into base/september weeks; October unaffected
+- 2026-06-29: Live Scout scraping (both modes) found zero usable email leads — built `scripts/sheet-import.js` as a stopgap importer for manually-curated Google Sheet leads (company/URL/phone/email), same lead contract as Scout. Imported 59 curated plumber/handyman leads; pipeline ran end-to-end (90 briefs checked, 5 real emails sent via Zoho to sheet-import leads). Confirmed: remaining 146 checked leads in queue are 100% SMS-only — Scout/Enricher have not produced any email-capable leads this week. Root-caused why: Outscraper (Scout's data source) doesn't return emails from GMB listings (~95% empty); Apollo.io (Enricher) is capped at 200 credits/mo and depends on phone-match accuracy; no hit/miss stats are persisted from Enricher runs. Manual Sheet curation currently outperforms the automated pipeline for email yield.
+- 2026-06-29: Temporarily raised `config/checker-config.json` daily_limit 30→120 (count cap only, monthly $ cap untouched) to clear same-day backlog — needs reverting to 30 once back from travel.
+- 2026-06-29: Bumped diagnoser + checker daily_limit to 250 to clear email-lead backlog (53 stuck leads); 79 newly approved, Pitcher sent 25 emails same day (30/day limit). Dollar caps untouched.
+- 2026-06-30: Contact-scraper built (feature/contact-page-scraper): free email discovery from lead websites, two bugs found+fixed (domain-match false positive; "none" placeholder strings).
+- 2026-06-30: Sheet-log v1 live-tested — SentLog tab created, header written, 5 rows appended, 0 errors.
+- 2026-06-30: Sheet-log v2 built (feature/sheet-log-refine): 14-col CRM, update-in-place, drip timestamps, reply/unsubscribe columns, notes preserved, old-format migration handled.
+- 2026-06-30: Demo link personalization upgraded — pitcher P.S. names business, personalizer passes s= (rating) + h= (hero_angle), /for/ page shows insight callout + star-rated reviews + city-aware compare + checkout param pass-through; $65/mo pricing bug fixed.
 
 ## Twilio A2P 10DLC Status
 - Brand registration submitted: 2026-06-03
@@ -309,6 +318,12 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - [x] Handyman demo site exists at website/demos/handyman/
 - [x] 2026-06-24: Removed HVAC from all public-facing pages (/start/, /for/, /proposal/) — HVAC is excluded per conflict-of-interest policy but was still being marketed/linked publicly. website/demos/hvac/ left in place but no longer linked.
 - [ ] Check `miley/docs/roadmap-specs.md` for the next batch of specced content-quality build work for Miley when ready to pick one up.
+- [ ] **Revert `config/checker-config.json` + `config/diagnoser-config.json` daily_limit → 30** once backlog cleared (bumped to 250 on 2026-06-30, monthly $ caps untouched).
+- [x] **Contact-scraper built** (feature/contact-page-scraper) — merge to main when ready; run on Mac after Scout `--mode has-website`.
+- [ ] **Regenerate demo URLs for already-sent leads**: run `node scripts/personalizer.js --write --force` on Mac — adds s= (rating) + h= (hero_angle) to the 48+ existing demo links so they get the richer /for/ page.
+- [ ] **Persist Enricher hit/miss stats** — `scripts/enricher.js` currently prints found/noMatch/error counts to terminal but never saves them; add a per-run summary to `config/enricher-config.json` so Apollo's real success rate is visible over time instead of guessed.
+- [ ] **Check licensed-contractor registries** (state Chamber of Commerce / contractor licensing boards) as a free, ToS-clean public-data email source — untapped, not yet scoped per-state.
+- [ ] **Decide on Google Sheet write-back** — user wants to eventually move scraper output + pipeline run logs into the same Sheet used for sheet-import (not just read from it). Needs Google Sheets write API (only read-only Drive access used so far). Not scoped — needs a follow-up conversation on what "logs" should contain before building.
 
 ### Milly — first run (Mac, after Buffer token setup)
 1. Add `BUFFER_ACCESS_TOKEN` + `BUFFER_INSTAGRAM_PROFILE_ID` to `milly/.env`

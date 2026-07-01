@@ -11,7 +11,7 @@
   "diagnosis": "Strong Google presence (64 reviews, 4.6★) but zero web footprint. No website to capture leads beyond Maps discovery or referrals. Missing opportunity to control narrative and showcase services.",
   "hero_angle": "Established handyman with proven customer satisfaction—just needs a digital home to stop losing prospects to competitors with websites.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Worth a quick call? - Dave @ Trevo Advisors",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -23,6 +23,17 @@
   "secondary_message": null,
   "secondary_template_id": null,
   "secondary_template_name": null,
-  "checker_approved": false,
-  "diagnosed_at": "2026-06-05T22:09:12.171Z"
+  "checker_approved": true,
+  "diagnosed_at": "2026-06-05T22:09:12.171Z",
+  "final_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "checker_flag": "",
+  "rewrite_count": 0,
+  "checker_score": {
+    "template_based": true,
+    "placeholders_filled": true,
+    "secondary_placeholders": true
+  },
+  "checked_at": "2026-06-29T16:27:42.492Z",
+  "demo_url": "https://trevoadvisors.com/for/?b=Mr.+25%2F8+Handyman+Services&t=handyman&c=San+Antonio&r=64",
+  "demo_url_created_at": "2026-06-29T16:27:42.669Z"
 }

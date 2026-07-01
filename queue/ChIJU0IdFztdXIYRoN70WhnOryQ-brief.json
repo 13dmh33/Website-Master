@@ -11,7 +11,7 @@
   "diagnosis": "Fix-It-Freddy has 99 five-star reviews but zero web presence. No website means lost jobs—customers can't learn services, pricing, or book. They're leaving money on the table daily.",
   "hero_angle": "Trusted by 99 verified customers with perfect ratings—time to let the web do the selling.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Worth a quick call? - Dave @ Trevo Advisors",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -23,6 +23,17 @@
   "secondary_message": null,
   "secondary_template_id": null,
   "secondary_template_name": null,
-  "checker_approved": false,
-  "diagnosed_at": "2026-06-05T22:09:00.496Z"
+  "checker_approved": true,
+  "diagnosed_at": "2026-06-05T22:09:00.496Z",
+  "final_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "checker_flag": "",
+  "rewrite_count": 0,
+  "checker_score": {
+    "template_based": true,
+    "placeholders_filled": true,
+    "secondary_placeholders": true
+  },
+  "checked_at": "2026-06-29T16:27:42.189Z",
+  "demo_url": "https://trevoadvisors.com/for/?b=Fix-It-Freddy&t=handyman&c=San+Antonio&r=99",
+  "demo_url_created_at": "2026-06-29T16:27:42.694Z"
 }

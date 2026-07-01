@@ -6,7 +6,9 @@
  *   --mode no-website  (default) — finds contractors with no real website.
  *   --mode has-website           — finds established contractors who DO have
  *                                   a real website + email, captures site_url,
- *                                   emits auditor-ready CSV for /audit.
+ *                                   emits auditor-ready CSV for /audit, and feeds
+ *                                   leads with an email into the pitcher pipeline
+ *                                   (mirrored to leads/, queued in state.json).
  *
  * Usage:
  *   node scripts/scout.js --suggest hvac            ← show top 5 markets for a trade, then exit
@@ -20,17 +22,21 @@
  *   node scripts/scout.js --city "Denver, CO" --trade plumber --csv --force
  *   node scripts/scout.js --dry-run --city "Denver, CO" --trade plumber
  *   node scripts/scout.js --city "Denver, CO" --trade plumber --mode has-website --csv --force
+ *   node scripts/scout.js --city "Denver, CO" --trade plumber --mode has-website --min-reviews 3 --min-rating 3.5 --force
+ *                                   (has-website mode only — loosen if a market returns 0 qualifying leads)
  *
  * Reads:  config/scout-config.json  (budget + settings, shared cap across modes)
  *         .env.local                (OUTSCRAPER_API_KEY)
  *         leads/*.json              (no-website pre-dedup; also cross-checked by has-website)
  *         leads-web/*.json          (has-website pre-dedup)
- * Writes: leads/{city}-{trade}-{date}-{run}.json              (no-website mode)
+ * Writes: leads/{city}-{trade}-{date}-{run}.json              (no-website mode; also mirrors
+ *                                                               has-website's auditor-ready/email leads)
  *         leads-web/{city}-{trade}-{date}-{run}.json           (has-website mode)
  *         leads-web/{city}-{trade}-{date}-{run}.csv             (has-website mode, auditor-ready)
  *         leads-web/needs-email-{city}-{trade}-{date}-{run}.csv (has-website mode, manual lookup queue)
  *         reports/scout-{trade}-{date}.csv  (if --csv, no-website mode)
- *         state.json                (no-website mode only — has-website leads are not pitcher-pipeline leads yet)
+ *         state.json                (both modes — has-website's auditor-ready/email leads are
+ *                                     queued with status 'scouted' just like no-website leads)
  *         config/scout-config.json
  *         logs/{date}.log
  */
@@ -79,6 +85,8 @@ const limitArg  = parseInt(get('--limit') || '30', 10);
 const budgetArg = parseFloat(get('--budget') || '0');      // --budget 0.25 caps this run
 const targetArg = parseInt(get('--target') || '0', 10);    // --target 50 → auto-calc limit
 const minScore  = parseInt(get('--min-score') || '3', 10); // --min-score 5 → only keep hot leads
+const minReviews = parseInt(get('--min-reviews') || '10', 10);  // has-website mode only
+const minRating  = parseFloat(get('--min-rating') || '4.0');    // has-website mode only
 const isDryRun  = hasFlag('--dry-run');
 const isMulti   = hasFlag('--multi');
 const exportCsv = hasFlag('--csv');
@@ -499,6 +507,7 @@ async function main() {
   if (budgetArg) console.log(`  Run cap:          $${budgetArg.toFixed(2)} (--budget)`);
   console.log(`  Queries:          ${queries.length} × ${perQueryLimit} = ~${totalLimit} raw (~$${estimatedCost.toFixed(3)})`);
   console.log(`  Min score:        ${minScore}`);
+  if (isHasWebsiteMode) console.log(`  Min reviews/rating: ${minReviews} / ${minRating}`);
   console.log('');
 
   if (isDryRun) {
@@ -607,7 +616,7 @@ async function runNoWebsiteMode(config, flat, knownIds) {
 }
 
 async function runHasWebsiteMode(config, flat, knownIds, knownDomains) {
-  const { leads, needsEmail, disc } = filterAndFormatHasWebsite(flat, trade, city, knownIds, minScore, knownDomains);
+  const { leads, needsEmail, disc } = filterAndFormatHasWebsite(flat, trade, city, knownIds, minScore, knownDomains, minReviews, minRating);
   logHasWebsiteBreakdown(flat.length, leads.length, needsEmail.length, disc);
 
   if (leads.length === 0 && needsEmail.length === 0) {
@@ -624,6 +633,14 @@ async function runHasWebsiteMode(config, flat, knownIds, knownDomains) {
   if (leads.length > 0) {
     csvFilename = buildFilename(city, LEADS_WEB_DIR, 'csv');
     fs.writeFileSync(path.join(LEADS_WEB_DIR, csvFilename), exportAuditorCsv(leads));
+
+    // Auditor-ready leads have a real email — also feed the pitcher pipeline.
+    // Mirror into leads/ (same filename, same content) so Diagnoser's leads/*.json
+    // scan picks them up, and register them in state.json as 'scouted'.
+    if (!fs.existsSync(LEADS_DIR)) fs.mkdirSync(LEADS_DIR, { recursive: true });
+    fs.writeFileSync(path.join(LEADS_DIR, jsonFilename), JSON.stringify(leads, null, 2));
+    const newToQueue = updateState(leads);
+    console.log(`  Queued for pitcher:  ${newToQueue}  (mirrored to leads/${jsonFilename}, state.json)`);
   }
 
   let needsEmailFilename = null;

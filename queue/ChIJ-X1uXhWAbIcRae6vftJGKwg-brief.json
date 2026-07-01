@@ -11,7 +11,7 @@
   "diagnosis": "Strong local presence (104 reviews, 4.6★) but zero web footprint—no website means lost calls to competitors who rank. Missing email contact and address visibility hurt conversion from Maps traffic.",
   "hero_angle": "104 verified customer reviews prove reliability; website will convert that trust into calls.",
   "tone": "direct",
-  "cold_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $150 flat. 15-min call? — Dave @ Trevo Advisors",
+  "cold_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $100 flat. 15-min call? — Dave @ Trevo Advisors",
   "template_id": "s2",
   "template_name": "The missed job",
   "template_based": true,
@@ -24,7 +24,7 @@
   "secondary_template_name": null,
   "checker_approved": true,
   "diagnosed_at": "2026-06-02T14:04:17.551Z",
-  "final_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $150 flat. 15-min call? — Dave @ Trevo Advisors",
+  "final_message": "Hey — no website means missing 3–5 plumber jobs a week to competitors who have one. I build them for $100 flat. 15-min call? — Dave @ Trevo Advisors",
   "checker_flag": "",
   "rewrite_count": 0,
   "checker_score": {

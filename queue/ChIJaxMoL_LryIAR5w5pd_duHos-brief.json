@@ -11,7 +11,7 @@
   "diagnosis": "170 reviews, 4.8 stars, zero web presence. Strong local reputation on Maps but no website to convert calls or showcase work. Losing online visibility and inquiry volume to competitors with basic sites.",
   "hero_angle": "Trusted handyman with 170+ verified reviews and 4.8-star rating—just needs a web home to capture more Las Vegas jobs.",
   "tone": "direct",
-  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $150 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "cold_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Worth a quick call? - Dave @ Trevo Advisors",
   "template_id": "s3",
   "template_name": "The simple ask",
   "template_subject": null,
@@ -23,6 +23,17 @@
   "secondary_message": null,
   "secondary_template_id": null,
   "secondary_template_name": null,
-  "checker_approved": false,
-  "diagnosed_at": "2026-06-05T22:10:26.766Z"
+  "checker_approved": true,
+  "diagnosed_at": "2026-06-05T22:10:26.766Z",
+  "final_message": "Hey - I build websites for local handyman contractors. Clean, fast, live in a week. $100 flat. Worth a quick call? - Dave @ Trevo Advisors",
+  "checker_flag": "",
+  "rewrite_count": 0,
+  "checker_score": {
+    "template_based": true,
+    "placeholders_filled": true,
+    "secondary_placeholders": true
+  },
+  "checked_at": "2026-06-29T16:27:42.511Z",
+  "demo_url": "https://trevoadvisors.com/for/?b=Getz+Handyman+Las+Vegas&t=handyman&c=Las+Vegas&r=170",
+  "demo_url_created_at": "2026-06-29T16:27:42.718Z"
 }

@@ -1,0 +1,46 @@
+{
+  "weekOf": "2026-07-06",
+  "generatedAt": "2026-07-06T16:01:45.027Z",
+  "researchMode": "evergreen",
+  "campaignMode": "base",
+  "week": 2,
+  "seasonalAngle": "Heat on the deck — HVAC season, breathable gear (trucker cap, tees)",
+  "themes": [
+    "Women breaking into a male-dominated trade — relatable wins and pushback",
+    "The double-standard of being underestimated on a jobsite",
+    "Strength + femininity as complements, not opposites",
+    "Apprentice-to-pro journeys and mentorship between women",
+    "Tool obsessions and gear loyalty",
+    "Jobsite humor only tradeswomen will get",
+    "The 30% donation as proof the brand walks the walk",
+    "Trade pride: the skill, the paycheck, the independence"
+  ],
+  "facts": [
+    {
+      "claim": "About 1 in 8 women (~13%) in the US will develop invasive breast cancer in her lifetime.",
+      "source": "American Cancer Society (2026)"
+    },
+    {
+      "claim": "An estimated 321,910 US women will be diagnosed with invasive breast cancer in 2026; about 42,140 will die.",
+      "source": "American Cancer Society (Cancer Facts & Figures 2026)"
+    },
+    {
+      "claim": "On average, a woman in the US is diagnosed with breast cancer every 2 minutes.",
+      "source": "National Breast Cancer Foundation (2026)"
+    },
+    {
+      "claim": "When breast cancer is caught early (localized), the 5-year relative survival rate is over 99%.",
+      "source": "American Cancer Society / NBCF (2026)"
+    },
+    {
+      "claim": "Breast cancer death rates have fallen ~44% since 1989, thanks to early detection and better treatment.",
+      "source": "American Cancer Society (2026)"
+    }
+  ],
+  "liveHeadlines": {
+    "women_in_trades": [],
+    "breast_cancer": [],
+    "fetchedAt": "2026-07-06T16:01:45.027Z"
+  },
+  "calendarAngles": []
+}

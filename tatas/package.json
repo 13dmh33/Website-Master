@@ -1,0 +1,20 @@
+{
+  "name": "tatas",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Tech 4 Tatas content engine — Phase 1: automated Instagram carousel lane (breast cancer awareness education), review-first.",
+  "scripts": {
+    "write": "node writer.js",
+    "design": "node designer.js",
+    "publish-cards": "node scripts/publish-cards.js",
+    "approve": "node scripts/approve-week.js",
+    "post-due": "node scripts/post-due.js",
+    "test-pipeline": "node writer.js --fallback && node designer.js && node scripts/publish-cards.js && node scripts/post-due.js --dry-run"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.37.0",
+    "dotenv": "^16.4.5",
+    "node-fetch": "^2.7.0",
+    "skia-canvas": "^1.0.2"
+  }
+}

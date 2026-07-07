@@ -1,0 +1,76 @@
+name: Tatas token refresh (Tech 4 Tatas)
+
+# Instagram-Login access tokens expire after 60 days. This refreshes the token
+# twice a month (each refresh grants a fresh 60 days) and stores the new value
+# back into the TATAS_IG_TOKEN secret, so posting never silently dies.
+#
+# Needs GH_SECRETS_PAT — a fine-grained PAT with "Secrets: read and write" on
+# this repo (the default GITHUB_TOKEN can't update secrets). Without it, this
+# workflow opens an issue telling you to set it up.
+#
+# Not needed at all in TATAS_IG_API_MODE=facebook (Page tokens don't expire).
+
+on:
+  schedule:
+    - cron: '30 5 1,15 * *'   # 1st + 15th monthly — well inside the 60-day window
+  workflow_dispatch:
+
+concurrency:
+  group: tatas-git-writes
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+
+    permissions:
+      issues: write   # failure/setup alerts open an issue
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Check PAT is configured
+        if: ${{ secrets.GH_SECRETS_PAT == '' }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: 'Tatas token refresh needs GH_SECRETS_PAT',
+              body: 'The token-refresh workflow ran but cannot store the refreshed token: add a fine-grained PAT with **Secrets: read and write** on this repo as the `GH_SECRETS_PAT` secret. Until then, refresh manually every <60 days: `cd tatas && node scripts/refresh-token.js --write`, then update the `TATAS_IG_TOKEN` secret.',
+            });
+            core.setFailed('GH_SECRETS_PAT secret is not set — cannot store the refreshed token.');
+
+      - name: Install dependencies
+        run: cd tatas && npm install --no-audit --no-fund
+
+      - name: Refresh token and update secret
+        env:
+          TATAS_IG_TOKEN: ${{ secrets.TATAS_IG_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_SECRETS_PAT }}
+        run: |
+          NEW_TOKEN=$(cd tatas && node scripts/refresh-token.js --print)
+          echo "::add-mask::$NEW_TOKEN"
+          gh secret set TATAS_IG_TOKEN --repo "$GITHUB_REPOSITORY" --body "$NEW_TOKEN"
+          echo "Secret TATAS_IG_TOKEN updated."
+
+      - name: Alert on failure (opens an issue)
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Tatas token refresh FAILED — ${new Date().toISOString().slice(0, 10)}`,
+              body: `The Instagram token refresh failed. If it isn't fixed within ~60 days of the last successful refresh, posting will stop.\n\nManual fix: regenerate a long-lived token in the Meta app dashboard and update the TATAS_IG_TOKEN secret.\n\nRun log: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });

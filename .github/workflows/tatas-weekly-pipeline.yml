@@ -1,0 +1,72 @@
+name: Tatas weekly pipeline (Tech 4 Tatas)
+
+# Thursday: writes NEXT week's 5 carousels (writer → designer → publish-cards),
+# hosts the slides + review preview on the Netlify site, commits. Review-first:
+# everything lands as 'pending' — nothing posts until tatas-approve-week.
+
+on:
+  schedule:
+    - cron: '0 14 * * 4'   # Thursday ~8am MT — generates NEXT week for Thu-Sun review
+  workflow_dispatch:        # manual trigger for testing
+
+concurrency:
+  group: tatas-git-writes   # separate from Miley's miley-git-writes — never collide
+  cancel-in-progress: false
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write   # commit state.json + hosted cards
+      issues: write     # failure alert opens an issue
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: cd tatas && npm install --no-audit --no-fund
+
+      - name: Run writer (5 carousels → pending in state.json)
+        run: cd tatas && node writer.js
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TATAS_MODEL:       ${{ vars.TATAS_MODEL }}
+          TATAS_IG_HANDLE:   ${{ vars.TATAS_IG_HANDLE }}
+
+      - name: Run designer (render 1080x1080 slides)
+        run: cd tatas && node designer.js
+        env:
+          TATAS_IG_HANDLE: ${{ vars.TATAS_IG_HANDLE }}
+
+      - name: Host cards + review preview on the website (Netlify)
+        run: cd tatas && node scripts/publish-cards.js
+
+      - name: Commit state + hosted cards + preview
+        run: |
+          git config user.name  "tatas-agent"
+          git config user.email "tatas@trevoadvisors.com"
+          git add tatas/state.json tatas/output/ website/social/tatas/ website/review/tatas/ || true
+          git diff --cached --quiet || git commit -m "tatas: week content $(date +%Y-%m-%d)"
+          git pull --rebase origin main
+          git push origin main
+
+      - name: Alert on failure (opens an issue)
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Tatas weekly pipeline FAILED — ${new Date().toISOString().slice(0, 10)}`,
+              body: `The Thursday carousel-generation run failed, so there may be no week to review/approve.\n\nRun log: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });

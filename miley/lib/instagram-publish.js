@@ -14,14 +14,14 @@
 //
 // Uses the same credentials as lib/instagram-insights.js:
 //   INSTAGRAM_ACCESS_TOKEN + INSTAGRAM_BUSINESS_ACCOUNT_ID
-// Works with the Meta app in Development mode as long as the IG account has a
-// role on the app — no App Review needed for accounts you own.
+// API flavor comes from lib/ig-config.js — default is "Instagram Login"
+// (graph.instagram.com, no Facebook Page link needed). Works with the Meta app
+// in Development mode for accounts connected to the app — no App Review.
 
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 
 const fetch = require('node-fetch');
-
-const GRAPH_BASE = 'https://graph.facebook.com/v19.0';
+const { GRAPH_BASE } = require('./ig-config');
 
 const POLL_INTERVAL_MS = 3000;
 const POLL_MAX_TRIES   = 20;   // ~60s — Meta usually finishes in a few seconds

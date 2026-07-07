@@ -141,8 +141,11 @@ Review the week at `trevoadvisors.com/review/miley/` (or open `output/queue/prev
 ```
 ANTHROPIC_API_KEY=             # content generation; blank → evergreen (free)
 FORCE_QUEUE=1                  # keep set — review-first, nothing auto-posts
-INSTAGRAM_ACCESS_TOKEN=        # direct posting (post-due.js) + analytics — long-lived Meta token
+INSTAGRAM_ACCESS_TOKEN=        # direct posting (post-due.js) + analytics — long-lived token
 INSTAGRAM_BUSINESS_ACCOUNT_ID= # direct posting + analytics
+# INSTAGRAM_API_MODE=facebook  # default is Instagram Login (graph.instagram.com, NO FB Page
+                               # link, 60-day tokens auto-refreshed). Set 'facebook' only for
+                               # the legacy FB-Page-linked setup. See lib/ig-config.js.
 SOCIAL_BASE_URL=               # where hosted cards/preview live (default https://trevoadvisors.com)
 BUFFER_ACCESS_TOKEN=           # LEGACY fallback only — CLASSIC token (NOT OIDC — it 401s)
 BUFFER_INSTAGRAM_PROFILE_ID=   # LEGACY fallback only
@@ -163,9 +166,10 @@ Workflows live at repo root — all only run from `main`, so merge there to acti
 | `miley-weekly-pipeline.yml` | Thu cron | Generates next week, hosts cards + review preview on the website, commits. |
 | `miley-approve-week.yml` | **manual (Run workflow)** | The approve button — flips the week pending → approved. Inputs: `week`, `skip_slots`. |
 | `miley-post-due.yml` | cron at the 4 slot times (+ manual) | Posts approved+due items directly to IG; commits `igMediaId` back. **October note: add cron hours for the daily campaign.** |
+| `miley-token-refresh.yml` | 1st + 15th monthly | Refreshes the 60-day Instagram-Login token and updates the secret (needs `GH_SECRETS_PAT`). No-op in facebook mode. |
 | `miley-weekly-analytics.yml` | Sun night cron | Engagement feedback loop. |
 
-Secrets: `ANTHROPIC_API_KEY`, `INSTAGRAM_ACCESS_TOKEN`, `INSTAGRAM_BUSINESS_ACCOUNT_ID` (+ legacy `BUFFER_*` if using the fallback). Repo variable: `SOCIAL_BASE_URL`. All three write-workflows share the `miley-git-writes` concurrency group (serialized commits) and open a GitHub issue on failure — that's the alerting.
+Secrets: `ANTHROPIC_API_KEY`, `INSTAGRAM_ACCESS_TOKEN`, `INSTAGRAM_BUSINESS_ACCOUNT_ID`, `GH_SECRETS_PAT` (fine-grained PAT, Secrets read/write, for token refresh) (+ legacy `BUFFER_*` if using the fallback). Repo variable: `SOCIAL_BASE_URL`. The write-workflows share the `miley-git-writes` concurrency group (serialized commits) and all open a GitHub issue on failure — that's the alerting.
 
 ---
 

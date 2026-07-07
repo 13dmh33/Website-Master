@@ -43,8 +43,9 @@ October is daily (7 posts/week). Generate a week ahead and approve all 7 in one 
 ## One-time setup checklist
 
 - [ ] `FORCE_QUEUE=1` set as a repo secret / env var (keeps everything review-first)
-- [ ] Meta app created (Development mode is fine) with @techs4tatas linked to a Facebook Page and holding a role on the app
+- [ ] Meta app created with use case **Instagram** → "Instagram API with Instagram Login" (**no Facebook Page link needed**; Development mode is fine). In the dashboard's "API setup with Instagram login", connect @techs4tatas (must be a professional account — Business or Creator) and generate the long-lived token; the account ID is shown right there.
 - [ ] `INSTAGRAM_ACCESS_TOKEN` (long-lived) + `INSTAGRAM_BUSINESS_ACCOUNT_ID` added as GitHub Actions secrets — these power both posting and analytics
+- [ ] `GH_SECRETS_PAT` secret (fine-grained PAT, "Secrets: read and write" on this repo) so the miley-token-refresh workflow can auto-renew the 60-day token
 - [ ] `SOCIAL_BASE_URL` repo variable set (defaults to https://trevoadvisors.com) and the Netlify site deploying `website/`
 - [ ] You've found the "Miley approve week" workflow in the GitHub Actions tab (that's your approve button)
 - [ ] (Legacy fallback only) Buffer **classic** token, if you ever want `push-queue.js`

@@ -1,15 +1,15 @@
 'use strict';
 
-// Instagram Graph API — read-only analytics
-// requires Instagram Business account + access token
-// not used for posting — PostPeer handles posting
+// Instagram Graph API — read-only analytics (posting lives in instagram-publish.js)
+// requires an Instagram professional account + access token
 // skip gracefully if INSTAGRAM_ACCESS_TOKEN is not set
 
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 
 const fetch = require('node-fetch');
 
-const GRAPH_BASE = 'https://graph.facebook.com/v19.0';
+// host depends on the API flavor (Instagram Login vs Facebook Login) — see lib/ig-config.js
+const { GRAPH_BASE } = require('./ig-config');
 
 function isConfigured() {
   return !!(process.env.INSTAGRAM_ACCESS_TOKEN && process.env.INSTAGRAM_BUSINESS_ACCOUNT_ID);

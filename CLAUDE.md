@@ -91,10 +91,12 @@ pending → approved → posted with retry/stale handling; failures open a GitHu
 Dry-run tested end-to-end in container. Buffer path (`push-queue.js`) kept as legacy fallback.
 
 Pending (all Mac/account-side, can't be done from container):
-- **Meta app setup** (can share Reeve's app): link @techs4tatas to a FB Page, add
-  `instagram_content_publish`, generate long-lived token → add `INSTAGRAM_ACCESS_TOKEN` +
-  `INSTAGRAM_BUSINESS_ACCOUNT_ID` as GitHub Actions secrets. Dev mode fine, no App Review.
-  Replaces the old "Buffer classic token" requirement.
+- **Meta app setup — no Facebook Page link needed**: create a Meta app with use case
+  "Instagram" → "Instagram API with Instagram Login", connect @techs4tatas (professional
+  account) in the dashboard, generate the long-lived token → add `INSTAGRAM_ACCESS_TOKEN` +
+  `INSTAGRAM_BUSINESS_ACCOUNT_ID` as GitHub Actions secrets, plus `GH_SECRETS_PAT`
+  (fine-grained PAT, Secrets read/write) so miley-token-refresh can auto-renew the 60-day
+  token. Dev mode fine, no App Review. Replaces the old "Buffer classic token" requirement.
 - Printify catalog scrape (`scripts/scrape-catalog.js`) — `techs4tatas.printify.me` returns
   403 to all fetch paths (anti-bot, not just container egress) — run on Mac or paste a
   product list manually.
@@ -322,7 +324,7 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - [ ] **Miley catalog**: run `node scripts/scrape-catalog.js --write` on Mac (blocked from container — Printify storefront 403s all server-side fetches), or paste a product list
 - [ ] **Miley brand colors**: replace placeholder hex in `miley/templates/visual-config.json` with real Canva brand-kit colors
 - [ ] **Miley product photos**: drop Printify mockups into `miley/assets/products/`
-- [ ] **Miley Meta app** (replaces Buffer for Miley): link @techs4tatas to a FB Page, create/reuse the Reeve Meta app with `instagram_content_publish`, generate a long-lived token → add `INSTAGRAM_ACCESS_TOKEN` + `INSTAGRAM_BUSINESS_ACCOUNT_ID` as GitHub Actions secrets (~1h, Dev mode, no App Review)
+- [ ] **Miley Meta app** (replaces Buffer for Miley — **no FB Page link needed**): create a Meta app with use case "Instagram" (Instagram Login flavor), connect @techs4tatas, generate a long-lived token → add `INSTAGRAM_ACCESS_TOKEN` + `INSTAGRAM_BUSINESS_ACCOUNT_ID` + `GH_SECRETS_PAT` (for auto token refresh) as GitHub Actions secrets (~45 min, Dev mode, no App Review)
 
 ### Next Claude session — container tasks
 - [x] Merge `claude/trevo-advisors-review-Sjewy` → main (already merged as of 2026-06-24 check)
@@ -343,8 +345,8 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 2. GitHub Actions cron is active on main — Mon 6am MT pipeline, Sun 10pm analytics
 3. Manual test: `cd milly && node scripts/test-pipeline.js`
 
-### Miley — first run (after Meta app setup — no Buffer needed)
-1. Meta app: link @techs4tatas to a FB Page → long-lived token → `INSTAGRAM_ACCESS_TOKEN` + `INSTAGRAM_BUSINESS_ACCOUNT_ID` as GitHub Actions secrets (and `miley/.env` for local runs)
+### Miley — first run (after Meta app setup — no Buffer, no FB Page link)
+1. Meta app (use case "Instagram", Instagram-Login flavor): connect @techs4tatas → long-lived token → `INSTAGRAM_ACCESS_TOKEN` + `INSTAGRAM_BUSINESS_ACCOUNT_ID` + `GH_SECRETS_PAT` as GitHub Actions secrets (and `miley/.env` for local runs); token auto-refreshes via miley-token-refresh
 2. Merge the direct-posting branch to main — workflows: Thu pipeline (generates next week + publishes review page), **miley-approve-week** (manual approve button), **miley-post-due** (posts at slot times), Sun analytics
 3. Weekly routine: review at trevoadvisors.com/review/miley/ → tap "Run workflow" on miley-approve-week → done
 4. Manual test: `cd miley && node scripts/test-pipeline.js` and `node scripts/post-due.js --dry-run`

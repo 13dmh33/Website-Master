@@ -157,7 +157,7 @@ function renderTopBar(ctx, width, palette) {
 // assets/logo-white.png for dark backgrounds), sized to LOGO_W. Falls back to
 // the text wordmark only if the logo assets are missing.
 const LOGO_W = 170;
-const LOGO_H = 92;
+const LOGO_H = 111; // matches assets/logo*.png aspect (706x462)
 const LOGO_Y = DESIGN.padding - 20;
 const logoCache = {};
 

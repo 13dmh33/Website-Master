@@ -87,11 +87,11 @@ async function renderSingle(post, imageDir, idx) {
       buf = await render.renderCleanCard(post.hook, '', 0, 0);
     } else if (templateName === 'photoCard' && hasPhoto) {
       const photoBuffer = fs.readFileSync(render.productImagePath(post.product));
-      buf = await render.renderPhotoCard(post.hook, photoBuffer, '— Riley, Techs4Tatas');
+      buf = await render.renderPhotoCard(post.hook, photoBuffer, '');
     } else {
       buf = await render.renderSingle({
         hook:       post.hook,
-        sub:        '— Riley, Techs4Tatas',
+        sub:        '',
         paletteKey,
         productKey: post.product,
       });

@@ -46,9 +46,9 @@ const DESIGN = {
 };
 
 // wordmark bounding box for the visual gate — matches renderBrand()'s
-// right-aligned placement (DESIGN.brandSize text ending at width - padding).
+// top-right placement (logo image when assets/logo*.png exist, else text).
 function wordmarkRegion(width) {
-  return { x: width - DESIGN.padding - 280, y: DESIGN.padding - 6, w: 280, h: DESIGN.brandSize + 14 };
+  return { x: width - DESIGN.padding - LOGO_W, y: LOGO_Y, w: LOGO_W, h: LOGO_H };
 }
 
 function brandColorList() {
@@ -153,7 +153,39 @@ function renderTopBar(ctx, width, palette) {
   ctx.fillRect(0, 0, width, 6);
 }
 
-function renderBrand(ctx, width, palette, color) {
+// brand mark top-right: the real Techs4Tatas logo (assets/logo.png pink,
+// assets/logo-white.png for dark backgrounds), sized to LOGO_W. Falls back to
+// the text wordmark only if the logo assets are missing.
+const LOGO_W = 170;
+const LOGO_H = 92;
+const LOGO_Y = DESIGN.padding - 20;
+const logoCache = {};
+
+async function loadLogo(variant) {
+  if (variant in logoCache) return logoCache[variant];
+  const file = path.join(__dirname, '..', 'assets', variant === 'white' ? 'logo-white.png' : 'logo.png');
+  try {
+    logoCache[variant] = fs.existsSync(file) ? await loadImage(file) : null;
+  } catch { logoCache[variant] = null; }
+  return logoCache[variant];
+}
+
+// pick the white logo when the card's brand color is light (i.e. dark bg)
+function isLightColor(hex) {
+  const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex || '');
+  if (!m) return false;
+  const [r, g, b] = [m[1], m[2], m[3]].map(v => parseInt(v, 16));
+  return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255 > 0.6;
+}
+
+async function renderBrand(ctx, width, palette, color) {
+  const variant = isLightColor(color) ? 'white' : 'pink';
+  const logo = await loadLogo(variant);
+  if (logo) {
+    const h = LOGO_W * (logo.height / logo.width);
+    ctx.drawImage(logo, width - DESIGN.padding - LOGO_W, LOGO_Y, LOGO_W, h);
+    return;
+  }
   ctx.font         = `bold ${DESIGN.brandSize}px ${HEADLINE_FONT}`;
   ctx.fillStyle    = color || palette.accent || '#FF2E88';
   ctx.textAlign    = 'right';
@@ -191,7 +223,7 @@ async function renderSingle({ hook, sub, paletteKey, productKey }) {
 
   const { headlineColor, bodyColor } = await drawBackground(ctx, width, height, palette, productKey);
   renderTopBar(ctx, width, palette);
-  renderBrand(ctx, width, palette, headlineColor);
+  await renderBrand(ctx, width, palette, headlineColor);
 
   // big accent quote mark
   ctx.font = `bold 120px ${HEADLINE_FONT}`;
@@ -229,7 +261,7 @@ async function renderCarouselSlide({ headline, body, slideNum, total, paletteKey
 
   const { headlineColor, bodyColor } = await drawBackground(ctx, width, height, palette, slideNum === 1 ? productKey : null);
   renderTopBar(ctx, width, palette);
-  renderBrand(ctx, width, palette, headlineColor);
+  await renderBrand(ctx, width, palette, headlineColor);
 
   // slide counter
   ctx.font = `${DESIGN.bodySize - 10}px ${BODY_FONT}`;
@@ -270,7 +302,7 @@ async function renderFallback(text, paletteKey) {
   const ctx = canvas.getContext('2d');
   drawGradient(ctx, width, height, palette);
   renderTopBar(ctx, width, palette);
-  renderBrand(ctx, width, palette, palette.headline);
+  await renderBrand(ctx, width, palette, palette.headline);
   ctx.font = `bold ${DESIGN.bodySize}px ${BODY_FONT}`;
   ctx.fillStyle = palette.headline || '#FFFFFF';
   wrapText(ctx, text, padding, padding + 90, width - padding * 2, 46);
@@ -299,7 +331,7 @@ async function renderCleanCard(headline, body, slideNum, totalSlides) {
   ctx.fillStyle = accent;
   ctx.fillRect(0, 0, 4, height);
 
-  renderBrand(ctx, width, { accent: headlineColor }, headlineColor);
+  await renderBrand(ctx, width, { accent: headlineColor }, headlineColor);
 
   let contentY = padding + 100;
   if (totalSlides && totalSlides > 1) {
@@ -360,7 +392,7 @@ async function renderPhotoCard(headline, photoBuffer, attribution) {
   ctx.fillStyle = 'rgba(10, 18, 40, 0.65)'; // navy at 65% — always-readable overlay
   ctx.fillRect(0, 0, width, height);
 
-  renderBrand(ctx, width, { accent: '#FFFFFF' }, '#FFFFFF');
+  await renderBrand(ctx, width, { accent: '#FFFFFF' }, '#FFFFFF');
 
   ctx.font = `bold ${DESIGN.headlineSize}px ${HEADLINE_FONT}`;
   ctx.fillStyle = '#FFFFFF';

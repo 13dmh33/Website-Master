@@ -1,0 +1,70 @@
+name: Tatas reels pipeline (Tech 4 Tatas)
+
+# Weekly: writes NEXT week's 5 reel plans (script + 3 hooks + shot list +
+# caption) and publishes the review page. STOPS there — the hook/tone gate is
+# yours. Approve via tatas-reels-build after reviewing.
+#
+# Runs Friday, after the carousel pipeline's Thursday run, so the two lanes
+# never contend (they also use separate state arrays + separate concurrency).
+
+on:
+  schedule:
+    - cron: '0 14 * * 5'   # Friday ~8am MT — generates NEXT week for weekend review
+  workflow_dispatch:
+
+concurrency:
+  group: tatas-reels-git-writes   # separate from miley-git-writes AND tatas-git-writes
+  cancel-in-progress: false
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      issues: write
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: cd tatas && npm install --no-audit --no-fund
+
+      - name: Run reels writer (5 plans → pending in reels[])
+        run: cd tatas && node writer-reels.js
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TATAS_MODEL:       ${{ vars.TATAS_MODEL }}
+          TATAS_IG_HANDLE:   ${{ vars.TATAS_IG_HANDLE }}
+
+      - name: Publish reels review page
+        run: cd tatas && node scripts/publish-reels-review.js
+
+      - name: Commit state + review page
+        run: |
+          git config user.name  "tatas-agent"
+          git config user.email "tatas@trevoadvisors.com"
+          git add tatas/state.json website/review/tatas-reels/ || true
+          git diff --cached --quiet || git commit -m "tatas reels: week plans $(date +%Y-%m-%d)"
+          git pull --rebase origin main
+          git push origin main
+
+      - name: Alert on failure (opens an issue)
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Tatas reels pipeline FAILED — ${new Date().toISOString().slice(0, 10)}`,
+              body: `The Friday reels-generation run failed — there may be no week to review.\n\nRun log: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });

@@ -1,0 +1,93 @@
+name: Tatas reels build (Tech 4 Tatas)
+
+# The one-tap BUILD step. After reviewing at
+# https://trevoadvisors.com/review/tatas-reels/ and copying the decisions
+# string, open this workflow in the GitHub app, paste it into "decisions",
+# and Run workflow. It:
+#   1. applies your hook/approve/reject decisions (approve-reels.js)
+#   2. voices the approved reels via ElevenLabs (voicer.js)
+#   3. writes the CapCut brief bundles + index (briefer.js)
+# Nothing posts — the lane ends at downloadable bundles.
+
+on:
+  workflow_dispatch:
+    inputs:
+      decisions:
+        description: 'Decisions string from the review page (id:hook# / id:reject, ; separated). Blank = build already-approved reels only.'
+        required: false
+        default: ''
+      week:
+        description: 'Week to build (Monday date, YYYY-MM-DD). Blank = latest.'
+        required: false
+        default: ''
+
+concurrency:
+  group: tatas-reels-git-writes
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      issues: write
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: cd tatas && npm install --no-audit --no-fund
+
+      - name: Apply hook/approve decisions
+        if: ${{ github.event.inputs.decisions != '' }}
+        run: cd tatas && node scripts/approve-reels.js --decisions "${{ github.event.inputs.decisions }}"
+
+      - name: Voice approved reels (ElevenLabs)
+        run: |
+          cd tatas
+          ARGS=""
+          [ -n "${{ github.event.inputs.week }}" ] && ARGS="--week ${{ github.event.inputs.week }}"
+          node voicer.js $ARGS
+        env:
+          TATAS_ELEVENLABS_KEY:      ${{ secrets.TATAS_ELEVENLABS_KEY }}
+          TATAS_ELEVENLABS_VOICE_ID: ${{ secrets.TATAS_ELEVENLABS_VOICE_ID }}
+          TATAS_ELEVENLABS_MODEL:    ${{ vars.TATAS_ELEVENLABS_MODEL }}
+
+      - name: Write CapCut brief bundles + index
+        run: |
+          cd tatas
+          ARGS=""
+          [ -n "${{ github.event.inputs.week }}" ] && ARGS="--week ${{ github.event.inputs.week }}"
+          node briefer.js $ARGS
+        env:
+          TATAS_SOCIAL_BASE_URL: ${{ vars.TATAS_SOCIAL_BASE_URL }}
+
+      - name: Commit state + audio + bundles
+        run: |
+          git config user.name  "tatas-agent"
+          git config user.email "tatas@trevoadvisors.com"
+          git add tatas/state.json website/social/tatas-reels/ website/review/tatas-reels/ || true
+          git diff --cached --quiet || git commit -m "tatas reels: voiced + briefed $(date +%Y-%m-%d)"
+          git pull --rebase origin main
+          git push origin main
+
+      - name: Alert on failure (opens an issue)
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Tatas reels build FAILED — ${new Date().toISOString().slice(0, 10)}`,
+              body: `The reels build run failed (decisions, voicing, or briefing). Check: \`cd tatas && node scripts/approve-reels.js --list\`\n\nRun log: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });

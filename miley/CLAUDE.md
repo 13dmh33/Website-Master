@@ -158,6 +158,7 @@ Workflows live at repo root: `.github/workflows/miley-weekly-pipeline.yml` (Thu,
 - Never offer/imply free product, samples, giveaways, or discount codes.
 - Never chase virality/fame/influencer collabs.
 - Never do face reveals or personal sob-stories (Riley is anonymous).
+- **Never print the name "Riley" on any public content** — cards, captions, attributions, replies. Riley is the internal voice name only; the brand signs as Techs4Tatas (logo top-right on every card, via `assets/logo.png` / `logo-white.png` in `renderBrand`).
 - Never stack two CTAs — exactly one.
 - Never copy source text — paraphrase facts into brand voice (copyright).
 - The quality gate (`generator-prompts.passesQualityGate`) drops any generated post that violates the freebie/donation/length/hashtag rules and falls back to evergreen.

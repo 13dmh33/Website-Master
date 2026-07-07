@@ -5,12 +5,17 @@ on:
     - cron: '0 13 * * 4'   # Thursday ~7am MT — generates NEXT week for Thu-Sun review
   workflow_dispatch:        # manual trigger for testing
 
+concurrency:
+  group: miley-git-writes   # shared with approve-week + post-due — serializes commits to main
+  cancel-in-progress: false
+
 jobs:
   run-pipeline:
     runs-on: ubuntu-latest
 
     permissions:
       contents: write   # commit the rotation counter + content output
+      issues: write     # failure alert opens an issue
 
     steps:
       - name: Check out repo
@@ -46,6 +51,9 @@ jobs:
           STOREFRONT_URL: ${{ vars.STOREFRONT_URL }}
           LINKPAGE_URL:   ${{ vars.LINKPAGE_URL }}
 
+      - name: Host cards + review preview on the website (Netlify)
+        run: cd miley && node scripts/publish-cards.js
+
       - name: Rebuild link-in-bio hub (keeps featured products fresh)
         run: cd miley && node scripts/build-linkpage.js
         env:
@@ -55,13 +63,14 @@ jobs:
           META_PIXEL_ID:      ${{ vars.META_PIXEL_ID }}
           EMAIL_CAPTURE_ACTION: ${{ vars.EMAIL_CAPTURE_ACTION }}
 
-      - name: Commit rotation counter + content output + linkpage
+      - name: Commit rotation counter + content output + linkpage + hosted cards
         run: |
           git config user.name  "miley-agent"
           git config user.email "miley@techs4tatas.com"
-          git add miley/templates/post-formats.json miley/templates/evergreen.json miley/output/ miley/linkpage/ || true
+          git add miley/templates/post-formats.json miley/templates/evergreen.json miley/output/ miley/linkpage/ website/social/miley/ website/review/miley/ || true
           git diff --cached --quiet || git commit -m "miley: week content + rotation $(date +%Y-%m-%d)"
-          git push origin main || true
+          git pull --rebase origin main
+          git push origin main
 
       - name: Upload output as artifact
         uses: actions/upload-artifact@v4
@@ -70,3 +79,15 @@ jobs:
           name: miley-output-${{ github.run_id }}
           path: miley/output/
           retention-days: 14
+
+      - name: Alert on failure (opens an issue)
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Miley weekly pipeline FAILED — ${new Date().toISOString().slice(0, 10)}`,
+              body: `The Thursday content-generation run failed, so there may be no week to review/approve.\n\nRun log: ${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`,
+            });

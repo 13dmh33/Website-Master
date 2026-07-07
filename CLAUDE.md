@@ -81,14 +81,27 @@ tested, breast-cancer stats re-verified current for 2026 (no changes needed). Re
 + Inter brand fonts added to `assets/fonts/` (auto-detected by `lib/canvas-render.js`) —
 cards now render in real brand fonts instead of the DejaVu fallback.
 
+**Direct Instagram posting (2026-07-07, branch claude/project-overview-9uoqjr):** Buffer
+replaced with the Instagram Graph API. New: `lib/instagram-publish.js` (single + carousel),
+`scripts/publish-cards.js` (PNG→JPEG, hosts cards at trevoadvisors.com/social/miley/ +
+review preview at /review/miley/), `scripts/approve-week.js` (approval step, also runnable
+as the **miley-approve-week** GitHub Action — Dave's phone-tap approve button),
+`scripts/post-due.js` (posts at slot times via the **miley-post-due** cron). Post lifecycle
+pending → approved → posted with retry/stale handling; failures open a GitHub issue.
+Dry-run tested end-to-end in container. Buffer path (`push-queue.js`) kept as legacy fallback.
+
 Pending (all Mac/account-side, can't be done from container):
+- **Meta app setup** (can share Reeve's app): link @techs4tatas to a FB Page, add
+  `instagram_content_publish`, generate long-lived token → add `INSTAGRAM_ACCESS_TOKEN` +
+  `INSTAGRAM_BUSINESS_ACCOUNT_ID` as GitHub Actions secrets. Dev mode fine, no App Review.
+  Replaces the old "Buffer classic token" requirement.
 - Printify catalog scrape (`scripts/scrape-catalog.js`) — `techs4tatas.printify.me` returns
   403 to all fetch paths (anti-bot, not just container egress) — run on Mac or paste a
   product list manually.
 - Real Canva brand-kit hex colors → `miley/templates/visual-config.json` (currently a
   placeholder palette, flagged `ACTION_NEEDED`).
 - Product mockup PNGs → `miley/assets/products/`.
-- Buffer classic token + Instagram Business IDs + GA4/Pixel + Formspree + ManyChat wiring.
+- GA4/Pixel + Formspree + ManyChat wiring (funnel attribution; posting no longer needs Buffer).
 
 ---
 
@@ -309,7 +322,7 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - [ ] **Miley catalog**: run `node scripts/scrape-catalog.js --write` on Mac (blocked from container — Printify storefront 403s all server-side fetches), or paste a product list
 - [ ] **Miley brand colors**: replace placeholder hex in `miley/templates/visual-config.json` with real Canva brand-kit colors
 - [ ] **Miley product photos**: drop Printify mockups into `miley/assets/products/`
-- [ ] **Miley Buffer token** → add to `miley/.env` (for auto-posting to @techs4tatas, separate from Milly's)
+- [ ] **Miley Meta app** (replaces Buffer for Miley): link @techs4tatas to a FB Page, create/reuse the Reeve Meta app with `instagram_content_publish`, generate a long-lived token → add `INSTAGRAM_ACCESS_TOKEN` + `INSTAGRAM_BUSINESS_ACCOUNT_ID` as GitHub Actions secrets (~1h, Dev mode, no App Review)
 
 ### Next Claude session — container tasks
 - [x] Merge `claude/trevo-advisors-review-Sjewy` → main (already merged as of 2026-06-24 check)
@@ -330,7 +343,8 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 2. GitHub Actions cron is active on main — Mon 6am MT pipeline, Sun 10pm analytics
 3. Manual test: `cd milly && node scripts/test-pipeline.js`
 
-### Miley — first run (Mac, after Buffer token setup)
-1. Add `BUFFER_ACCESS_TOKEN` + `BUFFER_INSTAGRAM_PROFILE_ID` to `miley/.env`
-2. GitHub Actions cron is active on main — Thu pipeline (generates next week), Sun analytics
-3. Manual test: `cd miley && node scripts/test-pipeline.js`
+### Miley — first run (after Meta app setup — no Buffer needed)
+1. Meta app: link @techs4tatas to a FB Page → long-lived token → `INSTAGRAM_ACCESS_TOKEN` + `INSTAGRAM_BUSINESS_ACCOUNT_ID` as GitHub Actions secrets (and `miley/.env` for local runs)
+2. Merge the direct-posting branch to main — workflows: Thu pipeline (generates next week + publishes review page), **miley-approve-week** (manual approve button), **miley-post-due** (posts at slot times), Sun analytics
+3. Weekly routine: review at trevoadvisors.com/review/miley/ → tap "Run workflow" on miley-approve-week → done
+4. Manual test: `cd miley && node scripts/test-pipeline.js` and `node scripts/post-due.js --dry-run`

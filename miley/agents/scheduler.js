@@ -111,7 +111,7 @@ async function main() {
   await generatePreview(queued, weekOf, campaignMode);
 
   if (useBuffer) console.log(`Done — ${queued.length} posts scheduled via Buffer.`);
-  else console.log(`Done — ${queued.length} posts saved to queue. Review preview, then run: node scripts/push-queue.js`);
+  else console.log(`Done — ${queued.length} posts saved to queue. Review preview, then approve: node scripts/approve-week.js (direct IG posting) or the miley-approve-week GitHub Action. Legacy Buffer path: scripts/push-queue.js`);
 }
 
 // browser-viewable preview of the week (Techs4Tatas pink/charcoal theme)

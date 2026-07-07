@@ -16,9 +16,12 @@ Weekly pipeline: **Researcher → Generator → Designer → Scheduler → Analy
 
 ## Review-first workflow (the core operating rule)
 
-**Nothing auto-posts.** With `FORCE_QUEUE=1` (standing setting), every run writes the week to `output/queue/` and builds `output/queue/preview-{weekOf}.html`. Dave reviews, edits if needed, then approves by running `scripts/push-queue.js`, which schedules the week to Buffer at each post's slot time.
+**Nothing auto-posts.** With `FORCE_QUEUE=1` (standing setting), every run writes the week to `output/queue/`, builds `output/queue/preview-{weekOf}.html`, and publishes the preview to **trevoadvisors.com/review/miley/** (via `scripts/publish-cards.js`). Dave reviews from any device, edits if needed, then approves via the **miley-approve-week** GitHub Action (or `node scripts/approve-week.js`). The **miley-post-due** cron then posts each item **directly to Instagram via the Graph API** at its slot time — no Buffer, no Mac.
 
 - Generation runs **Thursday** for the **following** week → Thu–Sun review window.
+- Post lifecycle: `pending` → `approved` → `posted` (`igMediaId` recorded for Analyst attribution). Failures retry 3× then `failed`; >72h overdue → `stale` (never posts late). Status: `node scripts/approve-week.js --list`.
+- Direct posting stack: `lib/instagram-publish.js` (Graph API single + carousel) · `scripts/publish-cards.js` (PNG→JPEG, hosts cards at `/social/miley/{week}/` on the Netlify site — the API requires public JPEG URLs) · `scripts/approve-week.js` · `scripts/post-due.js`.
+- Legacy fallback: `scripts/push-queue.js` still releases pending posts to Buffer if ever needed.
 - Full routine in `docs/review-workflow.md`.
 
 ---
@@ -123,10 +126,13 @@ node agents/researcher.js
 node agents/generator.js         # uses Claude if ANTHROPIC_API_KEY set, else evergreen
 node agents/designer.js
 node agents/scheduler.js          # FORCE_QUEUE=1 → review queue + preview
-node scripts/push-queue.js        # APPROVAL step: release queue to Buffer at slot times
+node scripts/publish-cards.js     # PNG→JPEG + host cards/preview on the website (Netlify)
+node scripts/approve-week.js      # APPROVAL step (--list / --week / --skip / --dry-run)
+node scripts/post-due.js          # posts approved+due items to IG (cron does this; --dry-run to test)
+node scripts/push-queue.js        # LEGACY approval: release queue to Buffer instead
 ```
 
-Open `output/queue/preview-{weekOf}.html` in a browser to review the week.
+Review the week at `trevoadvisors.com/review/miley/` (or open `output/queue/preview-{weekOf}.html` locally).
 
 ---
 
@@ -135,10 +141,11 @@ Open `output/queue/preview-{weekOf}.html` in a browser to review the week.
 ```
 ANTHROPIC_API_KEY=             # content generation; blank → evergreen (free)
 FORCE_QUEUE=1                  # keep set — review-first, nothing auto-posts
-BUFFER_ACCESS_TOKEN=           # CLASSIC token from buffer.com/developers (NOT OIDC — it 401s)
-BUFFER_INSTAGRAM_PROFILE_ID=   # GET /1/profiles.json once the token is valid
-INSTAGRAM_ACCESS_TOKEN=        # analytics only (Analyst)
-INSTAGRAM_BUSINESS_ACCOUNT_ID= # analytics only
+INSTAGRAM_ACCESS_TOKEN=        # direct posting (post-due.js) + analytics — long-lived Meta token
+INSTAGRAM_BUSINESS_ACCOUNT_ID= # direct posting + analytics
+SOCIAL_BASE_URL=               # where hosted cards/preview live (default https://trevoadvisors.com)
+BUFFER_ACCESS_TOKEN=           # LEGACY fallback only — CLASSIC token (NOT OIDC — it 401s)
+BUFFER_INSTAGRAM_PROFILE_ID=   # LEGACY fallback only
 INSTAGRAM_HANDLE=@techs4tatas
 STOREFRONT_URL=techs4tatas.printify.me
 DM_KEYWORD=PINK
@@ -149,7 +156,16 @@ DM_KEYWORD=PINK
 
 ## GitHub Actions
 
-Workflows live at repo root: `.github/workflows/miley-weekly-pipeline.yml` (Thu, generates next week) and `miley-weekly-analytics.yml` (Sun night). They only run from `main`, so merge there to activate. Add secrets: `ANTHROPIC_API_KEY`, `BUFFER_ACCESS_TOKEN`, `BUFFER_INSTAGRAM_PROFILE_ID`, `INSTAGRAM_ACCESS_TOKEN`, `INSTAGRAM_BUSINESS_ACCOUNT_ID`. The pipeline runs scheduler with `FORCE_QUEUE=1` (review-first), commits the rotation counter + content, and uploads `output/` as an artifact.
+Workflows live at repo root — all only run from `main`, so merge there to activate:
+
+| Workflow | Trigger | Job |
+|----------|---------|-----|
+| `miley-weekly-pipeline.yml` | Thu cron | Generates next week, hosts cards + review preview on the website, commits. |
+| `miley-approve-week.yml` | **manual (Run workflow)** | The approve button — flips the week pending → approved. Inputs: `week`, `skip_slots`. |
+| `miley-post-due.yml` | cron at the 4 slot times (+ manual) | Posts approved+due items directly to IG; commits `igMediaId` back. **October note: add cron hours for the daily campaign.** |
+| `miley-weekly-analytics.yml` | Sun night cron | Engagement feedback loop. |
+
+Secrets: `ANTHROPIC_API_KEY`, `INSTAGRAM_ACCESS_TOKEN`, `INSTAGRAM_BUSINESS_ACCOUNT_ID` (+ legacy `BUFFER_*` if using the fallback). Repo variable: `SOCIAL_BASE_URL`. All three write-workflows share the `miley-git-writes` concurrency group (serialized commits) and open a GitHub issue on failure — that's the alerting.
 
 ---
 

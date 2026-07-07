@@ -8,12 +8,14 @@ The pipeline never posts on its own. It writes the week's content to a queue and
 
 ## The rhythm
 
-1. **Thursday** — the engine generates and renders next week's posts, then writes them to `output/queue/` with a preview file: `output/queue/preview-{date}.html`.
-2. **Thursday–Sunday** — you review whenever you have a few minutes:
-   - Open the `preview-{date}.html` file in your browser. You'll see every post (image + caption) for the week.
+1. **Thursday** — the engine generates and renders next week's posts, writes them to `output/queue/`, and publishes the preview to **https://trevoadvisors.com/review/miley/** (also saved locally as `output/queue/preview-{date}.html`).
+2. **Thursday–Sunday** — you review whenever you have a few minutes, from any device:
+   - Open the review page (or the local preview file). You'll see every post (image + caption) for the week.
    - While you're there, glance at 1-2 news sources (see below) for a fresh angle worth swapping in.
 3. **Edit anything you don't love** (see "How to fix a post" below).
-4. **Approve** — run `scripts/push-queue.js`. This sends the approved week to Buffer, which posts each one automatically at its scheduled time the following week.
+4. **Approve** — open the **"Miley approve week"** workflow on GitHub (Actions tab, works from the GitHub phone app) and tap **Run workflow**. Leave the inputs blank to approve the whole week, or list slots to skip. The `miley-post-due` cron then posts each one directly to Instagram at its slot time — no Buffer, no Mac.
+   - Command-line equivalent: `node scripts/approve-week.js` (then `node scripts/post-due.js` runs on cron).
+   - Legacy path: `scripts/push-queue.js` still releases to Buffer if you ever need it.
 
 That's it. Skip a week? The previous content just stays queued — nothing posts without your approval.
 
@@ -41,6 +43,12 @@ October is daily (7 posts/week). Generate a week ahead and approve all 7 in one 
 ## One-time setup checklist
 
 - [ ] `FORCE_QUEUE=1` set as a repo secret / env var (keeps everything review-first)
-- [ ] Buffer **classic** token connected (not the MCP/OIDC one — it silently fails)
-- [ ] You know how to open the HTML preview and run `push-queue.js` (Claude Code will document the exact command)
-- [ ] Confirm with Claude Code that `push-queue.js` preserves the scheduled times (posts later) rather than posting immediately on approval
+- [ ] Meta app created (Development mode is fine) with @techs4tatas linked to a Facebook Page and holding a role on the app
+- [ ] `INSTAGRAM_ACCESS_TOKEN` (long-lived) + `INSTAGRAM_BUSINESS_ACCOUNT_ID` added as GitHub Actions secrets — these power both posting and analytics
+- [ ] `SOCIAL_BASE_URL` repo variable set (defaults to https://trevoadvisors.com) and the Netlify site deploying `website/`
+- [ ] You've found the "Miley approve week" workflow in the GitHub Actions tab (that's your approve button)
+- [ ] (Legacy fallback only) Buffer **classic** token, if you ever want `push-queue.js`
+
+## Post lifecycle (for debugging)
+
+`pending` (generated, awaiting review) → `approved` (you tapped approve) → `posted` (live on IG, `igMediaId` recorded). A failing post retries up to 3 runs then becomes `failed`; anything more than 72h overdue becomes `stale` and will NOT quietly post late. Check status anytime: `cd miley && node scripts/approve-week.js --list`. Failures automatically open a GitHub issue.

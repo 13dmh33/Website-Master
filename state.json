@@ -1642,9 +1642,11 @@
     },
     {
       "lead_id": "cyclone-sewer-pueblo-co",
-      "status": "diagnosed",
+      "status": "unsubscribed",
       "added_at": "2026-06-29T15:40:28.192Z",
-      "diagnosed_at": "2026-06-29T16:25:28.812Z"
+      "diagnosed_at": "2026-06-29T16:25:28.812Z",
+      "unsubscribed_at": "2026-07-07T00:00:00.000Z",
+      "unsubscribe_note": "Owner-requested opt-out (rm833276@gmail.com / (719) 545-2380) — do not contact"
     },
     {
       "lead_id": "drain-fix-team-pueblo-co",

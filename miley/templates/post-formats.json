@@ -113,6 +113,8 @@
     "kiss_cut_sticker_2",
     "magnet"
   ],
+  "reel_styles": ["card", "kinetic_karaoke", "kinetic_punch"],
+  "_reel_styles_note": "Weekly A/B rotation for reel visual style (planner picks styleList[current_week % len], uniform across the week). card = beat-card motion; kinetic_karaoke = words reveal progressively with the active word highlighted; kinetic_punch = one big word at a time. Trim this list to run a 2-way test (e.g. [\"card\",\"kinetic_karaoke\"]).",
   "_meta": {
     "maps_to": "milly/templates/post-formats.json",
     "note": "current_week is a single incrementing counter advanced once per pipeline run. Adding/removing items from any rotation array requires no code change. To switch cadence (base -> september -> october), change the POST_SCHEDULE env var to the matching post_schedule_env value above."

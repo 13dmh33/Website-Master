@@ -75,6 +75,7 @@ async function main() {
       day:         post.day,
       time:        post.time,
       format:      post.format,
+      reel_style:  post.reel_style || null,
       contentType: post.contentType,
       product:     post.product || null,
       isOctober:   post.isOctober,
@@ -143,7 +144,7 @@ async function generatePreview(records, weekOf, campaignMode) {
     const judge = r.judge ? `<div class="judge">⚖️ judge: ${r.judge.winnerScore ?? '?'}/10 of ${r.judge.variantsConsidered} compliant variants${r.judge.reasoning ? ` — "${escapeHtml(r.judge.reasoning)}"` : ''}</div>` : '';
     return `
     <div class="post">
-      <h2>${r.day} ${r.time} · ${r.contentType} <span class="fmt">${r.format}</span>${r.product ? ` · <span class="prod">${r.product}</span>` : ''}</h2>
+      <h2>${r.day} ${r.time} · ${r.contentType} <span class="fmt">${r.format}${r.reel_style ? ` · ${r.reel_style}` : ''}</span>${r.product ? ` · <span class="prod">${r.product}</span>` : ''}</h2>
       <div class="time">scheduled: ${r.scheduledFor}${r.captionVariant ? ` · variant ${r.captionVariant}` : ''}</div>
       ${video}
       ${imgs}

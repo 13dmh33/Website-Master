@@ -16,6 +16,11 @@ const weights   = require('./product-weights');
 
 // ── content-type → downstream mappings ─────────────────────────────────────
 
+// reel styles the weekly rotation cycles through (overridable via
+// post-formats.json `reel_styles`). card = beat-card style; kinetic_* = word-by-
+// word typography (karaoke = progressive reveal, punch = one word at a time).
+const REEL_STYLES = ['card', 'kinetic_karaoke', 'kinetic_punch'];
+
 // generator-prompts FORMAT key to use when a slot doesn't pin one (October)
 const DEFAULT_FORMAT = {
   trades_humor:             'single_image',
@@ -131,6 +136,14 @@ function buildWeekPlan(date = new Date(), week = 0) {
   const pools   = (formats.content_pools) || {};
   const catalog = (formats.product_catalog_rotation) || [];
 
+  // reel-style weekly rotation (#reels): every reel in a given week uses the
+  // same style so the Analyst can compare engagement week-over-week. The list is
+  // config-driven (post-formats.json `reel_styles`); default rotates all three.
+  const styleList = (Array.isArray(formats.reel_styles) && formats.reel_styles.length)
+    ? formats.reel_styles
+    : REEL_STYLES;
+  const weekReelStyle = styleList[((week % styleList.length) + styleList.length) % styleList.length];
+
   // dynamic product-rotation weighting (#9): expands the catalog so products
   // with higher click-through appear more often; identical to plain round-robin
   // when no click data exists yet (see lib/product-weights.js).
@@ -148,6 +161,7 @@ function buildWeekPlan(date = new Date(), week = 0) {
     ...p,
     paletteKey: paletteKeyFor(p.contentType),
     product:    needsProduct(p.contentType) ? (p.product || nextProduct()) : null,
+    reel_style: p.format === 'reel' ? weekReelStyle : null,
   });
 
   // ── October: daily, driven by october-campaign.json weekly_rhythm ──────────
@@ -229,4 +243,5 @@ module.exports = {
   EVERGREEN_TYPE,
   PALETTE_KEY,
   PRODUCT_TYPES,
+  REEL_STYLES,
 };

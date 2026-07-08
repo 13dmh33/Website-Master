@@ -29,7 +29,7 @@ Weekly pipeline: **Researcher → Generator → Designer → Scheduler → Analy
 |-------|------|-----|
 | Researcher | `agents/researcher.js` | Assembles a zero-API brief from `inspiration-sources.json`: evergreen themes, the seasonal angle, and VERIFIED data hooks (breast-cancer / women-in-trades stats). **Live data refresh:** also pulls fresh on-brand RSS headlines (free, no key) via `lib/sources.js` for both beats — paraphrasable angles only, fails silently offline. The Reeve "call for speakers" branch is disabled. |
 | Generator | `agents/generator.js` | Resolves the week's plan (planner) and writes ONE post per slot via the brand brain in `agents/generator-prompts.js`. Claude with quality gate → evergreen fallback on any miss. Appends hashtags. Each Claude-generated post also carries `captionVariantB` (same post, different hook) for A/B testing. |
-| Designer | `agents/designer.js` | Renders 1080×1080 PNGs per post via skia-canvas. Product photo background (`assets/products/{key}.png`) when present, else the content-type gradient palette. **Reels:** a `reel` post is rendered as one vertical 1080×1920 frame per script beat and stitched into a silent H.264 `.mp4` (`lib/reel.js`) — the actual postable Reel, not just a cover. |
+| Designer | `agents/designer.js` | Renders 1080×1080 PNGs per post via skia-canvas. Product photo background (`assets/products/{key}.png`) when present, else the content-type gradient palette. **Reels:** a `reel` post renders as a silent vertical 1080×1920 H.264 `.mp4` (`lib/reel.js`) — the actual postable Reel. Two styles, chosen by the planner's weekly rotation (`post.reel_style`): **card** (one text card per beat, Ken Burns motion) and **kinetic** word-by-word typography — `kinetic_karaoke` (progressive reveal, active word highlighted) and `kinetic_punch` (one big word at a time). |
 | Scheduler | `agents/scheduler.js` | Queue-first: writes posts + preview. Schedules to Buffer only when `FORCE_QUEUE` is off. Picks the week's A/B caption variant (`lib/ab-tracker.js`, alternates weekly) and records it. |
 | Analyst | `agents/analyst.js` | Instagram engagement → updates `brand-voice.json` `what_works` / `top_hashtags`. **Sales signal:** also ingests UTM click data (`output/clicks/latest.json`) and ranks products by click-through, so the loop optimizes for revenue, not just likes. Runs the click report even without an Instagram token. |
 
@@ -41,8 +41,8 @@ Weekly pipeline: **Researcher → Generator → Designer → Scheduler → Analy
 | `lib/planner.js` | Resolves campaign mode (base / september / october) → slots → `{format, contentType, product, isOctober, paletteKey}` per post. All rotation logic lives here. |
 | `lib/claude.js` | Claude API wrapper (system + user prompt, retry, JSON parse). |
 | `lib/glossary.js` | Flattens `trades-glossary.json` categories → 3 trade terms/week injected into prompts. |
-| `lib/canvas-render.js` | skia-canvas renderer driven by `visual-config.json` palettes; product-photo + gradient backgrounds; optional drop-in fonts. `renderReelFrame` draws a vertical 1080×1920 beat frame with a Stories-style segmented progress bar (no carousel counter), the punch word (`*word*`) highlighted in the accent color, a soft vignette, and safe-zone text placement. |
-| `lib/reel.js` | Reel builder — parses a `reel` post's script (`extra`) into beats (synthesizes from hook/body/cta when there's no script), then assembles the beat frames into a silent 1080×1920 H.264 `.mp4` via the bundled static ffmpeg (`@ffmpeg-installer/ffmpeg`). For a real-Reel feel (all $0 — CPU/filters only): per-beat varied Ken Burns motion, beat-synced hard cuts (fade only at open/close), read-length-scaled beat durations, and a filmic grade + moving film grain (`eq`/`noise`). Silent by design (brand rule: no licensed music) — Dave adds trending audio in-app. |
+| `lib/canvas-render.js` | skia-canvas renderer driven by `visual-config.json` palettes; product-photo + gradient backgrounds; optional drop-in fonts. `renderReelFrame` draws a vertical 1080×1920 beat frame (Stories-style segmented progress bar — no carousel counter, punch word `*word*` in accent, soft vignette, safe-zone text). `renderReelWordFrame` draws one word-reveal state for kinetic reels with frozen full-line layout (words pin in place as they appear). |
+| `lib/reel.js` | Reel builder. **Card style:** `parseBeats` (from `extra`, or synthesized from hook/body/cta) + `assembleReel` (one frame per beat, per-beat varied Ken Burns motion, beat-synced cuts, read-length durations). **Kinetic style:** `buildKineticStates` (one reveal state per word — karaoke accumulates with the active word lit, punch shows one word) + `assembleKineticReel` (holds each state for its exact duration via the concat demuxer, adds gentle global drift). Both share a filmic grade + moving grain (`eq`/`noise`) and ship silent (brand rule: no licensed music) via the bundled static ffmpeg (`@ffmpeg-installer/ffmpeg`). All $0 — CPU/filters only. |
 | `lib/buffer.js` | Buffer API v1 — image upload + scheduled post. |
 | `lib/instagram-insights.js` | Instagram Graph API (read-only) for the Analyst. |
 | `lib/sources.js` | Live data refresh — free RSS from the women-in-trades + breast-cancer beats, keyword-filtered, silent-fail. Headlines are paraphrasable angles only (never copied). |
@@ -101,7 +101,7 @@ The funnel's product list lives in two synced places: `PRODUCTS` in `lib/links.j
 | File | Purpose |
 |------|---------|
 | `brand-voice.json` | Riley voice, formula, donation phrasings, CTA bank, DM keyword (PINK). `what_works`/`top_hashtags` are analyst-owned — don't hand-edit. |
-| `post-formats.json` | `current_week` counter, base/september/october schedules, `content_pools`, `product_catalog_rotation`. |
+| `post-formats.json` | `current_week` counter, base/september/october schedules, `content_pools`, `product_catalog_rotation`, `reel_styles` (weekly card/kinetic rotation list). |
 | `evergreen.json` | 36 ready-to-post fallback posts across 5 types. Interchangeable with generated posts (same field shape). |
 | `trades-glossary.json` | 44 trade terms across plumbing/electrical/hvac/construction. |
 | `hashtag-master.json` | Anchor tags + per-type sets + October additions. |
@@ -179,5 +179,6 @@ Workflows live at repo root: `.github/workflows/miley-weekly-pipeline.yml` (Thu,
 ## Not yet built / future
 
 - Live news scanning is now automated (`lib/sources.js` — free RSS, both beats). Remaining manual step: skim a feed at review time for anything the keyword filter missed and paraphrase it in. Tune feed URLs/keywords in `lib/sources.js`.
+- Reel-style engagement comparison: `post.reel_style` (card / kinetic_karaoke / kinetic_punch) rotates weekly and is persisted per post, but the Analyst doesn't yet score which style performs best — same gap as the caption A/B loop, blocked on live Instagram insights. Wire it in when IG tokens are set.
 - Airtable swap (replace `lib/store.js` internals only).
 - Twilio alert when the weekly queue is ready for review.

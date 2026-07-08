@@ -257,6 +257,7 @@ async function main() {
       format:      planPost.format,
       contentType: planPost.contentType,
       paletteKey:  planPost.paletteKey,
+      reel_style:  planPost.reel_style || null,
       product,
       isOctober:   planPost.isOctober,
       ctaStyle:    planPost.ctaStyle || '',

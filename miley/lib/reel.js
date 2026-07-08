@@ -1,24 +1,28 @@
 'use strict';
 
 // reel.js — turns a Generator "reel" post into an actual faceless vertical
-// (1080x1920) .mp4 for Techs4Tatas (Miley).
+// (1080x1920) .mp4 for Techs4Tatas (Miley). Two visual styles:
 //
-// Two jobs:
-//   1. parseBeats(post)      — read the reel script (post.extra) into beats, or
-//                              synthesize beats from hook/body/cta when there's
-//                              no script (evergreen reels carry no `extra`).
-//   2. assembleReel(...)     — sequence the rendered beat frames into a silent
-//                              H.264 reel via the bundled static ffmpeg, with a
-//                              slow push-in (zoompan) + soft fades between beats.
+//   • card    — one text card per beat, Ken Burns motion, beat-synced cuts
+//               (parseBeats + assembleReel).
+//   • kinetic — word-by-word typography: one rendered state per word held for
+//               its own duration, stitched via the concat demuxer
+//               (buildKineticStates + assembleKineticReel). Sub-modes:
+//               karaoke (progressive reveal, active word highlighted) and
+//               punch (one big word at a time).
 //
-// No licensed music (brand rule) — the reel ships silent with a null audio
-// track so Buffer/Instagram accept it; Dave adds trending audio in-app.
+// No licensed music (brand rule) — reels ship silent with a null audio track so
+// Buffer/Instagram accept them; Dave adds trending audio in-app.
 //
 // ffmpeg comes from @ffmpeg-installer/ffmpeg (a static binary bundled per
 // platform), so this works the same in the container and on the Mac. The 2018
 // build has no `xfade`, so transitions use `fade` + the `concat` filter.
 
 const { execFile } = require('child_process');
+const fs   = require('fs');
+const path = require('path');
+const os   = require('os');
+const { tokenizeEmphasis } = require('./canvas-render');
 
 // ── ffmpeg binary (bundled, cross-platform) ─────────────────────────────────
 function ffmpegPath() {
@@ -230,12 +234,101 @@ function assembleReel(framePaths, outPath, opts = {}) {
   });
 }
 
+// ── kinetic (word-by-word) reels ──────────────────────────────────────────────
+
+const WORD_SECS = 0.22; // base on-screen time per word (~260 wpm caption pace)
+const END_HOLD  = 0.7;  // full line/last word held before the cut
+
+function wordDuration(tok) {
+  let d = WORD_SECS;
+  if (String(tok.word || '').replace(/[^A-Za-z]/g, '').length > 7) d += 0.06; // long words linger
+  if (tok.em) d += 0.14;                                                       // punch/emphasis words linger
+  return +d.toFixed(3);
+}
+
+// Build the reveal-state list for one beat. Each state is one rendered frame:
+//   karaoke → { revealCount, activeIndex, duration } accumulating words, then a
+//             final full-line hold (activeIndex -1 → only *emphasis* stays lit).
+//   punch   → one word per state; the last word absorbs the end hold.
+function buildKineticStates(beatText, opts = {}) {
+  const mode = opts.mode === 'punch' ? 'punch' : 'karaoke';
+  const tokens = tokenizeEmphasis(beatText);
+  if (!tokens.length) return [];
+
+  const states = tokens.map((tok, k) => ({
+    mode, revealCount: k + 1, activeIndex: k, duration: wordDuration(tok),
+  }));
+
+  if (mode === 'karaoke') {
+    states.push({ mode, revealCount: tokens.length, activeIndex: -1, duration: END_HOLD, isHold: true });
+  } else {
+    states[states.length - 1].duration = +(states[states.length - 1].duration + END_HOLD).toFixed(3);
+  }
+  if (opts.isCtaBeat) states[states.length - 1].isCta = true;
+  return states;
+}
+
+// the shared filmic finish (same grade + moving grain the card style uses)
+function gradeChain() {
+  return `eq=contrast=1.05:saturation=1.06,noise=alls=10:allf=t+u`;
+}
+
+// assembleKineticReel — hold each word-state PNG for its duration via the concat
+// demuxer, add a gentle global drift + the filmic grade/grain, encode to .mp4.
+//   framePaths / durations : parallel arrays, one entry per reveal-state
+function assembleKineticReel(framePaths, durations, outPath, opts = {}) {
+  return new Promise((resolve, reject) => {
+    if (!Array.isArray(framePaths) || !framePaths.length) return reject(new Error('assembleKineticReel: no frames'));
+    if (!Array.isArray(durations) || durations.length !== framePaths.length) {
+      return reject(new Error('assembleKineticReel: frames/durations length mismatch'));
+    }
+    if (!ffmpegAvailable()) return reject(new Error('ffmpeg not available'));
+
+    const total       = durations.reduce((a, b) => a + b, 0);
+    const totalFrames = Math.max(1, Math.round(total * FPS));
+
+    // concat-demuxer list. The demuxer ignores the LAST entry's duration, so the
+    // final file is listed once more to make its hold count.
+    const esc = p => path.resolve(p).replace(/'/g, `'\\''`);
+    let list = '';
+    framePaths.forEach((p, i) => { list += `file '${esc(p)}'\nduration ${durations[i].toFixed(3)}\n`; });
+    list += `file '${esc(framePaths[framePaths.length - 1])}'\n`;
+    const listPath = path.join(os.tmpdir(), `kinetic-${Date.now()}-${Math.random().toString(36).slice(2)}.txt`);
+    fs.writeFileSync(listPath, list);
+
+    const graph =
+      `[0:v]fps=${FPS},scale=${W * 2}:${H * 2},` +
+      `zoompan=z='1.0+0.03*on/${totalFrames}':d=1:s=${W}x${H}:fps=${FPS},` +
+      `${gradeChain()},fade=t=in:st=0:d=0.35,fade=t=out:st=${Math.max(0, total - 0.4).toFixed(2)}:d=0.4,` +
+      `format=yuv420p[outv]`;
+
+    const args = [
+      '-f', 'concat', '-safe', '0', '-i', listPath,
+      '-f', 'lavfi', '-t', total.toFixed(2), '-i', 'anullsrc=r=44100:cl=stereo',
+      '-filter_complex', graph,
+      '-map', '[outv]', '-map', '1:a',
+      '-r', String(FPS),
+      '-c:v', 'libx264', '-preset', opts.preset || 'medium', '-profile:v', 'high', '-pix_fmt', 'yuv420p',
+      '-c:a', 'aac', '-b:a', '128k', '-shortest', '-movflags', '+faststart', '-y', outPath,
+    ];
+
+    execFile(ffmpegPath(), args, { maxBuffer: 1024 * 1024 * 32 }, (err, _stdout, stderr) => {
+      fs.unlink(listPath, () => {});
+      if (err) return reject(new Error(`ffmpeg (kinetic) failed: ${(stderr || err.message).slice(-600)}`));
+      resolve(outPath);
+    });
+  });
+}
+
 module.exports = {
   parseBeats,
   parseScript,
   synthesizeBeats,
   beatDuration,
   assembleReel,
+  buildKineticStates,
+  wordDuration,
+  assembleKineticReel,
   ffmpegAvailable,
   ffmpegPath,
   FPS,

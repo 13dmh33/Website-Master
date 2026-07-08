@@ -6,8 +6,9 @@ const os     = require('os');
 const path   = require('path');
 const fs     = require('fs');
 
-const reel   = require('../lib/reel');
-const render = require('../lib/canvas-render');
+const reel    = require('../lib/reel');
+const render  = require('../lib/canvas-render');
+const planner = require('../lib/planner');
 
 // ── beat parsing ──────────────────────────────────────────────────────────────
 
@@ -89,6 +90,69 @@ test('beatDuration lingers on longer lines and gives the hook extra time', () =>
 });
 
 // ── mp4 assembly (uses the bundled static ffmpeg) ─────────────────────────────
+
+// ── kinetic (word-by-word) states ─────────────────────────────────────────────
+
+test('buildKineticStates (karaoke) reveals one word per state plus a final hold', () => {
+  const states = reel.buildKineticStates('She *earned* that toolbag', { mode: 'karaoke' });
+  // 4 words → 4 reveal states + 1 hold
+  assert.equal(states.length, 5);
+  assert.deepEqual(states.slice(0, 4).map(s => s.revealCount), [1, 2, 3, 4]);
+  assert.deepEqual(states.slice(0, 4).map(s => s.activeIndex), [0, 1, 2, 3]);
+  assert.equal(states[4].isHold, true);
+  assert.equal(states[4].activeIndex, -1);
+  // the emphasized word (index 1) lingers longer than a plain word
+  assert.ok(states[1].duration > states[0].duration);
+});
+
+test('buildKineticStates (punch) is one word per state and folds the hold into the last', () => {
+  const s = reel.buildKineticStates('Tag a tradeswoman who *earned* it', { mode: 'punch', isCtaBeat: true });
+  assert.equal(s.length, 6); // 6 words, no separate hold state in punch mode
+  assert.deepEqual(s.map(x => x.activeIndex), [0, 1, 2, 3, 4, 5]);
+  assert.equal(s[s.length - 1].isCta, true);
+  assert.ok(s[s.length - 1].duration > s[0].duration, 'last punch word absorbs the end hold');
+});
+
+test('renderReelWordFrame renders both karaoke and punch states', async () => {
+  const kara = await render.renderReelWordFrame({ text: 'She *earned* that toolbag', revealCount: 2, activeIndex: 1, mode: 'karaoke', beatNum: 1, total: 3, paletteKey: 'mission' });
+  assert.equal(kara.slice(0, 4).toString('hex'), '89504e47');
+  const punch = await render.renderReelWordFrame({ text: 'She *earned* that toolbag', activeIndex: 1, mode: 'punch', beatNum: 1, total: 3, paletteKey: 'mission', isCta: true });
+  assert.ok(Buffer.isBuffer(punch) && punch.length > 0);
+});
+
+test('planner rotates reel_style weekly across the configured styles', () => {
+  const styleFor = (wk) => {
+    const plan = planner.buildWeekPlan(new Date('2026-07-13'), wk);
+    const reelPost = plan.posts.find(p => p.format === 'reel');
+    return reelPost ? reelPost.reel_style : null;
+  };
+  // reels land on even weeks here; the style advances week % 3 through the list
+  assert.equal(styleFor(0), 'card');
+  assert.equal(styleFor(2), 'kinetic_punch');
+  assert.equal(styleFor(4), 'kinetic_karaoke');
+  // non-reel formats never carry a reel_style
+  const plan = planner.buildWeekPlan(new Date('2026-07-13'), 0);
+  assert.ok(plan.posts.filter(p => p.format !== 'reel').every(p => p.reel_style === null));
+});
+
+test('assembleKineticReel holds states for exact durations and yields an .mp4', async (t) => {
+  if (!reel.ffmpegAvailable()) return t.skip('ffmpeg not available');
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'kin-test-'));
+  try {
+    const frames = [], durations = [];
+    for (let i = 0; i < 3; i++) {
+      const buf = await render.renderReelWordFrame({ text: 'One two three', revealCount: i + 1, activeIndex: i, mode: 'karaoke', beatNum: 1, total: 1 });
+      const p = path.join(dir, `s${i}.png`);
+      fs.writeFileSync(p, buf); frames.push(p); durations.push(0.3);
+    }
+    const out = path.join(dir, 'k.mp4');
+    await reel.assembleKineticReel(frames, durations, out);
+    assert.ok(fs.existsSync(out) && fs.statSync(out).size > 1000);
+    assert.equal(fs.readFileSync(out).slice(4, 8).toString('ascii'), 'ftyp');
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});
 
 test('assembleReel stitches frames into a non-empty .mp4', async (t) => {
   if (!reel.ffmpegAvailable()) return t.skip('ffmpeg not available');

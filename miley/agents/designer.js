@@ -76,11 +76,20 @@ async function renderCarousel(post, imageDir, idx) {
   return paths;
 }
 
-// render a reel: one vertical (1080x1920) frame per beat, then stitch them into
-// a silent .mp4 via ffmpeg (lib/reel.js). Sets post.video to the mp4 path and
-// returns the frame PNG paths (used as review-preview thumbnails). If ffmpeg is
-// unavailable or fails, the frames still stand in as a storyboard.
+// render a reel — dispatches on post.reel_style (set by the planner's weekly
+// rotation): 'card' (default) or 'kinetic_karaoke' / 'kinetic_punch'.
 async function renderReel(post, imageDir, idx) {
+  const style = post.reel_style || 'card';
+  if (style === 'kinetic_karaoke' || style === 'kinetic_punch') {
+    return renderKineticReel(post, imageDir, idx, style === 'kinetic_punch' ? 'punch' : 'karaoke');
+  }
+  return renderCardReel(post, imageDir, idx);
+}
+
+// card style: one vertical (1080x1920) frame per beat, stitched into a silent
+// .mp4 (lib/reel.js). Sets post.video; returns frame PNG paths for the preview.
+// If ffmpeg is unavailable/fails, the frames still stand in as a storyboard.
+async function renderCardReel(post, imageDir, idx) {
   const paletteKey = paletteFor(post);
   const beats = reel.parseBeats(post);
   const framePaths = [];
@@ -112,12 +121,59 @@ async function renderReel(post, imageDir, idx) {
     try {
       await reel.assembleReel(framePaths, videoPath, { durations });
       post.video = videoPath;
-      console.log(`  ${post.slot} reel — ${framePaths.length} beats → ${path.basename(videoPath)}`);
+      console.log(`  ${post.slot} reel (card) — ${framePaths.length} beats → ${path.basename(videoPath)}`);
     } catch (err) {
       console.warn(`  ${post.slot} reel video assembly skipped (${err.message}) — frames kept as storyboard.`);
     }
   }
   return framePaths;
+}
+
+// kinetic style: render one PNG per word-reveal state and hold each for its
+// duration (concat demuxer). Returns one representative frame per beat for the
+// preview strip (not all states); prunes the intermediate state PNGs on success.
+async function renderKineticReel(post, imageDir, idx, mode) {
+  const paletteKey = paletteFor(post);
+  const beats = reel.parseBeats(post);
+  const frames = [], durations = [], previewFrames = [];
+  let seq = 0;
+
+  for (let b = 0; b < beats.length; b++) {
+    const isCtaBeat = b === beats.length - 1 && beats.length > 1;
+    const states = reel.buildKineticStates(beats[b].text, { mode, isCtaBeat });
+    let lastOfBeat = null;
+    for (const st of states) {
+      const outPath = path.join(imageDir, `${idx + 1}-${post.slot}-reel-${String(seq++).padStart(3, '0')}.png`);
+      try {
+        const buf = await render.renderReelWordFrame({
+          text: beats[b].text, revealCount: st.revealCount, activeIndex: st.activeIndex, mode,
+          beatNum: b + 1, total: beats.length, paletteKey, productKey: post.product, isCta: st.isCta,
+        });
+        saveBuffer(buf, outPath);
+        frames.push(outPath); durations.push(st.duration); lastOfBeat = outPath;
+      } catch (err) {
+        console.warn(`  ${post.slot} kinetic frame (beat ${b + 1}) failed (${err.message}).`);
+      }
+    }
+    if (lastOfBeat) previewFrames.push(lastOfBeat); // full-line state = the preview thumbnail
+  }
+
+  post.video = null;
+  if (frames.length) {
+    const videoPath = path.join(imageDir, `${idx + 1}-${post.slot}-reel.mp4`);
+    try {
+      await reel.assembleKineticReel(frames, durations, videoPath, {});
+      post.video = videoPath;
+      console.log(`  ${post.slot} reel (kinetic/${mode}) — ${beats.length} beats, ${frames.length} states → ${path.basename(videoPath)}`);
+      // prune the intermediate state frames; keep only the per-beat preview stills
+      const keep = new Set(previewFrames);
+      for (const f of frames) if (!keep.has(f)) { try { fs.unlinkSync(f); } catch { /* ignore */ } }
+    } catch (err) {
+      console.warn(`  ${post.slot} kinetic assembly skipped (${err.message}) — state frames kept as storyboard.`);
+      return frames; // assembly failed: keep all states so nothing is lost
+    }
+  }
+  return previewFrames;
 }
 
 async function renderSingle(post, imageDir, idx) {

@@ -539,6 +539,100 @@ async function renderReelFrame({ text, beatNum, total, paletteKey, productKey, i
   return canvas.toBuffer('png');
 }
 
+// ── kinetic reel frame (word-by-word typography) ─────────────────────────────
+// One reveal-state of a kinetic reel. `text` is the FULL beat line (with any
+// *emphasis*); layout is computed from the full token set every call so words
+// stay pinned in place as they appear (no reflow). Two modes:
+//   • karaoke: words 0..revealCount-1 shown; the active word (+ any *emphasis*
+//     word already passed) is accent-colored, the rest base color.
+//   • punch:   only the active word, big and centered.
+// lib/reel.js renders one of these per word and holds each for its duration.
+
+// place the full token set into centered lines; returns each token's draw x/y
+// and its global index, so a caller can reveal/color an arbitrary subset.
+function layoutTokens(ctx, tokens, maxWidth, cx, startY, lineHeight) {
+  const indexed = tokens.map((t, i) => ({ ...t, i }));
+  const lines = wrapTokens(ctx, indexed, maxWidth);
+  const space = ctx.measureText(' ').width;
+  const placed = [];
+  lines.forEach((line, li) => {
+    const widths = line.map(t => ctx.measureText(t.word).width);
+    const total  = widths.reduce((a, b) => a + b, 0) + space * (line.length - 1);
+    let x = cx - total / 2;
+    const y = startY + li * lineHeight;
+    line.forEach((t, k) => { placed.push({ token: t, x, y }); x += widths[k] + space; });
+  });
+  return { placed, lineCount: lines.length };
+}
+
+async function renderReelWordFrame({ text, revealCount, activeIndex, mode = 'karaoke',
+                                     beatNum, total, paletteKey, productKey, isCta }) {
+  const width = DESIGN.reelWidth, height = DESIGN.reelHeight, padding = DESIGN.padding;
+  const palette = getPalette(paletteKey);
+  const accent  = palette.accent || '#FF2E88';
+  const canvas  = new Canvas(width, height);
+  const ctx     = canvas.getContext('2d');
+
+  const { headlineColor } = await drawBackground(ctx, width, height, palette, productKey);
+  drawVignette(ctx, width, height);
+  await renderBrand(ctx, width, palette, headlineColor);
+  if (total > 1) drawProgressBar(ctx, width, beatNum, total, accent, padding);
+
+  const allTokens = tokenizeEmphasis(text);
+  ctx.textBaseline = 'top';
+
+  if (mode === 'punch') {
+    // one big centered word (the active one); emphasized words get the accent
+    const tk = allTokens[Math.max(0, Math.min(activeIndex, allTokens.length - 1))] || { word: '', em: false };
+    const maxTextWidth = width - padding * 2 - 40;
+    let fontSize = Math.round(DESIGN.reelSize * 1.4);
+    ctx.font = `bold ${fontSize}px ${HEADLINE_FONT}`;
+    while (ctx.measureText(tk.word).width > maxTextWidth && fontSize > 54) {
+      fontSize -= 8; ctx.font = `bold ${fontSize}px ${HEADLINE_FONT}`;
+    }
+    ctx.textAlign = 'center';
+    ctx.fillStyle = tk.em ? accent : headlineColor;
+    ctx.fillText(tk.word, width / 2, height / 2 - fontSize / 2 + 30);
+  } else {
+    // karaoke: frozen full-line layout, reveal a prefix, highlight active/emphasis
+    const maxTextWidth = width - padding * 2 - 40;
+    const maxLines = 5;
+    let fontSize = DESIGN.reelSize;
+    let lineCount;
+    for (;;) {
+      ctx.font = `bold ${fontSize}px ${HEADLINE_FONT}`;
+      lineCount = wrapTokens(ctx, allTokens, maxTextWidth).length;
+      if (lineCount <= maxLines || fontSize <= 46) break;
+      fontSize -= 6;
+    }
+    const lineHeight  = fontSize + 16;
+    const blockHeight = lineCount * lineHeight;
+    const bandTop = height * 0.30, bandBot = height * 0.66;
+    const startY = Math.min(bandBot - blockHeight, Math.max(bandTop, (height - blockHeight) / 2 + 40));
+
+    ctx.font = `bold ${fontSize}px ${HEADLINE_FONT}`;
+    const { placed } = layoutTokens(ctx, allTokens, maxTextWidth, width / 2, startY, lineHeight);
+    ctx.textAlign = 'left';
+    const shown = (revealCount == null) ? allTokens.length : revealCount;
+    for (const p of placed) {
+      if (p.token.i >= shown) continue; // not revealed yet — space is reserved
+      ctx.fillStyle = (p.token.i === activeIndex || p.token.em) ? accent : headlineColor;
+      ctx.fillText(p.token.word, p.x, p.y);
+    }
+  }
+
+  if (isCta) {
+    ctx.font = `bold ${Math.round(DESIGN.reelSize * 0.7)}px ${HEADLINE_FONT}`;
+    ctx.fillStyle = accent;
+    ctx.textAlign = 'center';
+    ctx.fillText('↓', width / 2, height - padding * 2.2);
+  }
+
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
+  return canvas.toBuffer('png');
+}
+
 // ── template selector (gated behind TEMPLATES_ACTIVE) ───────────────────────
 // format: the Generator's post.format value ('single_image' | 'reel' | 'caption' | 'carousel').
 // Returns a template name string: 'v1Gradient' | 'cleanCard' | 'photoCard'.
@@ -566,6 +660,8 @@ module.exports = {
   renderCleanCard,
   renderPhotoCard,
   renderReelFrame,
+  renderReelWordFrame,
+  tokenizeEmphasis,
   selectTemplate,
   renderFallback,
   getPalette,

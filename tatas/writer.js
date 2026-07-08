@@ -22,8 +22,15 @@ const state = require('./lib/state');
 
 const DRY_RUN        = process.argv.includes('--dry-run');
 const FORCE_FALLBACK = process.argv.includes('--fallback');
-const MODEL          = process.env.TATAS_MODEL || 'claude-opus-4-8';
+const FORCE          = process.argv.includes('--force'); // regenerate a week even if it exists
+// Haiku is plenty for this structured fill-in-the-JSON task and ~5x cheaper than
+// Opus; override with TATAS_MODEL if you ever want a heavier model.
+const MODEL          = process.env.TATAS_MODEL || 'claude-haiku-4-5';
 const HANDLE         = process.env.TATAS_IG_HANDLE || '@tech4tatas';
+
+// Hardcoded medical guidance below (fallback carousels) — RE-VERIFY BY 2026-12-31.
+// Screening-age guidance and stats drift; re-check against ACS / USPSTF yearly.
+const MEDICAL_REVIEW_BY = '2026-12-31';
 
 // ── Phase 1 starter topics — one per weekday slot ───────────────────────────
 const TOPICS = [
@@ -187,9 +194,15 @@ async function main() {
   const weekOf = argValue('--week') || nextMonday();
   const current = state.load();
 
-  if (current.posts.some(p => p.weekOf === weekOf)) {
-    console.log(`Posts for week ${weekOf} already exist in state.json — nothing to do.`);
+  if (!FORCE && current.posts.some(p => p.weekOf === weekOf)) {
+    console.log(`Posts for week ${weekOf} already exist in state.json — nothing to do. (Use --force to regenerate.)`);
     return;
+  }
+  if (FORCE) {
+    // drop existing posts for this week so we regenerate cleanly
+    current.posts = current.posts.filter(p => p.weekOf !== weekOf);
+    state.save(current);
+    console.log(`--force: cleared existing posts for week ${weekOf}.`);
   }
 
   const useClaude = !FORCE_FALLBACK && !!process.env.ANTHROPIC_API_KEY;

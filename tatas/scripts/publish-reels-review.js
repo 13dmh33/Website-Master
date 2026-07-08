@@ -45,7 +45,8 @@ function reelCard(reel) {
         <span>${esc(h)}</span>
       </label>`).join('');
 
-  const shots = reel.shotList.map((s, i) => `<li><b>${i + 1}.</b> ${esc(s)}</li>`).join('');
+  const beats = (reel.beats || []).map((b, i) =>
+    `<li><b>${i + 1}.</b> <span class="cap-txt">"${esc(b.caption)}"</span> <span class="broll">🎬 ${esc(b.broll)}</span></li>`).join('');
 
   return `
     <div class="reel" data-id="${esc(reel.id)}">
@@ -57,8 +58,8 @@ function reelCard(reel) {
       <div class="block"><span class="lbl">Script (voiceover)</span>
         <p class="script">${esc(reel.script)}</p></div>
 
-      <div class="block"><span class="lbl">Shot list (on-screen text)</span>
-        <ol class="shots">${shots}</ol></div>
+      <div class="block"><span class="lbl">Beats — caption + real b-roll</span>
+        <ol class="shots">${beats}</ol></div>
 
       <div class="block"><span class="lbl">Caption</span>
         <pre class="cap">${esc(reel.caption)}\n\n${esc(reel.hashtags.join(' '))}</pre></div>
@@ -94,7 +95,8 @@ function buildPage(reels, weekOf) {
   label.hook { display:flex; gap:.5rem; align-items:flex-start; padding:.4rem 0; cursor:pointer; }
   label.hook span { line-height:1.4; }
   .script { line-height:1.6; background:#1A1A1D; padding:.85rem; border-radius:8px; margin:0; }
-  .shots { margin:0; padding-left:1.2rem; line-height:1.7; }
+  .shots { margin:0; padding-left:1.2rem; line-height:1.9; }
+  .cap-txt { color:#F7F4F0; } .broll { color:#8a8a90; font-size:.8rem; }
   pre.cap { white-space:pre-wrap; font-family:inherit; background:#1A1A1D; padding:.85rem; border-radius:8px; margin:0; font-size:.92rem; line-height:1.5; }
   .decision label { margin-right:1.25rem; }
   .out { position:sticky; bottom:0; background:#101013; border:1px solid #FF2E88; border-radius:12px; padding:1rem; margin-top:1rem; }

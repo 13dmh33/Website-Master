@@ -36,6 +36,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: tatas/package-lock.json
 
       - name: Check PAT is configured
         if: ${{ secrets.GH_SECRETS_PAT == '' }}
@@ -51,7 +53,7 @@ jobs:
             core.setFailed('GH_SECRETS_PAT secret is not set — cannot store the refreshed token.');
 
       - name: Install dependencies
-        run: cd tatas && npm install --no-audit --no-fund
+        run: cd tatas && npm install --omit=optional --no-audit --no-fund
 
       - name: Refresh token and update secret
         env:

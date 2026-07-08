@@ -1,25 +1,26 @@
 'use strict';
 
-// writer-reels.js — the reels-lane writer (Phase 2).
+// writer-reels.js — the reels-lane writer (Phase 2, realness pass).
 //
-// Turns 5 starter topics into Instagram Reel plans: one 30–60s spoken script
-// (~90–140 words), 3 scroll-stopping hook variants, a 4–6 frame shot list
-// (on-screen text per frame), and one caption with 3–5 hashtags. Appends each
-// as a type:"reel", status:"pending" item to the `reels` array in
-// tatas/state.json (isolated from the carousel lane).
+// Produces Reel plans built to feel like a real creator made them, NOT a
+// gradient text-card slideshow:
+//   - script: spoken for the EAR (contractions, direct address, punctuation
+//     pacing), 30–60s / ~90–140 words
+//   - hooks: 3 scroll-stopping opening lines
+//   - beats: 5–7 { broll, caption } pairs — `broll` is a real-footage search
+//     phrase (Pexels/Pixabay), `caption` is SHORT on-screen text meant to be
+//     shown as native word-by-word captions over that footage
+//   - caption + 3–5 hashtags
 //
-// Review-first: nothing here approves or voices anything. The hook/tone gate is
-// the review page + approve-reels.js.
-//
-// Slots: one topic per weekday next week (label only — reels don't auto-post,
-// so there's no scheduledFor). Idempotent: if reels for the target week already
-// exist, the run is a no-op.
+// Topics are DISTINCT from the carousel lane (no cannibalization). Reels live
+// in the isolated reels[] array; nothing here approves or voices anything.
 //
 // usage:
 //   node writer-reels.js                    # Claude if ANTHROPIC_API_KEY set, else fallback
 //   node writer-reels.js --fallback         # force built-in fallback reels (zero spend)
-//   node writer-reels.js --dry-run          # print, don't write state
-//   node writer-reels.js --week 2026-07-13  # explicit week (Monday date)
+//   node writer-reels.js --force            # regenerate the week even if it exists
+//   node writer-reels.js --dry-run
+//   node writer-reels.js --week 2026-07-13
 
 require('dotenv').config({ path: require('path').join(__dirname, '.env') });
 
@@ -27,133 +28,149 @@ const reelsState = require('./lib/reels-state');
 
 const DRY_RUN        = process.argv.includes('--dry-run');
 const FORCE_FALLBACK = process.argv.includes('--fallback');
-const MODEL          = process.env.TATAS_MODEL || 'claude-opus-4-8';
+const FORCE          = process.argv.includes('--force');
+// Haiku is ideal for this structured task and ~5x cheaper than Opus.
+const MODEL          = process.env.TATAS_MODEL || 'claude-haiku-4-5';
 const HANDLE         = process.env.TATAS_IG_HANDLE || '@tech4tatas';
 
-// ── Phase 2 starter topics (reel-style angles) ──────────────────────────────
+// Hardcoded medical guidance below — RE-VERIFY BY 2026-12-31 against ACS/USPSTF.
+const MEDICAL_REVIEW_BY = '2026-12-31';
+
+// ── Reel topics — DISTINCT from the carousel lane's five ────────────────────
 const TOPICS = [
-  { key: 'mammogram-age-explained', title: 'When mammograms should actually start (the age question)' },
-  { key: 'self-check-in-60-seconds', title: 'The monthly self-check, in 60 seconds' },
-  { key: 'dense-breast-tissue', title: 'Dense breast tissue: what it means for your screening' },
-  { key: 'benign-vs-worth-a-call', title: 'Most lumps are benign — here is what is still worth a call' },
-  { key: 'what-to-say-when-someone-tells-you', title: 'What to say when someone tells you they were diagnosed' },
+  { key: 'mammogram-myths',        title: 'Deodorant, underwire, and other things that do NOT cause breast cancer' },
+  { key: 'first-mammogram',        title: 'What your first mammogram is actually like (it is quick)' },
+  { key: 'beyond-the-lump',        title: 'Changes to notice that aren\'t a lump' },
+  { key: 'questions-for-doctor',   title: '3 questions to ask your doctor about your own risk' },
+  { key: 'men-get-it-too',         title: 'Yes, men get breast cancer too' },
 ];
 
 const SLOT_DAYS = ['MON', 'TUE', 'WED', 'THU', 'FRI'];
 
-// ── Sensitivity rules — SAME as Phase 1 (carousel) writer ───────────────────
-const SYSTEM_PROMPT = `You write educational Instagram Reels scripts about breast cancer awareness for the brand Tech 4 Tatas (${HANDLE}). The script is spoken aloud as a voiceover.
+// ── Sensitivity rules (same as carousel) + spoken-cadence direction ─────────
+const SYSTEM_PROMPT = `You write short-form Instagram Reels for the brand Tech 4 Tatas (${HANDLE}). The script is spoken aloud as a voiceover by one real-sounding person, over real b-roll footage with native captions.
 
-Non-negotiable content rules:
-- Respectful and non-alarmist. Education tone, not clinical. Warm, clear, plain spoken language.
+NON-NEGOTIABLE content rules:
+- Respectful and non-alarmist. Education tone, not clinical. Warm, plain, human.
 - Medically accurate. If you are not certain a claim is accurate, leave it out.
-- No fear-mongering: never use scare statistics, worst-case framing, or urgency pressure.
-- No diagnostic claims: never tell viewers they do or don't have a condition, and never imply self-checks can diagnose anything.
-- Attribute every statistic to a source type, e.g. "per the American Cancer Society", "per the W.H.O." (spell out abbreviations for the voiceover). No unattributed numbers.
-- Always encourage professional screening and talking to a doctor — this content supplements medical care, never replaces it.
-- Inclusive: breast cancer affects people of all genders; avoid language that excludes.
+- No fear-mongering: no scare statistics, worst-case framing, or urgency pressure.
+- No diagnostic claims: never tell viewers they do or don't have a condition, and never imply self-checks diagnose anything.
+- Attribute every statistic to a source type, spelled out for the voice, e.g. "the American Cancer Society", "the World Health Organization". No unattributed numbers.
+- Always encourage professional screening and talking to a doctor — supplements medical care, never replaces it.
+- Inclusive: breast cancer affects people of all genders.
 - No graphic imagery or descriptions.
 
-Output format — respond with ONLY a JSON object, no markdown fences:
+WRITE THE SCRIPT FOR THE EAR, not the page — this is the difference between feeling real and feeling like AI:
+- Use contractions and everyday words. Short sentences. One idea at a time.
+- Open mid-thought like a real person: "Okay, real talk —", "So nobody tells you this, but", "Quick one —".
+- Talk directly to one viewer ("you"), ask a rhetorical question, let it breathe.
+- Use punctuation for pacing: em dashes and ellipses read as natural pauses in the voiceover.
+- Avoid essay phrasing, lists read aloud, or corporate polish. It should sound like a friend who happens to know this stuff.
+
+BEATS: the video is real footage, not text cards. Each beat has:
+- "broll": a 2–5 word search phrase for real stock footage that matches the moment (e.g. "woman laughing kitchen", "doctor talking to patient", "hands holding coffee mug"). Everyday, human, non-graphic.
+- "caption": the SHORT on-screen text for that beat (<= 45 chars) — punchy, lowercase-friendly, the kind of caption a real creator burns in.
+
+Output — respond with ONLY a JSON object, no markdown fences:
 {
-  "script": "the spoken voiceover, 90 to 140 words, 30-60 seconds read aloud. Natural spoken sentences (this is read, not shown). Open strong, close by pointing to a doctor/professional screening.",
-  "hooks": ["exactly 3 scroll-stopping opening-line hook variants, each <= 90 characters, spoken/on-screen style, none fear-based"],
-  "shotList": ["4 to 6 frames. Each is the ON-SCREEN TEXT for that frame (short, <= 60 chars) — not camera directions."],
-  "caption": "2-4 short sentences for the post caption, same tone, ending with a gentle CTA to save/share and talk to a doctor. No hashtags in the body.",
-  "hashtags": ["3 to 5 hashtags, lowercase, no spaces, mixing broad awareness tags and niche ones"]
+  "script": "spoken voiceover, 90-140 words, opens strong, closes by pointing to a doctor / professional screening.",
+  "hooks": ["exactly 3 opening-line hooks, <= 90 chars each, spoken style, none fear-based"],
+  "beats": [ { "broll": "real footage search phrase", "caption": "short on-screen text" } ],  // 5 to 7 beats
+  "caption": "2-4 sentence post caption, same voice, ends with a gentle save/share + talk-to-a-doctor CTA. No hashtags in the body.",
+  "hashtags": ["3 to 5 lowercase hashtags, mix broad + niche"]
 }`;
 
-// ── Built-in fallback reels (zero-API dry-runs; medically conservative) ─────
+// ── Built-in fallback reels — spoken cadence + b-roll beats ──────────────────
 const FALLBACK = {
-  'mammogram-age-explained': {
-    script: "Quick one that trips a lot of people up: when should mammograms actually start? For years the number everyone remembered was fifty. But recent guidance from the U.S. Preventive Services Task Force now recommends many people begin at forty. And if you have a family history or dense breast tissue, your doctor might suggest starting even earlier, or adding other imaging. The real takeaway isn't a magic number — it's that the right schedule is personal. So do one thing this week: ask your doctor what screening plan fits your specific risk. Five minutes now, real peace of mind later.",
+  'mammogram-myths': {
+    script: "Okay, real talk — let's kill a few myths that stress people out for no reason. Deodorant? It does not cause breast cancer. Neither does an underwire bra, or bumping your chest, or a phone in your pocket. None of it. The American Cancer Society is clear on this. What actually matters is way less dramatic: knowing your family history, and staying on top of screening as you get older. So if you've been quietly worried about your antiperspirant… let it go. And if you're not sure what screening you're due for, that's the real question — bring it to your doctor. That's the move.",
     hooks: [
-      'The mammogram age everyone remembers is out of date.',
-      'Wait — mammograms might start earlier than you think.',
-      'Fifty? Forty? Here\'s what the guidance actually says now.',
+      'Your deodorant is not giving you cancer. Promise.',
+      'Let\'s kill three myths that stress everyone out.',
+      'No, your underwire bra isn\'t the problem.',
     ],
-    shotList: [
-      'When should mammograms start?',
-      'Old answer everyone remembers: 50',
-      'Updated guidance: many start at 40 (per USPSTF)',
-      'Family history or dense tissue? Maybe earlier',
-      'The right schedule is personal',
-      'Ask your doctor what fits your risk',
+    beats: [
+      { broll: 'woman getting ready mirror', caption: 'myth check time' },
+      { broll: 'deodorant morning routine',  caption: 'deodorant? no.' },
+      { broll: 'bras on a rack',             caption: 'underwire? also no.' },
+      { broll: 'family talking together',    caption: 'what matters: family history' },
+      { broll: 'woman talking to doctor',    caption: 'and staying on top of screening' },
+      { broll: 'phone calendar reminder',    caption: 'ask what you\'re due for' },
     ],
-    caption: 'The recommended starting age for mammograms moved to 40 for many people (per the U.S. Preventive Services Task Force) — but the right plan depends on your personal risk. Save this and bring the question to your next appointment.',
-    hashtags: ['#breastcancerawareness', '#mammogram', '#earlydetection', '#womenshealth'],
+    caption: 'Deodorant, underwire, phone-in-your-pocket — none of it causes breast cancer (per the American Cancer Society). What actually helps: knowing your history and keeping up with screening. Save this and bring the screening question to your doctor.',
+    hashtags: ['#breastcancerawareness', '#mythbusting', '#womenshealth', '#breasthealth'],
   },
-  'self-check-in-60-seconds': {
-    script: "Here's your monthly self-check in about a minute. First, look: in the mirror, arms down, then raised — you're just noticing any change in shape, skin, or the way things sit. Next, feel while standing: flat fingers, small circles, cover the whole area including up into the armpit. Then feel lying down, same pattern. That's it. The goal isn't to diagnose anything — it's simply to learn what normal feels like for you, so you'd notice if something changed. And if you ever do notice a change, that's not a verdict — it's just a good reason to call your doctor. Same time each month, and you're set.",
+  'first-mammogram': {
+    script: "If your first mammogram is coming up and you're a little nervous — totally normal. Here's what actually happens, start to finish. You'll change into a gown. A tech, usually a woman, positions you one side at a time. There's a firm squeeze for a few seconds per image — uncomfortable, honestly, but quick. The whole thing? Usually under twenty minutes. That's it. You go back to your day. The nerves are almost always bigger than the appointment. So if you've been putting it off because of the unknown… now you know. Book it, and ask your doctor if it's the right time for you.",
     hooks: [
-      'Your whole monthly self-check, in about 60 seconds.',
-      'Nobody taught us how to actually do this. Let\'s fix that.',
-      'Three steps, one minute, once a month.',
+      'Nervous about your first mammogram? Here\'s the whole thing.',
+      'What a mammogram is actually like — start to finish.',
+      'The nerves are bigger than the appointment. Here\'s why.',
     ],
-    shotList: [
-      'The 60-second monthly self-check',
-      'LOOK: mirror, arms down then up',
-      'FEEL standing: flat fingers, small circles',
-      'FEEL lying down: same pattern',
-      'Goal: know YOUR normal (not to diagnose)',
-      'Notice a change? Call your doctor',
+    beats: [
+      { broll: 'woman waiting room calm',     caption: 'first mammogram?' },
+      { broll: 'hospital gown hanging',       caption: 'you change into a gown' },
+      { broll: 'friendly nurse smiling',      caption: 'a tech positions you' },
+      { broll: 'clock ticking close up',      caption: 'a few seconds per image' },
+      { broll: 'woman leaving clinic smiling',caption: 'under 20 minutes, done' },
+      { broll: 'phone booking appointment',   caption: 'ask if it\'s your time' },
     ],
-    caption: 'A monthly self-check takes about a minute, and it is not a diagnostic tool — it just helps you learn what normal feels like for you, so changes get in front of a doctor early. Save this as your monthly reminder.',
-    hashtags: ['#selfcheck', '#breasthealth', '#knowyournormal', '#breastcancerawareness'],
+    caption: 'First mammogram nerves are real — but the appointment is usually under 20 minutes and over before you know it. If the unknown has kept you from booking, now you know. Ask your doctor if it\'s the right time for you.',
+    hashtags: ['#mammogram', '#breastcancerawareness', '#earlydetection', '#womenshealth'],
   },
-  'dense-breast-tissue': {
-    script: "If a mammogram report ever said you have dense breast tissue, here's what that actually means — no alarm needed. Dense tissue is common and totally normal; it simply means you have more glandular and fibrous tissue relative to fat. Two things worth knowing: dense tissue can make mammograms a little harder to read, and it's considered one factor in overall risk. That's not a reason to worry — it's a reason to have an informed conversation. Ask your doctor whether your density means you'd benefit from additional screening, like an ultrasound or M.R.I. Knowing your density just helps you and your doctor screen a little smarter.",
+  'beyond-the-lump': {
+    script: "Everyone knows to check for a lump — but a lump isn't the only thing worth noticing. So here's what else to keep an eye on. Skin that starts to dimple, almost like an orange peel. A nipple that suddenly pulls inward. Redness or scaling that doesn't clear up. Or any unusual discharge. None of these mean something's wrong — most of the time there's a harmless explanation. But they're all worth a quick mention to your doctor. You don't have to diagnose anything. Your only job is to notice a change… and let a professional take it from there.",
     hooks: [
-      '"Dense breast tissue" on your report? Here\'s what it means.',
-      'This one line on your mammogram is worth understanding.',
-      'Dense tissue isn\'t a diagnosis — it\'s a conversation.',
+      'A lump isn\'t the only thing to watch for.',
+      'Nobody talks about these ones. Let\'s fix that.',
+      'Beyond the lump: 4 changes worth a call.',
     ],
-    shotList: [
-      '"Dense breast tissue" — what it means',
-      'It\'s common and normal',
-      'More glandular/fibrous tissue vs fat',
-      'Can make mammograms harder to read',
-      'One factor in overall risk',
-      'Ask your doctor about extra screening',
+    beats: [
+      { broll: 'woman thoughtful window light', caption: 'it\'s not just lumps' },
+      { broll: 'orange peel texture macro',     caption: 'skin dimpling' },
+      { broll: 'woman getting dressed morning',  caption: 'a nipple pulling inward' },
+      { broll: 'person applying lotion skin',    caption: 'redness that won\'t clear' },
+      { broll: 'woman talking on phone serious',  caption: 'worth a quick mention' },
+      { broll: 'doctor reassuring patient',      caption: 'notice → tell your doctor' },
     ],
-    caption: 'Dense breast tissue is common and normal — but it can make mammograms harder to read and is one factor in risk. If your report mentions it, ask your doctor whether additional screening makes sense for you. Knowledge, not worry.',
-    hashtags: ['#densebreasts', '#breasthealth', '#screening', '#breastcancerawareness'],
+    caption: 'A lump isn\'t the only change worth noticing — skin dimpling, a nipple pulling inward, redness that won\'t clear, or unusual discharge are all worth a quick mention to your doctor. Not to diagnose — just to notice. Save and share.',
+    hashtags: ['#breasthealth', '#knowyournormal', '#breastcancerawareness', '#earlydetection'],
   },
-  'benign-vs-worth-a-call': {
-    script: "Let's take some fear out of the word lump. Here's the reassuring part first: most breast lumps are not cancer. Cysts, fibroadenomas, and normal hormonal changes are all common, and many lumps come and go with your cycle. So finding something is not a verdict. That said, a few things are worth a call to your doctor — not to panic, just to check: a new lump that sticks around, skin dimpling, nipple changes, or unusual discharge. You don't have to know what it is; that's the doctor's job. Your job is simply to notice a change and make the appointment. Early conversations are always the win.",
+  'questions-for-doctor': {
+    script: "Your next doctor's visit is a chance most of us waste — so here are three questions worth asking about your own risk. One: based on my history, when should I start or change my screening? Two: is my breast tissue dense, and does that change anything for me? Three: are there everyday habits that would actually lower my risk? That's it. Screenshot these, put them in your notes, whatever works. Because the goal isn't to worry about risk — it's to have a real conversation with someone who can look at your specific picture. Five minutes of questions is worth a lot of peace of mind.",
     hooks: [
-      'Most lumps aren\'t cancer. Here\'s what\'s still worth a call.',
-      'Found something? Take a breath — then read this.',
-      'A lump is information, not a verdict.',
+      '3 questions to actually ask your doctor.',
+      'Stop wasting your next appointment. Ask these.',
+      'Screenshot these before your next check-up.',
     ],
-    shotList: [
-      'Most breast lumps are NOT cancer',
-      'Cysts & benign changes are common',
-      'Still worth a call: a lump that stays',
-      'Also: skin dimpling, nipple changes',
-      'You don\'t have to know what it is',
-      'Notice a change → make the appointment',
+    beats: [
+      { broll: 'woman writing in notebook',    caption: 'before your next visit' },
+      { broll: 'calendar screening schedule',  caption: '1. when should I screen?' },
+      { broll: 'doctor reviewing scan',        caption: '2. is my tissue dense?' },
+      { broll: 'person walking outdoors',      caption: '3. what lowers my risk?' },
+      { broll: 'phone taking screenshot',      caption: 'screenshot these' },
+      { broll: 'patient doctor conversation',  caption: '5 mins = real peace of mind' },
     ],
-    caption: 'Most lumps turn out to be benign — but a new lump that sticks around, skin dimpling, or nipple changes are worth a professional look. This is education, not diagnosis: notice a change, and let your doctor take it from there.',
-    hashtags: ['#breasthealth', '#earlydetection', '#breastcancerawareness', '#healtheducation'],
+    caption: 'Three questions turn a routine check-up into a real risk conversation: when to screen, whether your tissue is dense, and what everyday habits help. Screenshot these for your next appointment — and talk it through with your doctor.',
+    hashtags: ['#breastcancerawareness', '#knowyourrisk', '#womenshealth', '#screening'],
   },
-  'what-to-say-when-someone-tells-you': {
-    script: "Someone you love says the words: I was just diagnosed. And your mind goes blank. Here's the good news — you don't need the perfect thing to say. Skip \"let me know if you need anything,\" because they rarely will. Offer something specific instead: \"I'm dropping off dinner Tuesday,\" or \"I'll drive you to that appointment.\" Then mostly, just listen — you don't have to fix it. And keep showing up after the first week, because treatment is a marathon, not a moment. Leave the medical questions to their care team; your job is presence. That's it. Being there, consistently, is the whole thing.",
+  'men-get-it-too': {
+    script: "Here's one that surprises almost everyone: men get breast cancer too. It's rare — the American Cancer Society says it's about one percent of all breast cancer cases — but it's real, and because so few people expect it, it often gets caught later. Men have breast tissue too, so the same changes matter: a lump, skin dimpling, or a nipple that pulls in. This isn't about scaring anyone. It's just that awareness saves time, and time matters. So if something feels off, don't brush it off because you're a guy. Same rule for everyone — notice a change, and talk to your doctor.",
     hooks: [
-      '"I was just diagnosed." Here\'s what to actually say.',
-      'When someone tells you, most of us freeze. Try this.',
-      'You don\'t need perfect words. You need this.',
+      'Wait — men get breast cancer too?',
+      'The 1% nobody talks about.',
+      'This one surprises almost everyone.',
     ],
-    shotList: [
-      'When someone says "I was diagnosed"',
-      'Skip "let me know if you need anything"',
-      'Offer something specific instead',
-      '"I\'m bringing dinner Tuesday"',
-      'Listen more than you advise',
-      'Keep showing up after week one',
+    beats: [
+      { broll: 'man thinking coffee window',   caption: 'men get it too' },
+      { broll: 'group of men laughing',        caption: '~1% of cases (per ACS)' },
+      { broll: 'man checking phone serious',   caption: 'often caught later' },
+      { broll: 'man talking to doctor',        caption: 'same changes matter' },
+      { broll: 'hands on chest gesture',       caption: 'lump, dimpling, nipple change' },
+      { broll: 'man on phone booking',         caption: 'notice → tell your doctor' },
     ],
-    caption: 'When someone is diagnosed, presence beats perfect words. Offer something specific, listen without fixing, and keep showing up after the first wave of support fades. Share this with someone who needs it today.',
-    hashtags: ['#breastcancersupport', '#caregiver', '#breastcancerawareness', '#community'],
+    caption: 'Men get breast cancer too — about 1% of cases (per the American Cancer Society) — and because it\'s unexpected, it\'s often caught later. Same changes to watch for, same rule: notice something, talk to your doctor. Share this with the men in your life.',
+    hashtags: ['#malebreastcancer', '#breastcancerawareness', '#menshealth', '#earlydetection'],
   },
 };
 
@@ -176,10 +193,13 @@ function wordCount(s) { return (s || '').trim().split(/\s+/).filter(Boolean).len
 function validate(reel, topic) {
   const errs = [];
   const wc = wordCount(reel.script);
-  if (typeof reel.script !== 'string' || wc < 70 || wc > 170) errs.push(`script must be ~90-140 words, got ${wc}`);
+  if (typeof reel.script !== 'string' || wc < 80 || wc > 150) errs.push(`script must be ~90-140 words, got ${wc}`);
   if (!Array.isArray(reel.hooks) || reel.hooks.length !== 3) errs.push(`hooks must be exactly 3, got ${reel.hooks?.length}`);
-  if ((reel.hooks || []).some(h => typeof h !== 'string' || !h.trim() || h.length > 110)) errs.push('each hook must be a non-empty string <= 110 chars');
-  if (!Array.isArray(reel.shotList) || reel.shotList.length < 4 || reel.shotList.length > 6) errs.push(`shotList must be 4-6 frames, got ${reel.shotList?.length}`);
+  if ((reel.hooks || []).some(h => typeof h !== 'string' || !h.trim() || h.length > 100)) errs.push('each hook must be a non-empty string <= 100 chars');
+  if (!Array.isArray(reel.beats) || reel.beats.length < 5 || reel.beats.length > 7) errs.push(`beats must be 5-7, got ${reel.beats?.length}`);
+  if ((reel.beats || []).some(b => !b || typeof b.broll !== 'string' || !b.broll.trim() || typeof b.caption !== 'string' || !b.caption.trim() || b.caption.length > 55)) {
+    errs.push('each beat needs a broll phrase + a caption <= 55 chars');
+  }
   if (typeof reel.caption !== 'string' || reel.caption.length < 40) errs.push('caption too short');
   if (!Array.isArray(reel.hashtags) || reel.hashtags.length < 3 || reel.hashtags.length > 5) errs.push(`hashtags must be 3-5, got ${reel.hashtags?.length}`);
   if (errs.length) throw new Error(`Topic "${topic.key}" failed validation: ${errs.join('; ')}`);
@@ -210,9 +230,14 @@ async function main() {
   const weekOf  = argValue('--week') || nextMonday();
   const current = reelsState.load();
 
-  if (current.reels.some(r => r.weekOf === weekOf)) {
-    console.log(`Reels for week ${weekOf} already exist in state.json — nothing to do.`);
+  if (!FORCE && current.reels.some(r => r.weekOf === weekOf)) {
+    console.log(`Reels for week ${weekOf} already exist in state.json — nothing to do. (Use --force to regenerate.)`);
     return;
+  }
+  if (FORCE) {
+    current.reels = current.reels.filter(r => r.weekOf !== weekOf);
+    reelsState.save(current);
+    console.log(`--force: cleared existing reels for week ${weekOf}.`);
   }
 
   const useClaude = !FORCE_FALLBACK && !!process.env.ANTHROPIC_API_KEY;
@@ -247,14 +272,15 @@ async function main() {
       script:    content.script,
       hooks:     content.hooks,
       chosenHook: null,
-      shotList:  content.shotList,
+      beats:     content.beats,
       caption:   content.caption,
       hashtags:  content.hashtags,
+      voiceover: true, // build --no-vo flips to a captions-only bundle
       source,
       status:    'pending',
       createdAt: new Date().toISOString(),
     });
-    console.log(`  ✓ ${SLOT_DAYS[i]} · ${topic.key} · ${wordCount(content.script)}w script, 3 hooks, ${content.shotList.length} frames (${source})`);
+    console.log(`  ✓ ${SLOT_DAYS[i]} · ${topic.key} · ${wordCount(content.script)}w spoken, 3 hooks, ${content.beats.length} beats (${source})`);
   }
 
   if (DRY_RUN) {
@@ -264,7 +290,7 @@ async function main() {
   }
 
   reelsState.addReels(reels);
-  console.log(`Done — ${reels.length} pending reels written to tatas/state.json (reels[]). Next: node scripts/publish-reels-review.js`);
+  console.log(`Done — ${reels.length} pending reels written. Next: node scripts/publish-reels-review.js`);
 }
 
 main().catch(err => {

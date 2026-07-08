@@ -36,14 +36,18 @@ function argValue(flag) {
   return i !== -1 ? process.argv[i + 1] : null;
 }
 
-// Build the Shotstack timeline JSON for one reel (captions burned per shot,
-// voiceover as the soundtrack). Wired for the real API in a later pass.
+// Build the Shotstack timeline JSON for one reel. Beat length is derived from
+// the script's spoken duration (~2.8 words/sec) instead of a fixed 3s, so the
+// captions track the voiceover rather than drifting.
 function buildTimeline(reel) {
-  const perShot = 3; // seconds per caption frame — tune against audio length later
-  const clips = reel.shotList.map((text, i) => ({
-    asset: { type: 'html', html: `<p style="color:#fff;font:700 54px sans-serif;text-align:center">${text}</p>`, width: 1080, height: 1920 },
-    start: i * perShot,
-    length: perShot,
+  const totalSec = Math.max(reel.beats.length * 2, Math.round(reel.script.trim().split(/\s+/).length / 2.8));
+  const per = totalSec / reel.beats.length;
+  const clips = reel.beats.map((b, i) => ({
+    asset: { type: 'html', html: `<p style="color:#fff;font:700 54px sans-serif;text-align:center">${b.caption}</p>`, width: 1080, height: 1920 },
+    start: Math.round(i * per),
+    length: Math.round(per),
+    // TODO Phase 2b: replace the html caption asset with the resolved Pexels
+    // b-roll clip for `${b.broll}` as the background, caption as an overlay.
   }));
   return {
     timeline: {

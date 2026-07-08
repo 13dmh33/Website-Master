@@ -77,3 +77,47 @@ the Shotstack submit→poll→download against `TATAS_SHOTSTACK_KEY`, time the c
 clips to the actual audio duration, save the MP4 next to the mp3 (`videoPath` on
 the reel), and add an opt-in step to `tatas-reels-build`. Even then the lane
 should not auto-post — trending audio is added in CapCut/in-app.
+
+---
+
+## Polish pass (2026-07-08, branch tatas-phase-2-polish off tatas-phase-2)
+
+Implemented the full audit follow-up. Touches the carousel lane too (authorized
+by the user), so this branch stacks on Phase 2. Miley untouched (verified).
+
+**Realness (the priority):**
+- Reels are now built for REAL footage, not gradient text-cards. `writer-reels.js`
+  emits `beats[{broll, caption}]` — `broll` is a real-footage search phrase,
+  `caption` is short on-screen text. Replaces the old flat `shotList`.
+- Spoken-cadence system prompt (contractions, direct address, punctuation pacing);
+  fallback scripts rewritten to sound spoken.
+- 5 NEW reel topics, distinct from the carousel lane (no cannibalization):
+  mammogram-myths, first-mammogram, beyond-the-lump, questions-for-doctor,
+  men-get-it-too.
+- `voicer.js`: default `eleven_turbo_v2_5` (natural + ~half cost) at stability
+  0.35 + style + speaker_boost; `--sample` previews the voice cheaply; `--no-vo`
+  produces captions-only (trending-audio) bundles to A/B.
+- `briefer.js`: per-beat timing derived from script length, word-by-word
+  auto-caption instructions, and real Pexels b-roll — candidate clip URLs if
+  `TATAS_PEXELS_KEY` is set, else ready-to-click search links. Handles both
+  voiced and captions-only bundles.
+- `publish-reels-review.js` + `render.js` updated to the beats schema.
+
+**Cost/efficiency:**
+- `skia-canvas` → `optionalDependencies`; reels + non-render carousel workflows
+  install with `--omit=optional` (no needless native build). Only
+  tatas-weekly-pipeline does the full install (it renders carousels).
+- npm caching (`actions/setup-node` cache: npm) on all six tatas workflows.
+- Both writers default to `claude-haiku-4-5` (was Opus) — same output quality on
+  this structured task, ~5x cheaper.
+
+**Code quality:**
+- `--force` on both writers to regenerate a week.
+- `MEDICAL_REVIEW_BY = 2026-12-31` markers on hardcoded medical claims.
+
+**Dry-run evidence (container):** new reels writer (spoken + beats), review page,
+approve (mixed hooks + reject), voicer dry-run + `--no-vo` captions-only, briefer
+both branches (voiced + captions-only, timing + Pexels search links), carousel
+lane still works with skia optional + Haiku + `--force`. All 6 workflow YAMLs
+parse. Artifacts reset. Not built: automated Pexels-clip download into a rendered
+MP4 (that's render.js / Phase 2b).

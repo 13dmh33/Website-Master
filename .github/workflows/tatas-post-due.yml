@@ -34,9 +34,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: tatas/package-lock.json
 
       - name: Install dependencies
-        run: cd tatas && npm install --no-audit --no-fund
+        run: cd tatas && npm install --omit=optional --no-audit --no-fund
 
       - name: Post due carousels to Instagram
         run: cd tatas && node scripts/post-due.js

@@ -20,18 +20,35 @@ under `miley/` or the Phase 1 carousel files/workflows is modified.
 ## How a week flows
 
 ```
-FRI (cron)  writer-reels.js         5 topics → Claude (claude-opus-4-8):
-                                     script (90-140w) + 3 hooks + 4-6 frame shot list + caption/hashtags
+FRI (cron)  writer-reels.js         5 topics → Claude (claude-haiku-4-5):
+                                     spoken script (90-140w, written for the EAR) + 3 hooks
+                                     + 5-7 beats {real b-roll phrase + short caption} + caption/hashtags
                                      → 'pending' in reels[]
             publish-reels-review.js  interactive review page → trevoadvisors.com/review/tatas-reels/
 FRI-SUN     you review on your phone: per reel, pick 1 hook (radio) + Approve/Reject
             → tap "Copy decisions" → get a decisions string
 1 tap       tatas-reels-build workflow: paste decisions, Run workflow →
               approve-reels.js  applies hooks/approve/reject
-              voicer.js         approved reels → ElevenLabs mp3 (website/social/tatas-reels/{week}/)
-              briefer.js        voiced reels → CapCut brief .md bundles + week index page
-you         open trevoadvisors.com/review/tatas-reels/{week}/ → open each bundle in CapCut
+              voicer.js         approved reels → ElevenLabs mp3 (or --no-vo captions-only)
+              briefer.js        voiced reels → CapCut bundle: beats + real b-roll links (Pexels)
+                                + per-beat timing + word-by-word caption guidance
+you         open trevoadvisors.com/review/tatas-reels/{week}/ → build each in CapCut over REAL footage
 ```
+
+## Making them feel real (design choices)
+- **Real footage, not text cards.** Each beat carries a b-roll search phrase; the
+  bundle links straight to portrait Pexels clips (real clip URLs if `TATAS_PEXELS_KEY`
+  is set, else a search link). The on-screen caption rides over that footage.
+- **Written for the ear.** The system prompt forces spoken cadence — contractions,
+  direct address, punctuation-as-pacing — not essay prose.
+- **A human-sounding voice.** `voicer.js` defaults to `eleven_turbo_v2_5` at
+  stability 0.35 with style + speaker boost (not a flat narrator). Run
+  `node voicer.js --sample` to preview the voice cheaply before voicing full scripts.
+- **Word-by-word native captions.** Briefs instruct CapCut auto-captions, not
+  full-sentence static cards — the strongest "a person edited this" signal.
+- **Captions-only variant.** `--no-vo` produces trending-audio + captions bundles
+  (no voiceover) — often the most native format; worth A/B-ing.
+- **Distinct topics.** Reel topics don't overlap the carousel lane (no cannibalization).
 
 Reel lifecycle: `pending → approved (+chosenHook) | rejected → voiced` (briefer
 stamps `briefedAt`). The **hook + Approve/Reject choice is the single most

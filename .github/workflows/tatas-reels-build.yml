@@ -43,9 +43,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: tatas/package-lock.json
 
       - name: Install dependencies
-        run: cd tatas && npm install --no-audit --no-fund
+        run: cd tatas && npm install --omit=optional --no-audit --no-fund
 
       - name: Apply hook/approve decisions
         if: ${{ github.event.inputs.decisions != '' }}
@@ -58,9 +60,11 @@ jobs:
           [ -n "${{ github.event.inputs.week }}" ] && ARGS="--week ${{ github.event.inputs.week }}"
           node voicer.js $ARGS
         env:
-          TATAS_ELEVENLABS_KEY:      ${{ secrets.TATAS_ELEVENLABS_KEY }}
-          TATAS_ELEVENLABS_VOICE_ID: ${{ secrets.TATAS_ELEVENLABS_VOICE_ID }}
-          TATAS_ELEVENLABS_MODEL:    ${{ vars.TATAS_ELEVENLABS_MODEL }}
+          TATAS_ELEVENLABS_KEY:       ${{ secrets.TATAS_ELEVENLABS_KEY }}
+          TATAS_ELEVENLABS_VOICE_ID:  ${{ secrets.TATAS_ELEVENLABS_VOICE_ID }}
+          TATAS_ELEVENLABS_MODEL:     ${{ vars.TATAS_ELEVENLABS_MODEL }}
+          TATAS_ELEVENLABS_STABILITY: ${{ vars.TATAS_ELEVENLABS_STABILITY }}
+          TATAS_ELEVENLABS_STYLE:     ${{ vars.TATAS_ELEVENLABS_STYLE }}
 
       - name: Write CapCut brief bundles + index
         run: |
@@ -70,6 +74,7 @@ jobs:
           node briefer.js $ARGS
         env:
           TATAS_SOCIAL_BASE_URL: ${{ vars.TATAS_SOCIAL_BASE_URL }}
+          TATAS_PEXELS_KEY:      ${{ secrets.TATAS_PEXELS_KEY }}
 
       - name: Commit state + audio + bundles
         run: |

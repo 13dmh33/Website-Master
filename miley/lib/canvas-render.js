@@ -26,8 +26,11 @@ const { validateRender } = require('./render-validate');
 const DESIGN = {
   width:        1080,
   height:       1080,
+  reelWidth:    1080, // vertical 9:16 reel frame
+  reelHeight:   1920,
   overlay:      'rgba(8, 15, 30, 0.62)', // over product/lifestyle photos
   headlineSize: 64,
+  reelSize:     92, // on-screen reel text — big, phone-legible in motion
   bodySize:     34,
   brandSize:    22,
   padding:      80,
@@ -417,6 +420,87 @@ async function renderPhotoCard(headline, photoBuffer, attribution) {
   }, headline, 'mission');
 }
 
+// ── reel frame (vertical 1080x1920) ──────────────────────────────────────────
+// one beat of a Reel: big centered ON-SCREEN text over the brand background,
+// with a beat counter and the logo. Frames are composited into an .mp4 by
+// lib/reel.js. The hook beat (beatNum 1) uses the accent color; the final beat
+// gets a small CTA chevron. Not run through the square visual gate (9:16).
+
+// split text into lines that fit maxWidth at the current ctx.font (no drawing)
+function wrapLines(ctx, text, maxWidth) {
+  const words = (text || '').split(/\s+/).filter(Boolean);
+  const lines = [];
+  let line = '';
+  for (const w of words) {
+    const test = line ? `${line} ${w}` : w;
+    if (ctx.measureText(test).width > maxWidth && line) {
+      lines.push(line);
+      line = w;
+    } else {
+      line = test;
+    }
+  }
+  if (line) lines.push(line);
+  return lines;
+}
+
+async function renderReelFrame({ text, beatNum, total, paletteKey, productKey, isCta }) {
+  const width = DESIGN.reelWidth, height = DESIGN.reelHeight, padding = DESIGN.padding;
+  const palette = getPalette(paletteKey);
+  const canvas  = new Canvas(width, height);
+  const ctx     = canvas.getContext('2d');
+
+  const { headlineColor } = await drawBackground(ctx, width, height, palette, productKey);
+  renderTopBar(ctx, width, palette);
+  await renderBrand(ctx, width, palette, headlineColor);
+
+  // beat counter, top-left
+  if (total > 1) {
+    ctx.font = `${DESIGN.bodySize - 6}px ${BODY_FONT}`;
+    ctx.fillStyle = palette.accent || '#FF2E88';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'top';
+    ctx.fillText(`${beatNum} / ${total}`, padding, padding + 6);
+  }
+
+  // auto-fit the on-screen text: shrink until it fits ~5 lines in the safe band
+  const maxTextWidth = width - padding * 2;
+  const maxLines = 5;
+  let fontSize = DESIGN.reelSize;
+  let lines;
+  for (;;) {
+    ctx.font = `bold ${fontSize}px ${HEADLINE_FONT}`;
+    lines = wrapLines(ctx, text, maxTextWidth);
+    if (lines.length <= maxLines || fontSize <= 46) break;
+    fontSize -= 6;
+  }
+  const lineHeight = fontSize + 16;
+  const blockHeight = lines.length * lineHeight;
+
+  // vertically center the block in the frame
+  const startY = Math.max(height * 0.28, (height - blockHeight) / 2);
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'top';
+  ctx.fillStyle = beatNum === 1 ? (palette.accent || headlineColor) : headlineColor;
+  lines.forEach((ln, i) => ctx.fillText(ln, width / 2, startY + i * lineHeight));
+
+  // accent underline just below the text block
+  const underlineY = startY + blockHeight + 26;
+  ctx.fillStyle = palette.accent || '#FF2E88';
+  ctx.fillRect(width / 2 - 44, underlineY, 88, 6);
+
+  // final beat: a small CTA chevron to signal "act now"
+  if (isCta) {
+    ctx.font = `bold ${DESIGN.reelSize}px ${HEADLINE_FONT}`;
+    ctx.fillStyle = palette.accent || '#FF2E88';
+    ctx.fillText('↓', width / 2, height - padding * 2.4);
+  }
+
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
+  return canvas.toBuffer('png');
+}
+
 // ── template selector (gated behind TEMPLATES_ACTIVE) ───────────────────────
 // format: the Generator's post.format value ('single_image' | 'reel' | 'caption' | 'carousel').
 // Returns a template name string: 'v1Gradient' | 'cleanCard' | 'photoCard'.
@@ -443,6 +527,7 @@ module.exports = {
   renderCarouselSlide,
   renderCleanCard,
   renderPhotoCard,
+  renderReelFrame,
   selectTemplate,
   renderFallback,
   getPalette,

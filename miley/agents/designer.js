@@ -13,6 +13,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') }
 const fs      = require('fs');
 const path    = require('path');
 const render  = require('../lib/canvas-render');
+const reel    = require('../lib/reel');
 const store   = require('../lib/store');
 
 function saveBuffer(buffer, filePath) {
@@ -75,6 +76,49 @@ async function renderCarousel(post, imageDir, idx) {
   return paths;
 }
 
+// render a reel: one vertical (1080x1920) frame per beat, then stitch them into
+// a silent .mp4 via ffmpeg (lib/reel.js). Sets post.video to the mp4 path and
+// returns the frame PNG paths (used as review-preview thumbnails). If ffmpeg is
+// unavailable or fails, the frames still stand in as a storyboard.
+async function renderReel(post, imageDir, idx) {
+  const paletteKey = paletteFor(post);
+  const beats = reel.parseBeats(post);
+  const framePaths = [];
+
+  for (let b = 0; b < beats.length; b++) {
+    const outPath = path.join(imageDir, `${idx + 1}-${post.slot}-reel-frame-0${b + 1}.png`);
+    try {
+      const buf = await render.renderReelFrame({
+        text:       beats[b].text,
+        beatNum:    b + 1,
+        total:      beats.length,
+        paletteKey,
+        productKey: post.product,
+        isCta:      b === beats.length - 1 && beats.length > 1,
+      });
+      saveBuffer(buf, outPath);
+      framePaths.push(outPath);
+    } catch (err) {
+      console.warn(`  ${post.slot} reel frame ${b + 1} failed (${err.message}) — fallback.`);
+      try { saveBuffer(await render.renderFallback(beats[b].text, paletteKey), outPath); framePaths.push(outPath); }
+      catch (e2) { console.error(`  reel frame fallback failed: ${e2.message}`); }
+    }
+  }
+
+  post.video = null;
+  if (framePaths.length) {
+    const videoPath = path.join(imageDir, `${idx + 1}-${post.slot}-reel.mp4`);
+    try {
+      await reel.assembleReel(framePaths, videoPath);
+      post.video = videoPath;
+      console.log(`  ${post.slot} reel — ${framePaths.length} beats → ${path.basename(videoPath)}`);
+    } catch (err) {
+      console.warn(`  ${post.slot} reel video assembly skipped (${err.message}) — frames kept as storyboard.`);
+    }
+  }
+  return framePaths;
+}
+
 async function renderSingle(post, imageDir, idx) {
   const paletteKey = paletteFor(post);
   const outPath = path.join(imageDir, `${idx + 1}-${post.slot}-${post.format}.png`);
@@ -122,12 +166,14 @@ async function main() {
   let total = 0;
   for (let i = 0; i < posts.length; i++) {
     const post = posts[i];
-    const images = post.format === 'carousel'
-      ? await renderCarousel(post, imageDir, i)
-      : await renderSingle(post, imageDir, i);
+    let images;
+    if (post.format === 'carousel')   images = await renderCarousel(post, imageDir, i);
+    else if (post.format === 'reel')  images = await renderReel(post, imageDir, i);
+    else                              images = await renderSingle(post, imageDir, i);
     post.images = images;
     total += images.length;
-    console.log(`  ${post.slot} ${post.contentType} (${post.format}) — ${images.length} image(s).`);
+    const vid = post.video ? ' + reel.mp4' : '';
+    console.log(`  ${post.slot} ${post.contentType} (${post.format}) — ${images.length} image(s)${vid}.`);
   }
 
   store.savePost(content);

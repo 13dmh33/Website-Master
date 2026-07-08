@@ -29,7 +29,7 @@ Weekly pipeline: **Researcher → Generator → Designer → Scheduler → Analy
 |-------|------|-----|
 | Researcher | `agents/researcher.js` | Assembles a zero-API brief from `inspiration-sources.json`: evergreen themes, the seasonal angle, and VERIFIED data hooks (breast-cancer / women-in-trades stats). **Live data refresh:** also pulls fresh on-brand RSS headlines (free, no key) via `lib/sources.js` for both beats — paraphrasable angles only, fails silently offline. The Reeve "call for speakers" branch is disabled. |
 | Generator | `agents/generator.js` | Resolves the week's plan (planner) and writes ONE post per slot via the brand brain in `agents/generator-prompts.js`. Claude with quality gate → evergreen fallback on any miss. Appends hashtags. Each Claude-generated post also carries `captionVariantB` (same post, different hook) for A/B testing. |
-| Designer | `agents/designer.js` | Renders 1080×1080 PNGs per post via skia-canvas. Product photo background (`assets/products/{key}.png`) when present, else the content-type gradient palette. |
+| Designer | `agents/designer.js` | Renders 1080×1080 PNGs per post via skia-canvas. Product photo background (`assets/products/{key}.png`) when present, else the content-type gradient palette. **Reels:** a `reel` post is rendered as one vertical 1080×1920 frame per script beat and stitched into a silent H.264 `.mp4` (`lib/reel.js`) — the actual postable Reel, not just a cover. |
 | Scheduler | `agents/scheduler.js` | Queue-first: writes posts + preview. Schedules to Buffer only when `FORCE_QUEUE` is off. Picks the week's A/B caption variant (`lib/ab-tracker.js`, alternates weekly) and records it. |
 | Analyst | `agents/analyst.js` | Instagram engagement → updates `brand-voice.json` `what_works` / `top_hashtags`. **Sales signal:** also ingests UTM click data (`output/clicks/latest.json`) and ranks products by click-through, so the loop optimizes for revenue, not just likes. Runs the click report even without an Instagram token. |
 
@@ -41,7 +41,8 @@ Weekly pipeline: **Researcher → Generator → Designer → Scheduler → Analy
 | `lib/planner.js` | Resolves campaign mode (base / september / october) → slots → `{format, contentType, product, isOctober, paletteKey}` per post. All rotation logic lives here. |
 | `lib/claude.js` | Claude API wrapper (system + user prompt, retry, JSON parse). |
 | `lib/glossary.js` | Flattens `trades-glossary.json` categories → 3 trade terms/week injected into prompts. |
-| `lib/canvas-render.js` | skia-canvas renderer driven by `visual-config.json` palettes; product-photo + gradient backgrounds; optional drop-in fonts. |
+| `lib/canvas-render.js` | skia-canvas renderer driven by `visual-config.json` palettes; product-photo + gradient backgrounds; optional drop-in fonts. `renderReelFrame` draws a vertical 1080×1920 beat frame. |
+| `lib/reel.js` | Reel builder — parses a `reel` post's script (`extra`) into beats (synthesizes from hook/body/cta when there's no script), then assembles the beat frames into a silent 1080×1920 H.264 `.mp4` via the bundled static ffmpeg (`@ffmpeg-installer/ffmpeg`), with a slow push-in + soft fades. Silent by design (brand rule: no licensed music) — Dave adds trending audio in-app. |
 | `lib/buffer.js` | Buffer API v1 — image upload + scheduled post. |
 | `lib/instagram-insights.js` | Instagram Graph API (read-only) for the Analyst. |
 | `lib/sources.js` | Live data refresh — free RSS from the women-in-trades + breast-cancer beats, keyword-filtered, silent-fail. Headlines are paraphrasable angles only (never copied). |

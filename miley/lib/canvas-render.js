@@ -421,79 +421,117 @@ async function renderPhotoCard(headline, photoBuffer, attribution) {
 }
 
 // ── reel frame (vertical 1080x1920) ──────────────────────────────────────────
-// one beat of a Reel: big centered ON-SCREEN text over the brand background,
-// with a beat counter and the logo. Frames are composited into an .mp4 by
-// lib/reel.js. The hook beat (beatNum 1) uses the accent color; the final beat
-// gets a small CTA chevron. Not run through the square visual gate (9:16).
+// one beat of a Reel: big centered ON-SCREEN text over the brand background.
+// Frames are composited into an .mp4 by lib/reel.js (which adds the moving film
+// grain + vignette grade). To read as a real Reel, not a carousel slide, this:
+//   • shows a Stories-style segmented progress bar (never an "N/M" counter)
+//   • highlights the punch word (marked *word* in the script) in the accent color
+//   • bakes a soft vignette for depth
+//   • keeps text inside a safe band clear of Instagram's action rail / caption
+// Not run through the square visual gate (9:16).
 
-// split text into lines that fit maxWidth at the current ctx.font (no drawing)
-function wrapLines(ctx, text, maxWidth) {
-  const words = (text || '').split(/\s+/).filter(Boolean);
-  const lines = [];
-  let line = '';
-  for (const w of words) {
-    const test = line ? `${line} ${w}` : w;
-    if (ctx.measureText(test).width > maxWidth && line) {
-      lines.push(line);
-      line = w;
-    } else {
-      line = test;
-    }
+// tokenize text into words, marking any span wrapped in *asterisks* as emphasized
+function tokenizeEmphasis(text) {
+  const tokens = [];
+  const parts = (text || '').split(/(\*[^*]+\*)/g).filter(Boolean);
+  for (const part of parts) {
+    const em = /^\*[^*]+\*$/.test(part);
+    const clean = em ? part.slice(1, -1) : part;
+    for (const w of clean.split(/\s+/).filter(Boolean)) tokens.push({ word: w, em });
   }
-  if (line) lines.push(line);
+  return tokens;
+}
+
+// wrap emphasis tokens into lines that fit maxWidth at the current ctx.font
+function wrapTokens(ctx, tokens, maxWidth) {
+  const space = ctx.measureText(' ').width;
+  const lines = [];
+  let line = [], lineW = 0;
+  for (const tk of tokens) {
+    const w = ctx.measureText(tk.word).width;
+    const needed = line.length ? space + w : w;
+    if (lineW + needed > maxWidth && line.length) { lines.push(line); line = []; lineW = 0; }
+    lineW += line.length ? space + w : w;
+    line.push(tk);
+  }
+  if (line.length) lines.push(line);
   return lines;
+}
+
+// draw one wrapped line centered on cx, coloring emphasized tokens with accent
+function drawTokenLine(ctx, lineTokens, cx, y, baseColor, accentColor) {
+  const space  = ctx.measureText(' ').width;
+  const widths = lineTokens.map(tk => ctx.measureText(tk.word).width);
+  const total  = widths.reduce((a, b) => a + b, 0) + space * (lineTokens.length - 1);
+  let x = cx - total / 2;
+  ctx.textAlign = 'left';
+  lineTokens.forEach((tk, i) => {
+    ctx.fillStyle = tk.em ? accentColor : baseColor;
+    ctx.fillText(tk.word, x, y);
+    x += widths[i] + space;
+  });
+}
+
+// soft radial vignette for filmic depth (kept subtle so text stays legible)
+function drawVignette(ctx, w, h) {
+  const g = ctx.createRadialGradient(w / 2, h / 2, h * 0.24, w / 2, h / 2, h * 0.62);
+  g.addColorStop(0, 'rgba(0,0,0,0)');
+  g.addColorStop(1, 'rgba(0,0,0,0.30)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, w, h);
+}
+
+// Stories-style segmented progress bar across the top; segments up to the
+// current beat are filled with the accent color.
+function drawProgressBar(ctx, w, beatNum, total, accent, padding) {
+  const y = 30, h = 7, gap = 8, side = padding;
+  const segW = (w - side * 2 - gap * Math.max(0, total - 1)) / Math.max(1, total);
+  for (let i = 0; i < total; i++) {
+    ctx.fillStyle = i < beatNum ? accent : 'rgba(255,255,255,0.30)';
+    ctx.fillRect(side + i * (segW + gap), y, segW, h);
+  }
 }
 
 async function renderReelFrame({ text, beatNum, total, paletteKey, productKey, isCta }) {
   const width = DESIGN.reelWidth, height = DESIGN.reelHeight, padding = DESIGN.padding;
   const palette = getPalette(paletteKey);
+  const accent  = palette.accent || '#FF2E88';
   const canvas  = new Canvas(width, height);
   const ctx     = canvas.getContext('2d');
 
   const { headlineColor } = await drawBackground(ctx, width, height, palette, productKey);
-  renderTopBar(ctx, width, palette);
+  drawVignette(ctx, width, height);
   await renderBrand(ctx, width, palette, headlineColor);
+  if (total > 1) drawProgressBar(ctx, width, beatNum, total, accent, padding);
 
-  // beat counter, top-left
-  if (total > 1) {
-    ctx.font = `${DESIGN.bodySize - 6}px ${BODY_FONT}`;
-    ctx.fillStyle = palette.accent || '#FF2E88';
-    ctx.textAlign = 'left';
-    ctx.textBaseline = 'top';
-    ctx.fillText(`${beatNum} / ${total}`, padding, padding + 6);
-  }
-
-  // auto-fit the on-screen text: shrink until it fits ~5 lines in the safe band
-  const maxTextWidth = width - padding * 2;
+  // auto-fit the on-screen text: shrink until it fits ~5 lines in the safe band.
+  // Right margin is a touch wider to keep text clear of IG's action rail.
+  const maxTextWidth = width - padding * 2 - 40;
   const maxLines = 5;
   let fontSize = DESIGN.reelSize;
   let lines;
   for (;;) {
     ctx.font = `bold ${fontSize}px ${HEADLINE_FONT}`;
-    lines = wrapLines(ctx, text, maxTextWidth);
+    lines = wrapTokens(ctx, tokenizeEmphasis(text), maxTextWidth);
     if (lines.length <= maxLines || fontSize <= 46) break;
     fontSize -= 6;
   }
   const lineHeight = fontSize + 16;
   const blockHeight = lines.length * lineHeight;
 
-  // vertically center the block in the frame
-  const startY = Math.max(height * 0.28, (height - blockHeight) / 2);
-  ctx.textAlign = 'center';
+  // sit the block in the safe band (~30–66% of height): above the caption zone,
+  // below the progress bar / logo, biased just under center for a native feel.
+  const bandTop = height * 0.30, bandBot = height * 0.66;
+  const startY = Math.min(bandBot - blockHeight, Math.max(bandTop, (height - blockHeight) / 2 + 40));
   ctx.textBaseline = 'top';
-  ctx.fillStyle = beatNum === 1 ? (palette.accent || headlineColor) : headlineColor;
-  lines.forEach((ln, i) => ctx.fillText(ln, width / 2, startY + i * lineHeight));
+  lines.forEach((ln, i) => drawTokenLine(ctx, ln, width / 2, startY + i * lineHeight, headlineColor, accent));
 
-  // accent underline just below the text block
-  const underlineY = startY + blockHeight + 26;
-  ctx.fillStyle = palette.accent || '#FF2E88';
-  ctx.fillRect(width / 2 - 44, underlineY, 88, 6);
-
-  // final beat: a small CTA chevron to signal "act now"
+  // final beat: a subtle "tap" chevron low in frame (the real CTA is the caption)
   if (isCta) {
-    ctx.font = `bold ${DESIGN.reelSize}px ${HEADLINE_FONT}`;
-    ctx.fillStyle = palette.accent || '#FF2E88';
-    ctx.fillText('↓', width / 2, height - padding * 2.4);
+    ctx.font = `bold ${Math.round(DESIGN.reelSize * 0.7)}px ${HEADLINE_FONT}`;
+    ctx.fillStyle = accent;
+    ctx.textAlign = 'center';
+    ctx.fillText('↓', width / 2, height - padding * 2.2);
   }
 
   ctx.textAlign = 'left';

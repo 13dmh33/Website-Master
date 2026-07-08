@@ -108,8 +108,9 @@ async function renderReel(post, imageDir, idx) {
   post.video = null;
   if (framePaths.length) {
     const videoPath = path.join(imageDir, `${idx + 1}-${post.slot}-reel.mp4`);
+    const durations = beats.slice(0, framePaths.length).map((b, i) => reel.beatDuration(i, b.text));
     try {
-      await reel.assembleReel(framePaths, videoPath);
+      await reel.assembleReel(framePaths, videoPath, { durations });
       post.video = videoPath;
       console.log(`  ${post.slot} reel — ${framePaths.length} beats → ${path.basename(videoPath)}`);
     } catch (err) {

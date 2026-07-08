@@ -41,13 +41,17 @@ function ffmpegAvailable() {
 // ── timing ──────────────────────────────────────────────────────────────────
 const FPS         = 30;
 const HOOK_SECS   = 3.0;  // first beat lingers — the hook has to land
-const BEAT_SECS   = 2.6;  // every other beat
-const FADE_SECS   = 0.4;  // soft entrance on each beat (no xfade in this build)
+const BEAT_SECS   = 2.4;  // base for every other beat (extended by read length)
 const W           = 1080;
 const H           = 1920;
 
-function beatDuration(index) {
-  return index === 0 ? HOOK_SECS : BEAT_SECS;
+// beat length scales with how much there is to read, so long lines don't flash
+// by and short punchlines don't drag — the uneven pacing reads as edited.
+function beatDuration(index, text) {
+  const words = String(text || '').replace(/[*]/g, '').split(/\s+/).filter(Boolean).length;
+  const base  = index === 0 ? HOOK_SECS : BEAT_SECS;
+  const readBonus = Math.min(1.5, Math.max(0, (words - 4) * 0.22));
+  return +(base + readBonus).toFixed(2);
 }
 
 // ── beat parsing ──────────────────────────────────────────────────────────────
@@ -142,22 +146,38 @@ function parseBeats(post) {
 
 // ── ffmpeg assembly ───────────────────────────────────────────────────────────
 
-// Build the -filter_complex graph: per-frame slow push-in (zoompan) + soft fade
-// entrance, then concat all beats into one stream. Upscaling 2x before zoompan
-// keeps the push-in smooth (zoompan jitters on 1:1 sources).
+// Per-beat motion (Ken Burns). Varying direction beat-to-beat kills the robotic
+// "same slow zoom every card" feel. Upscaling 2x before zoompan keeps it smooth
+// (zoompan jitters on 1:1 sources). `on` = output frame index within the beat.
+const CX = 'iw/2-(iw/zoom/2)';
+const CY = 'ih/2-(ih/zoom/2)';
+const zp = (z, x, y, frames) => `zoompan=z='${z}':d=${frames}:s=${W}x${H}:fps=${FPS}:x='${x}':y='${y}'`;
+const MOTIONS = [
+  (f) => zp(`1.0+0.10*on/${f}`,  CX, CY, f),                 // push in
+  (f) => zp(`1.10-0.10*on/${f}`, CX, CY, f),                 // pull out
+  (f) => zp('1.06', `(iw-iw/zoom)*on/${f}`,     CY, f),      // pan right
+  (f) => zp('1.06', `(iw-iw/zoom)*(1-on/${f})`, CY, f),      // pan left
+];
+
+// Build the -filter_complex graph: per-beat varied motion, hard beat-synced cuts
+// (fade only at the very open/close, no dip-to-black between beats), then a
+// filmic grade + moving grain over the whole thing so it reads as shot/edited on
+// a phone rather than a flat vector export. (This build has no `xfade`.)
 function buildFilterGraph(durations) {
-  const parts = [];
+  const n = durations.length;
+  const parts  = [];
   const labels = [];
   durations.forEach((dur, i) => {
     const frames = Math.max(1, Math.round(dur * FPS));
-    // gentle push-in from 1.0 → ~1.08 over the beat, centered
-    const zoom = `zoompan=z='min(zoom+0.0009,1.08)':d=${frames}:s=${W}x${H}:fps=${FPS}:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'`;
-    const fade = `fade=t=in:st=0:d=${FADE_SECS}`;
-    parts.push(`[${i}:v]scale=${W * 2}:${H * 2},setsar=1,${zoom},${fade},format=yuv420p[v${i}]`);
+    let chain = `scale=${W * 2}:${H * 2},setsar=1,${MOTIONS[i % MOTIONS.length](frames)}`;
+    if (i === 0)     chain += ',fade=t=in:st=0:d=0.35';                                  // open from black
+    if (i === n - 1) chain += `,fade=t=out:st=${Math.max(0, dur - 0.4).toFixed(2)}:d=0.4`; // close to black
+    parts.push(`[${i}:v]${chain},format=yuv420p[v${i}]`);
     labels.push(`[v${i}]`);
   });
-  const concat = `${labels.join('')}concat=n=${durations.length}:v=1:a=0[outv]`;
-  return `${parts.join(';')};${concat}`;
+  // concat → gentle contrast/saturation lift → temporal (moving) film grain
+  const grade = `concat=n=${n}:v=1:a=0,eq=contrast=1.05:saturation=1.06,noise=alls=10:allf=t+u,format=yuv420p[outv]`;
+  return `${parts.join(';')};${labels.join('')}${grade}`;
 }
 
 // assembleReel — sequence rendered beat frames into a silent .mp4.
@@ -173,7 +193,9 @@ function assembleReel(framePaths, outPath, opts = {}) {
       return reject(new Error('ffmpeg not available (install @ffmpeg-installer/ffmpeg or set FFMPEG_PATH)'));
     }
 
-    const durations = framePaths.map((_, i) => beatDuration(i));
+    const durations = (Array.isArray(opts.durations) && opts.durations.length === framePaths.length)
+      ? opts.durations
+      : framePaths.map((_, i) => beatDuration(i));
     const totalSecs = durations.reduce((a, b) => a + b, 0);
 
     const args = [];
@@ -212,6 +234,7 @@ module.exports = {
   parseBeats,
   parseScript,
   synthesizeBeats,
+  beatDuration,
   assembleReel,
   ffmpegAvailable,
   ffmpegPath,

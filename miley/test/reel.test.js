@@ -76,6 +76,18 @@ test('renderReelFrame auto-fits very long on-screen text without throwing', asyn
   assert.ok(Buffer.isBuffer(buf) && buf.length > 0);
 });
 
+test('renderReelFrame renders *emphasis* markers without throwing', async () => {
+  const buf = await render.renderReelFrame({ text: 'She *earned* that toolbag', beatNum: 1, total: 4, paletteKey: 'mission', isCta: false });
+  assert.ok(Buffer.isBuffer(buf) && buf.length > 0);
+});
+
+test('beatDuration lingers on longer lines and gives the hook extra time', () => {
+  const shortBeat = reel.beatDuration(1, 'Not luck. Reps.');
+  const longBeat  = reel.beatDuration(1, 'Every callout she answered and every doubt she outworked on the job');
+  assert.ok(longBeat > shortBeat, 'longer line should read longer');
+  assert.ok(reel.beatDuration(0, 'x') >= reel.beatDuration(1, 'x'), 'hook >= normal beat');
+});
+
 // ── mp4 assembly (uses the bundled static ffmpeg) ─────────────────────────────
 
 test('assembleReel stitches frames into a non-empty .mp4', async (t) => {

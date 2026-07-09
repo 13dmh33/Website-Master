@@ -1,5 +1,5 @@
 {
-  "enabled": false,
+  "enabled": true,
   "auto_run": false,
   "d1_delay_days": 4,
   "d1b_delay_days": 8,

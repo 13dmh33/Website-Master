@@ -15,9 +15,17 @@
   },
   "_schedule_logic": "Weekdays = community/relationship content (humor, motivation, engagement, mission) to grow reach when engagement is highest. Weekends = product/commerce content, when the audience has time and intent to actually shop. Times are tuned to the trades audience: early lunch, after-work evening, relaxed weekend browsing.",
   "base_week": {
-    "description": "Default 4x/week cadence used Jan-Aug. Activated by POST_SCHEDULE env var.",
-    "post_schedule_env": "TUE:12:00,THU:19:00,SAT:10:00,SUN:18:00",
+    "description": "Default cadence: 4 posts + 2 reels per week (6x). Reels are the Mon and Thu slots; the reel theme rotates motivational/mission/product (reel_content_rotation) and the visual style rotates weekly (reel_styles). Activated by POST_SCHEDULE env var.",
+    "post_schedule_env": "MON:18:00,TUE:12:00,THU:19:00,FRI:12:00,SAT:10:00,SUN:18:00",
     "slots": [
+      {
+        "day": "MON",
+        "time": "18:00",
+        "format": "reel",
+        "content_pool": "weekday_community",
+        "cta_style": "engagement_or_dm",
+        "rationale": "Monday-evening reel to open the week. Reel theme comes from reel_content_rotation (motivational/mission/product), not the community pool."
+      },
       {
         "day": "TUE",
         "time": "12:00",
@@ -29,10 +37,18 @@
       {
         "day": "THU",
         "time": "19:00",
-        "format": "reel_or_caption",
+        "format": "reel",
         "content_pool": "weekday_community",
         "cta_style": "engagement_or_dm",
         "rationale": "Thursday evening has a confirmed 2026 engagement spike and is the best window for Reels (after-work wind-down)."
+      },
+      {
+        "day": "FRI",
+        "time": "12:00",
+        "format": "single_image",
+        "content_pool": "weekday_community",
+        "cta_style": "engagement_or_dm",
+        "rationale": "Friday lunch community post (humor/motivation/engagement) to keep reach up heading into the weekend."
       },
       {
         "day": "SAT",
@@ -53,8 +69,8 @@
     ]
   },
   "september_ramp": {
-    "description": "Activated Sept 1. Adds a 5th post (Wednesday, the single strongest engagement day) to build audience momentum heading into October.",
-    "post_schedule_env": "TUE:12:00,WED:12:00,THU:19:00,SAT:10:00,SUN:18:00",
+    "description": "Activated Sept 1. Adds a Wednesday post on top of the 6x base (→ 7x/week) to build audience momentum heading into October.",
+    "post_schedule_env": "MON:18:00,TUE:12:00,WED:12:00,THU:19:00,FRI:12:00,SAT:10:00,SUN:18:00",
     "added_slot": {
       "day": "WED",
       "time": "12:00",

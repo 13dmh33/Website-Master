@@ -16,6 +16,20 @@ const buffer = require('../lib/buffer');
 
 const DRY_RUN = process.argv.includes('--dry-run');
 
+// Build the exact payload handed to buffer.schedulePost() for one queue record.
+// Reels carry a rendered .mp4 in `record.video` (written by the scheduler); it
+// MUST be forwarded as videoPath so the reel posts as VIDEO, not its cover.
+// When there is no video, videoPath is null and the image/carousel path is
+// unchanged. Pure + exported so the handoff is unit-testable without Buffer.
+function buildSchedulePayload(record) {
+  return {
+    imagePaths:  record.images || [],
+    videoPath:   record.video || null,   // reel .mp4 — forwarded, not dropped
+    caption:     record.postText || record.caption || '',
+    scheduledAt: record.scheduledFor,     // preserved — posts at the slot, not now
+  };
+}
+
 async function main() {
   const pending = store.getPendingQueue();
 
@@ -35,19 +49,15 @@ async function main() {
   let posted = 0, failed = 0;
 
   for (const post of pending) {
-    const text = post.postText || post.caption || '';
+    const payload = buildSchedulePayload(post);
     console.log(`\n[${post.slot} · ${post.contentType}] scheduled for: ${post.scheduledFor}`);
-    console.log(`  text: ${text.slice(0, 90).replace(/\n/g, ' ')}...`);
-    console.log(`  images: ${(post.images || []).length}`);
+    console.log(`  text: ${payload.caption.slice(0, 90).replace(/\n/g, ' ')}...`);
+    console.log(`  images: ${payload.imagePaths.length}${payload.videoPath ? ' · reel video: 1 (.mp4)' : ''}`);
 
-    if (DRY_RUN) { console.log('  → would schedule via Buffer (dry run)'); continue; }
+    if (DRY_RUN) { console.log(`  → would schedule via Buffer (dry run)${payload.videoPath ? ' as VIDEO' : ''}`); continue; }
 
     try {
-      const result = await buffer.schedulePost({
-        imagePaths:  post.images || [],
-        caption:     text,
-        scheduledAt: post.scheduledFor,   // preserved — posts at the slot, not now
-      });
+      const result = await buffer.schedulePost(payload);
       store.markQueuePosted(post.file);
       console.log(`  ✓ scheduled — Buffer ID: ${result.updateId}`);
       posted++;
@@ -63,7 +73,14 @@ async function main() {
   }
 }
 
-main().catch(err => {
-  console.error(`Push queue failed: ${err.message}`);
-  process.exit(1);
-});
+// only run the approval flow when invoked directly (`node scripts/push-queue.js`);
+// requiring the module (e.g. from tests) exposes buildSchedulePayload without
+// touching the queue, Buffer, or a token.
+if (require.main === module) {
+  main().catch(err => {
+    console.error(`Push queue failed: ${err.message}`);
+    process.exit(1);
+  });
+}
+
+module.exports = { buildSchedulePayload };

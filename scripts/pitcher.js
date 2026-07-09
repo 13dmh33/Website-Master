@@ -480,8 +480,12 @@ async function main() {
       : brief;
 
     if (isDryRun) {
+      // Show the recipient for the channel actually being sent, not just whatever exists.
+      const previewTo = channel === 'email' ? (brief.email || '(no email on lead)')
+                      : channel === 'sms'   ? (brief.phone || '(no phone on lead)')
+                      : (brief.phone || brief.email || 'no contact info');
       console.log(`${label} — DRY RUN`);
-      console.log(`  To:      ${brief.phone || brief.email || 'no contact info'}`);
+      console.log(`  To:      ${previewTo}`);
       console.log(`  Message: ${resolvedBrief.final_message?.substring(0, 80)}...`);
       console.log(`  Video:   ${videoUrl || 'none'}`);
       continue;

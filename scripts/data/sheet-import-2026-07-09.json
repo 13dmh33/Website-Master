@@ -1,0 +1,52 @@
+[
+  {
+    "business_name": "Mr. Electric",
+    "trade": "electrician",
+    "city": "Denver, CO",
+    "email": "Web@mrelectriclittleton.com",
+    "phone": "+1 720-797-9982",
+    "site_url": "https://mrelectriclittleton.com",
+    "lead_id": "mr-electric-denver-co",
+    "scraped_at": "2026-07-09T00:00:00.000Z"
+  },
+  {
+    "business_name": "Resilient Electrical",
+    "trade": "electrician",
+    "city": "Denver, CO",
+    "email": "Tim@ResilientElectricalco.com",
+    "phone": "+1 303-578-6528",
+    "site_url": "https://resilientelectricalco.com",
+    "lead_id": "resilient-electrical-denver-co",
+    "scraped_at": "2026-07-09T00:00:00.000Z"
+  },
+  {
+    "business_name": "Prime Electrician Denver Co",
+    "trade": "electrician",
+    "city": "Denver, CO",
+    "email": "Info@primeelectriciandenverco.com",
+    "phone": "+1 720-208-4373",
+    "site_url": "https://primeelectriciandenverco.com",
+    "lead_id": "prime-electrician-denver-co",
+    "scraped_at": "2026-07-09T00:00:00.000Z"
+  },
+  {
+    "business_name": "D & J Enterprises",
+    "trade": "electrician",
+    "city": "Denver, CO",
+    "email": "Donnie@dandjenterprises.org",
+    "phone": "+1 303-947-7218",
+    "site_url": "https://dandjenterprises.org",
+    "lead_id": "d-j-enterprises-denver-co",
+    "scraped_at": "2026-07-09T00:00:00.000Z"
+  },
+  {
+    "business_name": "Stellar Electrical Contractors",
+    "trade": "electrician",
+    "city": "Denver, CO",
+    "email": "Andrew@StellarEC.com",
+    "phone": "+1 720-593-6004",
+    "site_url": "https://stellarec.com",
+    "lead_id": "stellar-electrical-contractors-denver-co",
+    "scraped_at": "2026-07-09T00:00:00.000Z"
+  }
+]

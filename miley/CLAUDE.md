@@ -59,7 +59,7 @@ Weekly pipeline: **Researcher → Generator → Designer → Scheduler → Analy
 - **September (ramp):** 7×/week — adds `WED:12:00` (awareness build-up) on top of the 6× base
 - **October (Pink October):** daily (7×/week) — driven by `october-campaign.json` `weekly_rhythm`
 
-> Changing the cadence in `post-formats.json` also requires updating the runtime **`POST_SCHEDULE`** env var on the Mac to the matching `post_schedule_env` string, or the new slots won't fire.
+> Miley's cadence is driven entirely by `post-formats.json` `base_week.slots` (day + time) and the calendar month (`planner.getCampaignMode`: Sep → september, Oct → october, else base). There is **no `POST_SCHEDULE` env var** for Miley — that's Milly/Molly. Editing the slots here is the whole change; the next pipeline run picks them up.
 
 Weekdays = community content (humor / motivation / engagement / mission) for reach. Weekends = product/commerce for buying intent. October leans the 30% donation toward the emotional center and shifts cards to the pink **awareness** palette.
 

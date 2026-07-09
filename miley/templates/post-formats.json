@@ -4,18 +4,18 @@
     "enabled": true,
     "mode": "queue_first",
     "env_flag": "FORCE_QUEUE=1",
-    "description": "Nothing auto-posts. Every run renders the week and writes it to output/queue/ with an HTML preview. Dave reviews once a week, edits if needed, then approves by running scripts/push-queue.js, which hands the approved week to Buffer for scheduled posting at the POST_SCHEDULE times.",
+    "description": "Nothing auto-posts. Every run renders the week and writes it to output/queue/ with an HTML preview. Dave reviews once a week, edits if needed, then approves by running scripts/push-queue.js, which hands the approved week to Buffer for scheduled posting at each slot's time.",
     "generation_day": "THU",
     "generation_note": "Run the weekly pipeline on Thursday for the FOLLOWING week. This gives a relaxed Thu-Sun review window instead of a rushed same-day approval.",
     "review_window": "Thursday through Sunday",
     "approval_action": "scripts/push-queue.js",
-    "posts_go_live": "The following week at the POST_SCHEDULE slots",
+    "posts_go_live": "The following week at each slot's scheduled time",
     "october_note": "In October (daily), one weekly review covers all 7 posts at once - generate a week ahead and batch-approve.",
     "see": "review-workflow.md"
   },
   "_schedule_logic": "Weekdays = community/relationship content (humor, motivation, engagement, mission) to grow reach when engagement is highest. Weekends = product/commerce content, when the audience has time and intent to actually shop. Times are tuned to the trades audience: early lunch, after-work evening, relaxed weekend browsing.",
   "base_week": {
-    "description": "Default cadence: 4 posts + 2 reels per week (6x). Reels are the Mon and Thu slots; the reel theme rotates motivational/mission/product (reel_content_rotation) and the visual style rotates weekly (reel_styles). Activated by POST_SCHEDULE env var.",
+    "description": "Default cadence: 4 posts + 2 reels per week (6x). Reels are the Mon and Thu slots; the reel theme rotates motivational/mission/product (reel_content_rotation) and the visual style rotates weekly (reel_styles). Active Jan-Aug (chosen by calendar month); posting times come straight from each slot's `time` below — Miley does NOT use a POST_SCHEDULE env var (that's Milly/Molly).",
     "post_schedule_env": "MON:18:00,TUE:12:00,THU:19:00,FRI:12:00,SAT:10:00,SUN:18:00",
     "slots": [
       {
@@ -143,6 +143,6 @@
   "_reel_content_note": "What reels are ABOUT (separate from visual style). A reel slot cycles its theme through this list across reel weeks instead of using the weekday community pool. product_feature_lifestyle pulls a product and uses its photo background when assets/products/<key>.png exists. Reorder or trim to change the mix (e.g. drop products, or add \"trades_humor\").",
   "_meta": {
     "maps_to": "milly/templates/post-formats.json",
-    "note": "current_week is a single incrementing counter advanced once per pipeline run. Adding/removing items from any rotation array requires no code change. To switch cadence (base -> september -> october), change the POST_SCHEDULE env var to the matching post_schedule_env value above."
+    "note": "current_week is a single incrementing counter advanced once per pipeline run. Adding/removing items from any rotation array requires no code change. Cadence (base -> september -> october) switches AUTOMATICALLY by calendar month (planner.getCampaignMode). Base/September posting times come straight from each slot's `time`; only October parses `october_daily.post_schedule_env`. The base/september `post_schedule_env` strings are reference-only — Miley does NOT read a POST_SCHEDULE env var (unlike Milly/Molly, whose file this mirrors)."
   }
 }

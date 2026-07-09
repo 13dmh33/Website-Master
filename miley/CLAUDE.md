@@ -63,6 +63,8 @@ Weekdays = community content (humor / motivation / engagement / mission) for rea
 
 **Reel theme rotation:** reel slots don't use the weekday community pool — they cycle their theme through `post-formats.json` `reel_content_rotation` (default motivational → mission → product) across reel weeks, independent of the `reel_styles` visual rotation. Product reels pull a catalog product and render over its photo (`assets/products/<key>.png`) when present.
 
+**Full reels reference + example scripts:** `docs/reels.md` (partner overview: `docs/reels-overview.html`).
+
 ### Content types → downstream (in `lib/planner.js`)
 `trades_humor · motivational · engagement · mission · product_feature_single · product_feature_lifestyle · product_social_proof · mission_product_combo · awareness_stat · mission_recap`
 

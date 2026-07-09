@@ -21,6 +21,7 @@
     "@anthropic-ai/sdk": "^0.37.0",
     "dotenv": "^16.0.0",
     "imapflow": "^1.0.0",
-    "nodemailer": "^6.9.0"
+    "nodemailer": "^6.9.0",
+    "twilio": "^5.0.0"
   }
 }

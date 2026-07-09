@@ -120,16 +120,28 @@ test('renderReelWordFrame renders both karaoke and punch states', async () => {
   assert.ok(Buffer.isBuffer(punch) && punch.length > 0);
 });
 
+test('base week schedules 4 posts + 2 reels on Mon and Thu', () => {
+  const plan  = planner.buildWeekPlan(new Date('2026-07-13'), 0);
+  const reels = plan.posts.filter(p => p.format === 'reel');
+  const posts = plan.posts.filter(p => p.format !== 'reel');
+  assert.equal(plan.posts.length, 6);
+  assert.equal(reels.length, 2);
+  assert.equal(posts.length, 4);
+  assert.deepEqual(reels.map(r => r.day).sort(), ['MON', 'THU']);
+  // both reels share the week's visual style, but run different themes
+  assert.equal(reels[0].reel_style, reels[1].reel_style);
+  assert.notEqual(reels[0].contentType, reels[1].contentType);
+  // an explicit single_image slot stays a post even when its theme is 'motivational'
+  // (whose DEFAULT_FORMAT is 'reel') — no accidental third reel
+  assert.ok(posts.every(p => p.format !== 'reel'));
+});
+
 test('planner rotates reel_style weekly across the configured styles', () => {
-  const styleFor = (wk) => {
-    const plan = planner.buildWeekPlan(new Date('2026-07-13'), wk);
-    const reelPost = plan.posts.find(p => p.format === 'reel');
-    return reelPost ? reelPost.reel_style : null;
-  };
-  // reels land on even weeks here; the style advances week % 3 through the list
+  const styleFor = (wk) => planner.buildWeekPlan(new Date('2026-07-13'), wk).posts.find(p => p.format === 'reel').reel_style;
+  // reels run every week now; style advances week % 3 through the list
   assert.equal(styleFor(0), 'card');
+  assert.equal(styleFor(1), 'kinetic_karaoke');
   assert.equal(styleFor(2), 'kinetic_punch');
-  assert.equal(styleFor(4), 'kinetic_karaoke');
   // non-reel formats never carry a reel_style
   const plan = planner.buildWeekPlan(new Date('2026-07-13'), 0);
   assert.ok(plan.posts.filter(p => p.format !== 'reel').every(p => p.reel_style === null));

@@ -117,6 +117,9 @@ function parseScheduleEnv(str) {
 function mapSlotFormat(slotFormat, week, contentType) {
   switch (slotFormat) {
     case 'carousel':          return 'carousel';
+    case 'reel':              return 'reel';       // dedicated reel slot (forced)
+    case 'single_image':      return 'single_image';
+    case 'caption':           return 'caption';
     case 'reel_or_caption':   return week % 2 === 0 ? 'reel' : 'caption';
     case 'product_feature':   return 'single_image';
     case 'product_or_mission':return 'single_image';
@@ -218,11 +221,14 @@ function buildWeekPlan(date = new Date(), week = 0) {
 
   const poolCounters = {};
   const posts = slots.map(slot => {
-    const communityType = pickFromPool(slot.content_pool, pools, week, poolCounters);
-    const format = mapSlotFormat(slot.format, week, communityType);
+    // format resolves without a contentType (every base/september slot pins an
+    // explicit format), so reel slots don't consume a community-pool step.
+    const format = mapSlotFormat(slot.format, week, null);
     // reels take their theme from the reel content rotation (motivational /
-    // mission / product), not the weekday community pool.
-    const contentType = format === 'reel' ? pickReelContent() : communityType;
+    // mission / product); everything else draws from its content pool.
+    const contentType = format === 'reel'
+      ? pickReelContent()
+      : pickFromPool(slot.content_pool, pools, week, poolCounters);
     return finalize({
       day:        slot.day,
       time:       slot.time,

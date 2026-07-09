@@ -55,9 +55,11 @@ Weekly pipeline: **Researcher → Generator → Designer → Scheduler → Analy
 ## Content model
 
 ### Cadence by month (driven by `post-formats.json` + `october-campaign.json`)
-- **Jan–Aug (base):** 4×/week — `TUE:12:00, THU:19:00, SAT:10:00, SUN:18:00`
-- **September (ramp):** 5×/week — adds `WED:12:00` (awareness build-up)
+- **Jan–Aug (base):** 6×/week = 4 posts + 2 reels — `MON:18:00, TUE:12:00, THU:19:00, FRI:12:00, SAT:10:00, SUN:18:00`. **Reels = the MON + THU slots** (`format: "reel"`); TUE carousel + FRI single = community posts; SAT/SUN = product/mission.
+- **September (ramp):** 7×/week — adds `WED:12:00` (awareness build-up) on top of the 6× base
 - **October (Pink October):** daily (7×/week) — driven by `october-campaign.json` `weekly_rhythm`
+
+> Changing the cadence in `post-formats.json` also requires updating the runtime **`POST_SCHEDULE`** env var on the Mac to the matching `post_schedule_env` string, or the new slots won't fire.
 
 Weekdays = community content (humor / motivation / engagement / mission) for reach. Weekends = product/commerce for buying intent. October leans the 30% donation toward the emotional center and shifts cards to the pink **awareness** palette.
 

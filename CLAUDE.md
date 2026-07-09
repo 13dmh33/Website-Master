@@ -81,6 +81,8 @@ tested, breast-cancer stats re-verified current for 2026 (no changes needed). Re
 + Inter brand fonts added to `assets/fonts/` (auto-detected by `lib/canvas-render.js`) —
 cards now render in real brand fonts instead of the DejaVu fallback.
 
+**Reels engine (2026-07-08, branch `claude/tatas-reels-tech-gv5khk`, not merged):** Miley now turns a script into a finished vertical 1080×1920 `.mp4` — the actual postable Reel. Two visual styles (`card` beat-cards, and `kinetic` word-by-word typography with `karaoke`/`punch` sub-modes) plus a content-theme rotation (motivational / mission / product) both rotate weekly and independently. $0 marginal cost (skia-canvas + bundled static ffmpeg; silent; review-first). Full detail + example scripts: `miley/docs/reels.md`; partner overview: `miley/docs/reels-overview.html`.
+
 Pending (all Mac/account-side, can't be done from container):
 - Printify catalog scrape (`scripts/scrape-catalog.js`) — `techs4tatas.printify.me` returns
   403 to all fetch paths (anti-bot, not just container egress) — run on Mac or paste a
@@ -277,6 +279,7 @@ Safe to send cold email at volume. DMARC set to p=none (monitor only) — tighte
 - 2026-06-30: Sheet-log v1 live-tested — SentLog tab created, header written, 5 rows appended, 0 errors.
 - 2026-06-30: Sheet-log v2 built (feature/sheet-log-refine): 14-col CRM, update-in-place, drip timestamps, reply/unsubscribe columns, notes preserved, old-format migration handled.
 - 2026-06-30: Demo link personalization upgraded — pitcher P.S. names business, personalizer passes s= (rating) + h= (hero_angle), /for/ page shows insight callout + star-rated reviews + city-aware compare + checkout param pass-through; $65/mo pricing bug fixed.
+- 2026-07-08: Miley Reels engine built (branch `claude/tatas-reels-tech-gv5khk`) — script → finished 1080×1920 `.mp4` via skia-canvas + bundled static ffmpeg (`@ffmpeg-installer/ffmpeg`), $0/video, silent, review-first. `card` style (beat-cards, Ken Burns, beat-synced cuts) + `kinetic` word-by-word typography (`karaoke` progressive reveal + `punch` one-word), rendered via `renderReelWordFrame` with frozen layout; concat-demuxer frame-accurate holds; filmic grade + moving grain. Realism pass: Stories-style progress bar (no carousel counter), `*word*` accent highlight, vignette, safe-zone layout. Weekly rotations (independent): visual style (`reel_styles`) + content theme (`reel_content_rotation`: motivational / mission / product; product reels render over `assets/products/<key>.png`). 29 automated checks passing. Docs: `miley/docs/reels.md` (full examples), `miley/docs/reels-overview.html` (partner page).
 
 ## Twilio A2P 10DLC Status
 - Brand registration submitted: 2026-06-03

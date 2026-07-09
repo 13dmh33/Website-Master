@@ -78,15 +78,42 @@ async function uploadImage(imagePath) {
   return data?.media?.picture || data?.picture || null;
 }
 
+// upload a local .mp4 to Buffer — returns the hosted video URL
+async function uploadVideo(videoPath) {
+  const token = getToken();
+
+  const videoBuffer = fs.readFileSync(videoPath);
+  const blob        = new Blob([videoBuffer], { type: 'video/mp4' });
+  const form        = new FormData(); // Node 18+ global
+  form.append('access_token', token);
+  form.append('video', blob, path.basename(videoPath));
+
+  const res = await globalThis.fetch(`${BASE_URL}/media/upload.json`, {
+    method: 'POST',
+    body:   form,
+  });
+
+  if (!res.ok) {
+    const body = await res.text();
+    throw new Error(`Buffer video upload failed (${res.status}): ${body}`);
+  }
+
+  const data = await res.json();
+  return data?.media?.video || data?.video || null;
+}
+
 // schedule one post via Buffer
 // imagePaths: local file paths (uses first image; Buffer handles carousel scheduling)
+// videoPath:  optional local .mp4 (reels) — posted as a video with the first
+//             image as its thumbnail; falls back to an image post on failure
 // caption: full caption text
 // scheduledAt: ISO 8601 UTC string
-async function schedulePost({ imagePaths, caption, scheduledAt }) {
+async function schedulePost({ imagePaths, videoPath, caption, scheduledAt }) {
   const token     = getToken();
   const profileId = await getInstagramProfileId();
 
-  // upload cover image — warn and continue if upload fails
+  // upload cover image — warn and continue if upload fails.
+  // For a reel this becomes the thumbnail (first beat frame).
   let photoUrl = null;
   if (imagePaths && imagePaths.length > 0) {
     try {
@@ -96,12 +123,27 @@ async function schedulePost({ imagePaths, caption, scheduledAt }) {
     }
   }
 
+  // upload the reel video if one was rendered
+  let videoUrl = null;
+  if (videoPath) {
+    try {
+      videoUrl = await uploadVideo(videoPath);
+    } catch (err) {
+      console.warn(`  Reel video upload skipped (${err.message}) — falling back to cover image.`);
+    }
+  }
+
   // Buffer v1 create-update endpoint uses URL-encoded form body
   const params = new URLSearchParams();
   params.append('access_token', token);
   params.append('profile_ids[]', profileId);
   params.append('text', caption);
-  if (photoUrl)    params.append('media[photo]', photoUrl);
+  if (videoUrl) {
+    params.append('media[video]', videoUrl);
+    if (photoUrl) params.append('media[thumbnail]', photoUrl);
+  } else if (photoUrl) {
+    params.append('media[photo]', photoUrl);
+  }
   if (scheduledAt) params.append('scheduled_at', scheduledAt);
 
   const res = await nodeFetch(`${BASE_URL}/updates/create.json`, {
@@ -120,4 +162,4 @@ async function schedulePost({ imagePaths, caption, scheduledAt }) {
   return { success: true, updateId };
 }
 
-module.exports = { isConfigured, schedulePost, getInstagramProfileId };
+module.exports = { isConfigured, schedulePost, getInstagramProfileId, uploadVideo };

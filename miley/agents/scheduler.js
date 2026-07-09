@@ -75,6 +75,7 @@ async function main() {
       day:         post.day,
       time:        post.time,
       format:      post.format,
+      reel_style:  post.reel_style || null,
       contentType: post.contentType,
       product:     post.product || null,
       isOctober:   post.isOctober,
@@ -86,6 +87,7 @@ async function main() {
       tracked_link: post.tracked_link || null,
       utm_content:  post.utm_content || null,
       images:      post.images || [],
+      video:       post.video || null,
       suggested_visual: post.suggested_visual || '',
       extra:       post.extra || '',
       judge:       post.judge || null, // generate-then-judge scoring (#1) — null for evergreen/single-variant
@@ -94,7 +96,7 @@ async function main() {
 
     if (useBuffer) {
       try {
-        const result = await buffer.schedulePost({ imagePaths: record.images, caption: record.postText, scheduledAt: scheduledFor });
+        const result = await buffer.schedulePost({ imagePaths: record.images, videoPath: record.video, caption: record.postText, scheduledAt: scheduledFor });
         record.status = 'scheduled';
         record.bufferId = result.updateId;
         console.log(`  ${post.slot} ${post.contentType} → Buffer ${result.updateId} for ${scheduledFor}`);
@@ -121,21 +123,30 @@ async function generatePreview(records, weekOf, campaignMode) {
   const previewPath = path.join(queueDir, `preview-${weekOf}.html`);
 
   const cards = records.map(r => {
+    // reel .mp4 first (playable), then the beat frames as a storyboard strip
+    let video = '';
+    if (r.video && fs.existsSync(r.video)) {
+      const rel = path.relative(queueDir, r.video).split(path.sep).join('/');
+      video = `<video class="reel" controls muted loop playsinline preload="metadata" src="${escapeHtml(rel)}"></video>`;
+    }
     let imgs = '';
+    const isReel = r.format === 'reel';
     for (const imgPath of (r.images || [])) {
       if (fs.existsSync(imgPath)) {
         const b64 = fs.readFileSync(imgPath).toString('base64');
-        imgs += `<img src="data:image/png;base64,${b64}" alt="${r.slot}" />`;
+        imgs += `<img class="${isReel ? 'frame' : ''}" src="data:image/png;base64,${b64}" alt="${r.slot}" />`;
       }
     }
+    if (isReel && imgs) imgs = `<div class="frames">${imgs}</div>`;
     const extra = r.extra ? `<div class="extra"><span class="lbl">slides / reel script</span><pre>${escapeHtml(r.extra)}</pre></div>` : '';
     const vis   = r.suggested_visual ? `<div class="vis">📷 ${escapeHtml(r.suggested_visual)}</div>` : '';
     const link  = r.tracked_link ? `<div class="link">🔗 drives to: <a href="${escapeHtml(r.tracked_link)}" target="_blank" rel="noopener">${escapeHtml(r.tracked_link)}</a></div>` : '';
     const judge = r.judge ? `<div class="judge">⚖️ judge: ${r.judge.winnerScore ?? '?'}/10 of ${r.judge.variantsConsidered} compliant variants${r.judge.reasoning ? ` — "${escapeHtml(r.judge.reasoning)}"` : ''}</div>` : '';
     return `
     <div class="post">
-      <h2>${r.day} ${r.time} · ${r.contentType} <span class="fmt">${r.format}</span>${r.product ? ` · <span class="prod">${r.product}</span>` : ''}</h2>
+      <h2>${r.day} ${r.time} · ${r.contentType} <span class="fmt">${r.format}${r.reel_style ? ` · ${r.reel_style}` : ''}</span>${r.product ? ` · <span class="prod">${r.product}</span>` : ''}</h2>
       <div class="time">scheduled: ${r.scheduledFor}${r.captionVariant ? ` · variant ${r.captionVariant}` : ''}</div>
+      ${video}
       ${imgs}
       ${vis}
       <pre class="cap">${escapeHtml(r.postText)}</pre>
@@ -158,6 +169,9 @@ async function generatePreview(records, weekOf, campaignMode) {
   .prod { color:#FFB3D1; font-size:.8rem; }
   .time { color:#8a8a90; font-size:.8rem; margin-bottom:1rem; }
   .post img { max-width:100%; border-radius:10px; display:block; margin-bottom:.75rem; }
+  .post video.reel { width:280px; max-width:100%; border-radius:12px; display:block; margin-bottom:.75rem; background:#000; border:1px solid #333; }
+  .post .frames { display:flex; gap:.4rem; overflow-x:auto; padding-bottom:.4rem; margin-bottom:.75rem; }
+  .post .frames img.frame { width:120px; flex:0 0 auto; margin-bottom:0; border:1px solid #333; }
   .vis { color:#FFB3D1; font-size:.85rem; margin:.5rem 0; }
   .link { font-size:.8rem; margin:.5rem 0; color:#FFC400; word-break:break-all; } .link a { color:#FFC400; }
   .judge { font-size:.8rem; margin:.5rem 0; color:#9be29b; }

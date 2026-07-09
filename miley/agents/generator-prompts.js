@@ -99,11 +99,16 @@ Slide 1 must be the hook. Build a tiny arc across slides; last slide carries the
 Keep each slide to one punchy line a phone reader can grab in a second.`,
 
   reel: `
-FORMAT: Reel (short vertical video script).
+FORMAT: Reel (short vertical video — the pipeline auto-renders each beat into an .mp4).
 The "caption" is the post caption (short — the video does the work).
-In "extra", write the reel: a 3-6 beat shot list with ON-SCREEN TEXT for each beat and a one-line spoken
-voiceover or trend idea. No licensed music references — original audio or trending-sound-style only.
-Hook must hit in the first 2 seconds. End on the CTA.`,
+In "extra", write a 3-5 beat script. Put EACH beat on its own line in EXACTLY this shape:
+  Beat 1: ON-SCREEN TEXT || spoken voiceover
+The ON-SCREEN TEXT is what burns onto the frame — keep it to 3-8 punchy words a phone reader
+grabs instantly. Wrap the single strongest word of each beat in *asterisks* so it gets
+highlighted on screen (e.g. "She *earned* that toolbag"). The part after "||" is the one-line
+voiceover/trend idea (never rendered on screen).
+Beat 1 is the hook and must land in the first 2 seconds. The last beat is the CTA.
+No licensed music references — original audio or trending-sound-style only.`,
 
   caption: `
 FORMAT: Text-forward single post.

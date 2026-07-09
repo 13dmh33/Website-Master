@@ -13,6 +13,7 @@
  *   node scripts/drip.js --force
  *   node scripts/drip.js --dry-run --force
  *   node scripts/drip.js --step d1 --force    (one step only)
+ *   node scripts/drip.js --channel email --force   (email follow-ups only, skip SMS)
  *
  * Reads:  messages/*-sent.json   queue/*-brief.json
  *         config/drip-config.json  config/templates.json
@@ -40,6 +41,7 @@ const hasFlag    = (f) => args.includes(f);
 const getArg     = (f) => { const i = args.indexOf(f); return i !== -1 ? args[i + 1] : null; };
 const isDryRun   = hasFlag('--dry-run');
 const stepFilter = getArg('--step');
+const channelFilter = getArg('--channel'); // 'email' or 'sms' — restrict follow-ups to one channel
 
 const STEPS = ['d1', 'd1b', 'd1c', 'd2'];
 
@@ -139,7 +141,8 @@ function loadDripQueue(cfg, templates) {
 
       const drip = sent.drip || {};
 
-      for (const channel of ['email', 'sms']) {
+      const channels = channelFilter ? [channelFilter] : ['email', 'sms'];
+      for (const channel of channels) {
         const initialSentAt = channel === 'email' ? sent.email_sent_at : sent.sms_sent_at;
         if (!initialSentAt) continue;
 
@@ -241,7 +244,7 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 // ── MAIN ───────────────────────────────────────────────────────────────────────
 
 async function main() {
-  console.log(`\nDrip starting${isDryRun ? ' [DRY RUN]' : ''}${stepFilter ? ` [step: ${stepFilter}]` : ''}`);
+  console.log(`\nDrip starting${isDryRun ? ' [DRY RUN]' : ''}${stepFilter ? ` [step: ${stepFilter}]` : ''}${channelFilter ? ` [channel: ${channelFilter}]` : ''}`);
   console.log('─'.repeat(50));
 
   const cfg       = loadConfig();

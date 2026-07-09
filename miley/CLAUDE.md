@@ -61,6 +61,8 @@ Weekly pipeline: **Researcher → Generator → Designer → Scheduler → Analy
 
 Weekdays = community content (humor / motivation / engagement / mission) for reach. Weekends = product/commerce for buying intent. October leans the 30% donation toward the emotional center and shifts cards to the pink **awareness** palette.
 
+**Reel theme rotation:** reel slots don't use the weekday community pool — they cycle their theme through `post-formats.json` `reel_content_rotation` (default motivational → mission → product) across reel weeks, independent of the `reel_styles` visual rotation. Product reels pull a catalog product and render over its photo (`assets/products/<key>.png`) when present.
+
 ### Content types → downstream (in `lib/planner.js`)
 `trades_humor · motivational · engagement · mission · product_feature_single · product_feature_lifestyle · product_social_proof · mission_product_combo · awareness_stat · mission_recap`
 
@@ -101,7 +103,7 @@ The funnel's product list lives in two synced places: `PRODUCTS` in `lib/links.j
 | File | Purpose |
 |------|---------|
 | `brand-voice.json` | Riley voice, formula, donation phrasings, CTA bank, DM keyword (PINK). `what_works`/`top_hashtags` are analyst-owned — don't hand-edit. |
-| `post-formats.json` | `current_week` counter, base/september/october schedules, `content_pools`, `product_catalog_rotation`, `reel_styles` (weekly card/kinetic rotation list). |
+| `post-formats.json` | `current_week` counter, base/september/october schedules, `content_pools`, `product_catalog_rotation`, `reel_styles` (weekly card/kinetic visual rotation), `reel_content_rotation` (weekly reel theme rotation: motivational / mission / product). |
 | `evergreen.json` | 36 ready-to-post fallback posts across 5 types. Interchangeable with generated posts (same field shape). |
 | `trades-glossary.json` | 44 trade terms across plumbing/electrical/hvac/construction. |
 | `hashtag-master.json` | Anchor tags + per-type sets + October additions. |

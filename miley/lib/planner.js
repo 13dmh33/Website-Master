@@ -21,6 +21,12 @@ const weights   = require('./product-weights');
 // word typography (karaoke = progressive reveal, punch = one word at a time).
 const REEL_STYLES = ['card', 'kinetic_karaoke', 'kinetic_punch'];
 
+// reel CONTENT themes the rotation cycles through (overridable via
+// post-formats.json `reel_content_rotation`). Separate from visual style: this
+// decides what a reel is ABOUT. Product reels pull a product (photo background
+// when assets/products/<key>.png exists).
+const REEL_CONTENT = ['motivational', 'mission', 'product_feature_lifestyle'];
+
 // generator-prompts FORMAT key to use when a slot doesn't pin one (October)
 const DEFAULT_FORMAT = {
   trades_humor:             'single_image',
@@ -144,6 +150,18 @@ function buildWeekPlan(date = new Date(), week = 0) {
     : REEL_STYLES;
   const weekReelStyle = styleList[((week % styleList.length) + styleList.length) % styleList.length];
 
+  // reel content-theme rotation (motivational → mission → product → …). A reel
+  // slot takes its theme from here instead of the weekday community pool, so
+  // reels cycle across all three themes over successive reel weeks.
+  const reelContentList = (Array.isArray(formats.reel_content_rotation) && formats.reel_content_rotation.length)
+    ? formats.reel_content_rotation
+    : REEL_CONTENT;
+  let reelContentCounter = 0;
+  const pickReelContent = () => {
+    const i = week + reelContentCounter++;
+    return reelContentList[((i % reelContentList.length) + reelContentList.length) % reelContentList.length];
+  };
+
   // dynamic product-rotation weighting (#9): expands the catalog so products
   // with higher click-through appear more often; identical to plain round-robin
   // when no click data exists yet (see lib/product-weights.js).
@@ -200,11 +218,15 @@ function buildWeekPlan(date = new Date(), week = 0) {
 
   const poolCounters = {};
   const posts = slots.map(slot => {
-    const contentType = pickFromPool(slot.content_pool, pools, week, poolCounters);
+    const communityType = pickFromPool(slot.content_pool, pools, week, poolCounters);
+    const format = mapSlotFormat(slot.format, week, communityType);
+    // reels take their theme from the reel content rotation (motivational /
+    // mission / product), not the weekday community pool.
+    const contentType = format === 'reel' ? pickReelContent() : communityType;
     return finalize({
       day:        slot.day,
       time:       slot.time,
-      format:     mapSlotFormat(slot.format, week, contentType),
+      format,
       contentType,
       isOctober:  false,
       ctaStyle:   slot.cta_style || '',
@@ -244,4 +266,5 @@ module.exports = {
   PALETTE_KEY,
   PRODUCT_TYPES,
   REEL_STYLES,
+  REEL_CONTENT,
 };

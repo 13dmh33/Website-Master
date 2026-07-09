@@ -1,9 +1,9 @@
 {
   "weekOf": "2026-07-06",
-  "generatedAt": "2026-07-06T16:01:45.027Z",
-  "researchMode": "evergreen",
+  "generatedAt": "2026-07-09T16:06:39.694Z",
+  "researchMode": "hybrid",
   "campaignMode": "base",
-  "week": 2,
+  "week": 3,
   "seasonalAngle": "Heat on the deck — HVAC season, breathable gear (trucker cap, tees)",
   "themes": [
     "Women breaking into a male-dominated trade — relatable wins and pushback",
@@ -39,8 +39,13 @@
   ],
   "liveHeadlines": {
     "women_in_trades": [],
-    "breast_cancer": [],
-    "fetchedAt": "2026-07-06T16:01:45.027Z"
+    "breast_cancer": [
+      "Elizabeth Hurley Urges Support for Breast Cancer Research",
+      "His Wife Was Diagnosed With Breast Cancer—How He and the Gaming Community Raised Thousands for Research",
+      "Some HER2-Positive Breast Cancer Patients Can Skip More Intensive Treatment, Study Finds",
+      "FDA Approves Trodelvy for First-Line Metastatic Triple-Negative Breast Cancer Treatment"
+    ],
+    "fetchedAt": "2026-07-09T16:06:39.694Z"
   },
   "calendarAngles": []
 }

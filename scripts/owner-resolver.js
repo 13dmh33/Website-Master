@@ -162,15 +162,116 @@ function resolveFromCoRows(rows, lead) {
   return { owner_name: best.profile.ownerName, source: 'co-sos', confidence, profile: best.profile, match: best.match };
 }
 
+// ── co-dora: Colorado DORA professional/occupational licenses (Socrata 7s5z-vewr) ──
+// Confirms a lead is a licensed CO plumbing/electrical contractor and, when the
+// contractor record carries a responsible person, names the owner. The dataset has
+// separate firstName/lastName (the licensee) and entityName (the firm), so a lead's
+// business is matched on entityName + city; the person fields give the owner name.
+
+/** 'plumber' | 'electrician' | null from a lead's or a DORA row's trade text. */
+function tradeKey(t) {
+  const s = String(t || '').toLowerCase();
+  if (/plumb/.test(s)) return 'plumber';
+  if (/electric|wireman/.test(s)) return 'electrician';
+  return null;
+}
+
+/** Licensed trade of a DORA row from its prefix/sub-category/specialty/title. */
+function doraTradeOf(row) {
+  const hay = [row.licensePrefix, row.subCategory, row.specialty, row.title].map(x => String(x || '')).join(' ');
+  return tradeKey(hay);
+}
+
+/** Person (licensee) name from a DORA row's firstName/middleName/lastName, or null. */
+function doraPersonName(row) {
+  const first = String(row.firstName || '').trim();
+  const last  = String(row.lastName  || '').trim();
+  if (!first || !last) return null;
+  const mid = String(row.middleName || '').trim();
+  return titleCase([first, mid, last].filter(Boolean).join(' '));
+}
+
+/** One DORA row → normalized profile (name = entityName so the firm can be matched). */
+function rowToDoraProfile(row) {
+  return {
+    name:          row.entityName || null,
+    city:          row.city || null,
+    state:         row.state || null,
+    phone:         null,                       // dataset has no phone
+    ownerName:     doraPersonName(row),
+    licenseNumber: row.licenseNumber || null,
+    licenseStatus: row.licenseStatusDescription || null,
+    licensedTrade: doraTradeOf(row),
+    verifyUrl:     row.linkToVerifyLicense || null,
+    prefix:        row.licensePrefix || null,
+  };
+}
+
+/**
+ * Choose the licensed contractor record for a lead.
+ * @returns {{ source:'co-dora', confidence, owner_name:string|null, extra:object|null, profile, match }|null}
+ * owner_name is filled only when the matched record names a person (and rows agree);
+ * `extra` always carries the licensure fields on a confident firm match.
+ */
+function resolveFromDoraRows(rows, lead) {
+  const leadTrade = tradeKey(lead.trade);
+  const scored = [];
+  for (const raw of rows || []) {
+    const profile = rowToDoraProfile(raw);
+    if (!profile.name) continue;                                             // individual-only record — no firm to match
+    if (leadTrade && profile.licensedTrade && profile.licensedTrade !== leadTrade) continue; // wrong trade
+    const match = dm.scoreMatch(lead, profile, 2);                           // entityName + city (no phone)
+    if (!match.accepted) continue;
+    scored.push({
+      profile, match,
+      overlap:    nameOverlap(lead.business_name, profile.name),
+      active:     GOOD_STATUS.test(profile.licenseStatus || '') ? 1 : 0,
+      contractor: /^(PC|EC)$/i.test(profile.prefix || '') ? 1 : 0,           // firm-level (vs individual) license
+    });
+  }
+  if (!scored.length) return null;
+
+  scored.sort((a, b) => (b.overlap - a.overlap) || (b.contractor - a.contractor) || (b.active - a.active));
+  const best = scored[0];
+
+  // Owner name only when equally-good rows don't name a different person (else licensure only).
+  let ownerName = best.profile.ownerName;
+  if (ownerName) {
+    const rivals = scored.filter(s => s.overlap >= best.overlap - 1e-9 &&
+      s.profile.ownerName && s.profile.ownerName.toLowerCase() !== ownerName.toLowerCase());
+    if (rivals.length) ownerName = null;
+  }
+
+  let confidence = best.match.confidence + (best.active ? 0.1 : 0);
+  confidence = Math.min(0.9, Math.round(confidence * 100) / 100);
+
+  const extra = {};
+  if (best.profile.licenseNumber) extra.license_number     = best.profile.licenseNumber;
+  if (best.profile.licenseStatus) extra.license_status     = best.profile.licenseStatus;
+  if (best.profile.licensedTrade) extra.licensed_trade     = best.profile.licensedTrade;
+  if (best.profile.verifyUrl)     extra.license_verify_url = best.profile.verifyUrl;
+
+  return {
+    source: 'co-dora', confidence,
+    owner_name: ownerName || null,
+    extra: Object.keys(extra).length ? extra : null,
+    profile: best.profile, match: best.match,
+  };
+}
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // ADAPTERS
 // ═══════════════════════════════════════════════════════════════════════════════
 
-const CO_SOS_RESOURCE = 'https://data.colorado.gov/resource/4ykn-tg5h.json';
+const CO_SOS_RESOURCE  = 'https://data.colorado.gov/resource/4ykn-tg5h.json';
+const CO_DORA_RESOURCE = 'https://data.colorado.gov/resource/7s5z-vewr.json';
 
 /** SODA query URL: full-text search on the business name, capped. */
 function buildCoSosUrl(lead, limit = 25) {
   return `${CO_SOS_RESOURCE}?$q=${encodeURIComponent(lead.business_name || '')}&$limit=${limit}`;
+}
+function buildCoDoraUrl(lead, limit = 25) {
+  return `${CO_DORA_RESOURCE}?$q=${encodeURIComponent(lead.business_name || '')}&$limit=${limit}`;
 }
 
 const _lastHit = new Map();
@@ -181,8 +282,8 @@ async function politeWait(host) {
   _lastHit.set(host, Date.now());
 }
 
-async function fetchCoSosRows(lead) {
-  const url = buildCoSosUrl(lead);
+/** Fetch a Socrata SODA JSON endpoint politely (shared by all CIM adapters). */
+async function fetchSocrataRows(url) {
   await politeWait('data.colorado.gov');
   const headers = { Accept: 'application/json' };
   if (process.env.SOCRATA_APP_TOKEN) headers['X-App-Token'] = process.env.SOCRATA_APP_TOKEN;
@@ -192,17 +293,23 @@ async function fetchCoSosRows(lead) {
   return Array.isArray(rows) ? rows : [];
 }
 
-/** CO Secretary of State adapter — only applies to CO leads. */
+const isCO = rec => dm.cityState(rec.city).state === 'co';
+
+/** CO Secretary of State — registered-agent owner for any CO LLC/Corp lead w/o a name. */
 const coSosAdapter = {
   id: 'co-sos',
-  appliesTo: lead => dm.cityState(lead.city).state === 'co',
-  async lookup(lead) {
-    const rows = await fetchCoSosRows(lead);
-    return resolveFromCoRows(rows, lead);
-  },
+  eligible: rec => isCO(rec) && !hasVal(rec.contact_name),
+  async lookup(lead) { return resolveFromCoRows(await fetchSocrataRows(buildCoSosUrl(lead)), lead); },
 };
 
-const ADAPTERS = { 'co-sos': coSosAdapter };
+/** CO DORA licenses — licensure (+ owner for contractor records) for CO plumbing/electrical leads. */
+const coDoraAdapter = {
+  id: 'co-dora',
+  eligible: rec => isCO(rec) && !!tradeKey(rec.trade) && (!hasVal(rec.contact_name) || !hasVal(rec.license_number)),
+  async lookup(lead) { return resolveFromDoraRows(await fetchSocrataRows(buildCoDoraUrl(lead)), lead); },
+};
+
+const ADAPTERS = { 'co-sos': coSosAdapter, 'co-dora': coDoraAdapter };
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // ORCHESTRATION
@@ -234,30 +341,28 @@ async function main() {
   const state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
   const leadIndex = buildLeadIndex();
 
-  // Eligible: mid-funnel, no owner name yet, has business_name + city, adapter applies (geography).
+  // Eligible: mid-funnel, has business_name + city, and the adapter says so (geo/trade/missing-data).
   const candidates = [];
-  let skippedStatus = 0, haveOwner = 0, notSearchable = 0, outOfScope = 0, noRecord = 0;
+  let skippedStatus = 0, notSearchable = 0, notEligible = 0, noRecord = 0;
   for (const entry of state.queue) {
     if (SKIP_STATUSES.has(entry.status)) { skippedStatus++; continue; }
     const loc = leadIndex.get(entry.lead_id);
     if (!loc) { noRecord++; continue; }
     const rec = readLeadsFile(loc.file)[loc.idx];
-    if (hasVal(rec.contact_name)) { haveOwner++; continue; }
     if (!hasVal(rec.business_name) || !hasVal(rec.city)) { notSearchable++; continue; }
-    if (!adapter.appliesTo(rec)) { outOfScope++; continue; }
+    if (!adapter.eligible(rec)) { notEligible++; continue; }
     candidates.push({ entry, loc, rec });
   }
 
   console.log(`Queue: ${state.queue.length} leads`);
   console.log(`  skipped (sent/closed):        ${skippedStatus}`);
-  console.log(`  already have owner name:      ${haveOwner}`);
   console.log(`  not searchable (name/city):   ${notSearchable}`);
-  console.log(`  out of ${SOURCE} scope (geo):     ${outOfScope}`);
+  console.log(`  out of ${SOURCE} scope:          ${notEligible}`);
   console.log(`  → eligible to resolve:        ${candidates.length}` + (LIMIT !== Infinity ? ` (capped at ${LIMIT})` : ''));
   console.log('─'.repeat(64));
 
   const todo = candidates.slice(0, LIMIT);
-  let processed = 0, resolved = 0, errors = 0;
+  let processed = 0, resolved = 0, enriched = 0, errors = 0;
   const dirtyFiles = new Set();
   const resolvedLeads = [];
 
@@ -271,44 +376,56 @@ async function main() {
       console.log(`[${processed}/${todo.length}] ${c.rec.business_name} … error (${e.message})`);
       continue;
     }
-    if (!result) {
-      console.log(`[${processed}/${todo.length}] ${c.rec.business_name} … no confident owner`);
+    const gotOwner = result && hasVal(result.owner_name);
+    const gotExtra = result && result.extra && Object.keys(result.extra).length > 0;
+    if (!gotOwner && !gotExtra) {
+      console.log(`[${processed}/${todo.length}] ${c.rec.business_name} … no confident match`);
       continue;
     }
-    resolved++;
+    if (gotOwner) resolved++;
+    if (gotExtra) enriched++;
+
     const pct = Math.round(result.confidence * 100);
-    console.log(`[${processed}/${todo.length}] ${c.rec.business_name} … ✓ ${result.owner_name}  (${pct}%, ${result.source})`);
-    resolvedLeads.push({ business: c.rec.business_name, owner: result.owner_name, pct });
+    const bits = [];
+    if (gotOwner) bits.push(`owner: ${result.owner_name}`);
+    if (gotExtra && result.extra.license_number) bits.push(`lic ${result.extra.license_number} (${result.extra.license_status || '?'})`);
+    console.log(`[${processed}/${todo.length}] ${c.rec.business_name} … ✓ ${bits.join('  ')}  (${pct}%, ${result.source})`);
+    if (gotOwner) resolvedLeads.push({ business: c.rec.business_name, owner: result.owner_name, pct });
 
     if (!LIVE) continue;
     const rec = readLeadsFile(c.loc.file)[c.loc.idx];
-    if (!hasVal(rec.contact_name)) {              // additive — never overwrite
+    if (gotOwner && !hasVal(rec.contact_name)) {   // additive — never overwrite
       rec.contact_name = result.owner_name;
       rec.owner_source = result.source;
       rec.owner_confidence = result.confidence;
       if (result.profile.mailing) rec.owner_mailing_address = result.profile.mailing;
       rec.owner_resolved_at = new Date().toISOString();
-      dirtyFiles.add(c.loc.file);
+      c.entry.ownerSource = result.source;
+      c.entry.ownerResolvedAt = new Date().toISOString();
     }
-    c.entry.ownerSource = result.source;
-    c.entry.ownerResolvedAt = new Date().toISOString();
+    if (gotExtra) {                                // licensure fields (fill-if-empty)
+      for (const [k, v] of Object.entries(result.extra)) if (!hasVal(rec[k])) rec[k] = v;
+      rec.license_source = result.source;
+    }
+    dirtyFiles.add(c.loc.file);
   }
 
   if (LIVE) {
     for (const file of dirtyFiles) fs.writeFileSync(path.join(LEADS_DIR, file), JSON.stringify(readLeadsFile(file), null, 2));
-    if (resolved > 0) fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
+    if (resolved > 0 || enriched > 0) fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
   }
 
   console.log('─'.repeat(64));
   console.log('Summary');
   console.log(`  leads processed:      ${processed}`);
   console.log(`  owners resolved:      ${resolved}`);
-  console.log(`  no match / errors:    ${processed - resolved - errors} / ${errors}`);
+  if (SOURCE === 'co-dora') console.log(`  licenses confirmed:   ${enriched}`);
+  console.log(`  no match / errors:    ${processed - Math.max(resolved, enriched) - errors} / ${errors}`);
   if (resolvedLeads.length) {
     console.log('\nResolved owners:');
     for (const r of resolvedLeads) console.log(`  • ${r.business} → ${r.owner} (${r.pct}%)`);
   }
-  if (!LIVE && resolved > 0) console.log('\n[dry-run] nothing written. Re-run with --live to save owner names.');
+  if (!LIVE && (resolved > 0 || enriched > 0)) console.log('\n[dry-run] nothing written. Re-run with --live to save.');
   if (LIVE && resolved > 0) console.log('\nOwner names saved to contact_name — feed personalization (caller.js, DMs, drip) + email-permuter for has-website leads.');
   if (errors === processed && processed > 0) {
     console.log('\n⚠  Every lookup errored. In the container this is expected (proxy blocks data.colorado.gov).');
@@ -324,4 +441,6 @@ if (require.main === module) {
 module.exports = {
   isRegisteredAgentService, titleCase, agentOwnerName, rowToProfile,
   nameOverlap, resolveFromCoRows, buildCoSosUrl,
+  // co-dora
+  tradeKey, doraTradeOf, doraPersonName, rowToDoraProfile, resolveFromDoraRows, buildCoDoraUrl,
 };

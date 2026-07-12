@@ -75,7 +75,7 @@ test('--min-confidence 3 rejects a 2/3 match', () => {
 });
 
 // ── BBB parsers ───────────────────────────────────────────────────────────────
-test('parseBbbProfile pulls identity + contact + socials from JSON-LD & HTML', () => {
+test('parseBbbProfile pulls identity + contact + socials from the business JSON-LD only', () => {
   const p = d.parseBbbProfile(bbbProfile, 'https://www.bbb.org/x');
   assert.equal(p.name, 'Reliable Plumbing Services');
   assert.equal(p.phone, '+1 720-404-1160');
@@ -83,8 +83,41 @@ test('parseBbbProfile pulls identity + contact + socials from JSON-LD & HTML', (
   assert.equal(p.website, 'https://www.reliableplumbingco.com');
   assert.equal(p.city, 'Aurora');
   assert.equal(p.state, 'CO');
+  // socials come from the business's JSON-LD sameAs (facebook/instagram/linkedin)
   assert.ok(p.socials.facebook.includes('reliableplumbingaurora'));
-  assert.ok(p.socials.twitter.includes('reliableplumbco')); // from HTML href, not JSON-LD
+  assert.ok(p.socials.instagram.includes('reliableplumbingco'));
+  assert.ok(p.socials.linkedin.includes('reliable-plumbing-services'));
+  // the twitter link exists only as a page-wide <a href> — it must NOT be captured now
+  assert.equal(p.socials.twitter, undefined);
+});
+
+test('parseBbbProfile does NOT leak the directory\'s own socials/email (contamination fix)', () => {
+  // Realistic BBB page: business JSON-LD sameAs (facebook only) + BBB's OWN footer
+  // socials for twitter/instagram/youtube/linkedin + a "report this business" mailto.
+  const html = `<html><head>
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"Plumber","name":"Reliable Plumbing Services",
+     "telephone":"(720) 404-1160","address":{"addressLocality":"Aurora","addressRegion":"CO"},
+     "sameAs":["https://www.facebook.com/reliableplumbingaurora"]}
+    </script>
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"Organization","name":"Better Business Bureau",
+     "sameAs":["https://twitter.com/BBB_institute","https://www.instagram.com/betterbusinessbureau"]}
+    </script></head>
+    <body><footer>
+      <a href="https://www.facebook.com/BBBNorthwest">BBB FB</a>
+      <a href="https://twitter.com/BBB_institute">BBB X</a>
+      <a href="https://www.youtube.com/user/CouncilBBB">BBB YT</a>
+      <a href="https://www.linkedin.com/company/better-business-bureau">BBB LI</a>
+      <a href="mailto:complaints@bbb.org">Report this business</a>
+    </footer></body></html>`;
+  const p = d.parseBbbProfile(html, 'https://www.bbb.org/x', 'Reliable Plumbing Services');
+  assert.equal(p.email, null);                                  // NOT complaints@bbb.org
+  assert.equal(p.socials.facebook, 'https://www.facebook.com/reliableplumbingaurora'); // business's own
+  assert.equal(p.socials.twitter, undefined);                   // BBB's — dropped
+  assert.equal(p.socials.instagram, undefined);                 // BBB's — dropped
+  assert.equal(p.socials.youtube, undefined);                   // BBB's footer — dropped
+  assert.equal(p.socials.linkedin, undefined);                  // BBB's footer — dropped
 });
 
 test('parseBbbSearchJson tolerates multiple API shapes', () => {

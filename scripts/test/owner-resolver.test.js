@@ -74,3 +74,62 @@ test('nameOverlap is higher for closer names', () => {
   assert.ok(o.nameOverlap('Rocky Mountain Handyman', 'Rocky Mountain Handyman Services') >
             o.nameOverlap('Rocky Mountain Handyman', 'Rocky Ford Plumbing'));
 });
+
+// ── co-dora (Colorado DORA licenses, Socrata 7s5z-vewr) ───────────────────────
+const doraRows = JSON.parse(fs.readFileSync(path.join(__dirname, 'fixtures', 'co-dora-rows.json'), 'utf8'));
+
+test('tradeKey + doraTradeOf normalize trade text', () => {
+  assert.equal(o.tradeKey('plumber'), 'plumber');
+  assert.equal(o.tradeKey('Electrician'), 'electrician');
+  assert.equal(o.tradeKey('handyman'), null);
+  assert.equal(o.doraTradeOf(doraRows[0]), 'plumber');
+  assert.equal(o.doraTradeOf(doraRows[1]), 'electrician');
+});
+
+test('doraPersonName reads the licensee name; null when person fields blank', () => {
+  assert.equal(o.doraPersonName(doraRows[0]), 'Michael J Torres');
+  assert.equal(o.doraPersonName({ entityName: 'X LLC' }), null);
+});
+
+test('rowToDoraProfile matches on entityName and carries licensure', () => {
+  const p = o.rowToDoraProfile(doraRows[0]);
+  assert.equal(p.name, 'RELIABLE PLUMBING SERVICES LLC');
+  assert.equal(p.ownerName, 'Michael J Torres');
+  assert.equal(p.licenseNumber, 'PC.0012345');
+  assert.equal(p.licensedTrade, 'plumber');
+  assert.equal(p.phone, null);
+});
+
+test('resolveFromDoraRows returns owner + licensure for a matched plumbing contractor', () => {
+  const lead = { business_name: 'Reliable Plumbing Services', city: 'Aurora, CO', phone: '', trade: 'plumber' };
+  const r = o.resolveFromDoraRows(doraRows, lead);
+  assert.ok(r);
+  assert.equal(r.source, 'co-dora');
+  assert.equal(r.owner_name, 'Michael J Torres');
+  assert.equal(r.extra.license_number, 'PC.0012345');
+  assert.equal(r.extra.license_status, 'Active');
+  assert.equal(r.extra.licensed_trade, 'plumber');
+  assert.ok(r.extra.license_verify_url.includes('licenselookup'));
+});
+
+test('resolveFromDoraRows filters by trade (a plumber lead never matches an electric firm)', () => {
+  const lead = { business_name: 'Mile High Electric', city: 'Aurora, CO', phone: '', trade: 'plumber' };
+  assert.equal(o.resolveFromDoraRows(doraRows, lead), null); // EC record rejected for a plumber lead
+});
+
+test('resolveFromDoraRows skips entity-less (individual) records — no firm to match', () => {
+  const lead = { business_name: 'Dana West', city: 'Denver, CO', phone: '', trade: 'plumber' };
+  assert.equal(o.resolveFromDoraRows(doraRows, lead), null);
+});
+
+test('resolveFromDoraRows requires city match (no phone in dataset → strict name+city)', () => {
+  const lead = { business_name: 'Reliable Plumbing Services', city: 'Boulder, CO', phone: '', trade: 'plumber' };
+  assert.equal(o.resolveFromDoraRows(doraRows, lead), null);
+});
+
+test('buildCoDoraUrl targets the 7s5z-vewr resource with a $q name query', () => {
+  const url = o.buildCoDoraUrl({ business_name: 'Reliable Plumbing' }, 25);
+  assert.ok(url.startsWith('https://data.colorado.gov/resource/7s5z-vewr.json?'));
+  assert.ok(url.includes('$q=Reliable%20Plumbing'));
+  assert.ok(url.includes('$limit=25'));
+});

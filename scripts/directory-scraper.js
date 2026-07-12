@@ -226,49 +226,74 @@ function parseBbbSearchHtml(html) {
 }
 
 /** Business identity fields from a BBB profile's JSON-LD (name/website/phone/email/city/state). */
-function readBusinessJsonLd(html) {
-  const out = { name: null, phone: null, website: null, city: null, state: null, email: null };
+/** Every business-typed JSON-LD node as a normalized profile (incl. its OWN sameAs socials). */
+function collectBusinessNodes(html) {
+  const nodes = [];
   const seen = new Set();
   const visit = node => {
     if (!node || typeof node !== 'object') return;
     if (Array.isArray(node)) { node.forEach(visit); return; }
     if (seen.has(node)) return; seen.add(node);
     const types = [].concat(node['@type'] || []).map(t => String(t).toLowerCase());
-    const isBiz = types.some(t => /(localbusiness|business|organization|store|contractor|professionalservice|homeandconstruction)/.test(t));
+    // LocalBusiness family ONLY — deliberately NOT bare Organization/Business, because
+    // that is how a directory (BBB) marks ITSELF; its node carries the directory's
+    // socials/email and must never be read as the profiled business.
+    const isBiz = types.some(t => /(localbusiness|plumber|electrician|contractor|professionalservice|homeandconstruction|roofing|hvac|store)/.test(t));
     if (isBiz) {
-      if (!out.name && typeof node.name === 'string') out.name = node.name.trim();
-      if (!out.website && typeof node.url === 'string' && /^https?:/i.test(node.url) && !/bbb\.org/i.test(node.url)) out.website = node.url.trim();
-      if (!out.phone && typeof node.telephone === 'string') out.phone = se.normalizePhone(node.telephone);
-      if (!out.email && typeof node.email === 'string') out.email = node.email.replace(/^mailto:/i, '').trim().toLowerCase();
+      const p = { name: null, phone: null, website: null, city: null, state: null, email: null, socials: {} };
+      if (typeof node.name === 'string') p.name = node.name.trim();
+      if (typeof node.url === 'string' && /^https?:/i.test(node.url) && !/bbb\.org/i.test(node.url)) p.website = node.url.trim();
+      if (typeof node.telephone === 'string') p.phone = se.normalizePhone(node.telephone);
+      if (typeof node.email === 'string') p.email = node.email.replace(/^mailto:/i, '').trim().toLowerCase();
       const addr = node.address;
       if (addr && typeof addr === 'object' && !Array.isArray(addr)) {
-        if (!out.city && addr.addressLocality) out.city = String(addr.addressLocality).trim();
-        if (!out.state && addr.addressRegion) out.state = String(addr.addressRegion).trim();
+        if (addr.addressLocality) p.city = String(addr.addressLocality).trim();
+        if (addr.addressRegion) p.state = String(addr.addressRegion).trim();
       }
+      for (const u of [].concat(node.sameAs || [])) se.classifySocial(String(u), p.socials); // business's OWN socials
+      nodes.push(p);
     }
     for (const k of Object.keys(node)) if (node[k] && typeof node[k] === 'object') visit(node[k]);
   };
   se.extractJsonLd(html).forEach(visit);
-  return out;
+  return nodes;
+}
+
+/** Business identity from JSON-LD, disambiguated to the node whose name matches `expectedName`. */
+function readBusinessJsonLd(html, expectedName = null) {
+  const empty = { name: null, phone: null, website: null, city: null, state: null, email: null, socials: {} };
+  const nodes = collectBusinessNodes(html);
+  if (!nodes.length) return empty;
+  if (expectedName) {
+    const named = nodes.filter(n => n.name && nameMatch(expectedName, n.name));
+    if (named.length) return named[0];
+  }
+  return nodes[0];
 }
 
 /**
  * Parse a BBB business profile page → normalized profile object.
- * Combines JSON-LD business identity with the shared social/contact extractor.
+ *
+ * TRUSTED-SOURCE ONLY: email / socials / phone come from the matched business's
+ * JSON-LD node, NEVER page-wide. A directory profile's footer holds the DIRECTORY's
+ * own socials + a "report this business" mailto (e.g. complaints@bbb.org); scraping
+ * the page indiscriminately would attach BBB's contacts to the lead. Passing
+ * `expectedName` disambiguates to the node whose name matches the lead so BBB's own
+ * Organization block can't leak in either. BBB rarely publishes a business email, so
+ * `email` is usually null here — which is correct (better null than the wrong email).
  * @returns {{ name, phone, email, website, city, state, socials, url }}
  */
-function parseBbbProfile(html, url = null) {
-  const ld = readBusinessJsonLd(html);
-  const contact = se.extractContact(html); // no host: BBB page → prefer any real email/phone/socials
+function parseBbbProfile(html, url = null, expectedName = null) {
+  const ld = readBusinessJsonLd(html, expectedName);
   return {
     url,
     name:    ld.name || null,
-    phone:   ld.phone || contact.phone || null,
-    email:   ld.email || contact.email || null,
+    phone:   ld.phone || null,
+    email:   ld.email || null,
     website: ld.website || null,
     city:    ld.city || null,
     state:   ld.state || null,
-    socials: contact.socials || null,
+    socials: Object.keys(ld.socials || {}).length ? ld.socials : null,
   };
 }
 
@@ -352,7 +377,7 @@ async function lookupBbb(lead) {
     if (cand.name && !nameMatch(lead.business_name, cand.name) && !phoneMatch(lead.phone, cand.phone)) continue;
     let phtml = null;
     try { phtml = await fetchText(cand.url); } catch { continue; }
-    const profile = parseBbbProfile(phtml, cand.url);
+    const profile = parseBbbProfile(phtml, cand.url, lead.business_name);
     // profile city/phone/name may be richer than the search row — merge the row's phone in.
     if (!profile.phone && cand.phone) profile.phone = se.normalizePhone(cand.phone);
     if (!profile.city && cand.city) profile.city = cand.city;
@@ -551,5 +576,5 @@ if (require.main === module) {
 module.exports = {
   nameTokens, nameMatch, cityState, cityMatch, phoneMatch, scoreMatch,
   buildBbbApiUrl, buildBbbSearchUrl, parseBbbSearchJson, parseBbbSearchHtml,
-  readBusinessJsonLd, parseBbbProfile, signalStr,
+  collectBusinessNodes, readBusinessJsonLd, parseBbbProfile, signalStr,
 };

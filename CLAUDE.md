@@ -170,7 +170,11 @@ Shortcut: `./run-daily.sh` (or `npm run daily`) runs all steps in order with man
 
 Manual order:
 1. Scout → target city + trade (ask human at start of each session) — **run on Mac**
-2. Enricher → `node scripts/enricher.js --force` — finds emails for phone-only leads — run in container
+2. Free enrichment (before paid Apollo) — **run on Mac** (public-record APIs blocked from container):
+   - `node scripts/owner-resolver.js --source co-sos --live` then `--source co-dora --live` — owner name (+ CO licensure) from public records, no website needed
+   - `node scripts/contact-scraper.js --deep` — email/phone/name/socials from the lead's own website (has-website leads)
+   - `node scripts/email-permuter.js --live` — owner name + domain → ranked email guesses (staged; add `--trust-mx` to promote)
+   - `node scripts/enricher.js --force` — Apollo fallback for emails still missing (paid, 200 credit/mo cap) — run in container
 3. Diagnoser → process all new leads from /leads/ — run in container
 4. Checker + Builder → top 5 priority leads only — run in container
 5. Personalizer → `node scripts/personalizer.js --write` — generates demo_url for every approved lead — run in container

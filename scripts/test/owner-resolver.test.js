@@ -133,3 +133,55 @@ test('buildCoDoraUrl targets the 7s5z-vewr resource with a $q name query', () =>
   assert.ok(url.includes('$q=Reliable%20Plumbing'));
   assert.ok(url.includes('$limit=25'));
 });
+
+// ── az-roc (Arizona ROC — Salesforce portal, text-parsed; layout assumed) ─────
+const AZ_PROFILE_TEXT = [
+  'License Number  ROC 352664',
+  'Business Name  Sunstate Plumbing LLC',
+  'DBA  Sunstate Plumbing',
+  'Status  Active',
+  'Classification  L-37 Plumbing',
+  'Owner  Maria Gonzalez',
+  'Qualifying Party  Robert Kim',
+  'City  Phoenix   State  AZ',
+  'Phone  (602) 555-0143',
+].join('\n');
+
+test('parseAzRocProfileText pulls license/status/class/owner/city/phone (assumed layout)', () => {
+  const r = o.parseAzRocProfileText(AZ_PROFILE_TEXT);
+  assert.equal(r.name, 'Sunstate Plumbing LLC');
+  assert.equal(r.licenseNumber, 'ROC 352664');
+  assert.equal(r.licenseStatus, 'Active');
+  assert.equal(r.city, 'Phoenix');
+  assert.equal(r.state, 'AZ');
+  assert.equal(r.phone, '+1 602-555-0143');
+  assert.equal(r.ownerName, 'Maria Gonzalez');   // Owner preferred over Qualifying Party
+  assert.equal(r.licensedTrade, 'plumber');
+});
+
+test('resolveFromAzRecords matches name+city+phone and returns owner + licensure', () => {
+  const rec = o.parseAzRocProfileText(AZ_PROFILE_TEXT);
+  const lead = { business_name: 'Sunstate Plumbing', city: 'Phoenix, AZ', phone: '+1 602-555-0143', trade: 'plumber' };
+  const r = o.resolveFromAzRecords([rec], lead);
+  assert.ok(r);
+  assert.equal(r.source, 'az-roc');
+  assert.equal(r.owner_name, 'Maria Gonzalez');
+  assert.equal(r.match.score, 3);                 // AZ has phone → 3-signal match
+  assert.equal(r.extra.license_number, 'ROC 352664');
+  assert.equal(r.extra.licensed_trade, 'plumber');
+  assert.ok(r.confidence >= 0.9);
+});
+
+test('resolveFromAzRecords trade-gates and requires ≥2 signals', () => {
+  const rec = o.parseAzRocProfileText(AZ_PROFILE_TEXT); // a plumbing firm
+  const elecLead = { business_name: 'Sunstate Plumbing', city: 'Phoenix, AZ', phone: '', trade: 'electrician' };
+  assert.equal(o.resolveFromAzRecords([rec], elecLead), null); // wrong trade
+  const wrongCity = { business_name: 'Sunstate Plumbing', city: 'Tucson, AZ', phone: '', trade: 'plumber' };
+  assert.equal(o.resolveFromAzRecords([rec], wrongCity), null); // only name matches (1/3)
+});
+
+test('personAfterLabel finds a name after a role label, ignores non-matches', () => {
+  assert.equal(o.personAfterLabel('Owner: John Smith', ['Owner']), 'John Smith');
+  assert.equal(o.personAfterLabel('Qualifying Party  Ana Diaz Cruz', ['Qualifying Party']), 'Ana Diaz Cruz');
+  assert.equal(o.personAfterLabel('Owner: n/a', ['Owner']), null);
+});

@@ -51,7 +51,8 @@
 
 const fs   = require('fs');
 const path = require('path');
-const dm   = require('./directory-scraper'); // reuse nameTokens/nameMatch/cityState/cityMatch/scoreMatch
+const dm   = require('./directory-scraper');     // reuse nameTokens/nameMatch/cityState/cityMatch/scoreMatch
+const se   = require('./lib/social-extractor');  // normalizePhone for AZ ROC text parsing
 
 const ROOT       = path.join(__dirname, '..');
 const STATE_PATH = path.join(ROOT, 'state.json');
@@ -259,6 +260,127 @@ function resolveFromDoraRows(rows, lead) {
   };
 }
 
+// ── az-roc: Arizona Registrar of Contractors (Salesforce portal, NO open API) ──
+// Arizona publishes ROC data ONLY through a Salesforce Experience Cloud site
+// (azroc.my.site.com) — there is no Socrata/JSON feed. So retrieval must render
+// the portal (Playwright) and parse text. The PURE logic below (matching, owner
+// selection, trade gate, licensure) is fully tested; the retrieval + text parser
+// are a best-effort whose exact field layout must be CONFIRMED ON A LIVE MAC RUN
+// (capture one real profile's text to harden the regexes). Unlike the CO datasets,
+// AZ ROC profiles usually include a PHONE, enabling a stronger 3-signal match.
+
+/** person-name shape: 2–3 capitalized tokens (allows a middle initial, apostrophes, hyphens).
+ *  Inter-token spacing is [ \t] ONLY — a name must never run across a line break into the
+ *  next labelled field (e.g. "Owner Maria Gonzalez\nQualifying Party ..." → "Maria Gonzalez"). */
+const AZ_PERSON = "[A-Z][A-Za-z'.-]+(?:[ \\t]+[A-Z][A-Za-z'.-]?\\.?)?(?:[ \\t]+[A-Z][A-Za-z'.-]+){1,2}";
+
+/** Extract the first person name following any of the given role labels in rendered text. */
+function personAfterLabel(text, labels) {
+  for (const label of labels) {
+    const re = new RegExp(`${label}[^\\S\\n]*[:#-]?[^\\S\\n]*(${AZ_PERSON})`, 'i');
+    const m = String(text || '').match(re);
+    if (m && m[1]) return titleCase(m[1].replace(/[ \t]+/g, ' ').trim());
+  }
+  return null;
+}
+
+/**
+ * Parse one rendered AZ ROC contractor profile (text) → normalized record.
+ * LAYOUT ASSUMED — confirm against a real captured profile on the Mac.
+ * @returns {{ name, dba, city, state, phone, ownerName, licenseNumber, licenseStatus, licenseClass, licensedTrade }}
+ */
+function parseAzRocProfileText(text) {
+  const t = String(text || '').replace(/\r/g, ' ');
+  const grab = re => { const m = t.match(re); return m ? m[1].trim() : null; };
+  const licenseNumber = (() => { const m = t.match(/\bROC\s*#?\s*(\d{3,7})/i); return m ? `ROC ${m[1]}` : null; })();
+  const name  = grab(/Business Name\s*[:#-]?\s*([^\n|]+?)(?:\s{2,}|\n|$)/i);
+  const dba   = grab(/\bDBA\s*[:#-]?\s*([^\n|]+?)(?:\s{2,}|\n|$)/i);
+  const status = grab(/\bStatus\s*[:#-]?\s*([A-Za-z ]+?)(?:\s{2,}|\n|$)/i);
+  const licenseClass = grab(/Class(?:ification)?\s*[:#-]?\s*([A-Za-z]{1,3}-?\d{1,3}[^\n|]*?)(?:\s{2,}|\n|$)/i);
+  const city  = grab(/\bCity\s*[:#-]?\s*([A-Za-z .'-]+?)(?:\s{2,}|\n|$)/i);
+  const state = grab(/\bState\s*[:#-]?\s*([A-Z]{2})\b/i);
+  const phoneRaw = grab(/(?:Phone|Tel)\s*[:#-]?\s*([\d().\-\s]{7,})/i);
+  // Owner/member preferred over the qualifying party (the qualifier may be an employee).
+  const ownerName =
+    personAfterLabel(t, ['Owner', 'Member', 'Officer', 'President', 'Managing Member', 'Principal']) ||
+    personAfterLabel(t, ['Qualifying Party', 'Qualifier']);
+  return {
+    name: name || null,
+    dba: dba || null,
+    city: city || null,
+    state: state || null,
+    phone: phoneRaw ? se.normalizePhone(phoneRaw) : null,
+    ownerName: ownerName || null,
+    licenseNumber,
+    licenseStatus: status || null,
+    licenseClass: licenseClass || null,
+    licensedTrade: tradeKey(`${licenseClass || ''} ${name || ''}`),
+  };
+}
+
+/** Normalized AZ record → matcher profile (name = business so the firm can be matched). */
+function rowToAzProfile(rec) {
+  return {
+    name:          rec.name || null,
+    city:          rec.city || null,
+    state:         rec.state || null,
+    phone:         rec.phone || null,          // AZ ROC usually HAS a phone → 3-signal match
+    ownerName:     rec.ownerName || null,
+    licenseNumber: rec.licenseNumber || null,
+    licenseStatus: rec.licenseStatus || null,
+    licensedTrade: rec.licensedTrade || null,
+    licenseClass:  rec.licenseClass || null,
+  };
+}
+
+/**
+ * Choose the AZ ROC record for a lead (name+city+phone; ≥2 of 3).
+ * @returns {{ source:'az-roc', confidence, owner_name, extra, profile, match }|null}
+ */
+function resolveFromAzRecords(records, lead) {
+  const leadTrade = tradeKey(lead.trade);
+  const scored = [];
+  for (const raw of records || []) {
+    const profile = rowToAzProfile(raw);
+    if (!profile.name) continue;
+    if (leadTrade && profile.licensedTrade && profile.licensedTrade !== leadTrade) continue; // wrong trade
+    const match = dm.scoreMatch(lead, profile, 2);
+    if (!match.accepted) continue;
+    scored.push({
+      profile, match,
+      overlap: nameOverlap(lead.business_name, profile.name),
+      active:  /active/i.test(profile.licenseStatus || '') ? 1 : 0,
+    });
+  }
+  if (!scored.length) return null;
+
+  scored.sort((a, b) => (b.match.score - a.match.score) || (b.overlap - a.overlap) || (b.active - a.active));
+  const best = scored[0];
+
+  let ownerName = best.profile.ownerName;
+  if (ownerName) {
+    const rivals = scored.filter(s => s.overlap >= best.overlap - 1e-9 &&
+      s.profile.ownerName && s.profile.ownerName.toLowerCase() !== ownerName.toLowerCase());
+    if (rivals.length) ownerName = null;
+  }
+
+  let confidence = best.match.confidence + (best.active ? 0.05 : 0);
+  confidence = Math.min(0.95, Math.round(confidence * 100) / 100);
+
+  const extra = {};
+  if (best.profile.licenseNumber) extra.license_number = best.profile.licenseNumber;
+  if (best.profile.licenseStatus) extra.license_status = best.profile.licenseStatus;
+  if (best.profile.licensedTrade) extra.licensed_trade = best.profile.licensedTrade;
+  if (best.profile.licenseClass)  extra.license_class  = best.profile.licenseClass;
+
+  return {
+    source: 'az-roc', confidence,
+    owner_name: ownerName || null,
+    extra: Object.keys(extra).length ? extra : null,
+    profile: best.profile, match: best.match,
+  };
+}
+
 // ═══════════════════════════════════════════════════════════════════════════════
 // ADAPTERS
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -294,6 +416,7 @@ async function fetchSocrataRows(url) {
 }
 
 const isCO = rec => dm.cityState(rec.city).state === 'co';
+const isAZ = rec => dm.cityState(rec.city).state === 'az';
 
 /** CO Secretary of State — registered-agent owner for any CO LLC/Corp lead w/o a name. */
 const coSosAdapter = {
@@ -309,7 +432,65 @@ const coDoraAdapter = {
   async lookup(lead) { return resolveFromDoraRows(await fetchSocrataRows(buildCoDoraUrl(lead)), lead); },
 };
 
-const ADAPTERS = { 'co-sos': coSosAdapter, 'co-dora': coDoraAdapter };
+const AZ_ROC_SEARCH = 'https://azroc.my.site.com/AZRoc/s/contractor-search';
+
+/**
+ * Render the AZ ROC Salesforce portal and pull candidate contractor records for a lead.
+ * BEST-EFFORT / UNVERIFIED: the portal is a Salesforce Experience site with no API, so
+ * this navigates the search UI and parses rendered text. The search-trigger + result
+ * selectors are a first guess — CONFIRM on a live Mac run (capture a real profile's text
+ * and harden parseAzRocProfileText). Returns [] on any failure (adapter → "no match",
+ * never crashes). Requires `playwright`; skipped gracefully if not installed.
+ */
+let _azWarned = false;
+async function fetchAzRocRecords(lead) {
+  let chromium;
+  try { chromium = require('playwright').chromium; } catch {
+    if (!_azWarned) { _azWarned = true; console.log('  (az-roc needs Playwright — `npm i playwright` on the Mac)'); }
+    return [];
+  }
+  let browser;
+  try {
+    await politeWait('azroc.my.site.com');
+    browser = await chromium.launch({ headless: true });
+    const page = await (await browser.newContext()).newPage();
+    await page.goto(AZ_ROC_SEARCH, { waitUntil: 'domcontentloaded', timeout: 20000 });
+    // Type the business name into the first visible search box and submit. [VERIFY ON MAC]
+    const box = page.locator('input[type="text"], input[type="search"]').first();
+    await box.fill(lead.business_name || '', { timeout: 8000 });
+    await box.press('Enter');
+    await page.waitForTimeout(3500); // let Lightning render results
+    // Follow each result to its profile and parse the rendered text. [VERIFY ON MAC]
+    const links = await page.locator('a[href*="licenseId="]').evaluateAll(
+      els => els.map(e => e.getAttribute('href')).filter(Boolean).slice(0, 5));
+    const records = [];
+    for (const href of links) {
+      const url = href.startsWith('http') ? href : new URL(href, AZ_ROC_SEARCH).href;
+      try {
+        await politeWait('azroc.my.site.com');
+        await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 20000 });
+        await page.waitForTimeout(2500);
+        const text = await page.evaluate(() => document.body ? document.body.innerText : '');
+        const rec = parseAzRocProfileText(text);
+        if (rec.name) records.push(rec);
+      } catch { /* one bad profile never aborts the lead */ }
+    }
+    return records;
+  } catch {
+    return [];
+  } finally {
+    if (browser) await browser.close().catch(() => {});
+  }
+}
+
+/** AZ Registrar of Contractors — owner/qualifying party + licensure for AZ leads. Playwright-only. */
+const azRocAdapter = {
+  id: 'az-roc',
+  eligible: rec => isAZ(rec) && (!hasVal(rec.contact_name) || !hasVal(rec.license_number)),
+  async lookup(lead) { return resolveFromAzRecords(await fetchAzRocRecords(lead), lead); },
+};
+
+const ADAPTERS = { 'co-sos': coSosAdapter, 'co-dora': coDoraAdapter, 'az-roc': azRocAdapter };
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // ORCHESTRATION
@@ -428,8 +609,9 @@ async function main() {
   if (!LIVE && (resolved > 0 || enriched > 0)) console.log('\n[dry-run] nothing written. Re-run with --live to save.');
   if (LIVE && resolved > 0) console.log('\nOwner names saved to contact_name — feed personalization (caller.js, DMs, drip) + email-permuter for has-website leads.');
   if (errors === processed && processed > 0) {
-    console.log('\n⚠  Every lookup errored. In the container this is expected (proxy blocks data.colorado.gov).');
-    console.log('   Run on the Mac, or allowlist data.colorado.gov.');
+    const host = SOURCE === 'az-roc' ? 'azroc.my.site.com' : 'data.colorado.gov';
+    console.log(`\n⚠  Every lookup errored. In the container this is expected (proxy blocks ${host}).`);
+    console.log(`   Run on the Mac, or allowlist ${host}.`);
   }
 }
 
@@ -443,4 +625,6 @@ module.exports = {
   nameOverlap, resolveFromCoRows, buildCoSosUrl,
   // co-dora
   tradeKey, doraTradeOf, doraPersonName, rowToDoraProfile, resolveFromDoraRows, buildCoDoraUrl,
+  // az-roc
+  personAfterLabel, parseAzRocProfileText, rowToAzProfile, resolveFromAzRecords,
 };

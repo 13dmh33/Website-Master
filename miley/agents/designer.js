@@ -184,11 +184,14 @@ async function renderSingle(post, imageDir, idx) {
   const templateName = render.selectTemplate(post.format, { hasPhoto });
   try {
     let buf;
-    if (templateName === 'cleanCard') {
-      buf = await render.renderCleanCard(post.hook, '', 0, 0);
-    } else if (templateName === 'photoCard' && hasPhoto) {
+    // Product posts with a real photo always render over that photo (photoCard) —
+    // the product IS the point of the post. The gradient renderSingle path only
+    // runs for text-only posts, where its visual gate is calibrated correctly.
+    if (hasPhoto) {
       const photoBuffer = fs.readFileSync(render.productImagePath(post.product));
       buf = await render.renderPhotoCard(post.hook, photoBuffer, '');
+    } else if (templateName === 'cleanCard') {
+      buf = await render.renderCleanCard(post.hook, '', 0, 0);
     } else {
       buf = await render.renderSingle({
         hook:       post.hook,

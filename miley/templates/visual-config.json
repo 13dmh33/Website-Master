@@ -26,6 +26,7 @@
     "mission": {"bg": "#FF2E88", "headline": "#F7F4F0", "body": "#F7F4F0", "accent": "#1A1A1D", "gradient": ["#FF2E88", "#C71F66"]},
     "engagement": {"bg": "#3A5A78", "headline": "#F7F4F0", "body": "#FFB3D1", "accent": "#FFC400", "gradient": ["#3A5A78", "#243B4F"]},
     "motivational": {"bg": "#1A1A1D", "headline": "#FF2E88", "body": "#F7F4F0", "accent": "#FFB3D1", "gradient": ["#1A1A1D", "#3A1A2A"]},
+    "motivational_soft": {"bg": "#FFB3D1", "headline": "#1A1A1D", "body": "#3A5A78", "accent": "#FF2E88", "gradient": ["#FFB3D1", "#F7F4F0"], "note": "Light soft-pink variant of motivational — dark charcoal headline for contrast."},
     "awareness": {"bg": "#FFB3D1", "headline": "#C71F66", "body": "#1A1A1D", "accent": "#FF2E88", "gradient": ["#FFB3D1", "#FF2E88"], "note": "October-only palette. Ribbon motif on."}
   },
   "image_sources": {

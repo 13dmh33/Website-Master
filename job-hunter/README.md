@@ -82,6 +82,35 @@ Flags:
 - `--limit N` — cap how many jobs get tailored (default 8).
 - `--min-score N` — override the minimum blended score (default 70).
 
+## Testing
+
+Three layers, cheapest first:
+
+1. **Offline logic (no keys, runs anywhere):**
+   ```sh
+   npm test
+   ```
+   Checks the pieces that must be exactly right — freshness ranking, the age
+   cutoff, dedup/near-dup merge, the rules filter, and .docx rendering.
+
+2. **The Claude path (needs only `ANTHROPIC_API_KEY`):**
+   ```sh
+   npm run ingest        # once, to parse your resume
+   npm run test:claude   # scores + tailors ONE built-in sample job
+   ```
+   Validates scoring and tailoring against your real resume without any live
+   job source. Costs a few cents. Open the files it writes to `out/test-claude/`
+   and confirm every claim traces back to your actual resume.
+
+3. **Full pipeline dry-run (needs source keys; run on your Mac):**
+   ```sh
+   npm run daily -- --dry-run
+   ```
+   Pulls real postings, filters, scores, tailors the top matches, and prints
+   the digest preview — but sends no email, writes no sheet rows, and changes no
+   state. Run it twice in a row to confirm nothing repeats. This is the closest
+   thing to a real run; when it looks right, drop `--dry-run`.
+
 ## Twice-daily cron on your Mac
 
 Missy is built for a twice-daily cadence (fresh posts stand out via the "new

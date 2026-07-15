@@ -1,0 +1,17 @@
+# Secrets — never commit
+.env
+.env.local
+*-service-account*.json
+google-service-account.json
+
+# Node
+node_modules/
+
+# Dave's private inputs (his real resume) and generated deliverables
+inputs/master-resume.*
+data/master-profile.json
+out/
+logs/
+
+# Local pipeline state (append-only dedup ledger — machine-specific)
+state.json

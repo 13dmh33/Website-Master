@@ -1,0 +1,25 @@
+{
+  "name": "job-hunter",
+  "version": "1.0.0",
+  "description": "Missy — Dave's personal, review-only job-hunt pipeline. Pulls jobs from public ATS/API sources, filters and scores fit, tailors a resume + cover letter for the best matches, and emails a daily digest for manual apply. Never auto-applies.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "daily": "node src/index.js",
+    "ingest": "node src/ingest.js",
+    "scout": "node src/scout.js",
+    "dry-run": "node src/index.js --dry-run"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.65.0",
+    "docx": "^9.0.0",
+    "dotenv": "^16.4.5",
+    "googleapis": "^144.0.0",
+    "mammoth": "^1.8.0",
+    "nodemailer": "^6.9.15",
+    "pdf-parse": "^1.1.1"
+  }
+}

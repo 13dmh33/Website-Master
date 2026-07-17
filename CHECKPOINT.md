@@ -179,3 +179,84 @@ node scripts/contact-scraper.js --limit 20   # cap sites visited
 - 170 of current leads have no website — scraper can't help them (need Apollo/Enricher).
 - 11 has-website / no-email leads are the target set; run on Mac for real results.
 - No JS rendering — obfuscated emails won't be caught by design.
+
+---
+
+# CHECKPOINT — Nora multi-channel + multi-offering refactor
+
+Branch: `feature/nora-multichannel-config` (off `main` — no `master` branch exists in
+this repo). Not merged, not pushed to origin.
+
+## What's done
+
+All 7 tasks from the session scope doc are complete, plus Step 0 discovery. 46 tests
+passing (`npm run nora:test`). Commits, in order:
+
+1. `Nora multichannel: Step 0 discovery` — `/DISCOVERY.md`. Two material deltas found and
+   handled: (a) no Nora runtime code existed anywhere in the repo before this session —
+   Nora was only a sales-upsell talking point plus `mobile.js`'s pitch scheduler, so this
+   was a build, not a refactor; (b) the repo is CommonJS throughout, not ESM as the scope
+   doc assumed — all new code matches the real convention.
+2. `Nora: config schema, loader, and example customer configs` — `nora/config/`.
+3. `Nora: shared lib layer` — `nora/lib/{normalize,gates,dispatch,state}.js`.
+4. `Nora: channel- and offering-agnostic core, with offering routing` —
+   `nora/core/{business-hours,routing,escalate,index}.js`. Step 2's "byte-identical
+   migration" proof was substituted with a spec-conformance test (documented in
+   `/DISCOVERY.md` and in this commit message) since there was nothing to diff against.
+5. `Nora: missed-call + inbound SMS adapters, responders, and webhook server` —
+   `nora/channels/{missed_call,sms}/`, `nora/lib/twilio.js`,
+   `nora/lib/escalation-notifier.js`, `nora/server.js`.
+6. `Nora: scaffold web_chat and meta_dm channel stubs` — empty adapter/responder pairs
+   only, per the explicit "do not build them" instruction.
+7. (this checkpoint) — `nora/CLAUDE.md` subsystem doc, `package.json` scripts
+   (`nora:test`, `nora:server`), brand-compliance grep pass (clean — no emojis, no
+   founder name in customer-facing strings, "AI agent" not "bot", no "business days"
+   language, sentence case throughout).
+
+## Definition of done — status against the original list
+
+- [x] Plumber install runs unchanged through the refactored, config-driven core — n/a as
+  literally stated (nothing existed to be "unchanged" from), satisfied via the
+  conformance-test substitute instead: `example-plumber-single` never sees a routing
+  question and the qualify -> book flow matches what `templates.json`'s `e6` copy sells.
+- [x] A two-offering config routes correctly, asking at most one routing question, only
+  when ambiguous — tested in `nora/test/core.test.js`.
+- [x] Inbound SMS works end to end behind `SMS_LIVE`, off by default — tested in
+  `nora/test/channels.test.js` (full missed-call -> SMS -> qualified integration test).
+- [x] `web_chat` and `meta_dm` files exist as stubs.
+- [x] All new state fields are additive; Google Sheets logging still works — trivially
+  true, since no Nora code touches root `state.json` or anything `sheet-log.js` reads
+  (see `/DISCOVERY.md` for why Nora has its own state store instead).
+- [x] `DISCOVERY.md` and `CHECKPOINT.md` present.
+- [x] No emojis, sentence case, "AI agent" not "bot" anywhere in the diff — verified by
+  grep across `nora/**/*.js`.
+
+## What's next (not started, needs a new scope doc or explicit ask before building)
+
+- Web chat adapter (P1) — real implementation of `nora/channels/web_chat/`.
+- Meta DM adapter (P2) — blocked on Meta business-messaging permissions/app review.
+- Real Cal.com API booking call (currently always a draft-style confirmation referencing
+  `calendarId`, per this session's explicit scope limit).
+- Per-customer Twilio phone numbers (`fromPhone`) — right now every customer config shares
+  the single dev/test `TWILIO_FROM_PHONE` in `.env.local`.
+- Turning `NORA_LIVE`/`SMS_LIVE` on for a real pilot customer once Twilio A2P 10DLC
+  clears (see root `CLAUDE.md`'s "Twilio A2P 10DLC Status" section for that gate's
+  current state).
+- No live end-to-end test against a real Twilio number has been run — everything here is
+  verified via `node --test`, not a real phone call/text.
+
+## Ready-to-paste continuation prompt
+
+```
+Continue the Nora multi-channel refactor on branch feature/nora-multichannel-config.
+Read /CHECKPOINT.md (this section) and /DISCOVERY.md first for full context —
+everything through the original session's 7 tasks is done and tested (46 passing
+tests, npm run nora:test).
+
+Next up: [fill in — e.g. "build the real web_chat adapter" or "wire NORA_LIVE for a
+pilot customer once A2P 10DLC clears" or "add a real Cal.com booking call"]. Keep the
+same architecture: channel adapters translate to lib/normalize.js's shape, core/index.js
+stays channel-agnostic, responders send through lib/dispatch.js's dispatchOutbound() so
+gates keep working. Match nora/'s existing CommonJS + node:test conventions, not the
+original scope doc's ESM assumption (see DISCOVERY.md delta 2).
+```

@@ -1,0 +1,99 @@
+#!/usr/bin/env node
+/**
+ * Unit tests for reply-agent pure helpers (no network, no API).
+ * Run: node scripts/reply-agent.test.js
+ */
+'use strict';
+
+const assert = require('assert');
+const { stripQuotedAndSignature, buildDraftMime, foldMessageId } = require('./reply-agent');
+
+let passed = 0;
+function test(name, fn) {
+  try { fn(); passed++; console.log(`  ✓ ${name}`); }
+  catch (e) { console.error(`  ✗ ${name}\n    ${e.message}`); process.exitCode = 1; }
+}
+
+console.log('\nreply-agent helpers');
+console.log('─'.repeat(56));
+
+// ── stripQuotedAndSignature ──────────────────────────────────────────────────
+
+test('keeps the actual reply, drops Gmail quoted history', () => {
+  const raw = [
+    'Yeah this sounds interesting, what would it cost?',
+    '',
+    'On Mon, Jul 14, 2026 at 9:00 AM Dave <dave@trevoadvisors.com> wrote:',
+    '> Hey, I put together a quick demo of your site...',
+    '> Let me know.'
+  ].join('\n');
+  assert.strictEqual(stripQuotedAndSignature(raw), 'Yeah this sounds interesting, what would it cost?');
+});
+
+test('drops Outlook "Original Message" block', () => {
+  const raw = 'Not right now, try me in the fall.\n\n-----Original Message-----\nFrom: Dave\nSent: ...';
+  assert.strictEqual(stripQuotedAndSignature(raw), 'Not right now, try me in the fall.');
+});
+
+test('drops standard "-- " signature delimiter', () => {
+  const raw = 'Sounds good, call me.\n\n-- \nJoe Smith\nJoe\'s Plumbing\n555-1234';
+  assert.strictEqual(stripQuotedAndSignature(raw), 'Sounds good, call me.');
+});
+
+test('drops "Sent from my iPhone" mobile signature', () => {
+  const raw = 'How much per month?\n\nSent from my iPhone';
+  assert.strictEqual(stripQuotedAndSignature(raw), 'How much per month?');
+});
+
+test('empty / null input is safe', () => {
+  assert.strictEqual(stripQuotedAndSignature(''), '');
+  assert.strictEqual(stripQuotedAndSignature(null), '');
+});
+
+// ── foldMessageId ────────────────────────────────────────────────────────────
+
+test('wraps a bare message-id in angle brackets', () => {
+  assert.strictEqual(foldMessageId('abc@host'), '<abc@host>');
+  assert.strictEqual(foldMessageId('<abc@host>'), '<abc@host>');
+  assert.strictEqual(foldMessageId(null), null);
+});
+
+// ── buildDraftMime ───────────────────────────────────────────────────────────
+
+test('builds a threaded, Re:-prefixed plain-text draft', () => {
+  const mime = buildDraftMime({
+    fromEmail: 'dave@trevoadvisors.com',
+    toEmail:   'joe@joesplumbing.com',
+    subject:   "Joe's Plumbing website",
+    inReplyTo: '<orig-123@zoho.com>',
+    references: [],
+    bodyText:  'Happy to help.\n\nDave'
+  });
+  assert.ok(mime.includes('To: joe@joesplumbing.com'));
+  assert.ok(mime.includes("Subject: Re: Joe's Plumbing website"), 'adds Re: prefix');
+  assert.ok(mime.includes('In-Reply-To: <orig-123@zoho.com>'), 'threads via In-Reply-To');
+  assert.ok(mime.includes('References: <orig-123@zoho.com>'), 'seeds References from In-Reply-To');
+  assert.ok(mime.includes('Content-Type: text/plain; charset=utf-8'));
+  assert.ok(mime.includes('\r\n\r\nHappy to help.'), 'CRLF header/body separation + body present');
+});
+
+test('does not double-prefix an existing Re: subject', () => {
+  const mime = buildDraftMime({
+    fromEmail: 'd@x.com', toEmail: 'a@b.com', subject: 'Re: your site',
+    inReplyTo: null, references: [], bodyText: 'hi'
+  });
+  assert.ok(mime.includes('Subject: Re: your site'));
+  assert.ok(!mime.includes('Re: Re:'));
+});
+
+test('merges existing References and appends In-Reply-To without duplicating', () => {
+  const mime = buildDraftMime({
+    fromEmail: 'd@x.com', toEmail: 'a@b.com', subject: 's',
+    inReplyTo: '<m2@z>', references: ['<m1@z>', '<m2@z>'], bodyText: 'hi'
+  });
+  const refLine = mime.split('\r\n').find(l => l.startsWith('References:'));
+  assert.strictEqual(refLine, 'References: <m1@z> <m2@z>', 'no duplicate m2');
+});
+
+console.log('─'.repeat(56));
+console.log(`${passed} passing${process.exitCode ? ' (with failures)' : ''}\n`);

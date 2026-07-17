@@ -1,5 +1,13 @@
 #!/usr/bin/env node
 /**
+ * ⚠ SUPERSEDED by scripts/reply-agent.js (2026-07-17).
+ * The reply-agent absorbs this poller's IMAP connect, Message-ID dedup,
+ * out-of-office filter, and lead matching, and adds a Claude-drafted reply
+ * written to the Zoho Drafts folder for human review (nothing auto-sent).
+ * It marks matched leads `reply_drafted` instead of `positive`, so a lead is
+ * never both canned-auto-replied (mobile.js) AND hand-drafted. Do NOT run this
+ * poller and the reply-agent against the same inbox on cron. Kept for reference.
+ *
  * Email Reply Poller — checks Zoho inbox for replies, auto-updates lead status
  *
  * Mirrors the Twilio webhook (scripts/webhook.js) but for email.

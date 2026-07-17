@@ -43,6 +43,14 @@ const stepFilter = getArg('--step');
 
 const STEPS = ['d1', 'd1b', 'd1c', 'd2'];
 
+// A lead is out of the campaign once it replies, opts out, converts, or dies.
+// Reply-Agent sets `campaign.status = 'exited'` (and status reply_drafted /
+// unsubscribed); honor that so we never drip on someone who already replied.
+function campaignActive(sent) {
+  if (sent.campaign && sent.campaign.status === 'exited') return false;
+  return !['positive', 'unresponsive', 'reply_drafted', 'unsubscribed'].includes(sent.status);
+}
+
 // ── CONFIG ─────────────────────────────────────────────────────────────────────
 
 function today() { return new Date().toISOString().split('T')[0]; }
@@ -130,7 +138,7 @@ function loadDripQueue(cfg, templates) {
       const sentPath = path.join(MESSAGES_DIR, file);
       const sent     = JSON.parse(fs.readFileSync(sentPath, 'utf8'));
 
-      if (sent.status === 'positive' || sent.status === 'unresponsive') continue;
+      if (!campaignActive(sent)) continue;
 
       const leadId    = file.replace('-sent.json', '');
       const briefPath = path.join(QUEUE_DIR, `${leadId}-brief.json`);
@@ -182,7 +190,7 @@ function markUnresponsive(cfg) {
     try {
       const sentPath = path.join(MESSAGES_DIR, file);
       const sent     = JSON.parse(fs.readFileSync(sentPath, 'utf8'));
-      if (sent.status === 'positive' || sent.status === 'unresponsive') continue;
+      if (!campaignActive(sent)) continue;
 
       const initialSentAt = sent.email_sent_at || sent.sms_sent_at;
       if (!initialSentAt || daysSince(initialSentAt) < cfg.dead_after_days) continue;

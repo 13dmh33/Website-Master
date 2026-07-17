@@ -128,9 +128,14 @@ function buildRow(entry, brief, sent, existingRow, statusCol, notesCol) {
   const existingStatus = (existingRow && statusCol >= 0) ? (existingRow[statusCol] || '') : '';
   const existingNotes  = (existingRow && notesCol  >= 0) ? (existingRow[notesCol]  || '') : '';
 
-  // Auto-derive status for NEW rows only; existing rows keep whatever Dave set
-  const isUnsub   = entry.status === 'unsubscribed' || sent?.status === 'unsubscribed';
-  const isReplied = entry.status === 'replied'       || sent?.status === 'positive';
+  // Auto-derive status for NEW rows only; existing rows keep whatever Dave set.
+  // Reply-Agent campaign exits: reason 'opted_out' → unsub; 'replied' → replied
+  // (its lead status is `reply_drafted`, not `positive`).
+  const isUnsub   = entry.status === 'unsubscribed' || sent?.status === 'unsubscribed'
+                 || sent?.campaign?.reason === 'opted_out';
+  const isReplied = entry.status === 'replied' || entry.status === 'reply_drafted'
+                 || sent?.status === 'positive' || sent?.status === 'reply_drafted'
+                 || sent?.campaign?.reason === 'replied';
   let autoStatus = 'sent';
   if (isUnsub)        autoStatus = 'do not contact';
   else if (isReplied) autoStatus = 'replied';
@@ -214,7 +219,7 @@ async function main() {
   let skipped = 0;
   for (const entry of state.queue) {
     // Include if it was sent at some point (sent_at set) or status was 'sent'
-    if (!entry.sent_at && !['sent', 'replied', 'unsubscribed', 'drip_d1_sent',
+    if (!entry.sent_at && !['sent', 'replied', 'reply_drafted', 'unsubscribed', 'drip_d1_sent',
         'drip_d1b_sent', 'drip_d1c_sent', 'drip_d2_sent', 'unresponsive'].includes(entry.status)) {
       skipped++; continue;
     }

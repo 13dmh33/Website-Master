@@ -6,7 +6,8 @@
 'use strict';
 
 const assert = require('assert');
-const { stripQuotedAndSignature, buildDraftMime, foldMessageId, htmlToText, encodeHeaderWord } = require('./reply-agent');
+const { stripQuotedAndSignature, buildDraftMime, foldMessageId, htmlToText, encodeHeaderWord,
+        buildCampaignExit, lastCampaignStep } = require('./reply-agent');
 
 let passed = 0;
 function test(name, fn) {
@@ -131,6 +132,51 @@ test('merges existing References and appends In-Reply-To without duplicating', (
   });
   const refLine = mime.split('\r\n').find(l => l.startsWith('References:'));
   assert.strictEqual(refLine, 'References: <m1@z> <m2@z>', 'no duplicate m2');
+});
+
+// ── campaign exit ────────────────────────────────────────────────────────────
+
+test('lastCampaignStep: initial send only → "initial"', () => {
+  assert.strictEqual(lastCampaignStep({ email_sent_at: '2026-07-01T00:00:00Z' }), 'initial');
+  assert.strictEqual(lastCampaignStep({}), 'initial');
+  assert.strictEqual(lastCampaignStep(null), 'initial');
+});
+
+test('lastCampaignStep: returns the furthest drip step sent', () => {
+  assert.strictEqual(lastCampaignStep({ drip: { d1: { email_sent_at: 'x' } } }), 'd1');
+  assert.strictEqual(lastCampaignStep({ drip: { d1: { email_sent_at: 'x' }, d1b: { sms_sent_at: 'y' } } }), 'd1b');
+  assert.strictEqual(lastCampaignStep({ drip: { d1: {}, d1c: { email_sent_at: 'x' }, d2: { email_sent_at: 'z' } } }), 'd2');
+});
+
+test('buildCampaignExit: fresh replied exit', () => {
+  const c = buildCampaignExit('replied', { drip: { d1: { email_sent_at: 'x' } } });
+  assert.strictEqual(c.status, 'exited');
+  assert.strictEqual(c.reason, 'replied');
+  assert.strictEqual(c.exit_step, 'd1');
+  assert.strictEqual(c.exit_channel, 'email');
+  assert.strictEqual(c.by, 'reply-agent');
+  assert.ok(/^\d{4}-\d\d-\d\dT/.test(c.exited_at), 'exited_at is an ISO timestamp');
+});
+
+test('buildCampaignExit: idempotent — re-exit preserves first timestamp + step', () => {
+  const prior = { campaign: { status: 'exited', reason: 'replied', exit_step: 'd1b', exit_channel: 'email', exited_at: '2026-07-10T00:00:00.000Z', by: 'reply-agent' } };
+  const c = buildCampaignExit('replied', prior);
+  assert.strictEqual(c.exited_at, '2026-07-10T00:00:00.000Z');
+  assert.strictEqual(c.exit_step, 'd1b');
+  assert.strictEqual(c.reason, 'replied');
+});
+
+test('buildCampaignExit: opt-out upgrades a prior replied exit (opt-out wins)', () => {
+  const prior = { campaign: { status: 'exited', reason: 'replied', exit_step: 'd1', exit_channel: 'email', exited_at: '2026-07-10T00:00:00.000Z', by: 'reply-agent' } };
+  const c = buildCampaignExit('opted_out', prior);
+  assert.strictEqual(c.reason, 'opted_out', 'reason upgraded to opted_out');
+  assert.strictEqual(c.exited_at, '2026-07-10T00:00:00.000Z', 'original timestamp kept');
+});
+
+test('buildCampaignExit: replied never downgrades a prior opt-out', () => {
+  const prior = { campaign: { status: 'exited', reason: 'opted_out', exit_step: 'initial', exit_channel: 'email', exited_at: '2026-07-10T00:00:00.000Z', by: 'reply-agent' } };
+  const c = buildCampaignExit('replied', prior);
+  assert.strictEqual(c.reason, 'opted_out', 'opt-out stays');
 });
 
 console.log('─'.repeat(56));

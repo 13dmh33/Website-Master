@@ -165,6 +165,39 @@ function originalPitch(brief, sent) {
       || '(original outreach not on file)';
 }
 
+// ── CAMPAIGN EXIT ───────────────────────────────────────────────────────────
+
+/** Last outreach step actually sent to this lead: d2 > d1c > d1b > d1 > initial. Exported for tests. */
+function lastCampaignStep(sent) {
+  const drip = (sent && sent.drip) || {};
+  for (const step of ['d2', 'd1c', 'd1b', 'd1']) {
+    if (drip[step] && (drip[step].email_sent_at || drip[step].sms_sent_at)) return step;
+  }
+  return 'initial';
+}
+
+/**
+ * Build the campaign-exit block for a lead the Reply Agent has handled — the
+ * flag that halts further drip/pitcher sends. reason: 'replied' (a draft was
+ * written) | 'opted_out' (unsubscribe/clear-no). Idempotent: preserves the
+ * first exit's timestamp + step, and an opt-out always wins over a prior
+ * 'replied'. Exported for tests.
+ */
+function buildCampaignExit(reason, sent) {
+  const prior = (sent && sent.campaign && sent.campaign.status === 'exited') ? sent.campaign : null;
+  const finalReason = prior
+    ? (reason === 'opted_out' ? 'opted_out' : prior.reason)  // opt-out outranks replied
+    : reason;
+  return {
+    status:       'exited',
+    reason:       finalReason,
+    exit_step:    prior ? prior.exit_step   : lastCampaignStep(sent),
+    exit_channel: 'email',
+    exited_at:    prior ? prior.exited_at   : new Date().toISOString(),
+    by:           'reply-agent'
+  };
+}
+
 // ── STATE + RECORD UPDATES ──────────────────────────────────────────────────
 
 /** Apply a batch of {leadId, status} updates to state.json in a single write. */
@@ -173,9 +206,16 @@ function applyStateUpdates(updates) {
   try {
     const state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
     const now   = new Date().toISOString();
-    for (const { leadId, status } of updates) {
+    for (const { leadId, status, campaign } of updates) {
       const entry = (state.queue || []).find(l => l.lead_id === leadId);
-      if (entry) { entry.status = status; entry.reply_received_at = now; }
+      if (entry) {
+        entry.status = status;
+        entry.reply_received_at = now;
+        if (campaign) entry.campaign_exit = {
+          reason: campaign.reason, step: campaign.exit_step,
+          channel: campaign.exit_channel, at: campaign.exited_at
+        };
+      }
     }
     fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
   } catch (e) {
@@ -410,12 +450,13 @@ async function main() {
         processed.add(c.messageId); skipped++; continue;
       }
       if (intent === 'stop' || intent === 'negative') {
-        log(`✗ Opt-out from ${brief.business_name} ("${leadBody.slice(0, 40)}") — marked unsubscribed, no draft`);
+        log(`✗ Opt-out from ${brief.business_name} ("${leadBody.slice(0, 40)}") — marked unsubscribed, exited campaign, no draft`);
+        const campaign = buildCampaignExit('opted_out', loadSentRecord(c.lead.sentPath));
         updateSentRecord(c.lead.sentPath, {
           status: 'unsubscribed', unsubscribed_at: new Date().toISOString(),
-          reply_channel: 'email', reply_from: c.fromAddr, reply_text: leadBody
+          reply_channel: 'email', reply_from: c.fromAddr, reply_text: leadBody, campaign
         });
-        stateUpdates.push({ leadId: c.lead.leadId, status: 'unsubscribed' });
+        stateUpdates.push({ leadId: c.lead.leadId, status: 'unsubscribed', campaign });
         processed.add(c.messageId); optedOut++; continue;
       }
 
@@ -461,12 +502,13 @@ async function main() {
           log(`DRY RUN — would append draft for ${brief.business_name} ($${cost.toFixed(5)})`);
         } else {
           await imap.append(draftsPath, mime, ['\\Draft']);
+          const campaign = buildCampaignExit('replied', sent);
           updateSentRecord(c.lead.sentPath, {
             status: 'reply_drafted', replied_at: new Date().toISOString(),
             reply_channel: 'email', reply_from: c.fromAddr, reply_subject: c.subject,
-            reply_text: leadBody, draft_intent: out.intent, draft_flag: out.needs_human_note || ''
+            reply_text: leadBody, draft_intent: out.intent, draft_flag: out.needs_human_note || '', campaign
           });
-          stateUpdates.push({ leadId: c.lead.leadId, status: 'reply_drafted' });
+          stateUpdates.push({ leadId: c.lead.leadId, status: 'reply_drafted', campaign });
           log(`✓ Draft in Drafts for ${brief.business_name} ($${cost.toFixed(5)})`);
         }
         processed.add(c.messageId);
@@ -499,7 +541,7 @@ async function main() {
 }
 
 // Exported for unit tests; only run when invoked directly.
-module.exports = { stripQuotedAndSignature, buildDraftMime, foldMessageId, htmlToText, encodeHeaderWord };
+module.exports = { stripQuotedAndSignature, buildDraftMime, foldMessageId, htmlToText, encodeHeaderWord, buildCampaignExit, lastCampaignStep };
 
 if (require.main === module) {
   main().catch(err => { console.error('Unexpected error:', err.message); process.exit(1); });

@@ -178,6 +178,16 @@ function loadApprovedBriefs(config) {
 
       const sentPath = path.join(MESSAGES_DIR, `${data.lead_id}-sent.json`);
 
+      // Never (re)send to a lead that has exited the campaign — the Reply Agent
+      // flags a reply/opt-out with campaign.status = 'exited'. Closes the window
+      // where a dual-channel lead replies on one channel before the other sends.
+      if (fs.existsSync(sentPath)) {
+        try {
+          const s = JSON.parse(fs.readFileSync(sentPath, 'utf8'));
+          if (s.campaign && s.campaign.status === 'exited') continue;
+        } catch { /* fall through to normal handling */ }
+      }
+
       if (channelArg) {
         // Restrict to a single channel, bypassing primary/secondary delay gating
         if (data.channel !== channelArg && data.secondary_channel !== channelArg) continue;

@@ -1,6 +1,6 @@
 # Trevo Advisors — Project Status
 
-**Last updated:** 2026-06-03 (session 2)
+**Last updated:** 2026-07-17
 **Branch:** `main` — all branches merged and live
 
 ---
@@ -21,7 +21,8 @@
 | reply-classifier.js | Live | Container — keyword intent, zero API cost |
 | dashboard.js | Live | Container — terminal pipeline view |
 | webhook.js | Live | Mac only — Twilio inbound SMS, HMAC-SHA1 (needs ngrok) |
-| poller.js | Live | Mac only — IMAP email reply poller |
+| poller.js | ⚠️ Superseded | Mac only — IMAP email reply poller; replaced by reply-agent.js (don't cron both) |
+| reply-agent.js | Live (on main) | Mac only — inbound Zoho reply → GAP-selling Haiku draft into Zoho Drafts, review-first, $1/mo cap; needs `npm install imapflow mailparser` |
 | website/ | **Deployed** | Merged to main 2026-06-03 — Netlify auto-deploy in progress |
 
 ## Website Pages (trevoadvisors.com)

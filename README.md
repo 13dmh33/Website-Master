@@ -43,7 +43,8 @@ See daily workflow below.
 - [x] `scripts/reply-classifier.js` — keyword intent classifier, zero API cost
 - [x] `scripts/dashboard.js` — terminal pipeline view with color-coded status
 - [x] `scripts/webhook.js` — Twilio inbound SMS webhook + HMAC-SHA1 validation *(run on Mac)*
-- [x] `scripts/poller.js` — IMAP email reply poller via imapflow *(run on Mac)*
+- [x] `scripts/poller.js` — IMAP email reply poller via imapflow *(run on Mac; superseded by reply-agent.js)*
+- [x] `scripts/reply-agent.js` — inbound Zoho reply → GAP-selling Haiku draft into Zoho Drafts, review-first (nothing auto-sent), $1/mo cap *(run on Mac; needs `npm install imapflow mailparser`)*
 - [x] `config/templates.json` — pre-approved template vault (s1–s6, e1–e5)
 - [x] `config/template-stats.json` — reply rate tracking per template
 - [x] **First real send** — 18/19 Denver electricians SMS sent 2026-06-01 via Twilio

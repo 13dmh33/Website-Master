@@ -35,25 +35,42 @@ echo "────────────────────────�
 
 # ── STEP 1: Scout ────────────────────────────────────────────────────────────
 echo ""
-echo "[1/7] Scout — scraping $TRADE leads in $CITY..."
+echo "[1/8] Scout — scraping $TRADE leads in $CITY..."
 node scripts/scout.js --city "$CITY" --trade "$TRADE" --force
 echo "✓ Scout done"
 
-# ── STEP 2: Diagnoser ────────────────────────────────────────────────────────
+# ── STEP 2: Free enrichment (owner + contact, BEFORE paid Apollo) ─────────────
+# "Free before paid": fill owner name / email / phone / socials from free sources
+# so Diagnoser can route more leads to email. All are additive (never overwrite)
+# and safe to re-run. Guarded with `|| true` — enrichment is best-effort and must
+# never abort the outreach run. Mac-only (these APIs are blocked from the container).
 echo ""
-echo "[2/7] Diagnoser — generating briefs for new leads..."
+echo "[2/8] Enrichment — free owner/contact lookup before paid steps..."
+# Owner NAME (+ CO licensure) from public records — works with NO website. Additive.
+node scripts/owner-resolver.js --source co-sos  --live || true
+node scripts/owner-resolver.js --source co-dora --live || true
+# Email / phone / name / socials from the lead's OWN website (has-website leads).
+node scripts/contact-scraper.js --deep || true
+# Owner name + domain → ranked email guesses. Staged to email_candidates for review;
+# NOT auto-promoted to outreach (add --trust-mx to promote top MX-gated guesses).
+node scripts/email-permuter.js --live || true
+echo "✓ Enrichment done"
+
+# ── STEP 3: Diagnoser ────────────────────────────────────────────────────────
+echo ""
+echo "[3/8] Diagnoser — generating briefs for new leads..."
 node scripts/diagnoser.js --force
 echo "✓ Diagnoser done"
 
-# ── STEP 3: Checker ──────────────────────────────────────────────────────────
+# ── STEP 4: Checker ──────────────────────────────────────────────────────────
 echo ""
-echo "[3/7] Checker — evaluating and approving messages..."
+echo "[4/8] Checker — evaluating and approving messages..."
 node scripts/checker.js --force
 echo "✓ Checker done"
 
-# ── STEP 4: Builder ──────────────────────────────────────────────────────────
+# ── STEP 5: Builder ──────────────────────────────────────────────────────────
 echo ""
-echo "[4/7] Builder — generating Lovable prompts for top 5 leads..."
+echo "[5/8] Builder — generating Lovable prompts for top 5 leads..."
 node scripts/builder.js --force
 echo ""
 echo "  ► MANUAL STEP: Copy each prompt from /mockups/*-lovable-prompt.txt"
@@ -63,9 +80,9 @@ echo "    node scripts/builder.js --submit --lead LEAD_ID --url LOVABLE_URL"
 echo ""
 read -rp "  Press Enter when all mockups are submitted (or skip with Enter)..."
 
-# ── STEP 5: Filmer ───────────────────────────────────────────────────────────
+# ── STEP 6: Filmer ───────────────────────────────────────────────────────────
 echo ""
-echo "[5/7] Filmer — generating Loom recording instructions..."
+echo "[6/8] Filmer — generating Loom recording instructions..."
 node scripts/filmer.js --force
 echo ""
 echo "  ► MANUAL STEP: Record a 60-second Loom for each mockup."
@@ -75,28 +92,28 @@ echo "    node scripts/filmer.js --submit --lead LEAD_ID --url loom:LOOM_URL"
 echo ""
 read -rp "  Press Enter when all videos are submitted (or skip with Enter)..."
 
-# ── STEP 6: Pitcher ──────────────────────────────────────────────────────────
+# ── STEP 7: Pitcher ──────────────────────────────────────────────────────────
 echo ""
 if [ "$DRY_RUN" = "--dry-run" ]; then
-  echo "[6/7] Pitcher — DRY RUN (previewing messages, nothing sent)..."
+  echo "[7/8] Pitcher — DRY RUN (previewing messages, nothing sent)..."
   node scripts/pitcher.js --force --dry-run
   echo ""
   echo "  ► Dry run complete. Remove --dry-run from your command to send for real."
 else
-  echo "[6/7] Pitcher — sending approved messages..."
+  echo "[7/8] Pitcher — sending approved messages..."
   node scripts/pitcher.js --force
   echo "✓ Pitcher done"
 fi
 
-# ── STEP 7: Drip ─────────────────────────────────────────────────────────────
+# ── STEP 8: Drip ─────────────────────────────────────────────────────────────
 echo ""
 if [ "$DRY_RUN" = "--dry-run" ]; then
-  echo "[7/7] Drip — DRY RUN (previewing follow-ups, nothing sent)..."
+  echo "[8/8] Drip — DRY RUN (previewing follow-ups, nothing sent)..."
   node scripts/drip.js --force --dry-run
   echo ""
   echo "  ► Dry run complete. Remove --dry-run to send for real."
 else
-  echo "[7/7] Drip — sending follow-up sequence..."
+  echo "[8/8] Drip — sending follow-up sequence..."
   node scripts/drip.js --force
   echo "✓ Drip done"
 fi

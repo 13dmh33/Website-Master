@@ -1,0 +1,40 @@
+[
+  {
+    "entityName": "RELIABLE PLUMBING SERVICES LLC",
+    "firstName": "MICHAEL",
+    "middleName": "J",
+    "lastName": "TORRES",
+    "city": "Aurora",
+    "state": "CO",
+    "mailZipCode": "80012",
+    "licensePrefix": "PC",
+    "subCategory": "Plumbing Contractor",
+    "licenseNumber": "PC.0012345",
+    "licenseStatusDescription": "Active",
+    "specialty": "Plumbing",
+    "linkToVerifyLicense": "https://apps2.colorado.gov/dora/licensing/lookup/licenselookup.aspx?lic=PC.0012345"
+  },
+  {
+    "entityName": "MILE HIGH ELECTRIC LLC",
+    "firstName": "SARAH",
+    "lastName": "NGUYEN",
+    "city": "Aurora",
+    "state": "CO",
+    "licensePrefix": "EC",
+    "subCategory": "Electrical Contractor",
+    "licenseNumber": "EC.0098765",
+    "licenseStatusDescription": "Active",
+    "specialty": "Electrical"
+  },
+  {
+    "entityName": "",
+    "firstName": "DANA",
+    "lastName": "WEST",
+    "city": "Denver",
+    "state": "CO",
+    "licensePrefix": "MP",
+    "subCategory": "Master Plumber",
+    "licenseNumber": "MP.0055555",
+    "licenseStatusDescription": "Active"
+  }
+]

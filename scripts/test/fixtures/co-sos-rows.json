@@ -1,0 +1,40 @@
+[
+  {
+    "entityid": "20091234567",
+    "entityname": "RELIABLE PLUMBING SERVICES LLC",
+    "principalcity": "Aurora",
+    "principalstate": "CO",
+    "principalzipcode": "80012",
+    "entitystatus": "Good Standing",
+    "entitytype": "Limited Liability Company",
+    "agentfirstname": "MICHAEL",
+    "agentmiddlename": "J",
+    "agentlastname": "TORRES",
+    "mailingaddress1": "1420 S Havana St",
+    "mailingcity": "Aurora",
+    "mailingstate": "CO",
+    "mailingzipcode": "80012",
+    "entityformdate": "2009-04-15T00:00:00.000"
+  },
+  {
+    "entityid": "20185550000",
+    "entityname": "RELIABLE PLUMBING & HEATING LLC",
+    "principalcity": "Grand Junction",
+    "principalstate": "CO",
+    "entitystatus": "Good Standing",
+    "entitytype": "Limited Liability Company",
+    "agentfirstname": "DANA",
+    "agentlastname": "WEST"
+  },
+  {
+    "entityid": "20200009999",
+    "entityname": "RELIABLE PLUMBING CO",
+    "principalcity": "Aurora",
+    "principalstate": "CO",
+    "entitystatus": "Delinquent",
+    "entitytype": "Limited Liability Company",
+    "agentorganizationname": "NORTHWEST REGISTERED AGENT SERVICE INC",
+    "agentfirstname": "",
+    "agentlastname": ""
+  }
+]

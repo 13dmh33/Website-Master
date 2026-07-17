@@ -18,9 +18,10 @@
  *                                                     O  unsubscribe date
  *                                                     P  notes ← user-editable
  *
- * AllContacts layout (A–K):
+ * AllContacts layout (A–L):
  *  A  company   B  trade   C  city   D  phone   E  email   F  website
- *  G  channel   H  status  I  rating  J  reviews  K  demo URL
+ *  G  channel   H  status  I  rating  J  reviews  K  demo URL  L  socials
+ *  (socials sourced from the lead record; written by contact-scraper --deep + directory-scraper)
  *
  * Column F (status) allowed values: sent / replied / quoted / customer / lost / do not contact
  * Columns F and P are PRESERVED on every SentLog update — never overwritten by the script.
@@ -46,10 +47,13 @@ const {
   sheetsGetAll, sheetsBatchUpdate, sheetsAppend, ensureTab,
 } = require('./lib/google-sheets');
 
+const { formatSocials } = require('./lib/social-extractor');
+
 const ROOT         = path.join(__dirname, '..');
 const STATE_PATH   = path.join(ROOT, 'state.json');
 const QUEUE_DIR    = path.join(ROOT, 'queue');
 const MESSAGES_DIR = path.join(ROOT, 'messages');
+const LEADS_DIR    = path.join(ROOT, 'leads');
 
 const DRY_RUN  = process.argv.includes('--dry-run');
 const CSV_MODE = process.argv.includes('--csv');
@@ -81,7 +85,7 @@ const ALLCONTACTS_TAB  = 'AllContacts';
 const CHANGELOG_HEADER = ['timestamp', 'action', 'company', 'email', 'change'];
 const ALLCONTACTS_HEADER = [
   'company', 'trade', 'city', 'phone', 'email', 'website',
-  'channel', 'status', 'rating', 'reviews', 'demo URL',
+  'channel', 'status', 'rating', 'reviews', 'demo URL', 'socials',
 ];
 // Sheet ID + Google Sheets client live in ./lib/google-sheets (DEFAULT_SHEET_ID
 // overridable via SHEET_ID in .env.local).
@@ -189,6 +193,25 @@ function readJsonSafe(p) {
   try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return null; }
 }
 
+// Socials live on the lead record (leads/*.json) — written additively by
+// contact-scraper --deep and directory-scraper. Index them by lead_id so the
+// AllContacts rebuild can surface them to the CRM (formatted "network: url | …").
+function buildSocialsIndex() {
+  const index = new Map();
+  let files = [];
+  try { files = fs.readdirSync(LEADS_DIR).filter(f => f.endsWith('.json')); } catch { return index; }
+  for (const file of files) {
+    const arr = readJsonSafe(path.join(LEADS_DIR, file));
+    if (!Array.isArray(arr)) continue;
+    for (const rec of arr) {
+      if (rec && rec.lead_id && rec.socials && !index.has(rec.lead_id)) {
+        index.set(rec.lead_id, formatSocials(rec.socials));
+      }
+    }
+  }
+  return index;
+}
+
 function wasEmailSent(leadId, brief) {
   const sent = readJsonSafe(path.join(MESSAGES_DIR, `${leadId}-sent.json`));
   if (sent && typeof sent.email_sent === 'boolean') return sent.email_sent === true;
@@ -208,6 +231,7 @@ async function main() {
   if (!state || !Array.isArray(state.queue)) {
     console.error('Could not read state.json queue.'); process.exit(1);
   }
+  const socialsByLead = buildSocialsIndex();
 
   // Collect every lead ever sent via email (regardless of current status)
   const pending = [];
@@ -257,6 +281,7 @@ async function main() {
         brief.rating        != null ? String(brief.rating)       : '',
         brief.review_count  != null ? String(brief.review_count) : '',
         brief.demo_url      || '',
+        socialsByLead.get(entry.lead_id) || '',
       ]);
     }
     const acPath = path.join(ROOT, 'AllContacts.csv');
@@ -409,12 +434,13 @@ async function main() {
       brief.rating        != null ? String(brief.rating)       : '',
       brief.review_count  != null ? String(brief.review_count) : '',
       brief.demo_url      || '',
+      socialsByLead.get(entry.lead_id) || '',
     ]);
   }
 
   // Clear and rewrite AllContacts from scratch (full snapshot every run)
   await sheetsBatchUpdate(token, sheetId, [{
-    range:  `${quoteTab(ALLCONTACTS_TAB)}!A1:K${allRows.length + 200}`,
+    range:  `${quoteTab(ALLCONTACTS_TAB)}!A1:L${allRows.length + 200}`,
     values: allRows,
   }]);
   console.log(`AllContacts: wrote ${allRows.length - 1} leads (all channels).`);

@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trevo Advisors — funnel dashboard</title>
+<style>
+  :root {
+    --navy: #0A1228; --teal: #00C8AF; --deep-teal: #008870;
+    --white: #FFFFFF; --muted: #8BA8C4; --border: rgba(255,255,255,0.08);
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--navy); color: var(--white);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    margin: 0; padding: 2.5rem 1.5rem 4rem; line-height: 1.5;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
+  h1 { font-size: 1.5rem; margin-bottom: 0.25rem; }
+  .meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; }
+  h2 { font-size: 1.1rem; margin: 2.5rem 0 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+  .callout {
+    background: rgba(0,200,175,0.08); border: 1px solid var(--teal);
+    border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: 1.5rem;
+  }
+  .callout .headline { font-weight: 600; color: var(--teal); margin-bottom: 0.35rem; }
+  .callout .note { color: var(--muted); font-size: 0.9rem; }
+  .funnel-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; }
+  .funnel-label { width: 170px; flex-shrink: 0; font-size: 0.9rem; color: var(--muted); }
+  .funnel-bar-track { flex: 1; background: var(--border); border-radius: 4px; height: 22px; overflow: hidden; }
+  .funnel-bar { background: linear-gradient(90deg, var(--deep-teal), var(--teal)); height: 100%; min-width: 2px; }
+  .funnel-count { width: 50px; text-align: right; font-variant-numeric: tabular-nums; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  th, td { text-align: left; padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-weight: 500; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.03em; }
+  .apollo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+  .apollo-card { border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.25rem; }
+  .apollo-card h3 { margin: 0 0 0.75rem; font-size: 0.95rem; }
+  dl { margin: 0; display: grid; grid-template-columns: 1fr auto; gap: 0.35rem 0.75rem; }
+  dt { color: var(--muted); font-size: 0.85rem; }
+  dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+  .caveats { color: var(--muted); font-size: 0.85rem; }
+  .caveats li { margin-bottom: 0.5rem; }
+  .side-stat { color: var(--muted); font-size: 0.85rem; margin-top: 0.5rem; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Funnel + Apollo hit-rate dashboard</h1>
+    <div class="meta">Generated 2026-07-17T23:13:46.905Z</div>
+
+    <div class="callout">
+      <div class="headline">Biggest drop-off: Checked (approved) &rarr; Sent — 458 leads lost (26.5% conversion)</div>
+      <div class="note">This is very likely a send-capacity limit, not a quality problem — Pitcher sends at most 30 per day, and 623 leads are already approved and waiting.</div>
+    </div>
+
+    <h2>Funnel</h2>
+    
+      <div class="funnel-row">
+        <div class="funnel-label">Scouted</div>
+        <div class="funnel-bar-track">
+          <div class="funnel-bar" style="width:100%"></div>
+        </div>
+        <div class="funnel-count">636</div>
+      </div>
+
+      <div class="funnel-row">
+        <div class="funnel-label">Diagnosed</div>
+        <div class="funnel-bar-track">
+          <div class="funnel-bar" style="width:98%"></div>
+        </div>
+        <div class="funnel-count">625</div>
+      </div>
+
+      <div class="funnel-row">
+        <div class="funnel-label">Checked (approved)</div>
+        <div class="funnel-bar-track">
+          <div class="funnel-bar" style="width:98%"></div>
+        </div>
+        <div class="funnel-count">623</div>
+      </div>
+
+      <div class="funnel-row">
+        <div class="funnel-label">Sent</div>
+        <div class="funnel-bar-track">
+          <div class="funnel-bar" style="width:26%"></div>
+        </div>
+        <div class="funnel-count">165</div>
+      </div>
+
+      <div class="funnel-row">
+        <div class="funnel-label">Drip — day 4</div>
+        <div class="funnel-bar-track">
+          <div class="funnel-bar" style="width:3%"></div>
+        </div>
+        <div class="funnel-count">18</div>
+      </div>
+
+      <div class="funnel-row">
+        <div class="funnel-label">Drip — day 8</div>
+        <div class="funnel-bar-track">
+          <div class="funnel-bar" style="width:0%"></div>
+        </div>
+        <div class="funnel-count">1</div>
+      </div>
+
+      <div class="funnel-row">
+        <div class="funnel-label">Drip — day 12</div>
+        <div class="funnel-bar-track">
+          <div class="funnel-bar" style="width:0%"></div>
+        </div>
+        <div class="funnel-count">0</div>
+      </div>
+
+      <div class="funnel-row">
+        <div class="funnel-label">Drip — day 19</div>
+        <div class="funnel-bar-track">
+          <div class="funnel-bar" style="width:0%"></div>
+        </div>
+        <div class="funnel-count">0</div>
+      </div>
+
+      <div class="funnel-row">
+        <div class="funnel-label">Replied</div>
+        <div class="funnel-bar-track">
+          <div class="funnel-bar" style="width:0%"></div>
+        </div>
+        <div class="funnel-count">0</div>
+      </div>
+
+      <div class="funnel-row">
+        <div class="funnel-label">Booking reply sent</div>
+        <div class="funnel-bar-track">
+          <div class="funnel-bar" style="width:0%"></div>
+        </div>
+        <div class="funnel-count">0</div>
+      </div>
+    <div class="side-stat">9 lead(s) currently in mockup production (Builder/Filmer — not a required funnel gate, most leads skip it)</div>
+
+    <h2>Conversion by stage</h2>
+    
+    <table>
+      <thead><tr><th>Transition</th><th>Reached start</th><th>Reached end</th><th>Lost</th><th>Conversion</th></tr></thead>
+      <tbody>
+      <tr>
+        <td>Scouted &rarr; Diagnosed</td>
+        <td>636</td>
+        <td>625</td>
+        <td>11</td>
+        <td>98.3%</td>
+      </tr>
+
+      <tr>
+        <td>Diagnosed &rarr; Checked (approved)</td>
+        <td>625</td>
+        <td>623</td>
+        <td>2</td>
+        <td>99.7%</td>
+      </tr>
+
+      <tr>
+        <td>Checked (approved) &rarr; Sent</td>
+        <td>623</td>
+        <td>165</td>
+        <td>458</td>
+        <td>26.5%</td>
+      </tr>
+
+      <tr>
+        <td>Sent &rarr; Drip — day 4</td>
+        <td>165</td>
+        <td>18</td>
+        <td>147</td>
+        <td>10.9%</td>
+      </tr>
+
+      <tr>
+        <td>Drip — day 4 &rarr; Drip — day 8</td>
+        <td>18</td>
+        <td>1</td>
+        <td>17</td>
+        <td>5.6%</td>
+      </tr>
+
+      <tr>
+        <td>Drip — day 8 &rarr; Drip — day 12</td>
+        <td>1</td>
+        <td>0</td>
+        <td>1</td>
+        <td>0%</td>
+      </tr></tbody>
+    </table>
+
+    <h2>Apollo hit rate</h2>
+    <div class="apollo-grid">
+      
+    <div class="apollo-card">
+      <h3>Phone-only leads (headline)</h3>
+      <dl>
+        <dt>Attempted</dt><dd>0</dd>
+        <dt>Hits</dt><dd>0</dd>
+        <dt>Hit rate</dt><dd>n/a</dd>
+        <dt>Cost per successful email</dt><dd>n/a</dd>
+      </dl>
+    </div>
+      
+    <div class="apollo-card">
+      <h3>Has-website leads</h3>
+      <dl>
+        <dt>Attempted</dt><dd>0</dd>
+        <dt>Hits</dt><dd>0</dd>
+        <dt>Hit rate</dt><dd>n/a</dd>
+        <dt>Cost per successful email</dt><dd>n/a</dd>
+      </dl>
+    </div>
+    </div>
+
+    <h2>What this dashboard cannot measure yet</h2>
+    <ul class="caveats">
+      <li><strong>Opened:</strong> no email-open tracking exists anywhere in the pipeline — this stage cannot be measured (see DISCOVERY.md)</li>
+      <li><strong>Booked:</strong> no signal for an actual won deal exists yet — "hot" only means a booking-slots reply was auto-sent, not that a call was booked (see DISCOVERY.md)</li>
+      <li><strong>Closed:</strong> every observed "closed" lead was a data-quality rejection, not a sale — do not read closedCount as deals won (11 currently closed, all data-quality rejections as of this build).</li>
+      <li><strong>Has-website Apollo figures:</strong> leads-web/ is not currently tracked in git, so the scheduled daily refresh (which runs from a fresh checkout) only sees the phone-only breakdown reliably — has-website numbers may read zero in the automated run even when real local data exists.</li>
+      <li>Apollo and funnel instrumentation measure forward from deploy — no historical backfill.</li>
+    </ul>
+  </div>
+</body>
+</html>

@@ -1,0 +1,148 @@
+{
+  "generatedAt": "2026-07-17T23:13:46.905Z",
+  "funnel": {
+    "rawCounts": {
+      "mockup_pending": 9,
+      "checked": 458,
+      "sent": 145,
+      "diagnosed": 2,
+      "drip_d1_sent": 17,
+      "unsubscribed": 2,
+      "drip_d1b_sent": 1,
+      "closed": 11
+    },
+    "cumulativeReached": {
+      "scouted": 636,
+      "diagnosed": 625,
+      "checked": 623,
+      "sent": 165,
+      "drip_d1_sent": 18,
+      "drip_d1b_sent": 1,
+      "drip_d1c_sent": 0,
+      "drip_d2_sent": 0,
+      "replied": 0,
+      "hot": 0
+    },
+    "transitions": [
+      {
+        "from": "scouted",
+        "to": "diagnosed",
+        "countFrom": 636,
+        "countTo": 625,
+        "lost": 11,
+        "conversionPct": 98.3
+      },
+      {
+        "from": "diagnosed",
+        "to": "checked",
+        "countFrom": 625,
+        "countTo": 623,
+        "lost": 2,
+        "conversionPct": 99.7
+      },
+      {
+        "from": "checked",
+        "to": "sent",
+        "countFrom": 623,
+        "countTo": 165,
+        "lost": 458,
+        "conversionPct": 26.5
+      },
+      {
+        "from": "sent",
+        "to": "drip_d1_sent",
+        "countFrom": 165,
+        "countTo": 18,
+        "lost": 147,
+        "conversionPct": 10.9
+      },
+      {
+        "from": "drip_d1_sent",
+        "to": "drip_d1b_sent",
+        "countFrom": 18,
+        "countTo": 1,
+        "lost": 17,
+        "conversionPct": 5.6
+      },
+      {
+        "from": "drip_d1b_sent",
+        "to": "drip_d1c_sent",
+        "countFrom": 1,
+        "countTo": 0,
+        "lost": 1,
+        "conversionPct": 0
+      },
+      {
+        "from": "drip_d1c_sent",
+        "to": "drip_d2_sent",
+        "countFrom": 0,
+        "countTo": 0,
+        "lost": 0,
+        "conversionPct": null
+      },
+      {
+        "from": "drip_d2_sent",
+        "to": "replied",
+        "countFrom": 0,
+        "countTo": 0,
+        "lost": 0,
+        "conversionPct": null
+      },
+      {
+        "from": "replied",
+        "to": "hot",
+        "countFrom": 0,
+        "countTo": 0,
+        "lost": 0,
+        "conversionPct": null
+      }
+    ],
+    "biggestDropoff": {
+      "from": "checked",
+      "to": "sent",
+      "countFrom": 623,
+      "countTo": 165,
+      "lost": 458,
+      "conversionPct": 26.5
+    },
+    "worstConversionRate": {
+      "from": "drip_d1b_sent",
+      "to": "drip_d1c_sent",
+      "countFrom": 1,
+      "countTo": 0,
+      "lost": 1,
+      "conversionPct": 0
+    },
+    "mockupInProduction": 9,
+    "closedCount": 11,
+    "unmeasured": {
+      "opened": "no email-open tracking exists anywhere in the pipeline — this stage cannot be measured (see DISCOVERY.md)",
+      "booked": "no signal for an actual won deal exists yet — \"hot\" only means a booking-slots reply was auto-sent, not that a call was booked (see DISCOVERY.md)",
+      "closedMeansWon": "every observed \"closed\" lead was a data-quality rejection, not a sale — do not read closedCount as deals won"
+    }
+  },
+  "apollo": {
+    "phoneOnly": {
+      "attempted": 0,
+      "hits": 0,
+      "misses": 0,
+      "hitRatePct": null,
+      "creditsSpent": 0,
+      "costUsd": 0,
+      "costPerHitUsd": null
+    },
+    "hasWebsite": {
+      "attempted": 0,
+      "hits": 0,
+      "misses": 0,
+      "hitRatePct": null,
+      "creditsSpent": 0,
+      "costUsd": 0,
+      "costPerHitUsd": null
+    }
+  },
+  "context": {
+    "pitcherDailyLimit": 30,
+    "leadsWebTrackedInGit": false
+  }
+}

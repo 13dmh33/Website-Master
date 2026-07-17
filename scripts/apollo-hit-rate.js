@@ -24,49 +24,15 @@
 
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.local') });
 
-const fs = require('fs');
-const path = require('path');
-
 const { computeApolloMetrics } = require('./lib/apollo-metrics');
+const { loadPhoneOnlyLeads, loadHasWebsiteLeads } = require('./lib/lead-files');
 const {
   DEFAULT_SHEET_ID, loadServiceAccount, getAccessToken, ensureTab, sheetsAppend,
 } = require('./lib/google-sheets');
 
-const ROOT = path.join(__dirname, '..');
-const LEADS_DIR = path.join(ROOT, 'leads');
-const LEADS_WEB_DIR = path.join(ROOT, 'leads-web');
 const TAB_NAME = 'ApolloMetrics';
 
 const noSheet = process.argv.includes('--no-sheet');
-
-function readJsonArraySafe(filePath) {
-  try {
-    const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-    return Array.isArray(data) ? data : [];
-  } catch {
-    return [];
-  }
-}
-
-/** no-website mode — genuinely phone-only leads. */
-function loadPhoneOnlyLeads() {
-  if (!fs.existsSync(LEADS_DIR)) return [];
-  const files = fs.readdirSync(LEADS_DIR).filter(f => f.endsWith('.json'));
-  return files.flatMap(f => readJsonArraySafe(path.join(LEADS_DIR, f)));
-}
-
-/**
- * has-website mode — a real site exists, Apollo was used to find an email
- * on it. Hits move out of needs-email-*.json into {basename}.json (see
- * enricher.js's moveHasWebsiteLeadToAuditorReady); misses stay in
- * needs-email-*.json. Scanning both, filtered to apolloAttempted === true,
- * captures each lead exactly once regardless of which file it landed in.
- */
-function loadHasWebsiteLeads() {
-  if (!fs.existsSync(LEADS_WEB_DIR)) return [];
-  const files = fs.readdirSync(LEADS_WEB_DIR).filter(f => f.endsWith('.json'));
-  return files.flatMap(f => readJsonArraySafe(path.join(LEADS_WEB_DIR, f)));
-}
 
 function formatPct(v) { return v === null ? 'n/a' : `${v}%`; }
 function formatUsd(v) { return v === null ? 'n/a' : `$${v.toFixed(4)}`; }

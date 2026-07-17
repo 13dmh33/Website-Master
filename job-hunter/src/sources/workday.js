@@ -1,18 +1,17 @@
-// workday.js — STUB, intentionally not implemented in v1.
+// workday.js — STUB, intentionally not implemented.
 //
-// Large industrial employers (e.g. Daikin, the HVAC-distributor targets Dave
-// flagged) often run Workday, which needs a per-tenant endpoint rather than one
-// public board API. Per the coverage note in the spec, this is deliberately
-// deferred: we do NOT build it in v1. When a specific named employer justifies
-// it, add that tenant here (host + tenant + career-site path) and normalize its
-// postings into the same shape every other source returns.
-//
-// Normalized shape to target when this is built:
-//   { source: 'workday', company, title, location, remote, url, description, postedAt }
+// Researched 2026-07-16: Workday exposes an unauthenticated JSON endpoint per
+// tenant (POST {tenant}.{dc}.myworkdayjobs.com/wday/cxs/{tenant}/{site}/jobs),
+// technically reachable without login. But Workday's Terms of Service and End
+// User Agreement explicitly prohibit crawling/scraping their sites — unlike
+// Greenhouse's Job Board API, this isn't a published, sanctioned public API,
+// it's the internal endpoint powering each tenant's own career-site JS. Same
+// standard applied to LinkedIn/Indeed (login walls / ToS) elsewhere in this
+// pipeline: not built, not planned, regardless of employer demand.
 
 export async function pullWorkday() {
-  // Not implemented in v1 — returns nothing so the orchestrator treats Workday
-  // as simply "no results" rather than an error.
+  // Not implemented, by design — returns nothing so the orchestrator treats
+  // Workday as simply "no results" rather than an error.
   return [];
 }
 

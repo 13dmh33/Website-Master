@@ -11,6 +11,47 @@ ever. The only outbound action is emailing the digest to you.
 
 ---
 
+## Status (as of 2026-07-17)
+
+**Built and verified working end-to-end** — real Adzuna pulls, free rules
+filter, Haiku scoring, Sonnet tailoring, digest preview, all confirmed against
+Dave's real resume with no fabricated claims.
+
+**Live:**
+- Resume ingested, `preferences.md` set to Dave's real target (director/sr.
+  manager/VP across national accounts, sales, sales planning, finance,
+  strategy; $160k+ base; favor tech/HVAC/AI/large corporations)
+- `ANTHROPIC_API_KEY`, `ADZUNA_APP_ID`/`ADZUNA_APP_KEY` configured
+- Google Sheet tracker live — writes to a **"Jobs" tab inside "Trevo Propsect
+  list"** (shared with the service account via "anyone with the link can
+  edit"), not a dedicated Missy-only sheet. Feedback calibration is active.
+
+**Not yet live:**
+- Email sending — `ZOHO_SMTP_*` unset, digest previews to terminal only.
+  Point it at Gmail (`smtp.gmail.com`, an App Password for the target inbox)
+  or any other SMTP provider whenever ready.
+
+**Bugs found and fixed this round** (all covered by regression tests in
+`npm test`, 10/10 passing):
+- JSON parser choked on unescaped control characters in long Markdown
+  tailoring output (was crashing tailoring on ~37% of top matches)
+- Scoring prompt now weights title/seniority mismatch into the numeric fit
+  score, not just the rationale (was scoring a step-below-target posting 87/100)
+- Tailoring prompt blocks pairing a verified fact with an unverified adjacent
+  one in the same phrase/bullet
+- Near-dup merge now collapses "remote" postings listed under different
+  cities (was producing duplicate digest entries for the same role)
+- `jobId()` prefers Adzuna's stable ad id over its `redirect_url`, which can
+  carry a per-request tracking token — was silently breaking "nothing repeats
+  in a digest" and defeating the score cache for Adzuna-sourced jobs
+- Haiku scores are now cached across runs (fingerprinted on profile +
+  preferences) — a job already scored isn't re-sent to Haiku on a later run
+- `cache_control` added to the repeated profile+preferences prefix on both
+  scoring and tailoring calls — safe no-op below the model's cache minimum,
+  real savings above it
+
+---
+
 ## What she does, in order
 
 1. **ingest** — parse your resume into `data/master-profile.json` and scaffold
@@ -102,7 +143,7 @@ Three layers, cheapest first:
    job source. Costs a few cents. Open the files it writes to `out/test-claude/`
    and confirm every claim traces back to your actual resume.
 
-3. **Full pipeline dry-run (needs source keys; run on your Mac):**
+3. **Full pipeline dry-run (needs source keys):**
    ```sh
    npm run daily -- --dry-run
    ```
@@ -156,18 +197,29 @@ of waiting for the next digest. Off by default.
 
 ## Where this runs
 
-Like the other outbound tools in this repo, the network-facing stages (pulling
-jobs, calling Claude, sending email, writing the sheet) run on **Dave's Mac** —
-the remote container's outbound access is restricted, so live pulls and API
-calls are blocked there. `ingest` and all the offline logic run anywhere.
+Other tools in this repo assume network-facing stages need Dave's Mac because
+the remote container's outbound access is restricted — that assumption does
+**not** hold for Missy: real Adzuna pulls, Claude scoring/tailoring calls, and
+Google Sheets writes have all been run successfully from a remote/container
+session. If a future session hits connectivity errors on these calls, verify
+before assuming Mac-only — don't take this claim as settled either way, since
+proxy/network config can differ between environments and sessions.
 
 ## Sources and coverage
 
 Greenhouse, Lever, Ashby, and Adzuna cover most modern finance/sales roles.
-Large industrial employers (e.g. Daikin) often use **Workday**, which needs a
-per-tenant endpoint — `src/sources/workday.js` is a deliberate stub, left for a
-later phase when a specific named employer justifies it. LinkedIn and Indeed are
-**not** scraped (login walls, terms of service).
+Adzuna also re-syndicates listings from many other boards (including some
+Workday-hosted ones), so large-employer coverage isn't zero even without a
+dedicated Workday integration.
+
+**Workday is intentionally not built**, not just deferred. `src/sources/
+workday.js` remains a no-op stub. Researched 2026-07-16: Workday exposes an
+unauthenticated JSON endpoint per tenant
+(`{tenant}.{dc}.myworkdayjobs.com/wday/cxs/{tenant}/{site}/jobs`), but their
+Terms of Service and End User Agreement explicitly prohibit crawling/scraping
+their sites — this isn't a published, sanctioned public API the way
+Greenhouse's is. Same standard applied to **LinkedIn** and **Indeed** (login
+walls / ToS) — not scraped, not planned.
 
 ## Layout
 

@@ -14,6 +14,13 @@ mockups/*.txt
 # Logs
 logs/*.log
 
+# Nora runtime data — customer end-customer conversations (PII), drafts, logs.
+# Config in nora/config/customers/*.json is intentionally tracked (durable setup).
+nora/logs/*.log
+nora/state/conversations/**
+nora/state/drafts/**
+!nora/state/.gitkeep
+
 # Generated reports (local output — not tracked)
 reports/*.csv
 reports/*.json

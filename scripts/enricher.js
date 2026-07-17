@@ -24,8 +24,6 @@
  *   Basic plan: $49/mo → ~1,000 export credits
  */
 
-require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.local') });
-
 const fs    = require('fs');
 const path  = require('path');
 const https = require('https');
@@ -65,7 +63,12 @@ function loadConfig() {
       credits_used:        0,
       total_runs:          0,
       last_run:            null,
-      auto_run:            false
+      auto_run:            false,
+      stats: {
+        lifetime: { lookups: 0, found: 0, no_match: 0, errors: 0, briefs_upgraded: 0 },
+        match_rate_pct: 0,
+        last_run: null
+      }
     };
     fs.writeFileSync(CONFIG_PATH, JSON.stringify(defaults, null, 2));
     return defaults;
@@ -334,9 +337,36 @@ function upgradeBriefToEmail(leadId, email) {
 
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
+/**
+ * Fold a run's outcome into the persisted lifetime stats so Apollo's real match
+ * rate is measured over time instead of guessed. `lookups` counts resolved
+ * attempts (found + no_match); errors are transient and excluded from the rate.
+ * Pure — exported for tests.
+ */
+function mergeStats(prev, run) {
+  const s = prev && prev.lifetime
+    ? prev
+    : { lifetime: { lookups: 0, found: 0, no_match: 0, errors: 0, briefs_upgraded: 0 }, match_rate_pct: 0, last_run: null };
+  const L = s.lifetime;
+  L.found           += run.found;
+  L.no_match        += run.noMatch;
+  L.errors          += run.errors;
+  L.briefs_upgraded += run.briefsUpgraded;
+  L.lookups          = L.found + L.no_match;
+  const denom = L.found + L.no_match;
+  s.match_rate_pct = denom ? Math.round((L.found / denom) * 1000) / 10 : 0;
+  s.last_run = {
+    found: run.found, no_match: run.noMatch, errors: run.errors,
+    briefs_upgraded: run.briefsUpgraded, at: run.at || new Date().toISOString()
+  };
+  return s;
+}
+
 // ── MAIN ──────────────────────────────────────────────────────────────────────
 
 async function main() {
+  require('dotenv').config({ path: path.join(__dirname, '..', '.env.local') });
+
   console.log(`\nEnricher starting${isDry ? ' [DRY RUN]' : ''} [mode: ${mode}]`);
   console.log('─'.repeat(50));
 
@@ -422,11 +452,13 @@ async function main() {
 
   cfg.total_runs++;
   cfg.last_run = new Date().toISOString();
+  if (!isDry) cfg.stats = mergeStats(cfg.stats, { found, noMatch, errors, briefsUpgraded });
   saveConfig(cfg);
 
   writeLog('enricher', [
     `found: ${found}  no_match: ${noMatch}  errors: ${errors}`,
     `briefs_upgraded: ${briefsUpgraded}`,
+    `lifetime_match_rate: ${cfg.stats?.match_rate_pct ?? 0}%  (found ${cfg.stats?.lifetime?.found ?? 0} / ${cfg.stats?.lifetime?.lookups ?? 0} lookups)`,
     `credits_used_total: ${cfg.credits_used} / ${cfg.monthly_cap_credits}`
   ]);
 
@@ -437,6 +469,9 @@ async function main() {
   console.log(`  Errors:             ${errors}`);
   console.log(`  Briefs upgraded:    ${briefsUpgraded}  (channel sms → email)`);
   console.log(`  Credits used total: ${cfg.credits_used} / ${cfg.monthly_cap_credits}`);
+  if (!isDry && cfg.stats) {
+    console.log(`  Lifetime match rate: ${cfg.stats.match_rate_pct}%  (found ${cfg.stats.lifetime.found} / ${cfg.stats.lifetime.lookups} lookups, ${cfg.stats.lifetime.errors} errors)`);
+  }
   console.log('─'.repeat(50));
 
   if (found > 0) {
@@ -451,7 +486,12 @@ async function main() {
   }
 }
 
-main().catch(err => {
-  console.error('Unexpected error:', err.message);
-  process.exit(1);
-});
+// Exported for unit tests; only run when invoked directly.
+module.exports = { mergeStats };
+
+if (require.main === module) {
+  main().catch(err => {
+    console.error('Unexpected error:', err.message);
+    process.exit(1);
+  });
+}

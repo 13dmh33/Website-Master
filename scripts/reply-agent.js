@@ -6,11 +6,20 @@
  *
  * This SUPERSEDES scripts/poller.js (Option A — it absorbs the poller's IMAP
  * connect, Message-ID dedup, out-of-office filter, and lead matching, then adds
- * body extraction + a Haiku-drafted reply). It marks matched leads
+ * body extraction + a GAP-selling Haiku-drafted reply). It marks matched leads
  * `reply_drafted` (NOT `positive`), so mobile.js does not auto-send for email —
  * you send from Zoho. SMS replies (webhook.js) and the Nora upsell are untouched.
  *
  * Scope: KNOWN-LEAD replies only. Senders with no matching lead are skipped.
+ *
+ * Flow per run:
+ *   1. Search INBOX for messages above the last-processed UID (30-day floor on
+ *      first run), fetch envelopes only (cheap).
+ *   2. Keep new messages from known-lead senders; download the full source for
+ *      only those.
+ *   3. After the IMAP fetch is fully drained, run the classifier guardrail +
+ *      Haiku draft and APPEND each draft to the Drafts folder. (IMAP commands
+ *      are never issued while a fetch stream is open.)
  *
  * Usage:
  *   node scripts/reply-agent.js --force            (check inbox + write drafts)
@@ -23,7 +32,7 @@
  *
  * Reads:  queue/*-brief.json   messages/*-sent.json   config/reply-agent-config.json
  *         .env.local (ZOHO_EMAIL, ZOHO_APP_PASSWORD, ANTHROPIC_API_KEY)
- * Writes: Zoho "Drafts" mailbox   messages/*-sent.json   state.json
+ * Writes: Zoho Drafts mailbox   messages/*-sent.json   state.json
  *         config/reply-agent-config.json   logs/reply-agent-*.log
  */
 
@@ -50,14 +59,8 @@ function currentMonth() { const d = new Date(); return `${d.getFullYear()}-${Str
 
 function loadConfig() {
   const cfg = JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
-  if (cfg.current_month !== currentMonth()) {
-    cfg.current_month   = currentMonth();
-    cfg.spent_this_month = 0;
-  }
-  if (cfg.today !== today()) {
-    cfg.today = today();
-    cfg.processed_today = 0;
-  }
+  if (cfg.current_month !== currentMonth()) { cfg.current_month = currentMonth(); cfg.spent_this_month = 0; }
+  if (cfg.today !== today())                { cfg.today = today(); cfg.processed_today = 0; }
   return cfg;
 }
 
@@ -84,9 +87,25 @@ function log(msg) {
   fs.appendFileSync(path.join(LOGS_DIR, `reply-agent-${ts.split('T')[0]}.log`), line + '\n');
 }
 
+/** Crude HTML → text, used only when a reply has no plain-text part. Exported for tests. */
+function htmlToText(html) {
+  if (!html) return '';
+  return html
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<\/(p|div|tr|h[1-6]|li)>/gi, '\n')
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&nbsp;/gi, ' ').replace(/&amp;/gi, '&').replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>').replace(/&quot;/gi, '"').replace(/&#39;/gi, "'")
+    .replace(/[ \t]+\n/g, '\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
 /**
- * Strip quoted history and signature from a reply body so the model sees only
- * what the lead actually wrote this turn. Exported for tests.
+ * Strip quoted history and signature so the model sees only what the lead wrote
+ * this turn. Exported for tests.
  */
 function stripQuotedAndSignature(text) {
   if (!text) return '';
@@ -104,10 +123,16 @@ function stripQuotedAndSignature(text) {
     out.push(line);
   }
   let body = out.join('\n');
-  // Signature: cut at the standard "-- " delimiter or common mobile sig lines
-  body = body.split(/\n-- \n/)[0];
+  body = body.split(/\n--[ \t]?\n/)[0];                                  // "-- " sig delimiter (trailing space optional)
   body = body.replace(/\n+Sent from my (iPhone|iPad|Android|mobile).*/is, '');
   return body.trim();
+}
+
+/** RFC-2047 encode a header value if it contains non-ASCII. Exported for tests. */
+function encodeHeaderWord(s) {
+  if (!s) return s || '';
+  if (/^[\x00-\x7F]*$/.test(s)) return s;                                // pure ASCII — leave as-is
+  return `=?UTF-8?B?${Buffer.from(s, 'utf8').toString('base64')}?=`;
 }
 
 // ── LEAD LOOKUP (by sender email → lead) ────────────────────────────────────
@@ -133,7 +158,7 @@ function loadSentRecord(sentPath) {
   catch { return null; }
 }
 
-// The text we originally sent the lead — used as context so the reply is on-topic.
+/** The text we originally sent the lead — context so the reply stays on-topic. */
 function originalPitch(brief, sent) {
   return (sent && (sent.sent_message || sent.message || sent.body))
       || brief.cold_message
@@ -142,15 +167,17 @@ function originalPitch(brief, sent) {
 
 // ── STATE + RECORD UPDATES ──────────────────────────────────────────────────
 
-function updateState(leadId, status) {
+/** Apply a batch of {leadId, status} updates to state.json in a single write. */
+function applyStateUpdates(updates) {
+  if (isDryRun || updates.length === 0) return;
   try {
     const state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
-    const entry = (state.queue || []).find(l => l.lead_id === leadId);
-    if (entry) {
-      entry.status            = status;
-      entry.reply_received_at = new Date().toISOString();
-      if (!isDryRun) fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
+    const now   = new Date().toISOString();
+    for (const { leadId, status } of updates) {
+      const entry = (state.queue || []).find(l => l.lead_id === leadId);
+      if (entry) { entry.status = status; entry.reply_received_at = now; }
     }
+    fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
   } catch (e) {
     log(`WARN: could not update state.json — ${e.message}`);
   }
@@ -167,21 +194,25 @@ function updateSentRecord(sentPath, patch) {
   }
 }
 
-// ── HAIKU DRAFT ─────────────────────────────────────────────────────────────
+// ── HAIKU DRAFT (GAP selling) ───────────────────────────────────────────────
 
 // Cached system prompt — billed once per session, then cheap reads.
 const SYSTEM_PROMPT = `You are Dave, founder of Trevo Advisors — a small agency that builds websites for home service contractors (plumbers, electricians, handymen, roofers).
 
-A lead you cold-emailed has replied. You will be given their reply, the message you originally sent them, and a few facts about their business. Write the body of a short, friendly, human reply that Dave can review and send.
+A contractor you cold-emailed has replied. Write the body of a short reply that Dave can review and send. You will be given their reply, a diagnosis of their current website gap, the message Dave originally sent, and facts about their business.
+
+SELL USING THE GAP METHOD. Sell the gap between their CURRENT STATE and a better FUTURE STATE, anchored on business impact — problem-first, never a feature list. Every draft must:
+1. Acknowledge what they actually said first (answer a question directly if they asked one).
+2. Name their specific current-state gap using the diagnosis and facts provided — be concrete (weak or missing site, review count vs. no site to show it on, outdated look, invisible on Google). Do not be generic.
+3. Connect the gap to business impact honestly: searchers who can't find them (or find a bare listing) book the competitor instead. Never invent statistics or dollar figures.
+4. Point to the future state the $100 site closes — more of those searchers turning into booked jobs, and looking as credible as the work they do.
+5. Advance with exactly ONE thing: either a question that makes them quantify or feel the gap (e.g. "roughly how many calls a week do you figure you're missing when people can't find you online?"), or a concrete next step (a quick 15-min call, or the live demo at trevoadvisors.com/start). Not both.
 
 Pricing facts you may state (only if relevant): a website is a flat $100 one-time build with NO monthly fee. AI add-ons (Nora AI phone agent, Atlas lead follow-up, Argus review responder) are $100 build + $65/mo. Never invent discounts, guarantees, or commitments beyond these.
 
-Rules for draft_reply:
-- Address what they actually said. If they asked a question, answer it directly.
-- Keep it to 2-5 short sentences. Warm, plain, no corporate filler, no hype.
-- If they want to talk, suggest a quick 15-minute call and point them to trevoadvisors.com/start.
-- Do NOT add a greeting line with their name unless natural, and do NOT add a sign-off or signature — a signature is appended automatically. End with your last real sentence.
-- If the request is sensitive (pricing negotiation, a complaint, legal/contract question, or anything you're unsure about), still write a safe, brief holding reply ("happy to hop on a quick call to walk through that") and set needs_human_note to a one-line flag explaining why.
+Style: match the provided tone. 2-5 short sentences. Warm, plain, human — no corporate filler, no hype, no exclamation-point spam. Do NOT open with the recipient's name unless natural, and do NOT add a sign-off or signature — a signature is appended automatically; end on your last real sentence.
+
+If the request is sensitive (pricing negotiation, a complaint, a legal/contract question, or anything you're unsure about), still write a safe, brief holding reply ("happy to hop on a quick call to walk through that") and set needs_human_note to a one-line flag explaining why.
 
 Respond ONLY with a valid JSON object with keys:
   intent            (one of: interested | question | objection | neutral)
@@ -193,23 +224,26 @@ No markdown, no explanation.`;
 
 async function draftReply(client, cfg, { leadBody, pitch, brief }) {
   const facts = {
-    business_name: brief.business_name,
-    trade:         brief.trade,
-    city:          brief.city,
-    website:       brief.website || '(none)'
+    business_name:   brief.business_name,
+    trade:           brief.trade,
+    city:            brief.city,
+    website:         brief.website || '(none)',
+    review_count:    brief.review_count,
+    rating:          brief.rating,
+    gap_diagnosis:   brief.diagnosis  || '',
+    strongest_angle: brief.hero_angle || '',
+    tone:            brief.tone       || 'direct'
   };
-  const pitchClipped = pitch.slice(0, cfg.max_thread_chars);
-  const bodyClipped  = leadBody.slice(0, cfg.max_thread_chars);
 
   const userContent =
-`LEAD FACTS:
+`LEAD FACTS + CURRENT-STATE GAP:
 ${JSON.stringify(facts, null, 2)}
 
-WHAT WE ORIGINALLY SENT THEM:
-${pitchClipped}
+WHAT DAVE ORIGINALLY SENT THEM:
+${pitch.slice(0, cfg.max_thread_chars)}
 
 THEIR REPLY (this is what to respond to):
-${bodyClipped}`;
+${leadBody.slice(0, cfg.max_thread_chars)}`;
 
   const response = await client.messages.create({
     model: cfg.model,
@@ -223,7 +257,6 @@ ${bodyClipped}`;
   let parsed;
   try { parsed = JSON.parse(cleaned); }
   catch { throw new Error(`Claude returned invalid JSON: ${raw.slice(0, 200)}`); }
-
   return { parsed, usage: response.usage };
 }
 
@@ -234,24 +267,21 @@ function foldMessageId(id) {
   return id.trim().startsWith('<') ? id.trim() : `<${id.trim()}>`;
 }
 
-/**
- * Build a threaded plain-text reply as an RFC-822 message for IMAP APPEND.
- * Exported for tests.
- */
+/** Build a threaded plain-text reply as an RFC-822 message for IMAP APPEND. Exported for tests. */
 function buildDraftMime({ fromEmail, toEmail, subject, inReplyTo, references, bodyText }) {
-  const from    = `"Dave" <${fromEmail}>`;
-  const reSubj  = /^re:/i.test(subject || '') ? subject : `Re: ${subject || '(no subject)'}`;
-  const irt     = foldMessageId(inReplyTo);
-  const refs    = (references || []).map(foldMessageId).filter(Boolean);
+  const from   = `"Dave" <${fromEmail}>`;
+  const reSubj = /^re:/i.test(subject || '') ? subject : `Re: ${subject || '(no subject)'}`;
+  const irt    = foldMessageId(inReplyTo);
+  const refs   = (references || []).map(foldMessageId).filter(Boolean);
   if (irt && !refs.includes(irt)) refs.push(irt);
-  const genId   = `<${Date.now()}.${Math.random().toString(36).slice(2)}@trevoadvisors.com>`;
+  const genId  = `<${Date.now()}.${Math.random().toString(36).slice(2)}@trevoadvisors.com>`;
 
   const headers = [
     `Message-ID: ${genId}`,
     `Date: ${new Date().toUTCString()}`,
     `From: ${from}`,
     `To: ${toEmail}`,
-    `Subject: ${reSubj}`,
+    `Subject: ${encodeHeaderWord(reSubj)}`,
     irt  ? `In-Reply-To: ${irt}` : null,
     refs.length ? `References: ${refs.join(' ')}` : null,
     'MIME-Version: 1.0',
@@ -260,6 +290,18 @@ function buildDraftMime({ fromEmail, toEmail, subject, inReplyTo, references, bo
   ].filter(Boolean);
 
   return headers.join('\r\n') + '\r\n\r\n' + bodyText.replace(/\n/g, '\r\n');
+}
+
+// ── DRAFTS MAILBOX RESOLUTION ───────────────────────────────────────────────
+
+// Prefer the server's special-use \Drafts folder (survives localization), then
+// the configured name. Returns the resolved path, or null if not found.
+async function resolveDraftsMailbox(imap, configured) {
+  const boxes = await imap.list();
+  const special = boxes.find(b => b.specialUse === '\\Drafts');
+  if (special) return special.path;
+  const named = boxes.find(b => b.path === configured || b.name === configured);
+  return named ? named.path : null;
 }
 
 // ── MAIN ────────────────────────────────────────────────────────────────────
@@ -279,8 +321,8 @@ async function main() {
   require('dotenv').config({ path: path.join(__dirname, '..', '.env.local') });
   const Anthropic = require('@anthropic-ai/sdk');
 
-  const user = process.env.ZOHO_EMAIL;
-  const pass = process.env.ZOHO_APP_PASSWORD;
+  const user   = process.env.ZOHO_EMAIL;
+  const pass   = process.env.ZOHO_APP_PASSWORD;
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!user || !pass) { console.error('ZOHO_EMAIL and ZOHO_APP_PASSWORD must be set in .env.local'); process.exit(1); }
   if (!apiKey)        { console.error('ANTHROPIC_API_KEY must be set in .env.local'); process.exit(1); }
@@ -292,110 +334,154 @@ async function main() {
   const client    = new Anthropic({ apiKey });
   const emailIdx  = buildEmailIndex();
   const processed = new Set(cfg.processed_ids || []);
+  const lastUid   = cfg.last_uid || 0;
 
-  log(`Polling Zoho IMAP for ${user} — ${emailIdx.size} lead email(s) indexed`);
+  log(`Polling Zoho IMAP for ${user} — ${emailIdx.size} lead email(s) indexed (from UID ${lastUid + 1 || 1})`);
 
   const imap = new ImapFlow({ host: 'imap.zoho.com', port: 993, secure: true, auth: { user, pass }, logger: false });
   await imap.connect();
 
-  let checked = 0, drafted = 0, optedOut = 0, skipped = 0, capped = 0;
+  let checked = 0, drafted = 0, optedOut = 0, skipped = 0, capped = 0, errored = 0;
+  const stateUpdates = [];
 
   try {
+    // Fail fast if we can't locate a Drafts folder — before spending on Haiku.
+    const draftsPath = await resolveDraftsMailbox(imap, cfg.drafts_mailbox);
+    if (!draftsPath && !isDryRun) {
+      console.error(`\n✗ Could not find a Drafts mailbox (configured: "${cfg.drafts_mailbox}"). Set drafts_mailbox in config/reply-agent-config.json to your Zoho drafts folder name.`);
+      await imap.logout();
+      process.exit(1);
+    }
+
+    // ── Phase 1: cheap envelope scan → collect new, known-lead messages ──────
+    const candidates = [];
+    let   maxUid     = lastUid;
     const lock = await imap.getMailboxLock('INBOX');
     try {
-      const since = new Date(); since.setDate(since.getDate() - 30);
-      const uids = await imap.search({ since });
-      log(uids.length ? `Found ${uids.length} message(s) in the last 30 days` : 'No recent messages');
+      let searchRange;
+      if (lastUid > 0) {
+        searchRange = { uid: `${lastUid + 1}:*` };
+      } else {
+        const since = new Date(); since.setDate(since.getDate() - 30);
+        searchRange = { since };
+      }
+      const uids = await imap.search(searchRange, { uid: true }) || [];
+      log(uids.length ? `${uids.length} candidate UID(s) to scan` : 'No new messages');
 
-      for await (const msg of imap.fetch(uids, { uid: true, source: true })) {
-        const parsed    = await simpleParser(msg.source);
-        const messageId = parsed.messageId || String(msg.uid);
+      for await (const msg of imap.fetch(uids, { uid: true, envelope: true }, { uid: true })) {
+        if (msg.uid > maxUid) maxUid = msg.uid;
+        if (msg.uid <= lastUid) continue;                       // "N:*" can echo the boundary msg
+        const messageId = msg.envelope?.messageId || String(msg.uid);
         if (processed.has(messageId)) { skipped++; continue; }
-        processed.add(messageId);
-
-        const fromAddr = normalizeEmail(parsed.from?.value?.[0]?.address);
-        const subject  = parsed.subject || '(no subject)';
+        const fromAddr = normalizeEmail(msg.envelope?.from?.[0]?.address);
         const lead     = emailIdx.get(fromAddr);
-        if (!lead) { skipped++; continue; }              // not a known lead — out of scope
+        if (!lead) { skipped++; continue; }                     // not a known lead — out of scope
+        candidates.push({
+          uid: msg.uid, messageId, fromAddr, lead,
+          subject: msg.envelope?.subject || '(no subject)'
+        });
+      }
 
-        checked++;
-        const leadBody = stripQuotedAndSignature(parsed.text || '');
-
-        // Guardrail: opt-outs and out-of-office never reach the model.
-        const { intent } = classify(leadBody, subject, parsed.headers);
-        if (intent === 'auto_reply') {
-          log(`Auto-reply skipped: ${lead.brief.business_name}`);
-          skipped++; continue;
-        }
-        if (intent === 'stop' || intent === 'negative') {
-          log(`✗ Opt-out from ${lead.brief.business_name} ("${leadBody.slice(0, 40)}") — marked unsubscribed, no draft`);
-          updateSentRecord(lead.sentPath, {
-            status: 'unsubscribed', unsubscribed_at: new Date().toISOString(),
-            reply_channel: 'email', reply_from: fromAddr, reply_text: leadBody
-          });
-          updateState(lead.leadId, 'unsubscribed');
-          optedOut++; continue;
-        }
-
-        // Cost cap — checked before every model call.
-        if (cfg.spent_this_month >= cfg.monthly_cap) {
-          log(`CAP REACHED ($${cfg.spent_this_month.toFixed(4)} / $${cfg.monthly_cap.toFixed(2)}) — ${lead.brief.business_name} left for next run/month`);
-          processed.delete(messageId);   // don't burn the dedup slot — retry next run
-          capped++; continue;
-        }
-
-        try {
-          const sent  = loadSentRecord(lead.sentPath);
-          const pitch = originalPitch(lead.brief, sent);
-          const { parsed: out, usage } = await draftReply(client, cfg, { leadBody, pitch, brief: lead.brief });
-
-          const cost = calcCost(usage, cfg.rates);
-          recordAnthropic(cost, 'reply-agent', usage);
-          cfg.spent_this_month = parseFloat((cfg.spent_this_month + cost).toFixed(6));
-          cfg.processed_today += 1;
-          cfg.total_drafted   += 1;
-
-          const flag     = out.needs_human_note ? `[REVIEW: ${out.needs_human_note}]\n\n` : '';
-          const bodyText = `${flag}${(out.draft_reply || '').trim()}\n\n${cfg.signature}`;
-
-          const mime = buildDraftMime({
-            fromEmail:  user,
-            toEmail:    parsed.from?.value?.[0]?.address || fromAddr,
-            subject,
-            inReplyTo:  messageId,
-            references: [].concat(parsed.references || []),
-            bodyText
-          });
-
-          console.log('\n' + '═'.repeat(56));
-          console.log(`DRAFT for ${lead.brief.business_name} (${lead.brief.city})`);
-          console.log(`Their reply : "${leadBody.slice(0, 120)}"`);
-          console.log(`Intent      : ${out.intent} (${out.confidence})${out.needs_human_note ? '  ⚠ ' + out.needs_human_note : ''}`);
-          console.log('─'.repeat(56));
-          console.log(bodyText);
-          console.log('═'.repeat(56));
-
-          if (isDryRun) {
-            log(`DRY RUN — would append draft for ${lead.brief.business_name} ($${cost.toFixed(5)})`);
-          } else {
-            await imap.append(cfg.drafts_mailbox, mime, ['\\Draft']);
-            updateSentRecord(lead.sentPath, {
-              status: 'reply_drafted', replied_at: new Date().toISOString(),
-              reply_channel: 'email', reply_from: fromAddr, reply_subject: subject,
-              reply_text: leadBody, draft_intent: out.intent, draft_flag: out.needs_human_note || ''
-            });
-            updateState(lead.leadId, 'reply_drafted');
-            log(`✓ Draft in Zoho Drafts for ${lead.brief.business_name} ($${cost.toFixed(5)})`);
-          }
-          drafted++;
-        } catch (err) {
-          log(`ERROR drafting for ${lead.brief.business_name}: ${err.message}`);
-          processed.delete(messageId);   // let a transient failure retry next run
+      // ── Phase 2: download full source for only the messages we'll draft ────
+      if (candidates.length) {
+        const byUid = new Map(candidates.map(c => [c.uid, c]));
+        for await (const msg of imap.fetch(candidates.map(c => c.uid), { uid: true, source: true }, { uid: true })) {
+          const c = byUid.get(msg.uid);
+          if (c) c.source = msg.source;
         }
       }
     } finally {
-      lock.release();
+      lock.release();  // release INBOX before issuing APPENDs
     }
+
+    // ── Phase 3: classify + draft + APPEND (no fetch stream open now) ────────
+    let retryFloor = Infinity;   // lowest UID we must re-scan next run (cap/error)
+
+    for (const c of candidates.filter(c => c.source)) {
+      const parsed   = await simpleParser(c.source);
+      const rawBody  = parsed.text || htmlToText(parsed.html || '');
+      const leadBody = stripQuotedAndSignature(rawBody);
+      const brief    = c.lead.brief;
+
+      // Guardrail: opt-outs and out-of-office never reach the model.
+      const { intent } = classify(leadBody, c.subject, parsed.headers);
+      if (intent === 'auto_reply') {
+        log(`Auto-reply skipped: ${brief.business_name}`);
+        processed.add(c.messageId); skipped++; continue;
+      }
+      if (intent === 'stop' || intent === 'negative') {
+        log(`✗ Opt-out from ${brief.business_name} ("${leadBody.slice(0, 40)}") — marked unsubscribed, no draft`);
+        updateSentRecord(c.lead.sentPath, {
+          status: 'unsubscribed', unsubscribed_at: new Date().toISOString(),
+          reply_channel: 'email', reply_from: c.fromAddr, reply_text: leadBody
+        });
+        stateUpdates.push({ leadId: c.lead.leadId, status: 'unsubscribed' });
+        processed.add(c.messageId); optedOut++; continue;
+      }
+
+      // Cost cap — checked before every model call. Leave capped msgs for retry.
+      if (cfg.spent_this_month >= cfg.monthly_cap) {
+        log(`CAP REACHED ($${cfg.spent_this_month.toFixed(4)} / $${cfg.monthly_cap.toFixed(2)}) — ${brief.business_name} left for next run`);
+        retryFloor = Math.min(retryFloor, c.uid);
+        capped++; continue;
+      }
+
+      checked++;
+      try {
+        const sent  = loadSentRecord(c.lead.sentPath);
+        const pitch = originalPitch(brief, sent);
+        const { parsed: out, usage } = await draftReply(client, cfg, { leadBody, pitch, brief });
+
+        const cost = calcCost(usage, cfg.rates);
+        recordAnthropic(cost, 'reply-agent', usage);
+        cfg.spent_this_month = parseFloat((cfg.spent_this_month + cost).toFixed(6));
+        cfg.processed_today += 1;
+        cfg.total_drafted   += 1;
+
+        const flag     = out.needs_human_note ? `[REVIEW: ${out.needs_human_note}]\n\n` : '';
+        const bodyText = `${flag}${(out.draft_reply || '').trim()}\n\n${cfg.signature}`;
+        const mime = buildDraftMime({
+          fromEmail:  user,
+          toEmail:    c.fromAddr,
+          subject:    c.subject,
+          inReplyTo:  c.messageId,
+          references: [].concat(parsed.references || []),
+          bodyText
+        });
+
+        console.log('\n' + '═'.repeat(56));
+        console.log(`DRAFT for ${brief.business_name} (${brief.city})`);
+        console.log(`Their reply : "${leadBody.slice(0, 120)}"`);
+        console.log(`Intent      : ${out.intent} (${out.confidence})${out.needs_human_note ? '  ⚠ ' + out.needs_human_note : ''}`);
+        console.log('─'.repeat(56));
+        console.log(bodyText);
+        console.log('═'.repeat(56));
+
+        if (isDryRun) {
+          log(`DRY RUN — would append draft for ${brief.business_name} ($${cost.toFixed(5)})`);
+        } else {
+          await imap.append(draftsPath, mime, ['\\Draft']);
+          updateSentRecord(c.lead.sentPath, {
+            status: 'reply_drafted', replied_at: new Date().toISOString(),
+            reply_channel: 'email', reply_from: c.fromAddr, reply_subject: c.subject,
+            reply_text: leadBody, draft_intent: out.intent, draft_flag: out.needs_human_note || ''
+          });
+          stateUpdates.push({ leadId: c.lead.leadId, status: 'reply_drafted' });
+          log(`✓ Draft in Drafts for ${brief.business_name} ($${cost.toFixed(5)})`);
+        }
+        processed.add(c.messageId);
+        drafted++;
+      } catch (err) {
+        log(`ERROR drafting for ${brief.business_name}: ${err.message}`);
+        retryFloor = Math.min(retryFloor, c.uid);   // retry this message next run
+        errored++;
+      }
+    }
+
+    applyStateUpdates(stateUpdates);
+
+    // Advance the high-water-mark, but never past a message we still owe a retry.
+    cfg.last_uid = retryFloor === Infinity ? maxUid : Math.min(maxUid, retryFloor - 1);
   } finally {
     await imap.logout();
   }
@@ -405,14 +491,15 @@ async function main() {
   saveConfig(cfg);
 
   console.log('\n' + '─'.repeat(56));
-  console.log(`Done — matched: ${checked}  drafted: ${drafted}  opted-out: ${optedOut}  skipped: ${skipped}${capped ? `  capped: ${capped}` : ''}`);
+  console.log(`Done — drafted: ${drafted}  opted-out: ${optedOut}  skipped: ${skipped}` +
+              `${capped ? `  capped: ${capped}` : ''}${errored ? `  errored: ${errored}` : ''}`);
   console.log(`Spend: $${cfg.spent_this_month.toFixed(4)} / $${cfg.monthly_cap.toFixed(2)} this month`);
   if (drafted && !isDryRun) console.log(`\nReview your drafts in Zoho Mail → Drafts, then Send.`);
   console.log('─'.repeat(56));
 }
 
 // Exported for unit tests; only run when invoked directly.
-module.exports = { stripQuotedAndSignature, buildDraftMime, foldMessageId };
+module.exports = { stripQuotedAndSignature, buildDraftMime, foldMessageId, htmlToText, encodeHeaderWord };
 
 if (require.main === module) {
   main().catch(err => { console.error('Unexpected error:', err.message); process.exit(1); });

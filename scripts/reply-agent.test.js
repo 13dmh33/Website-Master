@@ -6,7 +6,7 @@
 'use strict';
 
 const assert = require('assert');
-const { stripQuotedAndSignature, buildDraftMime, foldMessageId } = require('./reply-agent');
+const { stripQuotedAndSignature, buildDraftMime, foldMessageId, htmlToText, encodeHeaderWord } = require('./reply-agent');
 
 let passed = 0;
 function test(name, fn) {
@@ -48,6 +48,44 @@ test('drops "Sent from my iPhone" mobile signature', () => {
 test('empty / null input is safe', () => {
   assert.strictEqual(stripQuotedAndSignature(''), '');
   assert.strictEqual(stripQuotedAndSignature(null), '');
+});
+
+// ── htmlToText (fallback for HTML-only replies) ──────────────────────────────
+
+test('extracts text from an HTML-only reply body', () => {
+  const html = '<div>Hey Dave,</div><p>How much per month?</p><br><p>Thanks</p>';
+  assert.strictEqual(htmlToText(html), 'Hey Dave,\nHow much per month?\n\nThanks');
+});
+
+test('strips style/script and decodes entities', () => {
+  const html = '<style>p{color:red}</style><p>Costs &lt;$200 &amp; no fee?</p>';
+  assert.strictEqual(htmlToText(html), 'Costs <$200 & no fee?');
+});
+
+test('html fallback feeds the quote stripper cleanly', () => {
+  const html = '<p>Sounds good, call me.</p><br>-- <br>Joe';
+  // htmlToText → "Sounds good, call me.\n\n-- \nJoe"; stripper cuts at "-- "
+  assert.strictEqual(stripQuotedAndSignature(htmlToText(html)), 'Sounds good, call me.');
+});
+
+// ── encodeHeaderWord (RFC 2047) ──────────────────────────────────────────────
+
+test('leaves ASCII subjects untouched', () => {
+  assert.strictEqual(encodeHeaderWord('Re: your website'), 'Re: your website');
+});
+
+test('base64-encodes a non-ASCII subject', () => {
+  assert.strictEqual(encodeHeaderWord('Re: café ☕'),
+    `=?UTF-8?B?${Buffer.from('Re: café ☕', 'utf8').toString('base64')}?=`);
+});
+
+test('non-ASCII subject flows through buildDraftMime encoded', () => {
+  const mime = buildDraftMime({
+    fromEmail: 'd@x.com', toEmail: 'a@b.com', subject: 'café',
+    inReplyTo: null, references: [], bodyText: 'hi'
+  });
+  assert.ok(mime.includes('Subject: =?UTF-8?B?'), 'subject header is RFC-2047 encoded');
+  assert.ok(!/Subject: café/.test(mime), 'raw non-ASCII is not emitted');
 });
 
 // ── foldMessageId ────────────────────────────────────────────────────────────

@@ -17,5 +17,6 @@
   "processed_today": 0,
   "total_drafted": 0,
   "processed_ids": [],
+  "last_uid": 0,
   "last_run": null
 }

@@ -12,6 +12,8 @@ import { jobId, mergeNearDuplicates } from '../src/lib/dedup.js';
 import { freshnessBonus, blendScore, withinMaxAge } from '../src/lib/recency.js';
 import { runFilter } from '../src/filter.js';
 import { writeDocx } from '../src/lib/docx.js';
+import { extractJson } from '../src/lib/claude.js';
+import { getCachedScore, cacheScore } from '../src/lib/state.js';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const now = new Date('2026-07-15T12:00:00Z');
@@ -49,6 +51,29 @@ assert.equal(merged.length, 1, 'near-dups merge to one');
 assert.equal(merged[0].source, 'greenhouse', 'kept the direct ATS link over the aggregator');
 ok('dedup + near-dup merge (ATS preferred over aggregator)');
 
+// 4b. Near-dup merge collapses remote:true postings that list different real
+// cities per listing (e.g. Georgia-Pacific reposting the same remote role
+// separately for Chicago/Dallas/St. Louis) — regression for the bug where
+// these survived as distinct "jobs" because the location string itself never
+// said the word "remote".
+const remoteChicago = { source: 'adzuna', company: 'Georgia-Pacific', title: 'National Account Manager - Foodservice - Remote', location: 'The Gap, Chicago', remote: true, url: 'https://adzuna.com/a', postedAt: iso(1) };
+const remoteDallas = { source: 'adzuna', company: 'Georgia-Pacific', title: 'National Account Manager - Foodservice - Remote', location: 'Highland Park, Dallas', remote: true, url: 'https://adzuna.com/b', postedAt: iso(2) };
+const remoteMerged = mergeNearDuplicates([remoteChicago, remoteDallas]);
+assert.equal(remoteMerged.length, 1, 'same remote role listed under different cities merges to one');
+ok('near-dup merge collapses remote postings listed under different cities');
+
+// 4c. jobId stays stable across two pulls of the same Adzuna posting even
+// when Adzuna's redirect_url carries a different per-request tracking token
+// each time — regression for the bug where job identity was built from the
+// tracking link instead of Adzuna's own stable ad id (job.externalId).
+const pullOne = { source: 'adzuna', company: 'Acme Corp', title: 'Director of Sales', url: 'https://adzuna.com/land/ad/123?se=abc111&v=xyz111', externalId: 'adzuna:123' };
+const pullTwo = { source: 'adzuna', company: 'Acme Corp', title: 'Director of Sales', url: 'https://adzuna.com/land/ad/123?se=def222&v=uvw222', externalId: 'adzuna:123' };
+assert.equal(jobId(pullOne), jobId(pullTwo), 'same externalId keeps jobId stable despite a different tracking url each pull');
+// Without an externalId (a source that doesn't provide one), url is still the fallback identity.
+const noExternalId = { source: 'greenhouse', company: 'Acme Corp', title: 'Director of Sales', url: 'https://boards.greenhouse.io/acme/jobs/1' };
+assert.equal(jobId(noExternalId), jobId({ ...noExternalId }), 'url remains the fallback identity when externalId is absent');
+ok('jobId prefers a stable externalId over a tracking url when the source provides one');
+
 // 5. Rules filter: deal-breaker, seniority, location
 const prefs = {
   greenhouse: [], lever: [], ashby: [], adzuna_query: [],
@@ -73,5 +98,32 @@ const buf = fs.readFileSync(out);
 assert.ok(buf.length > 500 && buf[0] === 0x50 && buf[1] === 0x4b, 'docx is a valid non-empty zip');
 fs.rmSync(path.join(here, '..', 'out', 'test'), { recursive: true, force: true });
 ok(`docx render (${buf.length} bytes)`);
+
+// 7. extractJson tolerates a raw literal newline inside a JSON string value
+// (the exact failure mode seen live: tailorJob's resume_markdown field with
+// an unescaped newline breaks a naive JSON.parse with "Bad control character
+// in string literal").
+{
+  const brokenJson = '{"resume_markdown": "Line one\nLine two", "cover_letter_markdown": "ok"}';
+  assert.throws(() => JSON.parse(brokenJson), 'sanity: raw JSON.parse must reject this input');
+  const parsed = extractJson(brokenJson);
+  assert.equal(parsed.resume_markdown, 'Line one\nLine two');
+  assert.equal(parsed.cover_letter_markdown, 'ok');
+  ok('extractJson repairs unescaped control chars in JSON string values');
+}
+
+// 8. Score cache: miss when empty, hit when fingerprint matches, miss again
+// when the fingerprint changes (resume/preferences edited) — this is what
+// lets runScorer skip a paid Haiku call for a job it already scored, while
+// still correctly invalidating on a real profile/preferences change.
+{
+  const state = { scores: {} };
+  assert.equal(getCachedScore(state, 'jobA', 'fp1'), null, 'empty cache misses');
+  cacheScore(state, 'jobA', 'fp1', { fit: 82, rationale: 'good fit', keywords: ['x'] });
+  const hit = getCachedScore(state, 'jobA', 'fp1');
+  assert.ok(hit && hit.fit === 82, 'cache hit returns the stored score under the same fingerprint');
+  assert.equal(getCachedScore(state, 'jobA', 'fp2'), null, 'changed fingerprint (resume/prefs edit) invalidates the cache');
+  ok('score cache hits on matching fingerprint, misses on a changed one');
+}
 
 console.log(`\n${passed} checks passed.`);

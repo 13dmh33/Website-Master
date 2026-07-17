@@ -10,12 +10,13 @@
 //   "seen":      { "<jobId>": { "firstSeenAt": ISO, "source", "company", "title" } },
 //   "digests":   [ { "date": ISO, "jobIds": [...] } ],
 //   "instant":   { "<jobId>": ISO }   // one-off high-fit alerts already fired
+//   "scores":    { "<jobId>": { "fingerprint", "fit", "rationale", "keywords", "scoredAt" } }
 // }
 
 import fs from 'node:fs';
 import { config } from './config.js';
 
-const EMPTY = { seen: {}, digests: [], instant: {} };
+const EMPTY = { seen: {}, digests: [], instant: {}, scores: {} };
 
 export function loadState() {
   try {
@@ -25,6 +26,7 @@ export function loadState() {
       seen: parsed.seen || {},
       digests: parsed.digests || [],
       instant: parsed.instant || {},
+      scores: parsed.scores || {},
     };
   } catch {
     return structuredClone(EMPTY);
@@ -64,4 +66,20 @@ export function hasSentInstant(state, jobId) {
 
 export function markInstant(state, jobId, nowIso) {
   state.instant[jobId] = nowIso || new Date().toISOString();
+}
+
+// Cached Haiku score for a job, keyed by job id + a fingerprint of the profile
+// and preferences that produced it. A stored score is only reused while the
+// fingerprint still matches — if the resume or preferences.md changes, the
+// fingerprint changes, the cache is treated as a miss, and the entry is
+// overwritten with a freshly-scored result (the one exception to append-only:
+// a stale score is wrong, not historical, so it gets corrected rather than kept).
+export function getCachedScore(state, jobId, fingerprint) {
+  const entry = state.scores[jobId];
+  if (!entry || entry.fingerprint !== fingerprint) return null;
+  return entry;
+}
+
+export function cacheScore(state, jobId, fingerprint, { fit, rationale, keywords }) {
+  state.scores[jobId] = { fingerprint, fit, rationale, keywords, scoredAt: new Date().toISOString() };
 }

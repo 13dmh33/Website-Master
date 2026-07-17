@@ -92,12 +92,15 @@ export async function runDaily(argv = process.argv.slice(2)) {
   // Stage 2: cheap rules filter.
   const { kept } = runFilter(fresh, prefs);
 
-  // Stage 3: score with Haiku + freshness bonus.
+  // Stage 3: score with Haiku + freshness bonus. Passing state lets the scorer
+  // reuse a cached score for a job it already scored under the same profile/
+  // preferences instead of paying for another Haiku call (see scorer.js).
   const { matches } = await runScorer(kept, {
     profile,
     preferencesText,
     minScore: args.minScore,
     now,
+    state,
   });
 
   // Stage 4: tailor the top matches with Sonnet.

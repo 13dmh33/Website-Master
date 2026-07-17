@@ -34,6 +34,13 @@ export async function pullAdzunaQuery(query, where, { maxDaysOld = 21, resultsPe
       location,
       remote: /remote/i.test(location) || /remote/i.test(r.title || ''),
       url: r.redirect_url || '',
+      // Adzuna's own stable ad id, distinct from redirect_url (a click-through
+      // tracking link that can carry a per-request session token and differ
+      // between pulls of the same posting). dedup.js's jobId() prefers this
+      // when present so the same real job keeps a stable identity across runs
+      // — without it, a re-pulled posting looks "new" every time, defeating
+      // the "nothing repeats in a digest" guarantee and the score cache.
+      externalId: r.id != null ? `adzuna:${r.id}` : null,
       description: htmlToText(r.description || ''),
       postedAt: r.created || null,
     };

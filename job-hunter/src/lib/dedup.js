@@ -13,8 +13,14 @@
 import crypto from 'node:crypto';
 
 // Stable id for a job. Deterministic across runs and machines.
+//
+// Prefers job.externalId (a source's own stable ad/listing id) over job.url
+// when present — some sources (Adzuna) hand back a click-through/tracking
+// URL that can differ between separate pulls of the same real posting, which
+// would otherwise make the same job hash to a different id every run.
 export function jobId(job) {
-  const basis = [job.source, job.company, job.title, job.url]
+  const identity = job.externalId || job.url;
+  const basis = [job.source, job.company, job.title, identity]
     .map((s) => normalize(s))
     .join('|');
   return crypto.createHash('sha1').update(basis).digest('hex').slice(0, 16);
@@ -46,8 +52,13 @@ function fuzzyKey(job) {
     .trim();
   // Canonical location: collapse any "remote" variant to just "remote"
   // ("Remote" vs "Remote, US" must match); otherwise key on the city token.
+  // Also collapse when job.remote is true even if the location field lists a
+  // real city — some postings (e.g. Georgia-Pacific's "National Account
+  // Manager - Foodservice - Remote") are genuinely remote but list a specific
+  // city per listing, which previously produced a distinct fuzzy key per city
+  // and let the same remote role survive near-dup merge multiple times.
   const locNorm = normalize(job.location);
-  const loc = locNorm.includes('remote') ? 'remote' : locNorm.split(' ')[0];
+  const loc = job.remote || locNorm.includes('remote') ? 'remote' : locNorm.split(' ')[0];
   return `${company}::${title}::${loc}`;
 }
 

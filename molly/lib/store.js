@@ -16,7 +16,12 @@ const PATHS = {
   archive:    path.join(ROOT, 'output', 'archive'),
   brandVoice:  path.join(ROOT, 'templates', 'brand-voice.json'),
   postFormats: path.join(ROOT, 'templates', 'post-formats.json'),
-  evergreen:   path.join(ROOT, 'templates', 'evergreen.json'),
+  // Quarantined 2026-07-18 — violates molly/CLAUDE.md's brand-voice rules
+  // throughout (unsourced stats, hard delivery promises, unconsented client
+  // results, city references). Kept readable here only so nothing that reads
+  // it crashes; brand-validator.js is the hard gate that stops any of this
+  // content from reaching the posting path. See molly/quarantine/README.md.
+  evergreen:   path.join(ROOT, 'quarantine', 'evergreen-prespec.json'),
 };
 
 function ensureDir(dir) {

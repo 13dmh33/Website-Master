@@ -6,10 +6,11 @@
 
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 
-const path      = require('path');
-const store     = require('../lib/store');
-const buffer    = require('../lib/buffer');
-const abTracker = require('../lib/ab-tracker');
+const path       = require('path');
+const store      = require('../lib/store');
+const buffer     = require('../lib/buffer');
+const abTracker  = require('../lib/ab-tracker');
+const { validateQueue } = require('../lib/brand-validator');
 
 const SCHEDULE_STR = process.env.POST_SCHEDULE || 'TUE:07:00,THU:12:00,SAT:09:00,SUN:18:00';
 
@@ -95,11 +96,28 @@ async function main() {
     process.exit(1);
   }
 
-  const schedule    = parseSchedule();
-  const postObjects = buildPostObjects(content, schedule);
+  const schedule       = parseSchedule();
+  const allPostObjects = buildPostObjects(content, schedule);
 
   console.log(`Scheduler running for week of ${content.weekOf}.`);
   console.log(`Buffer configured: ${buffer.isConfigured()}`);
+
+  // Hard gate: brand-validator.js checks every post against molly/CLAUDE.md's
+  // rules before it reaches EITHER the review queue or a live Buffer post.
+  // Runs ahead of the Buffer-vs-queue branch below on purpose — a failing
+  // post must not go live even if Buffer happens to be configured with
+  // FORCE_QUEUE unset.
+  const { passed: postObjects, rejected } = validateQueue(allPostObjects);
+  if (rejected.length > 0) {
+    console.warn(`Brand-validator rejected ${rejected.length}/${allPostObjects.length} post(s) — held back, not queued or posted:`);
+    for (const { post, failures } of rejected) {
+      console.warn(`  ${post.format}: ${failures.join('; ')}`);
+    }
+  }
+  if (postObjects.length === 0) {
+    console.error('All posts failed brand validation. Nothing to schedule this run.');
+    return;
+  }
 
   const forceQueue = process.env.FORCE_QUEUE === '1';
 

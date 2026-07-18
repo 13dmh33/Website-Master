@@ -1,0 +1,24 @@
+{
+  "_comment": "Editable by Dave. Seeded from real rates already in use elsewhere in this repo (see each field's source), not invented figures. Vendor dashboards are not assumed reachable — every Merlin cost figure is an estimate derived from countable activity against these rates.",
+  "apolloPerCreditUsd": 0.049,
+  "apolloPerCreditUsdSource": "scripts/cost-tracker.js recordApollo() — Apollo Basic $49/mo / ~1000 credits",
+  "twilioPerSmsUsd": 0.0079,
+  "twilioPerSmsUsdSource": "scripts/cost-tracker.js TWILIO_PER_SMS_USD",
+  "outscraperCostPerResultUsd": 0.001,
+  "outscraperCostPerResultUsdSource": "config/scout-config.json cost_per_result",
+  "anthropicHaiku": {
+    "inputPerMtokUsd": 0.80,
+    "outputPerMtokUsd": 4.00,
+    "cacheWritePerMtokUsd": 1.00,
+    "cacheReadPerMtokUsd": 0.08,
+    "source": "config/diagnoser-config.json and config/checker-config.json rates (both use Haiku)"
+  },
+  "fixedMonthlyUsd": {
+    "apolloSubscription": 49,
+    "apolloSubscriptionNote": "Apollo Basic plan. Only counted in the estimate if APOLLO_API_KEY is actually set — not configured in this environment as of this session (see STATE-AUDIT.md).",
+    "twilioSubscription": 0,
+    "twilioSubscriptionNote": "No fixed monthly fee documented for Twilio in this project — usage-based only (SMS segments).",
+    "zohoEmail": 0,
+    "zohoEmailNote": "Assumed pre-existing business email subscription, not itemized as pipeline spend."
+  }
+}

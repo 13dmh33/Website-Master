@@ -1,6 +1,6 @@
 {
   "weekOf": "2026-07-20",
-  "generatedAt": "2026-07-18T22:42:46.282Z",
+  "generatedAt": "2026-07-18T22:49:39.782Z",
   "campaignMode": "base",
   "week": 5,
   "theme": "heat-across-the-year",
@@ -43,7 +43,30 @@
         "#womenintheskilledtrades"
       ],
       "judge": null,
-      "status": "pending"
+      "status": "pending",
+      "video": null,
+      "images": [
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/1-MON-reel-000.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/1-MON-reel-001.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/1-MON-reel-002.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/1-MON-reel-003.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/1-MON-reel-004.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/1-MON-reel-005.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/1-MON-reel-006.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/1-MON-reel-007.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/1-MON-reel-008.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/1-MON-reel-009.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/1-MON-reel-010.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/1-MON-reel-011.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/1-MON-reel-012.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/1-MON-reel-013.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/1-MON-reel-014.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/1-MON-reel-015.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/1-MON-reel-016.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/1-MON-reel-017.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/1-MON-reel-018.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/1-MON-reel-019.png"
+      ]
     },
     {
       "slot": "TUE",
@@ -82,7 +105,15 @@
         "#bluecollarwomen"
       ],
       "judge": null,
-      "status": "pending"
+      "status": "pending",
+      "images": [
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/2-TUE-slide-01.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/2-TUE-slide-02.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/2-TUE-slide-03.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/2-TUE-slide-04.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/2-TUE-slide-05.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/2-TUE-slide-06.png"
+      ]
     },
     {
       "slot": "THU",
@@ -121,7 +152,25 @@
         "#bluecollarwomen"
       ],
       "judge": null,
-      "status": "pending"
+      "status": "pending",
+      "video": null,
+      "images": [
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/3-THU-reel-000.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/3-THU-reel-001.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/3-THU-reel-002.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/3-THU-reel-003.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/3-THU-reel-004.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/3-THU-reel-005.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/3-THU-reel-006.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/3-THU-reel-007.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/3-THU-reel-008.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/3-THU-reel-009.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/3-THU-reel-010.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/3-THU-reel-011.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/3-THU-reel-012.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/3-THU-reel-013.png",
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/3-THU-reel-014.png"
+      ]
     },
     {
       "slot": "FRI",
@@ -160,7 +209,10 @@
         "#bluecollarwomen"
       ],
       "judge": null,
-      "status": "pending"
+      "status": "pending",
+      "images": [
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/4-FRI-single_image.png"
+      ]
     },
     {
       "slot": "SAT",
@@ -200,7 +252,10 @@
         "#womenintheskilledtrades"
       ],
       "judge": null,
-      "status": "pending"
+      "status": "pending",
+      "images": [
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/5-SAT-single_image.png"
+      ]
     },
     {
       "slot": "SUN",
@@ -240,7 +295,14 @@
         "#womensupportingwomen"
       ],
       "judge": null,
-      "status": "pending"
+      "status": "pending",
+      "images": [
+        "/Users/davidhettinger/Website-Master/miley/output/images/2026-07-20/6-SUN-single_image.png"
+      ]
     }
-  ]
+  ],
+  "abTracking": {
+    "lastVariant": "A",
+    "week_2026-07-20": "A"
+  }
 }

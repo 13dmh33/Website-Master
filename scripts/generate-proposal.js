@@ -40,6 +40,7 @@ const QUEUE_DIR = path.join(ROOT, 'queue');
 const OUT_DIR = path.join(ROOT, 'proposals', 'out');
 
 const DEFAULT_CALCOM_LINK = 'https://cal.com/david-hettinger-g8qbdk/30min';
+const DEFAULT_PIXEL_BASE = 'https://trevoadvisors.com/.netlify/functions/proposal-open';
 
 function loadBrief(leadId) {
   const briefPath = path.join(QUEUE_DIR, `${leadId}-brief.json`);
@@ -89,8 +90,11 @@ async function main() {
     }
   }
 
+  const pixelBase = process.env.PROPOSAL_PIXEL_BASE || DEFAULT_PIXEL_BASE;
+  const trackingPixelUrl = `${pixelBase}?leadId=${encodeURIComponent(leadId)}`;
+
   const html = renderProposal({
-    input, businessName: brief.business_name, signatureName, calcomLink, stripeUrl,
+    input, businessName: brief.business_name, signatureName, calcomLink, stripeUrl, trackingPixelUrl,
   });
 
   if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });

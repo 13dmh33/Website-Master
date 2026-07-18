@@ -40,10 +40,15 @@ function featuresHtml(pkg) {
 }
 
 /**
- * renderProposal({ input, businessName, signatureName, calcomLink, stripeUrl })
+ * renderProposal({ input, businessName, signatureName, calcomLink, stripeUrl, trackingPixelUrl })
  * Pure — no file/network access. Returns an HTML string.
+ * trackingPixelUrl, if provided, is embedded as a 1x1 image so
+ * netlify/functions/proposal-open.js can record an open — see
+ * scripts/lib/proposal/open-pixel.js. Omitted entirely (no <img> tag) when
+ * not provided, so a proposal generated without a deployed pixel endpoint
+ * never references a broken URL.
  */
-function renderProposal({ input, businessName, signatureName, calcomLink, stripeUrl }) {
+function renderProposal({ input, businessName, signatureName, calcomLink, stripeUrl, trackingPixelUrl }) {
   const pkg = getPackage(input.package);
   const offering = input.offering || input.trade;
   const { rowsHtml, total } = lineItemsHtml(pkg, input.customLineItems);
@@ -121,6 +126,7 @@ function renderProposal({ input, businessName, signatureName, calcomLink, stripe
     ${noteHtml}
     <div class="sign-off">— ${signatureName}</div>
   </div>
+  ${trackingPixelUrl ? `<img src="${trackingPixelUrl}" width="1" height="1" alt="" style="display:none">` : ''}
 </body>
 </html>`;
 }

@@ -179,3 +179,155 @@ node scripts/contact-scraper.js --limit 20   # cap sites visited
 - 170 of current leads have no website — scraper can't help them (need Apollo/Enricher).
 - 11 has-website / no-email leads are the target set; run on Mac for real results.
 - No JS rendering — obfuscated emails won't be caught by design.
+
+---
+
+# CHECKPOINT — Post-call proposal core
+
+Branch: `feature/post-call-proposal` (off `main` — no `master` branch exists in this
+repo, consistent with every session this month). Not merged, not pushed to origin.
+Stopped after Tier 1 + Tier 1b + Tier 2 all completed — a natural, substantial stopping
+point well inside the 50–70% target, with Tier 3 and the Backlog cleanly rolling forward
+exactly as the session plan anticipated ("else next session").
+
+## What's done
+
+15 commits. 55 new tests passing (`node --test scripts/test/proposal-*.test.js
+scripts/test/brand-lint.test.js`), 17 pre-existing tests confirmed unaffected.
+
+**Phase 0** (`/STATE-AUDIT.md`): found two of the plan's assumptions didn't hold, both
+verified three independent ways before concluding:
+- **Nora is not merged** (plan assumed it was) — it's complete on unmerged, unpushed
+  branch `feature/nora-multichannel-config`. This branch has none of its code.
+- **Stripe is not live** (plan assumed it was) — no key in `.env.local`,
+  `website/checkout/index.html` still has placeholder Payment Link URLs, and
+  `scripts/brief.js`'s own live blocker check independently confirms it right now.
+- Also found: Tier 3 item 6 (funnel metrics) is already fully built on a separate
+  unmerged branch (`feature/funnel-metrics`) — correctly not rebuilt.
+- Also found and fixed: `scripts/check-email-auth.js` (built and passing since earlier
+  this month) had never been committed to any branch — closed that gap first.
+
+**Tier 1 — the anchor, built in full:**
+- `scripts/lib/proposal/packages.js` + `schema.js` + `load-input.js` — input contract
+  and package definitions (Starter $100 / Growth $497+$147mo / Pro $797+$197mo), fails
+  loud on anything malformed. No call-notes source exists (Nora isn't merged here), so
+  inputs are a small JSON file per lead at `proposals/inputs/<leadId>.json` — the plan's
+  own documented fallback.
+- `scripts/lib/proposal/template.js` — Gap Selling framing (pain point in their words →
+  cost of inaction → package → line items → CTA), Trevo's real navy/teal brand palette,
+  visually verified via an Artifact preview.
+- `scripts/lib/proposal/stripe.js` — real Checkout Session generation via raw HTTPS
+  (matching the repo's no-SDK convention), split into a pure request-builder (fully
+  tested without a key) and the one function that touches the network, which fails loud
+  immediately when `STRIPE_SECRET_KEY` is absent — it is, in this environment.
+- `scripts/lib/proposal/draft-mail.js` + `state.js` — Zoho Drafts delivery
+  (nodemailer `MailComposer` + `imapflow`) with a live-send gate (`PROPOSAL_SEND_LIVE`,
+  off by default), and additive `state.json` fields
+  (`proposalSentAt`/`proposalPackage`/`proposalAmount`/`stripeSessionId`) recorded only
+  after delivery succeeds.
+- `scripts/generate-proposal.js` — the CLI tying it together. Manually smoke-tested
+  end to end against a disposable fake lead (created, ran, verified, cleaned up):
+  generation and the local HTML write both succeeded; delivery correctly failed against
+  the real account with the **exact same pre-existing IMAP-not-enabled blocker already
+  known from `scripts/reply-agent.js`** (`authenticationFailed: true`, "You are yet to
+  enable IMAP for your account") — and, critically, `state.json` was confirmed untouched
+  afterward, proving the fail-safe ordering (record only after delivery succeeds) works.
+- Money-path tests: for all three packages, the due-today total shown to the customer is
+  asserted equal, in cents, to Stripe's one-time line items; unknown/missing packages
+  fail loud at every layer.
+
+**Tier 1b — open-tracking pixel, built in full:**
+- `netlify/functions/proposal-open.js` — mirrors the existing `enhance.js` function's
+  shape, always returns a valid 1×1 GIF regardless of logging success, logs to a new
+  "ProposalOpens" Sheet tab. Extended `scripts/lib/google-sheets.js` additively
+  (`GOOGLE_SERVICE_ACCOUNT_JSON_CONTENT`, a JSON-content credential path alongside the
+  existing file-path one — needed because a Netlify Function can't reference a local
+  file path) — verified both paths still work.
+- Live-verified against the real Sheet: tab auto-created with header, a real row landed
+  and was read back and confirmed. Deployment itself (a real Netlify deploy) is out of
+  reach from this environment — the actual integration this environment *can* reach was
+  fully verified.
+
+**Tier 2 — all three hygiene items, built in full:**
+- Brand-standard linter (`scripts/lint-brand-standards.js`) — ran it for real: this
+  session's own proposal code is clean; **the live website is not** — 15 files have
+  emojis, 8 have "business day(s)" language, `website/argus/index.html` says "bot".
+  Real, pre-existing, out of this session's scope to fix (large, touches live
+  customer-facing copy across the whole marketing site) — flagged, not silently changed.
+- Signature env-var check — rejects unset/empty/obvious-placeholder `SIGNATURE_NAME`
+  values, not just a bare truthiness check.
+- Deliverability preflight — one command, live-verified: SPF/DKIM/DMARC pass, and a real
+  Zoho SMTP `transport.verify()` (auth check, no message sent) also passes.
+
+## Definition of done — status against the original list
+
+- [x] Phase 0 audit complete, `STATE-AUDIT.md` written.
+- [x] A completed-call input produces a tailored one-page proposal with correct package
+  and line items.
+- [x] Proposal drafts to Zoho Drafts by default, sends only when `PROPOSAL_SEND_LIVE` is
+  on — code path correct; **Drafts write itself is blocked on IMAP not being enabled**
+  (account setting, not a defect — see above).
+- [~] A live Stripe link generates with the correct amount — code path correct and fully
+  tested; **cannot generate a real live link in this environment** (no
+  `STRIPE_SECRET_KEY` configured — see `STATE-AUDIT.md`). Money-path tests pass for
+  everything that doesn't require a live key.
+- [x] Open-tracking pixel logs opens to Sheets — live-verified.
+- [x] New state fields additive; existing Sheets logging intact.
+- [x] `CHECKPOINT.md` present (this section).
+- [x] No emojis, sentence case, no founder name in the proposal body, "AI agent" not
+  "bot" — verified by the brand linter itself against this session's own output, plus
+  dedicated automated tests.
+
+## What's next
+
+**Two real blockers, both need Dave, not more code:**
+1. **Enable IMAP** for `dave@trevoadvisors.com` in Zoho Mail admin settings — blocks both
+   this session's Drafts delivery and the separate Reply Agent (`claude/email-agent-scope-audit-ku4pkc`).
+   Same root cause, same fix, two separate pieces of finished code waiting on it.
+2. **Add a real `STRIPE_SECRET_KEY`** to `.env.local` (and replace the placeholder Payment
+   Link URLs in `website/checkout/index.html` while at it — `scripts/brief.js` already
+   flags that one). Once added, `node scripts/generate-proposal.js <leadId>` generates a
+   real, working payment link with no code changes needed.
+
+**Tier 3 (not started, rolls forward in priority order):**
+7. Drip opt-out / unsubscribe (CAN-SPAM/A2P compliance — real legal exposure).
+8. Lead dedup + phone normalization (pre-empts the Nora conversation-splitting bug from
+   the prior session's adversarial audit — reuse `scripts/webhook.js`'s normalizer).
+9. Client onboarding (`session-client-onboarding.md` — referenced by the plan but does
+   not exist anywhere in the repo; needs to be written or the scope needs re-deriving).
+10. Missed-call calculator (`session-missed-call-calculator.md` — same: referenced, not
+    found).
+
+**Backlog (unchanged, still not this session, must not be dropped):**
+- Nora remediation (9 defects from the prior session's adversarial audit — highest
+  priority on safety grounds, independent of revenue work; guardrail: keep real
+  contractor leads out of live Nora until it lands).
+- DMARC tighten to `p=quarantine` (~Aug 17, trigger is clean report cycles not the date).
+
+**Also worth a look, found during this session, not acted on:**
+- Merge `feature/nora-multichannel-config` and `feature/funnel-metrics` to `main` — both
+  complete, tested, and currently invisible to any other branch (including this one).
+- The live website's brand-standard violations found by the new linter (see Tier 2 above).
+- `session-funnel-metrics.md`, `session-client-onboarding.md`,
+  `session-missed-call-calculator.md`, `session-nora-remediation.md` — none of these
+  detail files referenced throughout the plan actually exist in the repo. Either they
+  live outside this repo, or they need to be (re)written before those sessions start.
+
+## Ready-to-paste continuation prompt
+
+```
+Continue the post-call-proposal work on branch feature/post-call-proposal. Read
+/CHECKPOINT.md (the "Post-call proposal core" section) and /STATE-AUDIT.md first —
+Tier 1, Tier 1b, and all of Tier 2 are done and tested (55 passing tests).
+
+Two things may have changed since: check whether IMAP is now enabled for
+dave@trevoadvisors.com (retry scripts/generate-proposal.js's Drafts delivery for real
+if so) and whether STRIPE_SECRET_KEY now exists in .env.local (retry a real Stripe
+Checkout Session if so). If neither has changed, move to Tier 3 in order: drip
+opt-out/unsubscribe (7), lead dedup + phone normalization (8), then client onboarding
+(9) and the missed-call calculator (10) — note neither of the last two has a detail
+file in the repo despite being referenced, so re-derive scope from the plan's one-line
+descriptions or ask before building. Keep the same conventions: CommonJS, pure
+computation in scripts/lib/**/*.js with node:test coverage, fail loud on money-adjacent
+or credential-missing paths rather than silently defaulting.
+```

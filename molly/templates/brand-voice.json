@@ -1,25 +1,36 @@
 {
+  "_supersededBy": "molly/CLAUDE.md — read that file first, this JSON is the machine-readable mirror of it, not the source of truth",
   "agent": "Molly",
   "brand": "Trevo Advisors",
   "instagram_handle": "@trevoadvisors",
-  "audience": "home service contractors — plumbers, HVAC techs, electricians, roofers, handymen — who don't have a professional website or are losing business to competitors who do",
-  "core_pain": "most contractors lose 3-5 jobs per week to competitors with better online presence — a professional website closes that gap in 48 hours",
-  "tone": "direct, results-focused, credible, never salesy — speak like a peer who gets the trade, not a software vendor",
+  "audience": "owner-operators of small home service businesses (plumbers, electricians, HVAC techs, roofers, handymen) nationally — trade-agnostic, no city or region references, no single trade singled out",
+  "core_pain": "a contractor's next customer looks them up before calling. When there is nothing to find, or what they find looks abandoned, that customer calls the next name on the list. The contractor never learns it happened.",
+  "tone": "peer, not consultant — respectful of the trade, never condescending about a bad or missing website. Talk in jobs, calls, and customers, never funnels, impressions, conversion rates, or ROI.",
   "casing": "sentence case always",
-  "avoid_words": ["unlock", "game-changer", "supercharge", "leverage", "hustle", "crush it", "AI", "automated", "bot", "synergy", "revolutionary", "cutting-edge", "innovative", "disruptive"],
+  "avoid_words": ["unlock", "game-changer", "supercharge", "leverage", "hustle", "crush it", "bot", "synergy", "revolutionary", "cutting-edge", "innovative", "disruptive"],
   "post_attribution": "— Trevo",
-  "never_mention_ai": true,
+  "never_mention_ai": false,
+  "ai_mention_rule": "the AI agent may be introduced as something that exists, secondary to the website pitch — never as the headline, never 'bot' (always 'AI agent'), never AI-replaces-your-staff framing",
+  "never_state_price": true,
+  "delivery_framing": "in as little as two days — soft, occasional, never the headline, never a campaign hook",
   "content_pillars": {
-    "results": "client wins — contractors who got more calls after launching their site",
-    "education": "why contractors need a website, what clients look for, how Google works for local service businesses",
-    "product": "demo showcases, feature highlights, site walkthroughs for each trade",
-    "journey": "behind-the-scenes of building sites, agency story, how the process works"
+    "invisible_loss": "jobs lost before the phone ever rings — the core thesis, told different ways",
+    "what_customers_do": "how people choose a contractor now — stat-backed, sourced (see statSources.approvedPrimarySources)",
+    "teardowns": "anonymized or composite website mistakes, shown not told — never a named real business, see molly/CLAUDE.md for the 3 permitted formats",
+    "quiet_proof": "what a good contractor site does differently — no client work until there is a consenting client",
+    "the_trade_itself": "content that respects the work and has nothing to sell — earns the right to post the other four"
   },
   "cta_options": {
-    "results": "DM us the word demo",
-    "education": "link in bio",
-    "product": "see the demo — link in bio",
-    "journey": "DM us the word demo"
+    "invisible_loss": "save or follow",
+    "what_customers_do": "save or follow",
+    "teardowns": "learn more — link in bio",
+    "quiet_proof": "learn more — link in bio",
+    "offer": "book a call"
+  },
+  "ctaRule": "one CTA per post, never stacked. Offer posts (book a call) should be the smallest share of the mix.",
+  "statSources": {
+    "approvedPrimarySources": ["BrightLocal", "Think with Google", "Pew Research", "SBA", "BBB", "U.S. Census", "BLS", "ServiceTitan (cite as vendor research)", "Housecall Pro (cite as vendor research)", "Jobber (cite as vendor research)"],
+    "rule": "every statistic carries its source and year visibly in the post. If a figure cannot be traced to a named primary source, it does not get used. Verify at publish time, not from a template. No statistic reused across more than a handful of posts. Missed-call statistics prohibited unless independently sourced."
   },
   "hashtags": [
     "#contractormarketing", "#plumbingbusiness", "#hvacbusiness", "#electrician",

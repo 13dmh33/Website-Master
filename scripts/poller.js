@@ -31,6 +31,14 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env.loc
 const fs   = require('fs');
 const path = require('path');
 
+// Shared intent classifier (keyword-based, zero API cost) — same module webhook.js
+// is meant to use for SMS. Wired in here so email replies are routed by intent
+// (opt-out / objection / positive / neutral) instead of blanket-marked positive.
+const { classify, statusFor } = require('./reply-classifier');
+// Reuse (do not duplicate) the reply-agent's quote/signature stripper and HTML→text
+// helper so the classifier sees only what the lead wrote this turn.
+const { stripQuotedAndSignature, htmlToText } = require('./reply-agent');
+
 const ROOT         = path.join(__dirname, '..');
 const QUEUE_DIR    = path.join(ROOT, 'queue');
 const MESSAGES_DIR = path.join(ROOT, 'messages');
@@ -39,6 +47,20 @@ const LOGS_DIR     = path.join(ROOT, 'logs');
 const CONFIG_PATH  = path.join(ROOT, 'config', 'poller-config.json');
 
 const isDryRun = process.argv.includes('--dry-run');
+
+// Intent → status routing. Mirrors webhook.js's SMS behaviour:
+//   sent   = status written to messages/<lead>-sent.json
+//   state  = status written to state.json (so the reply is visible in the pipeline)
+// neutral: still recorded as a reply in state.json (visibility) but the sent-record
+// status is left untouched so mobile.js does not fire an auto-reply on an unclear message.
+const REPLY_ROUTES = {
+  stop:      { sent: 'unsubscribed', state: 'unsubscribed' },
+  negative:  { sent: 'unsubscribed', state: 'unsubscribed' },
+  objection: { sent: 'on_hold',      state: 'on_hold' },
+  positive:  { sent: 'positive',     state: 'replied' },
+  question:  { sent: 'positive',     state: 'replied' },
+  neutral:   { sent: null,           state: 'replied' },
+};
 
 // Auto-reply detection patterns
 const AUTO_REPLY_SUBJECTS = [
@@ -103,52 +125,101 @@ function buildEmailIndex() {
 
 // ── STATE UPDATE ──────────────────────────────────────────────────────────────
 
-function updateState(leadId, status) {
+function updateState(leadId, status, meta = {}) {
   try {
     const state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
     const entry = state.queue.find(l => l.lead_id === leadId);
     if (entry) {
-      entry.status           = status;
+      entry.status            = status;
       entry.reply_received_at = new Date().toISOString();
+      // Additive-only: new fields recording the classified intent. Existing fields
+      // (status, reply_received_at) keep their prior meaning.
+      if (meta.intent)     entry.reply_intent     = meta.intent;
+      if (meta.confidence) entry.reply_confidence = meta.confidence;
+      entry.reply_channel = 'email';
       fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
+    } else {
+      log(`WARN: no state.json queue entry for ${leadId} — reply logged to sent record only`);
     }
   } catch (e) {
     log(`WARN: could not update state.json — ${e.message}`);
   }
 }
 
-function markPositive(leadId, sentPath, brief, subject, fromEmail) {
+/**
+ * Classify an inbound email reply and route the lead by intent.
+ * @param {object} args
+ * @param {string} args.leadId
+ * @param {string} args.sentPath
+ * @param {object} args.brief
+ * @param {string} args.subject
+ * @param {string} args.fromEmail
+ * @param {string} args.body       — cleaned reply text (quotes/signature stripped)
+ * @param {object} [args.headers]  — IMAP headers map (auto-reply detection)
+ */
+function recordReply({ leadId, sentPath, brief, subject, fromEmail, body, headers }) {
+  const { intent, confidence, notes } = classify(body, subject, headers);
+
+  // Auto-replies (OOO, autoresponders) are not real replies — never touch status.
+  if (intent === 'auto_reply') {
+    log(`Auto-reply from ${fromEmail} ("${subject}") — ${notes}; no status change`);
+    return { intent, changed: false };
+  }
+
+  const route = REPLY_ROUTES[intent] || REPLY_ROUTES.neutral;
+
   if (isDryRun) {
-    log(`DRY RUN — would mark ${brief.business_name} as positive (reply from ${fromEmail})`);
-    return;
+    log(`DRY RUN — ${brief.business_name}: intent="${intent}" (${confidence}) → state "${route.state}"${route.sent ? `, sent "${route.sent}"` : ''} (${notes})`);
+    return { intent, changed: false };
   }
+
   if (!fs.existsSync(sentPath)) {
-    log(`WARN: sent record not found at ${sentPath}`);
-    return;
+    log(`WARN: sent record not found at ${sentPath} — recording reply in state.json only`);
+    updateState(leadId, route.state, { intent, confidence });
+    return { intent, changed: true };
   }
+
   const sent = JSON.parse(fs.readFileSync(sentPath, 'utf8'));
-  if (sent.status === 'positive' || sent.status === 'unsubscribed') {
-    log(`${brief.business_name} already has status "${sent.status}" — skipping`);
-    return;
+  if (sent.status === 'unsubscribed') {
+    log(`${brief.business_name} already unsubscribed — leaving as-is`);
+    return { intent, changed: false };
   }
-  sent.status         = 'positive';
-  sent.replied_at     = new Date().toISOString();
-  sent.reply_subject  = subject;
-  sent.reply_channel  = 'email';
-  sent.reply_from     = fromEmail;
+
+  // Additive: record the reply on the sent record without discarding prior fields.
+  sent.replied_at       = new Date().toISOString();
+  sent.reply_subject    = subject;
+  sent.reply_channel    = 'email';
+  sent.reply_from       = fromEmail;
+  sent.reply_intent     = intent;
+  sent.reply_confidence = confidence;
+  if (Array.isArray(sent.replies)) {
+    sent.replies.push({ at: sent.replied_at, channel: 'email', intent, confidence, subject });
+  }
+  if (route.sent) sent.status = route.sent;   // neutral leaves status untouched
   fs.writeFileSync(sentPath, JSON.stringify(sent, null, 2));
-  updateState(leadId, 'replied');
-  log(`✓ Marked ${brief.business_name} as POSITIVE — run "node scripts/mobile.js" to send booking reply`);
+
+  updateState(leadId, route.state, { intent, confidence });
+
+  const hint = route.sent === 'positive'
+    ? ' — run "node scripts/mobile.js" to send booking reply'
+    : route.sent === 'unsubscribed'
+      ? ' — suppressed from further outreach'
+      : route.sent === 'on_hold'
+        ? ' — drip paused, revisit later'
+        : ' — flagged for manual review';
+  log(`✓ ${brief.business_name}: reply intent "${intent}" (${confidence}) → ${route.state}${hint}`);
+  return { intent, changed: true };
 }
 
 // ── IMAP POLL ─────────────────────────────────────────────────────────────────
 
 async function pollInbox() {
-  let ImapFlow;
+  let ImapFlow, simpleParser;
   try {
     ({ ImapFlow } = require('imapflow'));
+    ({ simpleParser } = require('mailparser'));
   } catch {
-    console.error('\n✗ imapflow not installed. Run:\n  npm install imapflow\nthen retry.\n');
+    console.error('\n✗ Missing deps. Run:\n  npm install imapflow mailparser\nthen retry.\n');
     process.exit(1);
   }
 
@@ -192,6 +263,9 @@ async function pollInbox() {
         log(`Found ${uids.length} message(s) to check`);
       }
 
+      // Phase 1 — cheap envelope/header scan. Identify replies from known leads;
+      // skip already-seen, auto-replies, and non-leads without fetching bodies.
+      const candidates = [];
       for await (const msg of client.fetch(uids, {
         uid: true, envelope: true, headers: true
       })) {
@@ -220,8 +294,37 @@ async function pollInbox() {
           continue;
         }
 
-        matched++;
-        markPositive(lead.leadId, lead.sentPath, lead.brief, subject, fromAddr);
+        candidates.push({ uid: msg.uid, subject, fromAddr, headers, lead });
+      }
+
+      // Phase 2 — fetch the source only for known-lead replies, parse the body,
+      // classify intent, and route (opt-out / objection / positive / neutral).
+      if (candidates.length > 0) {
+        const byUid = new Map(candidates.map(c => [c.uid, c]));
+        for await (const msg of client.fetch(
+          candidates.map(c => c.uid), { uid: true, source: true }, { uid: true }
+        )) {
+          const c = byUid.get(msg.uid);
+          if (!c) continue;
+          let body = '';
+          try {
+            const parsed = await simpleParser(msg.source);
+            body = parsed.text || (parsed.html ? htmlToText(parsed.html) : '');
+          } catch (e) {
+            log(`WARN: could not parse body for ${c.fromAddr} — ${e.message}; classifying on subject only`);
+          }
+          const cleanBody = stripQuotedAndSignature(body);
+          matched++;
+          recordReply({
+            leadId:    c.lead.leadId,
+            sentPath:  c.lead.sentPath,
+            brief:     c.lead.brief,
+            subject:   c.subject,
+            fromEmail: c.fromAddr,
+            body:      cleanBody,
+            headers:   c.headers,
+          });
+        }
       }
     } finally {
       lock.release();

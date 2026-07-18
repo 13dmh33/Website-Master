@@ -154,6 +154,17 @@ Load prompts from /agents/ folder:
 - agents/mobile.md
 
 ## Orchestration Rules
+- **No branch operation (checkout, stash, merge, rebase) while any pipeline process
+  (Pitcher, Drip, Scout, etc.) is running.** `state.json` and `config/cost-log.json` are
+  the live working files these processes write to on every step — a branch operation
+  mid-run can silently swap them out from under the process, which has caused real data
+  loss once already (a `git stash` reverted `state.json` to a stale committed baseline
+  while Pitcher kept writing real sends on top of it — see the standing action-items
+  memory / session history around 2026-07-18). Verify no pipeline process is running
+  before every checkout, stash, merge, or rebase, in every session, not just this one.
+  This is the accepted-cost fallback (Option B: no code change, tracking stays as-is) —
+  a more robust fix (gitignore both files + automated backups on every run, Option A) is
+  still open pending a decision; ask before assuming it's been superseded.
 - Never assign 2 agents to the same lead simultaneously
 - Write lead state to state.json after every step
 - Human approval required for: deals over $3,000, reply rate below 12%

@@ -99,4 +99,4 @@ async function deliverProposal({ from, to, subject, html, zohoEmail, zohoAppPass
   return { mode: 'draft' };
 }
 
-module.exports = { buildMime, writeToZohoDrafts, sendViaZohoSmtp, deliverProposal };
+module.exports = { buildMime, writeToZohoDrafts, sendViaZohoSmtp, deliverProposal, getZohoSmtpTransport };

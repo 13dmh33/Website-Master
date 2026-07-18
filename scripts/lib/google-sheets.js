@@ -33,6 +33,20 @@ function b64url(buf) {
 }
 
 function loadServiceAccount() {
+  // Serverless environments (e.g. a Netlify Function) can't reference a
+  // local file path the way this repo's Node scripts do — they get the
+  // key's raw JSON content as an env var instead. Checked first, additive:
+  // every existing caller keeps working unchanged via the file-path path
+  // below, since none of them set this var.
+  const rawContent = process.env.GOOGLE_SERVICE_ACCOUNT_JSON_CONTENT;
+  if (rawContent) {
+    let sa;
+    try { sa = JSON.parse(rawContent); }
+    catch { throw new Error('GOOGLE_SERVICE_ACCOUNT_JSON_CONTENT is not valid JSON.'); }
+    if (!sa?.client_email || !sa?.private_key) throw new Error('Service-account JSON content missing client_email/private_key.');
+    return sa;
+  }
+
   const credPath = process.env.GOOGLE_SERVICE_ACCOUNT_JSON || process.env.GOOGLE_APPLICATION_CREDENTIALS;
   if (!credPath) throw new Error('GOOGLE_SERVICE_ACCOUNT_JSON not set in .env.local (see CHECKPOINT.md).');
   if (!fs.existsSync(credPath)) throw new Error(`Service-account key not found: ${credPath}`);

@@ -179,3 +179,110 @@ node scripts/contact-scraper.js --limit 20   # cap sites visited
 - 170 of current leads have no website — scraper can't help them (need Apollo/Enricher).
 - 11 has-website / no-email leads are the target set; run on Mac for real results.
 - No JS rendering — obfuscated emails won't be caught by design.
+
+---
+
+# CHECKPOINT — Funnel metrics (Apollo hit-rate + conversion dashboard)
+
+Branch: `feature/funnel-metrics` (off `main` — no `master` branch exists in this repo,
+same as the Nora session). Not merged, not pushed to origin. Stopped at ~90% usage per
+the session's own protocol — this checkpoint written immediately after the last commit,
+no work left mid-state.
+
+## What's done
+
+All 6 tasks from the session scope doc are complete, plus Step 0 discovery. 14 new tests
+passing (`node --test scripts/test/apollo-metrics.test.js scripts/test/funnel.test.js`),
+17 pre-existing tests confirmed unaffected. Commits, in order:
+
+1. `Funnel metrics: Step 0 discovery` — `/DISCOVERY.md`. Key findings: Enricher never
+   touched `state.json` before this session; `replied`/`hot` are real statuses currently
+   at zero live occurrences (measured fact, not a guess — 163 leads sent, zero replies
+   recorded yet); every one of the 11 live `closed` leads is a data-quality rejection,
+   never a won deal, and `status: 'closed'` is never even set by any script; `opened` has
+   no tracking anywhere; `state.json`'s queue mirrors `messages/*-sent.json` for every
+   transition that matters, so the queue alone is sufficient for stage counts; repo is
+   CommonJS, not ESM (same delta as the Nora session).
+2. `Enricher: additive Apollo attempt/hit instrumentation` — `apolloAttempted`,
+   `apolloHit`, `apolloCreditSpent` added at all 4 existing per-lead write points, zero
+   control-flow change (diffed against `main` to confirm — only the 3 new fields per
+   write, nothing else touched).
+3. `Apollo hit-rate rollup script` — `scripts/lib/apollo-metrics.js` (pure) +
+   `scripts/apollo-hit-rate.js` (runner). Reports phone-only (no-website mode, the
+   literal scope-doc framing) as the headline, has-website mode as a separate breakdown.
+   Live-verified against the real Sheet — creates "ApolloMetrics" tab, writes header,
+   appends rows, read back and confirmed.
+4. `Funnel stage counts + conversion math` — `scripts/lib/funnel.js`. Two views:
+   `rawCounts` (current distribution, no interpretation) and `cumulativeReached` /
+   `transitions` (reached-at-least-this-far, built by ranking the real linear sequence
+   and anchoring the 3 exit statuses — closed at "scouted", unsubscribed at "sent",
+   unresponsive at "drip_d2_sent" — see DISCOVERY.md for why each anchor was chosen).
+   `biggestDropoff` flags by absolute leads lost (the literal ask), separate from
+   `worstConversionRate` since they can point at different transitions.
+5. `Funnel + Apollo hit-rate dashboard — static page render` — `scripts/lib/lead-files.js`
+   (shared loader, factored out of task 3's script), `scripts/generate-funnel-dashboard.js`,
+   `website/dashboard/{funnel.html,funnel-data.json}`. Brand-compliant static page,
+   verified visually via an Artifact preview before committing. Surfaces the biggest
+   drop-off (currently checked -> sent, 458 leads) with an inline caveat that it's very
+   likely the 30/day Pitcher send cap, not a quality problem — verified against the real
+   `config/pitcher-config.json`. Includes an explicit "what this dashboard cannot measure
+   yet" panel (opened, booked/won, closed != won, and a warning that `leads-web/` isn't
+   tracked in git so the CI refresh only sees the phone-only Apollo breakdown reliably).
+6. `Scheduled daily funnel dashboard refresh` — `.github/workflows/funnel-dashboard.yml`,
+   mirrors `milly-weekly-analytics.yml`'s exact pattern (checkout main, setup Node 20,
+   run + commit + push + upload artifact). Core dashboard generation needs zero secrets
+   (reads only repo-committed files); the optional Apollo Sheets sync skips gracefully
+   without `GOOGLE_SERVICE_ACCOUNT_JSON_CONTENT`/`SHEET_ID` repo secrets, which aren't
+   configured yet — see "What's next" below.
+
+## Definition of done — status against the original list
+
+- [x] Enricher records Apollo attempt/hit per lead, additively — diffed against `main`
+  to confirm zero outcome/control-flow change.
+- [x] Rollup reports hit rate % and cost per successful email to a Sheet tab (and log).
+- [x] Dashboard shows counts per real stage and conversion % per transition, biggest
+  drop-off flagged.
+- [x] Apollo hit rate appears on the same dashboard.
+- [x] Refreshes daily via existing automation pattern (GitHub Actions, matching Milly/Miley).
+- [x] All new state fields additive (`leads/*.json`/`leads-web/*.json`, not `state.json` —
+  see DISCOVERY.md for why); existing pipeline behavior and Sheets logging untouched.
+- [x] `DISCOVERY.md` and `CHECKPOINT.md` present.
+- [x] No emojis, sentence case, no "business days" language — grepped across every new/
+  touched file; the only emoji hits found were pre-existing console-log symbols in
+  `enricher.js` (✓/✗/⚠), confirmed via `git diff main` to not be part of this diff.
+
+## What's next (not started, needs explicit ask before building)
+
+- No real Enricher run has happened since this instrumentation shipped — all Apollo
+  hit-rate figures currently read zero/n/a. That's expected (measures forward from
+  deploy, no historical backfill, per the scope doc's explicit out-of-scope item), but
+  means the headline number won't be real until Enricher runs again for real.
+- `leads-web/` is not tracked in git (confirmed via `git ls-files leads-web/` — 0 files).
+  The scheduled dashboard refresh runs from a fresh checkout, so it will never see
+  has-website-mode Apollo data until that directory (or at least the enriched files) gets
+  committed. Not fixed this session — wasn't asked, and it's a bigger call (there may be a
+  reason it was left untracked) than this session's scope covers.
+- To enable the Apollo Sheets sync in the scheduled GitHub Actions run, add
+  `GOOGLE_SERVICE_ACCOUNT_JSON_CONTENT` (the service account key's raw JSON content) and
+  `SHEET_ID` as repo secrets. Without them the workflow still runs and still regenerates
+  the dashboard — it just skips the Sheets append step.
+- `poller.js` doesn't write `replied` into `state.json` for email replies the way
+  `webhook.js` does for SMS (DISCOVERY.md finding) — a pre-existing pipeline gap, not
+  something this session touched, but it means email replies are currently undercounted
+  in the funnel. Worth a future session if email reply volume matters.
+- Drip A/B variant tracking and aggregator lane attribution — explicitly out of scope
+  this session per the doc.
+
+## Ready-to-paste continuation prompt
+
+```
+Continue the funnel-metrics work on branch feature/funnel-metrics. Read /CHECKPOINT.md
+(the "Funnel metrics" section) and /DISCOVERY.md first — everything through the original
+session's 6 tasks is done and tested (14 new tests passing).
+
+Next up: [fill in — e.g. "run Enricher for real and confirm the hit-rate rollup shows
+real numbers" or "decide whether to commit leads-web/ so CI sees has-website Apollo data"
+or "wire replied-tracking for email replies via poller.js"]. Keep the same conventions:
+CommonJS (not ESM — see DISCOVERY.md delta), pure computation in scripts/lib/*.js with
+node:test coverage, read/log-only unless explicitly asked to change pipeline behavior.
+```

@@ -1,0 +1,56 @@
+name: Funnel dashboard refresh
+
+on:
+  schedule:
+    - cron: '0 13 * * *'  # 7am MDT (UTC-6) = 1pm UTC, daily
+  workflow_dispatch:        # manual trigger for testing
+
+jobs:
+  refresh-dashboard:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write  # needed to commit the regenerated dashboard files
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate funnel dashboard
+        run: node scripts/generate-funnel-dashboard.js
+
+      - name: Write Google service account key (optional — Apollo Sheets sync)
+        if: ${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON_CONTENT != '' }}
+        run: echo '${{ secrets.GOOGLE_SERVICE_ACCOUNT_JSON_CONTENT }}' > /tmp/ga-key.json
+
+      - name: Sync Apollo hit-rate to Sheets (skips gracefully if not configured)
+        run: node scripts/apollo-hit-rate.js
+        env:
+          GOOGLE_SERVICE_ACCOUNT_JSON: /tmp/ga-key.json
+          SHEET_ID: ${{ secrets.SHEET_ID }}
+
+      - name: Commit regenerated dashboard
+        run: |
+          git config user.name  "funnel-metrics-agent"
+          git config user.email "funnel-metrics@trevoadvisors.com"
+          git add website/dashboard/funnel.html website/dashboard/funnel-data.json
+          git diff --cached --quiet || git commit -m "funnel dashboard: daily refresh $(date +%Y-%m-%d)"
+          git push origin main || true
+
+      - name: Upload dashboard artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: funnel-dashboard-${{ github.run_id }}
+          path: website/dashboard/
+          retention-days: 90

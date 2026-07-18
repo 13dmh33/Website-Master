@@ -34,6 +34,7 @@ const { buildCheckoutSessionParams, createCheckoutSession } = require('./lib/pro
 const { getPackage } = require('./lib/proposal/packages');
 const { deliverProposal } = require('./lib/proposal/draft-mail');
 const { recordProposalSent } = require('./lib/proposal/state');
+const { checkSignatureConfigured } = require('./lib/proposal/signature-check');
 
 const ROOT = path.join(__dirname, '..');
 const QUEUE_DIR = path.join(ROOT, 'queue');
@@ -61,8 +62,9 @@ async function main() {
   }
 
   const signatureName = process.env.SIGNATURE_NAME;
-  if (!signatureName) {
-    console.error('SIGNATURE_NAME is not set in .env.local — refusing to generate an unsigned proposal.');
+  const signatureCheck = checkSignatureConfigured(signatureName);
+  if (!signatureCheck.ok) {
+    console.error(`${signatureCheck.reason} Refusing to generate an unsigned proposal.`);
     process.exit(1);
   }
 

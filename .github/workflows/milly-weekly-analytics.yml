@@ -23,6 +23,9 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Install root dependencies (for failure alerting)
+        run: npm install --no-audit --no-fund
+
       - name: Install dependencies
         run: cd milly && npm install
 
@@ -58,3 +61,14 @@ jobs:
           name: milly-analytics-${{ github.run_id }}
           path: milly/output/archive/
           retention-days: 90
+
+      - name: Alert on failure
+        if: failure()
+        run: node scripts/notify-workflow-failure.js
+        env:
+          WORKFLOW_NAME: "Milly weekly analytics"
+          JOB_NAME: ${{ github.job }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          COMMIT_SHA: ${{ github.sha }}
+          ZOHO_EMAIL: ${{ secrets.ZOHO_EMAIL }}
+          ZOHO_APP_PASSWORD: ${{ secrets.ZOHO_APP_PASSWORD }}

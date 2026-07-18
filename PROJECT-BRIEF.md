@@ -1,9 +1,9 @@
 # Trevo Advisors — Project Brief
 
-**Date:** June 1, 2026
+**Date:** June 2, 2026
 **Owner:** Dave Hettinger — dave@trevoadvisors.com
 **Website:** trevoadvisors.com
-**Status:** All 8 scripts live. Dual-channel outreach active. First batch sent 2026-06-01.
+**Status:** All 14 scripts live. Dual-channel outreach active. Website live at trevoadvisors.com (Netlify). Stripe payment links pending EIN propagation (~1-2 weeks).
 
 ---
 
@@ -44,11 +44,12 @@ Everything else is automated.
 
 | Product | Price | Type |
 |---|---|---|
-| Website build | $400 | One-time |
-| Nora voice agent | $399/mo | Recurring standalone |
-| Bundle (hosting + Nora) | $350/mo | Recurring |
+| Website build | $150 | One-time |
+| Hosting | $65/mo | Recurring |
+| Website + Nora build | $200 | One-time |
+| Bundle (hosting + Nora) | $65/mo | Recurring |
 
-**Target:** 47 clients/month → ~$18,800/mo recurring at scale
+**Target:** 47 clients/month → ~$7,050/mo recurring at scale
 
 ---
 
@@ -61,13 +62,19 @@ Everything else is automated.
 | Checker | checker.js | ✅ Live | Template fast-path, no API cost for templates |
 | Builder | builder.js | ✅ Live | Lovable prompts generated |
 | Filmer | filmer.js | ✅ Live | Loom instructions generated |
-| Pitcher | pitcher.js | ✅ Live | 18 SMS sent 2026-06-01 (Twilio paid) |
-| Mobile | mobile.js | ✅ Live | Auto-send, awaiting first real reply |
-| Reporter | reporter.js | ✅ Live | Morning email live, cron job pending setup |
+| Pitcher | pitcher.js | ✅ Live | 18 SMS + 15 emails sent |
+| Mobile | mobile.js | ✅ Live | Auto-send, sends /start link, Nora upsell |
+| Reporter | reporter.js | ✅ Live | Morning email + cron set on Mac (7am) |
+| Drip | drip.js | ✅ Live | 4-step sequence (d1/d1b/d1c/d2), 8 templates |
+| Reply Classifier | reply-classifier.js | ✅ Live | Keyword intent classifier, zero API cost |
+| Dashboard | dashboard.js | ✅ Live | Terminal pipeline view, color-coded status |
+| Webhook | webhook.js | ✅ Live | Twilio inbound SMS, HMAC-SHA1 — needs Mac + ngrok |
+| Poller | poller.js | ✅ Live | IMAP email reply poller — needs Mac + imapflow |
+| Website | website/ | ✅ Live | Deployed to trevoadvisors.com via Netlify — Stripe Payment Links pending EIN |
 
 ---
 
-## The 8 Scripts
+## The 14 Scripts
 
 ### 1. Scout (`scripts/scout.js`)
 Pulls contractor leads from Google Maps via the Outscraper API. Filters by review
@@ -136,13 +143,56 @@ template reply rates, and day/month costs across all services.
 - **Cron:** `0 7 * * * cd ~/Website-Master && /path/to/node scripts/reporter.js`
 - **Email to:** REPORT_TO_EMAIL in .env.local
 
+### 9. Drip (`scripts/drip.js`)
+4-step follow-up sequence for non-responders. Runs daily, sends up to 20 messages
+per channel per day. Skips leads already on positive/call_booked status.
+
+- **Steps:** d1 (day 4), d1b (day 8), d1c (day 12), d2 (day 19) — dead after day 26
+- **Config:** `config/drip-config.json`
+- **⚠️ Must run locally** — Twilio + Zoho SMTP blocked from container.
+
+### 10. Reply Classifier (`scripts/reply-classifier.js`)
+Keyword-based intent classifier. Reads new replies and tags them as:
+positive / question / objection / negative / stop / auto_reply / neutral.
+Zero API cost. Called by webhook.js and poller.js.
+
+### 11. Dashboard (`scripts/dashboard.js`)
+Terminal pipeline view. Shows all leads color-coded by status (queue / sent / hot /
+deal_closed). Flags leads stuck in any stage. Use `--leads` or `--drip` flags.
+
+### 12. Webhook (`scripts/webhook.js`)
+HTTP server that receives Twilio inbound SMS webhooks. Validates HMAC-SHA1 signature,
+classifies reply intent via reply-classifier.js, updates messages JSON.
+
+- **⚠️ Must run locally** on Mac + exposed via ngrok. URL registered in Twilio console.
+
+### 13. Poller (`scripts/poller.js`)
+IMAP poller for Zoho inbox. Reads unread emails, detects auto-replies,
+classifies intent, updates messages JSON. Runs on demand or cron.
+
+- **⚠️ Must run locally** — Zoho IMAP blocked from container.
+- **Requires:** `npm install imapflow` on Mac.
+
+### 14. Website (`website/`)
+Full client-facing funnel. Merged to main and deployed live at trevoadvisors.com via Netlify.
+
+- `/start/` — hero landing page texted to positive replies
+- `/demo/` — 3 live demo sites (plumber, electrician, HVAC)
+- `/proposal/` — personalized sales proposal with trade-specific demo
+- `/intake/` — 4-step client intake form (Formspree)
+- `/checkout/` — Stripe Payment Link checkout ($150 website / $200 + Nora)
+- `/thankyou/` — post-payment confirmation + next steps
+
 ---
 
 ## Template Vault
 
-10 pre-approved templates in `config/templates.json` — 5 SMS (s1–s5) + 5 email (e1–e5).
-Diagnoser picks and fills the right template for each lead. A/B rotation via
-epsilon-greedy algorithm (20% explore / 80% exploit) learns which template converts best.
+11 pre-approved templates in `config/templates.json` — 6 SMS (s1–s6) + 5 email (e1–e5).
+- All SMS templates ≤160 chars (1 Twilio segment = $0.0079/msg)
+- s6 = catch-all with no data requirements — always available as fallback
+- Templates with missing required fields skipped automatically
+- All templates open with "Hey," — no first name substitution
+- A/B rotation via epsilon-greedy algorithm (20% explore / 80% exploit)
 
 Reply tracking: `config/template-stats.json`
 
@@ -154,7 +204,7 @@ Reply tracking: `config/template-stats.json`
 # ── ON LOCAL MAC ───────────────────────────────────────────────
 node scripts/scout.js --city "Denver, CO" --trade plumber --force
 git add leads/ state.json config/cost-log.json
-git commit -m "Scout: Denver plumbers" && git push origin claude/kind-hypatia-3YzM0
+git commit -m "Scout: Denver plumbers" && git push origin main
 
 # ── IN CLAUDE CODE CONTAINER ───────────────────────────────────
 node scripts/diagnoser.js --force
@@ -163,7 +213,7 @@ node scripts/builder.js --force       # generates Lovable prompts
 node scripts/filmer.js --force        # writes Loom instructions
 
 # ── ON LOCAL MAC (after git pull) ─────────────────────────────
-git pull origin claude/kind-hypatia-3YzM0
+git pull origin main
 node scripts/pitcher.js --dry-run --force   # preview
 node scripts/pitcher.js --force             # send
 
@@ -212,24 +262,83 @@ Morning report aggregates by day and month.
 | Twilio (SMS) | ~$5–10/mo |
 | **Total infrastructure** | **~$25–30/mo** |
 
-At $400/site × 47 = $18,800/mo revenue, infrastructure is <0.2% of revenue.
+At $150/site × 47 = $7,050/mo revenue, infrastructure is <0.5% of revenue.
 
 ---
 
 ## Known Gaps / Next Steps
 
+### Blocked — waiting on external approvals
+
+| Item | Blocking | ETA |
+|---|---|---|
+| Create 2 Stripe Payment Links ($150/$200) | EIN propagation to IRS third-party verification | ~1-2 weeks |
+| Stripe business verification | Same EIN issue | ~1-2 weeks |
+| A2P Campaign creation → link +1 720 to Sender Pool | Twilio Brand approval | 1-3 business days |
+
+### Mac Setup (do when A2P/SMS is ready)
+
 | Item | Priority | Notes |
 |---|---|---|
-| GitHub PAT on Mac | High | Can't push to git from Mac without PAT — set up at github.com/settings/tokens |
-| Inbound reply detection | High | Must manually set `"status": "positive"` in messages JSON. Twilio webhook would automate this. |
-| Cron job for Reporter | Medium | Add 7am cron on Mac: `crontab -e` |
-| Email deliverability (SPF/DKIM/DMARC) | ✅ Done | SPF + DKIM + DMARC set in OpenSRS DNS for trevoadvisors.com (2026-06-01) |
-| D&J Enterprises SMS retry | Low | 1 failed send from first batch — retry with `node scripts/pitcher.js --force` |
-| Scout must run locally | Info | Cloud container IP blocked by Outscraper |
-| Pitcher must run locally | Info | Twilio blocked from container |
-| Reporter must run locally | Info | Zoho SMTP blocked from container |
-| `years_on_maps` filter | Low | Outscraper doesn't return this field. Filter unenforced. |
-| State management at scale | Low | state.json flat file fine until ~1,000 leads, then consider SQLite |
+| `npm install imapflow` on Mac | 🟡 Medium | Required for poller.js |
+| Start webhook.js + ngrok | 🟡 Medium | `node scripts/webhook.js` + expose via ngrok + register URL in Twilio console |
+| Add `SITE_START_URL` to .env.local | 🟡 Medium | `SITE_START_URL=https://trevoadvisors.com/start/` |
+
+### Bug Fixes (container — can do any session)
+
+| Item | Priority | Notes |
+|---|---|---|
+| mobile.js: status set too early | 🟡 Medium | Sets `call_booked` on send — should set `booking_sent` instead |
+| d1c-sms: unfilled `[trade]`/`[City]` tokens | 🟡 Medium | Fix token substitution in drip.js for d1c SMS template |
+| demo/hvac.html: missing noindex meta | 🟢 Low | Add `<meta name="robots" content="noindex, nofollow">` + emoji favicon |
+| start/index.html: missing OG tags | 🟢 Low | Add Open Graph meta for social sharing |
+| thankyou/index.html: missing OG tags | 🟢 Low | Add Open Graph meta |
+| Demo contact forms: no "demo" alert | 🟢 Low | Add "This is a demo — form submit disabled" alert on submit |
+| proposal/index.html: no-trade fallback | 🟢 Low | Show all 3 demo links when no `?trade=` param instead of defaulting to plumber |
+| Intake form step 3 UX | 🟢 Low | Make "optional" fields visually obvious (muted label + italic) |
+
+### Already Done ✅
+
+| Item | Completed |
+|---|---|
+| GitHub PAT on Mac | 2026-06-01 |
+| Cron job for Reporter (7am daily) | 2026-06-01 |
+| Email deliverability (SPF/DKIM/DMARC) | 2026-06-01 |
+| Dual-channel outreach (email + SMS) | 2026-06-01 |
+| Drip campaign (4-step, 8 templates) | 2026-06-01 |
+| reply-classifier, dashboard, webhook, poller | 2026-06-02 |
+| Pricing update across all files ($150/$200/$65) | 2026-06-02 |
+| Website funnel built (6 pages) | 2026-06-02 |
+| Branches 1–6 merged to main | 2026-06-02 |
+| EIN obtained (IRS CP575G) for Trevo Advisors | 2026-06-03 |
+| A2P 10DLC Brand registration submitted | 2026-06-03 |
+| Diagnoser phone-only channel routing bug fixed | 2026-06-03 |
+| webhook.js: timingSafeEqual RangeError fixed | 2026-06-03 |
+| poller.js: isAutoReply() null crash fixed | 2026-06-03 |
+| 30 SMS sent — Denver + Englewood plumbers (48 MTD) | 2026-06-03 |
+| claude/demo-site merged to main | 2026-06-03 |
+| Website deployed to Netlify (trevoadvisors.com) | 2026-06-03 |
+| Formspree wired into intake form (ID: xbdbneej) | 2026-06-03 |
+| DNS updated in OpenSRS → Netlify A record + www CNAME | 2026-06-03 |
+
+### Stripe Status
+
+| Field | Value |
+|---|---|
+| Account | Created 2026-06-03 |
+| Business verification | Blocked — EIN too new; IRS third-party verification takes ~1-2 weeks after issuance |
+| Payment Links | Not yet created — need verified account first |
+| Next step | Wait ~1-2 weeks, then retry EIN verification → create $150 + $200 Payment Links → paste into `website/checkout/index.html` |
+
+### Twilio A2P 10DLC Status
+
+| Field | Value |
+|---|---|
+| Brand status | Submitted — pending approval (1–3 business days) |
+| Bundle SID | BUb725ec9662f0dc3da58ed24117df8684 |
+| EIN | On file locally — not stored in repo |
+| Next step | After Brand approved: create Campaign (Mixed use case) → link +1 720 number to Sender Pool |
+| Sends blocked until | Campaign approved and number added to Sender Pool |
 
 ---
 
@@ -238,9 +347,10 @@ At $400/site × 47 = $18,800/mo revenue, infrastructure is <0.2% of revenue.
 ```
 /agents/         — System prompts for all 7 agents
 /config/         — Budget caps, counters, templates, cost log
-  templates.json       — 5 SMS + 5 email pre-approved templates
+  templates.json       — 6 SMS + 5 email pre-approved templates (+ 8 drip)
   template-stats.json  — A/B reply-rate tracking per template
   cost-log.json        — Append-only cost events (Anthropic/Twilio/Outscraper)
+  drip-config.json     — Drip sequence delays + daily limits
   pitcher-config.json  — Send counts + stagger settings
   diagnoser-config.json
   checker-config.json
@@ -250,18 +360,18 @@ At $400/site × 47 = $18,800/mo revenue, infrastructure is <0.2% of revenue.
 /mockups/        — Lovable URLs, screenshots, Loom links
 /messages/       — Outreach records from Pitcher (gitignored)
 /logs/           — Daily append-only logs
-/scripts/        — All 8 Node.js scripts
-  scout.js
-  diagnoser.js
-  checker.js
-  pitcher.js
-  builder.js
-  filmer.js
-  mobile.js
-  reporter.js
-  cost-tracker.js  — Shared cost logging module
-  template-picker.js — A/B template selection module
-  logger.js          — Shared log writer
+/scripts/        — All 14 Node.js scripts
+  scout.js · diagnoser.js · checker.js · pitcher.js
+  builder.js · filmer.js · mobile.js · reporter.js
+  drip.js · webhook.js · poller.js · dashboard.js
+  reply-classifier.js · cost-tracker.js · template-picker.js · logger.js
+/website/        — Client-facing funnel (live at trevoadvisors.com via Netlify)
+  start/           — Hero landing page (/start URL sent in positive replies)
+  demo/            — 3 live demo sites (plumber, electrician, HVAC)
+  proposal/        — Personalized sales proposal page
+  intake/          — 4-step client intake form (Formspree)
+  checkout/        — Stripe Payment Link checkout
+  thankyou/        — Post-payment confirmation + next steps
 state.json       — Shared lead state
 run-daily.sh     — Full pipeline runner
 .env.local       — API keys (gitignored)
@@ -273,4 +383,4 @@ README.md        — Quick start
 
 ---
 
-*Last updated: 2026-06-01 — First real SMS send complete (18 Denver electricians). Reporter live. All 8 scripts operational.*
+*Last updated: 2026-06-03 — 48 SMS sent MTD. Website live at trevoadvisors.com. Formspree wired. DNS propagating. EIN obtained; Stripe blocked ~1-2 weeks for EIN propagation. A2P 10DLC Brand submitted (1-3 days). Next: A2P Campaign → re-run 30 blocked SMS leads → Stripe Payment Links when EIN propagates.*

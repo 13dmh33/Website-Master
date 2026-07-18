@@ -11,7 +11,9 @@
  *         config/diagnoser-config.json    (Anthropic monthly cap)
  *         config/scout-config.json        (Outscraper monthly spend + cap)
  *         config/template-stats.json      (reply rates per template)
+ *         config/drip-config.json         (drip send counts + daily limit)
  *         state.json                      (pipeline counts)
+ *         messages/*-sent.json            (drip step tracking)
  *         .env.local                      (ZOHO_EMAIL, ZOHO_APP_PASSWORD, REPORT_TO_EMAIL)
  */
 
@@ -22,7 +24,8 @@ const path       = require('path');
 const nodemailer = require('nodemailer');
 const { getDailySummary, getMonthlySummary, TWILIO_PER_SMS_USD } = require('./cost-tracker');
 
-const ROOT = path.join(__dirname, '..');
+const ROOT         = path.join(__dirname, '..');
+const MESSAGES_DIR = path.join(ROOT, 'messages');
 
 const args      = process.argv.slice(2);
 const printOnly = args.includes('--print');
@@ -55,6 +58,41 @@ function pct(replies, sent) {
 }
 
 // ── BUILD REPORT ──────────────────────────────────────────────────────────────
+
+function buildDripStats() {
+  const dripCfg = readJson(path.join(ROOT, 'config', 'drip-config.json')) || {};
+  const delays  = {
+    d1: dripCfg.d1_delay_days || 4, d1b: dripCfg.d1b_delay_days || 8,
+    d1c: dripCfg.d1c_delay_days || 12, d2: dripCfg.d2_delay_days || 19
+  };
+  const steps = ['d1', 'd1b', 'd1c', 'd2'];
+  const stats = {};
+  for (const s of steps) stats[s] = { email_sent: 0, sms_sent: 0, email_due: 0, sms_due: 0 };
+  let unresponsive = 0;
+
+  if (!fs.existsSync(MESSAGES_DIR)) return { stats, unresponsive, dripCfg };
+
+  const files = fs.readdirSync(MESSAGES_DIR).filter(f => f.endsWith('-sent.json'));
+  for (const file of files) {
+    try {
+      const sent = JSON.parse(fs.readFileSync(path.join(MESSAGES_DIR, file), 'utf8'));
+      if (sent.status === 'unresponsive') { unresponsive++; continue; }
+      if (sent.status === 'positive') continue;
+      const drip = sent.drip || {};
+      for (const ch of ['email', 'sms']) {
+        const initAt = ch === 'email' ? sent.email_sent_at : sent.sms_sent_at;
+        if (!initAt) continue;
+        const days = (Date.now() - new Date(initAt).getTime()) / 86400000;
+        for (const step of steps) {
+          if (drip[step]?.[`${ch}_sent_at`]) { stats[step][`${ch}_sent`]++; break; }
+          if (days >= delays[step]) { stats[step][`${ch}_due`]++; break; }
+          break;
+        }
+      }
+    } catch { /* ignore */ }
+  }
+  return { stats, unresponsive, dripCfg };
+}
 
 function buildReport() {
   const pitcherCfg = readJson(path.join(ROOT, 'config', 'pitcher-config.json')) || {};
@@ -98,6 +136,8 @@ function buildReport() {
   const twilioYdayCost    = dayCosts.twilio?.cost_usd    || 0;
   const outscraperYdayCost = dayCosts.outscraper?.cost_usd || 0;
   const totalYdayCost = anthropicYdayCost + twilioYdayCost + outscraperYdayCost;
+
+  const { stats: dripStats, unresponsive: dripUnresponsive, dripCfg } = buildDripStats();
 
   // Template performance
   const templates = [];
@@ -164,6 +204,27 @@ function buildReport() {
     for (const t of templates) {
       L.push(`  ${t.id.padEnd(6)} ${t.ch.padEnd(7)} ${String(t.sent).padStart(5)}  ${String(t.replies).padStart(7)}  ${pct(t.replies, t.sent).padStart(5)}`);
     }
+    L.push('');
+  }
+
+  // Drip campaign status
+  const dripSteps = ['d1', 'd1b', 'd1c', 'd2'];
+  const dripLabels = { d1: 'Day 4  (soft check-in)', d1b: 'Day 8  (missed call)', d1c: 'Day 12 (competitor)', d2: 'Day 19 (breakup)' };
+  const anyDrip = dripSteps.some(s => Object.values(dripStats[s]).some(v => v > 0)) || dripUnresponsive > 0;
+  if (anyDrip) {
+    L.push('DRIP CAMPAIGN STATUS');
+    L.push(sep);
+    L.push(`  ${'Step'.padEnd(24)} ${'Email'.padStart(14)}  ${'SMS'.padStart(14)}`);
+    L.push(`  ${''.padEnd(24)} ${'due / sent'.padStart(14)}  ${'due / sent'.padStart(14)}`);
+    L.push(`  ${'-'.repeat(54)}`);
+    for (const step of dripSteps) {
+      const s = dripStats[step];
+      const emailCol = `${s.email_due} / ${s.email_sent}`;
+      const smsCol   = `${s.sms_due} / ${s.sms_sent}`;
+      L.push(`  ${dripLabels[step].padEnd(24)} ${emailCol.padStart(14)}  ${smsCol.padStart(14)}`);
+    }
+    L.push(`  ${'Unresponsive'.padEnd(24)} ${String(dripUnresponsive).padStart(14)}`);
+    L.push(`  Drip daily limit: ${dripCfg.daily_limit || 20}  |  Sent today: ${dripCfg.sent_today || 0}`);
     L.push('');
   }
 

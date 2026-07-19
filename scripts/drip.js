@@ -28,6 +28,7 @@ const nodemailer = require('nodemailer');
 const twilio     = require('twilio');
 const { writeLog }             = require('./logger');
 const { recordTwilio, recordEmail } = require('./cost-tracker');
+const { isSuppressed }         = require('./lib/suppression');
 
 const ROOT           = path.join(__dirname, '..');
 const CONFIG_PATH    = path.join(ROOT, 'config', 'drip-config.json');
@@ -131,10 +132,11 @@ function loadDripQueue(cfg, templates) {
     try {
       const sentPath = path.join(MESSAGES_DIR, file);
       const sent     = JSON.parse(fs.readFileSync(sentPath, 'utf8'));
+      const leadId   = file.replace('-sent.json', '');
 
       if (sent.status === 'positive' || sent.status === 'unresponsive') continue;
+      if (sent.status === 'unsubscribed' || isSuppressed(leadId)) continue; // do-not-contact — hard gate
 
-      const leadId    = file.replace('-sent.json', '');
       const briefPath = path.join(QUEUE_DIR, `${leadId}-brief.json`);
       if (!fs.existsSync(briefPath)) continue;
       const brief = JSON.parse(fs.readFileSync(briefPath, 'utf8'));
@@ -185,7 +187,9 @@ function markUnresponsive(cfg) {
     try {
       const sentPath = path.join(MESSAGES_DIR, file);
       const sent     = JSON.parse(fs.readFileSync(sentPath, 'utf8'));
+      const leadId   = file.replace('-sent.json', '');
       if (sent.status === 'positive' || sent.status === 'unresponsive') continue;
+      if (sent.status === 'unsubscribed' || isSuppressed(leadId)) continue; // never reclassify an opt-out
 
       const initialSentAt = sent.email_sent_at || sent.sms_sent_at;
       if (!initialSentAt || daysSince(initialSentAt) < cfg.dead_after_days) continue;

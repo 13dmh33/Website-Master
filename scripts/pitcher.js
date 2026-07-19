@@ -37,6 +37,7 @@ const nodemailer  = require('nodemailer');
 const { writeLog }              = require('./logger');
 const { recordSent }            = require('./template-picker');
 const { recordTwilio, recordEmail } = require('./cost-tracker');
+const { isSuppressed }          = require('./lib/suppression');
 
 // ── PATHS ─────────────────────────────────────────────────────────────────────
 
@@ -175,6 +176,7 @@ function loadApprovedBriefs(config) {
     try {
       const data = JSON.parse(fs.readFileSync(path.join(QUEUE_DIR, file), 'utf8'));
       if (!data.checker_approved) continue;
+      if (isSuppressed(data.lead_id)) continue; // do-not-contact — hard gate, checked before every send
 
       const sentPath = path.join(MESSAGES_DIR, `${data.lead_id}-sent.json`);
 

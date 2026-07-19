@@ -10,20 +10,96 @@ Continuing the 14-task "reconcile branches, unblock the funnel, fix Merlin" plan
 | Task | Status | Commit |
 |---|---|---|
 | 0 — pre-merge safety + branch inventory | done | (no commit) |
-| 1 — collision check (repeated per branch) | done, ongoing per-branch | (report only) |
+| 1 — collision check (repeated per branch) | done, per-branch | (report only) |
 | 2 — verify piper-scope/molly-brand-voice already merged | confirmed (prior session) | n/a |
 | 3 — rebase/merge audit branch | **done** | `f383624` |
-| 4 — resolve remaining branches | **partially done, one open question** | `ca75a0d` |
-| 5 — schedule drip.js | not started | — |
-| 6 — CAN-SPAM audit + suppression gate | not started | — |
-| 7 — verify evergreen quarantine (Phase-0) | not started | — |
-| 8 — verify state.json protection (Phase-0) | not started | — |
+| 4 — resolve remaining branches | **done, one open question for Dave** | `ca75a0d` |
+| 5 — schedule drip.js | **explicitly blocked, reason recorded** | — |
+| 6 — CAN-SPAM audit + suppression gate | **done** (gate built; legal copy reported, not added) | `38c9bba` |
+| 7 — verify evergreen quarantine (Phase-0) | **verified intact** | n/a |
+| 8 — verify state.json protection (Phase-0) | **verified intact** | n/a |
 | 9 — wire Stripe | blocked on Dave | — |
-| 10 — fix Merlin's blind spots | not started | — |
-| 11 — fix Merlin's session-prompt generation | not started | — |
-| 12 — verify cron failure alerting (Phase-0) | not started | — |
-| 13 — correct AUDIT_2026-07-18.md | not started | — |
-| 14 — fix-or-delete Strategy dashboard | not started | — |
+| 10 — fix Merlin's blind spots | **done** | `6df19c1` |
+| 11 — fix Merlin's session-prompt generation | **done** | `6df19c1` |
+| 12 — verify cron failure alerting (Phase-0) | **verified intact (all 5)** | n/a |
+| 13 — correct AUDIT_2026-07-18.md | **done** | `8ada509` |
+| 14 — fix-or-delete Strategy dashboard | **done — reads live, not stale; corrected audit** | `5f38c5d` |
+
+## Task 5 — drip.js: explicitly blocked, not scheduled (two independent reasons)
+
+The opt-out precondition the plan required IS met: `reply-classifier.js` correctly
+routes STOP/unsubscribe/"remove me"/"not interested" to `unsubscribed` (verified live),
+and this session's new `scripts/lib/suppression.js` gate makes both Pitcher and drip skip
+any suppressed lead (verified — a real unsubscribed lead is excluded from both dry-runs).
+So drip would respect opt-outs. It still must not be enabled yet:
+
+1. **drip.js is Mac-only.** Zoho SMTP + Twilio are both blocked from the container
+   (CLAUDE.md lines 207/250). It cannot be a GitHub Actions cron like Merlin/Miley/Milly —
+   those run in the container. "Scheduling" it means a launchd/cron entry on Dave's Mac,
+   which can't be created from here.
+2. **CAN-SPAM legal gap (Task 6) is a hard blocker regardless of channel.** No outreach
+   template has an opt-out mechanism or physical postal address. Automating follow-up
+   email at volume without those is a violation. Drip stays off until Dave supplies the
+   copy (see Task 6).
+
+**Ready-to-use Mac cron for when Dave unblocks CAN-SPAM** (conservative daily cap already
+in drip-config.json; runs after the morning poller so opt-outs are marked first):
+```
+# 8:30am daily — after the 4x/day poller has marked any overnight opt-outs
+30 8 * * *  cd /Users/davidhettinger/Website-Master && /usr/local/bin/node scripts/drip.js --force >> logs/drip-cron.log 2>&1
+```
+
+## Task 6 — CAN-SPAM audit + suppression gate (done)
+
+Built `scripts/lib/suppression.js` — one `isSuppressed(leadId)` check reading state.json
+(the canonical store every opt-out path already writes to). Wired as a hard gate into
+`pitcher.js` (loadApprovedBriefs) and `drip.js` (loadDripQueue + markUnresponsive — the
+latter previously could silently overwrite an `unsubscribed` status to `unresponsive`,
+erasing the opt-out). Verified against a real unsubscribed lead. **Legal copy reported,
+NOT added** per instruction: 0 of ~23 templates (e1-e7, s1-s8, drip d1/d1b/d1c/d2 x2
+channels, referral.js partner lanes) contain an opt-out mechanism or physical address.
+Dave must supply both before any live send resumes.
+
+## Tasks 7, 8, 12 — Phase-0 verifications (all intact from prior session)
+
+- **7:** `molly/quarantine/evergreen-prespec.json` present, `store.js` points at it,
+  `validateQueue` gates both `scheduler.js` and `push-queue.js`, 13 validator tests pass.
+- **8:** the "no branch op while pipeline runs" rule is in CLAUDE.md's Orchestration
+  Rules (Option B). Option A still open pending Dave.
+- **12:** `notify-workflow-failure.js` wired as an `if:failure()` step in all 5 scheduled
+  workflows (miley x2, milly x2, reeve). Merlin's workflow gained the same step this
+  session.
+
+## Tasks 10 + 11 — Merlin fixes (done, `6df19c1`)
+
+Full detail in the commit message and `merlin/CLAUDE.md`. Net effect: Merlin's top
+recommendation flipped from the confidently-wrong "clear the 436-lead backlog" to
+"add STRIPE_SECRET_KEY," because the backlog is now superseded by the seeded
+`backlog-is-arithmetic` decision and three already-done candidates (nora merge, poller
+fix, daily-limit revert) are auto-retired by live all-branch repo-facts. Stalled-stage
+scoring surfaces the drip-never-runs stall; session prompts now split Dave-vs-Claude-Code
+tasks. 58 Merlin tests pass. New files: `merlin/decisions.json`, `merlin/lib/decisions.js`,
+`merlin/lib/repo-facts.js`, `merlin/last-funnel.json` (+ 2 test files).
+
+## Tasks 13 + 14 — audit corrections (done)
+
+- **13** (`8ada509`): annotated Nora §2 and Merlin §8 in `reports/AUDIT_2026-07-18.md` in
+  place (branch-isolation artifacts — both are on main now), top banner + per-section
+  `[CORRECTED 2026-07-19]` notes, originals left legible.
+- **14** (`5f38c5d`): Strategy dashboard reads LIVE from `reeve/output/*` (grep-confirmed
+  zero state.json refs), correctly reports $0 MRR / 0 clients (Reeve has none yet) — not a
+  stale fixture as the audit claimed. No fix/deletion needed; corrected audit §7.
+
+## Still open for Dave (not Claude Code's to do)
+
+- **Task 9 (Stripe):** needs live Payment Link URLs + `STRIPE_SECRET_KEY`.
+- **Task 6 legal copy:** opt-out wording + physical postal address for every template.
+- **Task 5 unblock:** once the above land, add the Mac cron above.
+- **Task 4 open question:** does the "Campaign-exit on reply" commit
+  (`claude/email-agent-scope-audit-ku4pkc` @ `8ce5301`) get merged or discarded? It
+  contradicts CLAUDE.md's own "stopped per owner" note for that exact feature.
+- Standing blockers unchanged: Zoho IMAP enable, Twilio A2P 10DLC, SERPAPI_KEY,
+  state.json protection Option A decision.
 
 ## Task 0 — branch inventory (local, before this session's work)
 

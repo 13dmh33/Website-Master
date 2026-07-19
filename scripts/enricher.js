@@ -159,6 +159,10 @@ function moveHasWebsiteLeadToAuditorReady(file, leadId, email, meta) {
       lead.enriched_name  = meta.name  || null;
       lead.enriched_title = meta.title || null;
       lead.enriched_at    = new Date().toISOString();
+      // Additive Apollo hit-rate instrumentation — see DISCOVERY.md.
+      lead.apolloAttempted   = true;
+      lead.apolloHit         = true;
+      lead.apolloCreditSpent = 1;
       movedLead = lead;
     } else {
       remaining.push(lead);
@@ -187,6 +191,10 @@ function markHasWebsiteNoEmail(file, leadId) {
   for (const lead of leads) {
     if (lead.lead_id === leadId) {
       lead.enriched_at = new Date().toISOString();
+      // Additive Apollo hit-rate instrumentation — see DISCOVERY.md.
+      lead.apolloAttempted   = true;
+      lead.apolloHit         = false;
+      lead.apolloCreditSpent = 0;
       break;
     }
   }
@@ -285,6 +293,10 @@ function updateLeadFile(file, leadId, email, meta) {
       lead.enriched_name  = meta.name  || null;
       lead.enriched_title = meta.title || null;
       lead.enriched_at    = new Date().toISOString();
+      // Additive Apollo hit-rate instrumentation — see DISCOVERY.md.
+      lead.apolloAttempted   = true;
+      lead.apolloHit         = true;
+      lead.apolloCreditSpent = 1;
       break;
     }
   }
@@ -300,6 +312,10 @@ function markNoEmail(file, leadId) {
   for (const lead of leads) {
     if (lead.lead_id === leadId) {
       lead.enriched_at = new Date().toISOString();
+      // Additive Apollo hit-rate instrumentation — see DISCOVERY.md.
+      lead.apolloAttempted   = true;
+      lead.apolloHit         = false;
+      lead.apolloCreditSpent = 0;
       break;
     }
   }

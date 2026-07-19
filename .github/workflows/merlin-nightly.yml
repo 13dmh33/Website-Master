@@ -1,0 +1,51 @@
+name: Merlin nightly advisor run
+
+on:
+  schedule:
+    - cron: '0 7 * * *'  # 1am MDT (UTC-6) = 7am UTC, daily
+  workflow_dispatch:       # manual trigger for testing
+
+jobs:
+  merlin-run:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write  # needed to commit the dated report files
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0  # full history + remote refs — git-health.js needs real ahead/behind comparisons
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Merlin
+        run: node merlin/run.js
+        env:
+          ZOHO_EMAIL: ${{ secrets.ZOHO_EMAIL }}
+          ZOHO_APP_PASSWORD: ${{ secrets.ZOHO_APP_PASSWORD }}
+          APOLLO_API_KEY: ${{ secrets.APOLLO_API_KEY }}
+
+      - name: Commit dated report
+        run: |
+          git config user.name  "merlin-agent"
+          git config user.email "merlin@trevoadvisors.com"
+          git add merlin/reports/
+          git diff --cached --quiet || git commit -m "merlin: nightly report $(date +%Y-%m-%d)"
+          git push origin main || true
+
+      - name: Upload report artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: merlin-report-${{ github.run_id }}
+          path: merlin/reports/
+          retention-days: 90

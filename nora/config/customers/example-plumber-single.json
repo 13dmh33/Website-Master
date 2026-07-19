@@ -1,0 +1,35 @@
+{
+  "customerId": "example-plumber-single",
+  "enabledChannels": ["missed_call", "sms"],
+  "offerings": [
+    {
+      "id": "plumbing",
+      "label": "Plumbing",
+      "qualifyQs": [
+        "What's the issue you're having — leak, clog, no hot water, or something else?",
+        "Is this happening right now, or can it wait a day or two?",
+        "What's the property address or zip code?"
+      ],
+      "bookingType": "onsite_estimate",
+      "calendarId": "cal_plumbing_default"
+    }
+  ],
+  "businessHours": {
+    "timezone": "America/Denver",
+    "days": {
+      "mon": ["08:00", "17:00"],
+      "tue": ["08:00", "17:00"],
+      "wed": ["08:00", "17:00"],
+      "thu": ["08:00", "17:00"],
+      "fri": ["08:00", "17:00"],
+      "sat": null,
+      "sun": null
+    }
+  },
+  "afterHoursBehavior": "capture_and_promise",
+  "escalation": {
+    "toPhone": "+17205550100",
+    "toEmail": "",
+    "triggers": ["emergency", "angry_customer"]
+  }
+}

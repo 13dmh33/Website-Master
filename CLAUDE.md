@@ -1,6 +1,6 @@
 # Website-Master — Project Overview
 
-This repo contains five product systems. Trevo is the main system (root directory). Milly, Miley, Reeve, and Strategy are in subdirectories with their own CLAUDE.md files.
+This repo contains six product systems. Trevo is the main system (root directory). Milly, Miley, Reeve, Strategy, and Nora are in subdirectories with their own CLAUDE.md files.
 
 ---
 
@@ -118,6 +118,24 @@ Zero-API-cost monitoring agent. Reads pipeline JSON files, computes MRR/conversi
 - `node strategy/agents/strategist.js --monitor` — dashboard + save JSON snapshot to strategy/reports/
 - `node strategy/agents/strategist.js --pricing` — full pricing model analysis
 - `node strategy/agents/strategist.js --alerts` — active alerts only
+
+---
+
+## Nora — AI missed-call/SMS agent for Trevo's contractor customers
+
+**Directory:** `/nora`
+**See:** `nora/CLAUDE.md` for full architecture and scope.
+
+Distinct from Trevo's own outbound pipeline above — Nora is the product Trevo *sells* to
+contractors (an AI agent that answers their missed calls/texts, qualifies the job, books
+an appointment), not a tool Trevo uses to acquire them. `scripts/mobile.js`'s
+`nora_pipeline` tracking in root `state.json` is only the upsell-timing pitch, not Nora's
+runtime.
+
+**Status:** Config-driven core built (merged to `main` 2026-07-19). Missed-call text-back
+and inbound SMS implemented and tested (46 tests passing); web chat and Meta DM are
+scaffolded stubs only. **Nothing is live** — `NORA_LIVE`/`SMS_LIVE` both default off,
+every outbound send becomes a draft file instead of a real Twilio call.
 
 ---
 

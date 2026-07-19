@@ -16,7 +16,9 @@
     "poll": "node scripts/poller.js",
     "reply-agent": "node scripts/reply-agent.js",
     "daily": "bash run-daily.sh",
-    "daily:dry": "bash run-daily.sh --dry-run"
+    "daily:dry": "bash run-daily.sh --dry-run",
+    "nora:test": "node --test nora/test/*.test.js",
+    "nora:server": "node nora/server.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.37.0",

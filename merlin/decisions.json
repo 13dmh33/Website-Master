@@ -1,0 +1,13 @@
+{
+  "_comment": "Durable decisions Merlin must remember across runs, so it stops re-recommending settled questions as if freshly discovered. Each decision may 'supersede' candidate ids (removing them from the ranked pool) and/or 'explains' an integrity-flag / funnel-finding id (attached as a caveat instead of presented as a new problem). Dave (or a review session) edits this file; Merlin only reads it.",
+  "decisions": [
+    {
+      "id": "backlog-is-arithmetic",
+      "date": "2026-07-19",
+      "decision": "The checked-but-unsent backlog is arithmetic and channel-blocked, not a quality leak or a fresh discovery.",
+      "rationale": "Three verified, non-overlapping causes account for the whole 'checked' count, none of which is a funnel quality problem: (1) Checker was approving at up to 120/day against Pitcher's 30/day send cap — a 4x ratio guarantees a growing checked pile by construction; the daily_limit was reverted to 30 on 2026-07-19, removing the driver. (2) The large majority of checked leads are SMS-channel, which is fully blocked until Twilio A2P 10DLC clears — they cannot be sent regardless of backlog effort. (3) ~229 'checked' records in state.json have no brief file at all (orphaned state), so they need re-diagnosis, not pitching. As of 2026-07-19 there were 0 approved-and-unsent EMAIL leads. Do not re-recommend 'clear the backlog' as the single biggest revenue lever, and do not read the checked count as a quality leak.",
+      "supersedes": ["clear_send_backlog"],
+      "explains": ["checker_limit_elevated", "diagnoser_limit_elevated"]
+    }
+  ]
+}

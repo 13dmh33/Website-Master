@@ -78,3 +78,69 @@ test('buildRanking — every static candidate has all required fields, no silent
 test('buildRanking — never throws when pipelineSnapshot has no dynamic signal at all', () => {
   assert.doesNotThrow(() => buildRanking({ pipelineSnapshot: { sendActivity: null, funnel: { biggestDropoff: null } } }));
 });
+
+test('buildRanking — a decision supersedes its candidate: dropped from ranked, kept in superseded (Task 10b)', () => {
+  const decisions = {
+    isSuperseded: (id) => id === 'clear_send_backlog',
+    decisionFor: (id) => (id === 'clear_send_backlog' ? { id: 'backlog-is-arithmetic', date: '2026-07-19', decision: 'arithmetic' } : null),
+    explanationFor: () => null,
+  };
+  const result = buildRanking({
+    pipelineSnapshot: {
+      sendActivity: { backlogAtChecked: 458, dailyLimit: 30, daysToClearBacklogAtCurrentCap: 16 },
+      funnel: { biggestDropoff: null },
+      integrityFlags: [],
+    },
+    decisions,
+  });
+  assert.ok(!result.ranked.some(c => c.id === 'clear_send_backlog'), 'superseded candidate must not be ranked');
+  assert.ok(result.superseded.some(c => c.id === 'clear_send_backlog'), 'superseded candidate must be recorded transparently');
+  assert.notEqual(result.recommendation.id, 'clear_send_backlog');
+});
+
+test('buildRanking — repo-facts resolution drops an already-done candidate into resolved (Task 10a)', () => {
+  const repoFacts = {
+    isResolved: (id) => id === 'fix_poller_email_reply_gap',
+    noteFor: (id) => 'Already done: poller.js references reply-classifier.',
+  };
+  const result = buildRanking({
+    pipelineSnapshot: { sendActivity: null, funnel: { biggestDropoff: null }, integrityFlags: [] },
+    repoFacts,
+  });
+  assert.ok(!result.ranked.some(c => c.id === 'fix_poller_email_reply_gap'));
+  assert.ok(result.resolved.some(c => c.id === 'fix_poller_email_reply_gap'));
+  assert.ok(result.resolved.find(c => c.id === 'fix_poller_email_reply_gap').resolutionNote.includes('Already done'));
+});
+
+test('dynamicCandidates — generates an unstall candidate for a stalled stage (Task 10c)', () => {
+  const candidates = dynamicCandidates({
+    pipelineSnapshot: {
+      sendActivity: { backlogAtChecked: 0 },
+      funnel: { biggestDropoff: null, stalledStages: [{ stage: 'sent', reached: 167, waiting: 149 }] },
+    },
+  });
+  const stall = candidates.find(c => c.id === 'unstall_sent');
+  assert.ok(stall, 'a stalled stage must produce an unstall candidate');
+  assert.equal(stall.buildVolume, 0);
+  assert.equal(stall.executor, 'claude_code');
+});
+
+test('buildRanking — cross-references a surviving drop-off against an explaining decision (Task 10d)', () => {
+  const decisions = {
+    isSuperseded: () => false,
+    decisionFor: () => null,
+    explanationFor: (flagId) => (flagId === 'checker_limit_elevated'
+      ? { id: 'backlog-is-arithmetic', decision: 'arithmetic' } : null),
+  };
+  const result = buildRanking({
+    pipelineSnapshot: {
+      sendActivity: null,
+      funnel: { biggestDropoff: { from: 'checked', to: 'sent', lost: 400, conversionPct: 26 } },
+      integrityFlags: [{ id: 'checker_limit_elevated', severity: 'low', message: 'elevated' }],
+    },
+    decisions,
+  });
+  const dropoff = result.ranked.find(c => c.id === 'investigate_biggest_dropoff');
+  assert.ok(dropoff.caveats && dropoff.caveats.length > 0, 'the drop-off candidate must carry a cross-reference caveat');
+  assert.ok(dropoff.why.includes('backlog-is-arithmetic'));
+});

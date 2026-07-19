@@ -1,0 +1,15 @@
+{
+  "date": "2026-07-19",
+  "cumulativeReached": {
+    "scouted": 636,
+    "diagnosed": 625,
+    "checked": 623,
+    "sent": 187,
+    "drip_d1_sent": 18,
+    "drip_d1b_sent": 1,
+    "drip_d1c_sent": 0,
+    "drip_d2_sent": 0,
+    "replied": 0,
+    "hot": 0
+  }
+}

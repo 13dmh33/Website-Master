@@ -28,8 +28,24 @@ const { buildRanking } = require('./lib/ranking');
 const { buildSessionPrompts } = require('./lib/session-prompt');
 const { buildReport, today } = require('./lib/report');
 const { sendMerlinReport } = require('./lib/mailer');
+const { loadDecisions } = require('./lib/decisions');
+const { collectRepoFacts } = require('./lib/repo-facts');
 
 const REPORTS_DIR = path.join(__dirname, 'reports');
+const LAST_FUNNEL_PATH = path.join(__dirname, 'last-funnel.json');
+
+function loadPreviousFunnel() {
+  try { return JSON.parse(fs.readFileSync(LAST_FUNNEL_PATH, 'utf8')); }
+  catch { return null; } // first run ever — no previous snapshot to compare stalls against
+}
+
+function persistFunnel(funnel) {
+  // Only the cumulative counts are needed for next run's stall detection.
+  fs.writeFileSync(LAST_FUNNEL_PATH, JSON.stringify({
+    date: today(),
+    cumulativeReached: funnel.cumulativeReached,
+  }, null, 2));
+}
 
 async function main() {
   const noEmail = process.argv.includes('--no-email');
@@ -42,13 +58,18 @@ async function main() {
   const gitHealth = collectGitHealth();
 
   console.log('Collecting pipeline snapshot (funnel + Apollo)...');
-  const pipelineSnapshot = collectPipelineSnapshot();
+  const previousFunnel = loadPreviousFunnel();
+  const pipelineSnapshot = collectPipelineSnapshot({ previousFunnel });
 
   console.log('Running cost audit...');
   const costAudit = buildCostAudit({ funnel: pipelineSnapshot.funnel });
 
+  console.log('Loading durable decisions + live repo facts...');
+  const decisions = loadDecisions();
+  const repoFacts = collectRepoFacts();
+
   console.log('Ranking candidate moves...');
-  const ranking = buildRanking({ pipelineSnapshot });
+  const ranking = buildRanking({ pipelineSnapshot, decisions, repoFacts });
 
   console.log('Generating session prompts...');
   const { primary, light, primaryQueue, lightQueue } = buildSessionPrompts({
@@ -67,6 +88,9 @@ async function main() {
   fs.writeFileSync(path.join(outDir, 'session-primary.md'), primary);
   fs.writeFileSync(path.join(outDir, 'session-light.md'), light);
   console.log(`Wrote ${outDir}/{report.md,session-primary.md,session-light.md}`);
+
+  // Persist this run's funnel so the NEXT run can detect stalled stages (10c).
+  persistFunnel(pipelineSnapshot.funnel);
 
   console.log('\n' + '─'.repeat(50));
   console.log(`Recommendation: ${ranking.recommendation ? ranking.recommendation.label : 'none — empty candidate pool'}`);

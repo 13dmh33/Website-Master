@@ -40,6 +40,7 @@ function staticCandidates() {
       id: 'enable_zoho_imap',
       label: 'Enable IMAP for dave@trevoadvisors.com in Zoho Mail settings',
       category: 'non_code_blocker',
+      executor: 'dave',
       revenueProximity: 6,
       buildVolume: 0,
       effortHours: 0.1,
@@ -49,6 +50,7 @@ function staticCandidates() {
       id: 'add_stripe_key',
       label: 'Add a real STRIPE_SECRET_KEY and replace placeholder Payment Link URLs',
       category: 'non_code_blocker',
+      executor: 'dave',
       revenueProximity: 8,
       buildVolume: 0,
       effortHours: 0.25,
@@ -58,6 +60,7 @@ function staticCandidates() {
       id: 'merge_nora_and_funnel_metrics',
       label: 'Decide on and execute a merge plan for feature/nora-multichannel-config and feature/funnel-metrics',
       category: 'code_build',
+      executor: 'claude_code',
       revenueProximity: 3,
       buildVolume: 2,
       effortHours: 1,
@@ -67,6 +70,7 @@ function staticCandidates() {
       id: 'nora_remediation',
       label: 'Fix the 9 defects found in the Nora adversarial audit before any real contractor uses it live',
       category: 'code_build',
+      executor: 'claude_code',
       revenueProximity: 2,
       buildVolume: 5,
       effortHours: 3,
@@ -76,6 +80,7 @@ function staticCandidates() {
       id: 'fix_poller_email_reply_gap',
       label: 'Wire reply-classifier.js into poller.js so email replies write "replied" into state.json like SMS already does',
       category: 'code_build',
+      executor: 'claude_code',
       revenueProximity: 4,
       buildVolume: 3,
       effortHours: 1.5,
@@ -85,6 +90,7 @@ function staticCandidates() {
       id: 'revert_elevated_daily_limits',
       label: 'Revert checker-config.json / diagnoser-config.json daily_limit back to 30 (currently elevated)',
       category: 'data_hygiene',
+      executor: 'claude_code',
       revenueProximity: 2,
       buildVolume: 0,
       effortHours: 0.05,
@@ -94,6 +100,7 @@ function staticCandidates() {
       id: 'dmarc_tighten',
       label: 'Tighten DMARC to p=quarantine once clean report cycles confirm it is safe',
       category: 'data_hygiene',
+      executor: 'dave',
       revenueProximity: 1,
       buildVolume: 0,
       effortHours: 0.25,
@@ -117,6 +124,7 @@ function dynamicCandidates({ pipelineSnapshot }) {
       id: 'clear_send_backlog',
       label: `Clear the ${sendActivity.backlogAtChecked}-lead checked-but-unsent backlog — run Pitcher daily (already scheduled) or raise the daily cap if speed matters more than pacing`,
       category: 'manual_sales_action',
+      executor: 'dave',
       revenueProximity: 9,
       buildVolume: 0,
       effortHours: 0.1,
@@ -130,11 +138,34 @@ function dynamicCandidates({ pipelineSnapshot }) {
       id: 'investigate_biggest_dropoff',
       label: `Investigate the ${d.from} -> ${d.to} drop-off (${d.lost} leads lost, ${d.conversionPct}% conversion) before building anything new`,
       category: 'manual_sales_action',
+      executor: 'claude_code',
       revenueProximity: 7,
       buildVolume: 0,
       effortHours: 0.5,
       why: `This is the single biggest measured leak in the funnel. Understanding why (capacity limit vs. genuine drop-off vs. measurement artifact — see the pipeline snapshot's integrity flags) is higher-value than building new lead sources on top of a leaky funnel.`,
     });
+  }
+
+  // Task 10c — stalled stages: a funnel stage whose cumulative-reached count
+  // has NOT moved since the previous run is a different signal from the single
+  // biggest one-time drop-off. A stage that is simply stuck (no leads have
+  // advanced past it since last night) is often the real operational leak —
+  // e.g. drip that never fires, so no lead ever leaves `sent`. This needs the
+  // previous run's funnel snapshot, which run.js loads and the pipeline
+  // snapshot attaches as `funnel.stalledStages`.
+  if (funnel && Array.isArray(funnel.stalledStages)) {
+    for (const s of funnel.stalledStages) {
+      candidates.push({
+        id: `unstall_${s.stage}`,
+        label: `Unstick the "${s.stage}" stage — ${s.waiting} leads have sat there with zero movement since the previous run (${s.reached} reached, unchanged)`,
+        category: 'manual_sales_action',
+        executor: 'claude_code',
+        revenueProximity: 6,
+        buildVolume: 0,
+        effortHours: 0.5,
+        why: `Unlike a one-time drop-off, this stage is not leaking — it is frozen: no lead advanced past "${s.stage}" between the last two runs despite ${s.waiting} waiting. That usually means an operational step isn't running (a cron that never fires, a Mac-only script never invoked) rather than a conversion problem. Find the un-run step before building anything new.`,
+      });
+    }
   }
 
   return candidates;
@@ -147,13 +178,58 @@ function rankCandidates(candidates) {
     .sort((a, b) => b.score - a.score || a.buildVolume - b.buildVolume);
 }
 
-function buildRanking({ pipelineSnapshot }) {
+// Null-object defaults so buildRanking({ pipelineSnapshot }) still works with
+// no decisions/repoFacts wired (backward-compatible with existing callers/tests).
+const NO_DECISIONS = { isSuperseded: () => false, decisionFor: () => null, explanationFor: () => null };
+const NO_REPO_FACTS = { isResolved: () => false, noteFor: () => null };
+
+/**
+ * Task 10d — before finalizing, attach any decision/integrity explanation to a
+ * surviving funnel-derived candidate, so Merlin presents a caveat instead of
+ * re-raising a settled issue. Mutates a shallow copy, returns it.
+ */
+function crossReference(candidate, { decisions, integrityFlags }) {
+  const caveats = [];
+  // A funnel drop-off at checked->sent is explained by the same facts that
+  // explain the backlog (SMS block, orphaned records, the send-cap ratio).
+  const explainedFlag = (integrityFlags || [])
+    .map(f => ({ flag: f, decision: decisions.explanationFor(f.id) }))
+    .find(x => x.decision);
+  if (candidate.id === 'investigate_biggest_dropoff' && explainedFlag) {
+    caveats.push(`Cross-reference: this drop-off overlaps a known integrity caveat ("${explainedFlag.flag.id}") already explained by the standing decision "${explainedFlag.decision.id}" — ${explainedFlag.decision.decision} Confirm the leak is real before treating it as new work.`);
+  }
+  if (caveats.length === 0) return candidate;
+  return { ...candidate, caveats, why: `${candidate.why}\n\n   ${caveats.join('\n   ')}` };
+}
+
+function buildRanking({ pipelineSnapshot, decisions = NO_DECISIONS, repoFacts = NO_REPO_FACTS }) {
+  const integrityFlags = (pipelineSnapshot && pipelineSnapshot.integrityFlags) || [];
   const all = [...staticCandidates(), ...dynamicCandidates({ pipelineSnapshot })];
-  const ranked = rankCandidates(all);
+
+  const resolved = [];   // dropped because live repo state shows the work is already done (Task 10a)
+  const superseded = []; // dropped because a durable decision settled it (Task 10b)
+  const live = [];
+
+  for (const c of all) {
+    if (repoFacts.isResolved(c.id)) {
+      resolved.push({ ...c, resolutionNote: repoFacts.noteFor(c.id) });
+      continue;
+    }
+    if (decisions.isSuperseded(c.id)) {
+      const d = decisions.decisionFor(c.id);
+      superseded.push({ ...c, decision: d });
+      continue;
+    }
+    live.push(crossReference(c, { decisions, integrityFlags }));
+  }
+
+  const ranked = rankCandidates(live);
   const top = ranked[0] || null;
 
   return {
     ranked,
+    resolved,
+    superseded,
     recommendation: top,
     recommendationIsDontBuild: top ? top.buildVolume === 0 : false,
     rubric: { revenueWeight: REVENUE_WEIGHT, buildPenaltyWeight: BUILD_PENALTY_WEIGHT },

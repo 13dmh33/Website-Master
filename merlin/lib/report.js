@@ -32,10 +32,32 @@ function renderFunnel(funnel) {
   const lines = [
     `Biggest drop-off: ${d ? `${d.from} -> ${d.to}, ${d.lost} leads lost (${d.conversionPct}% conversion)` : 'not enough data yet'}.`,
   ];
+  if (Array.isArray(funnel.stalledStages) && funnel.stalledStages.length > 0) {
+    lines.push(`Stalled stages (frozen since previous run): ${funnel.stalledStages.map(s => `${s.stage} (${s.waiting} waiting)`).join(', ')}.`);
+  } else if (Array.isArray(funnel.stalledStages)) {
+    lines.push('Stalled stages: none — every stage with waiting leads advanced at least one since the previous run.');
+  }
   for (const [stage, count] of Object.entries(funnel.cumulativeReached)) {
     lines.push(`  ${stage}: ${count}`);
   }
   return lines.join('\n');
+}
+
+function renderResolvedAndSuperseded(ranking) {
+  const parts = [];
+  if (ranking.resolved && ranking.resolved.length > 0) {
+    parts.push('**Already done (verified against live repo state + all branches — not re-recommended):**');
+    for (const c of ranking.resolved) {
+      parts.push(`- ~~${c.label}~~ — ${c.resolutionNote}`);
+    }
+  }
+  if (ranking.superseded && ranking.superseded.length > 0) {
+    parts.push('**Settled by a standing decision (not re-recommended):**');
+    for (const c of ranking.superseded) {
+      parts.push(`- ~~${c.label}~~ — decision "${c.decision.id}" (${c.decision.date}): ${c.decision.decision}`);
+    }
+  }
+  return parts.length ? parts.join('\n') : '_None — every candidate is still open._';
 }
 
 function renderIntegrityFlags(flags) {
@@ -85,6 +107,10 @@ ${renderGitHealth(gitHealth)}
 ## Funnel state
 
 ${renderFunnel(pipelineSnapshot.funnel)}
+
+## Resolved / settled since last run (Merlin no longer recommends these)
+
+${renderResolvedAndSuperseded(ranking)}
 
 ## Data-integrity caveats (read before trusting the numbers above)
 

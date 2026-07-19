@@ -80,6 +80,13 @@ test('collectGitHealth — never throws even when every git call fails (e.g. not
 test('collectGitHealth — live smoke test against the real repo, structural only', () => {
   const result = collectGitHealth();
   assert.ok(Array.isArray(result.branches));
-  assert.ok(result.branches.some(b => b.name === 'feature/merlin-advisor'));
+  // Structural only — must not hardcode a specific transient branch name (branches
+  // get merged and deleted between runs; asserting one exists is inherently flaky).
+  // `main` is the one branch guaranteed present in every checkout.
+  assert.ok(result.branches.some(b => b.name === 'main'), 'main should always be a local branch');
+  for (const b of result.branches) {
+    assert.ok(typeof b.name === 'string' && b.name.length > 0);
+    assert.ok(typeof b.mergedIntoOriginMain === 'boolean');
+  }
   assert.ok(typeof result.mainDivergence.ahead === 'number' || result.mainDivergence.ahead === null);
 });

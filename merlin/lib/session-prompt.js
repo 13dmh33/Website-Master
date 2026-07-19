@@ -42,6 +42,29 @@ function renderTaskList(items) {
 }
 
 /**
+ * Task 11 — split a queue by executor. Dave-list = tasks only a human with
+ * browser/vendor-dashboard/phone access can do (get a Stripe key, flip a Zoho
+ * setting, run a Mac-only send). Claude-Code-list = repo file read/write tasks
+ * an agent session actually performs. Mixing them in one "session prompt" was
+ * a real defect — half the list was never something the Claude session could
+ * execute. Unclassified items default to the Claude-Code lane (conservative:
+ * an agent seeing them will at least surface them rather than assume Dave did).
+ */
+function splitByExecutor(items) {
+  const dave = items.filter(c => c.executor === 'dave');
+  const claudeCode = items.filter(c => c.executor !== 'dave');
+  return { dave, claudeCode };
+}
+
+function renderExecutorLists(items) {
+  const { dave, claudeCode } = splitByExecutor(items);
+  const sections = [];
+  sections.push(`### Claude Code tasks (this session executes these)\n\n${claudeCode.length ? renderTaskList(claudeCode) : '_None this run._'}`);
+  sections.push(`### Dave's tasks (browser / vendor dashboard / phone — the agent cannot do these)\n\n${dave.length ? renderTaskList(dave) : '_None this run._'}`);
+  return sections.join('\n\n');
+}
+
+/**
  * renderSessionPrompt({ branchSlug, title, queue, isLight, rankingContext })
  * Returns a single paste-ready markdown string, no editing required to run.
  */
@@ -68,14 +91,14 @@ ${capacityLine}
 - Ordered priority queue, worked top-down. No fixed task count — do as much as capacity allows.
 - Atomic tasks, one commit per task. Never leave a mid-change state across a stop point.
 - Living \`CHECKPOINT.md\`, updated after every task, so any stop is safe.
-- Phase 0 state audit first: verify each queue item's premise is still true before starting it (repo state may have moved since this prompt was generated) — mark done/partial/not-started, skip what's already done.
+- Phase 0 state audit first: verify each queue item's premise is still true before starting it (repo state may have moved since this prompt was generated) — mark done/partial/not-started, skip what's already done. Merlin pre-checks candidates against live repo state and all branches, but a parallel session may have moved things since generation.
 - Graceful stop, not a percentage: when running low, finalize \`CHECKPOINT.md\` and stop cleanly rather than starting a task that can't be finished and committed.
 
 ---
 
 ${task0}## Priority queue
 
-${renderTaskList(remainingItems)}
+${renderExecutorLists(remainingItems)}
 
 ---
 
@@ -106,4 +129,4 @@ function buildSessionPrompts({ ranking, generatedFor }) {
   return { primary, light, primaryQueue, lightQueue };
 }
 
-module.exports = { buildSessionQueue, lightAlternateQueue, renderSessionPrompt, buildSessionPrompts, PRIMARY_TARGET_HOURS, slugify };
+module.exports = { buildSessionQueue, lightAlternateQueue, renderSessionPrompt, buildSessionPrompts, splitByExecutor, renderExecutorLists, PRIMARY_TARGET_HOURS, slugify };

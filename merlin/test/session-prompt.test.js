@@ -2,10 +2,10 @@
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { buildSessionQueue, lightAlternateQueue, buildSessionPrompts, PRIMARY_TARGET_HOURS, slugify } = require('../lib/session-prompt');
+const { buildSessionQueue, lightAlternateQueue, buildSessionPrompts, splitByExecutor, renderExecutorLists, PRIMARY_TARGET_HOURS, slugify } = require('../lib/session-prompt');
 
-function candidate(id, revenueProximity, buildVolume, effortHours) {
-  return { id, label: `Do ${id}`, category: buildVolume === 0 ? 'manual_sales_action' : 'code_build', revenueProximity, buildVolume, effortHours, why: `why ${id}` };
+function candidate(id, revenueProximity, buildVolume, effortHours, executor) {
+  return { id, label: `Do ${id}`, category: buildVolume === 0 ? 'manual_sales_action' : 'code_build', revenueProximity, buildVolume, effortHours, why: `why ${id}`, executor };
 }
 
 test('buildSessionQueue — stops once the target hours is reached, does not overshoot needlessly', () => {
@@ -62,4 +62,30 @@ test('buildSessionPrompts — brand compliance: no emojis, sentence case, no "bu
   const emojiPattern = /[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u;
   assert.equal(emojiPattern.test(primary), false);
   assert.equal(/business\s+days?/i.test(primary), false);
+});
+
+test('splitByExecutor — dave-executor items separate from claude-code; unclassified defaults to claude-code (Task 11)', () => {
+  const items = [
+    candidate('stripe', 8, 0, 0.25, 'dave'),
+    candidate('poller', 4, 3, 1.5, 'claude_code'),
+    candidate('mystery', 5, 0, 0.5, undefined), // unclassified
+  ];
+  const { dave, claudeCode } = splitByExecutor(items);
+  assert.deepEqual(dave.map(c => c.id), ['stripe']);
+  assert.deepEqual(claudeCode.map(c => c.id).sort(), ['mystery', 'poller']);
+});
+
+test('renderExecutorLists — always shows both a Claude Code section and a Dave section', () => {
+  const md = renderExecutorLists([candidate('stripe', 8, 0, 0.25, 'dave')]);
+  assert.ok(/Claude Code tasks/.test(md));
+  assert.ok(/Dave's tasks/.test(md));
+  // The one dave item lands under Dave's section and Claude Code shows the empty marker.
+  assert.ok(/Dave's tasks[\s\S]*Do stripe/.test(md));
+});
+
+test('buildSessionPrompts — the rendered prompt carries both executor lanes (Task 11)', () => {
+  const ranked = [candidate('stripe', 8, 0, 0.25, 'dave'), candidate('poller', 4, 3, 1.5, 'claude_code')];
+  const { primary } = buildSessionPrompts({ ranking: { ranked, recommendation: ranked[0] }, generatedFor: 'test' });
+  assert.ok(primary.includes('Claude Code tasks'));
+  assert.ok(primary.includes("Dave's tasks"));
 });

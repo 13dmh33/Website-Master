@@ -34,11 +34,14 @@ jobs:
           ZOHO_APP_PASSWORD: ${{ secrets.ZOHO_APP_PASSWORD }}
           APOLLO_API_KEY: ${{ secrets.APOLLO_API_KEY }}
 
-      - name: Commit dated report
+      - name: Commit dated report + funnel snapshot
         run: |
           git config user.name  "merlin-agent"
           git config user.email "merlin@trevoadvisors.com"
-          git add merlin/reports/
+          # last-funnel.json must be committed too: stall detection compares each
+          # run against the PREVIOUS run's funnel, so the snapshot has to persist
+          # across nightly CI runners (each runner is ephemeral).
+          git add merlin/reports/ merlin/last-funnel.json
           git diff --cached --quiet || git commit -m "merlin: nightly report $(date +%Y-%m-%d)"
           git push origin main || true
 
@@ -49,3 +52,14 @@ jobs:
           name: merlin-report-${{ github.run_id }}
           path: merlin/reports/
           retention-days: 90
+
+      - name: Alert on failure
+        if: failure()
+        run: node scripts/notify-workflow-failure.js
+        env:
+          WORKFLOW_NAME: "Merlin nightly advisor run"
+          JOB_NAME: ${{ github.job }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          COMMIT_SHA: ${{ github.sha }}
+          ZOHO_EMAIL: ${{ secrets.ZOHO_EMAIL }}
+          ZOHO_APP_PASSWORD: ${{ secrets.ZOHO_APP_PASSWORD }}

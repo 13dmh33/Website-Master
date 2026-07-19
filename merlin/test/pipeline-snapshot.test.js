@@ -14,11 +14,21 @@ function baseArgs(overrides = {}) {
   };
 }
 
-test('collectIntegrityFlags — always includes the two standing gaps regardless of config', () => {
+test('collectIntegrityFlags — closed_not_won is always present', () => {
   const flags = collectIntegrityFlags(baseArgs());
-  const ids = flags.map(f => f.id);
-  assert.ok(ids.includes('poller_email_reply_gap'));
-  assert.ok(ids.includes('closed_not_won'));
+  assert.ok(flags.map(f => f.id).includes('closed_not_won'));
+});
+
+test('collectIntegrityFlags — poller gap is flagged only when poller.js lacks the reply-classifier fix (Task 10d)', () => {
+  // Unfixed / unknown poller source → gap is flagged.
+  const unfixed = collectIntegrityFlags(baseArgs({ pollerSrc: 'const x = 1; // no classifier wired' }));
+  assert.ok(unfixed.map(f => f.id).includes('poller_email_reply_gap'));
+  const unknown = collectIntegrityFlags(baseArgs({ pollerSrc: null }));
+  assert.ok(unknown.map(f => f.id).includes('poller_email_reply_gap'));
+
+  // Fixed poller source → gap must NOT be re-raised (Merlin's own repo-facts see it fixed).
+  const fixed = collectIntegrityFlags(baseArgs({ pollerSrc: "require('./reply-classifier');" }));
+  assert.ok(!fixed.map(f => f.id).includes('poller_email_reply_gap'));
 });
 
 test('collectIntegrityFlags — flags elevated checker/diagnoser limits only when actually elevated', () => {

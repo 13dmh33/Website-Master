@@ -11,7 +11,11 @@ const path = require('path');
 const REPO_ROOT = path.join(__dirname, '..', '..');
 
 function realExec(cmd) {
-  return execSync(cmd, { cwd: REPO_ROOT, encoding: 'utf8' });
+  // stderr: 'pipe' (not the default 'inherit') so a benign git failure — e.g. a
+  // local branch with no matching origin/ ref — doesn't leak "fatal:" lines to
+  // the process stderr. safeExec already turns the thrown error into a null;
+  // this just keeps the (CI) log clean so real errors stay visible.
+  return execSync(cmd, { cwd: REPO_ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
 }
 
 function safeExec(cmd, exec) {

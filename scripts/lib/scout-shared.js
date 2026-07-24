@@ -42,4 +42,19 @@ function normalizeDomain(url) {
   }
 }
 
-module.exports = { slugify, channelForTrade, isSocialOnlySite, normalizeDomain };
+// Outscraper's /maps/search-v3 returns the website under `website` (not `site`)
+// and the address under `address` (not `full_address`). Downstream Scout code
+// reads r.site / r.full_address, so alias the real fields onto those names.
+// (Requesting a `fields` subset with the wrong names silently dropped the
+// website for every lead — the "no real site" bug found 2026-07-24.)
+function normalizeOutscraperRows(rows) {
+  if (!Array.isArray(rows)) return rows;
+  for (const r of rows) {
+    if (!r || typeof r !== 'object') continue;
+    if (!r.site && r.website) r.site = r.website;
+    if (!r.full_address && r.address) r.full_address = r.address;
+  }
+  return rows;
+}
+
+module.exports = { slugify, channelForTrade, isSocialOnlySite, normalizeDomain, normalizeOutscraperRows };

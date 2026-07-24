@@ -48,7 +48,7 @@ const path  = require('path');
 const https = require('https');
 const { writeLog }         = require('./logger');
 const { recordOutscraper } = require('./cost-tracker');
-const { slugify, normalizeDomain } = require('./lib/scout-shared');
+const { slugify, normalizeDomain, normalizeOutscraperRows } = require('./lib/scout-shared');
 const { filterAndFormatNoWebsite, exportToCsv } = require('./lib/scout-no-website');
 const { filterAndFormatHasWebsite, exportAuditorCsv, exportNeedsEmailCsv } = require('./lib/scout-has-website');
 
@@ -378,8 +378,7 @@ async function callOutscraper(query, limit, apiKey) {
     query:    `${query} in ${city}`,
     limit:    String(limit),
     language: 'en',
-    region:   'us',
-    fields:   'name,email,phone,site,full_address,rating,reviews,place_id,latitude,longitude,subtypes'
+    region:   'us'
   });
 
   const options = {
@@ -402,11 +401,12 @@ async function callOutscraper(query, limit, apiKey) {
     req.end();
   });
 
-  if (raw.status === 'Success' && raw.data?.length > 0) return raw.data;
+  if (raw.status === 'Success' && raw.data?.length > 0) return normalizeOutscraperRows(raw.data);
 
   if (raw.id && raw.results_location) {
     process.stdout.write(`  Async task (id: ${raw.id}) — polling`);
-    return pollTask(raw.results_location, apiKey);
+    const rows = await pollTask(raw.results_location, apiKey);
+    return normalizeOutscraperRows(rows);
   }
 
   throw new Error(`Outscraper error: ${JSON.stringify(raw)}`);

@@ -47,8 +47,8 @@ test('assertEmailCompliant — does not throw once fully configured', () => {
   assert.doesNotThrow(() => assertEmailCompliant(FULL));
 });
 
-test('the shipped config/compliance.json satisfies #3 and #5 by default, blocks only on #4', () => {
-  const s = emailComplianceStatus(); // real file
-  assert.deepEqual(s.missing, ['#4 physical postal address (physical_address)'],
-    'defaults must cover ad ID + opt-out, leaving only the address for Dave');
+test('the shipped config/compliance.json is fully compliant (#3, #4, #5 all present)', () => {
+  const s = emailComplianceStatus(); // real file — address now filled in
+  assert.equal(s.compliant, true, 'shipped config must satisfy all three CAN-SPAM footer requirements');
+  assert.deepEqual(s.missing, []);
 });

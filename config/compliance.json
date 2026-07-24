@@ -1,6 +1,6 @@
 {
   "_comment": "CAN-SPAM footer content, appended to every commercial email at send time by scripts/lib/compliance.js. #3 (ad identification) and #5 (opt-out) are satisfied by the defaults below. #4 (physical postal address) is intentionally blank — Dave must fill physical_address before live email can send; the compliance guard blocks email sends while it is empty.",
-  "physical_address": "",
+  "physical_address": "3390 S Emerson Dr, Englewood, CO 80113",
   "ad_disclosure": "This is a commercial email advertising Trevo Advisors' website and AI services for home-service contractors.",
   "opt_out_line": "Not interested? Just reply \"stop\" to this email and you won't hear from me again.",
   "business_name": "Trevo Advisors"

@@ -38,6 +38,7 @@ const { writeLog }              = require('./logger');
 const { recordSent }            = require('./template-picker');
 const { recordTwilio, recordEmail } = require('./cost-tracker');
 const { isSuppressed }          = require('./lib/suppression');
+const { appendFooter, assertEmailCompliant } = require('./lib/compliance');
 
 // ── PATHS ─────────────────────────────────────────────────────────────────────
 
@@ -258,6 +259,7 @@ function getZohoTransport() {
 }
 
 async function sendEmail(brief, config, videoUrl) {
+  assertEmailCompliant(); // CAN-SPAM hard gate — never send a commercial email missing ad ID / address / opt-out
   const transport = getZohoTransport();
   const subject   = brief.template_subject || `Quick question about ${brief.business_name}'s website`;
 
@@ -271,7 +273,7 @@ async function sendEmail(brief, config, videoUrl) {
     ps = `\n\nP.S. I put together a quick mockup of what a new site could look like — happy to share it on a call.`;
   }
 
-  const text = `${brief.final_message}${ps}`;
+  const text = appendFooter(`${brief.final_message}${ps}`);
 
   const info = await transport.sendMail({
     from:    `${config.from_name} <${config.from_email}>`,

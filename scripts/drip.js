@@ -29,6 +29,7 @@ const twilio     = require('twilio');
 const { writeLog }             = require('./logger');
 const { recordTwilio, recordEmail } = require('./cost-tracker');
 const { isSuppressed }         = require('./lib/suppression');
+const { appendFooter, assertEmailCompliant } = require('./lib/compliance');
 
 const ROOT           = path.join(__dirname, '..');
 const CONFIG_PATH    = path.join(ROOT, 'config', 'drip-config.json');
@@ -231,9 +232,10 @@ function getTransport() {
 }
 
 async function sendEmail(to, subject, body, cfg) {
+  assertEmailCompliant(); // CAN-SPAM hard gate — same as pitcher.js
   return getTransport().sendMail({
     from: `"${cfg.from_name || 'Dave'}" <${process.env.ZOHO_EMAIL}>`,
-    to, subject, text: body
+    to, subject, text: appendFooter(body)
   });
 }
 

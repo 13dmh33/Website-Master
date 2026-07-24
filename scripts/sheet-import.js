@@ -8,6 +8,7 @@
  */
 const fs = require('fs');
 const path = require('path');
+const { syncFromState: syncDoNotContact, isContactSuppressed } = require('./lib/do-not-contact');
 
 const STATE_PATH = path.join(__dirname, '..', 'state.json');
 const LEADS_DIR = path.join(__dirname, '..', 'leads');
@@ -19,6 +20,7 @@ if (!inputPath) {
 }
 
 const leads = JSON.parse(fs.readFileSync(inputPath, 'utf8'));
+syncDoNotContact({}); // refresh the do-not-contact store from canonical opt-outs before ingesting
 const state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
 const knownIds = new Set(
   state.queue.map(l => l.lead_id)
@@ -26,11 +28,17 @@ const knownIds = new Set(
     .concat(state.closed.map(l => l.lead_id))
 );
 
-const newLeads = leads.filter(l => !knownIds.has(l.lead_id));
-const skipped = leads.length - newLeads.length;
+// Reject any lead whose contact (email/phone/domain) is on the do-not-contact list —
+// this is the cross-campaign guarantee: an opted-out business re-curated under a NEW
+// lead_id is caught here (knownIds only catches the exact same id).
+const suppressedLeads = leads.filter(l => isContactSuppressed({ email: l.email, phone: l.phone, website: l.url || l.website }));
+const suppressedCount = suppressedLeads.length;
+const newLeads = leads.filter(l => !knownIds.has(l.lead_id) &&
+  !isContactSuppressed({ email: l.email, phone: l.phone, website: l.url || l.website }));
+const skipped = leads.length - newLeads.length - suppressedCount;
 
 if (newLeads.length === 0) {
-  console.log(`All ${leads.length} leads already known (skipped ${skipped}). Nothing to import.`);
+  console.log(`Nothing to import: ${leads.length} leads (${skipped} already known, ${suppressedCount} on do-not-contact).`);
   process.exit(0);
 }
 
@@ -44,5 +52,5 @@ for (const l of newLeads) {
 }
 fs.writeFileSync(STATE_PATH, JSON.stringify(state, null, 2));
 
-console.log(`Imported ${newLeads.length} leads (skipped ${skipped} already known) -> leads/${outFile}`);
+console.log(`Imported ${newLeads.length} leads (skipped ${skipped} already known, ${suppressedCount} on do-not-contact) -> leads/${outFile}`);
 console.log(`Queued ${newLeads.length} into state.json (status: scouted)`);

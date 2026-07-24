@@ -39,6 +39,7 @@ const { recordSent }            = require('./template-picker');
 const { recordTwilio, recordEmail } = require('./cost-tracker');
 const { isSuppressed }          = require('./lib/suppression');
 const { appendFooter, assertEmailCompliant } = require('./lib/compliance');
+const { isContactSuppressed, syncFromState: syncDoNotContact } = require('./lib/do-not-contact');
 
 // ── PATHS ─────────────────────────────────────────────────────────────────────
 
@@ -177,7 +178,8 @@ function loadApprovedBriefs(config) {
     try {
       const data = JSON.parse(fs.readFileSync(path.join(QUEUE_DIR, file), 'utf8'));
       if (!data.checker_approved) continue;
-      if (isSuppressed(data.lead_id)) continue; // do-not-contact — hard gate, checked before every send
+      if (isSuppressed(data.lead_id)) continue; // lead_id-keyed do-not-contact (state.json status)
+      if (isContactSuppressed({ email: data.email, phone: data.phone, website: data.website })) continue; // contact-keyed do-not-contact — survives re-scrape under a new lead_id
 
       const sentPath = path.join(MESSAGES_DIR, `${data.lead_id}-sent.json`);
 
@@ -201,6 +203,9 @@ function loadApprovedBriefs(config) {
       // Check if secondary channel is pending (dual-channel lead)
       if (data.secondary_channel) {
         const sent   = JSON.parse(fs.readFileSync(sentPath, 'utf8'));
+        // Reply-based exit: if the lead already replied or opted out on the primary
+        // channel, do not fire the secondary at them (the branch's dual-channel-race fix).
+        if (['reply_drafted', 'positive', 'unsubscribed'].includes(sent.status)) continue;
         const secKey = `${data.secondary_channel}_sent`; // 'sms_sent' or 'email_sent'
         if (!sent[secKey]) {
           const primarySentAt = sent[`${data.channel}_sent_at`];
@@ -451,6 +456,7 @@ async function main() {
   console.log('─'.repeat(50));
 
   ensureDirs();
+  syncDoNotContact({}); // refresh the contact-keyed do-not-contact store from canonical opt-outs in state.json
   const config = loadConfig();
   checkAutoRun(config);
   warnIfMissingCreds();

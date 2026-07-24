@@ -1,0 +1,14 @@
+{
+  "_comment": "Global do-not-contact store, keyed on contact identity (email/phone/domain) so an opt-out survives across campaigns even if the same business is re-scraped under a new id. Written on opt-out and self-healed by scripts/lib/do-not-contact.js syncFromState(). Checked at ingestion (sheet-import) and every send lane (pitcher, drip). Entries are appended, never silently removed.",
+  "entries": [
+    {
+      "email": "office@aperfectplumber.com",
+      "phone": "7203753900",
+      "domain": null,
+      "reason": "opted_out",
+      "business_name": "A Perfect Plumber",
+      "lead_id": "a-perfect-plumber-denver-co",
+      "at": "2026-07-24T20:15:47.104Z"
+    }
+  ]
+}

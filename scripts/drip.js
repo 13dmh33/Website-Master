@@ -30,6 +30,7 @@ const { writeLog }             = require('./logger');
 const { recordTwilio, recordEmail } = require('./cost-tracker');
 const { isSuppressed }         = require('./lib/suppression');
 const { appendFooter, assertEmailCompliant } = require('./lib/compliance');
+const { isContactSuppressed, syncFromState: syncDoNotContact } = require('./lib/do-not-contact');
 
 const ROOT           = path.join(__dirname, '..');
 const CONFIG_PATH    = path.join(ROOT, 'config', 'drip-config.json');
@@ -135,12 +136,15 @@ function loadDripQueue(cfg, templates) {
       const sent     = JSON.parse(fs.readFileSync(sentPath, 'utf8'));
       const leadId   = file.replace('-sent.json', '');
 
-      if (sent.status === 'positive' || sent.status === 'unresponsive') continue;
-      if (sent.status === 'unsubscribed' || isSuppressed(leadId)) continue; // do-not-contact — hard gate
+      // Reply-based exit: a lead that replied (reply_drafted), converted (positive),
+      // opted out (unsubscribed), or went dead (unresponsive) is out of the campaign.
+      if (['positive', 'unresponsive', 'unsubscribed', 'reply_drafted'].includes(sent.status)) continue;
+      if (isSuppressed(leadId)) continue; // lead_id-keyed do-not-contact (state.json status)
 
       const briefPath = path.join(QUEUE_DIR, `${leadId}-brief.json`);
       if (!fs.existsSync(briefPath)) continue;
       const brief = JSON.parse(fs.readFileSync(briefPath, 'utf8'));
+      if (isContactSuppressed({ email: brief.email, phone: brief.phone, website: brief.website })) continue; // contact-keyed do-not-contact — survives re-scrape under a new lead_id
 
       const drip = sent.drip || {};
 
@@ -189,8 +193,8 @@ function markUnresponsive(cfg) {
       const sentPath = path.join(MESSAGES_DIR, file);
       const sent     = JSON.parse(fs.readFileSync(sentPath, 'utf8'));
       const leadId   = file.replace('-sent.json', '');
-      if (sent.status === 'positive' || sent.status === 'unresponsive') continue;
-      if (sent.status === 'unsubscribed' || isSuppressed(leadId)) continue; // never reclassify an opt-out
+      if (['positive', 'unresponsive', 'unsubscribed', 'reply_drafted'].includes(sent.status)) continue;
+      if (isSuppressed(leadId)) continue; // never reclassify an opt-out / already-exited lead
 
       const initialSentAt = sent.email_sent_at || sent.sms_sent_at;
       if (!initialSentAt || daysSince(initialSentAt) < cfg.dead_after_days) continue;
@@ -253,6 +257,7 @@ async function main() {
   console.log(`\nDrip starting${isDryRun ? ' [DRY RUN]' : ''}${stepFilter ? ` [step: ${stepFilter}]` : ''}${channelFilter ? ` [channel: ${channelFilter}]` : ''}`);
   console.log('─'.repeat(50));
 
+  syncDoNotContact({}); // refresh the contact-keyed do-not-contact store from canonical opt-outs in state.json
   const cfg       = loadConfig();
   checkAutoRun(cfg);
   const remaining = checkLimits(cfg);

@@ -65,6 +65,7 @@
 
 const fs   = require('fs');
 const path = require('path');
+const { isPlaceholderEmail, isNonProspectBusiness } = require('./lib/lead-quality');
 
 const ROOT       = path.join(__dirname, '..');
 const STATE_PATH = path.join(ROOT, 'state.json');
@@ -179,6 +180,7 @@ function isJunk(email) {
   if (ASSET_EXT.test(email)) return true;
   if (!/^[^@\s]+@[^@\s]+\.[a-z]{2,}$/i.test(email)) return true;
   if (JUNK_NEEDLES.some(n => email.includes(n))) return true;
+  if (isPlaceholderEmail(email)) return true; // template/builder defaults (e.g. info@mysite.com)
   // sentry/analytics style hashed local-parts (long hex) — skip
   if (/^[0-9a-f]{16,}@/i.test(email)) return true;
   return false;
@@ -823,6 +825,13 @@ async function main() {
       }
       if (!email) {
         console.log('no email found');
+        await sleep(DELAY_MS);
+        continue;
+      }
+      // Don't flip a non-prospect (supply house / distributor / big-box) into an
+      // email lead even if a real email was found — Trevo sells to contractors.
+      if (isNonProspectBusiness(c.rec.business_name)) {
+        console.log(`skipped (not a contractor prospect): ${email}`);
         await sleep(DELAY_MS);
         continue;
       }

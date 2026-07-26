@@ -656,6 +656,16 @@ async function runHasWebsiteMode(config, flat, knownIds, knownDomains) {
     // by lead_id — the CSV alone has no machine-friendly write-back target.
     const needsEmailJsonFilename = needsEmailFilename.replace(/\.csv$/, '.json');
     fs.writeFileSync(path.join(LEADS_WEB_DIR, needsEmailJsonFilename), JSON.stringify(needsEmail, null, 2));
+
+    // Feed the automated pipeline: mirror into leads/ and register as 'scouted'
+    // so contact-scraper (which reads state.json + leads/*.json) can crawl each
+    // site for its email, then Diagnoser processes them. Without this the
+    // has-website leads sit in leads-web/ invisible to the rest of the pipeline
+    // — the workflow gap that left 75 real leads stranded (found 2026-07-26).
+    if (!fs.existsSync(LEADS_DIR)) fs.mkdirSync(LEADS_DIR, { recursive: true });
+    fs.writeFileSync(path.join(LEADS_DIR, needsEmailJsonFilename), JSON.stringify(needsEmail, null, 2));
+    const newNeedsEmail = updateState(needsEmail);
+    console.log(`  Queued for contact-scraper: ${newNeedsEmail}  (mirrored to leads/${needsEmailJsonFilename}, state.json as 'scouted' — run contact-scraper --deep next)`);
   }
 
   const qualifyingTotal = leads.length + needsEmail.length;

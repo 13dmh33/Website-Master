@@ -150,7 +150,7 @@
         "id": "d1-sms",
         "name": "Follow-up 1 - soft check-in",
         "requires": [],
-        "body": "Hey - Dave from Trevo. Sent a note about your website a few days back. $100 flat, live in days. Grab 15 min: [Schedule Link]"
+        "body": "Hey - Dave from Trevo, following up on my note about your website. $100 flat, live in days. Grab 15 min: [Schedule Link]"
       },
       "email": {
         "id": "d1-email",

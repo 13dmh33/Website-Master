@@ -51,3 +51,24 @@ test('regression: an UN-normalized row (website only) IS wrongly dropped — pro
   const out = filterAndFormatHasWebsite(unfixed, 'plumber', 'Austin, TX', new Set(), 3, new Set(), 10, 4.0);
   assert.equal(out.disc.noWebsite, 1, 'without normalization the website is invisible (this is the original bug)');
 });
+
+test('async poll shape: nested [[...]] must be FLATTENED before normalizing (the second bug)', () => {
+  // Outscraper's async task returns one sub-array per query: [[row, row], ...].
+  // Normalizing the nested wrapper is a no-op — it has to be flattened first,
+  // exactly as scout.js does (results.flat()) before normalizeOutscraperRows.
+  const asyncShaped = [[
+    outscraperRow('Austin Plumbing', 'https://austinplumbing.com/'),
+    outscraperRow('Radiant Plumbing', 'https://radiantplumbing.com/austin/'),
+  ]];
+
+  // Normalizing the wrapper does nothing (the failure we hit live):
+  normalizeOutscraperRows(asyncShaped);
+  assert.equal(asyncShaped[0][0].site, undefined, 'normalizing the un-flattened wrapper leaves records untouched');
+
+  // Flatten first (what scout.js line 531 does), THEN normalize → works:
+  const flat = asyncShaped.flat();
+  normalizeOutscraperRows(flat);
+  const out = filterAndFormatHasWebsite(flat, 'plumber', 'Austin, TX', new Set(), 3, new Set(), 10, 4.0);
+  assert.equal(out.disc.noWebsite, 0);
+  assert.equal(out.needsEmail.length, 2, 'both leads captured once the nested payload is flattened then normalized');
+});

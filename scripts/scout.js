@@ -401,12 +401,11 @@ async function callOutscraper(query, limit, apiKey) {
     req.end();
   });
 
-  if (raw.status === 'Success' && raw.data?.length > 0) return normalizeOutscraperRows(raw.data);
+  if (raw.status === 'Success' && raw.data?.length > 0) return raw.data;
 
   if (raw.id && raw.results_location) {
     process.stdout.write(`  Async task (id: ${raw.id}) — polling`);
-    const rows = await pollTask(raw.results_location, apiKey);
-    return normalizeOutscraperRows(rows);
+    return pollTask(raw.results_location, apiKey);
   }
 
   throw new Error(`Outscraper error: ${JSON.stringify(raw)}`);
@@ -550,6 +549,12 @@ async function main() {
     if (!seen.has(key)) { seen.add(key); flat.push(r); }
   }
   if (isMulti) console.log(`\n  Deduped: ${allRaw.length} raw → ${flat.length} unique`);
+
+  // Alias Outscraper's real field names (website->site, address->full_address)
+  // onto what the filters read. Done here — on the flattened, deduped result
+  // OBJECTS — because the async poll returns a nested [[...]] array, so doing it
+  // inside callOutscraper hit the wrapper, not the records.
+  normalizeOutscraperRows(flat);
 
   if (isHasWebsiteMode) {
     const knownDomains = loadKnownDomains();

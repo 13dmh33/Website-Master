@@ -39,7 +39,15 @@
     "longitude": -97.669017,
     "fit_score": 6,
     "gap_score": 6,
-    "scraped_at": "2026-07-26T14:25:46.318Z"
+    "scraped_at": "2026-07-26T14:25:46.318Z",
+    "contact_name": "never using another",
+    "socials": {
+      "yelp": "https://www.yelp.com/biz/rooterman-plumbing-austin",
+      "facebook": "https://www.facebook.com/RooterManToTheRescue",
+      "youtube": "https://www.youtube.com/@RooterManVideos",
+      "instagram": "https://www.instagram.com/officialrooterman"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:11.941Z"
   },
   {
     "lead_id": "ChIJpxUGhC_LRIYR2g941oH50ow",
@@ -228,7 +236,13 @@
     "longitude": -97.9422792,
     "fit_score": 6,
     "gap_score": 6,
-    "scraped_at": "2026-07-26T14:25:46.318Z"
+    "scraped_at": "2026-07-26T14:25:46.318Z",
+    "socials": {
+      "facebook": "https://www.facebook.com/ColdisontheRight",
+      "instagram": "https://www.instagram.com/coldisontheright",
+      "twitter": "https://x.com/coldsontheright"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:21.536Z"
   },
   {
     "lead_id": "ChIJmUYKBAotW4YRh06-vt0DbcY",
@@ -270,7 +284,15 @@
     "longitude": -97.68313169999999,
     "fit_score": 6,
     "gap_score": 6,
-    "scraped_at": "2026-07-26T14:25:46.318Z"
+    "scraped_at": "2026-07-26T14:25:46.318Z",
+    "contact_name": "current building",
+    "socials": {
+      "facebook": "https://www.facebook.com/AustinAreaPlumber",
+      "yelp": "https://www.yelp.com/biz/austin-area-plumbing-round-rock",
+      "instagram": "https://www.instagram.com/austinareaplumbing",
+      "google": "https://maps.google.com/maps"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:13.191Z"
   },
   {
     "lead_id": "ChIJzQVpc8ZMW4YRpHSiiuztxWQ",
@@ -291,7 +313,13 @@
     "longitude": -97.7968612,
     "fit_score": 6,
     "gap_score": 6,
-    "scraped_at": "2026-07-26T14:25:46.318Z"
+    "scraped_at": "2026-07-26T14:25:46.318Z",
+    "contact_name": "to adapt with",
+    "socials": {
+      "facebook": "http://www.facebook.com/2008/fbml",
+      "instagram": "https://www.instagram.com/1sthomeplumbing"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:10.556Z"
   },
   {
     "lead_id": "ChIJxdbD8sEvmgMRb6McS8Wnax4",
@@ -375,7 +403,15 @@
     "longitude": -97.67565019999999,
     "fit_score": 6,
     "gap_score": 6,
-    "scraped_at": "2026-07-26T14:25:46.318Z"
+    "scraped_at": "2026-07-26T14:25:46.318Z",
+    "contact_name": "with modern conveniences",
+    "socials": {
+      "facebook": "https://www.facebook.com/FoxServiceCompany",
+      "youtube": "https://www.youtube.com/channel/UCYtaePMIPJJLqrzk8tEfWgw",
+      "yelp": "https://www.yelp.com/biz/fox-service-company-austin-5",
+      "instagram": "https://www.instagram.com/foxserviceco"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:15.883Z"
   },
   {
     "lead_id": "ChIJ5zrK37WCmA4R4PY1H6yXrEw",
@@ -438,7 +474,13 @@
     "longitude": -97.69262309999999,
     "fit_score": 6,
     "gap_score": 6,
-    "scraped_at": "2026-07-26T14:25:46.318Z"
+    "scraped_at": "2026-07-26T14:25:46.318Z",
+    "socials": {
+      "facebook": "https://www.facebook.com/CrowsPlumbingService",
+      "twitter": "https://twitter.com/CrowsPlumbing",
+      "linkedin": "https://www.linkedin.com/in/crows-plumbing-18342416b"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:30.427Z"
   },
   {
     "lead_id": "ChIJVeOoAsnJRIYREBDb7qnzQkE",
@@ -522,7 +564,16 @@
     "longitude": -97.7435363,
     "fit_score": 6,
     "gap_score": 6,
-    "scraped_at": "2026-07-26T14:25:46.319Z"
+    "scraped_at": "2026-07-26T14:25:46.319Z",
+    "contact_name": "you may have",
+    "socials": {
+      "instagram": "https://www.instagram.com/tapmavyn",
+      "youtube": "https://www.youtube.com/channel/UCR3nvY9K3KsjaaBXUuWiZhQ",
+      "twitter": "https://twitter.com/tapmavyn",
+      "facebook": "https://www.facebook.com/tapmavyn",
+      "tiktok": "https://www.tiktok.com/@tapmavyn"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:24.810Z"
   },
   {
     "lead_id": "ChIJO3z3jPnLRIYRdSUTGwQd_dk",
@@ -690,7 +741,15 @@
     "longitude": -97.71816349999999,
     "fit_score": 5,
     "gap_score": 5,
-    "scraped_at": "2026-07-26T14:25:46.318Z"
+    "scraped_at": "2026-07-26T14:25:46.318Z",
+    "contact_name": "plug it in",
+    "socials": {
+      "facebook": "https://www.facebook.com/stansofaustin",
+      "instagram": "https://www.instagram.com/stansofaustin",
+      "tiktok": "https://www.tiktok.com/@stansofaustin",
+      "youtube": "https://www.youtube.com/@Stansac/playlists"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:10.371Z"
   },
   {
     "lead_id": "ChIJu8oFG73LRIYR6NoivbCGPvQ",
@@ -698,7 +757,7 @@
     "trade": "plumber",
     "city": "Austin, TX",
     "site_url": "https://www.lnpplumbing.com/",
-    "email": "",
+    "email": "lpplumbing18@gmail.com",
     "phone": "+1 512-468-9030",
     "rating": 4.8,
     "review_count": 169,
@@ -711,7 +770,16 @@
     "longitude": -97.7181722,
     "fit_score": 5,
     "gap_score": 5,
-    "scraped_at": "2026-07-26T14:25:46.318Z"
+    "scraped_at": "2026-07-26T14:25:46.318Z",
+    "email_source": "contact-scraper",
+    "contact_name": "it is great",
+    "socials": {
+      "facebook": "https://www.facebook.com/LPPlumbingAustin",
+      "youtube": "https://www.youtube.com/@LP-Plumbing",
+      "instagram": "https://www.instagram.com/lpplumbingaustin",
+      "tiktok": "https://www.tiktok.com/@lpplumbingaustin"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:04.160Z"
   },
   {
     "lead_id": "ChIJRzUJezZJW4YRMbJmeiDVh58",
@@ -719,7 +787,7 @@
     "trade": "plumber",
     "city": "Austin, TX",
     "site_url": "https://www.1tomplumber.com/austin-tx/",
-    "email": "",
+    "email": "austintx@1tomplumber.com",
     "phone": "+1 512-566-3166",
     "rating": 5,
     "review_count": 130,
@@ -732,7 +800,16 @@
     "longitude": -97.9211697,
     "fit_score": 5,
     "gap_score": 5,
-    "scraped_at": "2026-07-26T14:25:46.318Z"
+    "scraped_at": "2026-07-26T14:25:46.318Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "instagram": "https://www.instagram.com/1tomplumber",
+      "facebook": "https://www.facebook.com/1tomplumberaustintx",
+      "linkedin": "https://www.linkedin.com/company/1-tom-plumber-austin",
+      "youtube": "https://www.youtube.com/@1-Tom-Plumber",
+      "tiktok": "https://www.tiktok.com/@1tomplumber_hq"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:05.029Z"
   },
   {
     "lead_id": "ChIJzwKq2Qu1RIYRRa82s95GBMQ",
@@ -795,7 +872,14 @@
     "longitude": -97.7495436,
     "fit_score": 5,
     "gap_score": 5,
-    "scraped_at": "2026-07-26T14:25:46.318Z"
+    "scraped_at": "2026-07-26T14:25:46.318Z",
+    "contact_name": "Accurate Leak",
+    "socials": {
+      "facebook": "https://www.facebook.com/profile.php?id=61558257272673",
+      "youtube": "https://www.youtube.com/user/AccurateLeakandLine",
+      "linkedin": "https://www.linkedin.com/company/accurate-leak-and-line"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:18.421Z"
   },
   {
     "lead_id": "ChIJ53ZeAZbLRIYRjUptPGKP3io",
@@ -816,7 +900,15 @@
     "longitude": -97.67565019999999,
     "fit_score": 5,
     "gap_score": 5,
-    "scraped_at": "2026-07-26T14:25:46.318Z"
+    "scraped_at": "2026-07-26T14:25:46.318Z",
+    "contact_name": "ship as Precision",
+    "socials": {
+      "facebook": "https://www.facebook.com/precisionheatac",
+      "youtube": "https://www.youtube.com/user/PrecisionACAustinTX",
+      "instagram": "https://www.instagram.com/precisionheatac",
+      "linkedin": "https://www.linkedin.com/company/precision-heating-&-air-llc."
+    },
+    "deep_enriched_at": "2026-07-26T14:33:25.665Z"
   },
   {
     "lead_id": "ChIJqy3E2DLKRIYRha0PPVC2rkY",
@@ -858,7 +950,12 @@
     "longitude": -97.759108,
     "fit_score": 4,
     "gap_score": 4,
-    "scraped_at": "2026-07-26T14:25:46.317Z"
+    "scraped_at": "2026-07-26T14:25:46.317Z",
+    "contact_name": "never using another",
+    "socials": {
+      "yelp": "https://www.yelp.com/biz/rooterman-plumbing-austin"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:08.538Z"
   },
   {
     "lead_id": "ChIJBcx6NlrLRIYRatzIKsnpxvs",
@@ -866,7 +963,7 @@
     "trade": "plumber",
     "city": "Austin, TX",
     "site_url": "https://johnnyrooter.com/",
-    "email": "",
+    "email": "johnnyrooterplumb@gmail.com",
     "phone": "+1 512-452-6646",
     "rating": 4.9,
     "review_count": 42,
@@ -879,7 +976,15 @@
     "longitude": -97.71930069999999,
     "fit_score": 4,
     "gap_score": 4,
-    "scraped_at": "2026-07-26T14:25:46.318Z"
+    "scraped_at": "2026-07-26T14:25:46.318Z",
+    "email_source": "contact-scraper",
+    "contact_name": "so glad",
+    "socials": {
+      "facebook": "https://www.facebook.com/profile.php?id=100067212908138",
+      "yelp": "https://www.yelp.com/biz/johnny-rooter-plumbing-austin-3",
+      "google": "https://maps.google.com/maps"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:09.924Z"
   },
   {
     "lead_id": "ChIJJSxtvpaNZqIRO75baYyLH80",
@@ -887,7 +992,7 @@
     "trade": "plumber",
     "city": "Austin, TX",
     "site_url": "https://www.ezflowplumbingtexas.com/",
-    "email": "",
+    "email": "bill@ezflowplumbingtexas.com",
     "phone": "+1 512-699-0083",
     "rating": 4.9,
     "review_count": 67,
@@ -900,7 +1005,14 @@
     "longitude": -97.683443,
     "fit_score": 4,
     "gap_score": 4,
-    "scraped_at": "2026-07-26T14:25:46.318Z"
+    "scraped_at": "2026-07-26T14:25:46.318Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Jose David",
+    "socials": {
+      "yelp": "https://www.yelp.com/biz/ez-flow-plumbing-pflugerville-3",
+      "facebook": "https://www.facebook.com/pages/biz/plumber/EZ-Flow-Plumbing-778249445554253"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:15.156Z"
   },
   {
     "lead_id": "ChIJDyzP-RZNW4YR4k6r5ALZWwc",
@@ -908,7 +1020,7 @@
     "trade": "plumber",
     "city": "Austin, TX",
     "site_url": "https://www.gardenhouseplumbing.com/",
-    "email": "",
+    "email": "info@gardenhouseplumbing.com",
     "phone": "+1 512-503-1080",
     "rating": 5,
     "review_count": 57,
@@ -921,7 +1033,12 @@
     "longitude": -97.8308189,
     "fit_score": 4,
     "gap_score": 4,
-    "scraped_at": "2026-07-26T14:25:46.318Z"
+    "scraped_at": "2026-07-26T14:25:46.318Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "https://facebook.com/p/Gardenhouse-Plumbing-Company-100067769860222"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:25.265Z"
   },
   {
     "lead_id": "ChIJ5UHegblNW4YRHv5lgt0PUzA",
@@ -950,7 +1067,7 @@
     "trade": "plumber",
     "city": "Austin, TX",
     "site_url": "https://abundantplumbingllc.com/",
-    "email": "",
+    "email": "abundantplumbing@gmail.com",
     "phone": "+1 512-201-9978",
     "rating": 5,
     "review_count": 44,
@@ -963,7 +1080,16 @@
     "longitude": -97.7651917,
     "fit_score": 4,
     "gap_score": 4,
-    "scraped_at": "2026-07-26T14:25:46.318Z"
+    "scraped_at": "2026-07-26T14:25:46.318Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Alec Barrera",
+    "socials": {
+      "facebook": "https://www.facebook.com/p/Abundant-Plumbing-LLC-61574714442475",
+      "yelp": "https://www.yelp.com/biz/abundant-plumbing-austin-3",
+      "bbb": "https://www.bbb.org/us/tx/austin/profile/plumber/abundant-plumbing-llc-0825-1000237688",
+      "google": "https://maps.google.com/maps"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:13.208Z"
   },
   {
     "lead_id": "ChIJZeMilGpV-KgRAt06uDW3FV0",
@@ -971,7 +1097,7 @@
     "trade": "plumber",
     "city": "Austin, TX",
     "site_url": "https://sustainableplumbingandair.com/",
-    "email": "",
+    "email": "matthew@sustainableplumbingandair.com",
     "phone": "+1 512-298-2849",
     "rating": 5,
     "review_count": 38,
@@ -984,7 +1110,15 @@
     "longitude": -97.8379788,
     "fit_score": 4,
     "gap_score": 4,
-    "scraped_at": "2026-07-26T14:25:46.318Z"
+    "scraped_at": "2026-07-26T14:25:46.318Z",
+    "email_source": "contact-scraper",
+    "contact_name": "profile picture",
+    "socials": {
+      "facebook": "https://www.facebook.com/profile.php?id=61577605979587",
+      "yelp": "https://www.yelp.com/biz/sustainable-plumbing-and-air-rollingwood",
+      "angi": "https://www.angi.com/companylist/us/tx/austin/sustainable-plumbing-air-llc-reviews-1.htm"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:23.569Z"
   },
   {
     "lead_id": "ChIJMXTRLHIzW4YRQlrZ0BY23s0",
@@ -1076,7 +1210,7 @@
     "trade": "plumber",
     "city": "Austin, TX",
     "site_url": "https://www.puroclean.com/austin-tx-puroclean-west-austin",
-    "email": "",
+    "email": "puroclean@brightpinkagency.com",
     "phone": "+1 512-953-2548",
     "rating": 4.8,
     "review_count": 48,
@@ -1089,7 +1223,13 @@
     "longitude": -97.7664537,
     "fit_score": 4,
     "gap_score": 4,
-    "scraped_at": "2026-07-26T14:25:46.318Z"
+    "scraped_at": "2026-07-26T14:25:46.318Z",
+    "email_source": "contact-scraper",
+    "contact_name": "might feel when",
+    "socials": {
+      "facebook": "https://www.facebook.com/PuroCleanWestAustin"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:25.621Z"
   },
   {
     "lead_id": "ChIJNRiM2kSFdKkRcOYt7AZzvAQ",
@@ -1097,7 +1237,7 @@
     "trade": "plumber",
     "city": "Austin, TX",
     "site_url": "http://freeflowaustin.com/",
-    "email": "",
+    "email": "eben@eyebytes.com",
     "phone": "+1 512-917-9813",
     "rating": 5,
     "review_count": 31,
@@ -1110,7 +1250,15 @@
     "longitude": -97.83163239999999,
     "fit_score": 4,
     "gap_score": 4,
-    "scraped_at": "2026-07-26T14:25:46.318Z"
+    "scraped_at": "2026-07-26T14:25:46.318Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "https://www.facebook.com/104333872560977",
+      "instagram": "https://www.instagram.com/freeflowaustin",
+      "linkedin": "https://www.linkedin.com/company/freeflow-austin",
+      "yelp": "https://www.yelp.com/biz/freeflow-plumbing-austin"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:28.994Z"
   },
   {
     "lead_id": "ChIJHdU1tm7LRIYRA7zbiSZKLgE",
@@ -1118,7 +1266,7 @@
     "trade": "plumber",
     "city": "Austin, TX",
     "site_url": "https://www.redbudplumbing.com/",
-    "email": "",
+    "email": "info@redbudplumbing.com",
     "phone": "+1 512-992-0909",
     "rating": 4.8,
     "review_count": 48,
@@ -1131,7 +1279,14 @@
     "longitude": -97.723891,
     "fit_score": 4,
     "gap_score": 4,
-    "scraped_at": "2026-07-26T14:25:46.319Z"
+    "scraped_at": "2026-07-26T14:25:46.319Z",
+    "email_source": "contact-scraper",
+    "contact_name": "is responsive and",
+    "socials": {
+      "facebook": "https://www.facebook.com/RedbudPlumbing",
+      "instagram": "https://www.instagram.com/redbudplumbing"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:33.317Z"
   },
   {
     "lead_id": "ChIJR_rovga1RIYRP44au3wFNRQ",
@@ -1139,7 +1294,7 @@
     "trade": "plumber",
     "city": "Austin, TX",
     "site_url": "https://www.prefixinc.com/",
-    "email": "",
+    "email": "customer.support@prefixinc.com",
     "phone": "+1 512-831-4390",
     "rating": 4.5,
     "review_count": 136,
@@ -1152,7 +1307,15 @@
     "longitude": -97.7470601,
     "fit_score": 4,
     "gap_score": 4,
-    "scraped_at": "2026-07-26T14:25:46.319Z"
+    "scraped_at": "2026-07-26T14:25:46.319Z",
+    "email_source": "contact-scraper",
+    "contact_name": "completely satisfied with",
+    "socials": {
+      "yelp": "https://www.yelp.com/biz/prefix-austin",
+      "facebook": "https://www.facebook.com/PreFixInc",
+      "twitter": "https://twitter.com/PreFixInc"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:14.074Z"
   },
   {
     "lead_id": "ChIJ015Etw21RIYRwxdqv9XZR3U",
@@ -1160,7 +1323,7 @@
     "trade": "plumber",
     "city": "Austin, TX",
     "site_url": "http://www.gohomepoint.com/",
-    "email": "",
+    "email": "info@gohomepoint.com",
     "phone": "+1 512-481-7214",
     "rating": 5,
     "review_count": 64,
@@ -1173,7 +1336,17 @@
     "longitude": -97.751058,
     "fit_score": 4,
     "gap_score": 4,
-    "scraped_at": "2026-07-26T14:25:46.319Z"
+    "scraped_at": "2026-07-26T14:25:46.319Z",
+    "email_source": "contact-scraper",
+    "contact_name": "glad that",
+    "socials": {
+      "facebook": "https://www.facebook.com/GoHomePoint",
+      "instagram": "https://www.instagram.com/gohomepoint",
+      "linkedin": "https://www.linkedin.com/company/gohomepoint",
+      "youtube": "https://www.youtube.com/@gohomepoint",
+      "tiktok": "https://www.tiktok.com/@gohomepoint"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:26.326Z"
   },
   {
     "lead_id": "ChIJC1Wddy1LW4YRNiYTwYu4zqE",
@@ -1181,7 +1354,7 @@
     "trade": "plumber",
     "city": "Austin, TX",
     "site_url": "https://www.youngtileinternational.com/",
-    "email": "",
+    "email": "yti@youngtileinternational.com",
     "phone": "+1 512-680-5622",
     "rating": 5,
     "review_count": 36,
@@ -1194,7 +1367,14 @@
     "longitude": -97.7911297,
     "fit_score": 4,
     "gap_score": 4,
-    "scraped_at": "2026-07-26T14:25:46.319Z"
+    "scraped_at": "2026-07-26T14:25:46.319Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "http://www.facebook.com/2008/fbml",
+      "linkedin": "https://www.linkedin.com/in/youngtileinternational",
+      "youtube": "https://www.youtube.com/channel/UCWCypujFRoYOqijoyJKngEw"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:26.227Z"
   },
   {
     "lead_id": "ChIJo9xtw7V7IokRsuec7y54QAQ",
@@ -1202,7 +1382,7 @@
     "trade": "plumber",
     "city": "Austin, TX",
     "site_url": "http://lonespringsplumbing.com/",
-    "email": "",
+    "email": "jefferey.graves@emypeople.net",
     "phone": "+1 512-798-3755",
     "rating": 4.9,
     "review_count": 48,
@@ -1215,7 +1395,17 @@
     "longitude": -97.2880023,
     "fit_score": 4,
     "gap_score": 4,
-    "scraped_at": "2026-07-26T14:25:46.319Z"
+    "scraped_at": "2026-07-26T14:25:46.319Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Jefferey Graves",
+    "socials": {
+      "facebook": "https://www.facebook.com/profile.php?id=61579767472992",
+      "bbb": "https://www.bbb.org/us/tx/bastrop/profile/residential-plumber/lonesprings-plumbing-0825-1000257001",
+      "instagram": "http://instagram.com/shopify",
+      "tiktok": "https://tiktok.com/@shopify",
+      "twitter": "https://x.com/shopify"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:27.385Z"
   },
   {
     "lead_id": "ChIJKfOZssrTRIYRiZVwIwiQuMw",
@@ -1223,7 +1413,7 @@
     "trade": "plumber",
     "city": "Austin, TX",
     "site_url": "https://www.plumbinatoraustin.com/",
-    "email": "",
+    "email": "mickeytheplumber@yahoo.com",
     "phone": "+1 512-786-1771",
     "rating": 4.7,
     "review_count": 144,
@@ -1236,7 +1426,15 @@
     "longitude": -97.6925298,
     "fit_score": 4,
     "gap_score": 4,
-    "scraped_at": "2026-07-26T14:25:46.319Z"
+    "scraped_at": "2026-07-26T14:25:46.319Z",
+    "email_source": "contact-scraper",
+    "contact_name": "and Corey",
+    "socials": {
+      "instagram": "https://instagram.com/theplumbinatorroundrock",
+      "linkedin": "https://linkedin.com/company/the-plumbinator",
+      "facebook": "https://facebook.com/theplumbinatorroundrock"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:29.262Z"
   },
   {
     "lead_id": "ChIJq0fCfwkpW4YR4EqPvo68RGQ",
@@ -1244,7 +1442,7 @@
     "trade": "plumber",
     "city": "Austin, TX",
     "site_url": "https://austinplumbing.com/",
-    "email": "",
+    "email": "service@austinplumbing.com",
     "phone": "+1 512-900-4663",
     "rating": 4.8,
     "review_count": 21,
@@ -1257,7 +1455,18 @@
     "longitude": -97.7301705,
     "fit_score": 3,
     "gap_score": 3,
-    "scraped_at": "2026-07-26T14:25:46.291Z"
+    "scraped_at": "2026-07-26T14:25:46.291Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "https://www.facebook.com/AustinPlumbing512",
+      "bbb": "https://www.bbb.org/us/tx/austin/profile/plumber/austin-plumbing-0825-1000198245",
+      "instagram": "https://www.instagram.com/austinplumbingtx",
+      "linkedin": "https://www.linkedin.com/company/austin-plumbing",
+      "youtube": "https://www.youtube.com/@AustinPlumbingtx",
+      "tiktok": "https://www.tiktok.com/@austinplumbingtx",
+      "twitter": "https://x.com/austinplumber"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:09.867Z"
   },
   {
     "lead_id": "ChIJYZpsXiW4RIYRM84IEm8F-GQ",
@@ -1278,7 +1487,15 @@
     "longitude": -97.6022093,
     "fit_score": 3,
     "gap_score": 3,
-    "scraped_at": "2026-07-26T14:25:46.318Z"
+    "scraped_at": "2026-07-26T14:25:46.318Z",
+    "contact_name": "absolutely thrilled with",
+    "socials": {
+      "google": "http://maps.google.com/maps",
+      "facebook": "https://www.facebook.com/fastplumbing",
+      "twitter": "https://twitter.com/FastPlumbingATX",
+      "yelp": "https://www.yelp.com/biz/fast-plumbing-austin-2"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:12.194Z"
   },
   {
     "lead_id": "ChIJ1x3-d97JRIYR5yGw_R5D2-k",
@@ -1286,7 +1503,7 @@
     "trade": "plumber",
     "city": "Austin, TX",
     "site_url": "http://ultimateplumberaustin.com/",
-    "email": "",
+    "email": "info@mysite.com",
     "phone": "+1 512-828-3835",
     "rating": 5,
     "review_count": 19,
@@ -1299,7 +1516,14 @@
     "longitude": -97.69174509999999,
     "fit_score": 3,
     "gap_score": 3,
-    "scraped_at": "2026-07-26T14:25:46.318Z"
+    "scraped_at": "2026-07-26T14:25:46.318Z",
+    "email_source": "contact-scraper",
+    "contact_name": "and Master Plumber",
+    "socials": {
+      "linkedin": "https://www.linkedin.com/company/wix-com",
+      "facebook": "https://www.facebook.com/wix"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:28.371Z"
   },
   {
     "lead_id": "ChIJcVDanT1GW4YRvV6KrSxrwMQ",
@@ -1307,7 +1531,7 @@
     "trade": "plumber",
     "city": "Austin, TX",
     "site_url": "https://austin-plumber.com/",
-    "email": "",
+    "email": "christian@adeptplumbing.com",
     "phone": "+1 512-301-6330",
     "rating": 4.7,
     "review_count": 25,
@@ -1320,7 +1544,15 @@
     "longitude": -97.9727899,
     "fit_score": 3,
     "gap_score": 3,
-    "scraped_at": "2026-07-26T14:25:46.318Z"
+    "scraped_at": "2026-07-26T14:25:46.318Z",
+    "email_source": "contact-scraper",
+    "contact_name": "operator and licensed",
+    "socials": {
+      "angi": "http://www.angieslist.com/companylist/us/tx/austin/adept-plumbing-reviews-418044.aspx&quot;",
+      "google": "http://maps.google.com/maps",
+      "yelp": "http://www.yelp.com/biz/adept-plumbing-austin"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:15.781Z"
   },
   {
     "lead_id": "ChIJPSAFjqAkmW4RKkUGwTHoS6E",
@@ -1328,7 +1560,7 @@
     "trade": "plumber",
     "city": "Austin, TX",
     "site_url": "https://laloplumbing.com/",
-    "email": "",
+    "email": "lalo@laloplumbing.com",
     "phone": "+1 737-259-7685",
     "rating": 5,
     "review_count": 21,
@@ -1341,7 +1573,14 @@
     "longitude": -97.6715799,
     "fit_score": 3,
     "gap_score": 3,
-    "scraped_at": "2026-07-26T14:25:46.318Z"
+    "scraped_at": "2026-07-26T14:25:46.318Z",
+    "email_source": "contact-scraper",
+    "contact_name": "and a flat",
+    "socials": {
+      "instagram": "https://www.instagram.com/laloplumbing",
+      "tiktok": "https://www.tiktok.com/@laloplumbing"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:15.294Z"
   },
   {
     "lead_id": "ChIJ4zJ-x2_PRIYRRU6_6hZbKOA",
@@ -1349,7 +1588,7 @@
     "trade": "plumber",
     "city": "Austin, TX",
     "site_url": "https://tmkplumberaustin.com/",
-    "email": "",
+    "email": "info@tmkplumberaustin.com",
     "phone": "+1 512-985-2932",
     "rating": 4.7,
     "review_count": 39,
@@ -1362,7 +1601,10 @@
     "longitude": -97.68662139999999,
     "fit_score": 3,
     "gap_score": 3,
-    "scraped_at": "2026-07-26T14:25:46.318Z"
+    "scraped_at": "2026-07-26T14:25:46.318Z",
+    "email_source": "contact-scraper",
+    "contact_name": "John Patterson",
+    "deep_enriched_at": "2026-07-26T14:33:28.192Z"
   },
   {
     "lead_id": "ChIJff8BK_RNW4YR656rl6iNL9M",
@@ -1391,7 +1633,7 @@
     "trade": "plumber",
     "city": "Austin, TX",
     "site_url": "http://www.westmorelandplumbing.com/",
-    "email": "",
+    "email": "wplumbingcompany@gmail.com",
     "phone": "+1 512-288-7590",
     "rating": 4.7,
     "review_count": 40,
@@ -1404,7 +1646,13 @@
     "longitude": -97.8881943,
     "fit_score": 3,
     "gap_score": 3,
-    "scraped_at": "2026-07-26T14:25:46.319Z"
+    "scraped_at": "2026-07-26T14:25:46.319Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "https://www.facebook.com/profile.php?id=61566941601768",
+      "nextdoor": "https://us.nextdoor.com/pages/westmoreland-plumbing-austin-tx"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:22.553Z"
   },
   {
     "lead_id": "ChIJUcA7BZi0RIYRImSxShGmvcM",
@@ -1433,7 +1681,7 @@
     "trade": "plumber",
     "city": "Austin, TX",
     "site_url": "http://joscoshowroom.com/",
-    "email": "",
+    "email": "sales@joscoshowroom.com",
     "phone": "+1 512-832-0013",
     "rating": 4.2,
     "review_count": 140,
@@ -1446,7 +1694,15 @@
     "longitude": -97.7087694,
     "fit_score": 3,
     "gap_score": 3,
-    "scraped_at": "2026-07-26T14:25:46.319Z"
+    "scraped_at": "2026-07-26T14:25:46.319Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Google Meet hardware",
+    "socials": {
+      "instagram": "https://www.instagram.com/joscosupplyandshowroom",
+      "facebook": "https://www.facebook.com/pages/Josco-Bath-Kitchen-Showroom/436458536453354",
+      "twitter": "https://x.com/googleworkspace"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:19.416Z"
   },
   {
     "lead_id": "ChIJRTgJxhG1RIYRDT_lF8Cdtfg",
@@ -1454,7 +1710,7 @@
     "trade": "plumber",
     "city": "Austin, TX",
     "site_url": "https://www.ferguson.com/store/tx/austin/plumbingpvf-0245%3Futm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_campaign%3Drt_lis_listingtraffic%26utm_content%3Dlisting",
-    "email": "",
+    "email": "customer.support@ferguson.com",
     "phone": "+1 512-651-5152",
     "rating": 4.6,
     "review_count": 44,
@@ -1467,7 +1723,14 @@
     "longitude": -97.75817819999999,
     "fit_score": 3,
     "gap_score": 3,
-    "scraped_at": "2026-07-26T14:25:46.319Z"
+    "scraped_at": "2026-07-26T14:25:46.319Z",
+    "email_source": "contact-scraper",
+    "contact_name": "ALL WARRANTIES AND",
+    "socials": {
+      "google": "https://maps.google.com",
+      "facebook": "https://www.facebook.com/FergusonOfficial"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:29.853Z"
   },
   {
     "lead_id": "ChIJF0na5Y60RIYRLRvWKRbk31E",
@@ -1509,7 +1772,11 @@
     "longitude": -97.7637709,
     "fit_score": 3,
     "gap_score": 3,
-    "scraped_at": "2026-07-26T14:25:46.319Z"
+    "scraped_at": "2026-07-26T14:25:46.319Z",
+    "socials": {
+      "google": "http://maps.google.com/maps/place/%7B%7Bprofitcenter.latitude%7D%7D+%7B%7Bprofitcenter.longitude"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:34.589Z"
   },
   {
     "lead_id": "ChIJLVStPrW1RIYRJfwtY78ndH8",
@@ -1551,7 +1818,9 @@
     "longitude": -97.7581976,
     "fit_score": 3,
     "gap_score": 3,
-    "scraped_at": "2026-07-26T14:25:46.319Z"
+    "scraped_at": "2026-07-26T14:25:46.319Z",
+    "contact_name": "with an Expert",
+    "deep_enriched_at": "2026-07-26T14:33:34.702Z"
   },
   {
     "lead_id": "ChIJS1fpd3a1RIYRjeD1TJvvwNs",
@@ -1559,7 +1828,7 @@
     "trade": "plumber",
     "city": "Austin, TX",
     "site_url": "https://www.vanrossuncontracting.com/",
-    "email": "",
+    "email": "office@vanrossuncontracting.com",
     "phone": "+1 512-289-2916",
     "rating": 4.5,
     "review_count": 40,
@@ -1572,6 +1841,12 @@
     "longitude": -97.7412883,
     "fit_score": 3,
     "gap_score": 3,
-    "scraped_at": "2026-07-26T14:25:46.319Z"
+    "scraped_at": "2026-07-26T14:25:46.319Z",
+    "email_source": "contact-scraper",
+    "contact_name": "to reply to",
+    "socials": {
+      "facebook": "https://developers.facebook.com/docs/meta-pixel/reference"
+    },
+    "deep_enriched_at": "2026-07-26T14:33:32.499Z"
   }
 ]

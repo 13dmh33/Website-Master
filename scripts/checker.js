@@ -126,11 +126,24 @@ function loadUncheckedBriefs() {
   const files = fs.readdirSync(QUEUE_DIR).filter(f => f.endsWith('-brief.json'));
   const briefs = [];
 
+  // Checker's job is diagnosed -> checked. Gate on the lead's LIVE state, not
+  // just brief.checker_approved: a brief with checker_approved=false whose lead
+  // has already moved on (checked / sent / drip / unsubscribed) is stale, and
+  // re-checking it would overwrite the lead's real status back to 'checked' —
+  // this silently un-suppressed an opt-out twice (2026-07-24, -26). Only
+  // process leads that are genuinely awaiting a check.
+  const statusById = {};
+  try {
+    const state = JSON.parse(fs.readFileSync(STATE_PATH, 'utf8'));
+    for (const l of state.queue) statusById[l.lead_id] = l.status;
+  } catch { /* no state -> nothing is 'diagnosed', so nothing gets checked */ }
+
   for (const file of files) {
     try {
       const data = JSON.parse(fs.readFileSync(path.join(QUEUE_DIR, file), 'utf8'));
-      // Only process briefs that haven't been checked yet
-      if (!data.checker_approved && data.checker_flag !== 'human_review') {
+      const leadId = file.replace('-brief.json', '');
+      // Only process briefs that haven't been checked yet AND whose lead is still 'diagnosed'.
+      if (!data.checker_approved && data.checker_flag !== 'human_review' && statusById[leadId] === 'diagnosed') {
         briefs.push({ file, data });
       }
     } catch (e) {

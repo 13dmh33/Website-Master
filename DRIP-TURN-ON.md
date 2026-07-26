@@ -44,8 +44,8 @@ launchd job is `--channel email` only.
 3. **Schedule it** (daily 9am, after the morning pitcher):
    ```
    mkdir -p ~/Website-Master/logs
-   # edit deploy/com.trevo.drip.daily.plist: set <NODE_PATH> (`which node`)
-   # and <REPO_PATH> = /Users/davidhettinger/Website-Master
+   # edit deploy/com.trevo.drip.daily.plist: set __NODE_PATH__ (`which node`)
+   # and __REPO_PATH__ = /Users/davidhettinger/Website-Master
    cp deploy/com.trevo.drip.daily.plist ~/Library/LaunchAgents/
    launchctl load ~/Library/LaunchAgents/com.trevo.drip.daily.plist
    ```

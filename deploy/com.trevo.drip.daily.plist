@@ -9,8 +9,8 @@
   daily_limit is 20/day (config/drip-config.json).
 
   Before loading, replace:
-    <NODE_PATH> -> `which node`   (e.g. /opt/homebrew/bin/node)
-    <REPO_PATH> -> /Users/davidhettinger/Website-Master
+    __NODE_PATH__ -> `which node`   (e.g. /opt/homebrew/bin/node)
+    __REPO_PATH__ -> /Users/davidhettinger/Website-Master
   See DRIP-TURN-ON.md for the verify-then-enable steps. Do a --dry-run first.
 -->
 <plist version="1.0">
@@ -20,15 +20,15 @@
 
     <key>ProgramArguments</key>
     <array>
-        <string><NODE_PATH></string>
-        <string><REPO_PATH>/scripts/drip.js</string>
+        <string>__NODE_PATH__</string>
+        <string>__REPO_PATH__/scripts/drip.js</string>
         <string>--force</string>
         <string>--channel</string>
         <string>email</string>
     </array>
 
     <key>WorkingDirectory</key>
-    <string><REPO_PATH></string>
+    <string>__REPO_PATH__</string>
 
     <!-- 9:00 AM daily — after the 8am pitcher send, so a same-day initial + drip don't collide. -->
     <key>StartCalendarInterval</key>
@@ -43,8 +43,8 @@
     <false/>
 
     <key>StandardOutPath</key>
-    <string><REPO_PATH>/logs/drip-daily.log</string>
+    <string>__REPO_PATH__/logs/drip-daily.log</string>
     <key>StandardErrorPath</key>
-    <string><REPO_PATH>/logs/drip-daily.err.log</string>
+    <string>__REPO_PATH__/logs/drip-daily.err.log</string>
 </dict>
 </plist>

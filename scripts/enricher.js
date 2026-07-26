@@ -77,6 +77,27 @@ function saveConfig(cfg) {
   fs.writeFileSync(CONFIG_PATH, JSON.stringify(cfg, null, 2));
 }
 
+/**
+ * Persist cumulative Apollo hit-rate stats across runs (documented backlog item:
+ * the enricher printed per-run found/no_match/errors but never saved them, so
+ * Apollo's real success rate was invisible over time). Match rate = found /
+ * (found + no_match) — transient API errors are excluded from the denominator.
+ * Pure + exported for testing.
+ */
+function updateEnricherStats(cfg, run) {
+  const s = cfg.stats || { attempted: 0, found: 0, no_match: 0, errors: 0, runs: 0, hit_rate_pct: null };
+  const found = run.found || 0, noMatch = run.noMatch || 0, errors = run.errors || 0;
+  s.attempted += found + noMatch + errors;
+  s.found     += found;
+  s.no_match  += noMatch;
+  s.errors    += errors;
+  s.runs      += 1;
+  const decided = s.found + s.no_match;
+  s.hit_rate_pct = decided > 0 ? parseFloat(((s.found / decided) * 100).toFixed(1)) : null;
+  cfg.stats = s;
+  return s;
+}
+
 function checkAutoRun(cfg) {
   if (args.includes('--force')) return;
   if (!cfg.auto_run) {
@@ -438,6 +459,7 @@ async function main() {
 
   cfg.total_runs++;
   cfg.last_run = new Date().toISOString();
+  const stats = updateEnricherStats(cfg, { found, noMatch, errors });
   saveConfig(cfg);
 
   writeLog('enricher', [
@@ -453,6 +475,7 @@ async function main() {
   console.log(`  Errors:             ${errors}`);
   console.log(`  Briefs upgraded:    ${briefsUpgraded}  (channel sms → email)`);
   console.log(`  Credits used total: ${cfg.credits_used} / ${cfg.monthly_cap_credits}`);
+  console.log(`  Lifetime hit rate:  ${stats.hit_rate_pct === null ? 'n/a' : stats.hit_rate_pct + '%'}  (${stats.found}/${stats.found + stats.no_match} matched over ${stats.runs} run(s))`);
   console.log('─'.repeat(50));
 
   if (found > 0) {
@@ -467,7 +490,12 @@ async function main() {
   }
 }
 
-main().catch(err => {
-  console.error('Unexpected error:', err.message);
-  process.exit(1);
-});
+// Exported for unit tests; only auto-run as a CLI.
+module.exports = { updateEnricherStats };
+
+if (require.main === module) {
+  main().catch(err => {
+    console.error('Unexpected error:', err.message);
+    process.exit(1);
+  });
+}

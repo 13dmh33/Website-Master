@@ -45,8 +45,8 @@ Confirm a digest actually lands in your inbox before step 4.
 
 ```
 mkdir -p ~/missy/job-hunter/logs
-# edit deploy/com.dave.missy.daily.plist: replace <NODE_PATH> (run `which node`)
-# and <MISSY_PATH> with /Users/davidhettinger/missy/job-hunter
+# edit deploy/com.dave.missy.daily.plist: replace __NODE_PATH__ (run `which node`)
+# and __MISSY_PATH__ with /Users/davidhettinger/missy/job-hunter
 cp deploy/com.dave.missy.daily.plist ~/Library/LaunchAgents/
 launchctl load ~/Library/LaunchAgents/com.dave.missy.daily.plist
 ```

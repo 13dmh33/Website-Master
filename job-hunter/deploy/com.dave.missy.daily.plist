@@ -4,8 +4,8 @@
   and emails you the digest. Local + private (never GitHub Actions).
 
   Before loading, replace the two PATH placeholders below:
-    1. <NODE_PATH>   -> output of `which node`   (e.g. /opt/homebrew/bin/node)
-    2. <MISSY_PATH>  -> Missy's permanent home    (e.g. /Users/davidhettinger/missy/job-hunter)
+    1. __NODE_PATH__   -> output of `which node`   (e.g. /opt/homebrew/bin/node)
+    2. __MISSY_PATH__  -> Missy's permanent home    (e.g. /Users/davidhettinger/missy/job-hunter)
   See TURN-ON.md for the full one-time setup.
 -->
 <plist version="1.0">
@@ -15,12 +15,12 @@
 
     <key>ProgramArguments</key>
     <array>
-        <string><NODE_PATH></string>
-        <string><MISSY_PATH>/src/index.js</string>
+        <string>__NODE_PATH__</string>
+        <string>__MISSY_PATH__/src/index.js</string>
     </array>
 
     <key>WorkingDirectory</key>
-    <string><MISSY_PATH></string>
+    <string>__MISSY_PATH__</string>
 
     <!-- 6:00 AM every day. Adjust Hour/Minute to taste (digest lands before your 5-8am block if you drop it to 4:45). -->
     <key>StartCalendarInterval</key>
@@ -35,8 +35,8 @@
     <false/>
 
     <key>StandardOutPath</key>
-    <string><MISSY_PATH>/logs/missy-daily.log</string>
+    <string>__MISSY_PATH__/logs/missy-daily.log</string>
     <key>StandardErrorPath</key>
-    <string><MISSY_PATH>/logs/missy-daily.err.log</string>
+    <string>__MISSY_PATH__/logs/missy-daily.err.log</string>
 </dict>
 </plist>

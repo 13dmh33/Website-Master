@@ -1,0 +1,75 @@
+name: Molly weekly pipeline (Trevo Advisors)
+
+on:
+  schedule:
+    - cron: '0 13 * * 1'  # Monday 6am MDT (UTC-6) = 1pm UTC — same slot as Milly
+  workflow_dispatch:       # manual trigger for testing
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write  # commit rotation counter + content output + evergreen used-state
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install root dependencies (for failure alerting)
+        run: npm install --no-audit --no-fund
+
+      - name: Install dependencies
+        run: cd molly && npm install
+
+      - name: Run researcher
+        run: cd molly && node agents/researcher.js
+        env:
+          SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
+
+      - name: Run generator
+        run: cd molly && node agents/generator.js
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: Run designer
+        run: cd molly && node agents/designer.js
+
+      - name: Run scheduler (review queue only)
+        run: cd molly && node agents/scheduler.js
+        env:
+          FORCE_QUEUE: '1'  # never auto-post — Dave approves via push-queue.js, same posture as Miley
+
+      - name: Commit rotation counter + content output + evergreen used-state
+        run: |
+          git config user.name  "molly-agent"
+          git config user.email "molly@trevoadvisors.com"
+          git add molly/templates/post-formats.json molly/templates/evergreen.json molly/output/ || true
+          git diff --cached --quiet || git commit -m "molly: week content + rotation $(date +%Y-%m-%d)"
+          git push origin main || true
+
+      - name: Upload output as artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: molly-output-${{ github.run_id }}
+          path: molly/output/
+          retention-days: 14
+
+      - name: Alert on failure
+        if: failure()
+        run: node scripts/notify-workflow-failure.js
+        env:
+          WORKFLOW_NAME: "Molly weekly pipeline (Trevo Advisors)"
+          JOB_NAME: ${{ github.job }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          COMMIT_SHA: ${{ github.sha }}
+          ZOHO_EMAIL: ${{ secrets.ZOHO_EMAIL }}
+          ZOHO_APP_PASSWORD: ${{ secrets.ZOHO_APP_PASSWORD }}

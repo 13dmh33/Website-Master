@@ -7,14 +7,18 @@ Advisors. Architectural sibling of Milly (Reeve) and Miley (Techs4Tatas) — sam
 Researcher → Generator → Designer → Scheduler pipeline shape, same file layout
 (`agents/`, `lib/`, `templates/`, `scripts/`, `output/`).
 
-Molly is the only sibling with no `CLAUDE.md` and no GitHub Actions workflow until this
-file — it has been run manually. That gap is deliberate for now, not dropped: see
-"Deferred" below and the reasoning in root `CLAUDE.md`'s session notes. Automating an
-untested content voice just automates unmeasured posting.
+**2026-07-27 update: automated.** GitHub Actions workflows now exist
+(`.github/workflows/molly-weekly-pipeline.yml` + `molly-weekly-analytics.yml`, cloned
+from Milly's proven pattern) and the evergreen fallback bank was rewritten clean — see
+"Known conflicts" below, now resolved, and "Activation checklist" at the bottom for what
+still needs Dave (Buffer token, secrets, merge to `main`). Everything below this point
+that still describes Molly as manual-only is superseded by that.
 
 This file is the authoritative brand-voice and targeting spec, current as of
-2026-07-18. It supersedes `templates/brand-voice.json`'s prior `audience`/`core_pain`
-framing (that file predates this spec and is stale — see "Known conflicts" below).
+2026-07-18 (content pillars, restrictions, targeting — unchanged by the 2026-07-27
+automation work). It supersedes `templates/brand-voice.json`'s prior `audience`/`core_pain`
+framing (that file was brought into line with this spec on 2026-07-18 — see "Known
+conflicts" below).
 
 ---
 
@@ -150,46 +154,52 @@ booking, the account reads as an ad feed and engagement collapses.
 - No hard delivery-time promises. "In as little as two days" is the ceiling, used
   sparingly.
 
-## Approval flow (scoped, not built)
+## Approval flow — built, 2026-07-27
 
-Clone Miley's pipeline exactly: generate → render → Netlify review page → one-tap phone
-approval → post via Meta API. `FORCE_QUEUE=1` as the gate. Nothing posts unapproved.
+Cloned Miley's queue-first pattern exactly: `agents/scheduler.js` runs the
+`lib/brand-validator.js` hard gate on every post — before EITHER the review queue or a
+live Buffer post — then, with `FORCE_QUEUE=1` (the GitHub Actions default) or no Buffer
+token configured, writes each post to `output/queue/` plus a single
+`output/queue/preview-{weekOf}.html` (dark navy/teal, matches the Trevo brand) with
+every rendered image inlined. Dave reviews, then runs `node scripts/push-queue.js` to
+push approved posts to Buffer — which re-checks the gate a second time as defense in
+depth, in case a queue file was ever hand-edited. Nothing posts unapproved.
 
-**One addition specific to Molly — claims check.** Any queued post containing a
-statistic, a delivery-time reference, or a teardown image gets visually flagged on the
-review page so it is reviewed deliberately rather than tapped through. These three
-categories are where the reputational risk lives.
+**The "claims check" this section originally scoped is now just the gate itself** —
+`brand-validator.js` doesn't merely flag a statistic, delivery-time reference, or
+client-result-shaped claim for review, it hard-rejects it before it ever reaches the
+queue. Stricter than the original one-tap-phone-approval design, and simpler: there's no
+separate Netlify review page or Meta API posting path, since Buffer already covers
+scheduled posting once a token exists (see "Activation checklist" below).
 
 ---
 
-## Known conflicts with existing content (found, not yet fixed)
+## Known conflicts with existing content — resolved
 
-`templates/brand-voice.json` and `templates/evergreen.json` predate this spec and
-violate it throughout — flagged here rather than silently rewritten, since fixing this
-is a real content task (verifying real sourced statistics), not a config edit:
+`templates/brand-voice.json` and the original `templates/evergreen.json` predated this
+spec and violated it throughout (unsourced stats, "48 hours" as a headline, two
+fabricated-reading client-result posts with no consent on record, city references,
+one post stating price directly). Fixed in two passes:
 
-- `brand-voice.json`'s `core_pain` field states "3-5 jobs per week" (unsourced) and
-  "closes that gap in 48 hours" (a hard delivery promise, not the sparing "in as little
-  as two days" framing this spec requires).
-- `evergreen.json` reuses the same unsourced "3-5 times a week" figure across at least
-  6 posts (ev bodies referencing "Slide 5," the Denver/Phoenix client-result posts, and
-  both reel scripts) — violates both the sourcing rule and the no-more-than-a-handful
-  reuse rule.
-- Multiple `evergreen.json` posts state "48 hours" as the headline/CTA repeatedly (e.g.
-  "48-hour build," "Live in 48 hours. DM us the word demo.") — violates "never the
-  headline, do not build a campaign around speed."
-- Two posts (the "Denver plumber... 14 new jobs" story and the "Handyman in Phoenix...
-  143 reviews" story) present specific, detailed client results with no indication of a
-  real consenting client — these read as fabricated case studies and violate "no
-  before-and-after client results until there is a real client who has consented."
-- Several posts reference specific cities (Denver, Phoenix) — violates the national,
-  no-city-or-region targeting rule.
-- At least one post states price directly ("$100 and it's live") — violates "never
-  state price."
+- **2026-07-18** (`d516c62`): the violating file was moved to
+  `quarantine/evergreen-prespec.json` rather than deleted (real drafting material, just
+  not postable as-is — see `quarantine/README.md`), and `lib/brand-validator.js` was
+  built as a hard gate wired into both `scheduler.js` and `scripts/push-queue.js` —
+  nothing that fails it reaches Buffer or the review queue, regardless of source.
+  `brand-voice.json`'s `core_pain` field was also brought into line with this spec at
+  the same time.
+- **2026-07-27**: `templates/evergreen.json` was rewritten from scratch — 20 posts (5
+  per format), every one passing `brand-validator.js`, deliberately avoiding hard
+  statistics entirely (qualitative claims only) since this content runs unattended
+  without per-post fact-checking. `lib/store.js`'s `PATHS.evergreen` now points back to
+  the live file. Two related generation-path bugs fixed the same day: `generator.js`'s
+  `trevo_found` prompt was instructing Claude to state the $65/mo price (guaranteed
+  rejection by the gate — removed), and the reel script format's `HOOK`/`BODY`/`CTA`
+  labels tripped the ALL-CAPS check (re-cased to `Hook`/`Body`/`Cta` in both the
+  evergreen content and the live prompt).
 
-Fixing this means regenerating the evergreen content library against this spec's
-content pillars and sourcing rules, not patching individual lines — flagged as a real
-next step, not done in this pass.
+`quarantine/evergreen-prespec.json` is untouched and still exists as raw drafting
+material per its own README — just no longer wired into the live pipeline.
 
 ---
 
@@ -248,6 +258,27 @@ enough posting history to measure — do not treat early analyzer output as sign
 
 ---
 
+## Activation checklist — what's left for Dave
+
+The pipeline runs end-to-end today (verified 2026-07-27: research → generate → design →
+schedule, real Claude calls, zero brand-validator rejections, real images rendered).
+What's still manual:
+
+- [ ] **Buffer classic token + Instagram Business profile ID** — same requirement as
+  Milly/Miley, get a *classic* token from `buffer.com/developers` (OIDC tokens 401).
+  Without it, the pipeline still runs and queues correctly — it just needs
+  `node scripts/push-queue.js` run by hand instead of posting automatically.
+- [ ] **Merge to `main`** — the workflows only trigger from the default branch.
+- [ ] **Add GitHub Actions secrets**: `ANTHROPIC_API_KEY` (required — without it,
+  generation still works via the evergreen bank, but with no live-research or
+  Claude-drafted variety); `BUFFER_ACCESS_TOKEN` + `BUFFER_INSTAGRAM_PROFILE_ID` (for
+  live posting); `SERPAPI_KEY` (optional — evergreen fallback runs every week without
+  it, same as Milly); `INSTAGRAM_ACCESS_TOKEN` + `INSTAGRAM_BUSINESS_ACCOUNT_ID`
+  (analytics only).
+- [ ] Once merged, `.github/workflows/molly-weekly-pipeline.yml` (Monday 6am MT) and
+  `molly-weekly-analytics.yml` (Sunday 10pm MT) activate automatically —
+  `workflow_dispatch` is available for a manual test run before then.
+
 ## File structure
 
 ```
@@ -267,14 +298,18 @@ molly/
     buffer.js
     glossary.js
     ab-tracker.js
+    brand-validator.js    # hard gate — see "Approval flow" above
     instagram-insights.js
     sources.js
   templates/
-    brand-voice.json      # stale — see "Known conflicts" above
+    brand-voice.json      # brought into line with this spec 2026-07-18
     contractor-glossary.json
-    evergreen.json         # stale — see "Known conflicts" above
+    evergreen.json         # rewritten 2026-07-27 — 20 posts, all pass brand-validator.js
     post-formats.json
     sources.json
+  quarantine/
+    evergreen-prespec.json # old violating content, kept as raw drafting material — never read by the live pipeline
+    README.md
   scripts/
     setup.js
     push-queue.js
@@ -283,7 +318,11 @@ molly/
   output/
     briefs/
     content/
+    images/
+    queue/                # review queue + preview-{weekOf}.html
 ```
 
-No GitHub Actions workflow exists yet — see "Deferred" and the note at the top of this
-file for why.
+GitHub Actions: `.github/workflows/molly-weekly-pipeline.yml` +
+`molly-weekly-analytics.yml` at the repo root (not inside `molly/`, matching where
+Milly's and Miley's live) — see "Activation checklist" above for what's needed before
+they run for real.

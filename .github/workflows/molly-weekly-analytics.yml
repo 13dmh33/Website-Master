@@ -1,0 +1,64 @@
+name: Molly weekly analytics (Trevo Advisors)
+
+on:
+  schedule:
+    - cron: '0 4 * * 1'  # Sunday 10pm MDT (UTC-6) = Monday 4am UTC — same slot as Milly/Miley
+  workflow_dispatch:
+
+jobs:
+  run-analytics:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write  # commit brand-voice.json (what_works / top_hashtags)
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install root dependencies (for failure alerting)
+        run: npm install --no-audit --no-fund
+
+      - name: Install dependencies
+        run: cd molly && npm install
+
+      - name: Run analyst
+        run: cd molly && node agents/analyst.js
+        env:
+          ANTHROPIC_API_KEY:             ${{ secrets.ANTHROPIC_API_KEY }}
+          INSTAGRAM_ACCESS_TOKEN:        ${{ secrets.INSTAGRAM_ACCESS_TOKEN }}
+          INSTAGRAM_BUSINESS_ACCOUNT_ID: ${{ secrets.INSTAGRAM_BUSINESS_ACCOUNT_ID }}
+
+      - name: Commit updated brand voice
+        run: |
+          git config user.name  "molly-agent"
+          git config user.email "molly@trevoadvisors.com"
+          git add molly/templates/brand-voice.json molly/output/archive/ || true
+          git diff --cached --quiet || git commit -m "analyst: update brand voice for week of $(date +%Y-%m-%d)"
+          git push origin main || true
+
+      - name: Upload analytics artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: molly-analytics-${{ github.run_id }}
+          path: molly/output/archive/
+          retention-days: 90
+
+      - name: Alert on failure
+        if: failure()
+        run: node scripts/notify-workflow-failure.js
+        env:
+          WORKFLOW_NAME: "Molly weekly analytics (Trevo Advisors)"
+          JOB_NAME: ${{ github.job }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          COMMIT_SHA: ${{ github.sha }}
+          ZOHO_EMAIL: ${{ secrets.ZOHO_EMAIL }}
+          ZOHO_APP_PASSWORD: ${{ secrets.ZOHO_APP_PASSWORD }}

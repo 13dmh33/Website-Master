@@ -18,12 +18,15 @@ function buildVoiceContext(brandVoice, glossaryTerms) {
   const glossCtx = glossary.formatForPrompt(glossaryTerms);
 
   return `Brand: Trevo Advisors (@trevoadvisors)
-Audience: home service contractors (plumbers, electricians, roofers, handymen) who need professional websites
+Audience: home service contractors (plumbers, electricians, roofers, handymen) who need professional websites, nationally — never name a specific city, region, or real business
 Tone: ${tone}
 Casing: ${casing}
 Never use these words: ${avoid}
-Never mention AI, bots, or automation tools — speak about the website and the results it drives
-End posts with "— Trevo" attribution
+Never state a price or dollar figure of any kind — if pricing comes up, that's a DM conversation, not a post
+Never promise a specific delivery time (no "48 hours," "same-day," "next-day," "instant," or similar) — "in as little as two days" is the one allowed phrase, and only sparingly
+Never name the founder — sign off as "— Trevo" only, never "Dave"
+The AI agent (Nora/Atlas/Argus) may be introduced as something that exists, secondary to the website itself — never as the headline, never call it a "bot," never imply it replaces staff
+Any specific number tied to a result (reviews, jobs, customers, leads, calls, minutes, percent) needs a named source and year, or don't use it — never describe a specific business's results without saying the source
 ${glossCtx}`;
 }
 
@@ -90,14 +93,14 @@ Return valid JSON only:
 async function generateTrevoFound(angle, voiceContext) {
   // Rotate between demo site updates and AI agent product updates
   const DEMOS = [
-    { trade: 'plumbing',    url: 'trevoadvisors.com/demos/plumbing/',    features: ['Tap-to-call above the fold', 'Emergency service page', 'Google reviews live', 'Service area map', 'Trust badges — licensed & insured', '48-hour build'] },
-    { trade: 'electrical',  url: 'trevoadvisors.com/demos/electrical/',  features: ['Tap-to-call above the fold', 'Panel upgrade service page', 'Google reviews live', 'Service area map', 'Trust badges — licensed & insured', '48-hour build'] },
-    { trade: 'handyman',    url: 'trevoadvisors.com/demos/handyman/',    features: ['Tap-to-call above the fold', 'Service menu with photos', 'Google reviews live', 'Instant quote request form', 'Trust badges', '48-hour build'] },
+    { trade: 'plumbing',    url: 'trevoadvisors.com/demos/plumbing/',    features: ['Tap-to-call above the fold', 'Emergency service page', 'Google reviews live', 'Service area map', 'Trust badges — licensed & insured', 'Live in as little as two days'] },
+    { trade: 'electrical',  url: 'trevoadvisors.com/demos/electrical/',  features: ['Tap-to-call above the fold', 'Panel upgrade service page', 'Google reviews live', 'Service area map', 'Trust badges — licensed & insured', 'Live in as little as two days'] },
+    { trade: 'handyman',    url: 'trevoadvisors.com/demos/handyman/',    features: ['Tap-to-call above the fold', 'Service menu with photos', 'Google reviews live', 'Instant quote request form', 'Trust badges', 'Live in as little as two days'] },
   ];
   const AGENTS = [
-    { name: 'Nora', tagline: 'AI lead follow-up agent', url: 'trevoadvisors.com/start/', features: ['Texts new leads in under 60 seconds', 'Follows up 3x without you lifting a finger', 'Hands off hot leads with full context', 'Works while you\'re on the job', '$65/mo — no contracts', 'Pairs with any Trevo website'] },
-    { name: 'Atlas', tagline: 'AI lead pipeline manager', url: 'trevoadvisors.com/atlas/', features: ['Scores and sorts leads by close probability', 'Sends personalized follow-up sequences', 'Flags high-value jobs for you', 'Dashboard to see pipeline at a glance', '$65/mo — no contracts', 'Add-on to your Trevo site'] },
-    { name: 'Argus', tagline: 'AI review responder', url: 'trevoadvisors.com/argus/', features: ['Responds to every Google review automatically', 'Flags negative reviews for human review', 'Keeps your profile active for SEO', 'Sounds like you — not a bot', '$65/mo — no contracts', 'Works on any Google Business Profile'] },
+    { name: 'Nora', tagline: 'AI lead follow-up agent', url: 'trevoadvisors.com/start/', features: ['Texts new leads in under a minute', 'Follows up without you lifting a finger', 'Hands off hot leads with full context', 'Works while you\'re on the job', 'Pairs with any Trevo website'] },
+    { name: 'Atlas', tagline: 'AI lead pipeline manager', url: 'trevoadvisors.com/atlas/', features: ['Scores and sorts leads by close probability', 'Sends personalized follow-up sequences', 'Flags high-value jobs for you', 'Dashboard to see pipeline at a glance', 'Add-on to your Trevo site'] },
+    { name: 'Argus', tagline: 'AI review responder', url: 'trevoadvisors.com/argus/', features: ['Responds to every Google review automatically', 'Flags negative reviews for human review', 'Keeps your profile active for SEO', 'Sounds like you, not automated', 'Works on any Google Business Profile'] },
   ];
 
   // Alternate: odd weeks → demo, even weeks → agent
@@ -113,7 +116,7 @@ Write an Instagram product update post for Trevo Advisors introducing ${agent.na
 Requirements:
 - Open with "We just launched ${agent.name}. Here's what it does."
 - List what ${agent.name} does in 4-6 punchy lines (use the features below as a guide)
-- Mention the price: $65/mo, no contracts
+- Never mention price or a dollar figure — if pricing comes up, that's a DM conversation, not a post
 - End with "That's ${agent.name}. — Trevo" followed by "DM us the word demo."
 - 80-120 words total
 - Tone: direct, not salesy
@@ -167,20 +170,20 @@ async function generateReelScript(angle, voiceContext, niche) {
 You are writing a 20-second Instagram reel script for Trevo Advisors.
 
 Niche this week: ${niche}
-${niche === 'results' ? 'Show a contractor before and after getting a website — more calls, more jobs.' : 'Show behind-the-scenes of how Trevo builds a contractor site in 48 hours.'}
+${niche === 'results' ? 'Show a contractor before and after getting a website — steadier calls, without naming a specific outcome or timeframe.' : 'Show behind-the-scenes of how Trevo builds a contractor site.'}
 Hook angle: ${angle.hook}
 
-Format: HOOK (0-2s), BODY (2-14s), CTA (14-20s)
+Format: Hook (0-2s), Body (2-14s), Cta (14-20s) — use exactly this sentence-case labeling, not all-caps
 Include b-roll notes inline in brackets.
 Under 60 spoken words total.
-CTA: "DM us the word demo."
+Cta: "DM us the word demo."
 End with "— Trevo"
 
 Also write the hook line only (max 12 words) for a reel hook image.
 
 Return valid JSON only:
 {
-  "script": "HOOK (0-2s): ...\n[B-roll: ...]\n\nBODY (2-14s): ...\n[B-roll: ...]\n\nCTA (14-20s): ...\n— Trevo",
+  "script": "Hook (0-2s): ...\n[B-roll: ...]\n\nBody (2-14s): ...\n[B-roll: ...]\n\nCta (14-20s): ...\n— Trevo",
   "hookLine": "short hook line for image...",
   "caption": "60-word or less caption for the reel post"
 }`;

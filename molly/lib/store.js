@@ -16,12 +16,10 @@ const PATHS = {
   archive:    path.join(ROOT, 'output', 'archive'),
   brandVoice:  path.join(ROOT, 'templates', 'brand-voice.json'),
   postFormats: path.join(ROOT, 'templates', 'post-formats.json'),
-  // Quarantined 2026-07-18 — violates molly/CLAUDE.md's brand-voice rules
-  // throughout (unsourced stats, hard delivery promises, unconsented client
-  // results, city references). Kept readable here only so nothing that reads
-  // it crashes; brand-validator.js is the hard gate that stops any of this
-  // content from reaching the posting path. See molly/quarantine/README.md.
-  evergreen:   path.join(ROOT, 'quarantine', 'evergreen-prespec.json'),
+  // Rewritten 2026-07-27 against molly/CLAUDE.md's brand-voice spec — see
+  // quarantine/README.md for the old file this replaced and why. Every post
+  // passes lib/brand-validator.js as of the rewrite; keep it that way.
+  evergreen:   path.join(ROOT, 'templates', 'evergreen.json'),
 };
 
 function ensureDir(dir) {
@@ -155,17 +153,30 @@ module.exports = {
     writeJson(PATHS.evergreen, data);
   },
 
-  getUnusedEvergreen(count = 4) {
+  // Picks one post per needed format (default: the 4 generator.js consumes),
+  // not a naive first-N slice — the evergreen bank holds several posts per
+  // format, and generator.js matches angles back to a slot by
+  // suggestedFormat, so a FIFO slice can hand it e.g. four carousel posts
+  // and leave the caption/trevo_found/reel slots empty (silently falling
+  // back to the wrong angle object for that slot). Within each format,
+  // prefers unused posts, oldest-used first once a format runs out of
+  // unused ones.
+  getUnusedEvergreen(formats = ['carousel', 'caption', 'trevo_found', 'reel']) {
     const data = readJson(PATHS.evergreen);
     if (!data || !data.posts) return [];
-    const unused = data.posts.filter(p => !p.used).slice(0, count);
-    if (unused.length < count) {
-      const used = data.posts
-        .filter(p => p.used)
-        .sort((a, b) => new Date(a.lastUsed || 0) - new Date(b.lastUsed || 0));
-      return [...unused, ...used].slice(0, count);
+    if (typeof formats === 'number') formats = ['carousel', 'caption', 'trevo_found', 'reel'];
+
+    const picks = [];
+    for (const format of formats) {
+      const candidates = data.posts.filter(p => p.format === format);
+      if (!candidates.length) continue;
+      const unused = candidates.filter(p => !p.used);
+      const pick = unused.length
+        ? unused[0]
+        : candidates.slice().sort((a, b) => new Date(a.lastUsed || 0) - new Date(b.lastUsed || 0))[0];
+      if (pick) picks.push(pick);
     }
-    return unused;
+    return picks;
   },
 
   markEvergreenUsed(ids) {

@@ -47,8 +47,15 @@
     }
   },
   "weekly_rotation": {
-    "caption_niche_alternation": ["results", "education", "journey"],
-    "reel_niche_alternation": ["results", "journey"],
-    "current_week": 0
+    "caption_niche_alternation": [
+      "results",
+      "education",
+      "journey"
+    ],
+    "reel_niche_alternation": [
+      "results",
+      "journey"
+    ],
+    "current_week": 2
   }
 }

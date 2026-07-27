@@ -41,7 +41,14 @@
         "#strongwomen"
       ],
       "judge": null,
-      "status": "pending"
+      "status": "pending",
+      "video": "/home/user/Website-Master/miley/output/images/2026-07-06/1-MON-reel.mp4",
+      "images": [
+        "/home/user/Website-Master/miley/output/images/2026-07-06/1-MON-reel-frame-01.png",
+        "/home/user/Website-Master/miley/output/images/2026-07-06/1-MON-reel-frame-02.png",
+        "/home/user/Website-Master/miley/output/images/2026-07-06/1-MON-reel-frame-03.png",
+        "/home/user/Website-Master/miley/output/images/2026-07-06/1-MON-reel-frame-04.png"
+      ]
     },
     {
       "slot": "TUE",
@@ -80,7 +87,12 @@
         "#skilledtrades"
       ],
       "judge": null,
-      "status": "pending"
+      "status": "pending",
+      "images": [
+        "/home/user/Website-Master/miley/output/images/2026-07-06/2-TUE-slide-01.png",
+        "/home/user/Website-Master/miley/output/images/2026-07-06/2-TUE-slide-02.png",
+        "/home/user/Website-Master/miley/output/images/2026-07-06/2-TUE-slide-03.png"
+      ]
     },
     {
       "slot": "THU",
@@ -120,7 +132,14 @@
         "#causebrand"
       ],
       "judge": null,
-      "status": "pending"
+      "status": "pending",
+      "video": "/home/user/Website-Master/miley/output/images/2026-07-06/3-THU-reel.mp4",
+      "images": [
+        "/home/user/Website-Master/miley/output/images/2026-07-06/3-THU-reel-frame-01.png",
+        "/home/user/Website-Master/miley/output/images/2026-07-06/3-THU-reel-frame-02.png",
+        "/home/user/Website-Master/miley/output/images/2026-07-06/3-THU-reel-frame-03.png",
+        "/home/user/Website-Master/miley/output/images/2026-07-06/3-THU-reel-frame-04.png"
+      ]
     },
     {
       "slot": "FRI",
@@ -160,7 +179,10 @@
         "#causebrand"
       ],
       "judge": null,
-      "status": "pending"
+      "status": "pending",
+      "images": [
+        "/home/user/Website-Master/miley/output/images/2026-07-06/4-FRI-single_image.png"
+      ]
     },
     {
       "slot": "SAT",
@@ -200,7 +222,10 @@
         "#supportsmallbusiness"
       ],
       "judge": null,
-      "status": "pending"
+      "status": "pending",
+      "images": [
+        "/home/user/Website-Master/miley/output/images/2026-07-06/5-SAT-single_image.png"
+      ]
     },
     {
       "slot": "SUN",
@@ -240,7 +265,10 @@
         "#supportsmallbusiness"
       ],
       "judge": null,
-      "status": "pending"
+      "status": "pending",
+      "images": [
+        "/home/user/Website-Master/miley/output/images/2026-07-06/6-SUN-single_image.png"
+      ]
     }
   ]
 }

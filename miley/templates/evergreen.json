@@ -122,7 +122,7 @@
       "hashtag_set": "product",
       "suggested_visual": "Front + back mockup side by side.",
       "used": true,
-      "lastUsed": "2026-06-25T15:44:05.074Z"
+      "lastUsed": "2026-07-27T03:47:27.689Z"
     },
     {
       "id": "prod-03",
@@ -136,7 +136,7 @@
       "hashtag_set": "product",
       "suggested_visual": "Snapback on a person, outdoor light.",
       "used": true,
-      "lastUsed": "2026-07-02T15:23:42.375Z"
+      "lastUsed": "2026-07-27T03:47:27.689Z"
     },
     {
       "id": "prod-04",
@@ -219,7 +219,7 @@
       "hashtag_set": "mission",
       "suggested_visual": "Pink ribbon woven into brand mark.",
       "used": true,
-      "lastUsed": "2026-07-02T15:23:42.375Z"
+      "lastUsed": "2026-07-27T03:47:27.689Z"
     },
     {
       "id": "mis-02",
@@ -282,7 +282,9 @@
       "cta": "Link in bio.",
       "caption": "Buy the shirt. Fund the fight.\n\nThat's the whole pitch. No catch.\nGood-looking merch that does actual good.\n\n30% of profit straight to breast cancer research.\n\nLink in bio 🩷",
       "hashtag_set": "mission",
-      "suggested_visual": "Big bold statement card."
+      "suggested_visual": "Big bold statement card.",
+      "used": true,
+      "lastUsed": "2026-07-27T03:47:27.689Z"
     },
     {
       "id": "eng-01",
@@ -319,7 +321,9 @@
       "cta": "Tag her below 👇",
       "caption": "Tag a tradeswoman who deserves a shoutout today.\n\nThe apprentice killing it. The boss lady. The one who taught you.\nGive her the credit. We'll amplify it.\n\n30% of every profit funds breast cancer research.\n\nTag her below 👇",
       "hashtag_set": "engagement",
-      "suggested_visual": "Spotlight / shoutout card."
+      "suggested_visual": "Spotlight / shoutout card.",
+      "used": true,
+      "lastUsed": "2026-07-27T03:47:27.689Z"
     },
     {
       "id": "eng-04",
@@ -439,7 +443,9 @@
       "cta": "Save this. Read it before the next callout.",
       "caption": "Skill doesn't care who's holding the tool.\n\nNot your size. Not your nails. Not your last name.\nJust the work. And the work speaks for you.\n\n30% of profit funds breast cancer research.\n\nSave this. Read it before the next callout 🔧",
       "hashtag_set": "motivational",
-      "suggested_visual": "Hand-on-tool silhouette."
+      "suggested_visual": "Hand-on-tool silhouette.",
+      "used": true,
+      "lastUsed": "2026-07-27T03:47:27.689Z"
     },
     {
       "id": "mot-07",

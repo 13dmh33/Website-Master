@@ -1,0 +1,52 @@
+{
+  "_purpose": "Date-specific observances relevant to home service contractors that the Researcher/Generator check each week via lib/calendar.js + lib/planner.js. Molly has no seasonal campaign mode (no September ramp / October daily cadence like Miley) — every matching entry becomes extra angle context folded into that week's prompts, never a format/slot override, since Molly's 4-post schedule is fixed.",
+  "_rule_types": {
+    "nth_weekday_of_month": "{ month: 1-12, weekday: 'SUN'..'SAT', n: 1-5 } — e.g. n:1, weekday:'WED', month:5 = first Wednesday in May.",
+    "first_full_week_of_month": "{ month: 1-12 } — the first Mon-Sun week fully contained in that month.",
+    "monthly_day": "{ day: 1-28 } — fires every month on that calendar day.",
+    "explicit_range": "{ start: 'YYYY-MM-DD', end: 'YYYY-MM-DD' } — hardcoded for a single year. Source-announced dates move yearly — re-verify and update before each occurrence; see 'reverify_note'."
+  },
+  "entries": [
+    {
+      "id": "skilled-trades-day",
+      "name": "National Skilled Trades Day",
+      "rule": { "type": "nth_weekday_of_month", "month": 5, "weekday": "WED", "n": 1 },
+      "angle": "National Skilled Trades Day (first Wednesday in May) — a built-in excuse to talk up the trades and the people in them. Good day for a pride/education angle, not a sales push.",
+      "source": "National Day Calendar (confirmed annual: first Wednesday in May)",
+      "priority": 8
+    },
+    {
+      "id": "small-business-week",
+      "name": "National Small Business Week",
+      "rule": { "type": "first_full_week_of_month", "month": 5 },
+      "angle": "National Small Business Week — most contractors ARE the small business it's honoring. Good angle for the caption or carousel slot: what it actually takes to run the business side of a trade, not just do the work.",
+      "source": "U.S. Small Business Administration (confirmed annual: first full week of May)",
+      "priority": 7
+    },
+    {
+      "id": "new-year-planning",
+      "name": "New year / new season planning window",
+      "rule": { "type": "explicit_range", "start": "2026-01-02", "end": "2026-01-15" },
+      "angle": "Early January — contractors are planning the year's marketing budget and slow-season projects. Good window for an education angle about getting found online before the busy season starts.",
+      "source": "Seasonal — contractor booking cycles slow in winter across most trades except HVAC (excluded)",
+      "reverify_note": "Hardcoded for 2026 only — shift the date range forward each year.",
+      "priority": 6
+    },
+    {
+      "id": "spring-season-kickoff",
+      "name": "Spring home-improvement season kickoff",
+      "rule": { "type": "nth_weekday_of_month", "month": 3, "weekday": "MON", "n": 1 },
+      "angle": "First Monday in March — homeowners start planning spring projects and searching for contractors again after the winter lull. Good angle for a results/education post about being findable when search volume picks up.",
+      "source": "Seasonal — general home-improvement search-volume pattern, no specific stat cited",
+      "priority": 5
+    },
+    {
+      "id": "monthly-review-reminder",
+      "name": "Monthly online-presence check-in",
+      "rule": { "type": "monthly_day", "day": 1 },
+      "angle": "The 1st of the month is a natural low-key reminder day: a gentle nudge to check how your business actually looks to someone searching for you right now (Google listing, reviews, whether you even have a site).",
+      "source": "General practice — no statistic attached, framed as a habit prompt not a claim",
+      "priority": 4
+    }
+  ]
+}

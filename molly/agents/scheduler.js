@@ -73,8 +73,12 @@ function buildPostObjects(content, schedule) {
     },
     {
       format:      'reel',
-      caption:     posts.reel.caption || posts.reel.script,
+      caption:     posts.reel.caption || posts.reel.hookLine,
       images:      (imagePaths && imagePaths.reel) || [],
+      video:       posts.reel.video || null,
+      hook:        posts.reel.hook,
+      body:        posts.reel.body,
+      cta:         posts.reel.cta,
       scheduleDay: DAYS[3],
     },
   ];
@@ -83,6 +87,10 @@ function buildPostObjects(content, schedule) {
     weekOf,
     format:       def.format,
     images:       def.images,
+    video:        def.video || null,
+    hook:         def.hook,
+    body:         def.body,
+    cta:          def.cta,
     caption:      def.caption,
     scheduledFor: nextOccurrence(def.scheduleDay, schedule[def.scheduleDay] || '09:00'),
     status:       'pending',
@@ -127,6 +135,7 @@ async function main() {
       try {
         const result = await buffer.schedulePost({
           imagePaths:  post.images,
+          videoPath:   post.video,
           caption:     post.caption,
           scheduledAt: post.scheduledFor,
         });
@@ -178,6 +187,7 @@ async function generatePreview(postObjects, weekOf) {
     .post h2  { color: #00C8AF; margin-top: 0; font-size: 1rem; text-transform: uppercase; letter-spacing: 0.05em; }
     .post .time { color: #8BA8C4; font-size: 0.85rem; margin-bottom: 1rem; }
     .post img   { max-width: 100%; border-radius: 8px; display: block; margin-bottom: 1rem; }
+    .post video.reel { width: 280px; max-width: 100%; border-radius: 12px; display: block; margin-bottom: .75rem; background: #000; border: 1px solid #1e293b; }
     .post pre   { white-space: pre-wrap; font-family: inherit; font-size: 0.9rem; line-height: 1.6; color: #cbd5e1; }
   </style>
 </head>
@@ -188,6 +198,11 @@ async function generatePreview(postObjects, weekOf) {
 
   for (const post of postObjects) {
     const label     = FORMAT_LABELS[post.format] || post.format;
+    let videoHtml   = '';
+    if (post.video && fs.existsSync(post.video)) {
+      const rel = path.relative(queueDir, post.video).split(path.sep).join('/');
+      videoHtml = `<video class="reel" controls muted loop playsinline preload="metadata" src="${escapeHtml(rel)}"></video>`;
+    }
     let imageHtml   = '';
     if (post.images && post.images.length) {
       for (const imgPath of post.images) {
@@ -201,7 +216,8 @@ async function generatePreview(postObjects, weekOf) {
   <div class="post">
     <h2>${label}</h2>
     <div class="time">Scheduled for: ${post.scheduledFor}</div>
-    ${imageHtml}
+    ${videoHtml}
+    ${videoHtml ? '' : imageHtml}
     <pre>${escapeHtml(post.caption)}</pre>
   </div>`;
   }

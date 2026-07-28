@@ -10,12 +10,21 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') }
 const claude   = require('../lib/claude');
 const store    = require('../lib/store');
 const glossary = require('../lib/glossary');
+const planner  = require('../lib/planner');
 
-function buildVoiceContext(brandVoice, glossaryTerms) {
+function buildVoiceContext(brandVoice, glossaryTerms, calendarContext) {
   const tone     = brandVoice?.tone || 'direct, results-focused, credible';
   const avoid    = (brandVoice?.avoid_words || []).join(', ');
   const casing   = brandVoice?.casing || 'sentence case always';
   const glossCtx = glossary.formatForPrompt(glossaryTerms);
+
+  let calendarCtx = '';
+  if (calendarContext?.primary) {
+    calendarCtx = `\nThis week's calendar context: ${calendarContext.primary.angle} — weave this in naturally where it fits, don't force it into every post.`;
+  }
+  if (calendarContext?.supplements?.length) {
+    calendarCtx += `\nAdditional context available this week: ${calendarContext.supplements.map(e => e.angle).join(' | ')}`;
+  }
 
   return `Brand: Trevo Advisors (@trevoadvisors)
 Audience: home service contractors (plumbers, electricians, roofers, handymen) who need professional websites, nationally — never name a specific city, region, or real business
@@ -27,7 +36,7 @@ Never promise a specific delivery time (no "48 hours," "same-day," "next-day," "
 Never name the founder — sign off as "— Trevo" only, never "Dave"
 The AI agent (Nora/Atlas/Argus) may be introduced as something that exists, secondary to the website itself — never as the headline, never call it a "bot," never imply it replaces staff
 Any specific number tied to a result (reviews, jobs, customers, leads, calls, minutes, percent) needs a named source and year, or don't use it — never describe a specific business's results without saying the source
-${glossCtx}`;
+${glossCtx}${calendarCtx}`;
 }
 
 async function generateCarousel(angle, voiceContext) {
@@ -90,25 +99,11 @@ Return valid JSON only:
   return claude.parseJson(raw);
 }
 
-async function generateTrevoFound(angle, voiceContext) {
-  // Rotate between demo site updates and AI agent product updates
-  const DEMOS = [
-    { trade: 'plumbing',    url: 'trevoadvisors.com/demos/plumbing/',    features: ['Tap-to-call above the fold', 'Emergency service page', 'Google reviews live', 'Service area map', 'Trust badges — licensed & insured', 'Live in as little as two days'] },
-    { trade: 'electrical',  url: 'trevoadvisors.com/demos/electrical/',  features: ['Tap-to-call above the fold', 'Panel upgrade service page', 'Google reviews live', 'Service area map', 'Trust badges — licensed & insured', 'Live in as little as two days'] },
-    { trade: 'handyman',    url: 'trevoadvisors.com/demos/handyman/',    features: ['Tap-to-call above the fold', 'Service menu with photos', 'Google reviews live', 'Instant quote request form', 'Trust badges', 'Live in as little as two days'] },
-  ];
-  const AGENTS = [
-    { name: 'Nora', tagline: 'AI lead follow-up agent', url: 'trevoadvisors.com/start/', features: ['Texts new leads in under a minute', 'Follows up without you lifting a finger', 'Hands off hot leads with full context', 'Works while you\'re on the job', 'Pairs with any Trevo website'] },
-    { name: 'Atlas', tagline: 'AI lead pipeline manager', url: 'trevoadvisors.com/atlas/', features: ['Scores and sorts leads by close probability', 'Sends personalized follow-up sequences', 'Flags high-value jobs for you', 'Dashboard to see pipeline at a glance', 'Add-on to your Trevo site'] },
-    { name: 'Argus', tagline: 'AI review responder', url: 'trevoadvisors.com/argus/', features: ['Responds to every Google review automatically', 'Flags negative reviews for human review', 'Keeps your profile active for SEO', 'Sounds like you, not automated', 'Works on any Google Business Profile'] },
-  ];
-
-  // Alternate: odd weeks → demo, even weeks → agent
-  const weekNum = Math.floor(Date.now() / (7 * 24 * 60 * 60 * 1000));
-  const useAgent = weekNum % 2 === 0;
-
-  if (useAgent) {
-    const agent = AGENTS[weekNum % AGENTS.length];
+async function generateTrevoFound(angle, voiceContext, trevoFound) {
+  // Demo-vs-agent rotation + which item now resolved once by lib/planner.js
+  // (buildWeekPlan) so researcher/generator/designer agree on the same pick.
+  if (trevoFound.kind === 'agent') {
+    const agent = trevoFound.item;
     const prompt = `${voiceContext}
 
 Write an Instagram product update post for Trevo Advisors introducing ${agent.name} — ${agent.tagline}.
@@ -135,7 +130,7 @@ Return valid JSON only:
     const result = claude.parseJson(raw);
     return { ...result, type: 'agent', name: agent.name, tagline: agent.tagline, url: agent.url, features: agent.features };
   } else {
-    const demo  = DEMOS[weekNum % DEMOS.length];
+    const demo = trevoFound.item;
     const prompt = `${voiceContext}
 
 Write an Instagram post showing off Trevo's ${demo.trade} contractor demo website.
@@ -164,31 +159,37 @@ Return valid JSON only:
   }
 }
 
+// Reel content is three short ON-SCREEN lines (hook/body/cta) rather than a
+// timestamped voiceover script — lib/reel.js turns these three lines into
+// beats and times each one by read length, then lib/canvas-render.js's
+// renderReelFrame/renderReelWordFrame render them as the actual reel frames
+// (card or kinetic style, per the week's planner.reelStyle). `caption` is the
+// separate IG caption text — never the on-screen text.
 async function generateReelScript(angle, voiceContext, niche) {
   const prompt = `${voiceContext}
 
-You are writing a 20-second Instagram reel script for Trevo Advisors.
+You are writing a 3-beat Instagram reel for Trevo Advisors: hook, body, cta — each beat is a SHORT line of ON-SCREEN text (not spoken/voiceover), max ~10 words per beat.
 
 Niche this week: ${niche}
 ${niche === 'results' ? 'Show a contractor before and after getting a website — steadier calls, without naming a specific outcome or timeframe.' : 'Show behind-the-scenes of how Trevo builds a contractor site.'}
 Hook angle: ${angle.hook}
 
-Format: Hook (0-2s), Body (2-14s), Cta (14-20s) — use exactly this sentence-case labeling, not all-caps
-Include b-roll notes inline in brackets.
-Under 60 spoken words total.
-Cta: "DM us the word demo."
-End with "— Trevo"
-
-Also write the hook line only (max 12 words) for a reel hook image.
+Requirements:
+- hook: the on-screen line for beat 1 — a pattern interrupt, short
+- body: the on-screen line for beat 2 — one idea, short
+- cta: the on-screen line for beat 3 — always ends "— Trevo" (e.g. "DM us the word demo. — Trevo")
+- One word per beat may be wrapped in *asterisks* to mark it as the emphasized word (optional, at most one per beat)
+- caption: a separate 60-word-or-less Instagram caption for the post (full sentences, not the on-screen lines verbatim)
 
 Return valid JSON only:
 {
-  "script": "Hook (0-2s): ...\n[B-roll: ...]\n\nBody (2-14s): ...\n[B-roll: ...]\n\nCta (14-20s): ...\n— Trevo",
-  "hookLine": "short hook line for image...",
-  "caption": "60-word or less caption for the reel post"
+  "hook": "short on-screen line for beat 1...",
+  "body": "short on-screen line for beat 2...",
+  "cta": "short on-screen line for beat 3, ending — Trevo",
+  "caption": "60-word or less caption for the reel post..."
 }`;
 
-  const raw = await claude.call({ prompt, maxTokens: 700 });
+  const raw = await claude.call({ prompt, maxTokens: 500 });
   return claude.parseJson(raw);
 }
 
@@ -200,13 +201,15 @@ async function main() {
   }
 
   const brandVoice    = store.getBrandVoice() || {};
-  const { caption: captionNiche, reel: reelNiche, weekNumber } = store.getWeekNiches();
+  const plan          = planner.buildWeekPlan();
+  const { captionNiche, reelNiche, weekNumber, reelStyle, calendarContext } = plan;
   const glossaryTerms = glossary.getWeeklyTerms(3);
 
   console.log(`Generator running for week of ${brief.weekOf}.`);
-  console.log(`Caption niche: ${captionNiche} | Reel niche: ${reelNiche} | Week rotation: ${weekNumber}`);
+  console.log(`Caption niche: ${captionNiche} | Reel niche: ${reelNiche} | Reel style: ${reelStyle} | Week rotation: ${weekNumber}`);
+  if (calendarContext.primary) console.log(`Calendar context: ${calendarContext.primary.name}`);
 
-  const voiceContext = buildVoiceContext(brandVoice, glossaryTerms);
+  const voiceContext = buildVoiceContext(brandVoice, glossaryTerms, calendarContext);
   const angles       = brief.angles || [];
 
   // use prewritten evergreen content if available (researcher set it on evergreen fallback)
@@ -260,20 +263,25 @@ async function main() {
       hookLine: trevoFoundAngle.hook,
     };
   } else {
-    posts.trevo_found = await generateTrevoFound(trevoFoundAngle, voiceContext);
+    posts.trevo_found = await generateTrevoFound(trevoFoundAngle, voiceContext, plan.trevoFound);
   }
   console.log('Trevo found done.');
 
-  // 4. reel
+  // 4. reel — hook/body/cta are the three on-screen beats lib/reel.js turns
+  // into the actual .mp4 (see generateReelScript); caption is separate IG text.
   console.log('Generating reel script...');
   if (reelAngle.prewrittenContent) {
+    const pc = reelAngle.prewrittenContent;
     posts.reel = {
-      script:   reelAngle.prewrittenContent.body,
-      hookLine: reelAngle.hook,
-      caption:  reelAngle.prewrittenContent.body.split('\n')[0] || reelAngle.hook,
+      hook:     pc.hook || reelAngle.hook,
+      body:     pc.body,
+      cta:      pc.cta || 'DM us the word demo. — Trevo',
+      hookLine: pc.hook || reelAngle.hook,
+      caption:  pc.caption || pc.body,
     };
   } else {
     posts.reel = await generateReelScript(reelAngle, voiceContext, reelNiche);
+    posts.reel.hookLine = posts.reel.hook;
   }
   console.log('Reel done.');
 
@@ -282,6 +290,7 @@ async function main() {
     generatedAt:  new Date().toISOString(),
     researchMode: brief.researchMode,
     niches:       { caption: captionNiche, reel: reelNiche },
+    reelStyle,
     posts,
     glossaryTerms: glossaryTerms.map(t => t.term),
   };

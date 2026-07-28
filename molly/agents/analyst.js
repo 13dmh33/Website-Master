@@ -10,6 +10,7 @@ const insights  = require('../lib/instagram-insights');
 const store     = require('../lib/store');
 const claude    = require('../lib/claude');
 const abTracker = require('../lib/ab-tracker');
+const sentiment = require('../lib/sentiment');
 
 function weekStartDate() {
   const now  = new Date();
@@ -72,12 +73,48 @@ Return as JSON:
   }
 }
 
+// sentiment mining: classify exported comments/DMs and feed aggregated sentiment
+// back into brand-voice.json. Runs regardless of whether Instagram insights are
+// configured (manual-export path). No-ops gracefully if no export exists or no
+// API key is set.
+async function runSentimentMining() {
+  const data = store.getComments();
+  if (!data || !data.comments || !data.comments.length) return null;
+
+  if (!process.env.ANTHROPIC_API_KEY) {
+    console.log(`\nFound ${data.comments.length} exported comments but no ANTHROPIC_API_KEY — skipping sentiment classification.`);
+    return null;
+  }
+
+  console.log(`\nClassifying ${data.comments.length} exported comments/DMs...`);
+  try {
+    const classified = await sentiment.classifyComments(data.comments);
+    const summary = sentiment.summarize(classified);
+    console.log(`  Sentiment: ${summary.bySentiment.positive} positive / ${summary.bySentiment.neutral} neutral / ${summary.bySentiment.negative} negative`);
+    return { weekOf: data.weekOf || null, ...summary };
+  } catch (err) {
+    console.warn(`Sentiment classification failed: ${err.message}`);
+    return null;
+  }
+}
+
 async function main() {
   const weekOf = weekStartDate();
 
+  // sentiment mining runs regardless of IG token — manual export path.
+  const sentimentSummary = await runSentimentMining();
+  if (sentimentSummary) {
+    store.updateBrandVoice({ sentiment_signal: sentimentSummary });
+  }
+
   if (!insights.isConfigured()) {
-    console.log('Instagram insights not configured — skipping analytics this week.');
-    console.log('To enable: add INSTAGRAM_ACCESS_TOKEN and INSTAGRAM_BUSINESS_ACCOUNT_ID to .env');
+    if (sentimentSummary) {
+      store.saveAnalytics({ weekOf, generatedAt: new Date().toISOString(), sentiment: sentimentSummary });
+      console.log('\nInstagram insights not configured — saved sentiment signal only.');
+    } else {
+      console.log('Instagram insights not configured and no comment export — nothing to analyze this week.');
+    }
+    console.log('To enable engagement analytics: add INSTAGRAM_ACCESS_TOKEN and INSTAGRAM_BUSINESS_ACCOUNT_ID to .env');
     process.exit(0);
   }
 
@@ -149,6 +186,7 @@ async function main() {
       permalink:      topPerformer.permalink,
     },
     highSignalCount: highSignalPosts.length,
+    sentiment:       sentimentSummary || null,
     posts:           enriched,
   };
 

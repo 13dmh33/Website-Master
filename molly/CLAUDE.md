@@ -301,12 +301,17 @@ molly/
     brand-validator.js    # hard gate — see "Approval flow" above
     instagram-insights.js
     sources.js
+    reel.js               # 2026-07-28 — reel .mp4 assembly, ported unchanged from Miley
+    planner.js             # 2026-07-28 — weekly rotation single-source-of-truth
+    calendar.js             # 2026-07-28 — date-specific observance matching
+    sentiment.js             # 2026-07-28 — comment/DM sentiment classification
   templates/
     brand-voice.json      # brought into line with this spec 2026-07-18
     contractor-glossary.json
-    evergreen.json         # rewritten 2026-07-27 — 20 posts, all pass brand-validator.js
+    evergreen.json         # rewritten 2026-07-27 — 20 posts, all pass brand-validator.js; reel posts restructured 2026-07-28 (hook/body/cta beats, see Reels below)
     post-formats.json
     sources.json
+    calendar.json          # 2026-07-28 — contractor-relevant observances (see Reels/planner section below)
   quarantine/
     evergreen-prespec.json # old violating content, kept as raw drafting material — never read by the live pipeline
     README.md
@@ -315,14 +320,73 @@ molly/
     push-queue.js
     test-pipeline.js
     generate-evergreen.js
+  docs/
+    reels.md               # 2026-07-28 — reels engine reference
+    review-workflow.md     # 2026-07-28 — weekly review routine
+  test/
+    brand-validator.test.js
+    reel.test.js            # 2026-07-28
+    canvas-render.test.js   # 2026-07-28
+    planner.test.js         # 2026-07-28
+    calendar.test.js        # 2026-07-28
+    sentiment.test.js       # 2026-07-28
   output/
     briefs/
     content/
     images/
     queue/                # review queue + preview-{weekOf}.html
+    comments/               # optional — drop latest.json here for sentiment mining
 ```
 
 GitHub Actions: `.github/workflows/molly-weekly-pipeline.yml` +
 `molly-weekly-analytics.yml` at the repo root (not inside `molly/`, matching where
 Milly's and Miley's live) — see "Activation checklist" above for what's needed before
 they run for real.
+
+---
+
+## Reels, planner, calendar, sentiment (2026-07-28)
+
+Ported from Miley (Techs4Tatas), whose engine had built out further than Molly's.
+Full reels detail: `docs/reels.md`. Summary of what changed:
+
+- **Real reel videos.** The Sunday reel slot used to render a single static
+  "reel hook" thumbnail (`renderReelHook`, still exported for compatibility but
+  no longer called by `designer.js`). It now renders an actual vertical
+  1080×1920 `.mp4` via `lib/reel.js` (ported unchanged from Miley — brand-
+  agnostic) + new reel-frame renderers in `lib/canvas-render.js`
+  (`renderReelFrame`, `renderReelWordFrame`, `tokenizeEmphasis`) using Trevo's
+  navy/teal brand system. Two styles rotate weekly (`card` beat-cards,
+  `kinetic_karaoke`/`kinetic_punch` word-by-word), silent by design, $0
+  marginal cost via the bundled static ffmpeg (`@ffmpeg-installer/ffmpeg`).
+  `lib/buffer.js` gained `uploadVideo` so a rendered reel actually posts as a
+  video (falls back to an image post if upload fails).
+- **Reel content shape changed.** `posts.reel` is now three short ON-SCREEN
+  lines — `hook`/`body`/`cta` — instead of a timestamped "Hook (0-2s) / Body
+  (2-14s) / Cta (14-20s)" voiceover script. `caption` is the separate IG
+  caption text. `agents/generator.js`'s `generateReelScript` and
+  `templates/evergreen.json`'s 5 reel posts were rewritten to this shape (all
+  re-verified against `brand-validator.js`).
+- **`lib/planner.js`** centralizes weekly rotation decisions that used to be
+  scattered inline in `generator.js`: week number, caption/reel niche
+  (wraps `store.getWeekNiches()`), the `trevo_found` demo-vs-agent rotation
+  (moved `DEMOS`/`AGENTS` here from `generator.js`), the new reel visual-style
+  rotation, and calendar context resolution. `generator.js`/`designer.js` call
+  `planner.buildWeekPlan()` once per run instead of recomputing rotations
+  independently.
+- **`lib/calendar.js` + `templates/calendar.json`** — date-specific
+  observances (National Skilled Trades Day, National Small Business Week,
+  seasonal planning windows, a monthly reminder) that the planner folds into
+  that week's prompts as extra angle context. Molly has no seasonal campaign
+  mode (no September/October equivalent), so — unlike Miley, where a
+  high-priority entry can override a slot's format — every active entry here
+  just supplements the week's voice-context prompt; the fixed
+  carousel/caption/trevo_found/reel schedule never changes.
+- **`lib/sentiment.js`** — classifies exported comments/DMs
+  (`output/comments/latest.json`) via a cheap Claude Haiku pass, wired into
+  `agents/analyst.js`'s `runSentimentMining()` (runs regardless of whether
+  Instagram insights are configured; no-ops gracefully with no export or no
+  `ANTHROPIC_API_KEY`). Feeds `brand-voice.json`'s `sentiment_signal`.
+
+Tests: `test/reel.test.js`, `test/canvas-render.test.js`, `test/planner.test.js`,
+`test/calendar.test.js`, `test/sentiment.test.js` (47 total passing).

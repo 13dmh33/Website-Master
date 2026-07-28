@@ -14,8 +14,10 @@ const PATHS = {
   images:     path.join(ROOT, 'output', 'images'),
   queue:      path.join(ROOT, 'output', 'queue'),
   archive:    path.join(ROOT, 'output', 'archive'),
+  comments:   path.join(ROOT, 'output', 'comments'),
   brandVoice:  path.join(ROOT, 'templates', 'brand-voice.json'),
   postFormats: path.join(ROOT, 'templates', 'post-formats.json'),
+  calendar:    path.join(ROOT, 'templates', 'calendar.json'),
   // Rewritten 2026-07-27 against molly/CLAUDE.md's brand-voice spec — see
   // quarantine/README.md for the old file this replaced and why. Every post
   // passes lib/brand-validator.js as of the rewrite; keep it that way.
@@ -147,6 +149,18 @@ module.exports = {
 
   getEvergreen() {
     return readJson(PATHS.evergreen);
+  },
+
+  getCalendar() {
+    return readJson(PATHS.calendar);
+  },
+
+  // ─── comments / DM sentiment ingestion ─────────────────────────────────────
+  // Drop a JSON file at output/comments/latest.json shaped like:
+  //   { "weekOf": "...", "comments": [ { "text": "...", "postId": "..." }, ... ] }
+  getComments() {
+    const latest = path.join(PATHS.comments, 'latest.json');
+    return readJson(latest);
   },
 
   saveEvergreen(data) {

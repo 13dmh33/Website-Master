@@ -16,6 +16,8 @@ const os    = require('os');
 const DESIGN_CONFIG = {
   width:         1080,
   height:        1080,
+  reelWidth:     1080, // vertical 9:16 reel frame
+  reelHeight:    1920,
   overlay:       'rgba(10, 18, 40, 0.65)',  // Trevo navy overlay
   headline:      '#FFFFFF',
   body:          '#E2E8F0',
@@ -23,6 +25,7 @@ const DESIGN_CONFIG = {
   muted:         'rgba(255,255,255,0.45)',
   fontFamily:    'Arial',
   headlineSize:  56,
+  reelSize:      92, // on-screen reel text — big, phone-legible in motion
   bodySize:      32,
   brandSize:     20,
   padding:       72,
@@ -399,6 +402,223 @@ async function renderReelHook(hookLine, niche = 'reel') {
   return canvas.toBuffer('png');
 }
 
+// ── reel frame (vertical 1080x1920) ──────────────────────────────────────────
+// one beat of a Reel: big centered ON-SCREEN text over the brand background.
+// Frames are composited into an .mp4 by lib/reel.js (which adds the moving film
+// grain + vignette grade). To read as a real Reel, not a carousel slide, this:
+//   • shows a Stories-style segmented progress bar (never an "N/M" counter)
+//   • highlights the punch word (marked *word* in the script) in the accent color
+//   • bakes a soft vignette for depth
+//   • keeps text inside a safe band clear of Instagram's action rail / caption
+// Uses the same niche-keyed background as the other Trevo renderers
+// (drawBackground/drawGradientBackground) rather than a separate palette
+// system — Molly's cards are always dark-navy branded, so headline/accent stay
+// fixed (DESIGN_CONFIG.headline / .accent) regardless of which niche background
+// is behind them, same as every other renderer in this file.
+
+// tokenize text into words, marking any span wrapped in *asterisks* as emphasized
+function tokenizeEmphasis(text) {
+  const tokens = [];
+  const parts = (text || '').split(/(\*[^*]+\*)/g).filter(Boolean);
+  for (const part of parts) {
+    const em = /^\*[^*]+\*$/.test(part);
+    const clean = em ? part.slice(1, -1) : part;
+    for (const w of clean.split(/\s+/).filter(Boolean)) tokens.push({ word: w, em });
+  }
+  return tokens;
+}
+
+// wrap emphasis tokens into lines that fit maxWidth at the current ctx.font
+function wrapTokens(ctx, tokens, maxWidth) {
+  const space = ctx.measureText(' ').width;
+  const lines = [];
+  let line = [], lineW = 0;
+  for (const tk of tokens) {
+    const w = ctx.measureText(tk.word).width;
+    const needed = line.length ? space + w : w;
+    if (lineW + needed > maxWidth && line.length) { lines.push(line); line = []; lineW = 0; }
+    lineW += line.length ? space + w : w;
+    line.push(tk);
+  }
+  if (line.length) lines.push(line);
+  return lines;
+}
+
+// draw one wrapped line centered on cx, coloring emphasized tokens with accent
+function drawTokenLine(ctx, lineTokens, cx, y, baseColor, accentColor) {
+  const space  = ctx.measureText(' ').width;
+  const widths = lineTokens.map(tk => ctx.measureText(tk.word).width);
+  const total  = widths.reduce((a, b) => a + b, 0) + space * (lineTokens.length - 1);
+  let x = cx - total / 2;
+  ctx.textAlign = 'left';
+  lineTokens.forEach((tk, i) => {
+    ctx.fillStyle = tk.em ? accentColor : baseColor;
+    ctx.fillText(tk.word, x, y);
+    x += widths[i] + space;
+  });
+}
+
+// soft radial vignette for filmic depth (kept subtle so text stays legible)
+function drawVignette(ctx, w, h) {
+  const g = ctx.createRadialGradient(w / 2, h / 2, h * 0.24, w / 2, h / 2, h * 0.62);
+  g.addColorStop(0, 'rgba(0,0,0,0)');
+  g.addColorStop(1, 'rgba(0,0,0,0.30)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, w, h);
+}
+
+// Stories-style segmented progress bar across the top; segments up to the
+// current beat are filled with the accent color.
+function drawProgressBar(ctx, w, beatNum, total, accent, padding) {
+  const y = 30, h = 7, gap = 8, side = padding;
+  const segW = (w - side * 2 - gap * Math.max(0, total - 1)) / Math.max(1, total);
+  for (let i = 0; i < total; i++) {
+    ctx.fillStyle = i < beatNum ? accent : 'rgba(255,255,255,0.30)';
+    ctx.fillRect(side + i * (segW + gap), y, segW, h);
+  }
+}
+
+async function renderReelFrame({ text, beatNum, total, niche = 'reel', isCta }) {
+  const width = DESIGN_CONFIG.reelWidth, height = DESIGN_CONFIG.reelHeight, padding = DESIGN_CONFIG.padding;
+  const accent = DESIGN_CONFIG.accent;
+  const headlineColor = DESIGN_CONFIG.headline;
+  const canvas = new Canvas(width, height);
+  const ctx    = canvas.getContext('2d');
+
+  await drawBackground(ctx, width, height, niche);
+  drawVignette(ctx, width, height);
+  renderTrevoBrand(ctx, width);
+  if (total > 1) drawProgressBar(ctx, width, beatNum, total, accent, padding);
+
+  // auto-fit the on-screen text: shrink until it fits ~5 lines in the safe band.
+  // Right margin is a touch wider to keep text clear of IG's action rail.
+  const maxTextWidth = width - padding * 2 - 40;
+  const maxLines = 5;
+  let fontSize = DESIGN_CONFIG.reelSize;
+  let lines;
+  for (;;) {
+    ctx.font = `bold ${fontSize}px ${DESIGN_CONFIG.fontFamily}`;
+    lines = wrapTokens(ctx, tokenizeEmphasis(text), maxTextWidth);
+    if (lines.length <= maxLines || fontSize <= 46) break;
+    fontSize -= 6;
+  }
+  const lineHeight = fontSize + 16;
+  const blockHeight = lines.length * lineHeight;
+
+  // sit the block in the safe band (~30–66% of height): above the caption zone,
+  // below the progress bar / logo, biased just under center for a native feel.
+  const bandTop = height * 0.30, bandBot = height * 0.66;
+  const startY = Math.min(bandBot - blockHeight, Math.max(bandTop, (height - blockHeight) / 2 + 40));
+  ctx.textBaseline = 'top';
+  lines.forEach((ln, i) => drawTokenLine(ctx, ln, width / 2, startY + i * lineHeight, headlineColor, accent));
+
+  // final beat: a subtle "tap" chevron low in frame (the real CTA is the caption)
+  if (isCta) {
+    ctx.font = `bold ${Math.round(DESIGN_CONFIG.reelSize * 0.7)}px ${DESIGN_CONFIG.fontFamily}`;
+    ctx.fillStyle = accent;
+    ctx.textAlign = 'center';
+    ctx.fillText('↓', width / 2, height - padding * 2.2);
+  }
+
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
+  return canvas.toBuffer('png');
+}
+
+// ── kinetic reel frame (word-by-word typography) ─────────────────────────────
+// One reveal-state of a kinetic reel. `text` is the FULL beat line (with any
+// *emphasis*); layout is computed from the full token set every call so words
+// stay pinned in place as they appear (no reflow). Two modes:
+//   • karaoke: words 0..revealCount-1 shown; the active word (+ any *emphasis*
+//     word already passed) is accent-colored, the rest base color.
+//   • punch:   only the active word, big and centered.
+// lib/reel.js renders one of these per word and holds each for its duration.
+
+// place the full token set into centered lines; returns each token's draw x/y
+// and its global index, so a caller can reveal/color an arbitrary subset.
+function layoutTokens(ctx, tokens, maxWidth, cx, startY, lineHeight) {
+  const indexed = tokens.map((t, i) => ({ ...t, i }));
+  const lines = wrapTokens(ctx, indexed, maxWidth);
+  const space = ctx.measureText(' ').width;
+  const placed = [];
+  lines.forEach((line, li) => {
+    const widths = line.map(t => ctx.measureText(t.word).width);
+    const total  = widths.reduce((a, b) => a + b, 0) + space * (line.length - 1);
+    let x = cx - total / 2;
+    const y = startY + li * lineHeight;
+    line.forEach((t, k) => { placed.push({ token: t, x, y }); x += widths[k] + space; });
+  });
+  return { placed, lineCount: lines.length };
+}
+
+async function renderReelWordFrame({ text, revealCount, activeIndex, mode = 'karaoke',
+                                     beatNum, total, niche = 'reel', isCta }) {
+  const width = DESIGN_CONFIG.reelWidth, height = DESIGN_CONFIG.reelHeight, padding = DESIGN_CONFIG.padding;
+  const accent = DESIGN_CONFIG.accent;
+  const headlineColor = DESIGN_CONFIG.headline;
+  const canvas = new Canvas(width, height);
+  const ctx    = canvas.getContext('2d');
+
+  await drawBackground(ctx, width, height, niche);
+  drawVignette(ctx, width, height);
+  renderTrevoBrand(ctx, width);
+  if (total > 1) drawProgressBar(ctx, width, beatNum, total, accent, padding);
+
+  const allTokens = tokenizeEmphasis(text);
+  ctx.textBaseline = 'top';
+
+  if (mode === 'punch') {
+    // one big centered word (the active one); emphasized words get the accent
+    const tk = allTokens[Math.max(0, Math.min(activeIndex, allTokens.length - 1))] || { word: '', em: false };
+    const maxTextWidth = width - padding * 2 - 40;
+    let fontSize = Math.round(DESIGN_CONFIG.reelSize * 1.4);
+    ctx.font = `bold ${fontSize}px ${DESIGN_CONFIG.fontFamily}`;
+    while (ctx.measureText(tk.word).width > maxTextWidth && fontSize > 54) {
+      fontSize -= 8; ctx.font = `bold ${fontSize}px ${DESIGN_CONFIG.fontFamily}`;
+    }
+    ctx.textAlign = 'center';
+    ctx.fillStyle = tk.em ? accent : headlineColor;
+    ctx.fillText(tk.word, width / 2, height / 2 - fontSize / 2 + 30);
+  } else {
+    // karaoke: frozen full-line layout, reveal a prefix, highlight active/emphasis
+    const maxTextWidth = width - padding * 2 - 40;
+    const maxLines = 5;
+    let fontSize = DESIGN_CONFIG.reelSize;
+    let lineCount;
+    for (;;) {
+      ctx.font = `bold ${fontSize}px ${DESIGN_CONFIG.fontFamily}`;
+      lineCount = wrapTokens(ctx, allTokens, maxTextWidth).length;
+      if (lineCount <= maxLines || fontSize <= 46) break;
+      fontSize -= 6;
+    }
+    const lineHeight  = fontSize + 16;
+    const blockHeight = lineCount * lineHeight;
+    const bandTop = height * 0.30, bandBot = height * 0.66;
+    const startY = Math.min(bandBot - blockHeight, Math.max(bandTop, (height - blockHeight) / 2 + 40));
+
+    ctx.font = `bold ${fontSize}px ${DESIGN_CONFIG.fontFamily}`;
+    const { placed } = layoutTokens(ctx, allTokens, maxTextWidth, width / 2, startY, lineHeight);
+    ctx.textAlign = 'left';
+    const shown = (revealCount == null) ? allTokens.length : revealCount;
+    for (const p of placed) {
+      if (p.token.i >= shown) continue; // not revealed yet — space is reserved
+      ctx.fillStyle = (p.token.i === activeIndex || p.token.em) ? accent : headlineColor;
+      ctx.fillText(p.token.word, p.x, p.y);
+    }
+  }
+
+  if (isCta) {
+    ctx.font = `bold ${Math.round(DESIGN_CONFIG.reelSize * 0.7)}px ${DESIGN_CONFIG.fontFamily}`;
+    ctx.fillStyle = accent;
+    ctx.textAlign = 'center';
+    ctx.fillText('↓', width / 2, height - padding * 2.2);
+  }
+
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
+  return canvas.toBuffer('png');
+}
+
 // kept for fallback compatibility
 async function renderQuotePost(mainText, attribution, niche = 'results') {
   return renderCaptionPost(mainText, attribution || '', niche);
@@ -428,6 +648,9 @@ module.exports = {
   renderCaptionPost,
   renderTrevoFoundPost,
   renderReelHook,
+  renderReelFrame,
+  renderReelWordFrame,
+  tokenizeEmphasis,
   renderQuotePost,
   renderFallback,
   renderTrevoBrand,

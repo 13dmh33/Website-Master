@@ -9,6 +9,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') }
 const fs     = require('fs');
 const path   = require('path');
 const render = require('../lib/canvas-render');
+const reel   = require('../lib/reel');
 const store  = require('../lib/store');
 
 function saveBuffer(buffer, filePath) {
@@ -50,6 +51,104 @@ async function renderSingleImage(text, attribution, outPath, niche = 'results') 
       return false;
     }
   }
+}
+
+// render a reel — dispatches on the week's reel style (lib/planner.js's
+// weekly rotation, saved on content.reelStyle): 'card' (default) or
+// 'kinetic_karaoke' / 'kinetic_punch'. Returns { images, video } — images are
+// PNG paths for the review preview, video is the assembled .mp4 path (or null
+// if ffmpeg assembly failed, in which case the frames stand in as a storyboard).
+async function renderReel(reelPost, imageDir, style) {
+  if (style === 'kinetic_karaoke' || style === 'kinetic_punch') {
+    return renderKineticReel(reelPost, imageDir, style === 'kinetic_punch' ? 'punch' : 'karaoke');
+  }
+  return renderCardReel(reelPost, imageDir);
+}
+
+// card style: one vertical (1080x1920) frame per beat, stitched into a silent
+// .mp4 (lib/reel.js). If ffmpeg is unavailable/fails, the frames still stand
+// in as a storyboard.
+async function renderCardReel(reelPost, imageDir) {
+  const beats = reel.parseBeats(reelPost);
+  const framePaths = [];
+
+  for (let b = 0; b < beats.length; b++) {
+    const outPath = path.join(imageDir, `reel-frame-0${b + 1}.png`);
+    try {
+      const buf = await render.renderReelFrame({
+        text:    beats[b].text,
+        beatNum: b + 1,
+        total:   beats.length,
+        niche:   'reel',
+        isCta:   b === beats.length - 1 && beats.length > 1,
+      });
+      saveBuffer(buf, outPath);
+      framePaths.push(outPath);
+    } catch (err) {
+      console.warn(`  reel frame ${b + 1} failed (${err.message}) — fallback.`);
+      try { saveBuffer(await render.renderFallback(beats[b].text, 'reel'), outPath); framePaths.push(outPath); }
+      catch (e2) { console.error(`  reel frame fallback failed: ${e2.message}`); }
+    }
+  }
+
+  let video = null;
+  if (framePaths.length) {
+    const videoPath = path.join(imageDir, 'reel.mp4');
+    const durations = beats.slice(0, framePaths.length).map((b, i) => reel.beatDuration(i, b.text));
+    try {
+      await reel.assembleReel(framePaths, videoPath, { durations });
+      video = videoPath;
+      console.log(`  reel (card) — ${framePaths.length} beats → ${path.basename(videoPath)}`);
+    } catch (err) {
+      console.warn(`  reel video assembly skipped (${err.message}) — frames kept as storyboard.`);
+    }
+  }
+  return { images: framePaths, video };
+}
+
+// kinetic style: render one PNG per word-reveal state and hold each for its
+// duration (concat demuxer). Returns one representative frame per beat for the
+// preview strip (not all states); prunes the intermediate state PNGs on success.
+async function renderKineticReel(reelPost, imageDir, mode) {
+  const beats = reel.parseBeats(reelPost);
+  const frames = [], durations = [], previewFrames = [];
+  let seq = 0;
+
+  for (let b = 0; b < beats.length; b++) {
+    const isCtaBeat = b === beats.length - 1 && beats.length > 1;
+    const states = reel.buildKineticStates(beats[b].text, { mode, isCtaBeat });
+    let lastOfBeat = null;
+    for (const st of states) {
+      const outPath = path.join(imageDir, `reel-${String(seq++).padStart(3, '0')}.png`);
+      try {
+        const buf = await render.renderReelWordFrame({
+          text: beats[b].text, revealCount: st.revealCount, activeIndex: st.activeIndex, mode,
+          beatNum: b + 1, total: beats.length, niche: 'reel', isCta: st.isCta,
+        });
+        saveBuffer(buf, outPath);
+        frames.push(outPath); durations.push(st.duration); lastOfBeat = outPath;
+      } catch (err) {
+        console.warn(`  kinetic frame (beat ${b + 1}) failed (${err.message}).`);
+      }
+    }
+    if (lastOfBeat) previewFrames.push(lastOfBeat); // full-line state = the preview thumbnail
+  }
+
+  let video = null;
+  if (frames.length) {
+    const videoPath = path.join(imageDir, 'reel.mp4');
+    try {
+      await reel.assembleKineticReel(frames, durations, videoPath, {});
+      video = videoPath;
+      console.log(`  reel (kinetic/${mode}) — ${beats.length} beats, ${frames.length} states → ${path.basename(videoPath)}`);
+      const keep = new Set(previewFrames);
+      for (const f of frames) if (!keep.has(f)) { try { fs.unlinkSync(f); } catch { /* ignore */ } }
+    } catch (err) {
+      console.warn(`  kinetic assembly skipped (${err.message}) — state frames kept as storyboard.`);
+      return { images: frames, video: null }; // assembly failed: keep all states so nothing is lost
+    }
+  }
+  return { images: previewFrames, video };
 }
 
 async function main() {
@@ -111,16 +210,19 @@ async function main() {
     imagePaths.trevo_found = [];
   }
 
-  // 4. reel hook image — bold thumbnail
-  const reelHookPath = path.join(imageDir, 'reel-hook.png');
+  // 4. reel — real vertical .mp4 (lib/reel.js + lib/canvas-render.js reel-frame
+  // renderers), dispatched on the week's reel style (content.reelStyle, set by
+  // lib/planner.js). Falls back to the storyboard frames if ffmpeg assembly fails.
   try {
-    const buf = await render.renderReelHook(posts.reel.hookLine || '', niches.reel || 'reel');
-    saveBuffer(buf, reelHookPath);
-    imagePaths.reel = [reelHookPath];
-    console.log('Reel hook image rendered.');
+    const style = content.reelStyle || 'card';
+    const { images, video } = await renderReel(posts.reel, imageDir, style);
+    imagePaths.reel = images;
+    posts.reel.video = video;
+    console.log(`Reel (${style}) rendered — ${images.length} frame(s)${video ? ' + reel.mp4' : ''}.`);
   } catch (err) {
     console.warn(`Reel render failed: ${err.message}`);
     imagePaths.reel = [];
+    posts.reel.video = null;
   }
 
   const updatedContent = { ...content, imagePaths };

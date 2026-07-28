@@ -117,7 +117,7 @@ function buildAnglesFromEvergreen(evergreenPosts) {
     dataPoint:       null,
     suggestedFormat: p.format,
     evergreenId:     p.id,
-    prewrittenContent: { hook: p.hook, body: p.body, hashtags: p.hashtags },
+    prewrittenContent: { hook: p.hook, body: p.body, cta: p.cta, caption: p.caption, hashtags: p.hashtags },
   }));
 }
 

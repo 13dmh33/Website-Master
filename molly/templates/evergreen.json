@@ -160,8 +160,10 @@
       "niche": "journey",
       "pillar": "the_trade_itself",
       "used": true,
-      "hook": "This is what actually goes into building a contractor's website.",
-      "body": "Hook (0-2s): This is what actually goes into building a contractor's website.\n[B-roll: laptop screen, site layout taking shape]\n\nBody (2-14s): It starts with the trade, not the template — what the work actually is, who calls for it, what they need to see fast. Reviews pulled in. Tap-to-call put where a thumb actually lands.\n[B-roll: phone screen, tap-to-call button, reviews scrolling]\n\nCta (14-20s): That's the process. DM us the word demo to see one.\n[B-roll: Trevo logo]\n— Trevo",
+      "hook": "This is what goes into a *contractor* site.",
+      "body": "It starts with the trade, not a template.",
+      "cta": "DM us the word demo to see one. — Trevo",
+      "caption": "Most contractor sites start with a template. Ours start with the trade — what the work is, who calls for it, what they need to see fast.\n\nTap-to-call where a thumb lands. Reviews pulled in. Built for the job, not just the industry.\n\nDM us the word demo. — Trevo",
       "hashtags": "#contractorwebsite #websitedesign #homeservices #trevoadvisors #reels",
       "lastUsed": "2026-07-27T17:54:20.696Z"
     },
@@ -171,8 +173,10 @@
       "niche": "results",
       "pillar": "quiet_proof",
       "used": false,
-      "hook": "Same contractor. Same trade. One thing changed.",
-      "body": "Hook (0-2s): Same contractor. Same trade. One thing changed.\n[B-roll: phone screen showing a search results page]\n\nBody (2-14s): He was running on referrals — solid, but with a ceiling. We built him a real website. Tap-to-call, reviews live, mobile-first.\n[B-roll: website loading on a phone]\nNow the calls that used to skip past him find him instead.\n[B-roll: phone ringing]\n\nCta (14-20s): That's the difference. DM us the word demo.\n[B-roll: Trevo logo]\n— Trevo",
+      "hook": "Same contractor. Same trade. *One* thing changed.",
+      "body": "He was running on referrals — solid, with a ceiling.",
+      "cta": "DM us the word demo. — Trevo",
+      "caption": "Same contractor. Same trade. One thing changed.\n\nHe was running on referrals — solid, but with a ceiling. We built him a real website: tap-to-call, reviews live, mobile-first.\n\nNow the calls that used to skip past him find him instead.\n\nDM us the word demo. — Trevo",
       "hashtags": "#contractormarketing #homeservices #trevoadvisors #reels"
     },
     {
@@ -181,8 +185,10 @@
       "niche": "journey",
       "pillar": "invisible_loss",
       "used": false,
-      "hook": "The job you never got isn't a mystery. It's arithmetic.",
-      "body": "Hook (0-2s): The job you never got isn't a mystery. It's arithmetic.\n[B-roll: phone search results scrolling]\n\nBody (2-14s): Someone searched. A few names came up. If you weren't one, that's it — no missed call, no message, nothing to notice. Just a job that went to whoever showed up.\n[B-roll: another business's site loading]\n\nCta (14-20s): We build the site that shows up. DM us the word demo.\n[B-roll: Trevo logo]\n— Trevo",
+      "hook": "The job you never got isn't a *mystery*.",
+      "body": "It's arithmetic — no missed call, nothing to notice.",
+      "cta": "We build the site that shows up. — Trevo",
+      "caption": "The job you never got isn't a mystery. It's arithmetic.\n\nSomeone searched. A few names came up. If you weren't one, that's it — no missed call, no message, nothing to notice.\n\nWe build the site that shows up.\n\nDM us the word demo. — Trevo",
       "hashtags": "#contractormarketing #homeservices #trevoadvisors #reels"
     },
     {
@@ -191,8 +197,10 @@
       "niche": "results",
       "pillar": "quiet_proof",
       "used": false,
-      "hook": "Nothing about the work changed. Just whether people could find it.",
-      "body": "Hook (0-2s): Nothing about the work changed. Just whether people could find it.\n[B-roll: contractor working, then phone screen]\n\nBody (2-14s): Same skill. Same standard. The only difference is a site that actually shows up when someone searches — tap-to-call, reviews visible, built for a phone.\n[B-roll: site on phone, tap-to-call highlighted]\n\nCta (14-20s): That's what we build. DM us the word demo.\n[B-roll: Trevo logo]\n— Trevo",
+      "hook": "Nothing about the work *changed*.",
+      "body": "Just whether people could find it.",
+      "cta": "DM us the word demo. — Trevo",
+      "caption": "Nothing about the work changed. Just whether people could find it.\n\nSame skill, same standard — the only difference is a site that shows up when someone searches. Tap-to-call. Reviews visible. Built for a phone.\n\nDM us the word demo. — Trevo",
       "hashtags": "#contractormarketing #homeservices #trevoadvisors #reels"
     },
     {
@@ -201,8 +209,10 @@
       "niche": "journey",
       "pillar": "the_trade_itself",
       "used": false,
-      "hook": "The trade takes years to get good at. Respect that first.",
-      "body": "Hook (0-2s): The trade takes years to get good at. Respect that first.\n[B-roll: hands working, close on tools]\n\nBody (2-14s): Every job's a little different. Reading a wall or a panel before you open it — that's judgment, not luck. Marketing should point at that, not talk over it.\n[B-roll: finished work, clean site pulling it together]\n\nCta (14-20s): That's what we try to show. DM us the word demo.\n[B-roll: Trevo logo]\n— Trevo",
+      "hook": "The trade takes *years* to get good at.",
+      "body": "Reading a job before you open it — that's judgment.",
+      "cta": "DM us the word demo. — Trevo",
+      "caption": "The trade takes years to get good at. Respect that first.\n\nEvery job's a little different. Reading a wall or a panel before you open it is judgment, not luck. Marketing should point at that, not talk over it.\n\nDM us the word demo. — Trevo",
       "hashtags": "#tradespeople #contractortips #trevoadvisors #reels"
     }
   ]

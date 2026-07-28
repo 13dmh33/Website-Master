@@ -30,7 +30,8 @@ const { writeLog }             = require('./logger');
 const { recordTwilio, recordEmail } = require('./cost-tracker');
 const { isSuppressed }         = require('./lib/suppression');
 const { appendFooter, assertEmailCompliant } = require('./lib/compliance');
-const { isContactSuppressed, syncFromState: syncDoNotContact } = require('./lib/do-not-contact');
+const { isContactSuppressed, loadStore: loadDncStore, syncFromState: syncDoNotContact } = require('./lib/do-not-contact');
+const { isNonProspectBusiness } = require('./lib/lead-quality');
 
 const ROOT           = path.join(__dirname, '..');
 const CONFIG_PATH    = path.join(ROOT, 'config', 'drip-config.json');
@@ -129,6 +130,10 @@ function loadDripQueue(cfg, templates) {
   if (!fs.existsSync(MESSAGES_DIR)) return [];
   const files = fs.readdirSync(MESSAGES_DIR).filter(f => f.endsWith('-sent.json'));
   const queue = [];
+  // Load the do-not-contact store ONCE. isContactSuppressed() defaults to
+  // loadStore(), which re-reads and re-parses the file on every call — inside a
+  // loop over every sent record that is one disk read per lead.
+  const dncStore = loadDncStore();
 
   for (const file of files) {
     try {
@@ -144,7 +149,8 @@ function loadDripQueue(cfg, templates) {
       const briefPath = path.join(QUEUE_DIR, `${leadId}-brief.json`);
       if (!fs.existsSync(briefPath)) continue;
       const brief = JSON.parse(fs.readFileSync(briefPath, 'utf8'));
-      if (isContactSuppressed({ email: brief.email, phone: brief.phone, website: brief.website })) continue; // contact-keyed do-not-contact — survives re-scrape under a new lead_id
+      if (isContactSuppressed({ email: brief.email, phone: brief.phone, website: brief.website }, dncStore)) continue; // contact-keyed do-not-contact — survives re-scrape under a new lead_id
+      if (isNonProspectBusiness(brief.business_name)) continue; // supply house / big-box — never a Trevo prospect
 
       const drip = sent.drip || {};
 

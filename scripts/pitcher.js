@@ -39,7 +39,8 @@ const { recordSent }            = require('./template-picker');
 const { recordTwilio, recordEmail } = require('./cost-tracker');
 const { isSuppressed }          = require('./lib/suppression');
 const { appendFooter, assertEmailCompliant } = require('./lib/compliance');
-const { isContactSuppressed, syncFromState: syncDoNotContact } = require('./lib/do-not-contact');
+const { isContactSuppressed, loadStore: loadDncStore, syncFromState: syncDoNotContact } = require('./lib/do-not-contact');
+const { isNonProspectBusiness } = require('./lib/lead-quality');
 
 // ── PATHS ─────────────────────────────────────────────────────────────────────
 
@@ -173,13 +174,23 @@ function loadApprovedBriefs(config) {
   const delayMs  = (config.sms_followup_delay_hours ?? 4) * 3600 * 1000;
   const files    = fs.readdirSync(QUEUE_DIR).filter(f => f.endsWith('-brief.json'));
   const briefs   = [];
+  // Load the do-not-contact store ONCE. isContactSuppressed() defaults to
+  // loadStore(), which re-reads and re-parses the file on every call — inside a
+  // loop over every brief that is one disk read per lead.
+  const dncStore = loadDncStore();
 
   for (const file of files) {
     try {
       const data = JSON.parse(fs.readFileSync(path.join(QUEUE_DIR, file), 'utf8'));
       if (!data.checker_approved) continue;
       if (isSuppressed(data.lead_id)) continue; // lead_id-keyed do-not-contact (state.json status)
-      if (isContactSuppressed({ email: data.email, phone: data.phone, website: data.website })) continue; // contact-keyed do-not-contact — survives re-scrape under a new lead_id
+      if (isContactSuppressed({ email: data.email, phone: data.phone, website: data.website }, dncStore)) continue; // contact-keyed do-not-contact — survives re-scrape under a new lead_id
+      // Trevo sells to contractors. Supply houses, distributors and big-box stores
+      // are not prospects — lead-quality.js already knew this, but the check only ran
+      // in contact-scraper, so non-prospects arriving via Scout or sheet-import were
+      // still reaching the send queue (8 approved briefs at the time of this fix,
+      // including Ferguson and The Home Depot).
+      if (isNonProspectBusiness(data.business_name)) continue;
 
       const sentPath = path.join(MESSAGES_DIR, `${data.lead_id}-sent.json`);
 

@@ -203,9 +203,14 @@ function assembleReel(framePaths, outPath, opts = {}) {
     const totalSecs = durations.reduce((a, b) => a + b, 0);
 
     const args = [];
-    // one looped-still input per beat
-    framePaths.forEach((p, i) => {
-      args.push('-loop', '1', '-t', String(durations[i]), '-i', p);
+    // One SINGLE-FRAME still input per beat. zoompan emits `d` frames per input
+    // frame, so the beat's whole animation must come from exactly one frame —
+    // feeding a looped multi-frame input (`-loop 1 -t dur`) made zoompan emit
+    // d frames for EACH looped frame, ballooning beat 0 past the total runtime
+    // so `-shortest` truncated the video to beat 0 (the later beats never
+    // played). A bare `-i png` is one frame; zoompan's `d` sets the beat length.
+    framePaths.forEach((p) => {
+      args.push('-i', p);
     });
     // silent stereo audio track so Buffer/Instagram accept the file
     args.push('-f', 'lavfi', '-t', String(totalSecs.toFixed(2)), '-i', 'anullsrc=r=44100:cl=stereo');

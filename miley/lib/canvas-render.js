@@ -173,16 +173,30 @@ async function loadLogo(variant) {
   return logoCache[variant];
 }
 
+// relative luminance of a hex color (0 dark → 1 light), or null if unparseable
+function relLuminance(hex) {
+  const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex || '');
+  if (!m) return null;
+  const [r, g, b] = [m[1], m[2], m[3]].map(v => parseInt(v, 16));
+  return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+}
+
 // pick the white logo when the card's brand color is light (i.e. dark bg)
 function isLightColor(hex) {
-  const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex || '');
-  if (!m) return false;
-  const [r, g, b] = [m[1], m[2], m[3]].map(v => parseInt(v, 16));
-  return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255 > 0.6;
+  const L = relLuminance(hex);
+  return L != null && L > 0.6;
 }
 
 async function renderBrand(ctx, width, palette, color) {
-  const variant = isLightColor(color) ? 'white' : 'pink';
+  // Use the white logo on dark backgrounds and the pink logo on light ones.
+  // The text color is a good proxy on white-text cards, but colored-headline
+  // cards on a dark bg (e.g. the pink motivational reel headline) need the
+  // background itself checked too — otherwise the pink logo's navy "Techs"
+  // wordmark disappears into the dark backdrop.
+  const bgRef = (palette && (palette.bg || (palette.gradient && palette.gradient[0]))) || '';
+  const bgLum = relLuminance(bgRef);
+  const bgIsDark = bgLum != null && bgLum < 0.5;
+  const variant = (isLightColor(color) || bgIsDark) ? 'white' : 'pink';
   const logo = await loadLogo(variant);
   if (logo) {
     const h = LOGO_W * (logo.height / logo.width);

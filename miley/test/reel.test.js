@@ -188,3 +188,56 @@ test('assembleReel stitches frames into a non-empty .mp4', async (t) => {
     fs.rmSync(dir, { recursive: true, force: true });
   }
 });
+
+// Regression: every beat must actually play. A looped multi-frame input made
+// zoompan over-emit frames for beat 0, so `-shortest` truncated the whole reel
+// to beat 0 and the later beats never appeared. Prove the LAST beat is on
+// screen during its own time window by using solid-color frames and sampling
+// the video late.
+test('assembleReel plays through all beats (last beat visible at the end)', async (t) => {
+  if (!reel.ffmpegAvailable()) return t.skip('ffmpeg not available');
+  const { execFile } = require('child_process');
+  const { Canvas, loadImage } = require('skia-canvas');
+
+  const solid = async (hex) => {
+    const c = new Canvas(reel.W, reel.H);
+    const g = c.getContext('2d');
+    g.fillStyle = hex; g.fillRect(0, 0, reel.W, reel.H);
+    return c.toBuffer('png');
+  };
+  const sampleMeanRGB = async (pngPath) => {
+    const img = await loadImage(pngPath);
+    const c = new Canvas(img.width, img.height);
+    const g = c.getContext('2d');
+    g.drawImage(img, 0, 0);
+    const { data } = g.getImageData(0, 0, img.width, img.height);
+    let r = 0, gr = 0, b = 0, n = 0;
+    for (let i = 0; i < data.length; i += 4 * 997) { r += data[i]; gr += data[i + 1]; b += data[i + 2]; n++; }
+    return { r: r / n, g: gr / n, b: b / n };
+  };
+  const extractFrame = (video, atSecs, dest) => new Promise((res, rej) => {
+    execFile(reel.ffmpegPath(), ['-ss', String(atSecs), '-i', video, '-frames:v', '1', '-y', dest],
+      (err) => err ? rej(err) : res(dest));
+  });
+
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'reel-beats-'));
+  try {
+    // beat 0 red, beat 1 green, beat 2 blue — 1s each
+    const colors = ['#FF0000', '#00FF00', '#0000FF'];
+    const frames = [];
+    for (let i = 0; i < colors.length; i++) {
+      const p = path.join(dir, `b${i}.png`);
+      fs.writeFileSync(p, await solid(colors[i]));
+      frames.push(p);
+    }
+    const out = path.join(dir, 'reel.mp4');
+    await reel.assembleReel(frames, out, { durations: [1, 1, 1] });
+
+    // sample mid-way through the LAST beat (total 3s → ~2.5s): must read blue.
+    const late = await extractFrame(out, 2.5, path.join(dir, 'late.png'));
+    const { r, g, b } = await sampleMeanRGB(late);
+    assert.ok(b > r + 40 && b > g + 40, `expected blue (beat 3) late in reel, got rgb(${r|0},${g|0},${b|0})`);
+  } finally {
+    fs.rmSync(dir, { recursive: true, force: true });
+  }
+});

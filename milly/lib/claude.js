@@ -8,7 +8,7 @@ require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') }
 
 const Anthropic = require('@anthropic-ai/sdk');
 
-const MODEL   = 'claude-sonnet-4-20250514';
+const MODEL   = 'claude-sonnet-4-6'; // claude-sonnet-4-20250514 was deprecated (404) as of 2026-07-27 — same tier, verified working
 const RETRY_DELAY_MS = 3000;
 
 let _client = null;

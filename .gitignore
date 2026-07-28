@@ -29,3 +29,6 @@ reports/*.json
 .DS_Store
 AllContacts.csv
 SentLog.csv
+
+# Local safety backups of live state files (created before pipeline runs)
+.backups/

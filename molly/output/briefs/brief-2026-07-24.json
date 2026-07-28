@@ -1,0 +1,35 @@
+{
+  "weekOf": "2026-07-24",
+  "generatedAt": "2026-07-24T20:32:56.059Z",
+  "researchMode": "test",
+  "angles": [
+    {
+      "id": "angle-1",
+      "niche": "education",
+      "angle": "Test angle",
+      "hook": "Test hook",
+      "suggestedFormat": "carousel"
+    },
+    {
+      "id": "angle-2",
+      "niche": "results",
+      "angle": "Test results",
+      "hook": "Test hook 2",
+      "suggestedFormat": "caption"
+    },
+    {
+      "id": "angle-3",
+      "niche": "product",
+      "angle": "Test product",
+      "hook": "Test hook 3",
+      "suggestedFormat": "trevo_found"
+    },
+    {
+      "id": "angle-4",
+      "niche": "journey",
+      "angle": "Test journey",
+      "hook": "Test hook 4",
+      "suggestedFormat": "reel"
+    }
+  ]
+}

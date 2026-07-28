@@ -1,9 +1,9 @@
 {
-  "date": "2026-07-20",
+  "date": "2026-07-28",
   "cumulativeReached": {
-    "scouted": 636,
-    "diagnosed": 625,
-    "checked": 623,
+    "scouted": 665,
+    "diagnosed": 644,
+    "checked": 642,
     "sent": 187,
     "drip_d1_sent": 18,
     "drip_d1b_sent": 1,

@@ -1,0 +1,965 @@
+[
+  {
+    "lead_id": "ChIJaWyPZJxPE4cRhiOvcyY-Uwc",
+    "business_name": "BullsEye Plumbing Heating & Air of Colorado Springs",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://bullseyeplumbing.com/service-areas/colorado-springs-co/%3Futm_source%3Dgoogle%26utm_medium%3Dgbp%26utm_campaign%3Dmaps",
+    "email": "",
+    "phone": "+1 719-249-0474",
+    "rating": 4.8,
+    "review_count": 1855,
+    "address": "3320 N Hancock Ave, Colorado Springs, CO 80907",
+    "place_id": "ChIJaWyPZJxPE4cRhiOvcyY-Uwc",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Air conditioning repair service, Contractor, Heating contractor, HVAC contractor"
+    ],
+    "latitude": 38.881577,
+    "longitude": -104.80371749999999,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-28T12:48:24.250Z"
+  },
+  {
+    "lead_id": "ChIJc6_bR1hGE4cRXCIzXv3g6GU",
+    "business_name": "Bill's Plumbing & Drain Service",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "http://www.billsplumbinganddrainservice.com/",
+    "email": "billsplumbing719@gmail.com",
+    "phone": "+1 719-598-4775",
+    "rating": 4.9,
+    "review_count": 309,
+    "address": "135 Baldridge View, Colorado Springs, CO 80916",
+    "place_id": "ChIJc6_bR1hGE4cRXCIzXv3g6GU",
+    "subtypes": [
+      "Plumber, Drainage service, Remodeler"
+    ],
+    "latitude": 38.8365779,
+    "longitude": -104.72373449999999,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-28T12:48:24.251Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "https://www.facebook.com/BillsPlumbingAndDrain",
+      "bbb": "https://www.bbb.org/us/co/colorado-springs/profile/plumber/bills-plumbing-drain-service-0785-5984775",
+      "yelp": "https://www.yelp.com/biz/bills-plumbing-and-drain-service-colorado-springs",
+      "google": "https://maps.google.com/maps"
+    },
+    "deep_enriched_at": "2026-07-28T12:50:57.700Z"
+  },
+  {
+    "lead_id": "ChIJUVZoam9BE4cReO9dcGxcwiQ",
+    "business_name": "Smith Plumbing, Heating, Air Conditioning & Electrical - Colorado Springs",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.smithtotalhome.com/",
+    "email": "info@smithtotalhome.com",
+    "phone": "+1 719-394-3927",
+    "rating": 4.9,
+    "review_count": 3552,
+    "address": "1875 Main St, Colorado Springs, CO 80911",
+    "place_id": "ChIJUVZoam9BE4cReO9dcGxcwiQ",
+    "subtypes": [
+      "Plumber, Air conditioning repair service, Air conditioning system supplier, Electrician, Heating contractor, Heating equipment supplier, HVAC contractor, Air conditioning contractor"
+    ],
+    "latitude": 38.768022099999996,
+    "longitude": -104.73787659999999,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-28T12:48:24.251Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "https://www.facebook.com/SmithPinkTrucks"
+    },
+    "deep_enriched_at": "2026-07-28T12:50:54.009Z"
+  },
+  {
+    "lead_id": "ChIJzZPe4pFGE4cRao-SjZRZHcw",
+    "business_name": "Alphalete Plumbing Drain Sewer",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://alphaleteplumbing.com/",
+    "email": "",
+    "phone": "+1 719-356-7915",
+    "rating": 4.9,
+    "review_count": 272,
+    "address": "716 Clark Pl Ste 160, Colorado Springs, CO 80915",
+    "place_id": "ChIJzZPe4pFGE4cRao-SjZRZHcw",
+    "subtypes": [
+      "Plumber, Drainage service"
+    ],
+    "latitude": 38.8418044,
+    "longitude": -104.7407605,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-28T12:48:24.251Z",
+    "contact_name": "of Plumb",
+    "socials": {
+      "google": "https://g.page/r/CWqPko2UWR3MEBE/review",
+      "bbb": "https://www.bbb.org/us/co/colorado-springs/profile/plumber/alphalete-plumbing-heat-llc-0785-87371573",
+      "facebook": "https://www.facebook.com/alphaleteplumbingdrain",
+      "instagram": "https://www.instagram.com/alphalete_plumbing",
+      "youtube": "https://www.youtube.com/@alphaleteplumbing",
+      "linkedin": "https://www.linkedin.com/company/alphalete-plumbing-mechanical",
+      "twitter": "https://x.com/alphaletepds",
+      "yelp": "https://www.yelp.com/biz/alphalete-plumbing-heating-air-colorado-springs",
+      "angi": "https://www.homeadvisor.com/images/sp-badges/100reviews-solid-border.png"
+    },
+    "deep_enriched_at": "2026-07-28T12:51:00.971Z"
+  },
+  {
+    "lead_id": "ChIJfYqeslRBE4cR69Wg7rxqTWI",
+    "business_name": "Pro Power Rooter",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://propowerrooterservice.com/",
+    "email": "propowerrooter@gmail.com",
+    "phone": "+1 719-331-4071",
+    "rating": 4.9,
+    "review_count": 308,
+    "address": "4355 London Ln, Colorado Springs, CO 80916",
+    "place_id": "ChIJfYqeslRBE4cR69Wg7rxqTWI",
+    "subtypes": [
+      "Plumber, Drainage service, Septic system service"
+    ],
+    "latitude": 38.793937,
+    "longitude": -104.747033,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-28T12:48:24.251Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Google Meet hardware",
+    "socials": {
+      "facebook": "https://badge.facebook.com/badge/318955818135250.2955.1552999507.png",
+      "yelp": "http://www.yelp.com/biz/pro-power-rooter-colorado-springs",
+      "twitter": "https://x.com/googleworkspace"
+    },
+    "deep_enriched_at": "2026-07-28T12:50:58.406Z"
+  },
+  {
+    "lead_id": "ChIJLYQbbDhFE4cR5SSE9mLrMT8",
+    "business_name": "Priority Plumbing and Heating",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://priorityplumbingandheating.com/%3Futm_source%3DGMB%26utm_medium%3Dorganic",
+    "email": "",
+    "phone": "+1 719-372-4246",
+    "rating": 4.8,
+    "review_count": 423,
+    "address": "712 Clark Pl Ste 150, Colorado Springs, CO 80915",
+    "place_id": "ChIJLYQbbDhFE4cR5SSE9mLrMT8",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Air conditioning repair service, Drainage service, Furnace repair service, Heating contractor, HVAC contractor"
+    ],
+    "latitude": 38.842216799999996,
+    "longitude": -104.74095369999999,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-28T12:48:24.251Z"
+  },
+  {
+    "lead_id": "ChIJW_rudPFbE4cRReNwAVicKBo",
+    "business_name": "Ellis Wyatt Plumbing, HVAC and Electrical, LLC",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.elliswyattmep.com/",
+    "email": "contact@elliswyattmep.com",
+    "phone": "+1 719-747-6466",
+    "rating": 4.9,
+    "review_count": 577,
+    "address": "425 E Fillmore St, Colorado Springs, CO 80907",
+    "place_id": "ChIJW_rudPFbE4cRReNwAVicKBo",
+    "subtypes": [
+      "Plumber, Boiler supplier, Electrician, HVAC contractor"
+    ],
+    "latitude": 38.8732992,
+    "longitude": -104.8136416,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-28T12:48:24.251Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Ellis Wyatt",
+    "socials": {
+      "facebook": "https://www.facebook.com/profile.php?id=100063984584881",
+      "linkedin": "https://www.linkedin.com/in/ellis-wyatt-plumbing-hvac-electrical-170239355"
+    },
+    "deep_enriched_at": "2026-07-28T12:50:55.596Z"
+  },
+  {
+    "lead_id": "ChIJywb_-AR03WYRuZOxydwBGy0",
+    "business_name": "Wild Water Plumbing Heating Cooling",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.wildwatercolorado.com/",
+    "email": "",
+    "phone": "+1 719-789-6937",
+    "rating": 4.9,
+    "review_count": 346,
+    "address": "4230 Barnes Rd Suite 120, Colorado Springs, CO 80917",
+    "place_id": "ChIJywb_-AR03WYRuZOxydwBGy0",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Air conditioning repair service, Furnace repair service, HVAC contractor"
+    ],
+    "latitude": 38.896992399999995,
+    "longitude": -104.7471815,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-28T12:48:24.251Z",
+    "contact_name": "wanting to",
+    "socials": {
+      "facebook": "https://www.facebook.com/p/Wild-Water-61558776055390",
+      "yelp": "https://www.yelp.com/biz/wild-water-colorado-springs-3",
+      "bbb": "https://www.bbb.org/us/co/colorado-springs/profile/plumbing-renovation/wild-water-plumbing-0785-1000031248"
+    },
+    "deep_enriched_at": "2026-07-28T12:51:07.767Z"
+  },
+  {
+    "lead_id": "ChIJKeWjVQ4qEWkRb2XSTerR9sY",
+    "business_name": "Big Cat Plumbing, Heating & Cooling",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://bigcatplumbinghvac.com/%3Futm_source%3Dgoogle%26utm_medium%3Dgbp%26utm_campaign%3Dcosprings",
+    "email": "",
+    "phone": "+1 719-431-6644",
+    "rating": 4.9,
+    "review_count": 490,
+    "address": "5615 Industrial Pl, Colorado Springs, CO 80916",
+    "place_id": "ChIJKeWjVQ4qEWkRb2XSTerR9sY",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Air conditioning system supplier, Drainage service, Furnace parts supplier, Furnace repair service, Heating contractor, Hot water system supplier, HVAC contractor, Air conditioning repair service"
+    ],
+    "latitude": 38.8226868,
+    "longitude": -104.7234816,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-28T12:48:24.251Z"
+  },
+  {
+    "lead_id": "ChIJszext05GE4cRIBVqx8PlkdI",
+    "business_name": "Home Heating Service, Inc.",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.homeheatingservice.com/",
+    "email": "service@homeheatingservice.com",
+    "phone": "+1 719-266-3351",
+    "rating": 4.9,
+    "review_count": 1834,
+    "address": "1565 Tuskegee Pl, Colorado Springs, CO 80915",
+    "place_id": "ChIJszext05GE4cRIBVqx8PlkdI",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Air duct cleaning service, Furnace repair service, Heating contractor, HVAC contractor"
+    ],
+    "latitude": 38.8539929,
+    "longitude": -104.71288609999999,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-28T12:48:24.251Z",
+    "email_source": "contact-scraper",
+    "contact_name": "AND CEO",
+    "socials": {
+      "youtube": "https://youtube.com/user/homeheatingservice1",
+      "yelp": "https://yelp.com/biz/home-heating-service-colorado-springs-2",
+      "twitter": "https://twitter.com/HomeHeatingInc",
+      "instagram": "https://instagram.com/homeheatingservice",
+      "facebook": "https://facebook.com/homeheatingservice",
+      "tiktok": "https://www.tiktok.com/@homeheatingservice",
+      "nextdoor": "https://nextdoor.com/pages/home-heating-service-inc-colorado-springs-co"
+    },
+    "deep_enriched_at": "2026-07-28T12:50:58.881Z"
+  },
+  {
+    "lead_id": "ChIJARoMTM1FE4cRo3DyFrsXylI",
+    "business_name": "Dan's Drains and Digs",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.dansdrainsanddigs.com/",
+    "email": "dansdrainsanddigs@gmail.com",
+    "phone": "+1 719-375-8181",
+    "rating": 5,
+    "review_count": 317,
+    "address": "216 S Chestnut St, Colorado Springs, CO 80905",
+    "place_id": "ChIJARoMTM1FE4cRo3DyFrsXylI",
+    "subtypes": [
+      "Plumber, Drainage service, Septic system service"
+    ],
+    "latitude": 38.8312238,
+    "longitude": -104.8362731,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-28T12:48:24.252Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "https://www.facebook.com/dansdrainsanddigs",
+      "angi": "http://www.homeadvisor.com/rated.ClareyConstruction.96830419.html"
+    },
+    "deep_enriched_at": "2026-07-28T12:51:06.007Z"
+  },
+  {
+    "lead_id": "ChIJtZDWxlZGE4cRQxSOw9fTYsw",
+    "business_name": "B&L Plumbing",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.bandlplumbing.com/",
+    "email": "",
+    "phone": "+1 719-800-7776",
+    "rating": 4.7,
+    "review_count": 911,
+    "address": "6160 Lake Shore Ct, Colorado Springs, CO 80915",
+    "place_id": "ChIJtZDWxlZGE4cRQxSOw9fTYsw",
+    "subtypes": [
+      "Plumber, Air conditioning repair service, Air duct cleaning service, Bathroom remodeler, Furnace repair service, Heating contractor, Hot water system supplier, HVAC contractor, Air conditioning contractor, Septic system service"
+    ],
+    "latitude": 38.8646947,
+    "longitude": -104.7134767,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-28T12:48:24.251Z",
+    "contact_name": "Norissa L.",
+    "socials": {
+      "facebook": "https://www.facebook.com/BNLPLUMBING",
+      "twitter": "https://twitter.com/BandLPlumbing",
+      "youtube": "https://www.youtube.com/channel/UCIuzBiFCr3MFhgE5ruF8jlQ"
+    },
+    "deep_enriched_at": "2026-07-28T12:51:03.373Z"
+  },
+  {
+    "lead_id": "ChIJiw0e8blHE4cRNdXlT4OyIyI",
+    "business_name": "Nates Plumbing",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://natesproplumbing.com/",
+    "email": "",
+    "phone": "+1 719-491-6283",
+    "rating": 4.8,
+    "review_count": 193,
+    "address": "2276 Pinyon Jay Dr, Colorado Springs, CO 80951",
+    "place_id": "ChIJiw0e8blHE4cRNdXlT4OyIyI",
+    "subtypes": [
+      "Plumber"
+    ],
+    "latitude": 38.8673356,
+    "longitude": -104.6705113,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-28T12:48:24.251Z"
+  },
+  {
+    "lead_id": "ChIJdeSjSEpEE4cRvjECVCPxFy0",
+    "business_name": "Green Plumbing Inc",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://begreenplumbing.com/",
+    "email": "greenplumbing8@gmail.com",
+    "phone": "+1 719-477-3217",
+    "rating": 4.8,
+    "review_count": 125,
+    "address": "3645 Jeannine Dr #212, Colorado Springs, CO 80917",
+    "place_id": "ChIJdeSjSEpEE4cRvjECVCPxFy0",
+    "subtypes": [
+      "Plumber, Contractor, Septic system service"
+    ],
+    "latitude": 38.8848638,
+    "longitude": -104.7599319,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-28T12:48:24.251Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "https://www.facebook.com/GreenPlumbingColorado",
+      "twitter": "https://twitter.com/begreenplumbing"
+    },
+    "deep_enriched_at": "2026-07-28T12:51:10.051Z"
+  },
+  {
+    "lead_id": "ChIJMdXdHQZEE4cRMe8zaI1PIao",
+    "business_name": "Pikes Peak Mechanical",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.pikespeakmechanical.com/",
+    "email": "",
+    "phone": "+1 719-232-4720",
+    "rating": 4.6,
+    "review_count": 214,
+    "address": "102 S Tejon St #1100, Colorado Springs, CO 80903",
+    "place_id": "ChIJMdXdHQZEE4cRMe8zaI1PIao",
+    "subtypes": [
+      "Plumber, HVAC contractor"
+    ],
+    "latitude": 38.831999599999996,
+    "longitude": -104.82405709999999,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-28T12:48:24.251Z",
+    "contact_name": "not a robot",
+    "socials": {
+      "facebook": "https://www.facebook.com/pikespeak.mechanical",
+      "twitter": "https://twitter.com/PikesPeakMech",
+      "youtube": "https://www.youtube.com/channel/UCF0zV9xLPinqVfxC3yo0bCA",
+      "yelp": "http://www.yelp.com/biz/pikes-peak-mechanical-colorado-springs"
+    },
+    "deep_enriched_at": "2026-07-28T12:51:03.785Z"
+  },
+  {
+    "lead_id": "ChIJu8pt3spIE4cROUq6DWRsyfU",
+    "business_name": "Peak Flow Plumbing",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://peakflowplumbing.com/%3Futm_source%3Dgmb%26utm_medium%3Dorganic%26utm_campaign%3Dgmb-listing",
+    "email": "",
+    "phone": "+1 719-200-2030",
+    "rating": 4.7,
+    "review_count": 203,
+    "address": "4615 Topaz Dr, Colorado Springs, CO 80918",
+    "place_id": "ChIJu8pt3spIE4cROUq6DWRsyfU",
+    "subtypes": [
+      "Plumber, Drainage service"
+    ],
+    "latitude": 38.8980823,
+    "longitude": -104.75097629999999,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-28T12:48:24.251Z"
+  },
+  {
+    "lead_id": "ChIJq6qqqn5IE4cRw_oYho2dMIk",
+    "business_name": "Leo's Sewer & Drain Inc.",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.leosdrains.com/",
+    "email": "service@leosdrains.com",
+    "phone": "+1 719-550-0837",
+    "rating": 4.5,
+    "review_count": 903,
+    "address": "315 Delaware Dr, Colorado Springs, CO 80909",
+    "place_id": "ChIJq6qqqn5IE4cRw_oYho2dMIk",
+    "subtypes": [
+      "Plumber, Excavating contractor"
+    ],
+    "latitude": 38.8378133,
+    "longitude": -104.7598063,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-28T12:48:24.251Z",
+    "email_source": "contact-scraper",
+    "contact_name": "David Book has",
+    "socials": {
+      "facebook": "https://www.facebook.com/Leos-Sewer-Drain-Plumbing-474485205897875",
+      "twitter": "https://twitter.com/LeosSewerDrain",
+      "google": "https://maps.google.com/maps"
+    },
+    "deep_enriched_at": "2026-07-28T12:51:04.508Z"
+  },
+  {
+    "lead_id": "ChIJBTsoKQNPE4cRbfgfJjrPMaM",
+    "business_name": "A Plus Sewer, Drain and Plumbing",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://aplussewerdp.com/",
+    "email": "astigma@astigmatic.com",
+    "phone": "+1 719-359-3558",
+    "rating": 4.8,
+    "review_count": 146,
+    "address": "2458 Waynoka Rd, Colorado Springs, CO 80915",
+    "place_id": "ChIJBTsoKQNPE4cRbfgfJjrPMaM",
+    "subtypes": [
+      "Plumber"
+    ],
+    "latitude": 38.8655093,
+    "longitude": -104.7195053,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-28T12:48:24.251Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "https://www.facebook.com/aplussewerdrainandplumbing"
+    },
+    "deep_enriched_at": "2026-07-28T12:51:05.052Z"
+  },
+  {
+    "lead_id": "ChIJc9wQTRlnCAURxyaNk1kaQKw",
+    "business_name": "Rocky Mountain Plumbing Services LLC",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.rockymountainplumbingservices.com/",
+    "email": "rockymountainplumbingservices@gmail.com",
+    "phone": "+1 719-428-9555",
+    "rating": 5,
+    "review_count": 173,
+    "address": "3125 N El Paso St Unit A, Colorado Springs, CO 80907",
+    "place_id": "ChIJc9wQTRlnCAURxyaNk1kaQKw",
+    "subtypes": [
+      "Plumber, Bathroom remodeler, Drainage service, Gas installation service, Water filter supplier, Water purification company, Water softening equipment supplier"
+    ],
+    "latitude": 38.878068,
+    "longitude": -104.8124922,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-28T12:48:24.251Z",
+    "email_source": "contact-scraper",
+    "contact_name": "First Guidance",
+    "socials": {
+      "facebook": "https://www.facebook.com/profile.php?id=61566110140944"
+    },
+    "deep_enriched_at": "2026-07-28T12:51:02.920Z"
+  },
+  {
+    "lead_id": "ChIJaa-iAEV5bIcRRZaE0Mx10eM",
+    "business_name": "Elite Rooter Plumbers",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.eliterooter.com/location/colorado-springs/%3Futm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_campaign%3Dgmb",
+    "email": "",
+    "phone": "+1 719-628-7909",
+    "rating": 4.6,
+    "review_count": 668,
+    "address": "511 N Union Blvd, Colorado Springs, CO 80909",
+    "place_id": "ChIJaa-iAEV5bIcRRZaE0Mx10eM",
+    "subtypes": [
+      "Plumber, Drainage service, Hot water system supplier, Septic system service, Water filter supplier, Water softening equipment supplier, Water treatment supplier"
+    ],
+    "latitude": 38.840216399999996,
+    "longitude": -104.7940215,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-28T12:48:24.251Z"
+  },
+  {
+    "lead_id": "ChIJowN4xGlDE4cR2wSsy5nQnwY",
+    "business_name": "Austin & Sons Plumbing",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://austinsonsplumbing.com/",
+    "email": "",
+    "phone": "+1 719-417-8466",
+    "rating": 4.8,
+    "review_count": 158,
+    "address": "1613 Lashelle Way #1700, Colorado Springs, CO 80906",
+    "place_id": "ChIJowN4xGlDE4cR2wSsy5nQnwY",
+    "subtypes": [
+      "Plumber"
+    ],
+    "latitude": 38.766676,
+    "longitude": -104.796577,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-28T12:48:24.251Z"
+  },
+  {
+    "lead_id": "ChIJuQGk28tIE4cRy1QS4PsAxfY",
+    "business_name": "Parkey's Heating, Plumbing, & Air Conditioning",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://callbuck.com/blog/r-buck-parkey-partnership/%3Futm_source%3Dgoogle-gbp%26utm_medium%3Dorganic%26utm_campaign%3D*248*parkeys-heating-plumbing-colorado-springs",
+    "email": "",
+    "phone": "+1 719-497-9470",
+    "rating": 4.6,
+    "review_count": 494,
+    "address": "4697 Cobalt Dr, Colorado Springs, CO 80918",
+    "place_id": "ChIJuQGk28tIE4cRy1QS4PsAxfY",
+    "subtypes": [
+      "Plumber, Air conditioning repair service, Furnace repair service, Electric generator shop, Heating contractor, HVAC contractor"
+    ],
+    "latitude": 38.8997171,
+    "longitude": -104.7467855,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-28T12:48:24.251Z"
+  },
+  {
+    "lead_id": "ChIJcdwMQmqPFU4Rj-xmk63p3M8",
+    "business_name": "Apex Plumbing & Mechanical",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.apexpandm.net/%3Futm_campaign%3Dgmb",
+    "email": "",
+    "phone": "+1 719-259-0580",
+    "rating": 4.9,
+    "review_count": 198,
+    "address": "5040 Corporate Plaza Dr, Colorado Springs, CO 80919",
+    "place_id": "ChIJcdwMQmqPFU4Rj-xmk63p3M8",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Air conditioning repair service, Furnace repair service, Heating contractor, HVAC contractor"
+    ],
+    "latitude": 38.904441899999995,
+    "longitude": -104.8647534,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-28T12:48:24.251Z"
+  },
+  {
+    "lead_id": "ChIJlfu-KsBEE4cRiN8Ch89bbkg",
+    "business_name": "Excellent Plumbing & Water Heater Repair Colorado Springs",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://plumbingcoloradosprings.com/",
+    "email": "alicerobertson@tidyhome.info",
+    "phone": "+1 719-393-9300",
+    "rating": 4.8,
+    "review_count": 186,
+    "address": "6510a S Academy Blvd #336, Colorado Springs, CO 80906",
+    "place_id": "ChIJlfu-KsBEE4cRiN8Ch89bbkg",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Furnace repair service, Gas installation service, Heating contractor, HVAC contractor"
+    ],
+    "latitude": 38.7674668,
+    "longitude": -104.81510759999999,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-28T12:48:24.251Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "bbb": "https://www.bbb.org/southern-colorado/business-reviews/plumber/excellent-plumbing-and-heating-in-colorado-springs-co-3381003",
+      "facebook": "https://www.facebook.com/people/Excellent-Plumbing-Heating-Mechanical/61555045733110",
+      "twitter": "https://twitter.com/ExcellentPHM",
+      "linkedin": "https://www.linkedin.com/in/excellentphm",
+      "google": "https://maps.google.com/maps"
+    },
+    "deep_enriched_at": "2026-07-28T12:51:13.387Z"
+  },
+  {
+    "lead_id": "ChIJH7iK6OWiOwwRwhK9346bTwI",
+    "business_name": "PlumbSmart Plumbing Heating and Air",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://itsjustplumbsmart.com/colorado-springs-co-plumbers/",
+    "email": "",
+    "phone": "+1 719-225-7272",
+    "rating": 4.9,
+    "review_count": 144,
+    "address": "2492 Waynoka Rd, Colorado Springs, CO 80915",
+    "place_id": "ChIJH7iK6OWiOwwRwhK9346bTwI",
+    "subtypes": [
+      "Plumber, Drainage service, Water purification company, Water softening equipment supplier, Water treatment supplier"
+    ],
+    "latitude": 38.8642884,
+    "longitude": -104.71953309999999,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-28T12:48:24.251Z",
+    "contact_name": "This Offer",
+    "socials": {
+      "facebook": "https://www.facebook.com/PlumbSmartAZ",
+      "youtube": "https://www.youtube.com/c/PlumbSmartPlumbingHeatingandAirConditioningMesa",
+      "bbb": "https://www.bbb.org/us/az/mesa/profile/plumber/plumbsmart-plumbing-heating-and-air-1126-97022481",
+      "instagram": "https://www.instagram.com/plumbsmart",
+      "google": "https://g.page/PlumbSmartAZ",
+      "yelp": "https://www.yelp.com/biz/plumbsmart-plumbing-heating-and-air-mesa-2"
+    },
+    "deep_enriched_at": "2026-07-28T12:51:05.877Z"
+  },
+  {
+    "lead_id": "ChIJMREzXXmifmURJbZsta24FLA",
+    "business_name": "Lujan Plumbing Services & Installations",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "http://www.lujanpsi.com/",
+    "email": "admin@lujanpsi.com",
+    "phone": "+1 719-425-0870",
+    "rating": 5,
+    "review_count": 104,
+    "address": "8080 Industry Rd unit 8, Colorado Springs, CO 80951",
+    "place_id": "ChIJMREzXXmifmURJbZsta24FLA",
+    "subtypes": [
+      "Plumber"
+    ],
+    "latitude": 38.881858699999995,
+    "longitude": -104.67905789999999,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-28T12:48:24.251Z",
+    "email_source": "contact-scraper",
+    "contact_name": "now looking forward",
+    "socials": {
+      "facebook": "https://www.facebook.com/@lujanpsi",
+      "instagram": "https://www.instagram.com/@lujanpsi",
+      "tiktok": "https://www.tiktok.com/@lujanpsi",
+      "bbb": "https://www.bbb.org/us/co/colorado-springs/profile/plumbing-and-heating/lujan-plumbing-services-and-installations-llc-0785-1000011569"
+    },
+    "deep_enriched_at": "2026-07-28T12:51:06.077Z"
+  },
+  {
+    "lead_id": "ChIJQfkEsb40E4cRotho48Vrlh4",
+    "business_name": "Water Heater Pros",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "http://www.waterheaterprosco.com/",
+    "email": "impallari@gmail.com",
+    "phone": "+1 719-229-5555",
+    "rating": 5,
+    "review_count": 163,
+    "address": "3415 Chelton Loop S Unit B, Colorado Springs, CO 80909",
+    "place_id": "ChIJQfkEsb40E4cRotho48Vrlh4",
+    "subtypes": [
+      "Plumber, Hot water system supplier"
+    ],
+    "latitude": 38.8364827,
+    "longitude": -104.7651042,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-28T12:48:24.251Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "https://www.facebook.com/waterheaterprosco",
+      "yelp": "https://www.yelp.com/biz/water-heater-pros-colorado-springs"
+    },
+    "deep_enriched_at": "2026-07-28T12:51:10.816Z"
+  },
+  {
+    "lead_id": "ChIJXyeAX3xGE4cRwV2DwXSUd0E",
+    "business_name": "Roto-Rooter Plumbing & Water Cleanup",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.rotorooter.com/coloradosprings/%3Futm_source%3DGoogle%26utm_medium%3Dorganic%26utm_campaign%3Dgmb%26utm_content%3Dwebsite",
+    "email": "",
+    "phone": "+1 719-619-4003",
+    "rating": 4.6,
+    "review_count": 2542,
+    "address": "4615 Town Center Dr, Colorado Springs, CO 80916",
+    "place_id": "ChIJXyeAX3xGE4cRwV2DwXSUd0E",
+    "subtypes": [
+      "Plumber, Drainage service, Excavating contractor, Repair service, Water damage restoration service, Water filter supplier, Water softening equipment supplier, Water testing service"
+    ],
+    "latitude": 38.8390142,
+    "longitude": -104.7434803,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-28T12:48:24.252Z"
+  },
+  {
+    "lead_id": "ChIJpcn5cyRFE4cRRC2ePbPN47w",
+    "business_name": "Olson Plumbing & Heating Co",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://olsonph.com/",
+    "email": "service@olsonph.com",
+    "phone": "+1 719-635-3563",
+    "rating": 4.3,
+    "review_count": 404,
+    "address": "2500 Centennial Blvd, Colorado Springs, CO 80907",
+    "place_id": "ChIJpcn5cyRFE4cRRC2ePbPN47w",
+    "subtypes": [
+      "Plumber, Air conditioning repair service, Heating contractor, HVAC contractor, Utility contractor"
+    ],
+    "latitude": 38.8684577,
+    "longitude": -104.8434829,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-07-28T12:48:24.251Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Arthur Olson",
+    "socials": {
+      "facebook": "https://www.facebook.com/olsonph",
+      "youtube": "https://www.youtube.com/user/olsonphcos",
+      "instagram": "https://www.instagram.com/olsonphco",
+      "twitter": "https://twitter.com/PlumbingOlson",
+      "linkedin": "https://www.linkedin.com/company/olson-plumbing-and-heating"
+    },
+    "deep_enriched_at": "2026-07-28T12:51:06.816Z"
+  },
+  {
+    "lead_id": "ChIJu4dAhjxPE4cRqr13Mu0YAyo",
+    "business_name": "Always Plumbing & Heating, Inc",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://alwaysph.com/",
+    "email": "%20info@alwaysph.com",
+    "phone": "+1 719-510-1306",
+    "rating": 4.8,
+    "review_count": 61,
+    "address": "4640 Ridgeglen Rd, Colorado Springs, CO 80918",
+    "place_id": "ChIJu4dAhjxPE4cRqr13Mu0YAyo",
+    "subtypes": [
+      "Plumber"
+    ],
+    "latitude": 38.901185399999996,
+    "longitude": -104.7702367,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-07-28T12:48:24.251Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "https://www.facebook.com/Always-Plumbing-Heating-Inc-126253527389960"
+    },
+    "deep_enriched_at": "2026-07-28T12:51:13.955Z"
+  },
+  {
+    "lead_id": "ChIJkdawEVlFE4cRc4M9SEuGy30",
+    "business_name": "Sveagle Plumbing, Heating, and Cooling",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://sveagle.com/",
+    "email": "",
+    "phone": "+1 719-752-8443",
+    "rating": 4.6,
+    "review_count": 129,
+    "address": "3735 E St Vrain St, Colorado Springs, CO 80909",
+    "place_id": "ChIJkdawEVlFE4cRc4M9SEuGy30",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Air conditioning repair service, Drainage service, Furnace repair service, Heating contractor, Hot water system supplier, HVAC contractor, Septic system service, Water softening equipment supplier"
+    ],
+    "latitude": 38.838524199999995,
+    "longitude": -104.7592408,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-07-28T12:48:24.251Z",
+    "contact_name": "to please all",
+    "socials": {
+      "facebook": "https://www.facebook.com/109392085480854",
+      "linkedin": "https://www.linkedin.com/company/sveagle-plumbing",
+      "google": "https://maps.google.com/maps/contrib/110180286123619908368",
+      "bbb": "https://www.bbb.org/us/co/littleton/profile/plumber/sveagle-1296-90278345/customer-reviews"
+    },
+    "deep_enriched_at": "2026-07-28T12:51:10.795Z"
+  },
+  {
+    "lead_id": "ChIJCW9_aXBBE4cRWoLwiMoj6AA",
+    "business_name": "Colorado Best Plumbing",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://coloradobestplumbers.com/",
+    "email": "",
+    "phone": "+1 719-417-8876",
+    "rating": 4.7,
+    "review_count": 154,
+    "address": "413 Security Blvd #2310, Colorado Springs, CO 80911",
+    "place_id": "ChIJCW9_aXBBE4cRWoLwiMoj6AA",
+    "subtypes": [
+      "Plumber, Repair service"
+    ],
+    "latitude": 38.749717,
+    "longitude": -104.74073709999999,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-07-28T12:48:24.251Z"
+  },
+  {
+    "lead_id": "ChIJhVs98x1PE4cRHVcde8aPhj8",
+    "business_name": "BenTek Plumbing & Mechanical",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "http://www.bentekplumbing.com/",
+    "email": "support@bentekplumbing.com",
+    "phone": "+1 719-402-3888",
+    "rating": 4.8,
+    "review_count": 52,
+    "address": "5525 Erindale Dr Ste 254, Colorado Springs, CO 80918",
+    "place_id": "ChIJhVs98x1PE4cRHVcde8aPhj8",
+    "subtypes": [
+      "Plumber, Contractor, Gas installation service"
+    ],
+    "latitude": 38.9116279,
+    "longitude": -104.7848211,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-07-28T12:48:24.252Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Ben Roddy",
+    "socials": {
+      "facebook": "https://www.facebook.com/Bentekplumbing"
+    },
+    "deep_enriched_at": "2026-07-28T12:51:08.869Z"
+  },
+  {
+    "lead_id": "ChIJV1BezrhFE4cRWzhpr31Andk",
+    "business_name": "Jolly Plumbing & Heating, Inc.",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.jollyplumbing.net/%3Futm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_campaign%3Dgmb",
+    "email": "",
+    "phone": "+1 719-473-8545",
+    "rating": 4.3,
+    "review_count": 81,
+    "address": "905 Yuma St, Colorado Springs, CO 80909",
+    "place_id": "ChIJV1BezrhFE4cRWzhpr31Andk",
+    "subtypes": [
+      "Plumber, Contractor, Handyman/Handywoman/Handyperson, Remodeler"
+    ],
+    "latitude": 38.845951899999996,
+    "longitude": -104.7774814,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-07-28T12:48:24.251Z"
+  },
+  {
+    "lead_id": "ChIJ6VsloOZIE4cRCZna55flQGM",
+    "business_name": "Allright Plumbing & Heating, Inc",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.allrightplumbingandhvac.com/",
+    "email": "aallrightplumbing@gmail.com",
+    "phone": "+1 719-597-1099",
+    "rating": 4.3,
+    "review_count": 138,
+    "address": "5625 Appaloosa Dr, Colorado Springs, CO 80923",
+    "place_id": "ChIJ6VsloOZIE4cRCZna55flQGM",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Air conditioning repair service, Furnace repair service, Heating contractor, Heating equipment supplier, HVAC contractor, Mechanical contractor"
+    ],
+    "latitude": 38.9131382,
+    "longitude": -104.7227509,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-07-28T12:48:24.251Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Special Use Code",
+    "socials": {
+      "bbb": "https://www.bbb.org/us/co/colorado-springs/profile/plumber/allright-plumbing-heating-inc-0785-5971099",
+      "facebook": "https://www.facebook.com/allrightplumbingandheatinginc",
+      "yelp": "https://www.yelp.com/biz/allright-plumbing-and-heating-colorado-springs-3"
+    },
+    "deep_enriched_at": "2026-07-28T12:51:11.520Z"
+  },
+  {
+    "lead_id": "ChIJmfvFobZGE4cRT0T0_hayQhg",
+    "business_name": "Team Plumbing",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.teamplumbing.com/",
+    "email": "front@teamplumbinginc.com",
+    "phone": "+1 719-226-0711",
+    "rating": 4.3,
+    "review_count": 78,
+    "address": "2042 Aerotech Dr, Colorado Springs, CO 80916",
+    "place_id": "ChIJmfvFobZGE4cRT0T0_hayQhg",
+    "subtypes": [
+      "Plumber"
+    ],
+    "latitude": 38.8013536,
+    "longitude": -104.7332242,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-07-28T12:48:24.251Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "https://www.facebook.com/TeamPlumbingColoradoSprings",
+      "bbb": "https://www.bbb.org/southern-colorado/business-reviews/plumbing-contractors/team-plumbing-in-colorado-springs-co-15003816",
+      "google": "https://maps.google.com/maps"
+    },
+    "deep_enriched_at": "2026-07-28T12:51:15.033Z"
+  },
+  {
+    "lead_id": "ChIJv3TnrmZHE4cRWZx4O6OYRfk",
+    "business_name": "Three Amigos Plumbing",
+    "trade": "plumber",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://threeamigosplumbingco.com/",
+    "email": "threeamigosplumbingco@gmail.com",
+    "phone": "+1 719-597-6763",
+    "rating": 4.6,
+    "review_count": 70,
+    "address": "2283 Waynoka Rd Ste E, Colorado Springs, CO 80915",
+    "place_id": "ChIJv3TnrmZHE4cRWZx4O6OYRfk",
+    "subtypes": [
+      "Plumber"
+    ],
+    "latitude": 38.8655392,
+    "longitude": -104.7146349,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-07-28T12:48:24.252Z",
+    "email_source": "contact-scraper",
+    "deep_enriched_at": "2026-07-28T12:51:15.291Z"
+  }
+]

@@ -1,0 +1,82 @@
+{
+  "weekOf": "2026-07-27",
+  "generatedAt": "2026-07-28T15:32:33.763Z",
+  "researchMode": "evergreen",
+  "niches": {
+    "caption": "results",
+    "reel": "results"
+  },
+  "posts": {
+    "carousel": {
+      "slides": [
+        {
+          "headline": "Slide 1",
+          "body": "What happens when there's nothing to find"
+        },
+        {
+          "headline": "Slide 2",
+          "body": "A homeowner needs a plumber, electrician, or handyman today, not next week."
+        },
+        {
+          "headline": "Slide 3",
+          "body": "They search. Three names come up. If you're not one of them, this job was never yours to lose — it just never reached you."
+        },
+        {
+          "headline": "Slide 4",
+          "body": "You never see the search. You never know the job existed. There's no missed call to notice, no lead to follow up on."
+        },
+        {
+          "headline": "Slide 5",
+          "body": "The work you're best at doesn't matter if it never gets seen. That's the whole problem a website solves."
+        },
+        {
+          "headline": "Slide 6",
+          "body": "We build the site that shows up. — Trevo"
+        }
+      ],
+      "caption": "What happens when there's nothing to find\n\nLink in bio to see what yours could look like.\n\n#contractormarketing #plumbingbusiness #hvacbusiness #electrician #trevoadvisors"
+    },
+    "caption1": {
+      "variantA": "We reviewed a contractor site that had everything except a way to call.\n\nNice logo. Clean colors. A whole page about the company history. Somewhere near the bottom, in small text, a contact form.\n\nNo phone number anywhere above it. No tap-to-call. Just a form, on a site that's mostly viewed on a phone, by someone standing in a driveway wanting to talk to a person.\n\nThis is a composite of a pattern we see constantly, not one specific business. The fix isn't a redesign. It's one button, moved to the top.\n\nLink in bio to see what yours could look like.\n\n— Trevo",
+      "variantB": "We reviewed a contractor site that had everything except a way to call.\n\nNice logo. Clean colors. A whole page about the company history. Somewhere near the bottom, in small text, a contact form.\n\nNo phone number anywhere above it. No tap-to-call. Just a form, on a site that's mostly viewed on a phone, by someone standing in a driveway wanting to talk to a person.\n\nThis is a composite of a pattern we see constantly, not one specific business. The fix isn't a redesign. It's one button, moved to the top.\n\nLink in bio to see what yours could look like.\n\n— Trevo",
+      "body": "We reviewed a contractor site that had everything except a way to call.\n\nNice logo. Clean colors. A whole page about the company history. Somewhere near the bottom, in small text, a contact form.\n\nNo phone number anywhere above it. No tap-to-call. Just a form, on a site that's mostly viewed on a phone, by someone standing in a driveway wanting to talk to a person.\n\nThis is a composite of a pattern we see constantly, not one specific business. The fix isn't a redesign. It's one button, moved to the top.\n\nLink in bio to see what yours could look like.\n\n— Trevo"
+    },
+    "trevo_found": {
+      "body": "Here's what's inside a Trevo handyman site.\n\nA service menu with real photos, not stock images.\nTap-to-call above the fold, one thumb reach.\nA quick quote request form for jobs that don't need a phone call to start.\nGoogle reviews pulled in automatically.\nTrust badges shown clearly, right where a homeowner is deciding whether to trust you.\n\nThat's the build. — Trevo\n\nLink in bio to see what yours could look like.",
+      "hookLine": "Here's what's inside a Trevo handyman site."
+    },
+    "reel": {
+      "script": "Hook (0-2s): The job you never got isn't a mystery. It's arithmetic.\n[B-roll: phone search results scrolling]\n\nBody (2-14s): Someone searched. A few names came up. If you weren't one, that's it — no missed call, no message, nothing to notice. Just a job that went to whoever showed up.\n[B-roll: another business's site loading]\n\nCta (14-20s): We build the site that shows up. Link in bio to see yours.\n[B-roll: Trevo logo]\n— Trevo",
+      "hookLine": "The job you never got isn't a mystery. It's arithmetic.",
+      "caption": "The job you never got isn't a mystery. It's arithmetic.\n\nLink in bio to see yours."
+    }
+  },
+  "glossaryTerms": [
+    "social proof section",
+    "mobile-first",
+    "review velocity"
+  ],
+  "imagePaths": {
+    "carousel": [
+      "/Users/davidhettinger/Website-Master/molly/output/images/2026-07-27/carousel-slide-01.png",
+      "/Users/davidhettinger/Website-Master/molly/output/images/2026-07-27/carousel-slide-02.png",
+      "/Users/davidhettinger/Website-Master/molly/output/images/2026-07-27/carousel-slide-03.png",
+      "/Users/davidhettinger/Website-Master/molly/output/images/2026-07-27/carousel-slide-04.png",
+      "/Users/davidhettinger/Website-Master/molly/output/images/2026-07-27/carousel-slide-05.png",
+      "/Users/davidhettinger/Website-Master/molly/output/images/2026-07-27/carousel-slide-06.png"
+    ],
+    "caption1": [
+      "/Users/davidhettinger/Website-Master/molly/output/images/2026-07-27/caption-1.png"
+    ],
+    "trevo_found": [
+      "/Users/davidhettinger/Website-Master/molly/output/images/2026-07-27/trevo-found.png"
+    ],
+    "reel": [
+      "/Users/davidhettinger/Website-Master/molly/output/images/2026-07-27/reel-hook.png"
+    ]
+  },
+  "abTracking": {
+    "lastVariant": "A",
+    "week_2026-07-27": "A"
+  }
+}

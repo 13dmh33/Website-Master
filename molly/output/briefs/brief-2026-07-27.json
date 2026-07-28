@@ -1,0 +1,68 @@
+{
+  "weekOf": "2026-07-27",
+  "generatedAt": "2026-07-28T15:32:33.640Z",
+  "researchMode": "evergreen",
+  "weekTrade": "handyman",
+  "angles": [
+    {
+      "id": "angle-1",
+      "niche": "education",
+      "angle": "What happens when there's nothing to find",
+      "hook": "What happens when there's nothing to find",
+      "painPoint": "losing jobs to competitors with better websites",
+      "dataPoint": null,
+      "suggestedFormat": "carousel",
+      "evergreenId": "ev-carousel-03",
+      "prewrittenContent": {
+        "hook": "What happens when there's nothing to find",
+        "body": "Slide 1: What happens when there's nothing to find\nSlide 2: A homeowner needs a plumber, electrician, or handyman today, not next week.\nSlide 3: They search. Three names come up. If you're not one of them, this job was never yours to lose — it just never reached you.\nSlide 4: You never see the search. You never know the job existed. There's no missed call to notice, no lead to follow up on.\nSlide 5: The work you're best at doesn't matter if it never gets seen. That's the whole problem a website solves.\nSlide 6: We build the site that shows up. — Trevo",
+        "hashtags": "#contractormarketing #plumbingbusiness #hvacbusiness #electrician #trevoadvisors"
+      }
+    },
+    {
+      "id": "angle-2",
+      "niche": "journey",
+      "angle": "We reviewed a contractor site that had everything except a way to call.",
+      "hook": "We reviewed a contractor site that had everything except a way to call.",
+      "painPoint": "losing jobs to competitors with better websites",
+      "dataPoint": null,
+      "suggestedFormat": "caption",
+      "evergreenId": "ev-caption-03",
+      "prewrittenContent": {
+        "hook": "We reviewed a contractor site that had everything except a way to call.",
+        "body": "We reviewed a contractor site that had everything except a way to call.\n\nNice logo. Clean colors. A whole page about the company history. Somewhere near the bottom, in small text, a contact form.\n\nNo phone number anywhere above it. No tap-to-call. Just a form, on a site that's mostly viewed on a phone, by someone standing in a driveway wanting to talk to a person.\n\nThis is a composite of a pattern we see constantly, not one specific business. The fix isn't a redesign. It's one button, moved to the top.\n\nLink in bio to see what yours could look like.\n\n— Trevo",
+        "hashtags": "#contractorwebsite #websitedesign #contractormarketing #homeservices #trevoadvisors"
+      }
+    },
+    {
+      "id": "angle-3",
+      "niche": "product",
+      "angle": "Here's what's inside a Trevo handyman site.",
+      "hook": "Here's what's inside a Trevo handyman site.",
+      "painPoint": "losing jobs to competitors with better websites",
+      "dataPoint": null,
+      "suggestedFormat": "trevo_found",
+      "evergreenId": "ev-trevo-found-03",
+      "prewrittenContent": {
+        "hook": "Here's what's inside a Trevo handyman site.",
+        "body": "Here's what's inside a Trevo handyman site.\n\nA service menu with real photos, not stock images.\nTap-to-call above the fold, one thumb reach.\nA quick quote request form for jobs that don't need a phone call to start.\nGoogle reviews pulled in automatically.\nTrust badges shown clearly, right where a homeowner is deciding whether to trust you.\n\nThat's the build. — Trevo\n\nLink in bio to see what yours could look like.",
+        "hashtags": "#homeservices #contractorwebsite #trevoadvisors #websitedesign"
+      }
+    },
+    {
+      "id": "angle-4",
+      "niche": "journey",
+      "angle": "The job you never got isn't a mystery. It's arithmetic.",
+      "hook": "The job you never got isn't a mystery. It's arithmetic.",
+      "painPoint": "losing jobs to competitors with better websites",
+      "dataPoint": null,
+      "suggestedFormat": "reel",
+      "evergreenId": "ev-reel-03",
+      "prewrittenContent": {
+        "hook": "The job you never got isn't a mystery. It's arithmetic.",
+        "body": "Hook (0-2s): The job you never got isn't a mystery. It's arithmetic.\n[B-roll: phone search results scrolling]\n\nBody (2-14s): Someone searched. A few names came up. If you weren't one, that's it — no missed call, no message, nothing to notice. Just a job that went to whoever showed up.\n[B-roll: another business's site loading]\n\nCta (14-20s): We build the site that shows up. Link in bio to see yours.\n[B-roll: Trevo logo]\n— Trevo",
+        "hashtags": "#contractormarketing #homeservices #trevoadvisors #reels"
+      }
+    }
+  ]
+}

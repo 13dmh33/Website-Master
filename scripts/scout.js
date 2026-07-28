@@ -137,7 +137,9 @@ if (hasFlag('--suggest') || suggestTrade !== null) {
   }
 }
 
-if (!city || !trade) {
+// CLI-only guards. Skipped when this file is require()'d so tests can import the
+// budget helpers without the module exiting on missing --city/--trade.
+if (require.main === module && (!city || !trade)) {
   console.error('Usage: node scout.js --city "Denver, CO" --trade plumber [--multi] [--force]');
   console.error('       Add --mode has-website to find contractors who already have a site');
   console.error('       Add --suggest [trade]  to see top 5 markets before picking a city');
@@ -150,13 +152,17 @@ if (!city || !trade) {
 }
 
 const VALID_TRADES = ['plumber', 'electrician', 'roofer', 'handyman'];
-if (trade.toLowerCase() === 'hvac') {
-  console.error('HVAC is not a target trade. Focus on: plumber, electrician, roofer, handyman.');
-  process.exit(1);
-}
-if (!VALID_TRADES.includes(trade.toLowerCase())) {
-  console.error(`Trade must be one of: ${VALID_TRADES.join(', ')}`);
-  process.exit(1);
+// Also CLI-only — `trade` is null on import, and the HVAC exclusion is a
+// runtime guard for real runs, not something a test import should trip over.
+if (require.main === module) {
+  if (trade.toLowerCase() === 'hvac') {
+    console.error('HVAC is not a target trade. Focus on: plumber, electrician, roofer, handyman.');
+    process.exit(1);
+  }
+  if (!VALID_TRADES.includes(trade.toLowerCase())) {
+    console.error(`Trade must be one of: ${VALID_TRADES.join(', ')}`);
+    process.exit(1);
+  }
 }
 
 // ── CONFIG HELPERS ────────────────────────────────────────────────────────────
@@ -231,14 +237,30 @@ function resolveLimit(config) {
   return limitArg;
 }
 
-function checkBudget(config, estimatedCost) {
+/**
+ * Roll the spend counter when the calendar month changes. Deliberately separate
+ * from checkBudget() and called on EVERY run: it used to live inside
+ * checkBudget, which `--budget` skips entirely, so a stretch of --budget-only
+ * runs left current_month frozen. Real example from this repo — config sat at
+ * "2026-06" holding $0.142 accumulated across BOTH June and July, because every
+ * July run came through lead-gen.sh (which passes --budget by default). The
+ * first non-budget run then "detected a new month" and zeroed July's real spend.
+ */
+function rollMonthIfNeeded(config) {
   if (config.current_month !== currentMonth()) {
     config.current_month    = currentMonth();
     config.spent_this_month = 0;
     console.log('New month detected — spend counter reset to $0.00');
   }
+}
 
-  const remaining = config.monthly_cap - config.spent_this_month;
+function checkBudget(config, estimatedCost) {
+  rollMonthIfNeeded(config);
+
+  // Round to whole cents before dividing. Binary floating point makes
+  // 10 - 9.9 = 0.09999999999999964, so a raw Math.floor() silently forfeits a
+  // result at every budget boundary (99 instead of 100 at $0.10 / $0.001).
+  const remaining = Math.round((config.monthly_cap - config.spent_this_month) * 100) / 100;
 
   if (remaining <= 0) {
     console.error(`BUDGET CAP REACHED: $${config.spent_this_month.toFixed(2)} of $${config.monthly_cap.toFixed(2)} used this month.`);
@@ -493,11 +515,13 @@ async function main() {
   const totalLimit    = perQueryLimit * queries.length;
   const estimatedCost = totalLimit * costPerResult;
 
-  // Monthly budget check (only applies if no --budget flag) — shared cap across modes
-  if (!budgetArg) {
-    const capped = checkBudget(config, estimatedCost);
-    if (capped !== null) perQueryLimit = Math.max(1, Math.floor(capped / queries.length));
-  }
+  // Monthly budget check — shared cap across modes, and now enforced on EVERY
+  // run. `--budget` previously skipped this block outright, which meant the
+  // $10/mo ceiling was unenforceable through lead-gen.sh (it passes --budget by
+  // default), and the month never rolled. --budget is a per-run cap that
+  // narrows a run *within* the monthly ceiling; it is not an override of it.
+  const capped = checkBudget(config, estimatedCost);
+  if (capped !== null) perQueryLimit = Math.max(1, Math.floor(capped / queries.length));
 
   // Load known place_ids for pre-dedup (saves money on re-scraping same leads)
   const knownIds = loadKnownIds();
@@ -699,7 +723,14 @@ async function runHasWebsiteMode(config, flat, knownIds, knownDomains) {
   }
 }
 
-main().catch(err => {
-  console.error('Unexpected error:', err.message);
-  process.exit(1);
-});
+// Exported for tests — budget maths is money-safety logic and deserves a
+// regression guard. Matches the pattern in checker.js (module.exports +
+// require.main guard) so requiring this file never kicks off a real scrape.
+module.exports = { currentMonth, rollMonthIfNeeded, checkBudget };
+
+if (require.main === module) {
+  main().catch(err => {
+    console.error('Unexpected error:', err.message);
+    process.exit(1);
+  });
+}

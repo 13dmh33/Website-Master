@@ -65,7 +65,7 @@
 
 const fs   = require('fs');
 const path = require('path');
-const { isPlaceholderEmail, isNonProspectBusiness } = require('./lib/lead-quality');
+const { isPlaceholderEmail, isNonProspectBusiness, isImplausibleBusinessEmail } = require('./lib/lead-quality');
 
 const ROOT       = path.join(__dirname, '..');
 const STATE_PATH = path.join(ROOT, 'state.json');
@@ -187,7 +187,7 @@ function isJunk(email) {
 }
 
 /** Pick the single best email: prefer site-domain match, then a personal address over a role address. */
-function pickBest(emails, leadHost) {
+function pickBest(emails, leadHost, businessName) {
   const clean = [...new Set(emails)].filter(e => !isJunk(e));
   if (clean.length === 0) return null;
   // Domain match must be exact or a real subdomain — substring matching would
@@ -196,7 +196,16 @@ function pickBest(emails, leadHost) {
     const d = (e.split('@')[1] || '').toLowerCase();
     return d === leadHost || d.endsWith('.' + leadHost);
   }) : [];
-  const pool = domMatch.length ? domMatch : clean;
+  // With no domain match the old fallback accepted ANY non-junk address on the
+  // page, which is how third-party boilerplate became a lead's email: the
+  // 2026-07-28 Colorado Springs run adopted a font designer's personal Gmail
+  // (from a Google Fonts licence header) and a WordPress theme demo address.
+  // Restrict the fallback to addresses that could plausibly belong to this
+  // business; if none survive, report no email rather than a wrong one — the
+  // lead just stays SMS-channel, which is recoverable. Emailing a stranger is not.
+  const fallback = clean.filter(e => !isImplausibleBusinessEmail(e, leadHost, businessName));
+  const pool = domMatch.length ? domMatch : fallback;
+  if (!pool.length) return null;
   const personal = pool.filter(e => !ROLE_RE.test(e));
   return (personal.length ? personal : pool)[0];
 }
@@ -218,7 +227,7 @@ function findContactLinks(html, baseUrl, hints = CONTACT_HINTS) {
 }
 
 /** Scrape one site → best email or null. Never throws (homepage failure returns null). */
-async function scrapeSite(siteUrl) {
+async function scrapeSite(siteUrl, businessName) {
   const base = /^https?:/i.test(siteUrl) ? siteUrl : 'http://' + siteUrl;
   const host = normHost(base);
   let html;
@@ -239,7 +248,7 @@ async function scrapeSite(siteUrl) {
     } catch { /* one bad sub-page never aborts the site */ }
     await sleep(SUBPAGE_DELAY_MS);
   }
-  return pickBest(emails, host);
+  return pickBest(emails, host, businessName);
 }
 
 // ── --deep extraction helpers (public contact-page info only) ────────────────
@@ -589,7 +598,7 @@ async function renderHtml(url) {
  * fallback for empty SPA shells. Returns { email, phone, contact_name, socials, rendered }.
  * Throws only when the homepage itself is unreachable (mirrors scrapeSite).
  */
-async function scrapeSiteDeep(siteUrl) {
+async function scrapeSiteDeep(siteUrl, businessName) {
   const bare = String(siteUrl).replace(/^https?:\/\//i, '');
   const candidates = /^https?:/i.test(siteUrl) ? [siteUrl] : [`https://${bare}`, `http://${bare}`]; // https-first
   const host = normHost(candidates[0]);
@@ -617,7 +626,7 @@ async function scrapeSiteDeep(siteUrl) {
     names.push(...g.names); socials = mergeSocials(socials, g.socials);
   };
   // "Fully enriched" = the three outreach fields are in hand; socials are a bonus.
-  const complete = () => pickBest(emails, host) && (strong.length || weak.length) && names.find(Boolean);
+  const complete = () => pickBest(emails, host, businessName) && (strong.length || weak.length) && names.find(Boolean);
 
   fold(html);
 
@@ -644,7 +653,7 @@ async function scrapeSiteDeep(siteUrl) {
   }
 
   return {
-    email:        pickBest(emails, host),
+    email:        pickBest(emails, host, businessName),
     phone:        [...new Set([...strong, ...weak])][0] || null, // prefer tel:/JSON-LD over text
     contact_name: names.find(Boolean) || null,
     socials:      Object.keys(socials).length ? socials : null,
@@ -815,7 +824,7 @@ async function main() {
       process.stdout.write(`[${visited}/${todo.length}] ${c.rec.business_name || c.entry.lead_id} … `);
       let email = null;
       try {
-        email = await scrapeSite(c.site);
+        email = await scrapeSite(c.site, c.rec.business_name);
       } catch (e) {
         errors++;
         errorLeads.push({ lead_id: c.entry.lead_id, site: c.site, error: e.message });
@@ -864,7 +873,7 @@ async function main() {
       const label = c.rec.business_name || c.entry.lead_id;
       let result;
       try {
-        result = await scrapeSiteDeep(c.site);
+        result = await scrapeSiteDeep(c.site, c.rec.business_name);
       } catch (e) {
         errors++;
         errorLeads.push({ lead_id: c.entry.lead_id, site: c.site, error: e.message });

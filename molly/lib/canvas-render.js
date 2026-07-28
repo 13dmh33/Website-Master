@@ -391,7 +391,7 @@ async function renderReelHook(hookLine, niche = 'reel') {
   // CTA subline
   ctx.font      = `${DESIGN_CONFIG.bodySize - 4}px ${DESIGN_CONFIG.fontFamily}`;
   ctx.fillStyle = DESIGN_CONFIG.accent;
-  ctx.fillText('DM us the word  demo', padding, height - padding - 36);
+  ctx.fillText('Link in bio', padding, height - padding - 36);
 
   ctx.fillStyle = DESIGN_CONFIG.accent;
   ctx.fillRect(padding, height - padding, 44, 4);

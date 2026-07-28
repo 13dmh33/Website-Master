@@ -30,21 +30,31 @@ Write one evergreen Instagram ${format} post for the ${niche} niche, focused on 
 Format requirements:
 ${format === 'carousel' ? `- Hook line (stops a contractor scrolling)
 - 4 additional slide bodies (slide 1 headline, slides 2-5 body text)
-- Caption for the post (60-100 words, ends with "DM us the word demo.")` : ''}
+- Caption for the post (60-100 words, ends with "Link in bio to see what yours could look like.")` : ''}
 ${format === 'caption' ? `- 100-150 word caption (results or education niche)
 - Opens with a hook line
 - Short paragraphs
 - Ends with "— Trevo"` : ''}
 ${format === 'trevo_found' ? `- 80-120 words
-- Opens with "Trevo just built a [trade] site in [city]."
+- Opens with "Here's what's inside a Trevo [trade] site." — never name a city, and never imply a specific real client build
 - Lists 4-6 specific features
-- Ends with "That's the build. — Trevo\nDM us the word demo."` : ''}
-${format === 'reel' ? `- 20-second reel script format: HOOK (0-2s), BODY (2-14s), CTA (14-20s)
+- Ends with "That's the build. — Trevo\nLink in bio to see what yours could look like."` : ''}
+${format === 'reel' ? `- 20-second reel script format, labelled in sentence case exactly: Hook (0-2s), Body (2-14s), Cta (14-20s) — never all-caps labels
 - Include b-roll notes in brackets
 - Under 60 spoken words
 - Ends with "— Trevo"` : ''}
 
 Tone: direct, results-focused, never salesy. Sentence case. No buzzwords.
+
+Hard rules — a post breaking any of these is discarded by lib/brand-validator.js, so follow them exactly:
+- Never state a price or any dollar figure. Pricing is a DM/site conversation, never a post.
+- Never promise a delivery time (no "48 hours", "same-day", "next-day", "instant"). "In as little as two days" is the only allowed phrasing, used sparingly.
+- Never name a city, region, or real business. Targeting is national and trade-agnostic.
+- Never name the founder. Sign off as "— Trevo" only.
+- Never describe a specific client's results — no consenting client exists yet.
+- Any quantified claim (reviews, jobs, calls, customers, percentages, minutes) needs a named source and year from: BrightLocal, Think with Google, Pew Research, SBA, BBB, U.S. Census, BLS, ServiceTitan, Housecall Pro, Jobber. If you cannot cite one, make the point qualitatively instead.
+- Say "AI agent", never "bot". Never imply AI replaces staff.
+- No emojis. No "business day(s)" language. Exactly one call to action.
 
 Return valid JSON only:
 {

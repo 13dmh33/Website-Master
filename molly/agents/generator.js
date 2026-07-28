@@ -117,7 +117,7 @@ Requirements:
 - Open with "We just launched ${agent.name}. Here's what it does."
 - List what ${agent.name} does in 4-6 punchy lines (use the features below as a guide)
 - Never mention price or a dollar figure — if pricing comes up, that's a DM conversation, not a post
-- End with "That's ${agent.name}. — Trevo" followed by "DM us the word demo."
+- End with "That's ${agent.name}. — Trevo" followed by "Link in bio to see what yours could look like."
 - 80-120 words total
 - Tone: direct, not salesy
 
@@ -144,7 +144,7 @@ Requirements:
 - Open with "We just updated our ${demo.trade} demo site. Here's what's inside."
 - List 4-6 specific features of the demo site
 - Mention contractors can view the live demo at ${demo.url}
-- End with "That's the build. — Trevo" followed by "DM us the word demo."
+- End with "That's the build. — Trevo" followed by "Link in bio to see what yours could look like."
 - 80-120 words total
 - Tone: direct, results-focused
 
@@ -176,7 +176,7 @@ Hook angle: ${angle.hook}
 Format: Hook (0-2s), Body (2-14s), Cta (14-20s) — use exactly this sentence-case labeling, not all-caps
 Include b-roll notes inline in brackets.
 Under 60 spoken words total.
-Cta: "DM us the word demo."
+Cta: "Link in bio to see yours."
 End with "— Trevo"
 
 Also write the hook line only (max 12 words) for a reel hook image.
@@ -228,7 +228,7 @@ async function main() {
       });
     posts.carousel = {
       slides: slides.length ? slides : [{ headline: carouselAngle.hook, body: '' }],
-      caption: `${carouselAngle.hook}\n\nDM us the word demo.\n\n${carouselAngle.prewrittenContent.hashtags || ''}`,
+      caption: `${carouselAngle.hook}\n\nLink in bio to see what yours could look like.\n\n${carouselAngle.prewrittenContent.hashtags || ''}`,
     };
   } else {
     posts.carousel = await generateCarousel(carouselAngle, voiceContext);
@@ -270,7 +270,9 @@ async function main() {
     posts.reel = {
       script:   reelAngle.prewrittenContent.body,
       hookLine: reelAngle.hook,
-      caption:  reelAngle.prewrittenContent.body.split('\n')[0] || reelAngle.hook,
+      // The script's first line is a timing-labelled beat ("Hook (0-2s): ...") —
+      // never usable as a public caption. Use the clean hook plus the format's CTA.
+      caption:  `${reelAngle.hook}\n\nLink in bio to see yours.`,
     };
   } else {
     posts.reel = await generateReelScript(reelAngle, voiceContext, reelNiche);

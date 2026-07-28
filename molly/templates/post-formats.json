@@ -8,8 +8,8 @@
       "niche": "education",
       "caption_length": "60-100 words",
       "hook_purpose": "make a contractor stop scrolling — speak to a pain they feel daily",
-      "cta": "DM us the word demo",
-      "notes": "slide 1 is the hook — most important. slide 5 is always a soft CTA showing a demo link."
+      "cta": "link in bio",
+      "notes": "slide 1 is the hook — most important. slide 5 is always a soft CTA pointing to the configurator via link in bio."
     },
     "caption": {
       "description": "single-image pain-point or results caption — drives profile visits and follows",
@@ -30,7 +30,7 @@
       "niche": "product",
       "caption_length": "80-120 words",
       "hook_purpose": "show proof of work — real demo, real trade, real features",
-      "cta": "DM us the word demo",
+      "cta": "link in bio",
       "notes": "ends with 'That's the build. — Trevo'. never names specific clients."
     },
     "reel": {
@@ -41,7 +41,7 @@
       "niche": "results or journey (alternates weekly)",
       "caption_length": "under 60 spoken words",
       "hook_purpose": "pattern interrupt — contractor hears this and thinks 'that's me'",
-      "cta": "DM us the word demo",
+      "cta": "link in bio",
       "notes": "hook 2 sec, body 12 sec, cta 6 sec. include b-roll notes inline.",
       "image_type": "reel_hook — just the hook line as a quote-style image"
     }
@@ -56,6 +56,6 @@
       "results",
       "journey"
     ],
-    "current_week": 2
+    "current_week": 1
   }
 }

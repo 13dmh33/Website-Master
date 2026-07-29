@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Daily lead-gen — launchd job, 6:30am.
+
+  Runs scripts/daily-lead-gen.sh: sends yesterday's APPROVED batch, scrapes the
+  next market from the rotation, then emails Dave the new companies + contacts
+  to approve. Nothing sends without an approval recorded in
+  config/lead-batches.json.
+
+  Before loading, replace the two placeholders below:
+    __NODE_PATH__  -> output of `which node`   (e.g. /usr/local/bin/node)
+    __REPO_PATH__  -> /Users/davidhettinger/Website-Master
+
+  Install:
+    cp deploy/com.trevo.leadgen.daily.plist ~/Library/LaunchAgents/
+    launchctl load ~/Library/LaunchAgents/com.trevo.leadgen.daily.plist
+
+  Remove:
+    launchctl unload ~/Library/LaunchAgents/com.trevo.leadgen.daily.plist
+
+  IMPORTANT — the Mac must be awake at 06:30. launchd will NOT run a missed
+  StartCalendarInterval job while asleep; it fires late on wake, which can push
+  a send into the afternoon. Schedule a wake a few minutes prior:
+    sudo pmset repeat wakeorpoweron MTWRFSU 06:25:00
+  Verify with: pmset -g sched
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.trevo.leadgen.daily</string>
+
+    <!-- bash, not node: daily-lead-gen.sh orchestrates several node steps. -->
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/bash</string>
+        <string>__REPO_PATH__/scripts/daily-lead-gen.sh</string>
+    </array>
+
+    <key>WorkingDirectory</key>
+    <string>__REPO_PATH__</string>
+
+    <!-- node must be on PATH for the script's inner `node` calls. -->
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>PATH</key>
+        <string>/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>6</integer>
+        <key>Minute</key>
+        <integer>30</integer>
+    </dict>
+
+    <!-- Never run on load. Loading must not fire a real send. -->
+    <key>RunAtLoad</key>
+    <false/>
+
+    <key>StandardOutPath</key>
+    <string>__REPO_PATH__/logs/daily-lead-gen/launchd.log</string>
+    <key>StandardErrorPath</key>
+    <string>__REPO_PATH__/logs/daily-lead-gen/launchd.err.log</string>
+</dict>
+</plist>

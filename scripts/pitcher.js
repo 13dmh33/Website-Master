@@ -41,6 +41,7 @@ const { isSuppressed }          = require('./lib/suppression');
 const { appendFooter, assertEmailCompliant } = require('./lib/compliance');
 const { isContactSuppressed, loadStore: loadDncStore, syncFromState: syncDoNotContact } = require('./lib/do-not-contact');
 const { isNonProspectBusiness } = require('./lib/lead-quality');
+const { approvedLeadIds, getBatch } = require('./lib/lead-batches');
 
 // ── PATHS ─────────────────────────────────────────────────────────────────────
 
@@ -59,6 +60,7 @@ const hasFlag = (flag) => args.includes(flag);
 const limitArg  = parseInt(getArg('--limit') || '0', 10);
 const isDryRun  = hasFlag('--dry-run');
 const channelArg = getArg('--channel'); // e.g. 'email' — restrict send to this channel only
+const batchArg   = getArg('--batch');   // e.g. '2026-07-29' — send ONLY leads in that approved batch
 
 // ── CONFIG ────────────────────────────────────────────────────────────────────
 
@@ -178,6 +180,16 @@ function loadApprovedBriefs(config) {
   // loadStore(), which re-reads and re-parses the file on every call — inside a
   // loop over every brief that is one disk read per lead.
   const dncStore = loadDncStore();
+  // --batch restricts this run to one human-approved batch. The allowlist is
+  // empty unless that batch is explicitly status 'approved', so an un-reviewed
+  // or rejected batch sends nothing rather than defaulting to send.
+  const batchAllowlist = batchArg ? approvedLeadIds(batchArg) : null;
+  if (batchArg && batchAllowlist.size === 0) {
+    const b = getBatch(batchArg);
+    console.error(b
+      ? `Batch ${batchArg} is "${b.status}", not "approved" — nothing will be sent. Approve it with: node scripts/approve-batch.js ${batchArg}`
+      : `No batch recorded for ${batchArg} — nothing will be sent.`);
+  }
 
   for (const file of files) {
     try {
@@ -191,6 +203,7 @@ function loadApprovedBriefs(config) {
       // still reaching the send queue (8 approved briefs at the time of this fix,
       // including Ferguson and The Home Depot).
       if (isNonProspectBusiness(data.business_name)) continue;
+      if (batchAllowlist && !batchAllowlist.has(data.lead_id)) continue; // outside the approved batch
 
       const sentPath = path.join(MESSAGES_DIR, `${data.lead_id}-sent.json`);
 

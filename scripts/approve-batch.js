@@ -6,10 +6,16 @@
  * contacts it found. Nothing is sent until you approve that list here. The next
  * morning's run sends the approved batch, then scrapes the next market.
  *
+ * Approving is not a daily obligation. Unapproved batches queue up safely and
+ * drain one per morning once approved, so reviewing a week's worth in one
+ * sitting works exactly as well as doing it every day — sends simply pace to
+ * your approval rate rather than stopping permanently.
+ *
  * Usage:
  *   node scripts/approve-batch.js                 # show pending batches
  *   node scripts/approve-batch.js --list          # same, explicit
  *   node scripts/approve-batch.js 2026-07-29      # approve that batch
+ *   node scripts/approve-batch.js --all           # approve every pending batch
  *   node scripts/approve-batch.js 2026-07-29 --reject
  *   node scripts/approve-batch.js --show 2026-07-29   # full contact list
  */
@@ -40,6 +46,27 @@ function main() {
     if (!b) { console.error(`No batch for ${d}.`); process.exit(1); }
     printBatch(b, { full: true });
     console.log('');
+    return;
+  }
+
+  // Bulk approve — the realistic workflow. Reviewing every morning at 6:30am
+  // is not something a human actually does; approving a backlog in one sitting
+  // is. Each approved batch still sends on its own morning, one per day.
+  if (args.includes('--all')) {
+    const pend = pendingBatches();
+    if (!pend.length) { console.log('Nothing pending. Nothing to approve.'); return; }
+    let total = 0;
+    for (const b of pend) {
+      const res = reject ? rejectBatch(b.date) : approveBatch(b.date);
+      if (res.ok) {
+        total += b.leads.length;
+        console.log(`  ${b.date} → ${res.batch.status} (${b.leads.length} contacts)`);
+      } else {
+        console.log(`  ${b.date} → skipped: ${res.reason}`);
+      }
+    }
+    console.log(`\n${pend.length} batches ${reject ? 'rejected' : 'approved'}, ${total} contacts total.`);
+    if (!reject) console.log('They will send one batch per morning, oldest first.');
     return;
   }
 

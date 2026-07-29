@@ -8,6 +8,14 @@
       "rationale": "Three verified, non-overlapping causes account for the whole 'checked' count, none of which is a funnel quality problem: (1) Checker was approving at up to 120/day against Pitcher's 30/day send cap — a 4x ratio guarantees a growing checked pile by construction; the daily_limit was reverted to 30 on 2026-07-19, removing the driver. (2) The large majority of checked leads are SMS-channel, which is fully blocked until Twilio A2P 10DLC clears — they cannot be sent regardless of backlog effort. (3) ~229 'checked' records in state.json have no brief file at all (orphaned state), so they need re-diagnosis, not pitching. As of 2026-07-19 there were 0 approved-and-unsent EMAIL leads. Do not re-recommend 'clear the backlog' as the single biggest revenue lever, and do not read the checked count as a quality leak.",
       "supersedes": ["clear_send_backlog"],
       "explains": ["checker_limit_elevated", "diagnoser_limit_elevated"]
+    },
+    {
+      "id": "zoho-imap-enabled",
+      "date": "2026-07-27",
+      "decision": "IMAP is enabled for dave@trevoadvisors.com. Stop recommending it.",
+      "rationale": "Dave enabled IMAP in the Zoho Mail admin settings on 2026-07-27, and it was verified working the same day: a live ImapFlow connection to imap.zoho.com:993 authenticated and opened INBOX successfully, with imapflow and mailparser both installed. This is the class of change Merlin structurally cannot see — it reads repo state, and a vendor account setting leaves no trace in the repo, so repo-facts.js has no resolver that could ever detect it. Without this entry Merlin re-recommends it every night forever at score 18.0, crowding out real work in both the ranked backlog and Dave's own list. The same pattern applies to every other vendor-side unlock (Twilio A2P approval, Buffer tokens, Formspree): record a decision here rather than waiting for a resolver that cannot exist.",
+      "supersedes": ["enable_zoho_imap"],
+      "explains": []
     }
   ]
 }

@@ -10,6 +10,30 @@ function today() {
   return new Date().toISOString().slice(0, 10);
 }
 
+/**
+ * Dave's own list, surfaced in the report body rather than only inside the
+ * session prompts. These are the candidates tagged `executor: 'dave'` — work
+ * that needs a browser, a vendor dashboard, or a phone, and that no Claude Code
+ * session can do. Previously they appeared only in session-primary.md's "Dave's
+ * tasks" lane, so reading the report alone gave no view of what was blocked on
+ * him. Ordered by the same revenue-weighted score as everything else.
+ */
+function renderDaveItems(ranking) {
+  const items = (ranking.ranked || []).filter(c => c.executor === 'dave');
+  if (items.length === 0) {
+    return 'Nothing is currently blocked on you — every ranked candidate can be done in a Claude Code session.';
+  }
+  const lines = items.map((c, i) => {
+    const est = c.estimateHours != null ? `, ~${c.estimateHours}h` : '';
+    return `${i + 1}. **${c.label}** (score ${c.score.toFixed(1)}${est})\n   ${c.why}`;
+  });
+  return [
+    `${items.length} item${items.length === 1 ? '' : 's'} need you — a browser, a vendor dashboard, or a phone. Nothing here can be automated away.`,
+    '',
+    ...lines,
+  ].join('\n');
+}
+
 function renderGitHealth(gitHealth) {
   const stale = gitHealth.branches.filter(b => b.stale);
   const unpushed = gitHealth.branches.filter(b => b.unpushed);
@@ -99,6 +123,10 @@ branches, configs, or sent outreach.
 ${rec ? `**${rec.label}**\n\n${rec.why}\n\nThis scored highest under the fixed rubric (revenue proximity weighted 3x above build volume — a hard rule, not a per-run preference). ${rec.buildVolume === 0 ? 'This is a zero-build, don\'t-build recommendation: the highest-value move right now is not writing more code.' : `Build volume: ${rec.buildVolume}/10.`}` : 'No candidates scored — see the ranked list appendix (empty) and check Merlin\'s candidate pool for a bug.'}
 
 Two session prompts are attached separately (primary, ~${primaryQueueHours}h; light alternate, ~${lightQueueHours}h) — both are paste-ready, no editing required.
+
+## Your list — what needs you
+
+${renderDaveItems(ranking)}
 
 ## Repo health
 

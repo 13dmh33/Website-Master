@@ -11,7 +11,9 @@ Code session prompts. Advisor only — it recommends, it never acts.
 
 Merlin reads and writes only its own reports/prompts under `merlin/reports/`. It never
 modifies code, pushes/deletes branches, changes configs, or sends outreach. Its only
-outbound action is emailing its own report to `13dmh33@gmail.com`.
+outbound action is delivering its own report to `13dmh33@gmail.com` — as a GitHub issue
+in CI, or over SMTP locally. The issue channel opens issues about its own report and
+nothing else; it never comments on, labels, or closes anyone else's issue or PR.
 `merlin/lib/actor-gate.js`'s `MERLIN_ACTOR` is a documented, unimplemented, default-off
 stub for any future autonomous-action capability — nothing is gated on it yet, and
 nothing should be until a real actor capability is built and reviewed separately.
@@ -69,10 +71,46 @@ subsystems (Nora, funnel-metrics):
   meaning an operational step isn't running). Committed by the nightly workflow so the
   comparison survives ephemeral CI runners.
 - `lib/report.js` — assembles the full dated markdown report.
+- `lib/report-body.js` — the delivered body (report + both prompts). Dependency-free so
+  both delivery channels render identical content without the issue channel pulling in
+  nodemailer. Owns `RECIPIENT`.
+- `lib/github-issue.js` — **the CI delivery channel.** Posts the report as a GitHub
+  issue, which GitHub emails to `13dmh33@gmail.com`. Authenticates with the
+  Actions-injected `GITHUB_TOKEN`, so it needs no secret setup — see "Delivery" below
+  for why that matters. Assigns and @-mentions Dave so the notification email fires
+  regardless of his repo-watch level, retries without assignee/label metadata on a 422
+  rather than losing the report, and truncates past GitHub's 65,536-char body limit
+  (pointing at the committed files) instead of failing.
 - `lib/mailer.js` — Zoho SMTP send to `13dmh33@gmail.com`, matching `pitcher.js`'s
-  proven transport shape.
-- `run.js` — the CLI orchestrator. Writes `merlin/reports/YYYY-MM-DD/` then emails
+  proven transport shape. Now the **local** channel; re-exports `buildEmailBody` /
+  `RECIPIENT` from `report-body.js` so its API is unchanged.
+- `run.js` — the CLI orchestrator. Writes `merlin/reports/YYYY-MM-DD/` then delivers
   (unless `--no-email`). Never touches `state.json` or any config file.
+
+## Delivery
+
+Both channels land in `13dmh33@gmail.com`. `run.js` picks whichever the environment can
+actually authenticate:
+
+| Environment | Channel | Credentials |
+|---|---|---|
+| GitHub Actions | GitHub issue → GitHub notification email | `GITHUB_TOKEN`, injected automatically |
+| Local Mac | Zoho SMTP | `ZOHO_EMAIL` / `ZOHO_APP_PASSWORD` from `.env.local` |
+
+**Why CI does not use Zoho:** it never could. `ZOHO_EMAIL`/`ZOHO_APP_PASSWORD` were
+referenced by the workflow but never set as repo secrets, so `mailer.js` threw on the
+empty values before opening a socket — Zoho itself was never contacted. Every scheduled
+run from the workflow's first day through 2026-07-29 failed there (see run
+`30440898428`), and because the commit step lacked `if: always()`, a failed delivery also
+meant the report was never committed — which is why `merlin/reports/` held only
+hand-committed dates. Both are fixed; the commit and artifact steps now run regardless.
+
+A delivery failure still exits 1 so the run goes red honestly, but the report files are
+written before delivery is attempted and are committed either way.
+
+**Still unfixed:** `scripts/notify-workflow-failure.js` (the `if: failure()` alert step)
+depends on those same absent Zoho secrets, so failure alerts remain silent. Adding the
+secrets or porting it to the issue channel would close that gap.
 
 ## Config
 
@@ -83,16 +121,17 @@ already in use elsewhere (`cost-tracker.js`, `scout-config.json`,
 ## Running it
 
 ```bash
-node merlin/run.js              # full run: writes dated files + emails the report
-node merlin/run.js --no-email   # writes dated files only
+node merlin/run.js              # full run: writes dated files + delivers the report
+node merlin/run.js --no-email   # writes dated files only, skips delivery
 
 npm run test -- merlin/test/*.test.js   # or: node --test merlin/test/*.test.js
 ```
 
-Env vars (from `.env.local`): `ZOHO_EMAIL`, `ZOHO_APP_PASSWORD` (required for the send —
-SMTP is unaffected by the standing IMAP-disabled blocker documented in the standing
+Env vars (from `.env.local`): `ZOHO_EMAIL`, `ZOHO_APP_PASSWORD` for the local SMTP send
+(SMTP is unaffected by the standing IMAP-disabled blocker documented in the standing
 action-items memory). `APOLLO_API_KEY` is optional — its absence is detected and
-reported, not treated as an error.
+reported, not treated as an error. In CI, `GITHUB_TOKEN` (automatic) selects the issue
+channel and `MERLIN_RUN_URL` adds a link back to the run.
 
 ## Scheduling
 

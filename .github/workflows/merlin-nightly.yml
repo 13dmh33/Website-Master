@@ -13,6 +13,7 @@ jobs:
 
     permissions:
       contents: write  # needed to commit the dated report files
+      issues: write    # the report is delivered as an issue, which GitHub emails to Dave
 
     steps:
       - name: Check out repo
@@ -32,11 +33,17 @@ jobs:
       - name: Run Merlin
         run: node merlin/run.js
         env:
-          ZOHO_EMAIL: ${{ secrets.ZOHO_EMAIL }}
-          ZOHO_APP_PASSWORD: ${{ secrets.ZOHO_APP_PASSWORD }}
+          # GITHUB_TOKEN is injected by Actions — no secret setup required, which is
+          # the whole point: the Zoho secrets were never set, so every scheduled run
+          # since this workflow landed failed at the send step without reaching Zoho.
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          MERLIN_RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           APOLLO_API_KEY: ${{ secrets.APOLLO_API_KEY }}
 
+      # always(): a delivery failure must not cost us the report. The commit step
+      # having no such guard is why merlin/reports/ holds only hand-committed dates.
       - name: Commit dated report + funnel snapshot
+        if: always()
         run: |
           git config user.name  "merlin-agent"
           git config user.email "merlin@trevoadvisors.com"

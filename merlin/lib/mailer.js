@@ -9,7 +9,9 @@
 
 const nodemailer = require('nodemailer');
 
-const RECIPIENT = '13dmh33@gmail.com';
+// Body rendering lives in report-body.js so the GitHub-issue channel can share
+// it without requiring nodemailer. Re-exported here to keep this module's API.
+const { buildEmailBody, RECIPIENT } = require('./report-body');
 
 function getZohoTransport(zohoEmail, zohoAppPassword) {
   if (!zohoEmail || !zohoAppPassword) {
@@ -21,27 +23,6 @@ function getZohoTransport(zohoEmail, zohoAppPassword) {
     secure: true,
     auth: { user: zohoEmail, pass: zohoAppPassword },
   });
-}
-
-function buildEmailBody({ report, primaryPrompt, lightPrompt }) {
-  return `${report}
-
----
-
-## Primary session prompt (paste-ready)
-
-\`\`\`
-${primaryPrompt}
-\`\`\`
-
----
-
-## Light alternate session prompt (paste-ready)
-
-\`\`\`
-${lightPrompt}
-\`\`\`
-`;
 }
 
 async function sendMerlinReport({ report, primaryPrompt, lightPrompt, date, zohoEmail, zohoAppPassword }) {

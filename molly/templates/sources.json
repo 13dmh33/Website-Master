@@ -1,8 +1,8 @@
 {
   "meta": {
     "title": "Trades Social Media Source Database",
-    "description": "200 curated sources for HVAC, Plumbing, Electrical, and Handyman content inspiration.",
-    "total": 200,
+    "description": "234 curated sources for HVAC, Plumbing, Electrical, and Handyman content inspiration.",
+    "total": 234,
     "tags": {
       "trades": ["hvac", "plumbing", "electrical", "handyman", "multi"],
       "categories": ["news", "business", "humor", "regulatory"],
@@ -211,6 +211,41 @@
     { "id": 197, "name": "@blue_collar_pride", "url": "https://www.instagram.com/blue_collar_pride", "platform": "instagram", "trades": ["hvac", "plumbing", "electrical", "handyman"], "categories": ["humor"], "notes": "Blue collar identity and pride content" },
     { "id": 198, "name": "SMACNA YouTube", "url": "https://www.youtube.com/@SMACNA", "platform": "youtube", "trades": ["hvac"], "categories": ["regulatory"], "notes": "Sheet Metal and Air Conditioning Contractors National Association" },
     { "id": 199, "name": "@trades_memes", "url": "https://www.instagram.com/trades_memes", "platform": "instagram", "trades": ["hvac", "plumbing", "electrical", "handyman"], "categories": ["humor"], "notes": "Cross-trade meme content — high shareable value" },
-    { "id": 200, "name": "Skilled Trades Alliance", "url": "https://www.skilledtradesalliance.org", "platform": "website", "trades": ["hvac", "plumbing", "electrical", "handyman"], "categories": ["business", "regulatory"], "notes": "Workforce development and trades advocacy" }
+    { "id": 200, "name": "Skilled Trades Alliance", "url": "https://www.skilledtradesalliance.org", "platform": "website", "trades": ["hvac", "plumbing", "electrical", "handyman"], "categories": ["business", "regulatory"], "notes": "Workforce development and trades advocacy" },
+
+    { "id": 201, "name": "Avoca AI Blog", "url": "https://www.avoca.ai/blog", "platform": "website", "trades": ["hvac", "plumbing", "electrical", "handyman"], "categories": ["business"], "notes": "AI receptionist case studies — after-hours missed-call revenue impact" },
+    { "id": 202, "name": "AI by Storm Case Studies", "url": "https://www.aibystorm.com/case-studies", "platform": "website", "trades": ["plumbing", "electrical", "handyman"], "categories": ["business"], "notes": "Real-world AI intake, lead qualification, emergency detection for contractors" },
+    { "id": 203, "name": "Skillmammoth AI HVAC Guide", "url": "https://skillmammoth.com", "platform": "website", "trades": ["hvac"], "categories": ["business"], "notes": "ROI-ranked AI receptionist/chatbot guide, training on real service scripts" },
+    { "id": 204, "name": "RelayFi Home Services Guide", "url": "https://www.relayfi.com", "platform": "website", "trades": ["hvac", "plumbing", "electrical", "handyman"], "categories": ["business"], "notes": "Eliminating admin churn, ML-driven real-time dispatching" },
+    { "id": 205, "name": "Goodcall Resources", "url": "https://www.goodcall.com/resources", "platform": "website", "trades": ["hvac", "plumbing", "electrical", "handyman"], "categories": ["business"], "notes": "AI phone agent case studies for overflow home service call capture" },
+    { "id": 206, "name": "Zyra Talk Case Studies", "url": "https://www.zyratalk.com/case-studies", "platform": "website", "trades": ["plumbing", "electrical", "handyman"], "categories": ["business"], "notes": "AI chat workflows for contractor lead capture and routing" },
+    { "id": 207, "name": "Schedule Engine Blog", "url": "https://www.scheduleengine.com/blog", "platform": "website", "trades": ["hvac", "plumbing", "electrical", "handyman"], "categories": ["business"], "notes": "Intelligent automated booking systems integrated with trade CRMs" },
+    { "id": 208, "name": "HVACR Business", "url": "https://www.hvacrbusiness.com", "platform": "website", "trades": ["hvac"], "categories": ["business", "news"], "notes": "HVAC leadership, finance, and operational sales" },
+    { "id": 209, "name": "SNIPS Magazine", "url": "https://www.snipsmag.com", "platform": "website", "trades": ["hvac"], "categories": ["news"], "notes": "Sheet metal contractors and custom HVAC fabrication" },
+    { "id": 210, "name": "Air Conditioning Today", "url": "https://www.airconditioningtoday.com", "platform": "website", "trades": ["hvac"], "categories": ["news"], "notes": "Southwest regional HVAC news, product launches, market analysis" },
+    { "id": 211, "name": "ASHRAE Journal", "url": "https://www.ashrae.org/technical-resources/ashrae-journal", "platform": "website", "trades": ["hvac"], "categories": ["news", "regulatory"], "notes": "Engineering, design guidance, and technology standard" },
+    { "id": 212, "name": "Indoor Comfort News", "url": "https://www.indoorcomfortnews.com", "platform": "website", "trades": ["hvac"], "categories": ["news"], "notes": "Western U.S. trade monthly — industry shifts and products" },
+    { "id": 213, "name": "HVAC School", "url": "https://www.hvacrschool.com", "platform": "website", "trades": ["hvac"], "categories": ["business"], "notes": "Field-level troubleshooting education, \"for techs, by techs\"" },
+    { "id": 214, "name": "Engineered Systems", "url": "https://www.esmagazine.com", "platform": "website", "trades": ["hvac"], "categories": ["news"], "notes": "HVAC design and digital building controls" },
+    { "id": 215, "name": "PHC News", "url": "https://www.phcnews.com", "platform": "website", "trades": ["plumbing"], "categories": ["news"], "notes": "Monthly insights for plumbing and hydronic contractors" },
+    { "id": 216, "name": "Plumber Magazine", "url": "https://www.plumbermag.com", "platform": "website", "trades": ["plumbing"], "categories": ["news"], "notes": "Field-level plumbing business advice and product spotlights" },
+    { "id": 217, "name": "ASPE Pipeline", "url": "https://www.aspe.org/pipeline", "platform": "website", "trades": ["plumbing"], "categories": ["regulatory"], "notes": "American Society of Plumbing Engineers — technical education and standards" },
+    { "id": 218, "name": "Plbg.com Forums", "url": "https://www.plbg.com", "platform": "website", "trades": ["plumbing"], "categories": ["business", "humor"], "notes": "Grassroots plumbing scenarios and troubleshooting advice" },
+    { "id": 219, "name": "Plumbing Systems & Design", "url": "https://www.psdmagazine.org", "platform": "website", "trades": ["plumbing"], "categories": ["news"], "notes": "Complex plumbing infrastructure content" },
+    { "id": 220, "name": "Kitchen and Bath Design News", "url": "https://www.kbdn.com", "platform": "website", "trades": ["plumbing"], "categories": ["news"], "notes": "Remodeling and fixture installation side of plumbing" },
+    { "id": 221, "name": "Water Conditioning & Purification (WC&P)", "url": "https://www.wcponline.com", "platform": "website", "trades": ["plumbing"], "categories": ["news"], "notes": "Filtration, water quality, and specialized tech training" },
+    { "id": 222, "name": "Electrical Wholesaling", "url": "https://www.ewweb.com", "platform": "website", "trades": ["electrical"], "categories": ["business"], "notes": "Supply chain updates and equipment trends for electrical trade" },
+    { "id": 223, "name": "Pro Remodeler", "url": "https://www.proremodeler.com", "platform": "website", "trades": ["handyman"], "categories": ["business"], "notes": "Business and tech advice for general contractors and remodelers" },
+    { "id": 224, "name": "Qualified Remodeler", "url": "https://www.qualifiedremodeler.com", "platform": "website", "trades": ["handyman"], "categories": ["business"], "notes": "Industry data, scaling strategies for residential general contractors" },
+    { "id": 225, "name": "Construction Executive", "url": "https://www.constructionexec.com", "platform": "website", "trades": ["hvac", "plumbing", "electrical", "handyman"], "categories": ["business"], "notes": "Macro-level view of tech, IT, and automation in contracting" },
+    { "id": 226, "name": "Electrical Business", "url": "https://www.ebmag.com", "platform": "website", "trades": ["electrical"], "categories": ["business"], "notes": "Market trends, code changes, operations management" },
+    { "id": 227, "name": "Home Service Expert (Tommy Mello)", "url": "https://www.homeserviceexpert.com", "platform": "website", "trades": ["hvac", "plumbing", "electrical", "handyman"], "categories": ["business"], "notes": "High-energy education on scaling, automation, dominating local markets" },
+    { "id": 228, "name": "Blue Collar Nerd", "url": "https://www.bluecollarnerd.com", "platform": "website", "trades": ["hvac", "plumbing", "electrical", "handyman"], "categories": ["business"], "notes": "Technical breakdowns of CRM setup and workflow automation in trades" },
+    { "id": 229, "name": "Service Nation Alliance", "url": "https://www.servicenation.com", "platform": "website", "trades": ["hvac", "plumbing", "electrical", "handyman"], "categories": ["business"], "notes": "Business resources, financial benchmarks, contractor case studies" },
+    { "id": 230, "name": "EGIA Contractor University", "url": "https://www.egia.org", "platform": "website", "trades": ["hvac", "plumbing", "electrical", "handyman"], "categories": ["business"], "notes": "Sales psychology, marketing, and business tech education" },
+    { "id": 231, "name": "Weldon Long HVAC Sales Training", "url": "https://www.weldonlong.com", "platform": "website", "trades": ["hvac"], "categories": ["business"], "notes": "Lead handling, customer psychology, closing deal frameworks" },
+    { "id": 232, "name": "Plumber SEO Blog", "url": "https://www.plumberseo.com", "platform": "website", "trades": ["plumbing"], "categories": ["business"], "notes": "Digital footprint and lead generation tactics for plumbers" },
+    { "id": 233, "name": "FieldRoutes Resource Center", "url": "https://www.fieldroutes.com/resources", "platform": "website", "trades": ["hvac", "plumbing", "electrical", "handyman"], "categories": ["business"], "notes": "Routing optimization, dispatch efficiency, field operations" },
+    { "id": 234, "name": "TradeWire", "url": "https://www.tradewire.com", "platform": "website", "trades": ["hvac", "plumbing", "electrical", "handyman"], "categories": ["news"], "notes": "Press and breaking news on technology shifts across trade verticals" }
   ]
 }

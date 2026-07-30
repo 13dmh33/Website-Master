@@ -9,6 +9,8 @@
     "ingest": "node src/ingest.js",
     "scout": "node src/scout.js",
     "dry-run": "node src/index.js --dry-run",
+    "approve-tailor": "node scripts/approve-tailor.js",
+    "interview-prep": "node scripts/interview-prep.js",
     "test": "node test/offline.mjs",
     "test:claude": "node test/claude-path.mjs"
   },
@@ -17,6 +19,7 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.65.0",
+    "diff": "^9.0.0",
     "docx": "^9.0.0",
     "dotenv": "^16.4.5",
     "googleapis": "^144.0.0",

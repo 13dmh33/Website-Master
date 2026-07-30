@@ -227,12 +227,46 @@ walls / ToS) — not scraped, not planned.
 job-hunter/
   inputs/       master-resume.*  (yours; gitignored) + preferences.md
   data/         master-profile.json (generated; gitignored)
+                career-context.md — Dave's career-coach brief (positioning, vetted
+                  accomplishments, resume methodology, open-items checklist)
+                resume-baselines/{sales-planning,finance,national-accounts}.md —
+                  last-approved resume per archetype, used to diff new drafts against
+                career-coach-drafts.json — pending/approved/rejected career-coach drafts
   out/          tailored resume + cover letter per match (generated; gitignored)
+                out/<date>/career-coach/<slug>/ — review.md, interview-prep.md,
+                  resume.docx/cover-letter.docx (only after approval)
   logs/         daily run logs (gitignored)
   state.json    append-only dedup ledger (gitignored)
+  scripts/
+    approve-tailor.js    approve/reject a career-coach draft (writes the real .docx)
+    interview-prep.js    on-demand interview prep for an already-tailored job
   src/
     index.js    orchestrator (npm run daily)
-    ingest.js scout.js filter.js scorer.js tailor.js reporter.js
-    lib/        config, state, recency, dedup, claude, sheets, email, docx, ...
+    ingest.js scout.js filter.js scorer.js tailor.js career-coach.js reporter.js
+    lib/        config, state, recency, dedup, claude, sheets, email, docx,
+                career-coach-store, ...
     sources/    greenhouse, lever, ashby, adzuna, usajobs, workday(stub)
 ```
+
+## Career-coach (2026-07-29)
+
+A second, separate step alongside the automatic `tailor.js` resume generation
+above — this one re-ranks the day's matches against your own career-context
+brief (`data/career-context.md`, not the auto-parsed resume), which is allowed
+to disagree with the scorer's own fit ranking. Only the top 1-3 get a draft,
+and nothing becomes a real `.docx` until you approve it:
+
+```bash
+node scripts/approve-tailor.js               # list pending drafts
+node scripts/approve-tailor.js --show <id>   # view the full draft (diff, gaps, open items)
+node scripts/approve-tailor.js <id>          # approve -> writes resume.docx/cover-letter.docx
+node scripts/approve-tailor.js <id> --reject # reject, nothing written
+
+node scripts/interview-prep.js <id>          # once an interview is scheduled — likely
+                                              # questions, STAR stories, gap talking points,
+                                              # questions to ask them. On-demand, not cron.
+```
+
+The highlighted diff (added/removed vs. the last approved resume for the same
+archetype) and gap analysis show up in the daily digest email for the top
+picks, not just in local files.

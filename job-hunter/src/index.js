@@ -26,6 +26,7 @@ import { runScout } from './scout.js';
 import { runFilter } from './filter.js';
 import { runScorer } from './scorer.js';
 import { runTailor } from './tailor.js';
+import { runCareerCoach } from './career-coach.js';
 import { runReporter } from './reporter.js';
 
 const log = makeLogger('daily');
@@ -92,12 +93,14 @@ export async function runDaily(argv = process.argv.slice(2)) {
   // Stage 2: cheap rules filter.
   const { kept } = runFilter(fresh, prefs);
 
-  // Stage 3: score with Haiku + freshness bonus. Passing state lets the scorer
-  // reuse a cached score for a job it already scored under the same profile/
-  // preferences instead of paying for another Haiku call (see scorer.js).
-  const { matches } = await runScorer(kept, {
+  // Stage 3: score with Haiku + freshness bonus + location adjustment. Passing
+  // state lets the scorer reuse a cached score for a job it already scored
+  // under the same profile/preferences instead of paying for another Haiku
+  // call (see scorer.js). `prefs` feeds lib/location.js#classifyLocation.
+  const { matches, duplicateFitWarning } = await runScorer(kept, {
     profile,
     preferencesText,
+    prefs,
     minScore: args.minScore,
     now,
     state,
@@ -112,8 +115,27 @@ export async function runDaily(argv = process.argv.slice(2)) {
     now,
   });
 
+  // Stage 4b: career-coach review — runs alongside Stage 4, not replacing it.
+  // Re-ranks `matches` (not `tailored`) against Dave's own career-context
+  // brief, since this re-ranking is allowed to promote a job Stage 4's
+  // scorer-order tailoring never reached. Attaches job.careerCoach onto the
+  // matching entry in `tailored` by id, adding a new entry (with no
+  // tailor.js deliverables) if the career-coach's pick wasn't already there.
+  const careerCoachResults = await runCareerCoach(matches, { now, dryRun: args.dryRun });
+  const tailoredById = new Map(tailored.map((j) => [j.id, j]));
+  for (const { job, careerCoach } of careerCoachResults) {
+    const existing = tailoredById.get(job.id);
+    if (existing) {
+      existing.careerCoach = careerCoach;
+    } else {
+      const added = { ...job, deliverables: null, careerCoach };
+      tailored.push(added);
+      tailoredById.set(job.id, added);
+    }
+  }
+
   // Stage 5: digest (email + sheet + state).
-  await runReporter(tailored, { state, now, dryRun: args.dryRun });
+  await runReporter(tailored, { state, now, dryRun: args.dryRun, duplicateFitWarning });
 
   // Persist the append-only state once, unless this was a dry run.
   if (!args.dryRun) {

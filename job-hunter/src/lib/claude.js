@@ -13,6 +13,8 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { config } from './config.js';
 
+const ARCHETYPES_FOR_PROMPT = ['sales-planning', 'finance', 'national-accounts'];
+
 let _client = null;
 function client() {
   if (!_client) {
@@ -257,6 +259,283 @@ export async function tailorJob({ job, profile, preferencesText }) {
     missingKeywords: Array.isArray(parsed.missing_keywords)
       ? parsed.missing_keywords.map(String)
       : [],
+    usage: message.usage,
+  };
+}
+
+// --- Career-coach re-rank (Claude Haiku) ---
+//
+// Dave's own career-context brief carries a different evaluation lens than the
+// generic scorer (sales-to-finance crossover positioning, standing strategic
+// conclusions like "internal Daikin applications are highest-probability").
+// This re-ranking is explicitly allowed to disagree with scoreJob()'s fit —
+// that's the whole point of running it, not a bug to reconcile.
+export async function rerankForCareerCoach({ jobs, brief }) {
+  const system =
+    "You are David Hettinger's personal career-coach re-ranking assistant. You are given his " +
+    'full career-context brief (real background, resume methodology, and standing strategic ' +
+    "conclusions) and a list of today's candidate job matches. Apply the brief's evaluation lens " +
+    '(sales-to-finance crossover positioning) and its standing strategic conclusions to assign ' +
+    'each job a candid percent fit rating. Be plain, not validating: fit degrades sharply when a ' +
+    'posting drifts from commercial finance + pricing leadership, and a poor-fit archetype should ' +
+    "be named and rated low rather than softened. This rating is allowed to disagree with any " +
+    'other fit score already attached to a job — score independently from the brief\'s lens. ' +
+    'Return a strict JSON object.';
+
+  const stablePrefix = ['CAREER CONTEXT BRIEF (authoritative):', brief].join('\n');
+
+  const variableSuffix = [
+    '',
+    "TODAY'S CANDIDATE MATCHES:",
+    JSON.stringify(
+      jobs.map((j) => ({
+        id: j.id,
+        company: j.company,
+        title: j.title,
+        location: j.location,
+        remote: j.remote,
+        scorerFit: j.fit,
+        description: (j.description || '').slice(0, 2000),
+      })),
+      null,
+      2,
+    ),
+    '',
+    'Return ONLY this JSON object, no prose:',
+    '{',
+    '  "ranked": [',
+    '    { "id": "<job id, exact string from above>", "fitPercent": <integer 0-100>, "verdict": "<one candid sentence>" }',
+    '  ]',
+    '}',
+    'Include every job id exactly once, ordered best fit first.',
+  ].join('\n');
+
+  const message = await client().messages.create({
+    model: config.models.scorer,
+    max_tokens: 2000,
+    system,
+    messages: [
+      {
+        role: 'user',
+        content: [
+          { type: 'text', text: stablePrefix, cache_control: { type: 'ephemeral' } },
+          { type: 'text', text: variableSuffix },
+        ],
+      },
+    ],
+  });
+
+  const parsed = extractJson(firstText(message));
+  const ranked = Array.isArray(parsed.ranked) ? parsed.ranked : [];
+  return {
+    ranked: ranked.map((r) => ({
+      id: String(r.id || ''),
+      fitPercent: Math.max(0, Math.min(100, Math.round(Number(r.fitPercent) || 0))),
+      verdict: String(r.verdict || '').trim(),
+    })),
+    usage: message.usage,
+  };
+}
+
+// --- Career-coach draft (Claude Sonnet) ---
+//
+// Same truthfulness discipline as tailorJob(), extended with the brief's own
+// resume methodology (role-dependent archetype framing) and a mandatory gap
+// analysis + open-items cross-check — Section 6 of the brief is a live list
+// of unresolved data issues that must never be silently reused.
+//
+// `baselines` is a map of all three archetypes to their last-approved resume
+// text (or null if none exists yet) — passed as a map, not a single guess,
+// because the archetype for THIS job isn't known until the model picks it in
+// this same call. Whichever one it picks, it needs the real prior wording to
+// reuse (see the "reuse exact wording" rule below) — without this, career-
+// coach.js's word-level diff against the baseline would show nearly the whole
+// resume as changed on every run, since two independently-phrased drafts of
+// the same facts rarely match word-for-word even when nothing substantive
+// changed.
+export async function careerCoachTailor({ job, brief, baselines = {} }) {
+  const system =
+    'You are David Hettinger\'s personal career-coach, producing a tailored, TRUTHFUL resume and ' +
+    'cover letter draft for one job, following his own methodology exactly. Absolute rules: ' +
+    '(1) Use ONLY facts present in the career-context brief\'s vetted accomplishments — never ' +
+    'invent or embellish employers, titles, dates, degrees, or metrics, and never reuse a figure ' +
+    'the brief marks as retired/unverified. (2) If the job asks for something the brief does not ' +
+    'evidence, do not fake it — list it in "gaps" instead. (3) Pick exactly one resume archetype ' +
+    'per the brief\'s own rule: "sales-planning" for Sales Planning-forward roles, "finance" for ' +
+    'Finance roles (lead with FP&A and margin governance), or "national-accounts" for National ' +
+    'Accounts roles (lead with the commercial story). (4) Perform the gap analysis line-by-line ' +
+    'against the actual posting language, not generically. (5) Cross-check this specific draft ' +
+    'against the brief\'s open-items checklist (Section 6) and flag any item this draft touches — ' +
+    'do not silently use an unresolved figure or placeholder. (6) US-style resume, one to two ' +
+    'pages. Short cover letter (200-300 words). No emojis. Sentence case. (7) A prior resume for ' +
+    'each archetype is provided below where one exists. For whichever archetype you pick, reuse ' +
+    "that prior resume's exact wording verbatim for any bullet describing the same underlying " +
+    "fact or accomplishment — only change wording where this posting's language genuinely calls " +
+    'for different emphasis or phrasing. The output is diffed against that prior resume afterward, ' +
+    'and an unforced rewrite of unchanged content would bury the real changes in noise. ' +
+    'Return a strict JSON object.';
+
+  const stablePrefix = ['CAREER CONTEXT BRIEF (the only allowed source of facts):', brief].join('\n');
+
+  const baselineBlock = ARCHETYPES_FOR_PROMPT.map((a) =>
+    baselines[a]
+      ? `PRIOR RESUME — ${a}:\n${baselines[a].slice(0, 6000)}`
+      : `PRIOR RESUME — ${a}: none yet — this would be the first one for this archetype.`,
+  ).join('\n\n');
+
+  const variableSuffix = [
+    '',
+    'JOB POSTING:',
+    JSON.stringify(
+      {
+        company: job.company,
+        title: job.title,
+        location: job.location,
+        remote: job.remote,
+        description: (job.description || '').slice(0, 8000),
+      },
+      null,
+      2,
+    ),
+    '',
+    baselineBlock,
+    '',
+    'Return ONLY this JSON object, no prose. Use Markdown inside the markdown string fields:',
+    '{',
+    '  "archetype": "<sales-planning|finance|national-accounts>",',
+    '  "fit_percent": <integer 0-100, your own candid assessment>,',
+    '  "verdict": "<one candid sentence>",',
+    '  "resume_markdown": "<full tailored resume in Markdown, truthful, ready to edit>",',
+    '  "cover_letter_markdown": "<short cover letter in Markdown>",',
+    '  "gaps": [ { "requirement": "<exact requirement or phrase from the posting>", "note": "<why the current brief shows no evidence of this>" } ],',
+    '  "open_items_flagged": [ { "item": "<short label of the Section 6 open item>", "note": "<why this draft touches it>" } ]',
+    '}',
+  ].join('\n');
+
+  const message = await client().messages.create({
+    model: config.models.tailor,
+    max_tokens: 8000,
+    system,
+    messages: [
+      {
+        role: 'user',
+        content: [
+          { type: 'text', text: stablePrefix, cache_control: { type: 'ephemeral' } },
+          { type: 'text', text: variableSuffix },
+        ],
+      },
+    ],
+  });
+
+  const parsed = extractJson(firstText(message));
+  const archetype = ['sales-planning', 'finance', 'national-accounts'].includes(parsed.archetype)
+    ? parsed.archetype
+    : 'finance';
+  return {
+    archetype,
+    fitPercent: Math.max(0, Math.min(100, Math.round(Number(parsed.fit_percent) || 0))),
+    verdict: String(parsed.verdict || '').trim(),
+    resumeMarkdown: String(parsed.resume_markdown || '').trim(),
+    coverLetterMarkdown: String(parsed.cover_letter_markdown || '').trim(),
+    gaps: Array.isArray(parsed.gaps)
+      ? parsed.gaps.map((g) => ({ requirement: String(g.requirement || ''), note: String(g.note || '') }))
+      : [],
+    openItemsFlagged: Array.isArray(parsed.open_items_flagged)
+      ? parsed.open_items_flagged.map((o) => ({ item: String(o.item || ''), note: String(o.note || '') }))
+      : [],
+    usage: message.usage,
+  };
+}
+
+// --- Interview prep (Claude Sonnet) ---
+//
+// The career-context brief's own title names "interview prep" as a thread
+// this assistant covers — this is that extension. Same accuracy discipline
+// as careerCoachTailor(): every suggested answer must trace to a vetted
+// accomplishment in the brief, gaps get an honest talking point (never a
+// fabricated one), and Section 6's open items are cross-checked again here —
+// an unresolved figure that slipped through to the resume must not then get
+// rehearsed as a confident interview answer.
+export async function prepareInterview({ job, brief, resumeMarkdown, archetype }) {
+  const system =
+    'You are David Hettinger\'s personal interview-prep assistant, working from his own ' +
+    'career-context brief and the resume actually used for this application. Absolute rules: ' +
+    '(1) Every suggested talking point or STAR-format story must trace to a vetted ' +
+    'accomplishment in the brief or the resume provided — never invent a detail, metric, or ' +
+    'anecdote. (2) For any gap between the posting and the brief, write an honest talking ' +
+    'point that acknowledges it plainly and bridges to adjacent real experience — never a ' +
+    'fabricated claim of experience he does not have. (3) Cross-check against the brief\'s ' +
+    'open-items checklist (Section 6) — if a suggested answer would rely on an unresolved or ' +
+    'retired figure, flag it instead of rehearsing it as confident. (4) Questions should span ' +
+    'behavioral, role-specific/technical, and culture-fit categories, grounded in the actual ' +
+    'posting language. (5) No emojis. Sentence case. Return a strict JSON object.';
+
+  const stablePrefix = ['CAREER CONTEXT BRIEF (the only allowed source of facts):', brief].join('\n');
+
+  const variableSuffix = [
+    '',
+    'JOB POSTING:',
+    JSON.stringify(
+      {
+        company: job.company,
+        title: job.title,
+        location: job.location,
+        remote: job.remote,
+        description: (job.description || '').slice(0, 8000),
+      },
+      null,
+      2,
+    ),
+    '',
+    `RESUME ACTUALLY USED FOR THIS APPLICATION (archetype: ${archetype || 'unknown'}):`,
+    (resumeMarkdown || '').slice(0, 6000),
+    '',
+    'Return ONLY this JSON object, no prose:',
+    '{',
+    '  "likely_questions": [ { "question": "...", "category": "behavioral|role-specific|culture-fit" } ],',
+    '  "star_stories": [ { "accomplishment": "<short label from the brief>", "situation": "...", "task": "...", "action": "...", "result": "..." } ],',
+    '  "gap_talking_points": [ { "gap": "<what the posting asks for>", "honest_response": "<how to address it plainly, bridging to real adjacent experience>" } ],',
+    '  "open_items_flagged": [ { "item": "<short label of the Section 6 open item>", "note": "<why an interview answer here would touch it>" } ],',
+    '  "questions_to_ask": [ "..." ]',
+    '}',
+  ].join('\n');
+
+  const message = await client().messages.create({
+    model: config.models.tailor,
+    max_tokens: 6000,
+    system,
+    messages: [
+      {
+        role: 'user',
+        content: [
+          { type: 'text', text: stablePrefix, cache_control: { type: 'ephemeral' } },
+          { type: 'text', text: variableSuffix },
+        ],
+      },
+    ],
+  });
+
+  const parsed = extractJson(firstText(message));
+  return {
+    likelyQuestions: Array.isArray(parsed.likely_questions)
+      ? parsed.likely_questions.map((q) => ({ question: String(q.question || ''), category: String(q.category || '') }))
+      : [],
+    starStories: Array.isArray(parsed.star_stories)
+      ? parsed.star_stories.map((s) => ({
+          accomplishment: String(s.accomplishment || ''),
+          situation: String(s.situation || ''),
+          task: String(s.task || ''),
+          action: String(s.action || ''),
+          result: String(s.result || ''),
+        }))
+      : [],
+    gapTalkingPoints: Array.isArray(parsed.gap_talking_points)
+      ? parsed.gap_talking_points.map((g) => ({ gap: String(g.gap || ''), honestResponse: String(g.honest_response || '') }))
+      : [],
+    openItemsFlagged: Array.isArray(parsed.open_items_flagged)
+      ? parsed.open_items_flagged.map((o) => ({ item: String(o.item || ''), note: String(o.note || '') }))
+      : [],
+    questionsToAsk: Array.isArray(parsed.questions_to_ask) ? parsed.questions_to_ask.map(String) : [],
     usage: message.usage,
   };
 }

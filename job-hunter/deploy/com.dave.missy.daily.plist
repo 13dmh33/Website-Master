@@ -15,28 +15,28 @@
 
     <key>ProgramArguments</key>
     <array>
-        <string>__NODE_PATH__</string>
-        <string>__MISSY_PATH__/src/index.js</string>
+        <string>/usr/local/bin/node</string>
+        <string>/Users/davidhettinger/missy/job-hunter/src/index.js</string>
     </array>
 
     <key>WorkingDirectory</key>
-    <string>__MISSY_PATH__</string>
+    <string>/Users/davidhettinger/missy/job-hunter</string>
 
-    <!-- 6:00 AM every day. Adjust Hour/Minute to taste (digest lands before your 5-8am block if you drop it to 4:45). -->
+    <!-- 4:45 AM every day, per Dave's request. -->
     <key>StartCalendarInterval</key>
     <dict>
         <key>Hour</key>
-        <integer>6</integer>
+        <integer>4</integer>
         <key>Minute</key>
-        <integer>0</integer>
+        <integer>45</integer>
     </dict>
 
     <key>RunAtLoad</key>
     <false/>
 
     <key>StandardOutPath</key>
-    <string>__MISSY_PATH__/logs/missy-daily.log</string>
+    <string>/Users/davidhettinger/missy/job-hunter/logs/missy-daily.log</string>
     <key>StandardErrorPath</key>
-    <string>__MISSY_PATH__/logs/missy-daily.err.log</string>
+    <string>/Users/davidhettinger/missy/job-hunter/logs/missy-daily.err.log</string>
 </dict>
 </plist>

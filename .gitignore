@@ -25,6 +25,12 @@ nora/state/drafts/**
 reports/*.csv
 reports/*.json
 
+# Midas — personal stock screener, not a Trevo Advisors system (see midas/CLAUDE.md)
+midas/reports/*.csv
+midas/reports/*.json
+midas/reports/*.md
+midas/reports/*.txt
+
 # OS
 .DS_Store
 AllContacts.csv

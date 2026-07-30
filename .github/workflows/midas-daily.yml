@@ -1,0 +1,39 @@
+name: Midas daily screen
+
+on:
+  schedule:
+    # 21:00 UTC = 5:00pm EDT / 4:00pm... note: US market closes 4:00pm ET.
+    # 21:00 UTC = 1 hour after close while EDT is in effect (most of the year).
+    # During EST (winter), this drifts to 4:00pm ET (right at close, not +1h) —
+    # a static cron can't track DST. Revisit if that drift matters.
+    - cron: '0 21 * * 1-5'
+  workflow_dispatch: {}
+
+jobs:
+  screen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: pip install yfinance numpy pandas
+      - name: Run DCA screen (Steps 1-6)
+        working-directory: midas
+        run: |
+          python3 screener.py
+          python3 analyze.py
+      - name: Run TCREI Mode C watchlist scan (second skill)
+        working-directory: midas
+        run: python3 tcrei.py
+      - name: Upload report artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: midas-screen-${{ github.run_id }}
+          path: |
+            midas/reports/*.csv
+            midas/reports/*.json
+            midas/reports/*.md
+            midas/reports/*.txt
+          retention-days: 90

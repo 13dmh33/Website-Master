@@ -11,6 +11,7 @@ const path      = require('path');
 const store     = require('../lib/store');
 const buffer    = require('../lib/buffer');
 const abTracker = require('../lib/ab-tracker');
+const { validateQueue } = require('../lib/brand-validator');
 
 const TIMEZONE = process.env.TIMEZONE || 'America/Denver';
 const SCHEDULE_STR = process.env.POST_SCHEDULE || 'TUE:07:00,THU:12:00,SAT:09:00,SUN:18:00,FRI:15:00';
@@ -50,44 +51,67 @@ function nextOccurrence(dayAbbr, timeStr) {
 }
 
 // build the 4 post objects from content + image paths
+//
+// Any of posts.carousel/caption1/reevefound/reel can now be null — a per-post
+// generation failure that had no evergreen fallback (see generator.js) skips
+// that post rather than crashing the whole run. Each is included only when
+// present, mirroring the existing null-guard already used for posts.story.
 function buildPostObjects(content, schedule) {
   const { weekOf, posts, imagePaths } = content;
   const DAYS = ['TUE', 'THU', 'SAT', 'SUN'];
 
-  // Enhancement B: pick A or B variant for caption alternating weekly
-  const captionVariant = abTracker.getCurrentVariant();
-  const captionBody    = captionVariant === 'B' && posts.caption1.variantB
-    ? posts.caption1.variantB
-    : posts.caption1.variantA || posts.caption1.body;
-  abTracker.recordVariant(weekOf, captionVariant);
-  console.log(`Caption variant this week: ${captionVariant}`);
+  const postDefs = [];
 
-  const postDefs = [
-    {
+  if (posts.carousel) {
+    postDefs.push({
       format:    'carousel',
       caption:   posts.carousel.caption,
       images:    (imagePaths && imagePaths.carousel) || [],
       scheduleDay: DAYS[0],
-    },
-    {
+    });
+  } else {
+    console.warn('No carousel post this week (generation + evergreen fallback both unavailable) — skipping.');
+  }
+
+  if (posts.caption1) {
+    // Enhancement B: pick A or B variant for caption alternating weekly
+    const captionVariant = abTracker.getCurrentVariant();
+    const captionBody    = captionVariant === 'B' && posts.caption1.variantB
+      ? posts.caption1.variantB
+      : posts.caption1.variantA || posts.caption1.body;
+    abTracker.recordVariant(weekOf, captionVariant);
+    console.log(`Caption variant this week: ${captionVariant}`);
+    postDefs.push({
       format:    'caption',
       caption:   captionBody,
       images:    (imagePaths && imagePaths.caption1) || [],
       scheduleDay: DAYS[1],
-    },
-    {
+    });
+  } else {
+    console.warn('No caption post this week (generation + evergreen fallback both unavailable) — skipping.');
+  }
+
+  if (posts.reevefound) {
+    postDefs.push({
       format:    'reevefound',
       caption:   posts.reevefound.body,
       images:    (imagePaths && imagePaths.reevefound) || [],
       scheduleDay: DAYS[2],
-    },
-    {
+    });
+  } else {
+    console.warn('No reeve-found post this week (generation + evergreen fallback both unavailable) — skipping.');
+  }
+
+  if (posts.reel) {
+    postDefs.push({
       format:    'reel',
       caption:   posts.reel.script,
       images:    (imagePaths && imagePaths.reel) || [],
       scheduleDay: DAYS[3],
-    },
-  ];
+    });
+  } else {
+    console.warn('No reel post this week (generation failed, no evergreen fallback exists for this format) — skipping.');
+  }
 
   // Story — vertical format, Buffer's classic API has no Stories endpoint,
   // so it's always manual-only and routes straight to the queue
@@ -120,10 +144,29 @@ async function main() {
   }
 
   const schedule  = parseSchedule();
-  const postObjects = buildPostObjects(content, schedule);
+  const allPostObjects = buildPostObjects(content, schedule);
 
   console.log(`Scheduler running for week of ${content.weekOf}.`);
   console.log(`Buffer configured: ${buffer.isConfigured()}`);
+
+  // Hard gate: brand-validator.js checks every post against
+  // templates/brand-voice.json's rules before it reaches EITHER the manual
+  // queue or a live Buffer post. Runs ahead of the Buffer-vs-queue branch on
+  // purpose — a failing post must not go live even if Buffer happens to be
+  // configured with FORCE_QUEUE unset. Mirrors Molly's identical wiring
+  // (molly/agents/scheduler.js) — Milly was the only live-posting sibling
+  // without this gate before now.
+  const { passed: postObjects, rejected } = validateQueue(allPostObjects);
+  if (rejected.length > 0) {
+    console.warn(`Brand-validator rejected ${rejected.length}/${allPostObjects.length} post(s) — held back, not queued or posted:`);
+    for (const { post, failures } of rejected) {
+      console.warn(`  ${post.format}: ${failures.join('; ')}`);
+    }
+  }
+  if (postObjects.length === 0) {
+    console.error('All posts failed brand validation. Nothing to schedule this run.');
+    return;
+  }
 
   const forceQueue = process.env.FORCE_QUEUE === '1';
 

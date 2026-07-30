@@ -333,7 +333,15 @@ async function main() {
 
   // if the brief came from evergreen with pre-written content, use it directly
   // otherwise generate via Claude API
-  let carousel, caption1, reeveFound, reelScript;
+  //
+  // Per-post fallback: a single failed Claude call (rate limit, deprecated
+  // model, content-policy block, JSON parse failure) used to throw all the
+  // way to main()'s top-level catch, killing every post that week — including
+  // the 4 that had already succeeded. Each block below now falls back to an
+  // unused evergreen post of the matching format (store.getUnusedEvergreenByFormat)
+  // and only skips that one post (leaving it null) if the evergreen bank has
+  // nothing for that format either — the run always saves whatever it could.
+  let carousel = null, caption1A = null, caption1B = null, reeveFound = null, reelScript = null;
 
   console.log('Generating carousel...');
   if (carouselAngle.prewrittenContent) {
@@ -343,27 +351,54 @@ async function main() {
       caption: `${prc.hook}\n\n${prc.hashtags.join(' ')}`,
     };
   } else {
-    carousel = await generateCarousel(carouselAngle, voiceContext, ctaText);
+    try {
+      carousel = await generateCarousel(carouselAngle, voiceContext, ctaText);
+    } catch (e) {
+      console.warn(`Carousel generation failed (${e.message}) — falling back to evergreen.`);
+      const fallback = store.getUnusedEvergreenByFormat('carousel');
+      if (fallback) {
+        carousel = {
+          slides:  [{ slide: 1, headline: fallback.hook, body: '' }, { slide: 2, headline: 'Full breakdown', body: fallback.body }],
+          caption: `${fallback.hook}\n\n${fallback.hashtags.join(' ')}`,
+        };
+        store.markEvergreenUsed([fallback.id]);
+      } else {
+        console.warn('No evergreen carousel available either — skipping carousel this week.');
+      }
+    }
   }
   console.log('Carousel done.');
 
   // Enhancement B: generate 2 caption variants (different hook, same angle)
   // scheduler picks A or B alternating weekly via ab-tracker
   console.log(`Generating caption variants A and B (niche: ${weekNiches.caption})...`);
-  let caption1A, caption1B;
   if (captionAngle.prewrittenContent) {
     const prc = captionAngle.prewrittenContent;
     const cleanBody = prc.body.replace(/\s*—\s*Reeve\s*$/i, '').trimEnd();
     caption1A = `${prc.hook}\n\n${cleanBody}\n\n— Reeve\n\n${prc.hashtags.join(' ')}`;
     caption1B = caption1A; // evergreen content has one version; duplicate is fine
-  } else if (weekNiches.caption === 'business') {
-    caption1A = await generateBusinessCaption(captionAngle, voiceContext);
-    caption1B = await generateBusinessCaption({ ...captionAngle, angle: captionAngle.angle + ' (different business mechanic)' }, voiceContext);
   } else {
-    caption1A = await generateCaption(captionAngle, weekNiches.caption, voiceContext);
-    caption1B = await generateCaption({ ...captionAngle, angle: captionAngle.angle + ' (alternate angle)' }, weekNiches.caption, voiceContext);
+    try {
+      if (weekNiches.caption === 'business') {
+        caption1A = await generateBusinessCaption(captionAngle, voiceContext);
+        caption1B = await generateBusinessCaption({ ...captionAngle, angle: captionAngle.angle + ' (different business mechanic)' }, voiceContext);
+      } else {
+        caption1A = await generateCaption(captionAngle, weekNiches.caption, voiceContext);
+        caption1B = await generateCaption({ ...captionAngle, angle: captionAngle.angle + ' (alternate angle)' }, weekNiches.caption, voiceContext);
+      }
+    } catch (e) {
+      console.warn(`Caption generation failed (${e.message}) — falling back to evergreen.`);
+      const fallback = store.getUnusedEvergreenByFormat('caption');
+      if (fallback) {
+        const cleanBody = fallback.body.replace(/\s*—\s*Reeve\s*$/i, '').trimEnd();
+        caption1A = `${fallback.hook}\n\n${cleanBody}\n\n— Reeve\n\n${fallback.hashtags.join(' ')}`;
+        caption1B = caption1A;
+        store.markEvergreenUsed([fallback.id]);
+      } else {
+        console.warn('No evergreen caption available either — skipping caption this week.');
+      }
+    }
   }
-  caption1 = caption1A; // default — scheduler overrides based on ab-tracker
   console.log('Caption variants done.');
 
   console.log(`Generating Reeve found post (variant: ${reeveFoundVariant})...`);
@@ -371,15 +406,29 @@ async function main() {
     const prc = reeveFoundAngle.prewrittenContent;
     const cleanRfBody = prc.body.replace(/\s*(That['']s the job\.\s*)?—\s*Reeve\s*$/i, '').trimEnd();
     reeveFound = `${prc.hook}\n\n${cleanRfBody}\n\nThat's the job. — Reeve\n\n${prc.hashtags.slice(0, 3).join(' ')}`;
-  } else if (reeveFoundVariant === 'clarity') {
-    if (clarityVariant === 'pricing') {
-      console.log('  (using pricing transparency variant this cycle)');
-      reeveFound = await generatePricingClarity(voiceContext);
-    } else {
-      reeveFound = await generateServiceClarity(voiceContext, brandVoice, ctaText === 'DM us the word stages' ? 'DM us the word stages to see if you\'re a fit' : 'DM the word audit for a free 10-minute pipeline review');
-    }
   } else {
-    reeveFound = await generateReeveFound(conferencesFound || [], voiceContext);
+    try {
+      if (reeveFoundVariant === 'clarity') {
+        if (clarityVariant === 'pricing') {
+          console.log('  (using pricing transparency variant this cycle)');
+          reeveFound = await generatePricingClarity(voiceContext);
+        } else {
+          reeveFound = await generateServiceClarity(voiceContext, brandVoice, ctaText === 'DM us the word stages' ? 'DM us the word stages to see if you\'re a fit' : 'DM the word audit for a free 10-minute pipeline review');
+        }
+      } else {
+        reeveFound = await generateReeveFound(conferencesFound || [], voiceContext);
+      }
+    } catch (e) {
+      console.warn(`Reeve found post generation failed (${e.message}) — falling back to evergreen.`);
+      const fallback = store.getUnusedEvergreenByFormat('reevefound');
+      if (fallback) {
+        const cleanRfBody = fallback.body.replace(/\s*(That['']s the job\.\s*)?—\s*Reeve\s*$/i, '').trimEnd();
+        reeveFound = `${fallback.hook}\n\n${cleanRfBody}\n\nThat's the job. — Reeve\n\n${fallback.hashtags.slice(0, 3).join(' ')}`;
+        store.markEvergreenUsed([fallback.id]);
+      } else {
+        console.warn('No evergreen reeve-found post available either — skipping this week.');
+      }
+    }
   }
   console.log('Reeve found post done.');
 
@@ -388,7 +437,13 @@ async function main() {
     const prc = reelAngle.prewrittenContent;
     reelScript = `[HOOK - 2 sec]: ${prc.hook}\n\n[BODY - 12 sec]: ${prc.body}\n\n[CTA - 6 sec]: ${ctaText}.`;
   } else {
-    reelScript = await generateReelScript(reelAngle, weekNiches.reel, voiceContext, ctaText);
+    try {
+      reelScript = await generateReelScript(reelAngle, weekNiches.reel, voiceContext, ctaText);
+    } catch (e) {
+      // No evergreen bank exists for 'reel' format today (only carousel/caption/
+      // reevefound are covered) — skip rather than fabricate a substitute.
+      console.warn(`Reel script generation failed (${e.message}) — no evergreen fallback exists for reel format, skipping this week.`);
+    }
   }
   console.log('Reel script done.');
 
@@ -397,32 +452,40 @@ async function main() {
   const storyAngle  = angles.find(a => a.niche === storyNiche) || angles[0];
 
   console.log(`Generating Story text (niche: ${storyNiche})...`);
-  let storyText;
+  let storyText = null;
   if (storyAngle.prewrittenContent) {
     storyText = storyAngle.prewrittenContent.hook;
   } else {
-    storyText = await generateStory(storyAngle, storyNiche, voiceContext);
+    try {
+      storyText = await generateStory(storyAngle, storyNiche, voiceContext);
+    } catch (e) {
+      // No evergreen bank exists for 'story' format either — scheduler.js
+      // already null-guards posts.story, so skipping here is safe.
+      console.warn(`Story generation failed (${e.message}) — no evergreen fallback exists for story format, skipping this week.`);
+    }
   }
   console.log('Story text done.');
 
   // advance the weekly rotation counter so next week alternates niches
   store.advanceWeekRotation();
 
+  const postCount = [carousel, caption1A, reeveFound, reelScript, storyText].filter(Boolean).length;
+
   const content = {
     weekOf,
     generatedAt: new Date().toISOString(),
     niches:      weekNiches,
     posts: {
-      carousel:   { slides: carousel.slides, caption: carousel.caption },
-      caption1:   { body: caption1A, variantA: caption1A, variantB: caption1B },
-      reevefound: { body: reeveFound },
-      reel:       { script: reelScript, hookLine: extractReelHook(reelScript) },
-      story:      { text: storyText.trim(), niche: storyNiche },
+      carousel:   carousel ? { slides: carousel.slides, caption: carousel.caption } : null,
+      caption1:   caption1A ? { body: caption1A, variantA: caption1A, variantB: caption1B } : null,
+      reevefound: reeveFound ? { body: reeveFound } : null,
+      reel:       reelScript ? { script: reelScript, hookLine: extractReelHook(reelScript) } : null,
+      story:      storyText ? { text: storyText.trim(), niche: storyNiche } : null,
     },
   };
 
   const filePath = store.savePost(content);
-  console.log(`Content generation complete. 4 posts saved to: ${filePath}`);
+  console.log(`Content generation complete. ${postCount}/5 posts saved to: ${filePath}`);
 }
 
 main().catch(err => {

@@ -221,6 +221,21 @@ module.exports = {
     return unused;
   },
 
+  // Single unused (or least recently used) evergreen post matching a specific
+  // format — used by generator.js's per-post fallback when a live Claude call
+  // fails for one format but the week's other posts should still go out.
+  // Returns null if the evergreen bank has no post of that format at all
+  // (true today for 'reel' — the bank only covers carousel/caption/reevefound).
+  getUnusedEvergreenByFormat(format) {
+    const data = readJson(PATHS.evergreen);
+    if (!data || !data.posts) return null;
+    const matching = data.posts.filter(p => p.format === format);
+    if (!matching.length) return null;
+    const unused = matching.filter(p => !p.used);
+    if (unused.length) return unused[0];
+    return matching.sort((a, b) => new Date(a.lastUsed || 0) - new Date(b.lastUsed || 0))[0];
+  },
+
   // mark evergreen posts as used
   markEvergreenUsed(ids) {
     const data = readJson(PATHS.evergreen);

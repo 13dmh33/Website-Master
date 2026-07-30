@@ -51,6 +51,14 @@ const CONFIG_PATH  = path.join(ROOT, 'config', 'reply-agent-config.json');
 
 const isDryRun = process.argv.includes('--dry-run');
 const hasForce = process.argv.includes('--force');
+// First-ever run (last_uid = 0) defaults to a 30-day lookback, but this
+// campaign's outreach goes back to 2026-06-01 — a first run on today's date
+// would silently never see anything older than 30 days, since last_uid then
+// advances past it forever. --since-days N overrides the window for exactly
+// that one-time historical catch-up; ongoing runs (last_uid > 0) ignore this
+// and always resume from the UID high-water mark instead.
+const sinceDaysArgIdx = process.argv.indexOf('--since-days');
+const sinceDaysOverride = sinceDaysArgIdx !== -1 ? Number(process.argv[sinceDaysArgIdx + 1]) : null;
 
 // ── CONFIG ──────────────────────────────────────────────────────────────────
 
@@ -362,7 +370,8 @@ async function main() {
       if (lastUid > 0) {
         searchRange = { uid: `${lastUid + 1}:*` };
       } else {
-        const since = new Date(); since.setDate(since.getDate() - 30);
+        const since = new Date();
+        since.setDate(since.getDate() - (sinceDaysOverride || 30));
         searchRange = { since };
       }
       const uids = await imap.search(searchRange, { uid: true }) || [];

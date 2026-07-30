@@ -225,22 +225,32 @@ and job are different.
 
 ### Instagram DM catcher
 
-Designed, not built. Architecture mirrors the Techs4Tatas engagement-triggered flow, so
-most of this already exists.
+**Alert half built 2026-07-29** (`lib/high-signal.js` + `scripts/check-high-signal.js`,
+wired into `agents/analyst.js` and `.github/workflows/molly-weekly-analytics.yml`) —
+mirrors Reeve's `check-high-signal.js`/Milly's `lib/reeve-handoff.js` pattern exactly
+(same repo, sibling system), except the handoff target is Dave directly rather than a
+separate product, since Trevo is his own business. When `analyst.js` finds a post with
+profile visits >2x the weekly average, it's flagged to `output/archive/high-signal-
+<weekOf>.json`; `check-high-signal.js` emails Dave a 3-day outreach-window alert (Zoho
+SMTP, same `ZOHO_EMAIL`/`ZOHO_APP_PASSWORD`/`DAVE_NOTIFY_EMAIL` env vars as Reeve's).
+Verified end-to-end with synthetic data — flag write, dry-run email body, and the
+processed-marker all confirmed working.
 
-- Netlify Function receiving Instagram webhook events.
-- Triggers on engagement: comment, DM, or story reply on a Molly post.
+**Still not built — needs real infrastructure that doesn't exist yet:**
+- Netlify Function receiving Instagram webhook events (live, real-time trigger — the
+  alert above is weekly/batch, not live).
+- An actual automated welcome DM sent via the Instagram messaging API — requires Meta
+  App review for `instagram_manage_messages`, same blocker Reeve's own DM agent has, and
+  a live `@trevoadvisors` Instagram Business account, which does not exist yet either.
 - Supabase dedup so nobody is messaged twice.
-- One welcome DM only — a qualifier question, never a pitch, no automated sequence.
-- Any reply routes to Dave, not to an auto-responder.
 - Logs to the same Google Sheets CRM so Molly-sourced and Scout-sourced leads live
   together.
 - Lane tagged `molly-inbound` in `state.json`, additive only.
 - Safety gate `MOLLY_DM_LIVE`, defaults false.
 
-**Before building:** read Reeve's `check-high-signal.js` (see the "Reeve handoff"
-section in `milly/CLAUDE.md`). It already performs engagement-to-DM handoff for Milly.
-This may be a config change rather than a build.
+Building the live-webhook half before `@trevoadvisors` exists would be untestable
+speculative code — revisit once the account is live and (if a real welcome-DM flow is
+still wanted) Meta App review is underway.
 
 ### Pipeline connection
 
@@ -274,7 +284,8 @@ What's still manual:
   Claude-drafted variety); `BUFFER_ACCESS_TOKEN` + `BUFFER_INSTAGRAM_PROFILE_ID` (for
   live posting); `SERPAPI_KEY` (optional — evergreen fallback runs every week without
   it, same as Milly); `INSTAGRAM_ACCESS_TOKEN` + `INSTAGRAM_BUSINESS_ACCOUNT_ID`
-  (analytics only).
+  (analytics only); `ZOHO_EMAIL` + `ZOHO_APP_PASSWORD` + `DAVE_NOTIFY_EMAIL` (for the
+  high-signal-post alert — `scripts/check-high-signal.js`, logs only without them).
 - [ ] Once merged, `.github/workflows/molly-weekly-pipeline.yml` (Monday 6am MT) and
   `molly-weekly-analytics.yml` (Sunday 10pm MT) activate automatically —
   `workflow_dispatch` is available for a manual test run before then.
@@ -291,6 +302,8 @@ molly/
     designer.js
     scheduler.js
     analyst.js
+  scripts/
+    check-high-signal.js  # high-signal post -> email alert to Dave (see "Instagram DM catcher")
   lib/
     store.js
     claude.js
@@ -298,6 +311,7 @@ molly/
     buffer.js
     glossary.js
     ab-tracker.js
+    high-signal.js         # flags high-signal posts to output/archive/
     brand-validator.js    # hard gate — see "Approval flow" above
     instagram-insights.js
     sources.js

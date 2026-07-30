@@ -6,10 +6,11 @@
 
 require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 
-const insights  = require('../lib/instagram-insights');
-const store     = require('../lib/store');
-const claude    = require('../lib/claude');
-const abTracker = require('../lib/ab-tracker');
+const insights   = require('../lib/instagram-insights');
+const store      = require('../lib/store');
+const claude     = require('../lib/claude');
+const abTracker  = require('../lib/ab-tracker');
+const highSignal = require('../lib/high-signal');
 
 function weekStartDate() {
   const now  = new Date();
@@ -112,6 +113,7 @@ async function main() {
 
   if (highSignalPosts.length) {
     console.log(`High-signal posts this week: ${highSignalPosts.length} (${highSignalPosts.map(p => p.format).join(', ')})`);
+    for (const post of highSignalPosts) highSignal.flagHighSignal(post, weekOf);
   }
 
   // hashtag performance tracking

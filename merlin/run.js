@@ -8,6 +8,11 @@
  * Usage:
  *   node merlin/run.js              # full run: writes dated files + emails the report
  *   node merlin/run.js --no-email   # writes dated files only, skips the Zoho send
+ *   node merlin/run.js --reeve      # also collect Reeve's business metrics (strategy/lib/
+ *                                   # reeve-metrics.js) and include Reeve-sourced candidates
+ *                                   # in the same ranked backlog as Trevo's. Default (no flag)
+ *                                   # stays Trevo-only, unchanged, so the existing nightly
+ *                                   # cron is unaffected.
  *
  * Reads:  state.json, leads/*.json, leads-web/*.json, config/*.json,
  *         config/cost-log.json (via scripts/cost-tracker.js), git metadata.
@@ -30,6 +35,7 @@ const { buildReport, today } = require('./lib/report');
 const { sendMerlinReport } = require('./lib/mailer');
 const { loadDecisions } = require('./lib/decisions');
 const { collectRepoFacts } = require('./lib/repo-facts');
+const { collectReeveSnapshot } = require('./lib/reeve-snapshot');
 
 const REPORTS_DIR = path.join(__dirname, 'reports');
 const LAST_FUNNEL_PATH = path.join(__dirname, 'last-funnel.json');
@@ -49,6 +55,7 @@ function persistFunnel(funnel) {
 
 async function main() {
   const noEmail = process.argv.includes('--no-email');
+  const includeReeve = process.argv.includes('--reeve');
   const date = today();
 
   console.log(`Merlin — nightly advisor run, ${date}`);
@@ -61,6 +68,12 @@ async function main() {
   const previousFunnel = loadPreviousFunnel();
   const pipelineSnapshot = collectPipelineSnapshot({ previousFunnel });
 
+  let reeveSnapshot = null;
+  if (includeReeve) {
+    console.log('Collecting Reeve snapshot (business metrics + alerts)...');
+    reeveSnapshot = collectReeveSnapshot();
+  }
+
   console.log('Running cost audit...');
   const costAudit = buildCostAudit({ funnel: pipelineSnapshot.funnel });
 
@@ -69,7 +82,7 @@ async function main() {
   const repoFacts = collectRepoFacts();
 
   console.log('Ranking candidate moves...');
-  const ranking = buildRanking({ pipelineSnapshot, decisions, repoFacts });
+  const ranking = buildRanking({ pipelineSnapshot, decisions, repoFacts, reeveSnapshot });
 
   console.log('Generating session prompts...');
   const { primary, light, primaryQueue, lightQueue } = buildSessionPrompts({
@@ -78,7 +91,7 @@ async function main() {
 
   console.log('Assembling report...');
   const report = buildReport({
-    gitHealth, pipelineSnapshot, costAudit, ranking,
+    gitHealth, pipelineSnapshot, costAudit, ranking, reeveSnapshot,
     primaryQueueHours: primaryQueue.totalHours, lightQueueHours: lightQueue.totalHours,
   });
 

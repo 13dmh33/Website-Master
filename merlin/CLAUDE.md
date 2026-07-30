@@ -85,9 +85,42 @@ already in use elsewhere (`cost-tracker.js`, `scout-config.json`,
 ```bash
 node merlin/run.js              # full run: writes dated files + emails the report
 node merlin/run.js --no-email   # writes dated files only
+node merlin/run.js --reeve      # also collect Reeve's business metrics and rank
+                                 # Reeve-sourced candidates alongside Trevo's (see below)
 
 npm run test -- merlin/test/*.test.js   # or: node --test merlin/test/*.test.js
 ```
+
+## Cross-portfolio consolidation (2026-07-29) — Phase 1
+
+Merlin, Strategy, and Piper were three separate advisor agents, each seeing only part of
+the portfolio — nothing could answer "should the next hour go to Trevo or Reeve." Investigation
+confirmed Strategy's own docs claimed "Reeve and Milly" monitoring but the code (`strategist.js`)
+only ever read Reeve's data — Milly monitoring was never actually built (see
+`strategy/CLAUDE.md`'s scope-correction note).
+
+**Phase 1, shipped:** Strategy's real, working Reeve-reading logic (data loaders, MRR/
+conversion/pitch-acceptance/churn calculations, the alert engine) was extracted into
+`strategy/lib/reeve-metrics.js` — `strategist.js` is now a thin CLI wrapper around the same
+functions (`--monitor`/`--pricing`/`--dashboard`/`--alerts` behavior unchanged). `merlin/lib/
+reeve-snapshot.js` calls into that same module. `merlin/lib/ranking.js`'s
+`reeveDynamicCandidates()` turns each active Reeve alert into a candidate using the same
+`{revenueProximity, buildVolume, ...}` shape and scoring rubric as every Trevo candidate —
+so with `--reeve`, a Reeve issue and a Trevo issue are ranked in one list, comparably, for
+the first time. `merlin/lib/report.js` adds a "Reeve state" section (metrics/alerts summary)
+when `--reeve` was used; the ranked-candidate sections needed no new code since Reeve
+candidates already share Trevo's shape.
+
+**Deliberately deferred, not built this pass:**
+- Milly monitoring — there's no existing logic to extract; would be new work reading
+  `milly/lib/instagram-insights.js`/`lib/ab-tracker.js` directly.
+- Piper's cashflow/burn/runway layer — no real revenue data exists yet to make it
+  meaningful (Stripe/Printify not live, Reeve/Miley aren't in `cost-tracker.js`'s log).
+  Once real revenue exists, the intended shape is a `--cashflow` mode on this same Merlin,
+  not a fourth separate agent (see `piper/README.md`).
+
+Default behavior (no `--reeve`) is unchanged — verified byte-identical Trevo-only output
+before and after this change.
 
 Env vars (from `.env.local`): `ZOHO_EMAIL`, `ZOHO_APP_PASSWORD` (required for the send —
 SMTP is unaffected by the standing IMAP-disabled blocker documented in the standing

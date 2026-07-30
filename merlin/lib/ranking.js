@@ -171,6 +171,34 @@ function dynamicCandidates({ pipelineSnapshot }) {
   return candidates;
 }
 
+/**
+ * Reeve-sourced dynamic candidates — one per active alert from
+ * strategy/lib/reeve-metrics.js's generateAlerts(), reusing that alert engine
+ * directly rather than re-deriving Reeve-specific thresholds a second time.
+ * Only generated when Merlin is run with --reeve; absent otherwise so the
+ * default (Trevo-only) nightly cron is unaffected.
+ *
+ * revenueProximity is a judgment call per severity, same as every static
+ * Trevo candidate's revenueProximity already is — HIGH-severity alerts (a
+ * conversion/pitch-acceptance problem, an expiring CFP) sit closer to
+ * directly-losable revenue than MEDIUM (churn risk on an already-active
+ * client) or INFO (no clients yet at all, nothing concrete to lose).
+ */
+function reeveDynamicCandidates({ reeveSnapshot }) {
+  if (!reeveSnapshot) return [];
+  const SEVERITY_REVENUE_PROXIMITY = { HIGH: 7, MEDIUM: 5, INFO: 2 };
+  return (reeveSnapshot.alerts || []).map(a => ({
+    id: `reeve_${a.metric}`,
+    label: `[Reeve] ${a.action}`,
+    category: 'manual_sales_action',
+    executor: 'dave',
+    revenueProximity: SEVERITY_REVENUE_PROXIMITY[a.severity] || 3,
+    buildVolume: 0,
+    effortHours: 0.5,
+    why: `Reeve metric "${a.metric}" is at ${a.value} (threshold: ${a.threshold}, severity ${a.severity}).`,
+  }));
+}
+
 /** Ranks all candidates by score, descending. Ties broken by lower buildVolume (prefer the cheaper win). */
 function rankCandidates(candidates) {
   return [...candidates]
@@ -202,9 +230,13 @@ function crossReference(candidate, { decisions, integrityFlags }) {
   return { ...candidate, caveats, why: `${candidate.why}\n\n   ${caveats.join('\n   ')}` };
 }
 
-function buildRanking({ pipelineSnapshot, decisions = NO_DECISIONS, repoFacts = NO_REPO_FACTS }) {
+function buildRanking({ pipelineSnapshot, decisions = NO_DECISIONS, repoFacts = NO_REPO_FACTS, reeveSnapshot = null }) {
   const integrityFlags = (pipelineSnapshot && pipelineSnapshot.integrityFlags) || [];
-  const all = [...staticCandidates(), ...dynamicCandidates({ pipelineSnapshot })];
+  const all = [
+    ...staticCandidates(),
+    ...dynamicCandidates({ pipelineSnapshot }),
+    ...reeveDynamicCandidates({ reeveSnapshot }),
+  ];
 
   const resolved = [];   // dropped because live repo state shows the work is already done (Task 10a)
   const superseded = []; // dropped because a durable decision settled it (Task 10b)
@@ -236,4 +268,4 @@ function buildRanking({ pipelineSnapshot, decisions = NO_DECISIONS, repoFacts = 
   };
 }
 
-module.exports = { scoreCandidate, staticCandidates, dynamicCandidates, rankCandidates, buildRanking, REVENUE_WEIGHT, BUILD_PENALTY_WEIGHT };
+module.exports = { scoreCandidate, staticCandidates, dynamicCandidates, reeveDynamicCandidates, rankCandidates, buildRanking, REVENUE_WEIGHT, BUILD_PENALTY_WEIGHT };

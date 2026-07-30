@@ -67,6 +67,31 @@ function renderFunnel(funnel) {
   return lines.join('\n');
 }
 
+/**
+ * Reeve section — only rendered when Merlin ran with --reeve. Parallel to
+ * renderFunnel's Trevo section; the ranked candidates Reeve's alerts produced
+ * already show up generically in the existing "Your list"/"Backlog" sections
+ * (reeveDynamicCandidates() in ranking.js emits the same candidate shape
+ * Trevo's do), so this section covers the metrics/alerts view specifically.
+ */
+function renderReeve(reeveSnapshot) {
+  const m = reeveSnapshot.metrics;
+  const lines = [
+    `MRR: $${m.mrr} (${m.active_clients} active client${m.active_clients === 1 ? '' : 's'}, ARR projected $${m.arr}).`,
+    `Pipeline: ${m.pipeline.open_opps} open opportunities (${m.pipeline.urgent_cfps} urgent within 7 days), ${m.pipeline.pitches_sent} pitches sent, ${m.pipeline.pending_review} drafts pending review.`,
+    `Conversion: ${m.routed_conversations} DM leads routed -> ${m.active_clients} clients (${m.conversion_rate === null ? 'n/a' : m.conversion_rate + '%'}). Pitch acceptance: ${m.pitch_acceptance_rate === null ? 'no data yet' : m.pitch_acceptance_rate + '%'}.`,
+  ];
+  if (m.churn_risk_clients.length > 0) {
+    lines.push(`Churn risk: ${m.churn_risk_clients.map(c => `${c.name} (${c.days}d, no bookings)`).join(', ')}.`);
+  }
+  if (reeveSnapshot.alerts.length === 0) {
+    lines.push('No active Reeve alerts.');
+  } else {
+    lines.push(`${reeveSnapshot.alerts.length} active alert(s) — see the ranked backlog below for the corresponding [Reeve]-tagged candidates.`);
+  }
+  return lines.map(l => `- ${l}`).join('\n');
+}
+
 function renderResolvedAndSuperseded(ranking) {
   const parts = [];
   if (ranking.resolved && ranking.resolved.length > 0) {
@@ -109,9 +134,10 @@ function renderRanking(ranking) {
   return lines.join('\n\n');
 }
 
-function buildReport({ gitHealth, pipelineSnapshot, costAudit, ranking, primaryQueueHours, lightQueueHours }) {
+function buildReport({ gitHealth, pipelineSnapshot, costAudit, ranking, primaryQueueHours, lightQueueHours, reeveSnapshot = null }) {
   const rec = ranking.recommendation;
   const date = today();
+  const reeveSection = reeveSnapshot ? `\n## Reeve state\n\n${renderReeve(reeveSnapshot)}\n` : '';
 
   return `# Merlin nightly report — ${date}
 
@@ -135,7 +161,7 @@ ${renderGitHealth(gitHealth)}
 ## Funnel state
 
 ${renderFunnel(pipelineSnapshot.funnel)}
-
+${reeveSection}
 ## Resolved / settled since last run (Merlin no longer recommends these)
 
 ${renderResolvedAndSuperseded(ranking)}

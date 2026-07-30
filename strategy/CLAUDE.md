@@ -1,8 +1,16 @@
-# Strategist Agent — Reeve / Milly Business Intelligence
+# Strategist Agent — Reeve Business Intelligence
+
+**Scope correction (2026-07-29):** this file previously claimed "Reeve and Milly" monitoring
+and listed a "Milly → DM trigger rate" metric below. Confirmed by reading the source directly:
+`strategist.js` never had a Milly data path — only `REEVE_DIR` was ever defined. That was a
+documentation error, not a capability that regressed. Fixed here; the Milly metric row below
+is marked accordingly. Reeve-side monitoring is real and working — its data-loading and metric
+functions were extracted into `strategy/lib/reeve-metrics.js` the same day so Merlin (see
+`merlin/CLAUDE.md`'s `--reeve` flag) can reuse them instead of re-implementing the same logic.
 
 ## Role
 
-The Strategist is a permanent monitoring agent for the Reeve and Milly business systems. It has no opinion, no ego, and no loyalty to past decisions. Its job is to read the actual data, apply market benchmarks, and tell the truth about what the numbers say.
+The Strategist is a permanent monitoring agent for the Reeve business system. It has no opinion, no ego, and no loyalty to past decisions. Its job is to read the actual data, apply market benchmarks, and tell the truth about what the numbers say.
 
 It runs two modes:
 1. **Monitor** (weekly, zero API cost) — reads pipeline data, outputs health metrics, flags alerts
@@ -34,7 +42,7 @@ The Strategist does not build features. It tells you what to build and why, base
 | Pitch acceptance rate | >20% | <10% |
 | Client retention (monthly) | >90% | <80% |
 | Avg bookings confirmed per client/mo | >0.5 | 0 for 60 days |
-| Milly → DM trigger rate | Growing | Flat for 3 weeks |
+| ~~Milly → DM trigger rate~~ | ~~Growing~~ | **NOT YET WIRED — no Milly data path exists in `strategy/lib/reeve-metrics.js` or anywhere in this agent. Milly's own engagement data lives in `milly/lib/instagram-insights.js` / `milly/lib/ab-tracker.js`; wiring this row would mean reading those directly, not something this agent does today.** |
 
 ## Pricing model monitoring
 

@@ -1,0 +1,883 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recruiter Outreach Tracker</title>
+<style>
+  :root {
+    --navy: #1f2937;
+    --navy-dark: #111827;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-400: #9ca3af;
+    --gray-600: #4b5563;
+    --accent: #2563eb;
+    --amber: #f59e0b;
+    --amber-bg: #fffbeb;
+    --red: #b91c1c;
+    --green: #047857;
+    --border: #d1d5db;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--gray-50);
+    color: var(--navy-dark);
+    line-height: 1.5;
+  }
+  header {
+    background: var(--navy);
+    color: white;
+    padding: 16px 20px;
+  }
+  header h1 { margin: 0; font-size: 20px; font-weight: 600; }
+  header p { margin: 4px 0 0; font-size: 13px; color: var(--gray-400); }
+
+  nav.tabs {
+    display: flex;
+    background: white;
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+  }
+  nav.tabs button {
+    flex: 0 0 auto;
+    padding: 12px 18px;
+    border: none;
+    background: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gray-600);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+  }
+  nav.tabs button.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  main { max-width: 1100px; margin: 0 auto; padding: 20px; }
+  .tabpanel { display: none; }
+  .tabpanel.active { display: block; }
+
+  .panel {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  .panel h2 { margin: 0 0 12px; font-size: 16px; }
+  .panel h3 { margin: 16px 0 8px; font-size: 14px; color: var(--gray-600); }
+
+  .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .toolbar .spacer { flex: 1; }
+
+  button.btn {
+    padding: 8px 14px;
+    font-size: 13px;
+    border: 1px solid var(--border);
+    background: white;
+    border-radius: 5px;
+    cursor: pointer;
+    color: var(--navy-dark);
+  }
+  button.btn:hover { background: var(--gray-100); }
+  button.btn.primary { background: var(--accent); color: white; border-color: var(--accent); }
+  button.btn.primary:hover { background: #1d4ed8; }
+  button.btn.danger { color: var(--red); }
+  button.btn.small { padding: 4px 8px; font-size: 12px; }
+
+  select, input[type=text], input[type=date], textarea {
+    font-family: inherit;
+    font-size: 13px;
+    padding: 6px 8px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    width: 100%;
+  }
+
+  .counter {
+    font-size: 13px;
+    padding: 6px 12px;
+    background: var(--gray-100);
+    border-radius: 5px;
+    font-weight: 600;
+  }
+  .counter.over { background: #fee2e2; color: var(--red); }
+
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--gray-200); vertical-align: top; }
+  th { cursor: pointer; color: var(--gray-600); font-weight: 600; white-space: nowrap; user-select: none; }
+  th:hover { color: var(--accent); }
+  tr.needs-followup { background: var(--amber-bg); }
+  tr.needs-followup td:first-child { border-left: 3px solid var(--amber); }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--gray-100);
+    color: var(--gray-600);
+  }
+  .badge.Contacted { background: #dbeafe; color: #1e40af; }
+  .badge.Replied { background: #d1fae5; color: var(--green); }
+  .badge.Intake_call { background: #ede9fe; color: #6d28d9; }
+  .badge.Submitted { background: #fef3c7; color: #92400e; }
+  .badge.Dead { background: var(--gray-200); color: var(--gray-600); }
+  .badge.Identified { background: #e0e7ff; color: #3730a3; }
+
+  .followup-list { list-style: none; margin: 0; padding: 0; }
+  .followup-list li { padding: 8px 0; border-bottom: 1px solid var(--gray-200); font-size: 13px; }
+  .followup-list li:last-child { border-bottom: none; }
+
+  .actions { white-space: nowrap; }
+  .actions button { margin-right: 4px; }
+
+  .template-card { border: 1px solid var(--border); border-radius: 6px; padding: 14px; margin-bottom: 16px; }
+  .template-card h3 { margin-top: 0; }
+  .template-card textarea { min-height: 140px; font-size: 13px; }
+  .field-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; margin: 10px 0; }
+  .field-grid label { font-size: 12px; color: var(--gray-600); display: block; margin-bottom: 2px; }
+  .preview {
+    white-space: pre-wrap;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 13px;
+    margin-top: 8px;
+  }
+  .wordcount { font-size: 12px; color: var(--gray-600); margin-top: 6px; }
+  .wordcount.over { color: var(--red); font-weight: 600; }
+
+  .intake-frame {
+    font-size: 17px;
+    line-height: 1.6;
+    background: var(--gray-50);
+    border-left: 4px solid var(--accent);
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+  .intake-metrics { list-style: none; margin: 0; padding: 0; font-size: 16px; }
+  .intake-metrics li { padding: 8px 0; border-bottom: 1px solid var(--gray-200); }
+  .intake-questions { font-size: 16px; padding-left: 20px; }
+  .intake-questions li { margin-bottom: 10px; }
+
+  .checklist-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--gray-200); font-size: 14px; }
+  .checklist-item input[type=checkbox] { width: 18px; height: 18px; }
+
+  .muted { color: var(--gray-600); font-size: 12px; }
+
+  @media (max-width: 700px) {
+    table, thead, tbody, th, td, tr { display: block; }
+    thead tr { position: absolute; top: -9999px; left: -9999px; }
+    tr { border: 1px solid var(--gray-200); border-radius: 6px; margin-bottom: 10px; padding: 6px; }
+    tr.needs-followup { border-left: 3px solid var(--amber); }
+    td { border: none; padding: 6px 8px; position: relative; }
+    td::before { content: attr(data-label); display: block; font-size: 11px; font-weight: 600; color: var(--gray-600); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Recruiter Outreach Tracker</h1>
+  <p>Local, private, review-only. Nothing here is sent anywhere.</p>
+</header>
+
+<nav class="tabs">
+  <button data-tab="pipeline" class="active">Pipeline</button>
+  <button data-tab="templates">Templates</button>
+  <button data-tab="intake">Intake Call</button>
+  <button data-tab="maintenance">Monthly Maintenance</button>
+</nav>
+
+<main>
+
+  <!-- PIPELINE TAB -->
+  <section id="tab-pipeline" class="tabpanel active">
+
+    <div class="panel" id="followup-panel" style="display:none">
+      <h2>Needs follow-up</h2>
+      <ul class="followup-list" id="followup-list"></ul>
+    </div>
+
+    <div class="panel">
+      <div class="toolbar">
+        <button class="btn primary" id="btn-add">+ Add contact</button>
+        <select id="filter-stage">
+          <option value="">All stages</option>
+          <option>Identified</option>
+          <option>Contacted</option>
+          <option>Replied</option>
+          <option>Intake call</option>
+          <option>Submitted</option>
+          <option>Dead</option>
+        </select>
+        <span class="spacer"></span>
+        <span class="counter" id="weekly-counter">New contacts this week: 0 / 5</span>
+        <button class="btn" id="btn-export">Download CSV</button>
+        <button class="btn" id="btn-import-trigger">Import CSV</button>
+        <input type="file" id="btn-import" accept=".csv" style="display:none">
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th data-sort="name">Name</th>
+            <th data-sort="firm">Firm</th>
+            <th data-sort="specialty">Specialty</th>
+            <th data-sort="source">Source</th>
+            <th data-sort="dateContacted">Date contacted</th>
+            <th data-sort="response">Response</th>
+            <th data-sort="stage">Stage</th>
+            <th data-sort="nextStep">Next step</th>
+            <th data-sort="notes">Notes</th>
+            <th>Follow-up sent</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="pipeline-body"></tbody>
+      </table>
+      <p class="muted" id="empty-note" style="display:none">No contacts yet — click "+ Add contact" to start.</p>
+    </div>
+  </section>
+
+  <!-- TEMPLATES TAB -->
+  <section id="tab-templates" class="tabpanel">
+    <div class="panel">
+      <p class="muted">Source codes: A = LinkedIn search &middot; B = reverse-engineered from a posting &middot; C = industry firm &middot; D = my network. Edit any template below — your edits are saved automatically. "Reset to original" restores the drafted version from PLAN.md.</p>
+    </div>
+    <div id="templates-container"></div>
+  </section>
+
+  <!-- INTAKE CALL TAB -->
+  <section id="tab-intake" class="tabpanel">
+    <div class="panel">
+      <h2>30-second frame</h2>
+      <div class="intake-frame" id="intake-frame"></div>
+
+      <h2>Key metrics to have ready</h2>
+      <ul class="intake-metrics" id="intake-metrics"></ul>
+
+      <h2>Four questions to ask the recruiter</h2>
+      <ol class="intake-questions" id="intake-questions"></ol>
+    </div>
+  </section>
+
+  <!-- MAINTENANCE TAB -->
+  <section id="tab-maintenance" class="tabpanel">
+    <div class="panel">
+      <h2>Phase 4 — monthly maintenance</h2>
+      <div id="maintenance-list"></div>
+      <div class="toolbar" style="margin-top:14px">
+        <span class="muted" id="last-reviewed"></span>
+        <span class="spacer"></span>
+        <button class="btn primary" id="btn-mark-reviewed">Mark reviewed today</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  var STORAGE_KEY = 'recruiterTracker_v1';
+
+  var DEFAULT_TEMPLATES = {
+    A: 'Hi [Name] — I noticed you recruit for [industry] commercial and finance leadership roles. I\'m a Director-level commercial/finance leader — nearly two decades inside one organization, moving from national accounts into pricing policy and margin governance for a $250M business unit within a $1.3B portfolio. I\'m exploring [Role Title]-type opportunities, ideally in [industry], Denver-based or open to remote. Would you be open to a short call to see if I\'m a fit for anything on your desk, now or upcoming? Happy to send my resume ahead of time. Thanks for considering — David',
+    B: 'Hi [Name] — I came across the [Role Title] posting at [Firm] and wanted to reach out directly. I\'m a commercial/finance leader with pricing approval authority and quota-carrying national account experience — built my company\'s first price-to-volume governance loop (~$1.4M annual sales lift) and drove ~$500K in margin improvement through category pricing. That sales-to-finance crossover seemed relevant to this role. Open to a brief conversation about it, or others like it you\'re working? — David',
+    C: 'Hi [Name] — I understand [Firm] specializes in placements within [industry]. I\'m currently a Manager of Finance at a $250M business unit (Daikin/Motili), with a background spanning national accounts, pricing governance, and margin analysis across a ~$1.3B revenue scope. I\'m exploring Director-level Sales or Finance roles, ideally within [industry], and wanted to introduce myself in case a relevant search crosses your desk. Open to a short call whenever convenient. — David',
+    D: 'Hi [Name] — [Mutual] suggested I reach out, given your work placing finance/commercial leaders in [industry]. Quick background: nearly two decades in one organization, moving from national accounts into pricing policy and margin governance for a $250M business unit. I\'m exploring Director-level Sales/Finance roles and would value 15 minutes to see if you\'re working on anything relevant, or know someone who might be. Happy to work around your schedule. — David'
+  };
+
+  var INTAKE_FRAME = 'I\'m a commercial and finance leader who\'s spent nearly two decades inside one organization — moving from front-line customer service to national account sales to owning pricing policy, margin governance, and executive reporting across a $1.3 billion revenue scope. I built a segment from zero to a $10-12 million peak, personally carrying about $6 million of it, then crossed to the other side of the table — building my company\'s first price-to-volume governance loop and driving real margin improvement through pricing strategy. Sales leaders with real finance depth are rare. Finance leaders who\'ve personally grown accounts are rare. I\'m both, and I\'m looking at Director-level Sales or Finance roles, ideally in [industry], based in Denver or open to remote.';
+
+  var INTAKE_METRICS = [
+    '$250M business unit — pricing policy, margin governance, rebate + price approval authority',
+    '~$1.3B combined revenue scope for executive/investor reporting',
+    '~$1.4M annual sales lift — built the price-to-volume governance loop',
+    '~$500K annual gross margin improvement — water heater category pricing',
+    'Multifamily segment: built from $0 to $10-12M peak, ~$6M personally carried',
+    "Lowe's account: grew from $4M to $8M (stable $7-10M today)"
+  ];
+
+  var INTAKE_QUESTIONS = [
+    'What is the client actually trying to solve with this hire — not just the title, but the business problem?',
+    'What\'s the realistic compensation range, and is there flexibility based on experience?',
+    'Who else are you presenting for this role, and how do I compare?',
+    'What\'s the timeline, and what\'s the next step after this call?'
+  ];
+
+  var MAINTENANCE_ITEMS = [
+    'Re-engage any "Replied" or "Intake call" contacts gone quiet 3+ weeks',
+    'Move fully-cold contacts to "Dead" with a closing note',
+    'Refresh the target recruiter list — new firms/contacts in your industry',
+    'Review the four templates against what\'s actually gotten replies; tighten wording',
+    'Confirm LinkedIn profile is current',
+    'Export/back up the CSV',
+    'Check weekly-cap discipline — did the last 4 weeks actually stay near 5/week?'
+  ];
+
+  var STAGES = ['Identified', 'Contacted', 'Replied', 'Intake call', 'Submitted', 'Dead'];
+  var SOURCES = ['A', 'B', 'C', 'D'];
+
+  // ---------- data ----------
+
+  // Local calendar date as YYYY-MM-DD — deliberately NOT toISOString() (that's
+  // UTC-based, so a US timezone user in the evening could get "tomorrow"'s
+  // date, inconsistent with the local-time day-difference math in daysSince()
+  // and weekBounds() below). Found during verification: contact dates and the
+  // "last reviewed" stamp must all agree with the same local calendar day.
+  function todayLocal() {
+    var d = new Date();
+    var m = String(d.getMonth() + 1).padStart(2, '0');
+    var day = String(d.getDate()).padStart(2, '0');
+    return d.getFullYear() + '-' + m + '-' + day;
+  }
+
+  function loadData() {
+    var raw = localStorage.getItem(STORAGE_KEY);
+    var data = null;
+    if (raw) {
+      try { data = JSON.parse(raw); } catch (e) { data = null; }
+    }
+    if (!data) data = {};
+    if (!Array.isArray(data.contacts)) data.contacts = [];
+    if (!data.templates) data.templates = Object.assign({}, DEFAULT_TEMPLATES);
+    if (!data.maintenanceChecked) data.maintenanceChecked = {};
+    if (typeof data.maintenanceLastReviewed === 'undefined') data.maintenanceLastReviewed = null;
+    return data;
+  }
+
+  function saveData() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data));
+  }
+
+  var state = {
+    data: loadData(),
+    editingId: null,
+    filterStage: '',
+    sortKey: 'dateContacted',
+    sortDir: 'desc'
+  };
+
+  function uid() {
+    return 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  }
+
+  // ---------- helpers ----------
+
+  function daysSince(dateStr) {
+    if (!dateStr) return null;
+    var then = new Date(dateStr + 'T00:00:00');
+    if (isNaN(then.getTime())) return null;
+    var now = new Date();
+    now.setHours(0, 0, 0, 0);
+    return Math.round((now - then) / 86400000);
+  }
+
+  function needsFollowUp(c) {
+    if (c.stage !== 'Contacted') return false;
+    if (c.followUpSent) return false;
+    var d = daysSince(c.dateContacted);
+    return d !== null && d >= 7;
+  }
+
+  function weekBounds(now) {
+    now = now || new Date();
+    var day = now.getDay(); // 0 = Sun
+    var diffToMonday = day === 0 ? -6 : 1 - day;
+    var monday = new Date(now);
+    monday.setHours(0, 0, 0, 0);
+    monday.setDate(now.getDate() + diffToMonday);
+    var sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
+    sunday.setHours(23, 59, 59, 999);
+    return { start: monday, end: sunday };
+  }
+
+  function inCurrentWeek(dateStr) {
+    if (!dateStr) return false;
+    var d = new Date(dateStr + 'T12:00:00');
+    if (isNaN(d.getTime())) return false;
+    var b = weekBounds();
+    return d >= b.start && d <= b.end;
+  }
+
+  function esc(s) {
+    var d = document.createElement('div');
+    d.textContent = s == null ? '' : String(s);
+    return d.innerHTML;
+  }
+
+  function copyToClipboard(text, btn) {
+    function done(ok) {
+      var original = btn.textContent;
+      btn.textContent = ok ? 'Copied!' : 'Copy failed';
+      setTimeout(function () { btn.textContent = original; }, 1500);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { done(true); }, function () { fallbackCopy(text, done); });
+    } else {
+      fallbackCopy(text, done);
+    }
+  }
+
+  function fallbackCopy(text, done) {
+    try {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      var ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      done(ok);
+    } catch (e) {
+      done(false);
+    }
+  }
+
+  // ---------- tabs ----------
+
+  document.querySelectorAll('nav.tabs button').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('nav.tabs button').forEach(function (b) { b.classList.remove('active'); });
+      document.querySelectorAll('.tabpanel').forEach(function (p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    });
+  });
+
+  // ---------- CSV ----------
+
+  var CSV_HEADERS = ['Name', 'Firm', 'Specialty', 'Source', 'Date Contacted', 'Response', 'Stage', 'Next Step', 'Notes', 'Follow-up Sent'];
+  var CSV_FIELDS = ['name', 'firm', 'specialty', 'source', 'dateContacted', 'response', 'stage', 'nextStep', 'notes', 'followUpSent'];
+
+  function csvEscape(val) {
+    var s = val == null ? '' : String(val);
+    if (/[",\n]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+    return s;
+  }
+
+  function toCSV(contacts) {
+    var lines = [CSV_HEADERS.map(csvEscape).join(',')];
+    contacts.forEach(function (c) {
+      lines.push(CSV_FIELDS.map(function (f) {
+        var v = c[f];
+        if (f === 'followUpSent') v = v ? 'Yes' : 'No';
+        return csvEscape(v);
+      }).join(','));
+    });
+    return lines.join('\r\n');
+  }
+
+  // Minimal RFC4180-ish parser — handles quoted fields with embedded commas,
+  // quotes (doubled), and newlines.
+  function parseCSV(text) {
+    var rows = [];
+    var row = [];
+    var field = '';
+    var inQuotes = false;
+    var i = 0;
+    while (i < text.length) {
+      var ch = text[i];
+      if (inQuotes) {
+        if (ch === '"') {
+          if (text[i + 1] === '"') { field += '"'; i += 2; continue; }
+          inQuotes = false; i++; continue;
+        }
+        field += ch; i++; continue;
+      } else {
+        if (ch === '"') { inQuotes = true; i++; continue; }
+        if (ch === ',') { row.push(field); field = ''; i++; continue; }
+        if (ch === '\r') { i++; continue; }
+        if (ch === '\n') { row.push(field); rows.push(row); row = []; field = ''; i++; continue; }
+        field += ch; i++; continue;
+      }
+    }
+    if (field.length || row.length) { row.push(field); rows.push(row); }
+    return rows.filter(function (r) { return r.length > 1 || (r.length === 1 && r[0] !== ''); });
+  }
+
+  function fromCSV(text) {
+    var rows = parseCSV(text);
+    if (!rows.length) return [];
+    rows.shift(); // header
+    return rows.map(function (r) {
+      var c = { id: uid() };
+      CSV_FIELDS.forEach(function (f, idx) {
+        var v = r[idx] || '';
+        c[f] = f === 'followUpSent' ? /^y/i.test(v) : v;
+      });
+      return c;
+    });
+  }
+
+  document.getElementById('btn-export').addEventListener('click', function () {
+    var csv = toCSV(state.data.contacts);
+    var blob = new Blob([csv], { type: 'text/csv' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'recruiter-tracker-' + todayLocal() + '.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  });
+
+  document.getElementById('btn-import-trigger').addEventListener('click', function () {
+    document.getElementById('btn-import').click();
+  });
+
+  document.getElementById('btn-import').addEventListener('change', function (e) {
+    var file = e.target.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      var imported = fromCSV(String(reader.result));
+      if (!imported.length) { alert('No rows found in that CSV.'); return; }
+      var replace = confirm(imported.length + ' contact(s) found. Click OK to REPLACE your current pipeline, or Cancel to ADD them to it.');
+      if (replace) state.data.contacts = imported;
+      else state.data.contacts = state.data.contacts.concat(imported);
+      saveData();
+      renderPipeline();
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+  });
+
+  // ---------- pipeline rendering ----------
+
+  function sortedFilteredContacts() {
+    var list = state.data.contacts.slice();
+    if (state.filterStage) list = list.filter(function (c) { return c.stage === state.filterStage; });
+    var key = state.sortKey;
+    var dir = state.sortDir === 'asc' ? 1 : -1;
+    list.sort(function (a, b) {
+      var av = a[key] || '';
+      var bv = b[key] || '';
+      if (key === 'dateContacted') {
+        if (!av && !bv) return 0;
+        if (!av) return 1; // blanks last
+        if (!bv) return -1;
+      }
+      if (av < bv) return -1 * dir;
+      if (av > bv) return 1 * dir;
+      return 0;
+    });
+    return list;
+  }
+
+  function stageBadgeClass(stage) {
+    return (stage || '').replace(/\s+/g, '_');
+  }
+
+  function renderPipeline() {
+    var tbody = document.getElementById('pipeline-body');
+    var list = sortedFilteredContacts();
+
+    document.getElementById('empty-note').style.display = state.data.contacts.length ? 'none' : 'block';
+
+    tbody.innerHTML = list.map(function (c) {
+      var editing = c.id === state.editingId;
+      var followupClass = needsFollowUp(c) ? ' class="needs-followup"' : '';
+      if (editing) return renderEditRow(c);
+      return '<tr' + followupClass + ' data-id="' + c.id + '">' +
+        '<td data-label="Name">' + esc(c.name) + '</td>' +
+        '<td data-label="Firm">' + esc(c.firm) + '</td>' +
+        '<td data-label="Specialty">' + esc(c.specialty) + '</td>' +
+        '<td data-label="Source">' + esc(c.source) + '</td>' +
+        '<td data-label="Date contacted">' + esc(c.dateContacted) + '</td>' +
+        '<td data-label="Response">' + esc(c.response) + '</td>' +
+        '<td data-label="Stage"><span class="badge ' + stageBadgeClass(c.stage) + '">' + esc(c.stage) + '</span></td>' +
+        '<td data-label="Next step">' + esc(c.nextStep) + '</td>' +
+        '<td data-label="Notes">' + esc(c.notes) + '</td>' +
+        '<td data-label="Follow-up sent">' +
+          '<input type="checkbox" data-followup="' + c.id + '"' + (c.followUpSent ? ' checked' : '') + '></td>' +
+        '<td class="actions" data-label="">' +
+          '<button class="btn small" data-edit="' + c.id + '">Edit</button>' +
+          '<button class="btn small danger" data-delete="' + c.id + '">Delete</button>' +
+        '</td></tr>';
+    }).join('');
+
+    renderFollowUpPanel();
+    renderWeeklyCounter();
+    attachRowHandlers();
+  }
+
+  function renderEditRow(c) {
+    var stageOpts = STAGES.map(function (s) { return '<option' + (s === c.stage ? ' selected' : '') + '>' + s + '</option>'; }).join('');
+    var sourceOpts = SOURCES.map(function (s) { return '<option' + (s === c.source ? ' selected' : '') + '>' + s + '</option>'; }).join('');
+    return '<tr data-id="' + c.id + '" data-editing="1">' +
+      '<td data-label="Name"><input type="text" id="f-name" value="' + esc(c.name) + '"></td>' +
+      '<td data-label="Firm"><input type="text" id="f-firm" value="' + esc(c.firm) + '"></td>' +
+      '<td data-label="Specialty"><input type="text" id="f-specialty" value="' + esc(c.specialty) + '"></td>' +
+      '<td data-label="Source"><select id="f-source">' + sourceOpts + '</select></td>' +
+      '<td data-label="Date contacted"><input type="date" id="f-date" value="' + esc(c.dateContacted) + '"></td>' +
+      '<td data-label="Response"><input type="text" id="f-response" value="' + esc(c.response) + '"></td>' +
+      '<td data-label="Stage"><select id="f-stage">' + stageOpts + '</select></td>' +
+      '<td data-label="Next step"><input type="text" id="f-nextstep" value="' + esc(c.nextStep) + '"></td>' +
+      '<td data-label="Notes"><input type="text" id="f-notes" value="' + esc(c.notes) + '"></td>' +
+      '<td data-label="Follow-up sent"><input type="checkbox" id="f-followup"' + (c.followUpSent ? ' checked' : '') + '></td>' +
+      '<td class="actions" data-label="">' +
+        '<button class="btn small primary" data-save="' + c.id + '">Save</button>' +
+        '<button class="btn small" data-cancel="' + c.id + '">Cancel</button>' +
+      '</td></tr>';
+  }
+
+  function renderFollowUpPanel() {
+    var due = state.data.contacts.filter(needsFollowUp);
+    var panel = document.getElementById('followup-panel');
+    var list = document.getElementById('followup-list');
+    if (!due.length) { panel.style.display = 'none'; return; }
+    panel.style.display = 'block';
+    list.innerHTML = due.map(function (c) {
+      var d = daysSince(c.dateContacted);
+      return '<li><strong>' + esc(c.name) + '</strong> — ' + esc(c.firm) + ' — contacted ' + d + ' days ago, no response. ' +
+        '<button class="btn small" data-followup-done="' + c.id + '">Mark follow-up sent</button></li>';
+    }).join('');
+    list.querySelectorAll('[data-followup-done]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var c = findContact(btn.dataset.followupDone);
+        if (c) { c.followUpSent = true; saveData(); renderPipeline(); }
+      });
+    });
+  }
+
+  function renderWeeklyCounter() {
+    var count = state.data.contacts.filter(function (c) { return inCurrentWeek(c.dateContacted); }).length;
+    var el = document.getElementById('weekly-counter');
+    el.textContent = 'New contacts this week: ' + count + ' / 5';
+    el.className = 'counter' + (count > 5 ? ' over' : '');
+  }
+
+  function findContact(id) {
+    for (var i = 0; i < state.data.contacts.length; i++) {
+      if (state.data.contacts[i].id === id) return state.data.contacts[i];
+    }
+    return null;
+  }
+
+  function attachRowHandlers() {
+    document.querySelectorAll('[data-edit]').forEach(function (btn) {
+      btn.addEventListener('click', function () { state.editingId = btn.dataset.edit; renderPipeline(); });
+    });
+    document.querySelectorAll('[data-cancel]').forEach(function (btn) {
+      btn.addEventListener('click', function () { state.editingId = null; renderPipeline(); });
+    });
+    document.querySelectorAll('[data-delete]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (!confirm('Delete this contact? This cannot be undone (unless you have a CSV backup).')) return;
+        state.data.contacts = state.data.contacts.filter(function (c) { return c.id !== btn.dataset.delete; });
+        saveData();
+        renderPipeline();
+      });
+    });
+    document.querySelectorAll('[data-save]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var c = findContact(btn.dataset.save);
+        if (!c) return;
+        c.name = document.getElementById('f-name').value.trim();
+        c.firm = document.getElementById('f-firm').value.trim();
+        c.specialty = document.getElementById('f-specialty').value.trim();
+        c.source = document.getElementById('f-source').value;
+        c.dateContacted = document.getElementById('f-date').value;
+        c.response = document.getElementById('f-response').value.trim();
+        c.stage = document.getElementById('f-stage').value;
+        c.nextStep = document.getElementById('f-nextstep').value.trim();
+        c.notes = document.getElementById('f-notes').value.trim();
+        c.followUpSent = document.getElementById('f-followup').checked;
+        state.editingId = null;
+        saveData();
+        renderPipeline();
+      });
+    });
+    document.querySelectorAll('[data-followup]').forEach(function (cb) {
+      cb.addEventListener('change', function () {
+        var c = findContact(cb.dataset.followup);
+        if (c) { c.followUpSent = cb.checked; saveData(); renderPipeline(); }
+      });
+    });
+  }
+
+  document.getElementById('btn-add').addEventListener('click', function () {
+    var c = { id: uid(), name: '', firm: '', specialty: '', source: 'A', dateContacted: todayLocal(), response: '', stage: 'Identified', nextStep: '', notes: '', followUpSent: false };
+    state.data.contacts.unshift(c);
+    state.editingId = c.id;
+    saveData();
+    renderPipeline();
+  });
+
+  document.getElementById('filter-stage').addEventListener('change', function (e) {
+    state.filterStage = e.target.value;
+    renderPipeline();
+  });
+
+  document.querySelectorAll('th[data-sort]').forEach(function (th) {
+    th.addEventListener('click', function () {
+      var key = th.dataset.sort;
+      if (state.sortKey === key) state.sortDir = state.sortDir === 'asc' ? 'desc' : 'asc';
+      else { state.sortKey = key; state.sortDir = 'asc'; }
+      renderPipeline();
+    });
+  });
+
+  // ---------- templates ----------
+
+  function extractPlaceholders(text) {
+    var seen = {};
+    var out = [];
+    var re = /\[([^\]]+)\]/g;
+    var m;
+    while ((m = re.exec(text)) !== null) {
+      if (!seen[m[1]]) { seen[m[1]] = true; out.push(m[1]); }
+    }
+    return out;
+  }
+
+  function fillTemplate(text, values) {
+    return text.replace(/\[([^\]]+)\]/g, function (whole, key) {
+      var v = values[key];
+      return v ? v : whole;
+    });
+  }
+
+  function wordCount(text) {
+    var t = text.trim();
+    if (!t) return 0;
+    return t.split(/\s+/).length;
+  }
+
+  var templateFieldValues = {}; // in-memory only, per session
+
+  function renderTemplates() {
+    var container = document.getElementById('templates-container');
+    container.innerHTML = SOURCES.map(function (key) {
+      var text = state.data.templates[key] || '';
+      var placeholders = extractPlaceholders(text);
+      if (!templateFieldValues[key]) templateFieldValues[key] = {};
+      var fieldsHtml = placeholders.map(function (ph) {
+        var val = templateFieldValues[key][ph] || '';
+        return '<div><label>' + esc(ph) + '</label><input type="text" data-tplfield="' + key + '|' + esc(ph) + '" value="' + esc(val) + '"></div>';
+      }).join('');
+      var filled = fillTemplate(text, templateFieldValues[key]);
+      var wc = wordCount(filled);
+      var labels = { A: 'LinkedIn search (cold)', B: 'Reverse-engineered from a posting', C: 'Industry recruiting firm', D: 'Warm intro via network' };
+      return '<div class="template-card">' +
+        '<h3>Template ' + key + ' — ' + labels[key] + '</h3>' +
+        '<textarea data-tpltext="' + key + '">' + esc(text) + '</textarea>' +
+        '<div class="toolbar" style="margin-top:8px">' +
+          '<button class="btn small" data-tplreset="' + key + '">Reset to original</button>' +
+        '</div>' +
+        '<div class="field-grid">' + fieldsHtml + '</div>' +
+        '<div class="preview" id="preview-' + key + '">' + esc(filled) + '</div>' +
+        '<div class="wordcount' + (wc > 120 ? ' over' : '') + '" id="wc-' + key + '">' + wc + ' words' + (wc > 120 ? ' — over the 120-word target' : '') + '</div>' +
+        '<div class="toolbar" style="margin-top:8px">' +
+          '<button class="btn primary" data-tplcopy="' + key + '">Copy to clipboard</button>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+
+    container.querySelectorAll('[data-tpltext]').forEach(function (ta) {
+      ta.addEventListener('input', function () {
+        var key = ta.dataset.tpltext;
+        state.data.templates[key] = ta.value;
+        saveData();
+        renderTemplates();
+      });
+    });
+    container.querySelectorAll('[data-tplfield]').forEach(function (input) {
+      input.addEventListener('input', function () {
+        var parts = input.dataset.tplfield.split('|');
+        templateFieldValues[parts[0]][parts[1]] = input.value;
+        updatePreview(parts[0]);
+      });
+    });
+    container.querySelectorAll('[data-tplreset]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var key = btn.dataset.tplreset;
+        if (!confirm('Reset template ' + key + ' to the original drafted wording? Your edits will be lost.')) return;
+        state.data.templates[key] = DEFAULT_TEMPLATES[key];
+        saveData();
+        renderTemplates();
+      });
+    });
+    container.querySelectorAll('[data-tplcopy]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var key = btn.dataset.tplcopy;
+        var text = fillTemplate(state.data.templates[key] || '', templateFieldValues[key] || {});
+        copyToClipboard(text, btn);
+      });
+    });
+  }
+
+  function updatePreview(key) {
+    var text = state.data.templates[key] || '';
+    var filled = fillTemplate(text, templateFieldValues[key] || {});
+    var wc = wordCount(filled);
+    document.getElementById('preview-' + key).textContent = filled;
+    var wcEl = document.getElementById('wc-' + key);
+    wcEl.textContent = wc + ' words' + (wc > 120 ? ' — over the 120-word target' : '');
+    wcEl.className = 'wordcount' + (wc > 120 ? ' over' : '');
+  }
+
+  // ---------- intake call ----------
+
+  function renderIntake() {
+    document.getElementById('intake-frame').textContent = INTAKE_FRAME;
+    document.getElementById('intake-metrics').innerHTML = INTAKE_METRICS.map(function (m) { return '<li>' + esc(m) + '</li>'; }).join('');
+    document.getElementById('intake-questions').innerHTML = INTAKE_QUESTIONS.map(function (q) { return '<li>' + esc(q) + '</li>'; }).join('');
+  }
+
+  // ---------- maintenance ----------
+
+  function renderMaintenance() {
+    var list = document.getElementById('maintenance-list');
+    list.innerHTML = MAINTENANCE_ITEMS.map(function (item, i) {
+      var checked = !!state.data.maintenanceChecked[i];
+      return '<div class="checklist-item"><input type="checkbox" data-mcheck="' + i + '"' + (checked ? ' checked' : '') + '><span>' + esc(item) + '</span></div>';
+    }).join('');
+    list.querySelectorAll('[data-mcheck]').forEach(function (cb) {
+      cb.addEventListener('change', function () {
+        state.data.maintenanceChecked[cb.dataset.mcheck] = cb.checked;
+        saveData();
+      });
+    });
+    var lr = document.getElementById('last-reviewed');
+    lr.textContent = state.data.maintenanceLastReviewed
+      ? ('Last reviewed: ' + state.data.maintenanceLastReviewed)
+      : 'Not yet reviewed.';
+  }
+
+  document.getElementById('btn-mark-reviewed').addEventListener('click', function () {
+    state.data.maintenanceLastReviewed = todayLocal();
+    saveData();
+    renderMaintenance();
+  });
+
+  // ---------- init ----------
+
+  renderPipeline();
+  renderTemplates();
+  renderIntake();
+  renderMaintenance();
+})();
+</script>
+</body>
+</html>

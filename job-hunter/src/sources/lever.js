@@ -20,7 +20,13 @@ export async function pullLever(slug) {
       title: j.text || '',
       location,
       remote: workplace === 'remote' || /remote/i.test(location),
+      // Two distinct upstream URLs can exist — hostedUrl (Lever's own listing
+      // page) and applyUrl (the apply-form link). Previously collapsed with
+      // `||`, silently discarding whichever wasn't first — both are now kept
+      // so the digest can show both when they differ (see CHANGE_REQUEST.md,
+      // Change 1).
       url: j.hostedUrl || j.applyUrl || '',
+      applyUrl: j.applyUrl && j.applyUrl !== j.hostedUrl ? j.applyUrl : null,
       description: j.descriptionPlain || htmlToText(j.description || ''),
       postedAt: j.createdAt ? new Date(Number(j.createdAt)).toISOString() : null,
     };

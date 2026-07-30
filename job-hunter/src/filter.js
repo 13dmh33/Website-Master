@@ -3,11 +3,18 @@
 // Runs before any Claude call (free-before-paid). It drops jobs that clearly
 // fail hard preferences so the paid scorer only ever sees plausible matches:
 //   - deal-breaker keywords in the title/description
-//   - location / remote mismatch
 //   - obvious seniority mismatch (interns, executive tiers, when not wanted)
 //
 // It is deliberately conservative — when in doubt it keeps the job and lets the
 // scorer judge. Each drop records a plain-language reason for the run log.
+//
+// Location is no longer a hard filter here (removed 2026-07-30 — see
+// CHANGE_REQUEST.md). It used to drop any job whose location didn't match a
+// target city and wasn't remote, while treating an EMPTY location as neutral —
+// an asymmetry where a location-PARSING failure (garbled text) was punished
+// harder than having no location data at all. Location is now a scored
+// dimension in scorer.js (see lib/location.js#classifyLocation), not an
+// exclusion gate — nothing gets dropped from the pipeline over location alone.
 
 import { makeLogger } from './lib/log.js';
 import { normalize } from './lib/dedup.js';
@@ -27,20 +34,6 @@ function failsDealBreaker(job, prefs) {
     if (hay.includes(normalize(kw))) return kw;
   }
   return null;
-}
-
-function failsLocation(job, prefs) {
-  if (job.remote && prefs.remote_ok) return null; // remote is fine
-  const locs = prefs.location.filter((l) => !/remote/i.test(l));
-  if (!locs.length) return null; // no location constraint configured
-  if (job.remote) return null; // still remote, acceptable superset
-  const jobLoc = normalize(job.location);
-  if (!jobLoc) return null; // unknown location: let the scorer decide
-  const ok = locs.some((l) => {
-    const city = normalize(l).split(' ')[0];
-    return jobLoc.includes(city);
-  });
-  return ok ? null : `location "${job.location}" not in target areas and not remote`;
 }
 
 function failsSeniority(job, prefs) {
@@ -65,7 +58,6 @@ export function runFilter(jobs, prefs) {
   for (const job of jobs) {
     const reason =
       (failsDealBreaker(job, prefs) && `deal-breaker keyword: ${failsDealBreaker(job, prefs)}`) ||
-      failsLocation(job, prefs) ||
       failsSeniority(job, prefs);
     if (reason) dropped.push({ job, reason });
     else kept.push(job);

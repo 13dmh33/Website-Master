@@ -1,14 +1,19 @@
 // scorer.js — Stage 3. Score the shortlist with Claude Haiku, add the freshness
-// bonus, and keep everything at or above MIN_SCORE.
+// bonus + location adjustment, and keep everything at or above MIN_SCORE.
 //
 // Cost tiering: only jobs that survived the free rules filter reach this stage.
 // Each survivor gets one cheap Haiku call: fit 0-100, a one-line rationale, and
 // the top 3 keywords to mirror.
 //
 // Recency is baked into ranking, legibly:
-//   blended = min(100, rawFit + freshnessBonus)
-//   where freshnessBonus is +15 (<2d), +8 (<7d), +3 (<14d), +0 (older).
-// So a fresh 75 outranks a stale 82. The digest shows both numbers.
+//   blended = min(100, rawFit + freshnessBonus + locationDelta)
+//   where freshnessBonus is +15 (<2d), +8 (<7d), +3 (<14d), +0 (older), and
+//   locationDelta comes from lib/location.js#classifyLocation (REMOTE/ONSITE-
+//   match/HYBRID-match/UNKNOWN/MULTI = +0, ONSITE- or HYBRID-mismatch = -15).
+//   Location used to be a Stage-2 hard drop (filter.js#failsLocation, removed
+//   2026-07-30 — see CHANGE_REQUEST.md); it's additive scoring now, so nothing
+//   gets excluded from the pipeline over a location string alone.
+// So a fresh 75 outranks a stale 82. The digest shows all three numbers.
 //
 // Feedback calibration: we pass the last ~10 jobs Dave marked applied / passed /
 // interview in the tracker sheet as examples, so scoring tracks his real taste.
@@ -19,7 +24,8 @@ import { config, has } from './lib/config.js';
 import { makeLogger } from './lib/log.js';
 import { scoreJob } from './lib/claude.js';
 import { readFeedbackExamples } from './lib/sheets.js';
-import { freshnessBonus, blendScore } from './lib/recency.js';
+import { freshnessBonus } from './lib/recency.js';
+import { classifyLocation } from './lib/location.js';
 import { getCachedScore, cacheScore } from './lib/state.js';
 
 const log = makeLogger('scorer');
@@ -33,12 +39,29 @@ function scoringFingerprint(profile, preferencesText) {
   return crypto.createHash('sha1').update(JSON.stringify(profile) + '|' + (preferencesText || '')).digest('hex');
 }
 
-export async function runScorer(jobs, { profile, preferencesText, minScore, now = new Date(), state } = {}) {
+// Duplicate-fit-score check (Change 3) — if 2+ jobs in one run share the exact
+// same raw Claude fit score, that can mean the model returned a default/lazy
+// value instead of a genuinely differentiated one. Purely informational: never
+// changes ranking or filtering, just surfaces a data-quality signal to spot-check.
+function findDuplicateFitWarning(scored) {
+  const counts = new Map();
+  for (const j of scored) counts.set(j.fit, (counts.get(j.fit) || 0) + 1);
+  const dupes = [...counts.entries()].filter(([, count]) => count >= 2);
+  if (!dupes.length) return null;
+  return dupes
+    .map(
+      ([fit, count]) =>
+        `${count} jobs share an identical fit score of ${fit} — may indicate the model returned a default/lazy value rather than a differentiated score; spot-check these.`,
+    )
+    .join(' ');
+}
+
+export async function runScorer(jobs, { profile, preferencesText, prefs, minScore, now = new Date(), state } = {}) {
   const threshold = minScore ?? config.minScore;
 
   if (!has.claude()) {
     log.warn('ANTHROPIC_API_KEY not set — cannot score. Returning no matches.');
-    return { matches: [], scoredCount: 0 };
+    return { matches: [], scoredCount: 0, duplicateFitWarning: null };
   }
 
   let feedback = [];
@@ -63,8 +86,20 @@ export async function runScorer(jobs, { profile, preferencesText, minScore, now 
       }
       const { fit, rationale, keywords } = result;
       const bonus = freshnessBonus(job, now);
-      const blended = blendScore(fit, bonus);
-      scored.push({ ...job, fit, rationale, keywords, freshnessBonus: bonus, blended });
+      const location = classifyLocation(job, prefs || {});
+      const blended = Math.min(100, Math.round(fit + bonus + location.delta));
+      scored.push({
+        ...job,
+        fit,
+        rationale,
+        keywords,
+        freshnessBonus: bonus,
+        locationState: location.state,
+        locationDelta: location.delta,
+        locationEvidence: location.evidence,
+        isMulti: location.isMulti,
+        blended,
+      });
     } catch (e) {
       log.warn(`scoring failed for "${job.title}" @ ${job.company}: ${e.message}`);
     }
@@ -74,9 +109,13 @@ export async function runScorer(jobs, { profile, preferencesText, minScore, now 
     .filter((j) => j.blended >= threshold)
     .sort((a, b) => b.blended - a.blended || b.freshnessBonus - a.freshnessBonus);
 
+  const duplicateFitWarning = findDuplicateFitWarning(scored);
+
   log.info(
     `scored ${scored.length} (${cacheHits} from cache, ${scored.length - cacheHits} new Haiku calls), ` +
       `${matches.length} at/above blended ${threshold}.`,
   );
-  return { matches, scoredCount: scored.length };
+  if (duplicateFitWarning) log.warn(duplicateFitWarning);
+
+  return { matches, scoredCount: scored.length, duplicateFitWarning };
 }

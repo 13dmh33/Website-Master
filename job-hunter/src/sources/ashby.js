@@ -19,7 +19,13 @@ export async function pullAshby(slug) {
       title: j.title || '',
       location,
       remote: Boolean(j.isRemote) || /remote/i.test(location),
+      // Two distinct upstream URLs can exist — jobUrl (Ashby's own listing
+      // page) and applyUrl (the actual apply link, sometimes off-Ashby).
+      // Previously collapsed with `||`, silently discarding whichever wasn't
+      // first — both are now kept so the digest can show both when they
+      // differ (see CHANGE_REQUEST.md, Change 1).
       url: j.jobUrl || j.applyUrl || '',
+      applyUrl: j.applyUrl && j.applyUrl !== j.jobUrl ? j.applyUrl : null,
       description: j.descriptionPlain || htmlToText(j.descriptionHtml || ''),
       postedAt: j.publishedAt || j.publishedDate || null,
     };

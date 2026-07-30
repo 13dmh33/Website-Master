@@ -11,30 +11,32 @@ The post-call-proposal pipeline is fully built and tested end to end except for 
 
 This scored highest under the fixed rubric (revenue proximity weighted 3x above build volume — a hard rule, not a per-run preference). This is a zero-build, don't-build recommendation: the highest-value move right now is not writing more code.
 
-Two session prompts are attached separately (primary, ~2.5h; light alternate, ~2.5h) — both are paste-ready, no editing required.
+Two session prompts are attached separately (primary, ~2.75h; light alternate, ~3h) — both are paste-ready, no editing required.
 
 ## Your list — what needs you
 
-2 items need you — a browser, a vendor dashboard, or a phone. Nothing here can be automated away.
+3 items need you — a browser, a vendor dashboard, or a phone. Nothing here can be automated away.
 
 1. **Add a real STRIPE_SECRET_KEY and replace placeholder Payment Link URLs** (score 24.0)
    The post-call-proposal pipeline is fully built and tested end to end except for this — a real key turns a finished feature into revenue capability with zero code changes.
-2. **Tighten DMARC to p=quarantine once clean report cycles confirm it is safe** (score 3.0)
+2. **[Reeve] No paying clients yet. Run Phase 1: onboard 3 free/performance clients to validate booking success before charging retainers. See strategy/reports/pricing-analysis-2026-06-05.md** (score 6.0)
+   Reeve metric "mrr" is at $0 MRR (threshold: any revenue, severity INFO).
+3. **Tighten DMARC to p=quarantine once clean report cycles confirm it is safe** (score 3.0)
    Deliverability hygiene, not a sales lever — low priority until the trigger condition (clean report cycles) is actually met.
 
 ## Repo health
 
 - Main vs origin: 0 ahead, 0 behind.
 - 8 local branches — 2 stale (14+ days), 1 unpushed.
-- Untracked top-level directories: job-hunter — confirm each is intentional.
+- Untracked top-level directories: job-hunter, midas — confirm each is intentional.
 
 ## Funnel state
 
-Biggest drop-off: checked -> sent, 455 leads lost (29.1% conversion).
-Stalled stages (frozen since previous run): checked (455 waiting), sent (169 waiting), scouted (58 waiting).
-  scouted: 702
-  diagnosed: 644
-  checked: 642
+Biggest drop-off: checked -> sent, 480 leads lost (28% conversion).
+Stalled stages (frozen since previous run): checked (480 waiting), sent (169 waiting), scouted (40 waiting).
+  scouted: 709
+  diagnosed: 669
+  checked: 667
   sent: 187
   drip_d1_sent: 18
   drip_d1b_sent: 1
@@ -42,6 +44,13 @@ Stalled stages (frozen since previous run): checked (455 waiting), sent (169 wai
   drip_d2_sent: 0
   replied: 0
   hot: 0
+
+## Reeve state
+
+- MRR: $0 (0 active clients, ARR projected $0).
+- Pipeline: 0 open opportunities (0 urgent within 7 days), 0 pitches sent, 0 drafts pending review.
+- Conversion: 0 DM leads routed -> 0 clients (n/a). Pitch acceptance: no data yet.
+- 1 active alert(s) — see the ranked backlog below for the corresponding [Reeve]-tagged candidates.
 
 ## Resolved / settled since last run (Merlin no longer recommends these)
 
@@ -51,7 +60,7 @@ Stalled stages (frozen since previous run): checked (455 waiting), sent (169 wai
 - ~~Revert checker-config.json / diagnoser-config.json daily_limit back to 30 (currently elevated)~~ — Already done: checker daily_limit=30, diagnoser daily_limit=30 (both at/under the documented normal of 30).
 **Settled by a standing decision (not re-recommended):**
 - ~~Enable IMAP for dave@trevoadvisors.com in Zoho Mail settings~~ — decision "zoho-imap-enabled" (2026-07-27): IMAP is enabled for dave@trevoadvisors.com. Stop recommending it.
-- ~~Clear the 455-lead checked-but-unsent backlog — run Pitcher daily (already scheduled) or raise the daily cap if speed matters more than pacing~~ — decision "backlog-is-arithmetic" (2026-07-19): The checked-but-unsent backlog is arithmetic and channel-blocked, not a quality leak or a fresh discovery.
+- ~~Clear the 480-lead checked-but-unsent backlog — run Pitcher daily (already scheduled) or raise the daily cap if speed matters more than pacing~~ — decision "backlog-is-arithmetic" (2026-07-19): The checked-but-unsent backlog is arithmetic and channel-blocked, not a quality leak or a fresh discovery.
 
 ## Data-integrity caveats (read before trusting the numbers above)
 
@@ -65,7 +74,7 @@ Has-website: 0 attempted, 0 hits (n/a).
 
 ## Cost audit (estimates, assumptions listed)
 
-Actual logged spend this month (2026-07): $1.47 — this repo's own cost log, not a vendor dashboard.
+Actual logged spend this month (2026-07): $1.55 — this repo's own cost log, not a vendor dashboard.
 Cost per positive-signal outcome: n/a — zero leads have reached "replied" or "hot" this month (see the biggest-dropoff finding), so cost-per-outcome is undefined, not zero.
 - apollo_subscription: $0 (inactive) — APOLLO_API_KEY is not configured in this environment — subscription not counted (would be $49/mo if activated).
 - twilio_sms: $0 (inactive) — Zero SMS sent this month (Twilio A2P 10DLC not yet approved, per the standing action-items memory) — projected cost is $0 until sends resume.
@@ -80,22 +89,25 @@ Assumptions:
 1. **[RECOMMENDED]** Add a real STRIPE_SECRET_KEY and replace placeholder Payment Link URLs (score 24.0, revenue 8/10, build 0/10, ~0.25h)
    The post-call-proposal pipeline is fully built and tested end to end except for this — a real key turns a finished feature into revenue capability with zero code changes.
 
-2. Investigate the checked -> sent drop-off (455 leads lost, 29.1% conversion) before building anything new (score 21.0, revenue 7/10, build 0/10, ~0.5h)
+2. Investigate the checked -> sent drop-off (480 leads lost, 28% conversion) before building anything new (score 21.0, revenue 7/10, build 0/10, ~0.5h)
    This is the single biggest measured leak in the funnel. Understanding why (capacity limit vs. genuine drop-off vs. measurement artifact — see the pipeline snapshot's integrity flags) is higher-value than building new lead sources on top of a leaky funnel.
 
-3. Unstick the "checked" stage — 455 leads have sat there with zero movement since the previous run (642 reached, unchanged) (score 18.0, revenue 6/10, build 0/10, ~0.5h)
-   Unlike a one-time drop-off, this stage is not leaking — it is frozen: no lead advanced past "checked" between the last two runs despite 455 waiting. That usually means an operational step isn't running (a cron that never fires, a Mac-only script never invoked) rather than a conversion problem. Find the un-run step before building anything new.
+3. Unstick the "checked" stage — 480 leads have sat there with zero movement since the previous run (667 reached, unchanged) (score 18.0, revenue 6/10, build 0/10, ~0.5h)
+   Unlike a one-time drop-off, this stage is not leaking — it is frozen: no lead advanced past "checked" between the last two runs despite 480 waiting. That usually means an operational step isn't running (a cron that never fires, a Mac-only script never invoked) rather than a conversion problem. Find the un-run step before building anything new.
 
 4. Unstick the "sent" stage — 169 leads have sat there with zero movement since the previous run (187 reached, unchanged) (score 18.0, revenue 6/10, build 0/10, ~0.5h)
    Unlike a one-time drop-off, this stage is not leaking — it is frozen: no lead advanced past "sent" between the last two runs despite 169 waiting. That usually means an operational step isn't running (a cron that never fires, a Mac-only script never invoked) rather than a conversion problem. Find the un-run step before building anything new.
 
-5. Unstick the "scouted" stage — 58 leads have sat there with zero movement since the previous run (702 reached, unchanged) (score 18.0, revenue 6/10, build 0/10, ~0.5h)
-   Unlike a one-time drop-off, this stage is not leaking — it is frozen: no lead advanced past "scouted" between the last two runs despite 58 waiting. That usually means an operational step isn't running (a cron that never fires, a Mac-only script never invoked) rather than a conversion problem. Find the un-run step before building anything new.
+5. Unstick the "scouted" stage — 40 leads have sat there with zero movement since the previous run (709 reached, unchanged) (score 18.0, revenue 6/10, build 0/10, ~0.5h)
+   Unlike a one-time drop-off, this stage is not leaking — it is frozen: no lead advanced past "scouted" between the last two runs despite 40 waiting. That usually means an operational step isn't running (a cron that never fires, a Mac-only script never invoked) rather than a conversion problem. Find the un-run step before building anything new.
 
-6. Tighten DMARC to p=quarantine once clean report cycles confirm it is safe (score 3.0, revenue 1/10, build 0/10, ~0.25h)
+6. [Reeve] No paying clients yet. Run Phase 1: onboard 3 free/performance clients to validate booking success before charging retainers. See strategy/reports/pricing-analysis-2026-06-05.md (score 6.0, revenue 2/10, build 0/10, ~0.5h)
+   Reeve metric "mrr" is at $0 MRR (threshold: any revenue, severity INFO).
+
+7. Tighten DMARC to p=quarantine once clean report cycles confirm it is safe (score 3.0, revenue 1/10, build 0/10, ~0.25h)
    Deliverability hygiene, not a sales lever — low priority until the trigger condition (clean report cycles) is actually met.
 
-7. Fix the 9 defects found in the Nora adversarial audit before any real contractor uses it live (score 1.0, revenue 2/10, build 5/10, ~3h)
+8. Fix the 9 defects found in the Nora adversarial audit before any real contractor uses it live (score 1.0, revenue 2/10, build 5/10, ~3h)
    Safety-critical (Nora can escalate on the first missed call or go silently dark per customer) but zero current lead moves toward paid until Nora has a live customer — build volume without near-term revenue.
 
 ---

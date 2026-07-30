@@ -4456,12 +4456,10 @@
     },
     {
       "lead_id": "ChIJUUYv7ip_bIcRu_Vz9bX77Bg",
-      "status": "scouted",
+      "status": "checked",
       "added_at": "2026-07-11T14:02:03.649Z",
       "diagnosed_at": "2026-07-14T02:54:56.853Z",
-      "checked_at": "2026-07-14T03:16:05.897Z",
-      "preScrapeStatus": "checked",
-      "scrapedEmailAt": "2026-07-29T12:30:36.500Z"
+      "checked_at": "2026-07-14T03:16:05.897Z"
     },
     {
       "lead_id": "ChIJaQYg_Et3bIcRyBYW-qNOqgc",
@@ -4474,19 +4472,19 @@
     },
     {
       "lead_id": "ChIJDwrcHoNnsAURK0Sn93aiCSs",
-      "status": "scouted",
+      "status": "checked",
       "added_at": "2026-07-11T14:02:03.649Z",
-      "preScrapeStatus": "checked",
-      "scrapedEmailAt": "2026-07-29T12:30:39.896Z",
+      "preScrapeStatus": "scouted",
+      "scrapedEmailAt": "2026-07-11T14:20:54.382Z",
       "diagnosed_at": "2026-07-14T03:00:11.734Z",
       "checked_at": "2026-07-14T03:18:12.139Z"
     },
     {
       "lead_id": "ChIJTXjMNVtbv4cR8xfJa9CTOLU",
-      "status": "scouted",
+      "status": "checked",
       "added_at": "2026-07-11T14:02:03.649Z",
-      "preScrapeStatus": "checked",
-      "scrapedEmailAt": "2026-07-29T12:30:37.814Z",
+      "preScrapeStatus": "scouted",
+      "scrapedEmailAt": "2026-07-11T14:20:58.447Z",
       "diagnosed_at": "2026-07-14T03:00:14.318Z",
       "checked_at": "2026-07-14T03:18:12.193Z"
     },
@@ -4509,19 +4507,19 @@
     },
     {
       "lead_id": "ChIJLexq5ejibasRIXe20CCPjH4",
-      "status": "scouted",
+      "status": "checked",
       "added_at": "2026-07-11T14:02:03.649Z",
-      "preScrapeStatus": "checked",
-      "scrapedEmailAt": "2026-07-29T12:30:39.412Z",
+      "preScrapeStatus": "scouted",
+      "scrapedEmailAt": "2026-07-11T14:21:14.679Z",
       "diagnosed_at": "2026-07-14T03:03:04.174Z",
       "checked_at": "2026-07-14T03:18:12.176Z"
     },
     {
       "lead_id": "ChIJTZB2xtwObIcRBjxxms1WcqM",
-      "status": "scouted",
+      "status": "checked",
       "added_at": "2026-07-11T14:02:03.649Z",
-      "preScrapeStatus": "checked",
-      "scrapedEmailAt": "2026-07-29T12:30:41.114Z",
+      "preScrapeStatus": "scouted",
+      "scrapedEmailAt": "2026-07-11T14:21:18.736Z",
       "diagnosed_at": "2026-07-14T03:03:06.470Z",
       "checked_at": "2026-07-14T03:18:12.195Z"
     },
@@ -5335,225 +5333,169 @@
     },
     {
       "lead_id": "ChIJaWyPZJxPE4cRhiOvcyY-Uwc",
-      "status": "checked",
-      "added_at": "2026-07-28T12:48:24.258Z",
-      "diagnosed_at": "2026-07-29T12:31:11.392Z",
-      "checked_at": "2026-07-29T12:32:31.696Z"
+      "status": "scouted",
+      "added_at": "2026-07-28T12:48:24.258Z"
     },
     {
       "lead_id": "ChIJc6_bR1hGE4cRXCIzXv3g6GU",
-      "status": "checked",
+      "status": "scouted",
       "added_at": "2026-07-28T12:48:24.258Z",
       "preScrapeStatus": "scouted",
-      "scrapedEmailAt": "2026-07-28T12:50:57.700Z",
-      "diagnosed_at": "2026-07-29T12:31:13.964Z",
-      "checked_at": "2026-07-29T12:32:31.698Z"
+      "scrapedEmailAt": "2026-07-28T12:50:57.700Z"
     },
     {
       "lead_id": "ChIJUVZoam9BE4cReO9dcGxcwiQ",
-      "status": "checked",
+      "status": "scouted",
       "added_at": "2026-07-28T12:48:24.258Z",
       "preScrapeStatus": "scouted",
-      "scrapedEmailAt": "2026-07-28T12:50:54.010Z",
-      "diagnosed_at": "2026-07-29T12:31:17.762Z",
-      "checked_at": "2026-07-29T12:32:31.693Z"
+      "scrapedEmailAt": "2026-07-28T12:50:54.010Z"
     },
     {
       "lead_id": "ChIJzZPe4pFGE4cRao-SjZRZHcw",
-      "status": "checked",
-      "added_at": "2026-07-28T12:48:24.258Z",
-      "diagnosed_at": "2026-07-29T12:31:20.252Z",
-      "checked_at": "2026-07-29T12:32:31.703Z"
+      "status": "scouted",
+      "added_at": "2026-07-28T12:48:24.258Z"
     },
     {
       "lead_id": "ChIJfYqeslRBE4cR69Wg7rxqTWI",
-      "status": "checked",
+      "status": "scouted",
       "added_at": "2026-07-28T12:48:24.258Z",
       "preScrapeStatus": "scouted",
-      "scrapedEmailAt": "2026-07-28T12:50:58.406Z",
-      "diagnosed_at": "2026-07-29T12:31:22.638Z",
-      "checked_at": "2026-07-29T12:32:31.700Z"
+      "scrapedEmailAt": "2026-07-28T12:50:58.406Z"
     },
     {
       "lead_id": "ChIJLYQbbDhFE4cR5SSE9mLrMT8",
-      "status": "checked",
-      "added_at": "2026-07-28T12:48:24.258Z",
-      "diagnosed_at": "2026-07-29T12:31:26.020Z",
-      "checked_at": "2026-07-29T12:32:31.713Z"
+      "status": "scouted",
+      "added_at": "2026-07-28T12:48:24.258Z"
     },
     {
       "lead_id": "ChIJW_rudPFbE4cRReNwAVicKBo",
-      "status": "checked",
+      "status": "scouted",
       "added_at": "2026-07-28T12:48:24.258Z",
       "preScrapeStatus": "scouted",
-      "scrapedEmailAt": "2026-07-28T12:50:55.596Z",
-      "diagnosed_at": "2026-07-29T12:31:28.639Z",
-      "checked_at": "2026-07-29T12:32:31.731Z"
+      "scrapedEmailAt": "2026-07-28T12:50:55.596Z"
     },
     {
       "lead_id": "ChIJywb_-AR03WYRuZOxydwBGy0",
-      "status": "checked",
-      "added_at": "2026-07-28T12:48:24.258Z",
-      "diagnosed_at": "2026-07-29T12:31:31.468Z",
-      "checked_at": "2026-07-29T12:32:31.765Z"
+      "status": "scouted",
+      "added_at": "2026-07-28T12:48:24.258Z"
     },
     {
       "lead_id": "ChIJKeWjVQ4qEWkRb2XSTerR9sY",
-      "status": "checked",
-      "added_at": "2026-07-28T12:48:24.258Z",
-      "diagnosed_at": "2026-07-29T12:31:33.884Z",
-      "checked_at": "2026-07-29T12:32:31.724Z"
+      "status": "scouted",
+      "added_at": "2026-07-28T12:48:24.258Z"
     },
     {
       "lead_id": "ChIJszext05GE4cRIBVqx8PlkdI",
-      "status": "checked",
+      "status": "scouted",
       "added_at": "2026-07-28T12:48:24.258Z",
       "preScrapeStatus": "scouted",
-      "scrapedEmailAt": "2026-07-28T12:50:58.881Z",
-      "diagnosed_at": "2026-07-29T12:31:36.190Z",
-      "checked_at": "2026-07-29T12:32:31.758Z"
+      "scrapedEmailAt": "2026-07-28T12:50:58.881Z"
     },
     {
       "lead_id": "ChIJARoMTM1FE4cRo3DyFrsXylI",
-      "status": "checked",
+      "status": "scouted",
       "added_at": "2026-07-28T12:48:24.258Z",
       "preScrapeStatus": "scouted",
-      "scrapedEmailAt": "2026-07-28T12:51:06.007Z",
-      "diagnosed_at": "2026-07-29T12:31:38.472Z",
-      "checked_at": "2026-07-29T12:32:31.708Z"
+      "scrapedEmailAt": "2026-07-28T12:51:06.007Z"
     },
     {
       "lead_id": "ChIJtZDWxlZGE4cRQxSOw9fTYsw",
-      "status": "checked",
-      "added_at": "2026-07-28T12:48:24.258Z",
-      "diagnosed_at": "2026-07-29T12:31:46.211Z",
-      "checked_at": "2026-07-29T12:32:31.760Z"
+      "status": "scouted",
+      "added_at": "2026-07-28T12:48:24.258Z"
     },
     {
       "lead_id": "ChIJiw0e8blHE4cRNdXlT4OyIyI",
-      "status": "checked",
-      "added_at": "2026-07-28T12:48:24.258Z",
-      "diagnosed_at": "2026-07-29T12:31:49.284Z",
-      "checked_at": "2026-07-29T12:32:31.747Z"
+      "status": "scouted",
+      "added_at": "2026-07-28T12:48:24.258Z"
     },
     {
       "lead_id": "ChIJdeSjSEpEE4cRvjECVCPxFy0",
-      "status": "checked",
+      "status": "scouted",
       "added_at": "2026-07-28T12:48:24.258Z",
       "preScrapeStatus": "scouted",
-      "scrapedEmailAt": "2026-07-28T12:51:10.051Z",
-      "diagnosed_at": "2026-07-29T12:31:51.994Z",
-      "checked_at": "2026-07-29T12:32:31.744Z"
+      "scrapedEmailAt": "2026-07-28T12:51:10.051Z"
     },
     {
       "lead_id": "ChIJMdXdHQZEE4cRMe8zaI1PIao",
-      "status": "checked",
-      "added_at": "2026-07-28T12:48:24.258Z",
-      "diagnosed_at": "2026-07-29T12:31:54.412Z",
-      "checked_at": "2026-07-29T12:32:31.726Z"
+      "status": "scouted",
+      "added_at": "2026-07-28T12:48:24.258Z"
     },
     {
       "lead_id": "ChIJu8pt3spIE4cROUq6DWRsyfU",
-      "status": "checked",
-      "added_at": "2026-07-28T12:48:24.258Z",
-      "diagnosed_at": "2026-07-29T12:31:57.346Z",
-      "checked_at": "2026-07-29T12:32:31.763Z"
+      "status": "scouted",
+      "added_at": "2026-07-28T12:48:24.258Z"
     },
     {
       "lead_id": "ChIJq6qqqn5IE4cRw_oYho2dMIk",
-      "status": "checked",
+      "status": "scouted",
       "added_at": "2026-07-28T12:48:24.258Z",
       "preScrapeStatus": "scouted",
-      "scrapedEmailAt": "2026-07-28T12:51:04.508Z",
-      "diagnosed_at": "2026-07-29T12:31:59.482Z",
-      "checked_at": "2026-07-29T12:32:31.756Z"
+      "scrapedEmailAt": "2026-07-28T12:51:04.508Z"
     },
     {
       "lead_id": "ChIJBTsoKQNPE4cRbfgfJjrPMaM",
-      "status": "checked",
+      "status": "scouted",
       "added_at": "2026-07-28T12:48:24.258Z",
       "preScrapeStatus": "scouted",
-      "scrapedEmailAt": "2026-07-28T12:51:05.052Z",
-      "diagnosed_at": "2026-07-29T12:32:01.820Z",
-      "checked_at": "2026-07-29T12:32:31.718Z"
+      "scrapedEmailAt": "2026-07-28T12:51:05.052Z"
     },
     {
       "lead_id": "ChIJc9wQTRlnCAURxyaNk1kaQKw",
-      "status": "checked",
+      "status": "scouted",
       "added_at": "2026-07-28T12:48:24.258Z",
       "preScrapeStatus": "scouted",
-      "scrapedEmailAt": "2026-07-28T12:51:02.920Z",
-      "diagnosed_at": "2026-07-29T12:32:06.391Z",
-      "checked_at": "2026-07-29T12:32:31.740Z"
+      "scrapedEmailAt": "2026-07-28T12:51:02.920Z"
     },
     {
       "lead_id": "ChIJaa-iAEV5bIcRRZaE0Mx10eM",
-      "status": "checked",
-      "added_at": "2026-07-28T12:48:24.258Z",
-      "diagnosed_at": "2026-07-29T12:32:09.086Z",
-      "checked_at": "2026-07-29T12:32:31.737Z"
+      "status": "scouted",
+      "added_at": "2026-07-28T12:48:24.258Z"
     },
     {
       "lead_id": "ChIJowN4xGlDE4cR2wSsy5nQnwY",
-      "status": "checked",
-      "added_at": "2026-07-28T12:48:24.258Z",
-      "diagnosed_at": "2026-07-29T12:32:12.681Z",
-      "checked_at": "2026-07-29T12:32:31.752Z"
+      "status": "scouted",
+      "added_at": "2026-07-28T12:48:24.258Z"
     },
     {
       "lead_id": "ChIJuQGk28tIE4cRy1QS4PsAxfY",
-      "status": "checked",
-      "added_at": "2026-07-28T12:48:24.258Z",
-      "diagnosed_at": "2026-07-29T12:32:15.022Z",
-      "checked_at": "2026-07-29T12:32:31.716Z"
+      "status": "scouted",
+      "added_at": "2026-07-28T12:48:24.258Z"
     },
     {
       "lead_id": "ChIJcdwMQmqPFU4Rj-xmk63p3M8",
-      "status": "checked",
-      "added_at": "2026-07-28T12:48:24.258Z",
-      "diagnosed_at": "2026-07-29T12:32:18.053Z",
-      "checked_at": "2026-07-29T12:32:31.742Z"
+      "status": "scouted",
+      "added_at": "2026-07-28T12:48:24.258Z"
     },
     {
       "lead_id": "ChIJlfu-KsBEE4cRiN8Ch89bbkg",
-      "status": "checked",
+      "status": "scouted",
       "added_at": "2026-07-28T12:48:24.258Z",
       "preScrapeStatus": "scouted",
-      "scrapedEmailAt": "2026-07-29T12:31:03.044Z",
-      "diagnosed_at": "2026-07-29T12:32:20.788Z",
-      "checked_at": "2026-07-29T12:32:31.749Z"
+      "scrapedEmailAt": "2026-07-28T12:51:13.387Z"
     },
     {
       "lead_id": "ChIJH7iK6OWiOwwRwhK9346bTwI",
-      "status": "checked",
-      "added_at": "2026-07-28T12:48:24.258Z",
-      "diagnosed_at": "2026-07-29T12:32:23.169Z",
-      "checked_at": "2026-07-29T12:32:31.721Z"
+      "status": "scouted",
+      "added_at": "2026-07-28T12:48:24.258Z"
     },
     {
       "lead_id": "ChIJMREzXXmifmURJbZsta24FLA",
-      "status": "checked",
+      "status": "scouted",
       "added_at": "2026-07-28T12:48:24.258Z",
       "preScrapeStatus": "scouted",
-      "scrapedEmailAt": "2026-07-28T12:51:06.077Z",
-      "diagnosed_at": "2026-07-29T12:32:26.331Z",
-      "checked_at": "2026-07-29T12:32:31.768Z"
+      "scrapedEmailAt": "2026-07-28T12:51:06.077Z"
     },
     {
       "lead_id": "ChIJQfkEsb40E4cRotho48Vrlh4",
-      "status": "checked",
+      "status": "scouted",
       "added_at": "2026-07-28T12:48:24.258Z",
       "preScrapeStatus": "scouted",
-      "scrapedEmailAt": "2026-07-28T12:51:10.816Z",
-      "diagnosed_at": "2026-07-29T12:32:28.616Z",
-      "checked_at": "2026-07-29T12:32:31.729Z"
+      "scrapedEmailAt": "2026-07-28T12:51:10.816Z"
     },
     {
       "lead_id": "ChIJXyeAX3xGE4cRwV2DwXSUd0E",
-      "status": "checked",
-      "added_at": "2026-07-28T12:48:24.258Z",
-      "diagnosed_at": "2026-07-29T12:32:31.226Z",
-      "checked_at": "2026-07-29T12:32:31.734Z"
+      "status": "scouted",
+      "added_at": "2026-07-28T12:48:24.258Z"
     },
     {
       "lead_id": "ChIJpcn5cyRFE4cRRC2ePbPN47w",
@@ -5611,60 +5553,15 @@
       "added_at": "2026-07-28T12:48:24.258Z",
       "preScrapeStatus": "scouted",
       "scrapedEmailAt": "2026-07-28T12:51:15.291Z"
-    },
-    {
-      "lead_id": "ChIJ3Z5nVCuPa4cRbdnz861S_To",
-      "status": "checked",
-      "added_at": "2026-07-29T12:30:26.024Z",
-      "diagnosed_at": "2026-07-29T12:31:41.399Z",
-      "checked_at": "2026-07-29T12:32:31.706Z"
-    },
-    {
-      "lead_id": "ChIJEyt8XvR7bIcRSVG8FbQDZx0",
-      "status": "checked",
-      "added_at": "2026-07-29T12:30:26.024Z",
-      "diagnosed_at": "2026-07-29T12:31:43.605Z",
-      "checked_at": "2026-07-29T12:32:31.711Z"
-    },
-    {
-      "lead_id": "ChIJWb5cARV-bIcRJmyqaa2GmjE",
-      "status": "scouted",
-      "added_at": "2026-07-29T12:30:26.024Z"
-    },
-    {
-      "lead_id": "ChIJfWjuoyp5a4cRNWQpccpeQaQ",
-      "status": "scouted",
-      "added_at": "2026-07-29T12:30:26.024Z",
-      "preScrapeStatus": "scouted",
-      "scrapedEmailAt": "2026-07-29T12:30:59.390Z"
-    },
-    {
-      "lead_id": "ChIJgXjjieYrYWIRY9K0LD6OnbE",
-      "status": "scouted",
-      "added_at": "2026-07-29T12:30:26.024Z"
-    },
-    {
-      "lead_id": "ChIJ1_eaQ0qJbIcRWvTPkgakDts",
-      "status": "scouted",
-      "added_at": "2026-07-29T12:30:26.024Z",
-      "preScrapeStatus": "scouted",
-      "scrapedEmailAt": "2026-07-29T12:31:05.129Z"
-    },
-    {
-      "lead_id": "ChIJX12_de5_bIcRransEVc5ebk",
-      "status": "scouted",
-      "added_at": "2026-07-29T12:30:26.024Z",
-      "preScrapeStatus": "scouted",
-      "scrapedEmailAt": "2026-07-29T12:31:02.882Z"
     }
   ],
   "active": [],
   "closed": [],
   "nora_pipeline": [],
-  "last_run": "2026-07-29T12:30:26.024Z",
+  "last_run": "2026-07-28T12:48:24.258Z",
   "daily_stats": {
-    "leads_scouted": 586,
-    "briefs_written": 707,
+    "leads_scouted": 579,
+    "briefs_written": 677,
     "mockups_built": 10,
     "messages_sent": 160,
     "replies_received": 0,

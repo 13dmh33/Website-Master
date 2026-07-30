@@ -1,0 +1,417 @@
+[
+  {
+    "lead_id": "ChIJ3Z5nVCuPa4cRbdnz861S_To",
+    "business_name": "Ace Handyman Services North Metro Denver",
+    "trade": "handyman",
+    "city": "Denver, CO",
+    "site_url": "https://www.acehandymanservices.com/offices/north-metro-denver",
+    "email": "",
+    "phone": "+1 720-370-5190",
+    "rating": 4.8,
+    "review_count": 1066,
+    "address": "6145 Broadway Ste#44, Denver, CO 80216",
+    "place_id": "ChIJ3Z5nVCuPa4cRbdnz861S_To",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson, Bathroom remodeler, Carpenter, Electrician, Gutter cleaning service, Window installation service"
+    ],
+    "latitude": 39.8078924,
+    "longitude": -104.98831059999999,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-29T12:30:26.020Z"
+  },
+  {
+    "lead_id": "ChIJK310T_oybEMRS70JyvhfZ14",
+    "business_name": "Big Wheel Handyman, LLC",
+    "trade": "handyman",
+    "city": "Denver, CO",
+    "site_url": "https://www.bigwheelhandyman.com/",
+    "email": "",
+    "phone": "+1 303-900-3114",
+    "rating": 5,
+    "review_count": 206,
+    "address": "3025 Monroe St, Denver, CO 80205",
+    "place_id": "ChIJK310T_oybEMRS70JyvhfZ14",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson"
+    ],
+    "latitude": 39.7597282,
+    "longitude": -104.94524469999999,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-29T12:30:26.020Z"
+  },
+  {
+    "lead_id": "ChIJEyt8XvR7bIcRSVG8FbQDZx0",
+    "business_name": "Mr. Handyman of Englewood, Centennial and S Aurora",
+    "trade": "handyman",
+    "city": "Denver, CO",
+    "site_url": "https://www.mrhandyman.com/englewood-centennial-s-aurora/%3Fcid%3DLSTL_MHM000197%26utm_source%3Dgmb%26utm_campaign%3Dlocal%26utm_medium%3Dorganic",
+    "email": "",
+    "phone": "+1 720-729-2314",
+    "rating": 4.8,
+    "review_count": 204,
+    "address": "2835 W Oxford Ave #2, Englewood, CO 80110",
+    "place_id": "ChIJEyt8XvR7bIcRSVG8FbQDZx0",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson"
+    ],
+    "latitude": 39.642826299999996,
+    "longitude": -105.02328849999999,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-29T12:30:26.021Z"
+  },
+  {
+    "lead_id": "ChIJIzw3XIx5bIcRDSM_2PgkIqg",
+    "business_name": "CS Home Solutions",
+    "trade": "handyman",
+    "city": "Denver, CO",
+    "site_url": "http://www.cshomesolutions.com/",
+    "email": "",
+    "phone": "+1 303-563-9380",
+    "rating": 4.9,
+    "review_count": 517,
+    "address": "1550 Larimer St Ste 628, Denver, CO 80202",
+    "place_id": "ChIJIzw3XIx5bIcRDSM_2PgkIqg",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson, Bathroom remodeler, Flooring contractor, Contractor, Kitchen remodeler"
+    ],
+    "latitude": 39.7486585,
+    "longitude": -104.99762229999999,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-29T12:30:26.021Z"
+  },
+  {
+    "lead_id": "ChIJazptCv59bIcRMVdHnl8pWUU",
+    "business_name": "Denver Handyman Solutions",
+    "trade": "handyman",
+    "city": "Denver, CO",
+    "site_url": "http://www.denverhandymansolutions.com/",
+    "email": "",
+    "phone": "+1 720-514-9423",
+    "rating": 4.9,
+    "review_count": 176,
+    "address": "460 S Ivy St, Denver, CO 80224",
+    "place_id": "ChIJazptCv59bIcRMVdHnl8pWUU",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson"
+    ],
+    "latitude": 39.7082585,
+    "longitude": -104.92089999999999,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-29T12:30:26.020Z"
+  },
+  {
+    "lead_id": "ChIJUUYv7ip_bIcRu_Vz9bX77Bg",
+    "business_name": "Cransten Handyman and Remodeling",
+    "trade": "handyman",
+    "city": "Denver, CO",
+    "site_url": "https://cransten.com/denverhandymanandremodeling",
+    "email": "mountainwest@cransten.com",
+    "phone": "+1 303-433-6399",
+    "rating": 4.8,
+    "review_count": 101,
+    "address": "100 Fillmore St 5th floor, Denver, CO 80206",
+    "place_id": "ChIJUUYv7ip_bIcRu_Vz9bX77Bg",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson, Bathroom remodeler, Contractor, Deck builder, Flooring contractor, Kitchen remodeler, Property maintenance, Remodeler, Tile contractor"
+    ],
+    "latitude": 39.7185819,
+    "longitude": -104.9530808,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-29T12:30:26.021Z",
+    "email_source": "contact-scraper",
+    "contact_name": "reached out to",
+    "socials": {
+      "angi": "https://www.angi.com/companylist/us/ut/sandy/cransten-service-all-stars-reviews-9455863.htm"
+    },
+    "deep_enriched_at": "2026-07-29T12:30:36.499Z"
+  },
+  {
+    "lead_id": "ChIJDwrcHoNnsAURK0Sn93aiCSs",
+    "business_name": "Denver Handyman & Painting Services",
+    "trade": "handyman",
+    "city": "Denver, CO",
+    "site_url": "http://denverhps.com/",
+    "email": "a.folkers@denverhps.com",
+    "phone": "+1 303-578-0077",
+    "rating": 5,
+    "review_count": 31,
+    "address": "2231 Federal Blvd, Denver, CO 80211",
+    "place_id": "ChIJDwrcHoNnsAURK0Sn93aiCSs",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson, Painter"
+    ],
+    "latitude": 39.750648999999996,
+    "longitude": -105.0256749,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-07-29T12:30:26.021Z",
+    "email_source": "contact-scraper",
+    "contact_name": "so excited that",
+    "socials": {
+      "facebook": "https://www.facebook.com/DenverHPS",
+      "instagram": "https://www.instagram.com/denverhps",
+      "nextdoor": "https://nextdoor.com/pages/denver-handyman-painting-services-denver-co",
+      "google": "https://g.page/r/CStEp_d2ogkrEB0/review"
+    },
+    "deep_enriched_at": "2026-07-29T12:30:39.896Z"
+  },
+  {
+    "lead_id": "ChIJTXjMNVtbv4cR8xfJa9CTOLU",
+    "business_name": "JOB Home Services",
+    "trade": "handyman",
+    "city": "Denver, CO",
+    "site_url": "https://www.jobhomeservice.com/",
+    "email": "jobhomeservices@gmail.com",
+    "phone": "+1 720-998-4449",
+    "rating": 4.6,
+    "review_count": 122,
+    "address": "1020 15th St, Denver, CO 80202",
+    "place_id": "ChIJTXjMNVtbv4cR8xfJa9CTOLU",
+    "subtypes": [
+      "Deck builder, Painting"
+    ],
+    "latitude": 39.7465192,
+    "longitude": -104.9967339,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-07-29T12:30:26.021Z",
+    "email_source": "contact-scraper",
+    "contact_name": "modern standards",
+    "socials": {
+      "facebook": "https://www.facebook.com/profile.php?id=61560079375514"
+    },
+    "deep_enriched_at": "2026-07-29T12:30:37.814Z"
+  },
+  {
+    "lead_id": "ChIJ3xjRtzhbaocRA_PDF8s0u0U",
+    "business_name": "Bloom Services",
+    "trade": "handyman",
+    "city": "Denver, CO",
+    "site_url": "http://bloomservicesco.com/",
+    "email": "",
+    "phone": "+1 720-243-7087",
+    "rating": 4.9,
+    "review_count": 43,
+    "address": "1441 Little Raven St #8007, Denver, CO 80202",
+    "place_id": "ChIJ3xjRtzhbaocRA_PDF8s0u0U",
+    "subtypes": [
+      "Painter, Carpenter, Contractor, Dry wall contractor, Floor refinishing service, General contractor, Log cabins, Repair service, Siding contractor, Wood floor refinishing service"
+    ],
+    "latitude": 39.7539916,
+    "longitude": -105.00739879999999,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-07-29T12:30:26.021Z"
+  },
+  {
+    "lead_id": "ChIJWb5cARV-bIcRJmyqaa2GmjE",
+    "business_name": "Home Improvements of Colorado Inc.",
+    "trade": "handyman",
+    "city": "Denver, CO",
+    "site_url": "https://homeimprovementsofcolorado.com/",
+    "email": "",
+    "phone": "+1 303-452-6467",
+    "rating": 5,
+    "review_count": 71,
+    "address": "2075 S University Blvd #216, Denver, CO 80210",
+    "place_id": "ChIJWb5cARV-bIcRJmyqaa2GmjE",
+    "subtypes": [
+      "Cabinet maker, Kitchen remodeler"
+    ],
+    "latitude": 39.6791414,
+    "longitude": -104.9598963,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-07-29T12:30:26.021Z",
+    "contact_name": "work is added",
+    "socials": {
+      "bbb": "https://www.bbb.org/us/co/arvada/profile/kitchen-cabinets-and-equipment/home-improvements-of-colorado-inc-1296-37478"
+    },
+    "deep_enriched_at": "2026-07-29T12:31:05.155Z"
+  },
+  {
+    "lead_id": "ChIJ9cTQHBt7bIcRuIXK9U4Lnx8",
+    "business_name": "Welcome Home Handyman",
+    "trade": "handyman",
+    "city": "Denver, CO",
+    "site_url": "https://welcomehomehandymanofdenver.com/",
+    "email": "",
+    "phone": "+1 720-312-0607",
+    "rating": 5,
+    "review_count": 17,
+    "address": "5391 Verbena St, Denver, CO 80238",
+    "place_id": "ChIJ9cTQHBt7bIcRuIXK9U4Lnx8",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson"
+    ],
+    "latitude": 39.7945828,
+    "longitude": -104.88883679999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-07-29T12:30:26.021Z"
+  },
+  {
+    "lead_id": "ChIJLexq5ejibasRIXe20CCPjH4",
+    "business_name": "Relief Handyman Services",
+    "trade": "handyman",
+    "city": "Denver, CO",
+    "site_url": "http://reliefhandyman.com/",
+    "email": "info@reliefhandyman.com",
+    "phone": "+1 732-221-7413",
+    "rating": 5,
+    "review_count": 14,
+    "address": "2553 N Gaylord St, Denver, CO 80205",
+    "place_id": "ChIJLexq5ejibasRIXe20CCPjH4",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson"
+    ],
+    "latitude": 39.754312,
+    "longitude": -104.96129219999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-07-29T12:30:26.021Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Bobby Seaman",
+    "socials": {
+      "facebook": "http://www.facebook.com/2008/fbml",
+      "instagram": "http://instagram.com/squarespace"
+    },
+    "deep_enriched_at": "2026-07-29T12:30:39.412Z"
+  },
+  {
+    "lead_id": "ChIJTZB2xtwObIcRBjxxms1WcqM",
+    "business_name": "Home Improvement Express - Denver",
+    "trade": "handyman",
+    "city": "Denver, CO",
+    "site_url": "https://hie-denver.com/",
+    "email": "estimates@homeimprovementexpress.com",
+    "phone": "+1 720-638-4773",
+    "rating": 4.8,
+    "review_count": 23,
+    "address": "355 S Teller St Ste 200, #25, Denver, CO 80226",
+    "place_id": "ChIJTZB2xtwObIcRBjxxms1WcqM",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson, Bathroom remodeler, Kitchen remodeler"
+    ],
+    "latitude": 39.7099049,
+    "longitude": -105.0770617,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-07-29T12:30:26.021Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Edge facebook",
+    "deep_enriched_at": "2026-07-29T12:30:41.114Z"
+  },
+  {
+    "lead_id": "ChIJfWjuoyp5a4cRNWQpccpeQaQ",
+    "business_name": "A Master's Hands",
+    "trade": "handyman",
+    "city": "Denver, CO",
+    "site_url": "http://www.amastershands.com/",
+    "email": "info@amastershands.com",
+    "phone": "+1 720-468-3225",
+    "rating": 4.7,
+    "review_count": 38,
+    "address": "5771 S Spotswood St, Littleton, CO 80120",
+    "place_id": "ChIJfWjuoyp5a4cRNWQpccpeQaQ",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson, Electrician, Fence contractor, General contractor, Kitchen remodeler, Plumber"
+    ],
+    "latitude": 39.6119784,
+    "longitude": -105.0117507,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-07-29T12:30:26.021Z",
+    "email_source": "contact-scraper",
+    "contact_name": "industry standards",
+    "socials": {
+      "facebook": "https://www.facebook.com/AMastersHands",
+      "instagram": "https://www.instagram.com/a_masters_hands",
+      "twitter": "https://twitter.com/amastershands",
+      "linkedin": "https://www.linkedin.com/company/a-master&",
+      "yelp": "https://www.yelp.com/biz/a-masters-hands-littleton-3",
+      "nextdoor": "https://nextdoor.com/pages/a-masters-hands-llc-1"
+    },
+    "deep_enriched_at": "2026-07-29T12:30:59.390Z"
+  },
+  {
+    "lead_id": "ChIJgXjjieYrYWIRY9K0LD6OnbE",
+    "business_name": "Professional Facility Solutions",
+    "trade": "handyman",
+    "city": "Denver, CO",
+    "site_url": "http://professionalfacilitysolutions.com/",
+    "email": "",
+    "phone": "+1 720-400-7789",
+    "rating": 5,
+    "review_count": 14,
+    "address": "110 16th St Mall suite 1400, Denver, CO 80202",
+    "place_id": "ChIJgXjjieYrYWIRY9K0LD6OnbE",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson"
+    ],
+    "latitude": 39.7414304,
+    "longitude": -104.98780889999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-07-29T12:30:26.021Z"
+  },
+  {
+    "lead_id": "ChIJ1_eaQ0qJbIcRWvTPkgakDts",
+    "business_name": "The Handy Dads, LLC - Denver Handyman",
+    "trade": "handyman",
+    "city": "Denver, CO",
+    "site_url": "https://www.thehandydadsco.com/",
+    "email": "service@thehandydadsco.com",
+    "phone": "+1 833-724-2639",
+    "rating": 4.8,
+    "review_count": 18,
+    "address": "19003 E Bates Ave, Aurora, CO 80013",
+    "place_id": "ChIJ1_eaQ0qJbIcRWvTPkgakDts",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson, Gutter service, Painter"
+    ],
+    "latitude": 39.663734,
+    "longitude": -104.7680692,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-07-29T12:30:26.021Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "https://developers.facebook.com/docs/sharing/webmasters/crawler",
+      "instagram": "https://www.instagram.com/thehandydadsco",
+      "youtube": "https://www.youtube.com/@thehandydads",
+      "google": "https://maps.google.com"
+    },
+    "deep_enriched_at": "2026-07-29T12:31:05.129Z"
+  },
+  {
+    "lead_id": "ChIJX12_de5_bIcRransEVc5ebk",
+    "business_name": "Brown Truck Handyman",
+    "trade": "handyman",
+    "city": "Denver, CO",
+    "site_url": "http://browntruckhandyman.com/",
+    "email": "mike@browntruckhandyman.com",
+    "phone": "+1 720-840-8444",
+    "rating": 4.8,
+    "review_count": 21,
+    "address": "4930 S Pennsylvania St, Englewood, CO 80113",
+    "place_id": "ChIJX12_de5_bIcRransEVc5ebk",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson, Bathroom remodeler"
+    ],
+    "latitude": 39.627120999999995,
+    "longitude": -104.9818461,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-07-29T12:30:26.021Z",
+    "email_source": "contact-scraper",
+    "contact_name": "build three more",
+    "deep_enriched_at": "2026-07-29T12:31:02.882Z"
+  }
+]

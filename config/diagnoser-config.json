@@ -10,9 +10,9 @@
     "cache_read_per_mtok": 0.08
   },
   "current_month": "2026-07",
-  "spent_this_month": 0.031443,
-  "today": "2026-07-26",
+  "spent_this_month": 0.062971,
+  "today": "2026-07-29",
   "processed_today": 30,
-  "total_processed": 330,
-  "last_run": "2026-07-26T14:36:46.049Z"
+  "total_processed": 360,
+  "last_run": "2026-07-29T12:32:31.238Z"
 }

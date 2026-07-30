@@ -1,0 +1,413 @@
+╔══════════════════════════════════════════════════╗
+║  Daily lead-gen — 2026-07-29 
+╚══════════════════════════════════════════════════╝
+
+[0/7] Preflight…
+  ✓ Clear. Backed up state.json + cost-log.json → logs/state-backups/*-20260729T123000Z.json
+
+[1/7] Sending previously approved batch…
+  → nothing approved and waiting. Skipping send.
+
+[2/7] Choosing market from rotation…
+  → handyman in Denver, CO   (5 worked, 107 remaining)
+
+[3/7] Scout — has-website handyman in Denver, CO (cap $0.12)…
+
+Scout — handyman in Denver, CO [mode: has-website]
+──────────────────────────────────────────────────
+  --budget $0.12 → max 120 raw results
+  Known leads:      437 (will skip re-scraping)
+  Budget:           $0.04 / $10.00 this month
+  Run cap:          $0.12 (--budget)
+  Queries:          1 × 120 = ~120 raw (~$0.120)
+  Min score:        3
+  Min reviews/rating: 10 / 4
+
+  Async task (id: a-f0b6dc30-886e-4602-88a4-67194067ac74) — polling......... done
+  Filter breakdown  (48 raw):
+    Kept (auditor-ready, has email): 0
+    Needs manual email lookup:       17
+    Already known:  3  (skipped — saved $$)
+    Reviews <10:    22
+    Rating <4.0:    2
+    No real site:   2
+    No phone:       0
+    Score <3:       2
+  Queued for contact-scraper: 7  (mirrored to leads/needs-email-denver-co-handyman-2026-07-29-run1.json, state.json as 'scouted' — run contact-scraper --deep next)
+
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+Done.
+  Auditor-ready leads: 0  (of 48 raw)
+  Needs manual email:  17
+  Cost this run:       $0.0480
+  Cost per lead:       $0.0028
+  Monthly spend:       $0.0930 / $10.00
+  Saved to:            leads-web/denver-co-handyman-2026-07-29-run1.json
+  Needs-email CSV:     leads-web/needs-email-denver-co-handyman-2026-07-29-run1.csv  (manual lookup)
+──────────────────────────────────────────────────
+
+[4/7] Contact-scraper --deep — harvesting emails (free)…
+
+Contact-Page Scraper  [DEEP crawl]
+────────────────────────────────────────────────────────────
+Queue: 718 leads
+  skipped (sent/closed):     187
+  already have email:        89
+  no website to scrape:      182
+  no lead record found:      188
+  → eligible to scrape:      72
+────────────────────────────────────────────────────────────
+[1/72] Desert Sun Plumbing … error (fetch failed)
+[3/72] ABC Home & Commercial - Plumbing Services Department … error (HTTP 404)
+[6/72] Abacus Plumbing, Air Conditioning & Electrical … error (HTTP 403)
+[5/72] Reliant Plumbing - Austin … error (HTTP 404)
+[8/72] AAA AUGER Plumbing Services … error (HTTP 404)
+[9/72] Mr. Rooter Plumbing of Austin … error (HTTP 404)
+[7/72] Clarke Kent Plumbing … error (HTTP 404)
+[10/72] Economy Plumbing Services, LLC … error (HTTP 404)
+[4/72] Moore & More Plumbing, LLC. … ☎ +1 512-445-5212
+[13/72] Fast Plumbing LLC … ☎ +1 512-548-8188  name: absolutely thrilled with  4 social
+[14/72] Austin Area Plumbing … ☎ +1 512-736-7113  name: current building  4 social
+[15/72] 1st Home & Commercial Services … ☎ +1 512-588-5994  name: to adapt with  2 social
+[12/72] Rooterman Plumbing of Austin … ☎ +1 512-645-1441  name: never using another  1 social
+[19/72] Mr. Electric of Austin … error (HTTP 404)
+[17/72] SALT Plumbing Air & Electric … error (HTTP 404)
+[11/72] Stan's Heating, Air, Plumbing & Electrical … ☎ +1 512-929-9393  name: plug it in  4 social
+[18/72] Strand Brothers Service Experts … error (HTTP 400)
+[22/72] Winsupply of Austin … no contact info found
+[2/72] Rooter-Man Plumbing Austin TX … ☎ +1 512-645-1441  name: never using another  4 social
+[24/72] Handyman Connection of Austin-Westlake … error (HTTP 404)
+[25/72] Cransten Handyman and Remodeling … ✉ mountainwest@cransten.com  ☎ +1 303-433-6399  name: reached out to  1 social
+[27/72] JOB Home Services … ✉ jobhomeservices@gmail.com  ☎ +1 720-998-4449  name: modern standards  1 social
+[28/72] Welcome Home Handyman … error (HTTP 403)
+[23/72] ADK Plumbing … no contact info found
+[29/72] Relief Handyman Services … ✉ info@reliefhandyman.com  ☎ +1 732-221-7413  name: Bobby Seaman  2 social
+[21/72] Aquaman Plumbing Austin … error (fetch failed)
+[26/72] Denver Handyman & Painting Services … ✉ a.folkers@denverhps.com  ☎ +1 303-578-0077  name: so excited that  4 social
+[20/72] Accurate Leak and Line - Austin … ☎ +1 512-357-3826  name: Accurate Leak  3 social
+[32/72] Parobek Plumbing & Air Conditioning … error (HTTP 404)
+[33/72] McCullough Heating, Air Conditioning & Plumbing … error (HTTP 404)
+[36/72] Olshan Foundation Solutions … error (HTTP 403)
+[30/72] Home Improvement Express - Denver … ✉ estimates@homeimprovementexpress.com  ☎ +1 307-343-6746  name: Edge facebook
+[35/72] Efficient AC, Electric & Plumbing … error (HTTP 404)
+[16/72] Fox Service Company … ☎ +1 512-488-1120  name: with modern conveniences  4 social
+[40/72] Plumber Anderson Mill … error (HTTP 404)
+[39/72] Benjamin Franklin Plumbing … error (HTTP 404)
+[41/72] Affordable Plumbing LLC … error (HTTP 403)
+[31/72] Cold Is On The Right Plumbing & Air … ☎ +1 512-271-2172  3 social
+[43/72] Home Services at The Home Depot … error (HTTP 403)
+[42/72] ARS / Rescue Rooter … error (HTTP 404)
+[34/72] Crows Plumbing Service … ☎ +1 512-256-4001  3 social
+[44/72] Hercules Foundation Repair & Remodeling … error (HTTP 404)
+[37/72] Mavyn … name: you may have  5 social
+[45/72] BullsEye Plumbing Heating & Air of Colorado Springs … error (HTTP 404)
+[47/72] Priority Plumbing and Heating … error (HTTP 404)
+[49/72] Big Cat Plumbing, Heating & Cooling … error (HTTP 404)
+[51/72] Nates Plumbing … error (fetch failed)
+[38/72] Precision Heating & Air … ☎ +1 512-379-6385  name: ship as Precision  4 social
+[46/72] Alphalete Plumbing Drain Sewer … ☎ +1 719-631-3866  name: of Plumb  9 social
+[55/72] Elite Rooter Plumbers … error (HTTP 404)
+[53/72] Peak Flow Plumbing … error (HTTP 404)
+[57/72] Parkey's Heating, Plumbing, & Air Conditioning … error (HTTP 404)
+[54/72] A Plus Sewer, Drain and Plumbing … ☎ +1 719-359-3558  1 social
+[52/72] Pikes Peak Mechanical … ☎ +1 719-232-4720  name: not a robot  4 social
+[60/72] PlumbSmart Plumbing Heating and Air … ☎ +1 480-654-8865  name: This Offer  6 social
+[48/72] Wild Water Plumbing Heating Cooling … ☎ +1 719-789-6937  name: wanting to  3 social
+[58/72] Apex Plumbing & Mechanical … error (HTTP 404)
+[50/72] B&L Plumbing … ☎ +1 719-638-7341  name: Norissa L.  3 social
+[62/72] Roto-Rooter Plumbing & Water Cleanup … error (HTTP 404)
+[56/72] Austin & Sons Plumbing … ☎ +1 719-417-8466
+  (SPA render fallback unavailable — run `npm i playwright` on the Mac to enable JS rendering)
+[66/72] Ace Handyman Services North Metro Denver … no contact info found
+[65/72] Jolly Plumbing & Heating, Inc. … error (HTTP 404)
+[67/72] Mr. Handyman of Englewood, Centennial and S Aurora … error (HTTP 404)
+[61/72] Water Heater Pros … ☎ +1 719-229-5555  2 social
+[63/72] Sveagle Plumbing, Heating, and Cooling … ☎ +1 303-795-7498  name: to please all  4 social
+[70/72] Professional Facility Solutions … error (fetch failed)
+[69/72] A Master's Hands … ✉ info@amastershands.com  ☎ +1 720-468-3225  name: industry standards  6 social
+[64/72] Colorado Best Plumbing … ☎ +1 719-417-8876
+[72/72] Brown Truck Handyman … ✉ mike@browntruckhandyman.com  ☎ +1 720-840-8444  name: build three more
+[59/72] Excellent Plumbing & Water Heater Repair Colorado Springs … ✉ service@excellentphm.com  ☎ +1 719-393-9300  5 social
+[71/72] The Handy Dads, LLC - Denver Handyman … ✉ service@thehandydadsco.com  ☎ +1 833-724-2639  4 social
+[68/72] Home Improvements of Colorado Inc. … ☎ +1 303-452-6467  name: work is added  1 social
+────────────────────────────────────────────────────────────
+Summary
+  sites visited:        72
+  emails found:         9
+  phones found:         0
+  names found:          8
+  socials found:        7
+  leads flipped→email:  9
+  no email / unchanged: 63
+  fetch errors:         36
+  hit rate:             46%  (33/72 sites yielded contact info)
+
+Flipped to email:
+  • Cransten Handyman and Remodeling → mountainwest@cransten.com
+  • JOB Home Services → jobhomeservices@gmail.com
+  • Relief Handyman Services → info@reliefhandyman.com
+  • Denver Handyman & Painting Services → a.folkers@denverhps.com
+  • Home Improvement Express - Denver → estimates@homeimprovementexpress.com
+  • A Master's Hands → info@amastershands.com
+  • Brown Truck Handyman → mike@browntruckhandyman.com
+  • Excellent Plumbing & Water Heater Repair Colorado Springs → service@excellentphm.com
+  • The Handy Dads, LLC - Denver Handyman → service@thehandydadsco.com
+
+Next: node scripts/diagnoser.js  →  node scripts/checker.js  →  node scripts/pitcher.js --channel email
+
+✓ Google Sheet "AllContacts" synced: 5 cell update(s), 5 row(s) appended.
+
+[5/7] Diagnoser…
+
+Diagnoser starting
+──────────────────────────────────────────────────
+Leads available: 50 | Processing: 30 | Daily limit: 30
+Budget: $0.0314 / $5.00 used this month
+
+[1/30] BullsEye Plumbing Heating & Air of Colorado Springs (Colorado Springs, CO)... done ($0.00103)
+[2/30] Bill's Plumbing & Drain Service (Colorado Springs, CO)... done ($0.00109)
+[3/30] Smith Plumbing, Heating, Air Conditioning & Electrical - Colorado Springs (Colorado Springs, CO)... done ($0.00105)
+[4/30] Alphalete Plumbing Drain Sewer (Colorado Springs, CO)... done ($0.00122)
+[5/30] Pro Power Rooter (Colorado Springs, CO)... done ($0.00105)
+[6/30] Priority Plumbing and Heating (Colorado Springs, CO)... done ($0.00097)
+[7/30] Ellis Wyatt Plumbing, HVAC and Electrical, LLC (Colorado Springs, CO)... done ($0.00107)
+[8/30] Wild Water Plumbing Heating Cooling (Colorado Springs, CO)... done ($0.00106)
+[9/30] Big Cat Plumbing, Heating & Cooling (Colorado Springs, CO)... done ($0.00098)
+[10/30] Home Heating Service, Inc. (Colorado Springs, CO)... done ($0.00113)
+[11/30] Dan's Drains and Digs (Colorado Springs, CO)... done ($0.00103)
+[12/30] Ace Handyman Services North Metro Denver (Denver, CO)... done ($0.00101)
+[13/30] Mr. Handyman of Englewood, Centennial and S Aurora (Denver, CO)... done ($0.00104)
+[14/30] B&L Plumbing (Colorado Springs, CO)... done ($0.00109)
+[15/30] Nates Plumbing (Colorado Springs, CO)... done ($0.00093)
+[16/30] Green Plumbing Inc (Colorado Springs, CO)... done ($0.00112)
+[17/30] Pikes Peak Mechanical (Colorado Springs, CO)... done ($0.00110)
+[18/30] Peak Flow Plumbing (Colorado Springs, CO)... done ($0.00099)
+[19/30] Leo's Sewer & Drain Inc. (Colorado Springs, CO)... done ($0.00103)
+[20/30] A Plus Sewer, Drain and Plumbing (Colorado Springs, CO)... done ($0.00094)
+[21/30] Rocky Mountain Plumbing Services LLC (Colorado Springs, CO)... done ($0.00105)
+[22/30] Elite Rooter Plumbers (Colorado Springs, CO)... done ($0.00115)
+[23/30] Austin & Sons Plumbing (Colorado Springs, CO)... done ($0.00094)
+[24/30] Parkey's Heating, Plumbing, & Air Conditioning (Colorado Springs, CO)... done ($0.00104)
+[25/30] Apex Plumbing & Mechanical (Colorado Springs, CO)... done ($0.00100)
+[26/30] Excellent Plumbing & Water Heater Repair Colorado Springs (Colorado Springs, CO)... done ($0.00115)
+[27/30] PlumbSmart Plumbing Heating and Air (Colorado Springs, CO)... done ($0.00113)
+[28/30] Lujan Plumbing Services & Installations (Colorado Springs, CO)... done ($0.00106)
+[29/30] Water Heater Pros (Colorado Springs, CO)... done ($0.00101)
+[30/30] Roto-Rooter Plumbing & Water Cleanup (Colorado Springs, CO)... done ($0.00104)
+
+──────────────────────────────────────────────────
+Done.
+  Processed:      30 leads
+  Errors:         0
+  Priority (top5): ChIJaWyPZJxPE4cRhiOvcyY-Uwc, ChIJc6_bR1hGE4cRXCIzXv3g6GU, ChIJUVZoam9BE4cReO9dcGxcwiQ, ChIJzZPe4pFGE4cRao-SjZRZHcw, ChIJfYqeslRBE4cR69Wg7rxqTWI
+  Cost this run:  $0.03153
+  Monthly spend:  $0.0630 / $5.00
+  Briefs in /queue/: 30 new files
+──────────────────────────────────────────────────
+
+[6/7] Checker…
+
+Checker starting
+──────────────────────────────────────────────────
+Briefs to check: 30 | Processing: 30
+Budget: $0.0000 / $3.00
+
+[1/30] Smith Plumbing, Heating, Air Conditioning & Electrical - Colorado Springs — ✓ template approved (e5 + s3)
+[2/30] BullsEye Plumbing Heating & Air of Colorado Springs — ✓ template approved (s3)
+[3/30] Bill's Plumbing & Drain Service — ✓ template approved (e5 + s3)
+[4/30] Pro Power Rooter — ✓ template approved (e5 + s3)
+[5/30] Alphalete Plumbing Drain Sewer — ✓ template approved (s3)
+[6/30] Ace Handyman Services North Metro Denver — ✓ template approved (s3)
+[7/30] Dan's Drains and Digs — ✓ template approved (e5 + s3)
+[8/30] Mr. Handyman of Englewood, Centennial and S Aurora — ✓ template approved (s3)
+[9/30] Priority Plumbing and Heating — ✓ template approved (s3)
+[10/30] Parkey's Heating, Plumbing, & Air Conditioning — ✓ template approved (s3)
+[11/30] A Plus Sewer, Drain and Plumbing — ✓ template approved (s3)
+[12/30] PlumbSmart Plumbing Heating and Air — ✓ template approved (s3)
+[13/30] Big Cat Plumbing, Heating & Cooling — ✓ template approved (s3)
+[14/30] Pikes Peak Mechanical — ✓ template approved (s3)
+[15/30] Water Heater Pros — ✓ template approved (s3)
+[16/30] Ellis Wyatt Plumbing, HVAC and Electrical, LLC — ✓ template approved (e1 + s3)
+[17/30] Roto-Rooter Plumbing & Water Cleanup — ✓ template approved (s3)
+[18/30] Elite Rooter Plumbers — ✓ template approved (s3)
+[19/30] Rocky Mountain Plumbing Services LLC — ✓ template approved (e5 + s3)
+[20/30] Apex Plumbing & Mechanical — ✓ template approved (s3)
+[21/30] Green Plumbing Inc — ✓ template approved (e5 + s3)
+[22/30] Nates Plumbing — ✓ template approved (s3)
+[23/30] Excellent Plumbing & Water Heater Repair Colorado Springs — ✓ template approved (e5 + s3)
+[24/30] Austin & Sons Plumbing — ✓ template approved (s3)
+[25/30] Leo's Sewer & Drain Inc. — ✓ template approved (e5 + s3)
+[26/30] Home Heating Service, Inc. — ✓ template approved (e1 + s3)
+[27/30] B&L Plumbing — ✓ template approved (s3)
+[28/30] Peak Flow Plumbing — ✓ template approved (s3)
+[29/30] Wild Water Plumbing Heating Cooling — ✓ template approved (s3)
+[30/30] Lujan Plumbing Services & Installations — ✓ template approved (e5 + s3)
+
+──────────────────────────────────────────────────
+Done.
+  Approved:       30 (0 needed rewrite)
+  Flagged:        0 (need human review in /queue/)
+  Cost this run:  $0.00000
+  Monthly spend:  $0.0000 / $3.00
+──────────────────────────────────────────────────
+
+[7/7] Sheet-log — syncing Google Sheets CRM…
+
+Sheet-Log v3
+────────────────────────────────────────────────────────────
+email leads to sync:  22  (skipped: 696)
+AllContacts: wrote 344 leads (all channels).
+────────────────────────────────────────────────────────────
+Summary
+  SentLog new rows:      0
+  SentLog updates:       1
+  changelog entries:     1
+  AllContacts rows:      344
+  skipped (no email):    696
+
+Done. Edit columns F (status) and P (notes) in SentLog by hand.
+      AllContacts tab rebuilds from scratch each run.
+
+────────────────────────────────────────────────────
+New leads: 34 | emails: 8 | approved: 266 | batch 2026-07-29: 27 pending approval | sent earlier: 0
+[report] Approve 27 contacts — handyman / Denver, CO
+Daily lead-gen — 2026-07-29
+Status:  OK
+Target:  handyman in Denver, CO
+
+Stages
+  Scout           new leads:      34
+  Contact-scraper emails found:   8
+  Diagnoser       briefs written: 344
+  Checker         approved:       266
+  Sheet-log       rows synced:    266
+
+Email-ready leads now waiting to send: 27
+Rotation: 6/112 combinations worked, 106 remaining.
+Outscraper spend this run: $0.093
+
+Emails sent this morning (previously approved batch): 0
+
+─────────────────────────────────────────────
+AWAITING YOUR APPROVAL — 27 contacts scraped 2026-07-29
+─────────────────────────────────────────────
+  1. HomePoint
+     info@gohomepoint.com   ·   Austin, TX
+  2. TMK Plumber Austin
+     info@tmkplumberaustin.com   ·   Austin, TX
+  3. Dan's Drains and Digs
+     dansdrainsanddigs@gmail.com   ·   Colorado Springs, CO
+  4. Johnny Rooter Plumbing
+     johnnyrooterplumb@gmail.com   ·   Austin, TX
+  5. Gardenhouse Plumbing
+     info@gardenhouseplumbing.com   ·   Austin, TX
+  6. Redbud Plumbing
+     info@redbudplumbing.com   ·   Austin, TX
+  7. EZ Flow Plumbing
+     bill@ezflowplumbingtexas.com   ·   Austin, TX
+  8. The Plumbinator
+     mickeytheplumber@yahoo.com   ·   Austin, TX
+  9. Lujan Plumbing Services & Installations
+     admin@lujanpsi.com   ·   Colorado Springs, CO
+ 10. Westmoreland Plumbing Inc
+     wplumbingcompany@gmail.com   ·   Austin, TX
+ 11. Lalo Residential & Commercial Plumbing
+     lalo@laloplumbing.com   ·   Austin, TX
+ 12. PreFix Austin
+     customer.support@prefixinc.com   ·   Austin, TX
+ 13. 1-Tom-Plumber
+     austintx@1tomplumber.com   ·   Austin, TX
+ 14. Smith Plumbing, Heating, Air Conditioning & Electrical - Colorado Springs
+     info@smithtotalhome.com   ·   Colorado Springs, CO
+ 15. Ellis Wyatt Plumbing, HVAC and Electrical, LLC
+     contact@elliswyattmep.com   ·   Colorado Springs, CO
+ 16. Sustainable Plumbing & Air
+     matthew@sustainableplumbingandair.com   ·   Austin, TX
+ 17. Bill's Plumbing & Drain Service
+     billsplumbing719@gmail.com   ·   Colorado Springs, CO
+ 18. Rocky Mountain Plumbing Services LLC
+     rockymountainplumbingservices@gmail.com   ·   Colorado Springs, CO
+ 19. Adept Plumbing
+     christian@adeptplumbing.com   ·   Austin, TX
+ 20. Green Plumbing Inc
+     greenplumbing8@gmail.com   ·   Colorado Springs, CO
+ 21. Pro Power Rooter
+     propowerrooter@gmail.com   ·   Colorado Springs, CO
+ 22. Excellent Plumbing & Water Heater Repair Colorado Springs
+     service@excellentphm.com   ·   Colorado Springs, CO
+ 23. Abundant Plumbing
+     abundantplumbing@gmail.com   ·   Austin, TX
+ 24. Austin Plumbing
+     service@austinplumbing.com   ·   Austin, TX
+ 25. Leo's Sewer & Drain Inc.
+     service@leosdrains.com   ·   Colorado Springs, CO
+ 26. Home Heating Service, Inc.
+     service@homeheatingservice.com   ·   Colorado Springs, CO
+ 27. L & P Plumbing, LLC
+     lpplumbing18@gmail.com   ·   Austin, TX
+
+Nothing above has been emailed. Approve to send on the next 6:30am run:
+  node scripts/approve-batch.js 2026-07-29
+
+Or reject the whole batch:
+  node scripts/approve-batch.js 2026-07-29 --reject
+
+Left un-approved, this batch never sends.
+
+This report is sent on every run. No report at all means the scheduled job did not fire.
+[report] emailed 13dmh33@gmail.com
+────────────────────────────────────────────────────
+
+Today's scrape is PENDING your approval. Review the emailed list, then:
+  node scripts/approve-batch.js 2026-07-29
+
+Approved batches send automatically on the next 6:30am run.

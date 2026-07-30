@@ -1,0 +1,230 @@
+{
+  "date": "2026-07-29",
+  "city": "Denver, CO",
+  "trade": "handyman",
+  "stages": {
+    "scout": {
+      "newLeads": 34,
+      "exitCode": 0
+    },
+    "scrape": {
+      "emailsFound": 8
+    },
+    "diagnoser": {
+      "briefs": 344
+    },
+    "checker": {
+      "approved": 266
+    },
+    "sheetLog": {
+      "rows": 266,
+      "exitCode": 0
+    }
+  },
+  "readyToSend": 27,
+  "sentToday": 0,
+  "batch": {
+    "date": "2026-07-29",
+    "status": "pending",
+    "count": 27,
+    "created": true
+  },
+  "batchLeads": [
+    {
+      "lead_id": "ChIJ015Etw21RIYRwxdqv9XZR3U",
+      "business_name": "HomePoint",
+      "email": "info@gohomepoint.com",
+      "city": "Austin, TX",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJ4zJ-x2_PRIYRRU6_6hZbKOA",
+      "business_name": "TMK Plumber Austin",
+      "email": "info@tmkplumberaustin.com",
+      "city": "Austin, TX",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJARoMTM1FE4cRo3DyFrsXylI",
+      "business_name": "Dan's Drains and Digs",
+      "email": "dansdrainsanddigs@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJBcx6NlrLRIYRatzIKsnpxvs",
+      "business_name": "Johnny Rooter Plumbing",
+      "email": "johnnyrooterplumb@gmail.com",
+      "city": "Austin, TX",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJDyzP-RZNW4YR4k6r5ALZWwc",
+      "business_name": "Gardenhouse Plumbing",
+      "email": "info@gardenhouseplumbing.com",
+      "city": "Austin, TX",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJHdU1tm7LRIYRA7zbiSZKLgE",
+      "business_name": "Redbud Plumbing",
+      "email": "info@redbudplumbing.com",
+      "city": "Austin, TX",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJJSxtvpaNZqIRO75baYyLH80",
+      "business_name": "EZ Flow Plumbing",
+      "email": "bill@ezflowplumbingtexas.com",
+      "city": "Austin, TX",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJKfOZssrTRIYRiZVwIwiQuMw",
+      "business_name": "The Plumbinator",
+      "email": "mickeytheplumber@yahoo.com",
+      "city": "Austin, TX",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJMREzXXmifmURJbZsta24FLA",
+      "business_name": "Lujan Plumbing Services & Installations",
+      "email": "admin@lujanpsi.com",
+      "city": "Colorado Springs, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJOS-aIJpJW4YRFy55AC1_-sc",
+      "business_name": "Westmoreland Plumbing Inc",
+      "email": "wplumbingcompany@gmail.com",
+      "city": "Austin, TX",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJPSAFjqAkmW4RKkUGwTHoS6E",
+      "business_name": "Lalo Residential & Commercial Plumbing",
+      "email": "lalo@laloplumbing.com",
+      "city": "Austin, TX",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJR_rovga1RIYRP44au3wFNRQ",
+      "business_name": "PreFix Austin",
+      "email": "customer.support@prefixinc.com",
+      "city": "Austin, TX",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJRzUJezZJW4YRMbJmeiDVh58",
+      "business_name": "1-Tom-Plumber",
+      "email": "austintx@1tomplumber.com",
+      "city": "Austin, TX",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJUVZoam9BE4cReO9dcGxcwiQ",
+      "business_name": "Smith Plumbing, Heating, Air Conditioning & Electrical - Colorado Springs",
+      "email": "info@smithtotalhome.com",
+      "city": "Colorado Springs, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJW_rudPFbE4cRReNwAVicKBo",
+      "business_name": "Ellis Wyatt Plumbing, HVAC and Electrical, LLC",
+      "email": "contact@elliswyattmep.com",
+      "city": "Colorado Springs, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJZeMilGpV-KgRAt06uDW3FV0",
+      "business_name": "Sustainable Plumbing & Air",
+      "email": "matthew@sustainableplumbingandair.com",
+      "city": "Austin, TX",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJc6_bR1hGE4cRXCIzXv3g6GU",
+      "business_name": "Bill's Plumbing & Drain Service",
+      "email": "billsplumbing719@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJc9wQTRlnCAURxyaNk1kaQKw",
+      "business_name": "Rocky Mountain Plumbing Services LLC",
+      "email": "rockymountainplumbingservices@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJcVDanT1GW4YRvV6KrSxrwMQ",
+      "business_name": "Adept Plumbing",
+      "email": "christian@adeptplumbing.com",
+      "city": "Austin, TX",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJdeSjSEpEE4cRvjECVCPxFy0",
+      "business_name": "Green Plumbing Inc",
+      "email": "greenplumbing8@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJfYqeslRBE4cR69Wg7rxqTWI",
+      "business_name": "Pro Power Rooter",
+      "email": "propowerrooter@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJlfu-KsBEE4cRiN8Ch89bbkg",
+      "business_name": "Excellent Plumbing & Water Heater Repair Colorado Springs",
+      "email": "service@excellentphm.com",
+      "city": "Colorado Springs, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJo0JAlz61RIYRbWT35wBLQYk",
+      "business_name": "Abundant Plumbing",
+      "email": "abundantplumbing@gmail.com",
+      "city": "Austin, TX",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJq0fCfwkpW4YR4EqPvo68RGQ",
+      "business_name": "Austin Plumbing",
+      "email": "service@austinplumbing.com",
+      "city": "Austin, TX",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJq6qqqn5IE4cRw_oYho2dMIk",
+      "business_name": "Leo's Sewer & Drain Inc.",
+      "email": "service@leosdrains.com",
+      "city": "Colorado Springs, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJszext05GE4cRIBVqx8PlkdI",
+      "business_name": "Home Heating Service, Inc.",
+      "email": "service@homeheatingservice.com",
+      "city": "Colorado Springs, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJu8oFG73LRIYR6NoivbCGPvQ",
+      "business_name": "L & P Plumbing, LLC",
+      "email": "lpplumbing18@gmail.com",
+      "city": "Austin, TX",
+      "trade": "plumber"
+    }
+  ],
+  "spend": 0.093,
+  "rotation": {
+    "done": 6,
+    "remaining": 106,
+    "reportedDone": 5,
+    "reportedLeft": 107
+  }
+}

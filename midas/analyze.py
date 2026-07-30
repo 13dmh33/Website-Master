@@ -6,7 +6,10 @@ from datetime import datetime
 
 from lib import num, composite_score
 
-RUN_DATE = "2026-07-28"
+# Was hardcoded — see screener.py's identical fix note. Must match
+# screener.py's RUN_DATE since that's what named raw_results.json's sibling
+# report files this reads/writes.
+RUN_DATE = datetime.now().strftime("%Y-%m-%d")
 CASH_AVAILABLE = 148
 MIN_POSITION = 40
 MAX_POSITION = 100

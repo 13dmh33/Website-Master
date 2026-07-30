@@ -20,7 +20,8 @@ from datetime import datetime
 
 from lib import num, composite_score
 
-RUN_DATE = "2026-07-28"
+# Was hardcoded — see screener.py's identical fix note.
+RUN_DATE = datetime.now().strftime("%Y-%m-%d")
 BUCKET = "tactical"  # per session inputs — all 5 lenses required, tight stop
 TOP_N = 5
 

@@ -13,7 +13,11 @@ import yfinance as yf
 warnings.filterwarnings("ignore")
 
 # ---------------- SESSION INPUTS ----------------
-RUN_DATE = "2026-07-28"
+# Was hardcoded to a literal date string — every run (including the scheduled
+# GitHub Actions one) would always label itself "2026-07-28" regardless of the
+# actual date, silently overwriting the same report files forever. Fixed to
+# compute the real run date.
+RUN_DATE = datetime.now().strftime("%Y-%m-%d")
 CASH_AVAILABLE = 148
 MIN_POSITION = 40
 MAX_POSITION = 100

@@ -67,8 +67,39 @@ function freshnessBasis(job) {
   return Number.isFinite(d) ? d : 0;
 }
 
+// Key ignoring location entirely — used by the second pass below.
+function companyTitleKey(job) {
+  const title = normalize(job.title)
+    .replace(/\b(sr|snr)\b/g, 'senior')
+    .replace(/\b(jr)\b/g, 'junior')
+    .replace(/\b(remote|hybrid|onsite|contract|full time|part time)\b/g, '')
+    .trim();
+  return `${normalize(job.company)}::${title}`;
+}
+
 // Merge near-duplicates within a batch. Keeps the freshest record, and when
 // tied prefers the company ATS link over an aggregator link.
+//
+// Two passes, because location is load-bearing in opposite directions:
+//
+//   Pass 1 (fuzzyKey, location-aware) merges the same role listed on both an
+//   ATS and an aggregator, and collapses remote roles listed under different
+//   cities.
+//
+//   Pass 2 (companyTitleKey, location-blind) catches what pass 1 structurally
+//   cannot: one req blasted across many nearby ONSITE localities. Real case,
+//   2026-07-31 — Bayer posted an identical "National Account Director - Health
+//   Systems - Western USA" to Adzuna under seven Washington towns (Normandy
+//   Park, Othello, University Place, Tumwater, Warden, Issaquah,
+//   "International"), each with its own ad id. Pass 1 keys on the city token
+//   for non-remote jobs, so all seven survived, consumed seven of the eight
+//   DAILY_LIMIT tailoring slots (seven paid Sonnet calls all overwriting the
+//   same output directory, since company+title produce one slug), and crowded
+//   every other opportunity out of that morning's digest.
+//
+// The alternate locations are rolled up onto the kept record as
+// `alsoPostedIn` rather than dropped, so the breadth of a genuinely
+// multi-location posting is still visible.
 export function mergeNearDuplicates(jobs) {
   const byKey = new Map();
   for (const job of jobs) {
@@ -80,7 +111,26 @@ export function mergeNearDuplicates(jobs) {
     }
     byKey.set(key, pickBetter(existing, job));
   }
-  return [...byKey.values()];
+
+  const byCompanyTitle = new Map();
+  for (const job of byKey.values()) {
+    const key = companyTitleKey(job);
+    const existing = byCompanyTitle.get(key);
+    if (!existing) {
+      byCompanyTitle.set(key, job);
+      continue;
+    }
+    const kept = pickBetter(existing, job);
+    const dropped = kept === existing ? job : existing;
+    const locations = new Set([
+      ...(existing.alsoPostedIn || []),
+      ...(job.alsoPostedIn || []),
+    ]);
+    if (dropped.location) locations.add(dropped.location);
+    locations.delete(kept.location);
+    byCompanyTitle.set(key, locations.size ? { ...kept, alsoPostedIn: [...locations] } : kept);
+  }
+  return [...byCompanyTitle.values()];
 }
 
 function pickBetter(a, b) {

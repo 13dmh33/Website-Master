@@ -62,6 +62,38 @@ const remoteMerged = mergeNearDuplicates([remoteChicago, remoteDallas]);
 assert.equal(remoteMerged.length, 1, 'same remote role listed under different cities merges to one');
 ok('near-dup merge collapses remote postings listed under different cities');
 
+// 4b-ii. The same ONSITE req blasted across many nearby localities collapses
+// to one. Real case, 2026-07-31: Bayer posted an identical "National Account
+// Director - Health Systems - Western USA" to Adzuna under seven Washington
+// towns, each with its own ad id. The location-aware pass keys on the city
+// token for non-remote jobs, so all seven survived and consumed seven of the
+// eight daily tailoring slots — seven paid Sonnet calls all writing to the
+// same output directory, and a digest with nothing else in it.
+const bayerTowns = ['Normandy Park, King County', 'Othello, Adams County', 'University Place, Pierce County', 'Tumwater, Thurston County', 'Warden, Grant County', 'Issaquah, King County', 'International, King County'];
+const bayerPostings = bayerTowns.map((location, i) => ({
+  source: 'adzuna',
+  company: 'Bayer',
+  title: 'National Account Director - Health Systems - Western USA',
+  location,
+  remote: false,
+  url: `https://adzuna.com/land/ad/58220706${i}`,
+  externalId: `adzuna:58220706${i}`,
+  postedAt: iso(1),
+}));
+const bayerMerged = mergeNearDuplicates(bayerPostings);
+assert.equal(bayerMerged.length, 1, 'one req across seven towns collapses to one job');
+assert.equal(bayerMerged[0].alsoPostedIn.length, 6, 'the other six locations are rolled up, not discarded');
+ok('near-dup merge collapses one onsite req blasted across many localities');
+
+// 4b-iii. Genuinely different roles at the same company must NOT be merged by
+// the location-blind pass — it keys on title, so distinct titles stay distinct.
+const sameCoDifferentRoles = mergeNearDuplicates([
+  { source: 'adzuna', company: 'Bayer', title: 'National Account Director', location: 'Seattle, WA', url: 'https://adzuna.com/x', postedAt: iso(1) },
+  { source: 'adzuna', company: 'Bayer', title: 'Director of Pricing Strategy', location: 'Seattle, WA', url: 'https://adzuna.com/y', postedAt: iso(1) },
+]);
+assert.equal(sameCoDifferentRoles.length, 2, 'different titles at the same company stay separate');
+ok('location-blind merge keeps genuinely different roles apart');
+
 // 4c. jobId stays stable across two pulls of the same Adzuna posting even
 // when Adzuna's redirect_url carries a different per-request tracking token
 // each time — regression for the bug where job identity was built from the

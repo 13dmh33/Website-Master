@@ -85,6 +85,25 @@ function firstText(message) {
   return block ? block.text : '';
 }
 
+// Parse a model response that is supposed to be a single JSON object, but
+// report a truncated response as truncation rather than as malformed JSON.
+//
+// Worth the extra step because the two failure modes look nothing alike from
+// the outside and were both hit in production: a response cut off by the
+// max_tokens cap surfaces from extractJson() as either "no JSON object found
+// in model response" (the closing brace never arrived) or "Expected ',' or
+// ']' after array element" (cut mid-array) — neither of which points at the
+// token budget, which is the thing that actually needs changing. Checking
+// stop_reason first names the real cause in the log.
+export function parseModelJson(message, label) {
+  if (message.stop_reason === 'max_tokens') {
+    throw new Error(
+      `${label}: response hit the max_tokens cap and was truncated — raise max_tokens for this call`,
+    );
+  }
+  return extractJson(firstText(message));
+}
+
 // --- Scoring (Claude Haiku) ---
 //
 // `feedbackExamples` are recent rows Dave marked applied/passed/interview in the
@@ -310,9 +329,22 @@ export async function rerankForCareerCoach({ jobs, brief }) {
     'Include every job id exactly once, ordered best fit first.',
   ].join('\n');
 
+  // One ranked entry (id + fitPercent + one-sentence verdict) costs roughly
+  // 60-90 tokens once JSON structure is counted. A fixed 2000-token budget
+  // was only ever safe for small shortlists — on 2026-07-30, 25 candidate
+  // matches pushed the response past that cap, Claude's JSON got cut off
+  // mid-array, and extractJson()'s JSON.parse failed ("Expected ',' or ']'
+  // after array element"), which silently skipped career-coach review for
+  // the entire day (caught deliberately below in career-coach.js so a
+  // failure here never takes down the rest of the run — but that also means
+  // it fails silent unless someone reads this log line). Scaling the budget
+  // with jobs.length instead of a fixed guess is what actually fixes it,
+  // since the match count varies run to run and will keep growing.
+  const maxTokens = Math.min(8000, Math.max(2000, jobs.length * 150 + 500));
+
   const message = await client().messages.create({
     model: config.models.scorer,
-    max_tokens: 2000,
+    max_tokens: maxTokens,
     system,
     messages: [
       {
@@ -325,7 +357,7 @@ export async function rerankForCareerCoach({ jobs, brief }) {
     ],
   });
 
-  const parsed = extractJson(firstText(message));
+  const parsed = parseModelJson(message, 'rerankForCareerCoach');
   const ranked = Array.isArray(parsed.ranked) ? parsed.ranked : [];
   return {
     ranked: ranked.map((r) => ({
@@ -414,7 +446,12 @@ export async function careerCoachTailor({ job, brief, baselines = {} }) {
 
   const message = await client().messages.create({
     model: config.models.tailor,
-    max_tokens: 8000,
+    // A full tailored resume AND a cover letter AND the gap/open-item arrays
+    // all come back inside one JSON object here, so this needs materially more
+    // headroom than tailorJob()'s 8000. At 8000 every call on 2026-07-31 was
+    // truncated mid-resume and lost — the whole career-coach stage produced
+    // nothing three days running.
+    max_tokens: 16000,
     system,
     messages: [
       {
@@ -427,7 +464,7 @@ export async function careerCoachTailor({ job, brief, baselines = {} }) {
     ],
   });
 
-  const parsed = extractJson(firstText(message));
+  const parsed = parseModelJson(message, 'careerCoachTailor');
   const archetype = ['sales-planning', 'finance', 'national-accounts'].includes(parsed.archetype)
     ? parsed.archetype
     : 'finance';

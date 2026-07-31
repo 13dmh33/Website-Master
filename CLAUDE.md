@@ -207,6 +207,35 @@ Manual order:
 9. Drip → follow-up non-responders — **run on Mac** (Twilio + Zoho SMTP blocked from container)
 10. Reporter → `node scripts/reporter.js` on Mac each morning (or cron at 7am)
 
+## Automated Daily Pipeline + Approval Gate (built 2026-07-28)
+`scripts/daily-lead-gen.sh` replaces the manual order above for cold email. Mac only
+(launchd 6:30am, `deploy/com.trevo.leadgen.daily.plist`). Deliberately one day out of phase:
+
+    Day N 06:30   send day N-1's APPROVED batch, then scrape market N
+                  (Scout → contact-scraper --deep → Diagnoser → Checker → sheet-log)
+                  → record batch N as "pending" → email Dave the companies + contacts
+    Day N daytime node scripts/approve-batch.js <date>
+    Day N+1 06:30 batch N sends
+
+- **Nothing sends without an approval recorded in `config/lead-batches.json`.** Pitcher's
+  `--batch` allowlist is empty unless status is `approved`, so an un-reviewed batch sends
+  nothing — silence is the safe default, not delivery.
+- **`config/lead-batches.json` is NOT tracked in git and lives only on the Mac.** A
+  container clone can never see or record real approval state. Approving must happen on
+  the Mac. Never fabricate this file to simulate an approval.
+- Approving is not a daily obligation — unapproved batches queue safely and drain one per
+  morning. `--all` bulk-approves a backlog.
+- Market is picked automatically by `scripts/lib/market-rotation.js` (Colorado first,
+  trades rotating within each metro, HVAC excluded). Completion is derived from real
+  filenames in `leads/` + `leads-web/`, not a hand-maintained list.
+- **`bash scripts/check-leadgen.sh`** — read-only preflight: is the launchd job loaded,
+  are the plist placeholders still unsubstituted, will the Mac be awake at 06:30, what is
+  pending/approved, what actually sends next, next market, past-run evidence. Run this
+  before assuming a send is scheduled.
+- launchd will NOT run a missed 6:30am job while the Mac is asleep — it fires late on
+  wake, which can push a real send into the afternoon. Needs
+  `sudo pmset repeat wakeorpoweron MTWRFSU 06:25:00`.
+
 ## Nora Upsell
 - Website deal closes → set nora_pitch_due = closed_date + 7 days in state.json
 - Mobile agent sends Nora pitch message on due date

@@ -2,10 +2,10 @@
   "batches": {
     "2026-07-29": {
       "date": "2026-07-29",
-      "status": "approved",
+      "status": "sent",
       "createdAt": "2026-07-29T12:32:35.191Z",
       "approvedAt": "2026-07-29T12:48:25.763Z",
-      "sentAt": null,
+      "sentAt": "2026-07-30T14:11:31.990Z",
       "leads": [
         {
           "lead_id": "ChIJ015Etw21RIYRwxdqv9XZR3U",
@@ -195,6 +195,283 @@
           "email": "lpplumbing18@gmail.com",
           "city": "Austin, TX",
           "trade": "plumber"
+        }
+      ]
+    },
+    "2026-07-30": {
+      "date": "2026-07-30",
+      "status": "pending",
+      "createdAt": "2026-07-30T14:15:22.488Z",
+      "approvedAt": null,
+      "sentAt": null,
+      "leads": [
+        {
+          "lead_id": "ChIJ06TbSrd9bIcRktv4WehCflA",
+          "business_name": "Cenco Roofing",
+          "email": "info@cencoroofing.com",
+          "city": "Denver, CO",
+          "trade": "roofer"
+        },
+        {
+          "lead_id": "ChIJ113DnHCHa4cRPgsF7F_-AwI",
+          "business_name": "Altitude Contracting",
+          "email": "info@altitudecontracting.com",
+          "city": "Denver, CO",
+          "trade": "roofer"
+        },
+        {
+          "lead_id": "ChIJ2VwOPPuDa4cRtafOPo9laBM",
+          "business_name": "Peak Builders & Roofers of Denver",
+          "email": "info@peakbuildersdenver.com",
+          "city": "Denver, CO",
+          "trade": "roofer"
+        },
+        {
+          "lead_id": "ChIJF4pJ8jB_bIcR6g92SYp0ivM",
+          "business_name": "covR Roofing + Exteriors",
+          "email": "info@covrco.com",
+          "city": "Denver, CO",
+          "trade": "roofer"
+        },
+        {
+          "lead_id": "ChIJUUYv7ip_bIcRu_Vz9bX77Bg",
+          "business_name": "Cransten Handyman and Remodeling",
+          "email": "mountainwest@cransten.com",
+          "city": "Denver, CO",
+          "trade": "handyman"
+        },
+        {
+          "lead_id": "ChIJ_____8J4bIcRJeKNO6_TIf0",
+          "business_name": "Academy Roofing, Inc.",
+          "email": "estimates@academyroofinginc.com",
+          "city": "Denver, CO",
+          "trade": "roofer"
+        },
+        {
+          "lead_id": "ChIJbf9oNMrva4cRuoq0RSfRphY",
+          "business_name": "Ideal Roof & Exterior Pros",
+          "email": "office@myidealpros.com",
+          "city": "Denver, CO",
+          "trade": "roofer"
+        },
+        {
+          "lead_id": "ChIJdXH2DpyEbIcR_N1I3eM_j5c",
+          "business_name": "LR Contracting Inc.",
+          "email": "bfults@gmail.com",
+          "city": "Denver, CO",
+          "trade": "roofer"
+        },
+        {
+          "lead_id": "ChIJf5He1auBbIcReUWSHqvCxOU",
+          "business_name": "Advocate Construction, Inc",
+          "email": "info@advocate-construction.com",
+          "city": "Denver, CO",
+          "trade": "roofer"
+        },
+        {
+          "lead_id": "ChIJm9etz4x9bIcRhqyqcOEdSdY",
+          "business_name": "Forest Roofs",
+          "email": "info@forestroofs.com",
+          "city": "Denver, CO",
+          "trade": "roofer"
+        },
+        {
+          "lead_id": "ChIJox3l9GSHa4cRYzWHlfG55v0",
+          "business_name": "Priority Roofing",
+          "email": "colorado@priorityroofs.com",
+          "city": "Denver, CO",
+          "trade": "roofer"
+        },
+        {
+          "lead_id": "ChIJpcn5cyRFE4cRRC2ePbPN47w",
+          "business_name": "Olson Plumbing & Heating Co",
+          "email": "service@olsonph.com",
+          "city": "Colorado Springs, CO",
+          "trade": "plumber"
+        },
+        {
+          "lead_id": "ChIJu4dAhjxPE4cRqr13Mu0YAyo",
+          "business_name": "Always Plumbing & Heating, Inc",
+          "email": "%20info@alwaysph.com",
+          "city": "Colorado Springs, CO",
+          "trade": "plumber"
+        },
+        {
+          "lead_id": "ChIJzc0QD2aHa4cR5JAKkjShQlA",
+          "business_name": "MTN Roofing",
+          "email": "office@mtnroofing.com",
+          "city": "Denver, CO",
+          "trade": "roofer"
+        }
+      ]
+    },
+    "2026-07-31": {
+      "date": "2026-07-31",
+      "status": "approved",
+      "createdAt": "2026-07-31T12:33:42.951Z",
+      "approvedAt": "2026-07-31T15:48:45.885Z",
+      "sentAt": null,
+      "leads": [
+        {
+          "lead_id": "ChIJ06TbSrd9bIcRktv4WehCflA",
+          "business_name": "Cenco Roofing",
+          "email": "info@cencoroofing.com",
+          "city": "Denver, CO",
+          "trade": "roofer"
+        },
+        {
+          "lead_id": "ChIJ113DnHCHa4cRPgsF7F_-AwI",
+          "business_name": "Altitude Contracting",
+          "email": "info@altitudecontracting.com",
+          "city": "Denver, CO",
+          "trade": "roofer"
+        },
+        {
+          "lead_id": "ChIJ2VwOPPuDa4cRtafOPo9laBM",
+          "business_name": "Peak Builders & Roofers of Denver",
+          "email": "info@peakbuildersdenver.com",
+          "city": "Denver, CO",
+          "trade": "roofer"
+        },
+        {
+          "lead_id": "ChIJ2_MIMTQzE4cR-H1gOj4NPEc",
+          "business_name": "WHITE RHINO ELECTRIC",
+          "email": "ryan@whiterhinoelectric.com",
+          "city": "Colorado Springs, CO",
+          "trade": "electrician"
+        },
+        {
+          "lead_id": "ChIJE9X9FL5FE4cR2cfmatLPrqw",
+          "business_name": "Calibrating Air Heating & Cooling, Inc.",
+          "email": "info@calibratingair.com",
+          "city": "Colorado Springs, CO",
+          "trade": "electrician"
+        },
+        {
+          "lead_id": "ChIJF4pJ8jB_bIcR6g92SYp0ivM",
+          "business_name": "covR Roofing + Exteriors",
+          "email": "info@covrco.com",
+          "city": "Denver, CO",
+          "trade": "roofer"
+        },
+        {
+          "lead_id": "ChIJL_-ZeyZFE4cRid3JEaeuvBA",
+          "business_name": "Around The Clock Heating, Air Conditioning, Plumbing & Electric",
+          "email": "customer@callaroundtheclock.com",
+          "city": "Colorado Springs, CO",
+          "trade": "electrician"
+        },
+        {
+          "lead_id": "ChIJScB8UuizbIcRZ081AfBtpw4",
+          "business_name": "upGrade electric LLC",
+          "email": "info@upgradeelectricllc.com",
+          "city": "Colorado Springs, CO",
+          "trade": "electrician"
+        },
+        {
+          "lead_id": "ChIJUUYv7ip_bIcRu_Vz9bX77Bg",
+          "business_name": "Cransten Handyman and Remodeling",
+          "email": "mountainwest@cransten.com",
+          "city": "Denver, CO",
+          "trade": "handyman"
+        },
+        {
+          "lead_id": "ChIJXTPMVZBPE4cRDkIh8JqVmKs",
+          "business_name": "BudCo Electric",
+          "email": "khatodiasahil3@gmail.com",
+          "city": "Colorado Springs, CO",
+          "trade": "electrician"
+        },
+        {
+          "lead_id": "ChIJ_____8J4bIcRJeKNO6_TIf0",
+          "business_name": "Academy Roofing, Inc.",
+          "email": "estimates@academyroofinginc.com",
+          "city": "Denver, CO",
+          "trade": "roofer"
+        },
+        {
+          "lead_id": "ChIJbf9oNMrva4cRuoq0RSfRphY",
+          "business_name": "Ideal Roof & Exterior Pros",
+          "email": "office@myidealpros.com",
+          "city": "Denver, CO",
+          "trade": "roofer"
+        },
+        {
+          "lead_id": "ChIJdXH2DpyEbIcR_N1I3eM_j5c",
+          "business_name": "LR Contracting Inc.",
+          "email": "bfults@gmail.com",
+          "city": "Denver, CO",
+          "trade": "roofer"
+        },
+        {
+          "lead_id": "ChIJf5He1auBbIcReUWSHqvCxOU",
+          "business_name": "Advocate Construction, Inc",
+          "email": "info@advocate-construction.com",
+          "city": "Denver, CO",
+          "trade": "roofer"
+        },
+        {
+          "lead_id": "ChIJm7asIbJPE4cRZalYgph5Cfo",
+          "business_name": "Mister Sparky of Colorado Springs",
+          "email": "cosprings@mistersparky.com",
+          "city": "Colorado Springs, CO",
+          "trade": "electrician"
+        },
+        {
+          "lead_id": "ChIJm9etz4x9bIcRhqyqcOEdSdY",
+          "business_name": "Forest Roofs",
+          "email": "info@forestroofs.com",
+          "city": "Denver, CO",
+          "trade": "roofer"
+        },
+        {
+          "lead_id": "ChIJo4d55pBPE4cR4qsuPWi4CFA",
+          "business_name": "Furnace World",
+          "email": "dispatch@furnaceworld.com",
+          "city": "Colorado Springs, CO",
+          "trade": "electrician"
+        },
+        {
+          "lead_id": "ChIJox3l9GSHa4cRYzWHlfG55v0",
+          "business_name": "Priority Roofing",
+          "email": "colorado@priorityroofs.com",
+          "city": "Denver, CO",
+          "trade": "roofer"
+        },
+        {
+          "lead_id": "ChIJpbgjjNFFE4cRYSZlMUKCRA4",
+          "business_name": "Lenz Electric Inc",
+          "email": "generac@lenz-electric.com",
+          "city": "Colorado Springs, CO",
+          "trade": "electrician"
+        },
+        {
+          "lead_id": "ChIJpcn5cyRFE4cRRC2ePbPN47w",
+          "business_name": "Olson Plumbing & Heating Co",
+          "email": "service@olsonph.com",
+          "city": "Colorado Springs, CO",
+          "trade": "plumber"
+        },
+        {
+          "lead_id": "ChIJu4dAhjxPE4cRqr13Mu0YAyo",
+          "business_name": "Always Plumbing & Heating, Inc",
+          "email": "%20info@alwaysph.com",
+          "city": "Colorado Springs, CO",
+          "trade": "plumber"
+        },
+        {
+          "lead_id": "ChIJudQHDpxFE4cRXr3yxavBshI",
+          "business_name": "Celtic Electric",
+          "email": "info@celticcolorado.com",
+          "city": "Colorado Springs, CO",
+          "trade": "electrician"
+        },
+        {
+          "lead_id": "ChIJzc0QD2aHa4cR5JAKkjShQlA",
+          "business_name": "MTN Roofing",
+          "email": "office@mtnroofing.com",
+          "city": "Denver, CO",
+          "trade": "roofer"
         }
       ]
     }

@@ -1,0 +1,1400 @@
+[
+  {
+    "lead_id": "ChIJ-4A4pZ5FE4cRe2aQl1BAtaE",
+    "business_name": "Swartz Electric, LLC",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://swartzelectric.biz/electrician-colorado-springs/%3Futm_source%3Dgoogle-gbp%26utm_medium%3Dorganic%26utm_campaign%3D*523*swartz-colorado-springs",
+    "email": "",
+    "phone": "+1 719-230-0372",
+    "rating": 4.9,
+    "review_count": 674,
+    "address": "2345 Academy Pl #222, Colorado Springs, CO 80909",
+    "place_id": "ChIJ-4A4pZ5FE4cRe2aQl1BAtaE",
+    "subtypes": [
+      "Electrician, Contractor, Electrical engineer, Electrical installation service, Repair service"
+    ],
+    "latitude": 38.8663391,
+    "longitude": -104.7551792,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-31T12:30:32.629Z"
+  },
+  {
+    "lead_id": "ChIJm7asIbJPE4cRZalYgph5Cfo",
+    "business_name": "Mister Sparky of Colorado Springs",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.mistersparky.com/colorado-springs/",
+    "email": "cosprings@mistersparky.com",
+    "phone": "+1 719-249-3397",
+    "rating": 4.9,
+    "review_count": 800,
+    "address": "80 Talamine Ct Unit 1, Colorado Springs, CO 80907",
+    "place_id": "ChIJm7asIbJPE4cRZalYgph5Cfo",
+    "subtypes": [
+      "Electrician, Contractor, Electric vehicle charging station contractor, Electrical installation service, Electrical repair shop, Lighting contractor"
+    ],
+    "latitude": 38.8804825,
+    "longitude": -104.8233585,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "email_source": "contact-scraper",
+    "contact_name": "information on tablet",
+    "socials": {
+      "youtube": "https://www.youtube.com/channel/UChc64_8-2aVKb8qKL6bfPrQ",
+      "instagram": "https://www.instagram.com/mister_sparky_corp",
+      "twitter": "https://twitter.com/MisterSparky1",
+      "facebook": "https://www.facebook.com/MisterSparkyColoradoSprings"
+    },
+    "deep_enriched_at": "2026-07-31T12:31:29.894Z"
+  },
+  {
+    "lead_id": "ChIJfdcq-xpPE4cRaRrKPddC9qg",
+    "business_name": "Front Range Electric",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.frontrangeelectric.com/",
+    "email": "",
+    "phone": "+1 719-321-4413",
+    "rating": 4.9,
+    "review_count": 451,
+    "address": "6189 Lehman Dr #200, Colorado Springs, CO 80918",
+    "place_id": "ChIJfdcq-xpPE4cRaRrKPddC9qg",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 38.919914999999996,
+    "longitude": -104.7889694,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "socials": {
+      "facebook": "https://www.facebook.com/FRElectric",
+      "linkedin": "https://www.linkedin.com/company/front-range-electric-inc-",
+      "yelp": "https://www.yelp.com/biz/front-range-electric-colorado-springs-2"
+    },
+    "deep_enriched_at": "2026-07-31T12:31:36.836Z"
+  },
+  {
+    "lead_id": "ChIJzQCjShZOE4cRVjLX1WCnudQ",
+    "business_name": "The Electric Way",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://theelectricway.com/%3Futm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_campaign%3DGMB",
+    "email": "",
+    "phone": "+1 719-231-7249",
+    "rating": 5,
+    "review_count": 869,
+    "address": "3431 N Prospect St, Colorado Springs, CO 80907",
+    "place_id": "ChIJzQCjShZOE4cRVjLX1WCnudQ",
+    "subtypes": [
+      "Electrician, Lighting contractor"
+    ],
+    "latitude": 38.8840548,
+    "longitude": -104.8106863,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-31T12:30:32.630Z"
+  },
+  {
+    "lead_id": "ChIJMZ3OJNtaE4cRHmUjQ4lfYqw",
+    "business_name": "DR Electric",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.drelectricllc.com/",
+    "email": "",
+    "phone": "+1 719-232-3047",
+    "rating": 4.9,
+    "review_count": 872,
+    "address": "2275 Waynoka Rd, Colorado Springs, CO 80915",
+    "place_id": "ChIJMZ3OJNtaE4cRHmUjQ4lfYqw",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 38.8689418,
+    "longitude": -104.7160438,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "contact_name": "local building codes",
+    "socials": {
+      "google": "https://maps.google.com/maps",
+      "facebook": "https://www.facebook.com/profile.php?id=100065507709165",
+      "youtube": "https://www.youtube.com/channel/UCncG2Vwr2KPkp1NizXmSYig",
+      "angi": "https://www.angi.com/companylist/us/co/colorado-springs/dr-electric-reviews-7734083.htm"
+    },
+    "deep_enriched_at": "2026-07-31T12:31:31.914Z"
+  },
+  {
+    "lead_id": "ChIJZ6ckbuNOE4cRoNGjV3yIUSQ",
+    "business_name": "Gaddie Electric",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.gaddieelectric.com/",
+    "email": "",
+    "phone": "+1 719-268-9433",
+    "rating": 4.9,
+    "review_count": 325,
+    "address": "5855 N Academy Blvd #255, Colorado Springs, CO 80918",
+    "place_id": "ChIJZ6ckbuNOE4cRoNGjV3yIUSQ",
+    "subtypes": [
+      "Electrician, Electric vehicle charging station contractor, Electrical installation service, Lighting contractor"
+    ],
+    "latitude": 38.915965199999995,
+    "longitude": -104.78493789999999,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "contact_name": "Kristeen Danburg",
+    "socials": {
+      "facebook": "https://www.facebook.com/gaddieelectric",
+      "linkedin": "https://www.linkedin.com/company/gaddie-electric-inc/about",
+      "instagram": "https://www.instagram.com/gaddie_electric",
+      "twitter": "https://twitter.com/GaddieElectric",
+      "youtube": "https://www.youtube.com/channel/UCyJoMBTJnJqODR6PDtqhqkg"
+    },
+    "deep_enriched_at": "2026-07-31T12:31:37.597Z"
+  },
+  {
+    "lead_id": "ChIJ2_MIMTQzE4cR-H1gOj4NPEc",
+    "business_name": "WHITE RHINO ELECTRIC",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.whiterhinoelectric.com/",
+    "email": "ryan@whiterhinoelectric.com",
+    "phone": "+1 719-632-3232",
+    "rating": 4.8,
+    "review_count": 210,
+    "address": "1425 Valley St Ste C, Colorado Springs, CO 80915",
+    "place_id": "ChIJ2_MIMTQzE4cR-H1gOj4NPEc",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 38.851963,
+    "longitude": -104.7133757,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "email_source": "contact-scraper",
+    "contact_name": "LOOKING FOR",
+    "deep_enriched_at": "2026-07-31T12:31:32.970Z"
+  },
+  {
+    "lead_id": "ChIJScB8UuizbIcRZ081AfBtpw4",
+    "business_name": "upGrade electric LLC",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "http://www.upgradeelectricllc.com/",
+    "email": "info@upgradeelectricllc.com",
+    "phone": "+1 719-649-6653",
+    "rating": 5,
+    "review_count": 264,
+    "address": "16115 Gold Creek Dr, Monument, CO 80132",
+    "place_id": "ChIJScB8UuizbIcRZ081AfBtpw4",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 39.067948099999995,
+    "longitude": -104.8358842,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Sergii Smitiukh",
+    "socials": {
+      "instagram": "https://www.instagram.com/upgrade.electricllc",
+      "linkedin": "https://www.linkedin.com/in/upgrade-electric-llc-869929346",
+      "bbb": "https://www.bbb.org/us/co/monument/profile/electrician/upgrade-electric-llc-0785-1000034143"
+    },
+    "deep_enriched_at": "2026-07-31T12:31:34.351Z"
+  },
+  {
+    "lead_id": "ChIJGdxPyGiYyG8ROCwlAxvFGrA",
+    "business_name": "Awesome Home Services",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.awesomeservice.com/%3Futm_source%3Dgooglebusinessprofile%26utm_medium%3Dorganic%26utm_campaign%3Dcoloradospringsgbp",
+    "email": "",
+    "phone": "+1 719-800-7121",
+    "rating": 4.9,
+    "review_count": 1981,
+    "address": "805 N Murray Blvd, Colorado Springs, CO 80915",
+    "place_id": "ChIJGdxPyGiYyG8ROCwlAxvFGrA",
+    "subtypes": [
+      "Electrician, Air conditioning contractor, Air conditioning repair service, Drainage service, HVAC contractor, Heating contractor, Plumber"
+    ],
+    "latitude": 38.8452859,
+    "longitude": -104.74752559999999,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-31T12:30:32.630Z"
+  },
+  {
+    "lead_id": "ChIJL_-ZeyZFE4cRid3JEaeuvBA",
+    "business_name": "Around The Clock Heating, Air Conditioning, Plumbing & Electric",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://callaroundtheclock.com/",
+    "email": "customer@callaroundtheclock.com",
+    "phone": "+1 719-345-6247",
+    "rating": 4.9,
+    "review_count": 1187,
+    "address": "610 1st St, Colorado Springs, CO 80907",
+    "place_id": "ChIJL_-ZeyZFE4cRid3JEaeuvBA",
+    "subtypes": [
+      "Electrician, Air conditioning contractor, Air conditioning repair service, HVAC contractor, Heating contractor, Plumber"
+    ],
+    "latitude": 38.875476299999995,
+    "longitude": -104.81391889999999,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "https://www.facebook.com/p/Callaroundtheclock-61575796465723",
+      "instagram": "https://www.instagram.com/callaroundtheclock"
+    },
+    "deep_enriched_at": "2026-07-31T12:31:38.265Z"
+  },
+  {
+    "lead_id": "ChIJv6vDh8lPE4cRyspf9iDASEM",
+    "business_name": "One Source Home Service",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.onesourcehomeservice.com/%3Futm_source%3Dgbp%26utm_medium%3Dorganic%26utm_campaign%3DGBP-OneSource-Interpark",
+    "email": "",
+    "phone": "+1 719-792-8021",
+    "rating": 4.8,
+    "review_count": 1064,
+    "address": "3740 Interpark Dr, Colorado Springs, CO 80907",
+    "place_id": "ChIJv6vDh8lPE4cRyspf9iDASEM",
+    "subtypes": [
+      "Electrician, Air conditioning contractor, Air conditioning repair service, Air duct cleaning service, Electrical installation service, HVAC contractor, Heating contractor, Plumber"
+    ],
+    "latitude": 38.885189,
+    "longitude": -104.831234,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-31T12:30:32.630Z"
+  },
+  {
+    "lead_id": "ChIJf74h3mZGE4cRYd2hcStAPSo",
+    "business_name": "Peak Home Performance",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://gowithpeak.com/%3Futm_source%3Dgoogle-gbp%26utm_medium%3Dorganic%26utm_campaign%3D*357*peak-home-colorado-springs",
+    "email": "",
+    "phone": "+1 719-358-6992",
+    "rating": 4.8,
+    "review_count": 4156,
+    "address": "1125 Newport Rd, Colorado Springs, CO 80916",
+    "place_id": "ChIJf74h3mZGE4cRYd2hcStAPSo",
+    "subtypes": [
+      "HVAC contractor, Air conditioning contractor, Air conditioning repair service, Air conditioning system supplier, Furnace repair service, Electric generator shop, Heating contractor"
+    ],
+    "latitude": 38.815014,
+    "longitude": -104.7276552,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-31T12:30:32.630Z"
+  },
+  {
+    "lead_id": "ChIJV7LSIPOPbIcRJVNX_bPNO4s",
+    "business_name": "The Electricians",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.theelectriciansco.com/%3Futm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_campaign%3Dgbp",
+    "email": "",
+    "phone": "+1 720-633-5937",
+    "rating": 4.9,
+    "review_count": 367,
+    "address": "7076 S Alton Way Ste H-200, Centennial, CO 80112",
+    "place_id": "ChIJV7LSIPOPbIcRJVNX_bPNO4s",
+    "subtypes": [
+      "Electrician, Electric vehicle charging station contractor, Electrical engineer, Electrical installation service, Electric generator shop"
+    ],
+    "latitude": 39.5884298,
+    "longitude": -104.8830606,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-31T12:30:32.630Z"
+  },
+  {
+    "lead_id": "ChIJbWlkmnBPE4cREbfWwrOB_Bo",
+    "business_name": "Comfort By Design",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.mycomfortbydesign.com/",
+    "email": "",
+    "phone": "+1 719-733-9640",
+    "rating": 4.9,
+    "review_count": 382,
+    "address": "959 E Fillmore St, Colorado Springs, CO 80907",
+    "place_id": "ChIJbWlkmnBPE4cREbfWwrOB_Bo",
+    "subtypes": [
+      "HVAC contractor, Air conditioning contractor, Air conditioning repair service, Furnace repair service, Heating contractor, Heating equipment supplier"
+    ],
+    "latitude": 38.8739412,
+    "longitude": -104.8079636,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "socials": {
+      "facebook": "https://www.facebook.com/MyComfortByDesign",
+      "instagram": "https://www.instagram.com/_comfort_by_design_",
+      "twitter": "https://x.com/MyComfortDesign",
+      "linkedin": "https://www.linkedin.com/company/comfort-by-design-co",
+      "youtube": "https://www.youtube.com/channel/UCrL8PnX1NU8i2qXbqTPJQFw",
+      "yelp": "https://www.yelp.com/biz/comfort-by-design-colorado-springs",
+      "bbb": "https://www.bbb.org/us/co/colorado-springs/profile/heating-and-air-conditioning/comfort-by-design-0785-87383401",
+      "angi": "https://www.angi.com/companylist/us/co/colorado-springs/comfort-by-design-reviews-9653355.htm"
+    },
+    "deep_enriched_at": "2026-07-31T12:31:44.842Z"
+  },
+  {
+    "lead_id": "ChIJo4d55pBPE4cR4qsuPWi4CFA",
+    "business_name": "Furnace World",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.furnaceworld.com/",
+    "email": "dispatch@furnaceworld.com",
+    "phone": "+1 719-473-9276",
+    "rating": 4.9,
+    "review_count": 754,
+    "address": "3348 N El Paso St, Colorado Springs, CO 80907",
+    "place_id": "ChIJo4d55pBPE4cR4qsuPWi4CFA",
+    "subtypes": [
+      "HVAC contractor, Air conditioning contractor, Heating contractor"
+    ],
+    "latitude": 38.8802836,
+    "longitude": -104.8131626,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-31T12:30:32.631Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Lisa standing with",
+    "socials": {
+      "bbb": "https://www.bbb.org/us/co/colorado-springs/profile/heating-and-air-conditioning/furnace-world-0785-87346849",
+      "facebook": "https://www.facebook.com/FurnaceWorld",
+      "twitter": "https://twitter.com/furnaceworld"
+    },
+    "deep_enriched_at": "2026-07-31T12:31:43.133Z"
+  },
+  {
+    "lead_id": "ChIJc9RKoPlPE4cRqkl4sJ_jBeQ",
+    "business_name": "Squeaks Services Plumbing, Heating, & Air",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://squeaksservices.com/service-area/colorado-springs-co/%3Futm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_campaign%3Dgmb",
+    "email": "",
+    "phone": "+1 303-280-5765",
+    "rating": 4.9,
+    "review_count": 215,
+    "address": "3120 Beacon St, Colorado Springs, CO 80907",
+    "place_id": "ChIJc9RKoPlPE4cRqkl4sJ_jBeQ",
+    "subtypes": [
+      "Electrician, Air conditioning contractor, Air conditioning repair service, Plumber, Heating contractor, HVAC contractor"
+    ],
+    "latitude": 38.8770783,
+    "longitude": -104.8273784,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-31T12:30:32.631Z"
+  },
+  {
+    "lead_id": "ChIJE9X9FL5FE4cR2cfmatLPrqw",
+    "business_name": "Calibrating Air Heating & Cooling, Inc.",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://calibratingair.com/",
+    "email": "info@calibratingair.com",
+    "phone": "+1 719-491-2971",
+    "rating": 4.9,
+    "review_count": 629,
+    "address": "4575 Galley Rd #100b, Colorado Springs, CO 80915",
+    "place_id": "ChIJE9X9FL5FE4cR2cfmatLPrqw",
+    "subtypes": [
+      "HVAC contractor, Air conditioning contractor, Air conditioning repair service, Furnace repair service, Heating contractor"
+    ],
+    "latitude": 38.8468271,
+    "longitude": -104.7428185,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-31T12:30:32.631Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "https://www.facebook.com/CalibratingAir",
+      "twitter": "https://twitter.com/calibratingair",
+      "instagram": "https://www.instagram.com/calibrating_air",
+      "google": "https://maps.google.com/maps"
+    },
+    "deep_enriched_at": "2026-07-31T12:31:37.646Z"
+  },
+  {
+    "lead_id": "ChIJEUA1XtFFE4cRwILvUE6_x00",
+    "business_name": "Cornerstone Auto Repair",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://cornerstoneauto.repair/",
+    "email": "",
+    "phone": "+1 719-596-1516",
+    "rating": 4.8,
+    "review_count": 316,
+    "address": "3747 E St Vrain St, Colorado Springs, CO 80909",
+    "place_id": "ChIJEUA1XtFFE4cRwILvUE6_x00",
+    "subtypes": [
+      "Auto electrical service, Auto repair shop"
+    ],
+    "latitude": 38.838392999999996,
+    "longitude": -104.7589768,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-31T12:30:32.631Z",
+    "contact_name": "Bola Shonoiki",
+    "deep_enriched_at": "2026-07-31T12:31:49.022Z"
+  },
+  {
+    "lead_id": "ChIJb_T3Tu1PE4cRY8IPCK8Ywjs",
+    "business_name": "Advantage Heating and Cooling",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.advantageheatingcs.com/%3Futm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_campaign%3Dgbp",
+    "email": "",
+    "phone": "+1 719-493-9594",
+    "rating": 4.9,
+    "review_count": 259,
+    "address": "3286 N El Paso St, Colorado Springs, CO 80907",
+    "place_id": "ChIJb_T3Tu1PE4cRY8IPCK8Ywjs",
+    "subtypes": [
+      "HVAC contractor, Air conditioning contractor, Air conditioning repair service, Furnace repair service, Heating contractor"
+    ],
+    "latitude": 38.879219299999995,
+    "longitude": -104.8132682,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-07-31T12:30:32.631Z"
+  },
+  {
+    "lead_id": "ChIJJc79SclEE4cRHOU8vAlIZLA",
+    "business_name": "American Electrician",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://theamericanelectrician.com/",
+    "email": "",
+    "phone": "+1 719-642-6987",
+    "rating": 4.6,
+    "review_count": 740,
+    "address": "3407 N Prospect St, Colorado Springs, CO 80907",
+    "place_id": "ChIJJc79SclEE4cRHOU8vAlIZLA",
+    "subtypes": [
+      "Electrician, Solar energy company"
+    ],
+    "latitude": 38.8832281,
+    "longitude": -104.8105501,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "contact_name": "Should Know",
+    "socials": {
+      "facebook": "http://www.facebook.com/2008/fbml",
+      "yelp": "https://www.yelp.com/biz/american-electrician-colorado-springs-5",
+      "linkedin": "https://www.linkedin.com/in/american-electrician-3b9a9769",
+      "angi": "https://www.angi.com/companylist/us/co/colorado-springs/american-electrician-reviews-1.htm",
+      "bbb": "https://www.bbb.org/us/co/centennial/profile/electrician/american-electrician-1296-90244972",
+      "nextdoor": "https://nextdoor.com/pages/american-electrician-colorado-springs-co",
+      "google": "http://maps.google.com"
+    },
+    "deep_enriched_at": "2026-07-31T12:31:39.341Z"
+  },
+  {
+    "lead_id": "ChIJudQHDpxFE4cRXr3yxavBshI",
+    "business_name": "Celtic Electric",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "http://www.celticcolorado.com/",
+    "email": "info@celticcolorado.com",
+    "phone": "+1 719-659-4715",
+    "rating": 5,
+    "review_count": 106,
+    "address": "415 Juanita St, Colorado Springs, CO 80909",
+    "place_id": "ChIJudQHDpxFE4cRXr3yxavBshI",
+    "subtypes": [
+      "Electrician, Electric vehicle charging station contractor, Electrical installation service"
+    ],
+    "latitude": 38.8380571,
+    "longitude": -104.7743103,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "email_source": "contact-scraper",
+    "contact_name": "honest craftsmanship and",
+    "deep_enriched_at": "2026-07-31T12:31:39.999Z"
+  },
+  {
+    "lead_id": "ChIJ_QsNjvk_E4cReXtMpD-NgMA",
+    "business_name": "A&E Electric",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://aeelectricpro.com/",
+    "email": "",
+    "phone": "+1 719-203-1533",
+    "rating": 4.9,
+    "review_count": 136,
+    "address": "9427 Tranquil Morning Terrace, Colorado Springs, CO 80925",
+    "place_id": "ChIJ_QsNjvk_E4cReXtMpD-NgMA",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 38.77406,
+    "longitude": -104.64927619999999,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "socials": {
+      "facebook": "https://www.facebook.com/aeelectricpro",
+      "angi": "https://www.homeadvisor.com/ratings/embed/iframe/114551149",
+      "google": "https://maps.google.com/maps"
+    },
+    "deep_enriched_at": "2026-07-31T12:31:44.503Z"
+  },
+  {
+    "lead_id": "ChIJXTPMVZBPE4cRDkIh8JqVmKs",
+    "business_name": "BudCo Electric",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "http://www.budcoelectric.com/",
+    "email": "khatodiasahil3@gmail.com",
+    "phone": "+1 719-302-2850",
+    "rating": 4.9,
+    "review_count": 103,
+    "address": "3336 N El Paso St, Colorado Springs, CO 80907",
+    "place_id": "ChIJXTPMVZBPE4cRDkIh8JqVmKs",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 38.879971,
+    "longitude": -104.81310309999999,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "email_source": "contact-scraper",
+    "contact_name": "modern load demands",
+    "deep_enriched_at": "2026-07-31T12:31:41.466Z"
+  },
+  {
+    "lead_id": "ChIJJSQig2lHE4cRsPaMBx4uQbM",
+    "business_name": "Electrical Pros of Colorado LLC",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "http://www.electricalprosofcolorado.com/",
+    "email": "",
+    "phone": "+1 719-453-5864",
+    "rating": 5,
+    "review_count": 79,
+    "address": "2910 N Powers Blvd #454, Colorado Springs, CO 80922",
+    "place_id": "ChIJJSQig2lHE4cRsPaMBx4uQbM",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 38.874374599999996,
+    "longitude": -104.7222216,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-31T12:30:32.630Z"
+  },
+  {
+    "lead_id": "ChIJ05V9ohhFE4cRKaDMKlSjXgE",
+    "business_name": "CUSI Electric",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://cusielectric.com/",
+    "email": "",
+    "phone": "+1 719-428-8245",
+    "rating": 4.9,
+    "review_count": 114,
+    "address": "1120 W Moreno Ave, Colorado Springs, CO 80905",
+    "place_id": "ChIJ05V9ohhFE4cRKaDMKlSjXgE",
+    "subtypes": [
+      "Electrician, Electrical installation service, Lighting contractor"
+    ],
+    "latitude": 38.8262864,
+    "longitude": -104.8469399,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-31T12:30:32.630Z"
+  },
+  {
+    "lead_id": "ChIJpbgjjNFFE4cRYSZlMUKCRA4",
+    "business_name": "Lenz Electric Inc",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "http://lenzelectricinc.com/",
+    "email": "generac@lenz-electric.com",
+    "phone": "+1 719-573-2700",
+    "rating": 4.8,
+    "review_count": 87,
+    "address": "3514 E St Vrain St A, Colorado Springs, CO 80909",
+    "place_id": "ChIJpbgjjNFFE4cRYSZlMUKCRA4",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 38.8386699,
+    "longitude": -104.7620434,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "email_source": "contact-scraper",
+    "contact_name": "warranty conditions",
+    "socials": {
+      "facebook": "https://www.facebook.com/Lenz-Electric-Inc-167438930089243"
+    },
+    "deep_enriched_at": "2026-07-31T12:31:44.179Z"
+  },
+  {
+    "lead_id": "ChIJW6uO3f5GE4cRgS3aJzg1jR4",
+    "business_name": "WireNut Home Services",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://thewirenut.com/%3Futm_source%3Dgoogle%26utm_medium%3Dgbp-col%26se_campaign%3DGBP-Colorado%2520Springs",
+    "email": "",
+    "phone": "+1 719-241-1834",
+    "rating": 4.7,
+    "review_count": 7018,
+    "address": "525 Babcock Rd, Colorado Springs, CO 80915",
+    "place_id": "ChIJW6uO3f5GE4cRgS3aJzg1jR4",
+    "subtypes": [
+      "Electrician, Air conditioning repair service, Contractor, Air conditioning contractor, Furnace repair service, Heating contractor, HVAC contractor, Plumber"
+    ],
+    "latitude": 38.8415311,
+    "longitude": -104.7289042,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-31T12:30:32.630Z"
+  },
+  {
+    "lead_id": "ChIJeT20ofM3E4cRQDQrPnj1jbo",
+    "business_name": "Weatherby Electric",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "http://www.weatherbyelectric.com/",
+    "email": "",
+    "phone": "+1 719-482-4756",
+    "rating": 4.9,
+    "review_count": 110,
+    "address": "12243 St Annes Rd, Peyton, CO 80831",
+    "place_id": "ChIJeT20ofM3E4cRQDQrPnj1jbo",
+    "subtypes": [
+      "Electrical installation service"
+    ],
+    "latitude": 38.9644319,
+    "longitude": -104.5993336,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "contact_name": "to provide you",
+    "deep_enriched_at": "2026-07-31T12:31:50.076Z"
+  },
+  {
+    "lead_id": "ChIJhf6yaYxRE4cRqcuk3ul1wfY",
+    "business_name": "SoCo Heating and Cooling",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.socoheatingandcooling.com/service-areas/colorado-springs%3Futm_source%3Dgoogle-gbp%26utm_medium%3Dorganic%26utm_campaign%3D*356*soco-heating-colorado-springs",
+    "email": "",
+    "phone": "+1 719-551-2232",
+    "rating": 4.7,
+    "review_count": 526,
+    "address": "3013 N Hancock Ave, Colorado Springs, CO 80907",
+    "place_id": "ChIJhf6yaYxRE4cRqcuk3ul1wfY",
+    "subtypes": [
+      "HVAC contractor, Air conditioning contractor, Air conditioning repair service, Electric generator shop"
+    ],
+    "latitude": 38.8746332,
+    "longitude": -104.8031433,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-31T12:30:32.631Z"
+  },
+  {
+    "lead_id": "ChIJOUJioZ1FE4cRWRnFtlFlecY",
+    "business_name": "Woods Contracting",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "http://wireworkscoinc.com/",
+    "email": "",
+    "phone": "+1 719-492-6955",
+    "rating": 5,
+    "review_count": 91,
+    "address": "685 Citadel Dr E ste 410, Colorado Springs, CO 80909",
+    "place_id": "ChIJOUJioZ1FE4cRWRnFtlFlecY",
+    "subtypes": [
+      "Electrician, Bathroom remodeler, General contractor, Handyman/Handywoman/Handyperson, Home builder, Kitchen remodeler, Remodeler"
+    ],
+    "latitude": 38.842621699999995,
+    "longitude": -104.7584098,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-07-31T12:30:32.631Z",
+    "contact_name": "very pleased with",
+    "socials": {
+      "google": "https://maps.google.com",
+      "youtube": "https://www.youtube.com/@WoodsContracting/videos",
+      "bbb": "https://www.bbb.org/us/co/canon-city/profile/general-contractor/woods-contracting-0785-87349861"
+    },
+    "deep_enriched_at": "2026-07-31T12:31:50.215Z"
+  },
+  {
+    "lead_id": "ChIJ0ZViAWtFE4cROBPk-j4P8Hk",
+    "business_name": "Apache Electric & Maintenance, Inc.",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "http://www.apacheelec.com/",
+    "email": "office@apacheelec.com",
+    "phone": "+1 719-208-4161",
+    "rating": 4.7,
+    "review_count": 120,
+    "address": "553 E Cimarron St, Colorado Springs, CO 80903",
+    "place_id": "ChIJ0ZViAWtFE4cROBPk-j4P8Hk",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 38.8264517,
+    "longitude": -104.8136937,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "email_source": "contact-scraper",
+    "contact_name": "WSI Development",
+    "socials": {
+      "facebook": "https://www.facebook.com/apacheelec",
+      "linkedin": "https://www.linkedin.com/in/fred-ramirez-420b209a"
+    },
+    "deep_enriched_at": "2026-07-31T12:31:47.637Z"
+  },
+  {
+    "lead_id": "ChIJWxuE2NtNE4cR9t9aimqFU80",
+    "business_name": "The Speedy Electricians of Colorado Springs",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.thespeedyelectricians.com/colorado-springs/",
+    "email": "coloradosprings@thespeedyelectricians.com",
+    "phone": "+1 719-306-0500",
+    "rating": 4.9,
+    "review_count": 33,
+    "address": "2435 Research Pkwy, Colorado Springs, CO 80920",
+    "place_id": "ChIJWxuE2NtNE4cR9t9aimqFU80",
+    "subtypes": [
+      "Electrical repair shop"
+    ],
+    "latitude": 38.958871099999996,
+    "longitude": -104.78395499999999,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "email_source": "contact-scraper",
+    "contact_name": "not an expert",
+    "socials": {
+      "facebook": "https://www.facebook.com/TheSpeedyElectricians",
+      "twitter": "https://twitter.com/TheSpeedyElect",
+      "youtube": "https://www.youtube.com/channel/UCspXfCqyFhjjeaauYIDO1xQ",
+      "linkedin": "https://www.linkedin.com/company/the-speedy-electricians",
+      "google": "https://maps.google.com/maps"
+    },
+    "deep_enriched_at": "2026-07-31T12:31:46.598Z"
+  },
+  {
+    "lead_id": "ChIJh293zJkkNS8R6nzktNttpik",
+    "business_name": "Super B Electric LLC",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.superbelectricllc.com/",
+    "email": "superbelectricllc@gmail.com",
+    "phone": "+1 719-669-9628",
+    "rating": 5,
+    "review_count": 27,
+    "address": "6410 Pawnee Cir, Colorado Springs, CO 80915",
+    "place_id": "ChIJh293zJkkNS8R6nzktNttpik",
+    "subtypes": [
+      "Electrical installation service, Electrician, Electric generator shop, Solar energy system service"
+    ],
+    "latitude": 38.856331,
+    "longitude": -104.7090375,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "email_source": "contact-scraper",
+    "contact_name": "back to complete",
+    "socials": {
+      "facebook": "https://www.facebook.com/SuperBElectricLLC",
+      "linkedin": "https://www.linkedin.com/in/derik-farley-269586120",
+      "instagram": "https://www.instagram.com/deriksuperbelectric",
+      "youtube": "https://www.youtube.com/@SuperBElectricLLC",
+      "nextdoor": "https://nextdoor.com/page/super-b-electric-llc"
+    },
+    "deep_enriched_at": "2026-07-31T12:31:47.657Z"
+  },
+  {
+    "lead_id": "ChIJlaPfOBamSAIRscq35f3YiJ8",
+    "business_name": "JRD Electric",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.jrdelectrical.com/",
+    "email": "office@jrdelectrical.com",
+    "phone": "+1 719-649-4691",
+    "rating": 5,
+    "review_count": 70,
+    "address": "2816 Willamette Pl D, Colorado Springs, CO 80909",
+    "place_id": "ChIJlaPfOBamSAIRscq35f3YiJ8",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 38.841383,
+    "longitude": -104.7749513,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Trey Kimberlain",
+    "socials": {
+      "facebook": "https://www.facebook.com/people/JRD-Electric/100031192676137",
+      "angi": "https://www.angi.com/companylist/us/co/colorado-springs/jrd-electric-reviews-1.htm",
+      "bbb": "https://www.bbb.org/us/co/colorado-springs/profile/electrical-contractors/jrd-electric-0785-1000031082"
+    },
+    "deep_enriched_at": "2026-07-31T12:31:54.310Z"
+  },
+  {
+    "lead_id": "ChIJU_BoQSNPE4cR675XVkDXRcU",
+    "business_name": "Mountain Pro Electric",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://mountainproelectric.com/%3Futm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_campaign%3Dgbp",
+    "email": "",
+    "phone": "+1 719-359-9055",
+    "rating": 5,
+    "review_count": 26,
+    "address": "7215 E U.S. Hwy 24 #115, Colorado Springs, CO 80915",
+    "place_id": "ChIJU_BoQSNPE4cR675XVkDXRcU",
+    "subtypes": [
+      "Electrician, Electrical engineer, Electrical installation service, Electrical repair shop, Lighting contractor"
+    ],
+    "latitude": 38.8403414,
+    "longitude": -104.6948888,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-07-31T12:30:32.630Z"
+  },
+  {
+    "lead_id": "ChIJJ2iN593VWKMRNoZ1TTAfqjw",
+    "business_name": "FREEDOM Electric & Lighting, LLC",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://freedomelectriclighting.com/",
+    "email": "freedom.electric2023@gmail.com",
+    "phone": "+1 719-437-7802",
+    "rating": 4.9,
+    "review_count": 61,
+    "address": "10920 Redington Dr, Peyton, CO 80831",
+    "place_id": "ChIJJ2iN593VWKMRNoZ1TTAfqjw",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 38.9713183,
+    "longitude": -104.6251025,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Joe Wolff",
+    "socials": {
+      "facebook": "https://www.facebook.com/profile.php?id=100091345661413"
+    },
+    "deep_enriched_at": "2026-07-31T12:31:48.289Z"
+  },
+  {
+    "lead_id": "ChIJy0lujvxFE4cRTtxg7FcZagA",
+    "business_name": "Advanced Electric Group",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "http://www.advancedelectricgroup.com/",
+    "email": "info@advancedelectricgroup.com",
+    "phone": "+1 719-694-2120",
+    "rating": 5,
+    "review_count": 50,
+    "address": "7225 US-24 Ste 125, Colorado Springs, CO 80915",
+    "place_id": "ChIJy0lujvxFE4cRTtxg7FcZagA",
+    "subtypes": [
+      "Electrician, Contractor, Electrical installation service"
+    ],
+    "latitude": 38.8411422,
+    "longitude": -104.6926285,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "email_source": "contact-scraper",
+    "contact_name": "because he was",
+    "socials": {
+      "facebook": "https://www.facebook.com/advancedelectricgroup",
+      "instagram": "http://instagram.com/advancedelectricgroup",
+      "tiktok": "https://www.tiktok.com/@advancedelectricgroup"
+    },
+    "deep_enriched_at": "2026-07-31T12:31:54.937Z"
+  },
+  {
+    "lead_id": "ChIJzb8v_hxME4cRMWsjCIfBDX0",
+    "business_name": "Reliant Electric",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "http://www.reliantelectriccolorado.com/",
+    "email": "",
+    "phone": "+1 719-244-0513",
+    "rating": 5,
+    "review_count": 26,
+    "address": "2590 Reveille Dr, Colorado Springs, CO 80921",
+    "place_id": "ChIJzb8v_hxME4cRMWsjCIfBDX0",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 39.0655158,
+    "longitude": -104.7808937,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-07-31T12:30:32.630Z"
+  },
+  {
+    "lead_id": "ChIJ17Td7E5GE4cRk6ij3mvacl4",
+    "business_name": "Blazer Electric Supply Company Colorado Springs",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.buyblazer.com/",
+    "email": "",
+    "phone": "+1 719-596-1333",
+    "rating": 4.6,
+    "review_count": 98,
+    "address": "6125 Omaha Blvd, Colorado Springs, CO 80915",
+    "place_id": "ChIJ17Td7E5GE4cRk6ij3mvacl4",
+    "subtypes": [
+      "Electrical supply store, Construction material wholesaler"
+    ],
+    "latitude": 38.8532076,
+    "longitude": -104.71309319999999,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "contact_name": "of that location",
+    "socials": {
+      "facebook": "https://www.facebook.com/pages/Blazer-Electric-Supply-Company-20/205141586146"
+    },
+    "deep_enriched_at": "2026-07-31T12:31:56.104Z"
+  },
+  {
+    "lead_id": "ChIJqSsXja2crW0RBYK_j7r32F8",
+    "business_name": "Elevated Electric",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://elevatedelectric.co/",
+    "email": "",
+    "phone": "+1 719-354-3704",
+    "rating": 4.9,
+    "review_count": 74,
+    "address": "41 Circle Dr, Florissant, CO 80816",
+    "place_id": "ChIJqSsXja2crW0RBYK_j7r32F8",
+    "subtypes": [
+      "Electrician, Electrical installation service"
+    ],
+    "latitude": 38.9463741,
+    "longitude": -105.28551859999999,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "contact_name": "Dustin Dewitt",
+    "socials": {
+      "facebook": "https://www.facebook.com/p/Elevated-Electric-100082991067662",
+      "nextdoor": "https://nextdoor.com/pages/elevated-electric-florissant-co",
+      "google": "https://maps.google.com/maps"
+    },
+    "deep_enriched_at": "2026-07-31T12:31:55.954Z"
+  },
+  {
+    "lead_id": "ChIJs0tUdkVGE4cRXjMq2Ah8YXs",
+    "business_name": "Energy Resource Center",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "http://www.erc-co.org/",
+    "email": "info@erc-co.org",
+    "phone": "+1 719-591-0772",
+    "rating": 4.8,
+    "review_count": 37,
+    "address": "540 E Cimarron St, Colorado Springs, CO 80903",
+    "place_id": "ChIJs0tUdkVGE4cRXjMq2Ah8YXs",
+    "subtypes": [
+      "Non-profit organization, HVAC contractor, Insulation contractor"
+    ],
+    "latitude": 38.827179,
+    "longitude": -104.8142354,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "https://www.facebook.com/EnergyResourceCenter",
+      "twitter": "https://twitter.com/energyrescenter",
+      "instagram": "https://www.instagram.com/energyresourcecenter",
+      "linkedin": "https://www.linkedin.com/company/energy-resource-center---colorado",
+      "youtube": "https://www.youtube.com/channel/UCwfrHy8wzdZl4u3C1mWDvfA",
+      "bbb": "https://www.bbb.org/us/co/loveland/profile/energy-management-consultant/energy-resource-center-0805-46101606"
+    },
+    "deep_enriched_at": "2026-07-31T12:32:03.703Z"
+  },
+  {
+    "lead_id": "ChIJd66xV9pRE4cR9O_Kzg-d3ao",
+    "business_name": "SunPower®",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://us.sunpower.com/",
+    "email": "",
+    "phone": "+1 800-377-4480",
+    "rating": 4.3,
+    "review_count": 519,
+    "address": "5526 N Academy Blvd #206, Colorado Springs, CO 80918",
+    "place_id": "ChIJd66xV9pRE4cR9O_Kzg-d3ao",
+    "subtypes": [
+      "Solar energy company, Environment renewable natural resources, Solar energy system service, Solar energy equipment supplier"
+    ],
+    "latitude": 38.906815,
+    "longitude": -104.78421,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-07-31T12:30:32.631Z",
+    "contact_name": "and Chairman of",
+    "socials": {
+      "facebook": "https://www.facebook.com/sunpower",
+      "twitter": "https://x.com/sunpower",
+      "linkedin": "https://www.linkedin.com/company/sunpower-corporation",
+      "youtube": "https://www.youtube.com/user/sunpower",
+      "instagram": "https://www.instagram.com/sunpower",
+      "bbb": "https://www.bbb.org/us/ut/orem/profile/solar-energy-contractors/sunpower-1166-90049414"
+    },
+    "deep_enriched_at": "2026-07-31T12:31:58.653Z"
+  },
+  {
+    "lead_id": "ChIJhxQyUTZAE4cRe7_D8iEyqnA",
+    "business_name": "Valley Electric",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.valleyelectric.co/",
+    "email": "valleyelectrics@gmail.com",
+    "phone": "+1 719-930-6022",
+    "rating": 4.6,
+    "review_count": 45,
+    "address": "3430 Quail Lake Rd #153, Colorado Springs, CO 80906",
+    "place_id": "ChIJhxQyUTZAE4cRe7_D8iEyqnA",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 38.7836948,
+    "longitude": -104.808717,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "https://www.facebook.com/WordPresscom"
+    },
+    "deep_enriched_at": "2026-07-31T12:32:00.552Z"
+  },
+  {
+    "lead_id": "ChIJbwbpuR1GE4cRn1jw-ttmhIQ",
+    "business_name": "Rocky Mountain Electric",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "http://rockymountainelectric.org/",
+    "email": "jason@rockymountainelectric.org",
+    "phone": "+1 719-229-6633",
+    "rating": 4.1,
+    "review_count": 76,
+    "address": "3508 E St Vrain St, Colorado Springs, CO 80909",
+    "place_id": "ChIJbwbpuR1GE4cRn1jw-ttmhIQ",
+    "subtypes": [
+      "Electrician, General contractor"
+    ],
+    "latitude": 38.838736499999996,
+    "longitude": -104.76245399999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "email_source": "contact-scraper",
+    "contact_name": "with all of",
+    "socials": {
+      "instagram": "https://www.instagram.com/rockymountainelectric_",
+      "facebook": "https://www.facebook.com/RockyMountainElectric1"
+    },
+    "deep_enriched_at": "2026-07-31T12:31:57.194Z"
+  },
+  {
+    "lead_id": "ChIJ-VutP5BFE4cRMGvfRWwjalQ",
+    "business_name": "Trinity Electric LLC",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "http://www.trinityelectric719.com/",
+    "email": "trinityelectric719@gmail.com",
+    "phone": "+1 719-424-9744",
+    "rating": 5,
+    "review_count": 10,
+    "address": "1306 Margo Ln, Colorado Springs, CO 80909",
+    "place_id": "ChIJ-VutP5BFE4cRMGvfRWwjalQ",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 38.8516895,
+    "longitude": -104.77931819999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "https://www.facebook.com/Trinity-Electric-LLC-102179331841136"
+    },
+    "deep_enriched_at": "2026-07-31T12:32:01.743Z"
+  },
+  {
+    "lead_id": "ChIJKR--QPtIE4cRSpX87bNtB08",
+    "business_name": "Bee Electric LLC",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://b-electric.us/",
+    "email": "",
+    "phone": "+1 719-367-7785",
+    "rating": 4.8,
+    "review_count": 16,
+    "address": "Colorado Springs, CO 80920",
+    "place_id": "ChIJKR--QPtIE4cRSpX87bNtB08",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 38.9648925,
+    "longitude": -104.7550347,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-07-31T12:30:32.630Z"
+  },
+  {
+    "lead_id": "ChIJN2zPwfxFE4cRsIdPzPyGeSI",
+    "business_name": "Independent Electrical Contractors Assoc. - Southern Colorado Chapter",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "http://www.iecscc.org/",
+    "email": "teamiec@iecscc.org",
+    "phone": "+1 719-596-3688",
+    "rating": 4.7,
+    "review_count": 72,
+    "address": "2345 N Academy Blvd, Colorado Springs, CO 80909",
+    "place_id": "ChIJN2zPwfxFE4cRsIdPzPyGeSI",
+    "subtypes": [
+      "Apprenticeship center"
+    ],
+    "latitude": 38.865653,
+    "longitude": -104.75624599999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "https://www.facebook.com/IECSouthernColorado",
+      "twitter": "https://twitter.com/iec_national",
+      "linkedin": "https://www.linkedin.com/school/iec-southern-colorado-chapter"
+    },
+    "deep_enriched_at": "2026-07-31T12:32:02.849Z"
+  },
+  {
+    "lead_id": "ChIJu36faGdGE4cRKQdrWdL2AXE",
+    "business_name": "Ross Electric",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "http://www.rosselectric.com/",
+    "email": "info@rosselectric.com",
+    "phone": "+1 719-495-4003",
+    "rating": 4.8,
+    "review_count": 11,
+    "address": "1555 Paonia St, Colorado Springs, CO 80915",
+    "place_id": "ChIJu36faGdGE4cRKQdrWdL2AXE",
+    "subtypes": [
+      "General contractor"
+    ],
+    "latitude": 38.854337,
+    "longitude": -104.7150449,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Mark Wiens",
+    "deep_enriched_at": "2026-07-31T12:32:02.708Z"
+  },
+  {
+    "lead_id": "ChIJhfFcz9_ZggMRA9KWSQPxT8M",
+    "business_name": "Sparkz Electrical",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://sparkzelectrical.com/",
+    "email": "",
+    "phone": "+1 719-888-0446",
+    "rating": 5,
+    "review_count": 23,
+    "address": "102 S Tejon St #1100, Colorado Springs, CO 80903",
+    "place_id": "ChIJhfFcz9_ZggMRA9KWSQPxT8M",
+    "subtypes": [
+      "Electrician, Electrical installation service"
+    ],
+    "latitude": 38.8321721,
+    "longitude": -104.82388379999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "contact_name": "to put up",
+    "deep_enriched_at": "2026-07-31T12:32:08.723Z"
+  },
+  {
+    "lead_id": "ChIJq16_69ERjY4RLV9Ih6JtQgo",
+    "business_name": "The way: Electrical solutions",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.thewayelectricalllc.com/",
+    "email": "dgeorge@thewayelectricalsolutions.com",
+    "phone": "+1 719-492-9009",
+    "rating": 5,
+    "review_count": 17,
+    "address": "380 Crestone Ln, Colorado Springs, CO 80905",
+    "place_id": "ChIJq16_69ERjY4RLV9Ih6JtQgo",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 38.8145125,
+    "longitude": -104.8347433,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "email_source": "contact-scraper",
+    "deep_enriched_at": "2026-07-31T12:32:06.045Z"
+  },
+  {
+    "lead_id": "ChIJv07bslVRa4cRISo_6JGdNag",
+    "business_name": "Ace Electric",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "http://www.coloradoaceelectric.com/",
+    "email": "",
+    "phone": "+1 719-686-0043",
+    "rating": 4.7,
+    "review_count": 56,
+    "address": "420 E Pikes Peak Ave, Woodland Park, CO 80863",
+    "place_id": "ChIJv07bslVRa4cRISo_6JGdNag",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 38.992506999999996,
+    "longitude": -105.0486409,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "socials": {
+      "facebook": "http://www.facebook.com/2008/fbml"
+    },
+    "deep_enriched_at": "2026-07-31T12:32:03.319Z"
+  },
+  {
+    "lead_id": "ChIJk12XP8lPE4cRjo6wB_yueI0",
+    "business_name": "Peak Lighting",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://peak-lighting.com/",
+    "email": "",
+    "phone": "+1 719-531-5200",
+    "rating": 4.2,
+    "review_count": 91,
+    "address": "4315 Sinton Rd, Colorado Springs, CO 80907",
+    "place_id": "ChIJk12XP8lPE4cRjo6wB_yueI0",
+    "subtypes": [
+      "Lighting store, Light bulb supplier"
+    ],
+    "latitude": 38.8952866,
+    "longitude": -104.829644,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-07-31T12:30:32.630Z"
+  },
+  {
+    "lead_id": "ChIJdSlLm8NaE4cRdZLP1qOOq5k",
+    "business_name": "Spectrum Lighting",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://spectrumlight.com/%3Futm_source%3Dgbp%26utm_medium%3Dorganic%26utm_campaign%3Dgbp-listing",
+    "email": "",
+    "phone": "+1 719-520-5167",
+    "rating": 4.7,
+    "review_count": 59,
+    "address": "2255 Spectra Dr, Colorado Springs, CO 80904",
+    "place_id": "ChIJdSlLm8NaE4cRdZLP1qOOq5k",
+    "subtypes": [
+      "Electrician, Ceiling supplier, Sign shop"
+    ],
+    "latitude": 38.8328041,
+    "longitude": -104.86346429999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-07-31T12:30:32.631Z"
+  },
+  {
+    "lead_id": "ChIJb11x7LhaE4cR322iA-Bml_k",
+    "business_name": "IBEW Local 113",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "http://www.ibew113.com/",
+    "email": "info@ibew113.com",
+    "phone": "+1 719-633-3872",
+    "rating": 4.7,
+    "review_count": 25,
+    "address": "2150 Naegele Rd, Colorado Springs, CO 80904",
+    "place_id": "ChIJb11x7LhaE4cR322iA-Bml_k",
+    "subtypes": [
+      "Labor union"
+    ],
+    "latitude": 38.842078199999996,
+    "longitude": -104.86117639999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-07-31T12:30:32.631Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Jeff Pressel",
+    "socials": {
+      "facebook": "https://www.facebook.com/ibew113",
+      "instagram": "https://www.instagram.com/ibew113",
+      "twitter": "https://twitter.com/ibew113",
+      "youtube": "https://www.youtube.com/@ibew113"
+    },
+    "deep_enriched_at": "2026-07-31T12:32:09.573Z"
+  },
+  {
+    "lead_id": "ChIJMa8OXI5PE4cRkayXIhjeowo",
+    "business_name": "KW Restoration",
+    "trade": "electrician",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.coloradowaterrestoration.com/",
+    "email": "",
+    "phone": "+1 719-867-4299",
+    "rating": 4.7,
+    "review_count": 42,
+    "address": "1312 Pecan St, Colorado Springs, CO 80904",
+    "place_id": "ChIJMa8OXI5PE4cRkayXIhjeowo",
+    "subtypes": [
+      "Water damage restoration service, Fire damage restoration service"
+    ],
+    "latitude": 38.835205099999996,
+    "longitude": -104.8607797,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-07-31T12:30:32.631Z",
+    "contact_name": "for excellence in",
+    "deep_enriched_at": "2026-07-31T12:32:09.589Z"
+  }
+]

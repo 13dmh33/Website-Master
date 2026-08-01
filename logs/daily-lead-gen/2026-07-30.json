@@ -1,0 +1,139 @@
+{
+  "date": "2026-07-30",
+  "city": "Denver, CO",
+  "trade": "roofer",
+  "stages": {
+    "scout": {
+      "newLeads": 184,
+      "exitCode": 0
+    },
+    "scrape": {
+      "emailsFound": 38
+    },
+    "diagnoser": {
+      "briefs": 374
+    },
+    "checker": {
+      "approved": 296
+    },
+    "sheetLog": {
+      "rows": 296,
+      "exitCode": 0
+    }
+  },
+  "readyToSend": 14,
+  "sentToday": 27,
+  "batch": {
+    "date": "2026-07-30",
+    "status": "pending",
+    "count": 14,
+    "created": true
+  },
+  "batchLeads": [
+    {
+      "lead_id": "ChIJ06TbSrd9bIcRktv4WehCflA",
+      "business_name": "Cenco Roofing",
+      "email": "info@cencoroofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJ113DnHCHa4cRPgsF7F_-AwI",
+      "business_name": "Altitude Contracting",
+      "email": "info@altitudecontracting.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJ2VwOPPuDa4cRtafOPo9laBM",
+      "business_name": "Peak Builders & Roofers of Denver",
+      "email": "info@peakbuildersdenver.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJF4pJ8jB_bIcR6g92SYp0ivM",
+      "business_name": "covR Roofing + Exteriors",
+      "email": "info@covrco.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJUUYv7ip_bIcRu_Vz9bX77Bg",
+      "business_name": "Cransten Handyman and Remodeling",
+      "email": "mountainwest@cransten.com",
+      "city": "Denver, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJ_____8J4bIcRJeKNO6_TIf0",
+      "business_name": "Academy Roofing, Inc.",
+      "email": "estimates@academyroofinginc.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJbf9oNMrva4cRuoq0RSfRphY",
+      "business_name": "Ideal Roof & Exterior Pros",
+      "email": "office@myidealpros.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJdXH2DpyEbIcR_N1I3eM_j5c",
+      "business_name": "LR Contracting Inc.",
+      "email": "bfults@gmail.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJf5He1auBbIcReUWSHqvCxOU",
+      "business_name": "Advocate Construction, Inc",
+      "email": "info@advocate-construction.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJm9etz4x9bIcRhqyqcOEdSdY",
+      "business_name": "Forest Roofs",
+      "email": "info@forestroofs.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJox3l9GSHa4cRYzWHlfG55v0",
+      "business_name": "Priority Roofing",
+      "email": "colorado@priorityroofs.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJpcn5cyRFE4cRRC2ePbPN47w",
+      "business_name": "Olson Plumbing & Heating Co",
+      "email": "service@olsonph.com",
+      "city": "Colorado Springs, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJu4dAhjxPE4cRqr13Mu0YAyo",
+      "business_name": "Always Plumbing & Heating, Inc",
+      "email": "%20info@alwaysph.com",
+      "city": "Colorado Springs, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJzc0QD2aHa4cR5JAKkjShQlA",
+      "business_name": "MTN Roofing",
+      "email": "office@mtnroofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    }
+  ],
+  "spend": 0.213,
+  "rotation": {
+    "done": 7,
+    "remaining": 105,
+    "reportedDone": 6,
+    "reportedLeft": 106
+  }
+}

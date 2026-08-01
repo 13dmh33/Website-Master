@@ -342,8 +342,15 @@ async function main() {
 
   const unresponsive = markUnresponsive(cfg);
 
-  cfg.last_run = new Date().toISOString();
-  saveConfig(cfg);
+  // A dry run must not stamp last_run. It is the signal for "when did drip
+  // actually send anything", and Merlin's stalled-stage detection reads it to
+  // notice that follow-ups have stopped — the exact check that surfaced 17
+  // leads frozen at drip_d1_sent. Previewing the queue would otherwise reset
+  // that clock and hide the staleness it was meant to reveal.
+  if (!isDryRun) {
+    cfg.last_run = new Date().toISOString();
+    saveConfig(cfg);
+  }
 
   writeLog('drip', [
     `sent: ${sent}  errors: ${errors}  unresponsive: ${unresponsive}`,

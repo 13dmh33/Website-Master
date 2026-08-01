@@ -103,6 +103,34 @@ else
   fi
 fi
 
+# ── STEP 1b: drip follow-ups ─────────────────────────────────────────────────
+# Drip was previously scheduled nowhere — not cron, not launchd, not here — so
+# a lead that got the initial send never received steps 2-4 of the sequence it
+# was enrolled in. On 2026-07-31 that left 17 leads frozen at drip_d1_sent
+# since 07-09, days from the 26-day dead_after_days sweep that would have
+# retired them having heard from us exactly once.
+#
+# Weekdays only. Follow-ups landing Saturday morning read as automated and
+# convert worse, and these are contractors — Monday is the working day. `date
+# +%u` gives 1-7 with 6=Sat, 7=Sun.
+#
+# --force is deliberate even though this is now automated: drip-config keeps
+# auto_run:false so a stray manual `node scripts/drip.js` still refuses to
+# send. The scheduled path opts in explicitly; the manual path stays guarded.
+# drip.js enforces its own daily_limit (20) and per-send stagger.
+echo ""
+DOW="$(date +%u)"
+if [ "$DOW" -ge 6 ]; then
+  echo "[1b/7] Drip — skipped, weekend (follow-ups resume Monday)."
+elif [ -n "$DRY_RUN" ]; then
+  echo "[1b/7] Drip — preview only…"
+  node scripts/drip.js --dry-run --force
+else
+  echo "[1b/7] Drip — sending due follow-ups…"
+  node scripts/drip.js --force
+  [ $? -eq 0 ] || echo "  ! Drip exited non-zero — due follow-ups stay queued for tomorrow."
+fi
+
 # ── STEP 2: choose today's market ────────────────────────────────────────────
 echo ""
 echo "[2/7] Choosing market from rotation…"

@@ -1,0 +1,19 @@
+{
+  "_comment": "Append-only log of session feedback on Merlin recommendations. Written by merlin/feedback.js; Merlin reads it to suppress items it got wrong and to report its own accuracy. Do not hand-edit: reverse an entry by recording a \"reinstate\" verdict instead.",
+  "entries": [
+    {
+      "id": "add_stripe_key",
+      "verdict": "already-done",
+      "note": "Payment Links live since 6db94f9; Payment Links are Stripe-hosted so no secret key exists to add. Resolver added to repo-facts.js.",
+      "reportDate": null,
+      "recordedAt": "2026-08-01T00:11:04.819Z"
+    },
+    {
+      "id": "investigate_biggest_dropoff",
+      "verdict": "good",
+      "note": "Real finding — led to computeActionableBacklog; 510 raw vs 24 actionable.",
+      "reportDate": null,
+      "recordedAt": "2026-08-01T00:11:13.106Z"
+    }
+  ]
+}

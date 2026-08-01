@@ -210,6 +210,7 @@ function rankCandidates(candidates) {
 // no decisions/repoFacts wired (backward-compatible with existing callers/tests).
 const NO_DECISIONS = { isSuperseded: () => false, decisionFor: () => null, explanationFor: () => null };
 const NO_REPO_FACTS = { isResolved: () => false, noteFor: () => null };
+const NO_FEEDBACK = { isSuppressed: () => false, feedbackFor: () => null };
 
 /**
  * Task 10d — before finalizing, attach any decision/integrity explanation to a
@@ -230,7 +231,7 @@ function crossReference(candidate, { decisions, integrityFlags }) {
   return { ...candidate, caveats, why: `${candidate.why}\n\n   ${caveats.join('\n   ')}` };
 }
 
-function buildRanking({ pipelineSnapshot, decisions = NO_DECISIONS, repoFacts = NO_REPO_FACTS, reeveSnapshot = null }) {
+function buildRanking({ pipelineSnapshot, decisions = NO_DECISIONS, repoFacts = NO_REPO_FACTS, feedback = NO_FEEDBACK, reeveSnapshot = null }) {
   const integrityFlags = (pipelineSnapshot && pipelineSnapshot.integrityFlags) || [];
   const all = [
     ...staticCandidates(),
@@ -240,6 +241,7 @@ function buildRanking({ pipelineSnapshot, decisions = NO_DECISIONS, repoFacts = 
 
   const resolved = [];   // dropped because live repo state shows the work is already done (Task 10a)
   const superseded = []; // dropped because a durable decision settled it (Task 10b)
+  const corrected = [];  // dropped because a session recorded that Merlin got it wrong
   const live = [];
 
   for (const c of all) {
@@ -252,6 +254,13 @@ function buildRanking({ pipelineSnapshot, decisions = NO_DECISIONS, repoFacts = 
       superseded.push({ ...c, decision: d });
       continue;
     }
+    // Checked last of the three: a machine-verifiable resolver or a durable
+    // decision is stronger evidence than a one-off session observation, and
+    // should be the reason shown when more than one applies.
+    if (feedback.isSuppressed(c.id)) {
+      corrected.push({ ...c, feedback: feedback.feedbackFor(c.id) });
+      continue;
+    }
     live.push(crossReference(c, { decisions, integrityFlags }));
   }
 
@@ -262,6 +271,7 @@ function buildRanking({ pipelineSnapshot, decisions = NO_DECISIONS, repoFacts = 
     ranked,
     resolved,
     superseded,
+    corrected,
     recommendation: top,
     recommendationIsDontBuild: top ? top.buildVolume === 0 : false,
     rubric: { revenueWeight: REVENUE_WEIGHT, buildPenaltyWeight: BUILD_PENALTY_WEIGHT },

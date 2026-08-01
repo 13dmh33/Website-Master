@@ -35,6 +35,7 @@ const { buildReport, today } = require('./lib/report');
 const { sendMerlinReport } = require('./lib/mailer');
 const { loadDecisions } = require('./lib/decisions');
 const { collectRepoFacts } = require('./lib/repo-facts');
+const { loadFeedback } = require('./lib/feedback');
 const { collectReeveSnapshot } = require('./lib/reeve-snapshot');
 
 const REPORTS_DIR = path.join(__dirname, 'reports');
@@ -80,9 +81,10 @@ async function main() {
   console.log('Loading durable decisions + live repo facts...');
   const decisions = loadDecisions();
   const repoFacts = collectRepoFacts();
+  const feedback = loadFeedback();
 
   console.log('Ranking candidate moves...');
-  const ranking = buildRanking({ pipelineSnapshot, decisions, repoFacts, reeveSnapshot });
+  const ranking = buildRanking({ pipelineSnapshot, decisions, repoFacts, feedback, reeveSnapshot });
 
   console.log('Generating session prompts...');
   const { primary, light, primaryQueue, lightQueue } = buildSessionPrompts({
@@ -91,7 +93,7 @@ async function main() {
 
   console.log('Assembling report...');
   const report = buildReport({
-    gitHealth, pipelineSnapshot, costAudit, ranking, reeveSnapshot,
+    gitHealth, pipelineSnapshot, costAudit, ranking, reeveSnapshot, feedback,
     primaryQueueHours: primaryQueue.totalHours, lightQueueHours: lightQueue.totalHours,
   });
 

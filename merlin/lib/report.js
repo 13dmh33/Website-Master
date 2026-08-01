@@ -128,7 +128,35 @@ function renderResolvedAndSuperseded(ranking) {
       parts.push(`- ~~${c.label}~~ — decision "${c.decision.id}" (${c.decision.date}): ${c.decision.decision}`);
     }
   }
+  if (ranking.corrected && ranking.corrected.length > 0) {
+    parts.push('**Corrected by session feedback (Merlin got these wrong):**');
+    for (const c of ranking.corrected) {
+      const f = c.feedback || {};
+      parts.push(`- ~~${c.label}~~ — ${f.verdict}${f.note ? `: ${f.note}` : ''} (recorded ${(f.recordedAt || '').slice(0, 10)})`);
+    }
+  }
   return parts.length ? parts.join('\n') : '_None — every candidate is still open._';
+}
+
+/**
+ * Merlin's own scorecard. Printed so the report is honest about how often its
+ * advice has been wrong — without it, a bad recommendation costs a session and
+ * leaves no trace, which is exactly how the Stripe item led five-hour sessions
+ * for weeks.
+ */
+function renderAccuracy(feedback) {
+  if (!feedback || typeof feedback.accuracy !== 'function') return null;
+  const a = feedback.accuracy();
+  if (!a || a.rated === 0) {
+    return 'No feedback recorded yet. Correct a bad recommendation with:\n  node merlin/feedback.js <candidate-id> <already-done|wrong-premise|not-worth-it|good> "note"';
+  }
+  const lines = [`Accuracy across all recorded feedback: ${a.accuracyPct}% (${a.good} good, ${a.off} off, ${a.rated} rated).`];
+  const reasons = Object.entries(a.offByReason || {});
+  if (reasons.length) {
+    lines.push(`Reasons it was off: ${reasons.map(([k, v]) => `${k} x${v}`).join(', ')}.`);
+  }
+  lines.push('Record new feedback with: node merlin/feedback.js <candidate-id> <verdict> "note"');
+  return lines.join('\n');
 }
 
 function renderIntegrityFlags(flags) {
@@ -156,7 +184,7 @@ function renderRanking(ranking) {
   return lines.join('\n\n');
 }
 
-function buildReport({ gitHealth, pipelineSnapshot, costAudit, ranking, primaryQueueHours, lightQueueHours, reeveSnapshot = null }) {
+function buildReport({ gitHealth, pipelineSnapshot, costAudit, ranking, primaryQueueHours, lightQueueHours, reeveSnapshot = null, feedback = null }) {
   const rec = ranking.recommendation;
   const date = today();
   const reeveSection = reeveSnapshot ? `\n## Reeve state\n\n${renderReeve(reeveSnapshot)}\n` : '';
@@ -184,6 +212,10 @@ ${renderGitHealth(gitHealth)}
 
 ${renderFunnel(pipelineSnapshot.funnel, pipelineSnapshot.actionableBacklog)}
 ${reeveSection}
+## Merlin accuracy
+
+${renderAccuracy(feedback) || '_Not tracked this run._'}
+
 ## Resolved / settled since last run (Merlin no longer recommends these)
 
 ${renderResolvedAndSuperseded(ranking)}

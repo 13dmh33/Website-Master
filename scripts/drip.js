@@ -32,6 +32,7 @@ const { isSuppressed }         = require('./lib/suppression');
 const { appendFooter, assertEmailCompliant } = require('./lib/compliance');
 const { isContactSuppressed, loadStore: loadDncStore, syncFromState: syncDoNotContact } = require('./lib/do-not-contact');
 const { isNonProspectBusiness } = require('./lib/lead-quality');
+const { orderDripQueue }        = require('./lib/drip-order');
 
 const ROOT           = path.join(__dirname, '..');
 const CONFIG_PATH    = path.join(ROOT, 'config', 'drip-config.json');
@@ -175,7 +176,7 @@ function loadDripQueue(cfg, templates) {
           const to = channel === 'email' ? brief.email : brief.phone;
           if (!to) break;
 
-          queue.push({ sentPath, sent, brief, leadId, channel, step, tmpl, to });
+          queue.push({ sentPath, sent, brief, leadId, channel, step, tmpl, to, daysOverdue: days - delay });
           break; // one step per channel per run
         }
       }
@@ -184,8 +185,9 @@ function loadDripQueue(cfg, templates) {
     }
   }
 
-  return queue;
+  return orderDripQueue(queue);
 }
+
 
 // ── UNRESPONSIVE SWEEP ─────────────────────────────────────────────────────────
 

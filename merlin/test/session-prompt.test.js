@@ -89,3 +89,29 @@ test('buildSessionPrompts — the rendered prompt carries both executor lanes (T
   assert.ok(primary.includes('Claude Code tasks'));
   assert.ok(primary.includes("Dave's tasks"));
 });
+
+test('renderSessionPrompt — a dave-executor blocker is never front-loaded as agent Task 0', () => {
+  // Regression for 2026-07-31: the Stripe candidate (non_code_blocker,
+  // executor 'dave') opened the generated session as "Task 0" under a heading
+  // that reads "this session executes these" — work the agent structurally
+  // cannot do — and the slice that removes Task 0 from the remaining queue
+  // then dropped it out of Dave's list too, so the one person who could do it
+  // never saw it.
+  const daveBlocker = { ...candidate('stripe', 8, 0, 0.25, 'dave'), category: 'non_code_blocker' };
+  const agentTask = candidate('poller', 4, 3, 1.5, 'claude_code');
+  const { primary } = buildSessionPrompts({
+    ranking: { ranked: [daveBlocker, agentTask], recommendation: daveBlocker },
+    generatedFor: 'test',
+  });
+  assert.equal(/## Task 0/.test(primary), false, 'no Task 0 section when the top item is dave-only');
+  assert.ok(/Dave's tasks[\s\S]*Do stripe/.test(primary), 'it stays in Dave\'s list instead');
+});
+
+test('renderSessionPrompt — an agent-executable blocker is still front-loaded as Task 0', () => {
+  const agentBlocker = { ...candidate('unblock', 7, 0, 0.5, 'claude_code'), category: 'non_code_blocker' };
+  const { primary } = buildSessionPrompts({
+    ranking: { ranked: [agentBlocker], recommendation: agentBlocker },
+    generatedFor: 'test',
+  });
+  assert.ok(/## Task 0/.test(primary), 'front-loading still happens for work the agent can do');
+});

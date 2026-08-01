@@ -73,8 +73,17 @@ function renderSessionPrompt({ branchSlug, title, queue, isLight, generatedFor }
     ? `**Target usage:** light — a day with less available capacity. Estimated queue: ~${queue.totalHours}h.`
     : `**Target usage:** at least 50% of a 5-hour window (2.5h+). Estimated queue: ~${queue.totalHours}h.`;
 
-  const task0 = queue.items[0] && queue.items[0].category === 'non_code_blocker'
-    ? `## Task 0 — front-loaded irreversible/high-value risk\n\n${queue.items[0].label}\n\n${queue.items[0].why}\n\n`
+  // Front-load Task 0 only when the agent can actually execute it. A
+  // non_code_blocker with executor 'dave' needs a browser, a vendor dashboard,
+  // or a phone — putting it under "Task 0" of a section headed "this session
+  // executes these" tells the agent to do something it structurally cannot,
+  // and the slice() below then drops it out of Dave's list, so the one person
+  // who *can* do it never sees it. Both happened on 2026-07-31 with the Stripe
+  // candidate: it opened the session as Task 0, and Dave's list showed only
+  // DMARC. Leaving it unfront-loaded keeps it in Dave's list where it belongs.
+  const top = queue.items[0];
+  const task0 = top && top.category === 'non_code_blocker' && top.executor !== 'dave'
+    ? `## Task 0 — front-loaded irreversible/high-value risk\n\n${top.label}\n\n${top.why}\n\n`
     : '';
   const remainingItems = task0 ? queue.items.slice(1) : queue.items;
 

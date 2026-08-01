@@ -83,6 +83,28 @@ function buildResolvers({ exec = realExec, readJson = realReadJson, readFile = r
       };
     },
 
+    add_stripe_key: () => {
+      // Two things were conflated in this candidate's label, and only one was
+      // ever real. The checkout page uses Stripe *Payment Links* — URLs Stripe
+      // hosts itself — so no secret key is involved at all; nothing in this
+      // repo reads STRIPE_SECRET_KEY. The only genuine part was "replace
+      // placeholder Payment Link URLs", and that landed in commit 6db94f9.
+      //
+      // Marker is a real hosted link (buy.stripe.com/<id>) rather than the
+      // absence of the word "STRIPE_PAYMENT_LINK": a stale setup comment
+      // mentioning that placeholder name still sits above the live constants,
+      // so keying on its absence would report "not done" forever.
+      const checkout = readFile('website/checkout/index.html');
+      const links = checkout ? checkout.match(/https:\/\/buy\.stripe\.com\/\w+/g) || [] : [];
+      const resolved = links.length > 0;
+      return {
+        resolved,
+        note: resolved
+          ? `Already done: website/checkout/index.html carries ${links.length} live Stripe Payment Link(s). Payment Links are Stripe-hosted, so no STRIPE_SECRET_KEY is required — no code in this repo reads one.`
+          : 'Not done: website/checkout/index.html has no live buy.stripe.com Payment Link.',
+      };
+    },
+
     fix_poller_email_reply_gap: () => {
       const poller = readFile('scripts/poller.js');
       // The fix wires reply-classifier.js into poller.js; its presence is the marker.

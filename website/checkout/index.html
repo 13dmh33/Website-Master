@@ -262,9 +262,11 @@
     <h2>Secure Payment</h2>
     <p>Fill in your details below — you'll be taken to Stripe's secure payment page to complete checkout.</p>
 
-    <!-- ⚙️ SETUP: Replace STRIPE_PAYMENT_LINK below with your real Stripe Payment Link URL.
-         Create one at: https://dashboard.stripe.com/payment-links
-         Set the success URL to: https://trevoadvisors.com/thankyou/
+    <!-- The live Payment Links are set in the CONFIG block at the bottom of this
+         file. They are Stripe-hosted URLs, so there is no secret key or server
+         code involved here.
+         Manage them at: https://dashboard.stripe.com/payment-links
+         Success URL for each: https://trevoadvisors.com/thankyou/
          Supports: ?prefilled_email=EMAIL to pre-fill the customer's email field. -->
 
     <div class="payment-icons">

@@ -51,3 +51,27 @@ test('collectRepoFacts — returns a resolvedIds map with isResolved/noteFor hel
   assert.ok(typeof facts.noteFor('revert_elevated_daily_limits') === 'string');
   assert.equal(facts.isResolved('enable_zoho_imap'), false); // not machine-resolvable — never auto-dropped
 });
+
+test('buildResolvers — add_stripe_key resolves once a live Payment Link exists', () => {
+  // Real 2026-07-31 shape: live constants sitting below a stale setup comment
+  // that still names the old STRIPE_PAYMENT_LINK placeholder. Keying on that
+  // word's absence would report "not done" forever, so the marker is a real
+  // hosted buy.stripe.com link.
+  const done = buildResolvers({
+    readFile: () => `
+      <!-- SETUP: Replace STRIPE_PAYMENT_LINK below with your real Payment Link URL. -->
+      const STRIPE_LINK_WEBSITE = 'https://buy.stripe.com/6oU5kC6VdaLS0BceGL8og02';
+      const STRIPE_LINK_NORA    = 'https://buy.stripe.com/5kQeVccfx07ecjUdCH8og03';
+    `,
+  }).add_stripe_key();
+  assert.equal(done.resolved, true, 'live links resolve even with the stale placeholder comment present');
+  assert.ok(/no STRIPE_SECRET_KEY is required/.test(done.note));
+
+  const notDone = buildResolvers({
+    readFile: () => `const STRIPE_LINK_WEBSITE = 'STRIPE_PAYMENT_LINK';`,
+  }).add_stripe_key();
+  assert.equal(notDone.resolved, false);
+
+  const noFile = buildResolvers({ readFile: () => null }).add_stripe_key();
+  assert.equal(noFile.resolved, false, 'a missing checkout page is not "done"');
+});

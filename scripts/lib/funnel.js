@@ -107,6 +107,65 @@ function worstConversionRate(transitions) {
   return withVolume.reduce((worst, t) => (t.conversionPct < worst.conversionPct ? t : worst), withVolume[0]);
 }
 
+/**
+ * Decompose a backlog stage into what can actually move versus what is
+ * structurally stuck. Pure: takes the queue plus a lead_id -> brief map,
+ * returns numbers.
+ *
+ * Why this exists. The ranked funnel above measures status transitions only,
+ * so a stage's raw count silently treats every lead in it as convertible.
+ * On 2026-07-31 that made "checked -> sent" read as 510 leads lost at 29.6%
+ * conversion — the largest number in the report, investigated repeatedly as
+ * if it were a conversion problem. It is not. Of those 510:
+ *
+ *   208  had no brief file at all, so Pitcher has nothing to read or send
+ *   242  were channel 'sms', and SMS has never sent once in this pipeline's
+ *        history (Twilio A2P 10DLC still unapproved — sms_sent_this_month
+ *        has been 0 every month)
+ *    36  were email but not yet checker_approved
+ *    24  were email AND approved — the only ones that could send
+ *
+ * So 4.7% of that "backlog" was actionable, and the real constraint is
+ * supply of email-capable approved leads, not send capacity: the daily cap
+ * is 30 and the prior day sent 27, meaning the entire true backlog is under
+ * one day of capacity. Reporting the raw count invites the wrong fix
+ * (raise throughput) for the actual problem (find email addresses).
+ */
+function computeActionableBacklog(queue, briefsById, { stage = 'checked' } = {}) {
+  const atStage = (queue || []).filter(l => l && l.status === stage);
+  const get = (id) => (briefsById instanceof Map ? briefsById.get(id) : (briefsById || {})[id]);
+
+  let noBrief = 0, sendable = 0, awaitingApproval = 0;
+  const blockedByChannel = {};
+
+  for (const lead of atStage) {
+    const brief = get(lead.lead_id);
+    if (!brief) { noBrief++; continue; }
+    // A channel that has never delivered is not a slow lane, it is a closed
+    // one — count it as blocked rather than pending regardless of approval.
+    const channel = brief.channel || 'unknown';
+    if (channel !== 'email') {
+      blockedByChannel[channel] = (blockedByChannel[channel] || 0) + 1;
+      continue;
+    }
+    if (brief.checker_approved) sendable++;
+    else awaitingApproval++;
+  }
+
+  const blocked = Object.values(blockedByChannel).reduce((a, b) => a + b, 0);
+  const total = atStage.length;
+  return {
+    stage,
+    total,
+    sendable,
+    awaitingApproval,
+    noBrief,
+    blockedByChannel,
+    blocked,
+    actionablePct: total > 0 ? Math.round((sendable / total) * 1000) / 10 : null,
+  };
+}
+
 function computeFunnel(queue) {
   const rawCounts = computeRawCounts(queue);
   const cumulativeReached = computeCumulativeReached(queue);
@@ -131,4 +190,5 @@ module.exports = {
   FUNNEL_ORDER, RANK, ANCHOR_RANK,
   computeRawCounts, computeCumulativeReached, computeTransitions,
   biggestDropoff, worstConversionRate, computeFunnel,
+  computeActionableBacklog,
 };

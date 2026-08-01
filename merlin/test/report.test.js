@@ -67,3 +67,25 @@ test('mailer — buildEmailBody includes both prompts and the report, RECIPIENT 
   assert.ok(body.includes('LIGHT_TEXT'));
   assert.equal(RECIPIENT, '13dmh33@gmail.com');
 });
+
+test('buildReport — reports the actionable backlog, not just the raw stage count', () => {
+  // Regression for 2026-07-31: the report led with "510 leads lost" at the
+  // checked -> sent step. Only 24 of those could send; the rest had no brief
+  // file or sat on a channel that has never delivered. The raw number kept
+  // pointing at throughput when the real constraint was supply.
+  const f = fixture();
+  f.pipelineSnapshot.actionableBacklog = {
+    stage: 'checked', total: 510, sendable: 24, awaitingApproval: 36,
+    noBrief: 208, blockedByChannel: { sms: 242 }, blocked: 242, actionablePct: 4.7,
+  };
+  const report = buildReport(f);
+  assert.ok(/24 of 510/.test(report), 'states how many can actually send');
+  assert.ok(/4\.7%/.test(report));
+  assert.ok(/208 have no brief file/.test(report));
+  assert.ok(/'sms'/.test(report), 'names the blocked channel');
+});
+
+test('buildReport — omits the actionable-backlog line when there is no backlog data', () => {
+  const report = buildReport(fixture()); // fixture has no actionableBacklog
+  assert.equal(/Actionable backlog/.test(report), false, 'no empty section when the data is absent');
+});

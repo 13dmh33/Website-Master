@@ -51,11 +51,33 @@ function renderGitHealth(gitHealth) {
   return lines.map(l => `- ${l}`).join('\n');
 }
 
-function renderFunnel(funnel) {
+/**
+ * The backlog number that matters. A raw stage count treats every lead in it
+ * as convertible; most are not, and the gap is large enough to point at the
+ * wrong fix entirely (see computeActionableBacklog in scripts/lib/funnel.js).
+ */
+function renderActionableBacklog(ab) {
+  if (!ab || !ab.total) return null;
+  const parts = [];
+  if (ab.noBrief) parts.push(`${ab.noBrief} have no brief file (nothing to send)`);
+  for (const [channel, count] of Object.entries(ab.blockedByChannel || {})) {
+    parts.push(`${count} on channel '${channel}' (has never delivered)`);
+  }
+  if (ab.awaitingApproval) parts.push(`${ab.awaitingApproval} email awaiting approval`);
+  return [
+    `Actionable backlog: ${ab.sendable} of ${ab.total} leads at '${ab.stage}' can actually send (${ab.actionablePct}%).`,
+    parts.length ? `  Blocked: ${parts.join('; ')}.` : null,
+    `  Read the ${ab.total} as reach, not as pending work — throughput is not the constraint when ${ab.sendable} can move.`,
+  ].filter(Boolean).join('\n');
+}
+
+function renderFunnel(funnel, actionableBacklog) {
   const d = funnel.biggestDropoff;
   const lines = [
     `Biggest drop-off: ${d ? `${d.from} -> ${d.to}, ${d.lost} leads lost (${d.conversionPct}% conversion)` : 'not enough data yet'}.`,
   ];
+  const ab = renderActionableBacklog(actionableBacklog);
+  if (ab) lines.push(ab);
   if (Array.isArray(funnel.stalledStages) && funnel.stalledStages.length > 0) {
     lines.push(`Stalled stages (frozen since previous run): ${funnel.stalledStages.map(s => `${s.stage} (${s.waiting} waiting)`).join(', ')}.`);
   } else if (Array.isArray(funnel.stalledStages)) {
@@ -160,7 +182,7 @@ ${renderGitHealth(gitHealth)}
 
 ## Funnel state
 
-${renderFunnel(pipelineSnapshot.funnel)}
+${renderFunnel(pipelineSnapshot.funnel, pipelineSnapshot.actionableBacklog)}
 ${reeveSection}
 ## Resolved / settled since last run (Merlin no longer recommends these)
 

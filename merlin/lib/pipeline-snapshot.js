@@ -10,7 +10,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const { computeFunnel } = require('../../scripts/lib/funnel');
+const { computeFunnel, computeActionableBacklog } = require('../../scripts/lib/funnel');
 const { computeApolloMetrics } = require('../../scripts/lib/apollo-metrics');
 const { loadPhoneOnlyLeads, loadHasWebsiteLeads } = require('../../scripts/lib/lead-files');
 
@@ -20,6 +20,7 @@ const PITCHER_CONFIG_PATH = path.join(ROOT, 'config', 'pitcher-config.json');
 const CHECKER_CONFIG_PATH = path.join(ROOT, 'config', 'checker-config.json');
 const DIAGNOSER_CONFIG_PATH = path.join(ROOT, 'config', 'diagnoser-config.json');
 const POLLER_PATH = path.join(ROOT, 'scripts', 'poller.js');
+const QUEUE_DIR = path.join(ROOT, 'queue');
 
 const NORMAL_DAILY_LIMIT = 30; // documented normal value per root CLAUDE.md's action items
 
@@ -116,10 +117,29 @@ function computeStalledStages(funnel, previousFunnel) {
   return stalls.sort((a, b) => b.waiting - a.waiting).slice(0, 3);
 }
 
+/**
+ * Load every queue brief as lead_id -> brief. Briefs carry the two fields
+ * state.json does not — channel and checker_approved — which is what turns a
+ * raw stage count into a count of leads that can actually move.
+ */
+function loadBriefs(dir = QUEUE_DIR) {
+  const briefs = {};
+  let names = [];
+  try { names = fs.readdirSync(dir); } catch { return briefs; }
+  for (const name of names) {
+    if (!name.endsWith('-brief.json')) continue;
+    const brief = readJsonSafe(path.join(dir, name), null);
+    if (brief && brief.lead_id) briefs[brief.lead_id] = brief;
+  }
+  return briefs;
+}
+
 function collectPipelineSnapshot({ previousFunnel = null } = {}) {
   const state = readJsonSafe(STATE_PATH, { queue: [] });
   const funnel = computeFunnel(state.queue);
   funnel.stalledStages = computeStalledStages(funnel, previousFunnel);
+
+  const actionableBacklog = computeActionableBacklog(state.queue, loadBriefs());
 
   const apollo = {
     phoneOnly: computeApolloMetrics(loadPhoneOnlyLeads()),
@@ -136,15 +156,24 @@ function collectPipelineSnapshot({ previousFunnel = null } = {}) {
     sentThisMonth: pitcherConfig.sent_this_month,
     totalSent: pitcherConfig.total_sent,
     backlogAtChecked: funnel.rawCounts.checked || 0,
+    sendableAtChecked: actionableBacklog.sendable,
+    // Days-to-clear must divide the SENDABLE backlog, not the raw stage count.
+    // Dividing the raw count implied ~17 days of pending work on 2026-07-31
+    // when only 24 leads could actually send — under one day at the cap — and
+    // pointed at throughput as the fix when the real constraint is supply of
+    // email-capable approved leads.
     daysToClearBacklogAtCurrentCap: pitcherConfig.daily_limit > 0
-      ? Math.ceil((funnel.rawCounts.checked || 0) / pitcherConfig.daily_limit)
+      ? Math.ceil(actionableBacklog.sendable / pitcherConfig.daily_limit)
       : null,
   } : null;
 
   const pollerSrc = readFileSafe(POLLER_PATH);
   const integrityFlags = collectIntegrityFlags({ pitcherConfig, checkerConfig, diagnoserConfig, apollo, pollerSrc });
 
-  return { funnel, apollo, sendActivity, integrityFlags };
+  return { funnel, apollo, sendActivity, integrityFlags, actionableBacklog };
 }
 
-module.exports = { collectPipelineSnapshot, collectIntegrityFlags, computeStalledStages, NORMAL_DAILY_LIMIT };
+module.exports = {
+  collectPipelineSnapshot, collectIntegrityFlags, computeStalledStages,
+  loadBriefs, NORMAL_DAILY_LIMIT,
+};

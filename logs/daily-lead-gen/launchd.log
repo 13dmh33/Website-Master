@@ -1472,3 +1472,1788 @@ Today's scrape is PENDING your approval. Review the emailed list, then:
   node scripts/approve-batch.js 2026-07-31
 
 Approved batches send automatically on the next 6:30am run.
+╔══════════════════════════════════════════════════╗
+║  Daily lead-gen — 2026-08-01 
+╚══════════════════════════════════════════════════╝
+
+[0/7] Preflight…
+  ✓ Clear. Backed up state.json + cost-log.json → logs/state-backups/*-20260801T123000Z.json
+
+[1/7] Sending previously approved batch…
+  → batch 2026-07-31 (23 contacts, approved)
+
+Pitcher starting
+──────────────────────────────────────────────────
+Approved briefs: 23 | Sending: 23 | Daily limit: 30
+Sent today: 0 | This month: 0
+
+[1/23] covR Roofing + Exteriors (email) — ✓ sent via Zoho (id: <e2c92df0-b96d-9bfd-7ace-a841d491d268@trevoadvisors.com>, tmpl: e6)
+  ⏱  Staggering 4m 47s before next send....................
+[2/23] Mister Sparky of Colorado Springs (email) — ✓ sent via Zoho (id: <bee944b7-c663-e72c-2c46-593a38429b9b@trevoadvisors.com>, tmpl: e6)
+  ⏱  Staggering 3m 32s before next send....................
+[3/23] Cenco Roofing (email) — ✓ sent via Zoho (id: <aa174ea7-7408-52f9-fb79-ed9c4c64675a@trevoadvisors.com>, tmpl: e6)
+  ⏱  Staggering 2m 24s before next send..................
+[4/23] WHITE RHINO ELECTRIC (email) — ✓ sent via Zoho (id: <5259026b-5bb5-243e-5c61-a40ec689976d@trevoadvisors.com>, tmpl: e6)
+  ⏱  Staggering 4m 12s before next send....................
+[5/23] Calibrating Air Heating & Cooling, Inc. (email) — ✓ sent via Zoho (id: <5a01848a-367c-e767-88ec-d32496b0d089@trevoadvisors.com>, tmpl: e6)
+  ⏱  Staggering 2m 9s before next send...................
+[6/23] Around The Clock Heating, Air Conditioning, Plumbing & Electric (email) — ✓ sent via Zoho (id: <72d918f1-1553-230c-10f3-74b93ecb9bf6@trevoadvisors.com>, tmpl: e6)
+  ⏱  Staggering 4m 57s before next send....................
+[7/23] upGrade electric LLC (email) — ✓ sent via Zoho (id: <df7cc4b6-6bdc-728f-45c7-b87f1ed7a91e@trevoadvisors.com>, tmpl: e6)
+  ⏱  Staggering 4m 59s before next send....................
+[8/23] Advocate Construction, Inc (email) — ✓ sent via Zoho (id: <b8fc932f-0f34-1e24-ff6d-aa934f4b086a@trevoadvisors.com>, tmpl: e6)
+  ⏱  Staggering 2m 1s before next send..................
+[9/23] Furnace World (email) — ✓ sent via Zoho (id: <550228aa-2fae-ff13-50c5-5756edff1756@trevoadvisors.com>, tmpl: e6)
+  ⏱  Staggering 3m 7s before next send...................
+[10/23] MTN Roofing (email) — ✓ sent via Zoho (id: <5c9e0d06-c9d3-c2fc-9fc3-e5be768f7e2a@trevoadvisors.com>, tmpl: e6)
+  ⏱  Staggering 3m 8s before next send...................
+[11/23] Altitude Contracting (email) — ✓ sent via Zoho (id: <12af4830-e47c-fc6a-ebae-b86a17dca056@trevoadvisors.com>, tmpl: e6)
+  ⏱  Staggering 2m 54s before next send....................
+[12/23] Peak Builders & Roofers of Denver (email) — ✓ sent via Zoho (id: <d4ef5729-a226-c849-4b7b-575600f8de55@trevoadvisors.com>, tmpl: e6)
+  ⏱  Staggering 3m 21s before next send...................
+[13/23] Cransten Handyman and Remodeling (email) — ✓ sent via Zoho (id: <ab7b590f-574a-b583-fa4c-4cac45bd769a@trevoadvisors.com>, tmpl: e6)
+  ⏱  Staggering 2m 10s before next send...................
+[14/23] BudCo Electric (email) — ✓ sent via Zoho (id: <4df18cb2-b5c3-171b-8353-555c12fd9381@trevoadvisors.com>, tmpl: e6)
+  ⏱  Staggering 3m 2s before next send...................
+[15/23] Academy Roofing, Inc. (email) — ✓ sent via Zoho (id: <1f587f75-ed6b-d39a-3420-a8fb07a03286@trevoadvisors.com>, tmpl: e6)
+  ⏱  Staggering 3m 17s before next send....................
+[16/23] Ideal Roof & Exterior Pros (email) — ✓ sent via Zoho (id: <6499d8ae-30f6-c538-da68-1535acfa4c87@trevoadvisors.com>, tmpl: e6)
+  ⏱  Staggering 2m 2s before next send..................
+[17/23] LR Contracting Inc. (email) — ✓ sent via Zoho (id: <ae4a20de-dc25-b0ac-6371-c23befb52e92@trevoadvisors.com>, tmpl: e6)
+  ⏱  Staggering 4m 43s before next send...................
+[18/23] Forest Roofs (email) — ✓ sent via Zoho (id: <1e4836b6-8513-2c70-620e-e818d7aab04f@trevoadvisors.com>, tmpl: e6)
+  ⏱  Staggering 4m 16s before next send....................
+[19/23] Priority Roofing (email) — ✓ sent via Zoho (id: <a286c6c1-99a3-1a2f-1195-c92e51f84411@trevoadvisors.com>, tmpl: e6)
+  ⏱  Staggering 4m 38s before next send....................
+[20/23] Lenz Electric Inc (email) — ✓ sent via Zoho (id: <1858d63b-525d-61e7-bc46-ad2a5b567a60@trevoadvisors.com>, tmpl: e6)
+  ⏱  Staggering 3m 35s before next send....................
+[21/23] Olson Plumbing & Heating Co (email) — ✓ sent via Zoho (id: <49329ee0-6239-190e-443c-efb5822320ed@trevoadvisors.com>, tmpl: e6)
+  ⏱  Staggering 3m 46s before next send...................
+[22/23] Celtic Electric (email) — ✓ sent via Zoho (id: <733ebe51-b7b0-4275-9682-7e0efa57c117@trevoadvisors.com>, tmpl: e6)
+  ⏱  Staggering 3m 49s before next send....................
+[23/23] Always Plumbing & Heating, Inc (email) — ✓ sent via Zoho (id: <730b5628-0f50-c8c2-d01a-b8ae33cd942c@trevoadvisors.com>, tmpl: e6)
+
+──────────────────────────────────────────────────
+Done.
+  Sent (email/SMS): 23
+  Manual drafts:    0 (check messages/*-draft.txt)
+  Errors:           0
+  Sent today:       23 / 30
+  Sent this month:  23
+──────────────────────────────────────────────────
+  ✓ batch 2026-07-31 marked sent
+
+[1b/7] Drip — skipped, weekend (follow-ups resume Monday).
+
+[2/7] Choosing market from rotation…
+  → handyman in Colorado Springs, CO   (8 worked, 104 remaining)
+
+[3/7] Scout — has-website handyman in Colorado Springs, CO (cap $0.12)…
+
+Scout — handyman in Colorado Springs, CO [mode: has-website]
+──────────────────────────────────────────────────
+  --budget $0.12 → max 120 raw results
+New month detected — spend counter reset to $0.00
+  Known leads:      601 (will skip re-scraping)
+  Budget:           $0.00 / $10.00 this month
+  Run cap:          $0.12 (--budget)
+  Queries:          1 × 120 = ~120 raw (~$0.120)
+  Min score:        3
+  Min reviews/rating: 10 / 4
+
+  Async task (id: a-6f0ad398-e685-4f36-b801-bec77f0d006d) — polling........... done
+  Filter breakdown  (64 raw):
+    Kept (auditor-ready, has email): 0
+    Needs manual email lookup:       14
+    Already known:  5  (skipped — saved $$)
+    Reviews <10:    38
+    Rating <4.0:    3
+    No real site:   3
+    No phone:       0
+    Score <3:       1
+  Queued for contact-scraper: 14  (mirrored to leads/needs-email-colorado-springs-co-handyman-2026-08-01-run1.json, state.json as 'scouted' — run contact-scraper --deep next)
+
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+Done.
+  Auditor-ready leads: 0  (of 64 raw)
+  Needs manual email:  14
+  Cost this run:       $0.0640
+  Cost per lead:       $0.0046
+  Monthly spend:       $0.0640 / $10.00
+  Saved to:            leads-web/colorado-springs-co-handyman-2026-08-01-run1.json
+  Needs-email CSV:     leads-web/needs-email-colorado-springs-co-handyman-2026-08-01-run1.csv  (manual lookup)
+──────────────────────────────────────────────────
+
+[4/7] Contact-scraper --deep — harvesting emails (free)…
+
+Contact-Page Scraper  [DEEP crawl]
+────────────────────────────────────────────────────────────
+Queue: 856 leads
+  skipped (sent/closed):     237
+  already have email:        109
+  no website to scrape:      182
+  no lead record found:      178
+  → eligible to scrape:      150
+────────────────────────────────────────────────────────────
+[1/150] Desert Sun Plumbing … error (fetch failed)
+[6/150] Abacus Plumbing, Air Conditioning & Electrical … error (HTTP 403)
+[3/150] ABC Home & Commercial - Plumbing Services Department … error (HTTP 404)
+[5/150] Reliant Plumbing - Austin … error (HTTP 404)
+[10/150] Economy Plumbing Services, LLC … error (HTTP 404)
+[9/150] Mr. Rooter Plumbing of Austin … error (HTTP 404)
+[7/150] Clarke Kent Plumbing … error (HTTP 404)
+[8/150] AAA AUGER Plumbing Services … error (HTTP 404)
+[4/150] Moore & More Plumbing, LLC. … ☎ +1 512-445-5212
+[12/150] Rooterman Plumbing of Austin … ☎ +1 512-645-1441  name: never using another  1 social
+[14/150] Austin Area Plumbing … ☎ +1 512-736-7113  name: current building  4 social
+[13/150] Fast Plumbing LLC … ☎ +1 512-548-8188  name: absolutely thrilled with  4 social
+[15/150] 1st Home & Commercial Services … ☎ +1 512-588-5994  name: to adapt with  2 social
+[18/150] Strand Brothers Service Experts … error (HTTP 400)
+[19/150] Mr. Electric of Austin … error (HTTP 404)
+[17/150] SALT Plumbing Air & Electric … error (HTTP 404)
+[11/150] Stan's Heating, Air, Plumbing & Electrical … ☎ +1 512-929-9393  name: plug it in  4 social
+[2/150] Rooter-Man Plumbing Austin TX … ☎ +1 512-645-1441  name: never using another  4 social
+[22/150] Winsupply of Austin … no contact info found
+[25/150] Welcome Home Handyman … error (HTTP 403)
+[24/150] Handyman Connection of Austin-Westlake … error (HTTP 404)
+[16/150] Fox Service Company … ☎ +1 512-488-1120  name: with modern conveniences  4 social
+[27/150] Red Diamond Roofing … error (HTTP 403)
+[21/150] Aquaman Plumbing Austin … no contact info found
+[28/150] New Roof Plus … error (HTTP 404)
+[30/150] Cox Roofing … ☎ +1 303-505-5574  2 social
+[23/150] ADK Plumbing … no contact info found
+[20/150] Accurate Leak and Line - Austin … ☎ +1 512-357-3826  name: Accurate Leak  3 social
+[34/150] Parobek Plumbing & Air Conditioning … error (HTTP 404)
+[26/150] Peak To Peak Roofing & Exteriors, LLC … ☎ +1 720-740-4325  name: plans to stay  4 social
+[35/150] McCullough Heating, Air Conditioning & Plumbing … error (HTTP 404)
+[37/150] Efficient AC, Electric & Plumbing … error (HTTP 404)
+[38/150] Olshan Foundation Solutions … error (HTTP 403)
+[29/150] Interstate Roofing, Inc. … ☎ +1 303-763-9114  name: so pleased with  4 social
+[33/150] Cold Is On The Right Plumbing & Air … ☎ +1 512-271-2172  3 social
+[36/150] Crows Plumbing Service … ☎ +1 512-256-4001  3 social
+[42/150] Plumber Anderson Mill … error (HTTP 404)
+[43/150] Affordable Plumbing LLC … error (HTTP 403)
+[44/150] ARS / Rescue Rooter … error (HTTP 404)
+[41/150] Benjamin Franklin Plumbing … error (HTTP 404)
+[32/150] A-Denver Roofing … ☎ +1 303-455-3185  4 social
+[45/150] Home Services at The Home Depot … error (HTTP 403)
+[46/150] Hercules Foundation Repair & Remodeling … error (HTTP 404)
+[40/150] Precision Heating & Air … ☎ +1 512-379-6385  name: ship as Precision  4 social
+[47/150] BullsEye Plumbing Heating & Air of Colorado Springs … error (HTTP 404)
+[39/150] Mavyn … name: you may have  5 social
+[51/150] Big Cat Plumbing, Heating & Cooling … error (HTTP 404)
+[53/150] Nates Plumbing … error (fetch failed)
+[31/150] Denver Roofing Works … ☎ +1 720-674-9094  name: dapibus aliquam
+[49/150] Priority Plumbing and Heating … error (HTTP 404)
+[55/150] Peak Flow Plumbing … error (HTTP 404)
+[48/150] Alphalete Plumbing Drain Sewer … ☎ +1 719-631-3866  name: of Plumb  9 social
+[57/150] Elite Rooter Plumbers … error (HTTP 404)
+[50/150] Wild Water Plumbing Heating Cooling … ☎ +1 719-789-6937  name: wanting to  3 social
+[59/150] Parkey's Heating, Plumbing, & Air Conditioning … error (HTTP 404)
+[52/150] B&L Plumbing … ☎ +1 719-638-7341  name: Norissa L.  3 social
+[56/150] A Plus Sewer, Drain and Plumbing … ☎ +1 719-359-3558  1 social
+[54/150] Pikes Peak Mechanical … ☎ +1 719-232-4720  name: not a robot  4 social
+[63/150] Roto-Rooter Plumbing & Water Cleanup … error (HTTP 404)
+[60/150] Apex Plumbing & Mechanical … error (HTTP 404)
+[66/150] Jolly Plumbing & Heating, Inc. … error (HTTP 404)
+  (SPA render fallback unavailable — run `npm i playwright` on the Mac to enable JS rendering)
+[67/150] Ace Handyman Services North Metro Denver … no contact info found
+[58/150] Austin & Sons Plumbing … ☎ +1 719-417-8466
+[68/150] Mr. Handyman of Englewood, Centennial and S Aurora … error (HTTP 404)
+[70/150] Professional Facility Solutions … error (fetch failed)
+[71/150] Core Roofing Systems … error (HTTP 403)
+[64/150] Sveagle Plumbing, Heating, and Cooling … ☎ +1 303-795-7498  name: to please all  4 social
+[62/150] Water Heater Pros … ☎ +1 719-229-5555  2 social
+[65/150] Colorado Best Plumbing … ☎ +1 719-417-8876
+[61/150] PlumbSmart Plumbing Heating and Air … ☎ +1 480-992-2225  name: can buy  5 social
+[76/150] Horn Brothers Roofing … error (HTTP 404)
+[73/150] Ethos Roofing & Restoration … ☎ +1 855-553-8467  name: every need  6 social
+[72/150] 1st Priority Roofing … ☎ +1 918-398-0407  5 social
+[74/150] Arvada Roofing & Home Improvement … ☎ +1 720-402-8039  1 social
+[69/150] Home Improvements of Colorado Inc. … ☎ +1 303-452-6467  name: work is added  1 social
+[80/150] Red Hawk Roofing - Denver … error (HTTP 404)
+[79/150] LEMT Roofing … error (HTTP 404)
+[75/150] Best Roof Roofing … ☎ +1 720-310-3419  name: he is there  4 social
+[82/150] Reclamation Roofing … ☎ +1 303-744-3064  4 social
+[77/150] McIntire Roofing … ☎ +1 303-962-7599  name: to cultivate lasting  5 social
+[85/150] Premier Roofing Company … error (HTTP 404)
+[84/150] Above All Roofing … ☎ +1 303-944-3047  name: process with diligence  3 social
+[87/150] Bumble Roofing Denver South … error (HTTP 404)
+[78/150] Farha … ☎ +1 720-306-7949  name: of this website  5 social
+[81/150] Accurate America … ☎ +1 303-900-7663  name: but exceed expectations  6 social
+[86/150] Colorado Precision Roofing … ☎ +1 303-872-7750  name: support for homeowners
+[92/150] Mountaintop Roofing, Inc. … error (HTTP 404)
+[89/150] Severe Weather Roofing and Restoration, LLC … error (HTTP 404)
+[83/150] RTP ROOFING CO. … ☎ +1 303-791-2223  name: Scott Ponzio
+[91/150] Jesse Roofs Co. … ☎ +1 303-367-5683
+[88/150] Denver Pros Roofing Services … ☎ +1 303-565-2363
+[96/150] Colorado Superior Roofing & Exteriors … error (HTTP 404)
+[95/150] Modern Roof Co … ☎ +1 720-507-8472  name: to this scam  5 social
+[99/150] Prestige Roofing Denver CO … error (fetch failed)
+[90/150] Canopy Roof & Restoration … ☎ +1 704-350-5999  name: Resources Locations
+[94/150] Frontier Metal Roofing … ☎ +1 720-615-2627  name: industry standards and
+[98/150] Shamrock Roofing & Construction … error (HTTP 404)
+[101/150] APC Roofing … error (HTTP 403)
+[103/150] Modern Pro Roofing … error (fetch failed)
+[97/150] Advanced Exteriors, Inc. … ☎ +1 303-756-7663  name: analysis and negotiation  3 social
+[105/150] Swartz Electric, LLC … error (HTTP 404)
+[107/150] The Electric Way … error (HTTP 404)
+[100/150] Next Wave Roofing … error (HTTP 404)
+[93/150] Sky Ridge Exteriors … error (The operation was aborted due to timeout)
+[110/150] Awesome Home Services … error (HTTP 400)
+[108/150] DR Electric … ☎ +1 719-232-3047  name: local building codes  4 social
+[111/150] One Source Home Service … error (HTTP 400)
+[113/150] The Electricians … error (HTTP 404)
+[112/150] Peak Home Performance … error (HTTP 404)
+[104/150] R3D Roofing, LLC … ☎ +1 303-419-3935  name: an engineer and
+[102/150] Sunny Roofing LLC … ☎ +1 303-734-0956  name: S St  3 social
+[106/150] Front Range Electric … ☎ +1 719-321-4413  3 social
+[117/150] Advantage Heating and Cooling … error (HTTP 404)
+[109/150] Gaddie Electric … ☎ +1 719-268-9433  name: Kristeen Danburg  5 social
+[118/150] American Electrician … ☎ +1 719-520-9999  name: Should Know  7 social
+[121/150] CUSI Electric … error (fetch failed)
+[122/150] WireNut Home Services … error (HTTP 404)
+[119/150] A&E Electric … ☎ +1 719-203-1533  3 social
+[120/150] Electrical Pros of Colorado LLC … no contact info found
+[114/150] Comfort By Design … ☎ +1 719-374-1776  8 social
+[115/150] Squeaks Services Plumbing, Heating, & Air … ✉ workorder@squeaksservices.com  ☎ +1 303-280-5765  7 social
+[124/150] SoCo Heating and Cooling … error (HTTP 404)
+[126/150] Mountain Pro Electric … error (HTTP 404)
+[123/150] Weatherby Electric … ☎ +1 719-482-4756  name: to provide you
+[116/150] Cornerstone Auto Repair … name: Bola Shonoiki
+[125/150] Woods Contracting … ☎ +1 719-419-9477  name: very pleased with  3 social
+[127/150] Reliant Electric … ☎ +1 719-244-0513
+[130/150] SunPower® … ☎ +1 877-299-4943  name: and Chairman of  6 social
+[131/150] Bee Electric LLC … no contact info found
+[135/150] Spectrum Lighting … error (fetch failed)
+[128/150] Blazer Electric Supply Company Colorado Springs … ☎ +1 719-596-1333  name: of that location  1 social
+[129/150] Elevated Electric … ☎ +1 719-354-3704  name: Dustin Dewitt  3 social
+[133/150] Ace Electric … 1 social
+[132/150] Sparkz Electrical … ☎ +1 719-888-0446  name: to put up
+[139/150] The Home Improvement Doctor … error (HTTP 503)
+[140/150] Integrity Roofing and Painting … error (HTTP 404)
+[136/150] KW Restoration … ☎ +1 719-867-4299  name: for excellence in
+[138/150] HOMEfix … ✉ office@homefixcos.com  ☎ +1 719-749-1788  4 social
+[141/150] Fix Fellows … ✉ fixfellows@outlook.com  ☎ +1 719-319-3174  name: Greenspan profile picture  2 social
+[145/150] Colorado Springs Handyman … ✉ info@handymancoloradospringsco.com  ☎ +1 719-626-4222  name: so happy that  1 social
+[143/150] True Craft Handyman … ✉ jake@truecrafthandymancolorado.com  ☎ +1 719-726-2589  name: ship and hard  1 social
+[142/150] Soto's Best Handyman Services … ✉ sotomoises@yahoo.com  ☎ +1 562-448-4283  name: again if  1 social
+[134/150] Peak Lighting … ☎ +1 719-531-5200
+[137/150] House Doctors of Colorado Springs … ☎ +1 719-356-4845  name: and Molding Installation  4 social
+[144/150] House Hack Colorado Springs … ✉ ryan@househackcoloradosprings.com  ☎ +1 719-624-3472  name: WITH RYAN  5 social
+[146/150] Lionheart Construction … ✉ codygetchell.lionheart@gmail.com  ☎ +1 719-213-1270  name: work to add  3 social
+[148/150] Wickham's Workbench … ☎ +1 719-632-5117  4 social
+[147/150] Founder's Renovations … no contact info found
+[150/150] Colorado Building Supply - Colorado Springs … name: or Contractor  2 social
+[149/150] Cascade Drywall … ☎ +1 720-289-3854  name: from Nextdoor  1 social
+────────────────────────────────────────────────────────────
+Summary
+  sites visited:        150
+  emails found:         8
+  phones found:         0
+  names found:          9
+  socials found:        12
+  leads flipped→email:  8
+  no email / unchanged: 142
+  fetch errors:         66
+  hit rate:             51%  (77/150 sites yielded contact info)
+
+Flipped to email:
+  • Squeaks Services Plumbing, Heating, & Air → workorder@squeaksservices.com
+  • HOMEfix → office@homefixcos.com
+  • Fix Fellows → fixfellows@outlook.com
+  • Colorado Springs Handyman → info@handymancoloradospringsco.com
+  • True Craft Handyman → jake@truecrafthandymancolorado.com
+  • Soto's Best Handyman Services → sotomoises@yahoo.com
+  • House Hack Colorado Springs → ryan@househackcoloradosprings.com
+  • Lionheart Construction → codygetchell.lionheart@gmail.com
+
+Next: node scripts/diagnoser.js  →  node scripts/checker.js  →  node scripts/pitcher.js --channel email
+
+✓ Google Sheet "AllContacts" synced: 2 cell update(s), 11 row(s) appended.
+
+[5/7] Diagnoser…
+
+Diagnoser starting
+──────────────────────────────────────────────────
+New month — spend counter reset to $0.00
+Leads available: 102 | Processing: 30 | Daily limit: 30
+Budget: $0.0000 / $5.00 used this month
+
+[1/30] Squeaks Services Plumbing, Heating, & Air (Colorado Springs, CO)... done ($0.00122)
+[2/30] House Doctors of Colorado Springs (Colorado Springs, CO)... done ($0.00109)
+[3/30] HOMEfix (Colorado Springs, CO)... done ($0.00113)
+[4/30] The Home Improvement Doctor (Colorado Springs, CO)... done ($0.00098)
+[5/30] Integrity Roofing and Painting (Colorado Springs, CO)... done ($0.00091)
+[6/30] Apache Electric & Maintenance, Inc. (Colorado Springs, CO)... done ($0.00098)
+[7/30] The Speedy Electricians of Colorado Springs (Colorado Springs, CO)... done ($0.00116)
+[8/30] Super B Electric LLC (Colorado Springs, CO)... done ($0.00111)
+[9/30] JRD Electric (Colorado Springs, CO)... done ($0.00106)
+[10/30] Mountain Pro Electric (Colorado Springs, CO)... done ($0.00096)
+[11/30] FREEDOM Electric & Lighting, LLC (Colorado Springs, CO)... done ($0.00103)
+[12/30] Advanced Electric Group (Colorado Springs, CO)... done ($0.00106)
+[13/30] Reliant Electric (Colorado Springs, CO)... done ($0.00093)
+[14/30] Blazer Electric Supply Company Colorado Springs (Colorado Springs, CO)... done ($0.00100)
+[15/30] Elevated Electric (Colorado Springs, CO)... done ($0.00106)
+[16/30] Energy Resource Center (Colorado Springs, CO)... done ($0.00112)
+[17/30] SunPower® (Colorado Springs, CO)... done ($0.00110)
+[18/30] Fix Fellows (Colorado Springs, CO)... done ($0.00098)
+[19/30] Soto's Best Handyman Services (Colorado Springs, CO)... done ($0.00102)
+[20/30] True Craft Handyman (Colorado Springs, CO)... done ($0.00101)
+[21/30] House Hack Colorado Springs (Colorado Springs, CO)... done ($0.00110)
+[22/30] BenTek Plumbing & Mechanical (Colorado Springs, CO)... done ($0.00101)
+[23/30] Denver Handyman & Painting Services (Denver, CO)... done ($0.00108)
+[24/30] JOB Home Services (Denver, CO)... done ($0.00100)
+[25/30] Home Improvements of Colorado Inc. (Denver, CO)... done ($0.00102)
+[26/30] Premier Roofing Company (Denver, CO)... done ($0.00105)
+[27/30] Colorado Precision Roofing (Denver, CO)... done ($0.00096)
+[28/30] Bumble Roofing Denver South (Denver, CO)... done ($0.00104)
+[29/30] 303 Roofer (Denver, CO)... done ($0.00113)
+[30/30] North West Roofing (Denver, CO)... done ($0.00105)
+
+──────────────────────────────────────────────────
+Done.
+  Processed:      30 leads
+  Errors:         0
+  Priority (top5): ChIJc9RKoPlPE4cRqkl4sJ_jBeQ, ChIJD6Vj4PxFE4cRliyRM5TFtgE, ChIJ-3nAw09JE4cRkYyLm3-oiOQ, ChIJc-u9UfVFE4cRoksYrUIIo3c, ChIJ95PzfMKtbIcRaH8J_PDQck4
+  Cost this run:  $0.03134
+  Monthly spend:  $0.0313 / $5.00
+  Briefs in /queue/: 30 new files
+──────────────────────────────────────────────────
+
+[6/7] Checker…
+
+Checker starting
+──────────────────────────────────────────────────
+New month — spend counter reset.
+Briefs to check: 30 | Processing: 30
+Budget: $0.0000 / $3.00
+
+[1/30] Squeaks Services Plumbing, Heating, & Air — ✓ template approved (e7 + s3)
+[2/30] HOMEfix — ✓ template approved (e7 + s3)
+[3/30] Integrity Roofing and Painting — ✓ template approved (s3)
+[4/30] House Doctors of Colorado Springs — ✓ template approved (s3)
+[5/30] The Home Improvement Doctor — ✓ template approved (s3)
+[6/30] Apache Electric & Maintenance, Inc. — ✓ template approved (e7 + s3)
+[7/30] FREEDOM Electric & Lighting, LLC — ✓ template approved (e7 + s3)
+[8/30] Premier Roofing Company — ✓ template approved (s3)
+[9/30] JOB Home Services — ✓ template approved (e7 + s3)
+[10/30] Mountain Pro Electric — ✓ template approved (s3)
+[11/30] Home Improvements of Colorado Inc. — ✓ template approved (s3)
+[12/30] Fix Fellows — ✓ template approved (e7 + s3)
+[13/30] SunPower® — ✓ template approved (s3)
+[14/30] JRD Electric — ✓ template approved (e7 + s3)
+[15/30] Bumble Roofing Denver South — ✓ template approved (s3)
+[16/30] Reliant Electric — ✓ template approved (s3)
+[17/30] Blazer Electric Supply Company Colorado Springs — ✓ template approved (s3)
+[18/30] Denver Handyman & Painting Services — ✓ template approved (e7 + s3)
+[19/30] 303 Roofer — ✓ template approved (e7 + s3)
+[20/30] The Speedy Electricians of Colorado Springs — ✓ template approved (e7 + s3)
+[21/30] True Craft Handyman — ✓ template approved (e7 + s3)
+[22/30] House Hack Colorado Springs — ✓ template approved (e7 + s3)
+[23/30] Soto's Best Handyman Services — ✓ template approved (e7 + s3)
+[24/30] Super B Electric LLC — ✓ template approved (e7 + s3)
+[25/30] BenTek Plumbing & Mechanical — ✓ template approved (e7 + s3)
+[26/30] Colorado Precision Roofing — ✓ template approved (s3)
+[27/30] North West Roofing — ✓ template approved (e7 + s3)
+[28/30] Elevated Electric — ✓ template approved (s3)
+[29/30] Energy Resource Center — ✓ template approved (e7 + s3)
+[30/30] Advanced Electric Group — ✓ template approved (e7 + s3)
+
+──────────────────────────────────────────────────
+Done.
+  Approved:       30 (0 needed rewrite)
+  Flagged:        0 (need human review in /queue/)
+  Cost this run:  $0.00000
+  Monthly spend:  $0.0000 / $3.00
+──────────────────────────────────────────────────
+
+[7/7] Sheet-log — syncing Google Sheets CRM…
+
+Sheet-Log v3
+────────────────────────────────────────────────────────────
+email leads to sync:  72  (skipped: 784)
+AllContacts: wrote 433 leads (all channels).
+────────────────────────────────────────────────────────────
+Summary
+  SentLog new rows:      22
+  SentLog updates:       1
+  changelog entries:     23
+  AllContacts rows:      433
+  skipped (no email):    784
+
+Done. Edit columns F (status) and P (notes) in SentLog by hand.
+      AllContacts tab rebuilds from scratch each run.
+
+────────────────────────────────────────────────────
+New leads: 28 | emails: 7 | approved: 355 | batch 2026-08-01: 18 pending approval | sent earlier: 23
+[report] Approve 18 contacts — handyman / Colorado Springs, CO
+Daily lead-gen — 2026-08-01
+Status:  OK
+Target:  handyman in Colorado Springs, CO
+
+Stages
+  Scout           new leads:      28
+  Contact-scraper emails found:   7
+  Diagnoser       briefs written: 433
+  Checker         approved:       355
+  Sheet-log       rows synced:    355
+
+Email-ready leads now waiting to send: 18
+Rotation: 9/112 combinations worked, 103 remaining.
+Outscraper spend this run: $0.064
+
+Emails sent this morning (previously approved batch): 23
+
+─────────────────────────────────────────────
+AWAITING YOUR APPROVAL — 18 contacts scraped 2026-08-01
+─────────────────────────────────────────────
+  1. HOMEfix
+     office@homefixcos.com   ·   Colorado Springs, CO
+  2. Apache Electric & Maintenance, Inc.
+     office@apacheelec.com   ·   Colorado Springs, CO
+  3. Denver Handyman & Painting Services
+     a.folkers@denverhps.com   ·   Denver, CO
+  4. FREEDOM Electric & Lighting, LLC
+     freedom.electric2023@gmail.com   ·   Colorado Springs, CO
+  5. 303 Roofer
+     info@303roofer.com   ·   Denver, CO
+  6. JOB Home Services
+     jobhomeservices@gmail.com   ·   Denver, CO
+  7. The Speedy Electricians of Colorado Springs
+     coloradosprings@thespeedyelectricians.com   ·   Colorado Springs, CO
+  8. True Craft Handyman
+     jake@truecrafthandymancolorado.com   ·   Colorado Springs, CO
+  9. Fix Fellows
+     fixfellows@outlook.com   ·   Colorado Springs, CO
+ 10. Squeaks Services Plumbing, Heating, & Air
+     workorder@squeaksservices.com   ·   Colorado Springs, CO
+ 11. House Hack Colorado Springs
+     ryan@househackcoloradosprings.com   ·   Colorado Springs, CO
+ 12. Soto's Best Handyman Services
+     sotomoises@yahoo.com   ·   Colorado Springs, CO
+ 13. Super B Electric LLC
+     superbelectricllc@gmail.com   ·   Colorado Springs, CO
+ 14. BenTek Plumbing & Mechanical
+     support@bentekplumbing.com   ·   Colorado Springs, CO
+ 15. North West Roofing
+     info@northwest-roofing.com   ·   Denver, CO
+ 16. JRD Electric
+     office@jrdelectrical.com   ·   Colorado Springs, CO
+ 17. Energy Resource Center
+     info@erc-co.org   ·   Colorado Springs, CO
+ 18. Advanced Electric Group
+     info@advancedelectricgroup.com   ·   Colorado Springs, CO
+
+Nothing above has been emailed. Approve to send on the next 6:30am run:
+  node scripts/approve-batch.js 2026-08-01
+
+Or reject the whole batch:
+  node scripts/approve-batch.js 2026-08-01 --reject
+
+Left un-approved, this batch never sends.
+
+This report is sent on every run. No report at all means the scheduled job did not fire.
+[report] emailed 13dmh33@gmail.com
+────────────────────────────────────────────────────
+
+Today's scrape is PENDING your approval. Review the emailed list, then:
+  node scripts/approve-batch.js 2026-08-01
+
+Approved batches send automatically on the next 6:30am run.
+╔══════════════════════════════════════════════════╗
+║  Daily lead-gen — 2026-08-02 
+╚══════════════════════════════════════════════════╝
+
+[0/7] Preflight…
+  ✓ Clear. Backed up state.json + cost-log.json → logs/state-backups/*-20260802T123000Z.json
+
+[1/7] Sending previously approved batch…
+  → nothing approved and waiting. Skipping send.
+
+[1b/7] Drip — skipped, weekend (follow-ups resume Monday).
+
+[2/7] Choosing market from rotation…
+  → roofer in Colorado Springs, CO   (9 worked, 103 remaining)
+
+[3/7] Scout — has-website roofer in Colorado Springs, CO (cap $0.12)…
+
+Scout — roofer in Colorado Springs, CO [mode: has-website]
+──────────────────────────────────────────────────
+  --budget $0.12 → max 120 raw results
+  Known leads:      615 (will skip re-scraping)
+  Budget:           $0.06 / $10.00 this month
+  Run cap:          $0.12 (--budget)
+  Queries:          1 × 120 = ~120 raw (~$0.120)
+  Min score:        3
+  Min reviews/rating: 10 / 4
+
+  Async task (id: a-780c893c-9513-47a2-8c89-926ac76e3776) — polling......... done
+  Filter breakdown  (120 raw):
+    Kept (auditor-ready, has email): 0
+    Needs manual email lookup:       69
+    Already known:  8  (skipped — saved $$)
+    Reviews <10:    19
+    Rating <4.0:    7
+    No real site:   12
+    No phone:       1
+    Score <3:       4
+  Queued for contact-scraper: 69  (mirrored to leads/needs-email-colorado-springs-co-roofer-2026-08-02-run1.json, state.json as 'scouted' — run contact-scraper --deep next)
+
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+Done.
+  Auditor-ready leads: 0  (of 120 raw)
+  Needs manual email:  69
+  Cost this run:       $0.1200
+  Cost per lead:       $0.0017
+  Monthly spend:       $0.1840 / $10.00
+  Saved to:            leads-web/colorado-springs-co-roofer-2026-08-02-run1.json
+  Needs-email CSV:     leads-web/needs-email-colorado-springs-co-roofer-2026-08-02-run1.csv  (manual lookup)
+──────────────────────────────────────────────────
+
+[4/7] Contact-scraper --deep — harvesting emails (free)…
+
+Contact-Page Scraper  [DEEP crawl]
+────────────────────────────────────────────────────────────
+Queue: 925 leads
+  skipped (sent/closed):     237
+  already have email:        117
+  no website to scrape:      182
+  no lead record found:      178
+  → eligible to scrape:      211
+────────────────────────────────────────────────────────────
+[1/211] Desert Sun Plumbing … error (fetch failed)
+[3/211] ABC Home & Commercial - Plumbing Services Department … error (HTTP 404)
+[6/211] Abacus Plumbing, Air Conditioning & Electrical … error (HTTP 403)
+[5/211] Reliant Plumbing - Austin … error (HTTP 404)
+[9/211] Mr. Rooter Plumbing of Austin … error (HTTP 404)
+[10/211] Economy Plumbing Services, LLC … error (HTTP 404)
+[7/211] Clarke Kent Plumbing … error (HTTP 404)
+[8/211] AAA AUGER Plumbing Services … error (HTTP 404)
+[13/211] Fast Plumbing LLC … ☎ +1 512-548-8188  name: absolutely thrilled with  4 social
+[4/211] Moore & More Plumbing, LLC. … ☎ +1 512-445-5212
+[15/211] 1st Home & Commercial Services … ☎ +1 512-588-5994  name: to adapt with  2 social
+[14/211] Austin Area Plumbing … ☎ +1 512-736-7113  name: current building  4 social
+[12/211] Rooterman Plumbing of Austin … ☎ +1 512-645-1441  name: never using another  1 social
+[18/211] Strand Brothers Service Experts … error (HTTP 400)
+[19/211] Mr. Electric of Austin … error (HTTP 404)
+[17/211] SALT Plumbing Air & Electric … error (HTTP 404)
+[2/211] Rooter-Man Plumbing Austin TX … ☎ +1 512-645-1441  name: never using another  4 social
+[22/211] Winsupply of Austin … no contact info found
+[24/211] Handyman Connection of Austin-Westlake … error (HTTP 404)
+[16/211] Fox Service Company … ☎ +1 512-488-1120  name: with modern conveniences  4 social
+[11/211] Stan's Heating, Air, Plumbing & Electrical … ☎ +1 512-929-9393  name: plug it in  4 social
+[25/211] Welcome Home Handyman … error (HTTP 403)
+[27/211] Red Diamond Roofing … error (HTTP 403)
+[21/211] Aquaman Plumbing Austin … no contact info found
+[23/211] ADK Plumbing … no contact info found
+[30/211] Cox Roofing … ☎ +1 303-505-5574  2 social
+[20/211] Accurate Leak and Line - Austin … ☎ +1 512-357-3826  name: Accurate Leak  3 social
+[26/211] Peak To Peak Roofing & Exteriors, LLC … ☎ +1 720-740-4325  name: plans to stay  4 social
+[34/211] Parobek Plumbing & Air Conditioning … error (HTTP 404)
+[28/211] New Roof Plus … error (HTTP 404)
+[29/211] Interstate Roofing, Inc. … ☎ +1 303-763-9114  name: so pleased with  4 social
+[35/211] McCullough Heating, Air Conditioning & Plumbing … error (HTTP 404)
+[33/211] Cold Is On The Right Plumbing & Air … ☎ +1 512-271-2172  3 social
+[38/211] Olshan Foundation Solutions … error (HTTP 403)
+[37/211] Efficient AC, Electric & Plumbing … error (HTTP 404)
+[31/211] Denver Roofing Works … ☎ +1 720-674-9094  name: dapibus aliquam
+[36/211] Crows Plumbing Service … ☎ +1 512-256-4001  3 social
+[43/211] Affordable Plumbing LLC … error (HTTP 403)
+[42/211] Plumber Anderson Mill … error (HTTP 404)
+[41/211] Benjamin Franklin Plumbing … error (HTTP 404)
+[45/211] Home Services at The Home Depot … error (HTTP 403)
+[44/211] ARS / Rescue Rooter … error (HTTP 404)
+[32/211] A-Denver Roofing … ☎ +1 303-455-3185  4 social
+[46/211] Hercules Foundation Repair & Remodeling … error (HTTP 404)
+[40/211] Precision Heating & Air … ☎ +1 512-379-6385  name: ship as Precision  4 social
+[39/211] Mavyn … name: you may have  5 social
+[51/211] Big Cat Plumbing, Heating & Cooling … error (HTTP 404)
+[53/211] Nates Plumbing … error (fetch failed)
+[47/211] BullsEye Plumbing Heating & Air of Colorado Springs … error (HTTP 404)
+[49/211] Priority Plumbing and Heating … error (HTTP 404)
+[55/211] Peak Flow Plumbing … error (HTTP 404)
+[57/211] Elite Rooter Plumbers … error (HTTP 404)
+[50/211] Wild Water Plumbing Heating Cooling … ☎ +1 719-789-6937  name: wanting to  3 social
+[48/211] Alphalete Plumbing Drain Sewer … ☎ +1 719-631-3866  name: of Plumb  9 social
+[54/211] Pikes Peak Mechanical … ☎ +1 719-232-4720  name: not a robot  4 social
+[59/211] Parkey's Heating, Plumbing, & Air Conditioning … error (HTTP 404)
+[56/211] A Plus Sewer, Drain and Plumbing … ☎ +1 719-359-3558  1 social
+[52/211] B&L Plumbing … ☎ +1 719-638-7341  name: Norissa L.  3 social
+[63/211] Roto-Rooter Plumbing & Water Cleanup … error (HTTP 404)
+[60/211] Apex Plumbing & Mechanical … error (HTTP 404)
+[58/211] Austin & Sons Plumbing … ☎ +1 719-417-8466
+  (SPA render fallback unavailable — run `npm i playwright` on the Mac to enable JS rendering)
+[67/211] Ace Handyman Services North Metro Denver … no contact info found
+[66/211] Jolly Plumbing & Heating, Inc. … error (HTTP 404)
+[68/211] Mr. Handyman of Englewood, Centennial and S Aurora … error (HTTP 404)
+[70/211] Professional Facility Solutions … error (fetch failed)
+[71/211] Core Roofing Systems … error (HTTP 403)
+[62/211] Water Heater Pros … ☎ +1 719-229-5555  2 social
+[64/211] Sveagle Plumbing, Heating, and Cooling … ☎ +1 303-795-7498  name: to please all  4 social
+[65/211] Colorado Best Plumbing … ☎ +1 719-417-8876
+[61/211] PlumbSmart Plumbing Heating and Air … ☎ +1 480-992-2225  name: can buy  5 social
+[76/211] Horn Brothers Roofing … error (HTTP 404)
+[74/211] Arvada Roofing & Home Improvement … ☎ +1 720-402-8039  1 social
+[69/211] Home Improvements of Colorado Inc. … ☎ +1 303-452-6467  name: work is added  1 social
+[72/211] 1st Priority Roofing … ☎ +1 918-398-0407  5 social
+[80/211] Red Hawk Roofing - Denver … error (HTTP 404)
+[79/211] LEMT Roofing … error (HTTP 404)
+[82/211] Reclamation Roofing … ☎ +1 303-744-3064  4 social
+[73/211] Ethos Roofing & Restoration … ☎ +1 855-553-8467  name: every need  6 social
+[77/211] McIntire Roofing … ☎ +1 303-962-7599  name: to cultivate lasting  5 social
+[75/211] Best Roof Roofing … ☎ +1 720-310-3419  name: he is there  4 social
+[81/211] Accurate America … ☎ +1 303-900-7663  name: but exceed expectations  6 social
+[85/211] Premier Roofing Company … error (HTTP 404)
+[78/211] Farha … ☎ +1 720-306-7949  name: of this website  5 social
+[84/211] Above All Roofing … ☎ +1 303-944-3047  name: process with diligence  3 social
+[87/211] Bumble Roofing Denver South … error (HTTP 404)
+[89/211] Severe Weather Roofing and Restoration, LLC … error (HTTP 404)
+[83/211] RTP ROOFING CO. … ☎ +1 303-791-2223  name: Scott Ponzio
+[86/211] Colorado Precision Roofing … ☎ +1 303-872-7750  name: support for homeowners
+[92/211] Mountaintop Roofing, Inc. … error (HTTP 404)
+[91/211] Jesse Roofs Co. … ☎ +1 303-367-5683
+[88/211] Denver Pros Roofing Services … ☎ +1 303-565-2363
+[96/211] Colorado Superior Roofing & Exteriors … error (HTTP 404)
+[95/211] Modern Roof Co … ☎ +1 720-507-8472  name: to this scam  5 social
+[99/211] Prestige Roofing Denver CO … error (fetch failed)
+[90/211] Canopy Roof & Restoration … ☎ +1 704-350-5999  name: Resources Locations
+[98/211] Shamrock Roofing & Construction … error (HTTP 404)
+[101/211] APC Roofing … error (HTTP 403)
+[103/211] Modern Pro Roofing … error (fetch failed)
+[100/211] Next Wave Roofing … error (HTTP 404)
+[94/211] Frontier Metal Roofing … ☎ +1 720-615-2627  name: industry standards and
+[97/211] Advanced Exteriors, Inc. … ☎ +1 303-756-7663  name: analysis and negotiation  3 social
+[105/211] Swartz Electric, LLC … error (HTTP 404)
+[93/211] Sky Ridge Exteriors … error (The operation was aborted due to timeout)
+[107/211] The Electric Way … error (HTTP 404)
+[110/211] Awesome Home Services … error (HTTP 400)
+[111/211] One Source Home Service … error (HTTP 400)
+[108/211] DR Electric … ☎ +1 719-232-3047  name: local building codes  4 social
+[113/211] The Electricians … error (HTTP 404)
+[112/211] Peak Home Performance … error (HTTP 404)
+[104/211] R3D Roofing, LLC … ☎ +1 303-419-3935  name: an engineer and
+[102/211] Sunny Roofing LLC … ☎ +1 303-734-0956  name: S St  3 social
+[117/211] American Electrician … ☎ +1 719-520-9999  name: Should Know  7 social
+[116/211] Advantage Heating and Cooling … error (HTTP 404)
+[106/211] Front Range Electric … ☎ +1 719-321-4413  3 social
+[120/211] CUSI Electric … error (fetch failed)
+[121/211] WireNut Home Services … error (HTTP 404)
+[109/211] Gaddie Electric … ☎ +1 719-268-9433  name: Kristeen Danburg  5 social
+[119/211] Electrical Pros of Colorado LLC … no contact info found
+[123/211] SoCo Heating and Cooling … error (HTTP 404)
+[118/211] A&E Electric … ☎ +1 719-203-1533  3 social
+[114/211] Comfort By Design … ☎ +1 719-374-1776  8 social
+[122/211] Weatherby Electric … ☎ +1 719-482-4756  name: to provide you
+[115/211] Cornerstone Auto Repair … name: Bola Shonoiki
+[125/211] Mountain Pro Electric … error (HTTP 404)
+[124/211] Woods Contracting … ☎ +1 719-419-9477  name: very pleased with  3 social
+[126/211] Reliant Electric … ☎ +1 719-244-0513
+[132/211] Ace Electric … 1 social
+[127/211] Blazer Electric Supply Company Colorado Springs … ☎ +1 719-596-1333  name: of that location  1 social
+[134/211] Spectrum Lighting … error (fetch failed)
+[129/211] SunPower® … ☎ +1 877-299-4943  name: and Chairman of  6 social
+[130/211] Bee Electric LLC … no contact info found
+[131/211] Sparkz Electrical … ☎ +1 719-888-0446  name: to put up
+[137/211] The Home Improvement Doctor … error (HTTP 400)
+[128/211] Elevated Electric … ☎ +1 719-354-3704  name: Dustin Dewitt  3 social
+[138/211] Integrity Roofing and Painting … error (HTTP 404)
+[135/211] KW Restoration … ☎ +1 719-867-4299  name: for excellence in
+[133/211] Peak Lighting … ☎ +1 719-531-5200
+[139/211] Founder's Renovations … no contact info found
+[140/211] Wickham's Workbench … ☎ +1 719-632-5117  4 social
+[136/211] House Doctors of Colorado Springs … ☎ +1 719-356-4845  name: and Molding Installation  4 social
+[145/211] Pierce Roofing … ☎ +1 719-630-1044  name: as Brian and  3 social
+[144/211] Cheyenne Mountain Roofing - Colorado Springs Roof Repair & Replacement … error (HTTP 404)
+[147/211] Storm Guard Roofing … error (HTTP 403)
+[141/211] Cascade Drywall … ☎ +1 720-289-3854  name: from Nextdoor  1 social
+[142/211] Colorado Building Supply - Colorado Springs … name: or Contractor  2 social
+[151/211] MD Roofing and Solar … ✉ office@mdroofing.info  ☎ +1 719-591-2142  name: to making informed  1 social
+[146/211] Rampart Roofing & Exteriors … ✉ info@rampartroofing.com  ☎ +1 719-487-7663  name: so glad  4 social
+[143/211] Petrali Roofing - Central … ☎ +1 719-375-8773  name: can be daunting  6 social
+[153/211] Colorado Pro Roofing … ✉ info@coloradoproroofing.com  ☎ +1 719-208-3227  name: Scott Jones  7 social
+[154/211] High Valley Roofing, LLC … ✉ info@highvalleyroofing.com  ☎ +1 719-373-9985  name: Enhancements and Aesthetic
+[148/211] Native Roofing & Solar … ✉ info@nativecoso.com  ☎ +1 719-685-6995  4 social
+[157/211] Homestead Roofing - Colorado Springs … ✉ info@homesteadroofingcolorado.com  ☎ +1 719-433-6991  name: Colorado regulations  1 social
+[149/211] Divine Roofing, Inc. … ☎ +1 719-497-1005  name: Guidance Same  6 social
+[159/211] Fixins Roofing and Restoration … ✉ getquote@fixinscontracting.com  ☎ +1 719-641-5969  name: from roof to  3 social
+[155/211] RIZE Roofing … ☎ +1 719-339-4004  name: management experts on  1 social
+[150/211] CO Roofing & Solar … ☎ +1 719-232-8747  name: Zack Stark  4 social
+[156/211] 7 Summits Roofing … ✉ info@7summitsroofing.com  ☎ +1 719-432-8619  name: Geoff Bray  6 social
+[162/211] Guardian Roofing and Restoration … ✉ guardianrandrllc@gmail.com  ☎ +1 719-755-8465  name: Third Angle
+[160/211] Pioneer Construction and Roofing … ✉ nclingan.pioneer@gmail.com  ☎ +1 719-822-9222  name: Noah Clingan  4 social
+[164/211] Rock Solid Roofing … ✉ 4rocksolid@gmail.com  ☎ +1 719-799-3329  name: repairs from start  3 social
+[165/211] 7th Generation Roofing … ✉ 7thgenerationroofing@gmail.com  ☎ +1 719-651-1883  name: to ensure you  1 social
+[152/211] Seamless Choice Siding LLC … ☎ +1 719-445-7888  name: and storm damage  5 social
+[167/211] Iron Shield Roofing … ✉ info@callironshieldroofing.com  ☎ +1 719-967-5329  name: Assistance Navigating insurance  2 social
+[166/211] Liberty Construction … ☎ +1 719-465-2788  name: Support for Exterior  2 social
+[161/211] hennessey roofing llc … ✉ tom@hennesseyroofing.com  ☎ +1 719-323-4938  4 social
+[171/211] Diversified Roofing And Construction … ☎ +1 719-900-8647  1 social
+[172/211] Tectum Roofing … ✉ admin@weroof.com  ☎ +1 719-455-7663  name: Sean Moriarty  4 social
+[158/211] Pristine Roofing & Gutters … ☎ +1 719-357-5609  name: and walking me  7 social
+[163/211] BLU roofing … ✉ sales@bluroofing.com  ☎ +1 719-287-1030  2 social
+[168/211] Raptor Roofing of Colorado Springs … ✉ raptorroofllc@gmail.com  ☎ +1 719-508-9045  3 social
+[175/211] All Things New Roofing & Restoration … ✉ sondra@allthingsnewroofing.com  ☎ +1 719-325-6949  name: process to get  4 social
+[176/211] 3G Construction & Roofing … ✉ 3gconstruction@gmail.com  ☎ +1 719-422-2027  name: paperwork can often  2 social
+[177/211] JR & CO … ✉ freeroofinspection2@jrcousa.com  ☎ +1 833-572-6872  name: Jon Schilling  4 social
+[179/211] Crestone Roofing … ✉ info@crestoneroofing.com  ☎ +1 719-230-0812  name: Luke Jones  1 social
+[180/211] Front Range Roofing & Siding … ✉ frontrangeroofing@yahoo.com  ☎ +1 719-536-9442  name: but also exceed  3 social
+[170/211] Golden Bee Roofing … ☎ +1 719-888-4467  name: forever groteful for
+[169/211] Reliable Roofing Systems - Colorado Springs Roofing Contractor … ☎ +1 719-576-6300  name: to help as  3 social
+[182/211] Triton Roofing … ✉ cos@tritonroofing.com  ☎ +1 719-322-3673  2 social
+[184/211] Holladay Grace Roofing … ☎ +1 719-596-0733  name: to no  3 social
+[181/211] Roofcraft, LLC … ☎ +1 719-300-9329  name: was a standout  6 social
+[173/211] A & I Skyline … ☎ +1 719-464-1944  3 social
+[185/211] Upfront Restoration & Roofing … ✉ office@upfrontrnr.com  ☎ +1 719-799-3526  name: using checklists  3 social
+[178/211] Hail Country Roofing & Gutters … error (The operation was aborted due to timeout)
+[186/211] Total Roofing & Restoration … error (HTTP 404)
+[174/211] Vector Roofing … ✉ office@vectorroofing.com  ☎ +1 719-418-2903  2 social
+[183/211] Wiseman Roofing … ✉ info@wisemanroofing.com  ☎ +1 719-722-9067  name: very busy Wiseman  3 social
+[187/211] All Area Construction & Roofing, LLC … ✉ allareaconst@gmail.com  ☎ +1 719-453-5080  name: All Area Construction  1 social
+[191/211] Titanium Ridge Exteriors LLC … ✉ info@titaniumridgeexteriors.com  ☎ +1 719-412-1653  name: assistance from start
+[189/211] Reynolds Roofing Systems … error (HTTP 404)
+[190/211] Excel Construction Group … ✉ info@excelcg.com  ☎ +1 833-324-2699  name: assistance Roof Restoration  4 social
+[193/211] Knight's Restoration LTD … ✉ jonpinhorn.typedesign@gmail.com  ☎ +1 719-900-3645  name: to build
+[194/211] Mountain View Roofing And Construction LLC … ✉ mountainviewroofingco@gmail.com  ☎ +1 719-761-7036  name: to grow  2 social
+[188/211] Grand Line Roofing … ✉ grandlineroofing1@gmail.com  ☎ +1 719-645-4200  name: grew up in  3 social
+[196/211] Rocky mountain roofing and construction … ✉ milenabbrandao@gmail.com  ☎ +1 719-375-8581
+[195/211] Peak View Roofing … ✉ peakview@peakviewroofing.com  ☎ +1 719-380-7663  name: Justin Gerdis  4 social
+[192/211] Mountview Skylights and Roof Repair … ✉ mtviewskylights@gmail.com  ☎ +1 719-536-9560
+[197/211] K&D Roofing and Construction … ✉ homerestorationsco@gmail.com  ☎ +1 719-822-7600
+[201/211] Trafton Roofing & Repair Service … ✉ traftonroofing1946@gmail.com  ☎ +1 719-634-3026  name: and Tara are  2 social
+[198/211] Campbell Roofing, Inc. … ✉ info@campbellroofinginc.com  ☎ +1 719-573-9395  name: guidance to help  2 social
+[203/211] 719 Roofing & Exteriors … ✉ robert@719roofing.com  ☎ +1 719-505-4987  name: field adjuster
+[204/211] Amber Peak Roofing … ✉ contact@amberpeakroofing.com  ☎ +1 719-247-2672  name: and payout is  2 social
+[199/211] On Top Roofing & Restoration … ☎ +1 719-432-9886  5 social
+[208/211] L.E. Roofing … ✉ leroofing@leroofing.com  ☎ +1 719-406-8623  name: Tina Chavez  1 social
+[200/211] High Point Roofing … ☎ +1 719-375-8850  name: from start to  1 social
+[202/211] Restoration Colorado Roofing … ☎ +1 719-244-7668  2 social
+[211/211] D&E Roofing … no contact info found
+[210/211] Royalty Roofing … error (HTTP 404)
+[207/211] Cobalt Roofing … ✉ info@cobaltroofing.com  ☎ +1 719-465-2687  4 social
+[206/211] Rocky Top Construction … ✉ rockytoproofingco@gmail.com  ☎ +1 719-494-6225  name: Login to Client  6 social
+[209/211] JRB Enterprises … ☎ +1 719-358-6484  3 social
+[205/211] Safe Plus Roofing Colorado Springs … ☎ +1 719-259-0909
+────────────────────────────────────────────────────────────
+Summary
+  sites visited:        211
+  emails found:         43
+  phones found:         0
+  names found:          46
+  socials found:        52
+  leads flipped→email:  43
+  no email / unchanged: 168
+  fetch errors:         72
+  hit rate:             62%  (131/211 sites yielded contact info)
+
+Flipped to email:
+  • MD Roofing and Solar → office@mdroofing.info
+  • Rampart Roofing & Exteriors → info@rampartroofing.com
+  • Colorado Pro Roofing → info@coloradoproroofing.com
+  • High Valley Roofing, LLC → info@highvalleyroofing.com
+  • Native Roofing & Solar → info@nativecoso.com
+  • Homestead Roofing - Colorado Springs → info@homesteadroofingcolorado.com
+  • Fixins Roofing and Restoration → getquote@fixinscontracting.com
+  • 7 Summits Roofing → info@7summitsroofing.com
+  • Guardian Roofing and Restoration → guardianrandrllc@gmail.com
+  • Pioneer Construction and Roofing → nclingan.pioneer@gmail.com
+  • Rock Solid Roofing → 4rocksolid@gmail.com
+  • 7th Generation Roofing → 7thgenerationroofing@gmail.com
+  • Iron Shield Roofing → info@callironshieldroofing.com
+  • hennessey roofing llc → tom@hennesseyroofing.com
+  • Tectum Roofing → admin@weroof.com
+  • BLU roofing → sales@bluroofing.com
+  • Raptor Roofing of Colorado Springs → raptorroofllc@gmail.com
+  • All Things New Roofing & Restoration → sondra@allthingsnewroofing.com
+  • 3G Construction & Roofing → 3gconstruction@gmail.com
+  • JR & CO → freeroofinspection2@jrcousa.com
+  • Crestone Roofing → info@crestoneroofing.com
+  • Front Range Roofing & Siding → frontrangeroofing@yahoo.com
+  • Triton Roofing → cos@tritonroofing.com
+  • Upfront Restoration & Roofing → office@upfrontrnr.com
+  • Vector Roofing → office@vectorroofing.com
+  • Wiseman Roofing → info@wisemanroofing.com
+  • All Area Construction & Roofing, LLC → allareaconst@gmail.com
+  • Titanium Ridge Exteriors LLC → info@titaniumridgeexteriors.com
+  • Excel Construction Group → info@excelcg.com
+  • Knight's Restoration LTD → jonpinhorn.typedesign@gmail.com
+  • Mountain View Roofing And Construction LLC → mountainviewroofingco@gmail.com
+  • Grand Line Roofing → grandlineroofing1@gmail.com
+  • Rocky mountain roofing and construction → milenabbrandao@gmail.com
+  • Peak View Roofing → peakview@peakviewroofing.com
+  • Mountview Skylights and Roof Repair → mtviewskylights@gmail.com
+  • K&D Roofing and Construction → homerestorationsco@gmail.com
+  • Trafton Roofing & Repair Service → traftonroofing1946@gmail.com
+  • Campbell Roofing, Inc. → info@campbellroofinginc.com
+  • 719 Roofing & Exteriors → robert@719roofing.com
+  • Amber Peak Roofing → contact@amberpeakroofing.com
+  • L.E. Roofing → leroofing@leroofing.com
+  • Cobalt Roofing → info@cobaltroofing.com
+  • Rocky Top Construction → rockytoproofingco@gmail.com
+
+Next: node scripts/diagnoser.js  →  node scripts/checker.js  →  node scripts/pitcher.js --channel email
+
+✓ Google Sheet "AllContacts" synced: 0 cell update(s), 61 row(s) appended.
+
+[5/7] Diagnoser…
+
+Diagnoser starting
+──────────────────────────────────────────────────
+Leads available: 141 | Processing: 30 | Daily limit: 30
+Budget: $0.0313 / $5.00 used this month
+
+[1/30] Petrali Roofing - Central (Colorado Springs, CO)... done ($0.00110)
+[2/30] Cheyenne Mountain Roofing - Colorado Springs Roof Repair & Replacement (Colorado Springs, CO)... done ($0.00097)
+[3/30] Pierce Roofing (Colorado Springs, CO)... done ($0.00105)
+[4/30] Rampart Roofing & Exteriors (Colorado Springs, CO)... done ($0.00109)
+[5/30] Storm Guard Roofing (Colorado Springs, CO)... done ($0.00116)
+[6/30] Native Roofing & Solar (Colorado Springs, CO)... done ($0.00108)
+[7/30] Divine Roofing, Inc. (Colorado Springs, CO)... done ($0.00108)
+[8/30] CO Roofing & Solar (Colorado Springs, CO)... done ($0.00103)
+[9/30] MD Roofing and Solar (Colorado Springs, CO)... done ($0.00104)
+[10/30] Seamless Choice Siding LLC (Colorado Springs, CO)... done ($0.00111)
+[11/30] Colorado Pro Roofing (Colorado Springs, CO)... done ($0.00127)
+[12/30] High Valley Roofing, LLC (Colorado Springs, CO)... done ($0.00095)
+[13/30] RIZE Roofing (Colorado Springs, CO)... done ($0.00100)
+[14/30] 7 Summits Roofing (Colorado Springs, CO)... done ($0.00109)
+[15/30] Homestead Roofing - Colorado Springs (Colorado Springs, CO)... done ($0.00102)
+[16/30] Pristine Roofing & Gutters (Colorado Springs, CO)... done ($0.00118)
+[17/30] Fixins Roofing and Restoration (Colorado Springs, CO)... done ($0.00107)
+[18/30] Pioneer Construction and Roofing (Colorado Springs, CO)... done ($0.00109)
+[19/30] hennessey roofing llc (Colorado Springs, CO)... done ($0.00106)
+[20/30] Guardian Roofing and Restoration (Colorado Springs, CO)... done ($0.00096)
+[21/30] BLU roofing (Colorado Springs, CO)... done ($0.00100)
+[22/30] Rock Solid Roofing (Colorado Springs, CO)... done ($0.00104)
+[23/30] 7th Generation Roofing (Colorado Springs, CO)... done ($0.00101)
+[24/30] Liberty Construction (Colorado Springs, CO)... done ($0.00101)
+[25/30] Iron Shield Roofing (Colorado Springs, CO)... done ($0.00103)
+[26/30] Raptor Roofing of Colorado Springs (Colorado Springs, CO)... done ($0.00109)
+[27/30] Reliable Roofing Systems - Colorado Springs Roofing Contractor (Colorado Springs, CO)... done ($0.00104)
+[28/30] Golden Bee Roofing (Colorado Springs, CO)... done ($0.00103)
+[29/30] Diversified Roofing And Construction (Colorado Springs, CO)... done ($0.00100)
+[30/30] Tectum Roofing (Colorado Springs, CO)... done ($0.00107)
+
+──────────────────────────────────────────────────
+Done.
+  Processed:      30 leads
+  Errors:         0
+  Priority (top5): ChIJ4TNaEZFPE4cRli0F6QOAAFQ, ChIJKx8a9ZlPE4cRrdokhh1yOuc, ChIJxw-_KsBEE4cR-BVZtaVUr2E, ChIJJdAmluROE4cRs8m7_7tuODE, ChIJzSauP7BFE4cRBtm6LdPIW2Q
+  Cost this run:  $0.03170
+  Monthly spend:  $0.0630 / $5.00
+  Briefs in /queue/: 30 new files
+──────────────────────────────────────────────────
+
+[6/7] Checker…
+
+Checker starting
+──────────────────────────────────────────────────
+Briefs to check: 30 | Processing: 30
+Budget: $0.0000 / $3.00
+
+[1/30] Cheyenne Mountain Roofing - Colorado Springs Roof Repair & Replacement — ✓ template approved (s3)
+[2/30] Storm Guard Roofing — ✓ template approved (s3)
+[3/30] Pierce Roofing — ✓ template approved (s3)
+[4/30] Rampart Roofing & Exteriors — ✓ template approved (e7 + s3)
+[5/30] Divine Roofing, Inc. — ✓ template approved (s3)
+[6/30] CO Roofing & Solar — ✓ template approved (s3)
+[7/30] Seamless Choice Siding LLC — ✓ template approved (s3)
+[8/30] MD Roofing and Solar — ✓ template approved (e7 + s3)
+[9/30] RIZE Roofing — ✓ template approved (s3)
+[10/30] BLU roofing — ✓ template approved (e7 + s3)
+[11/30] Fixins Roofing and Restoration — ✓ template approved (e7 + s3)
+[12/30] Diversified Roofing And Construction — ✓ template approved (s3)
+[13/30] 7th Generation Roofing — ✓ template approved (e7 + s3)
+[14/30] Liberty Construction — ✓ template approved (s3)
+[15/30] Pristine Roofing & Gutters — ✓ template approved (s3)
+[16/30] hennessey roofing llc — ✓ template approved (e7 + s3)
+[17/30] Rock Solid Roofing — ✓ template approved (e7 + s3)
+[18/30] Petrali Roofing - Central — ✓ template approved (s3)
+[19/30] Guardian Roofing and Restoration — ✓ template approved (e7 + s3)
+[20/30] Pioneer Construction and Roofing — ✓ template approved (e7 + s3)
+[21/30] Tectum Roofing — ✓ template approved (e7 + s3)
+[22/30] High Valley Roofing, LLC — ✓ template approved (e7 + s3)
+[23/30] Native Roofing & Solar — ✓ template approved (e7 + s3)
+[24/30] 7 Summits Roofing — ✓ template approved (e7 + s3)
+[25/30] Reliable Roofing Systems - Colorado Springs Roofing Contractor — ✓ template approved (s3)
+[26/30] Homestead Roofing - Colorado Springs — ✓ template approved (e7 + s3)
+[27/30] Golden Bee Roofing — ✓ template approved (s3)
+[28/30] Raptor Roofing of Colorado Springs — ✓ template approved (e7 + s3)
+[29/30] Iron Shield Roofing — ✓ template approved (e7 + s3)
+[30/30] Colorado Pro Roofing — ✓ template approved (e7 + s3)
+
+──────────────────────────────────────────────────
+Done.
+  Approved:       30 (0 needed rewrite)
+  Flagged:        0 (need human review in /queue/)
+  Cost this run:  $0.00000
+  Monthly spend:  $0.0000 / $3.00
+──────────────────────────────────────────────────
+
+[7/7] Sheet-log — syncing Google Sheets CRM…
+
+Sheet-Log v3
+────────────────────────────────────────────────────────────
+email leads to sync:  72  (skipped: 853)
+AllContacts: wrote 463 leads (all channels).
+────────────────────────────────────────────────────────────
+Summary
+  SentLog new rows:      0
+  SentLog updates:       1
+  changelog entries:     1
+  AllContacts rows:      463
+  skipped (no email):    853
+
+Done. Edit columns F (status) and P (notes) in SentLog by hand.
+      AllContacts tab rebuilds from scratch each run.
+
+────────────────────────────────────────────────────
+New leads: 138 | emails: 43 | approved: 385 | batch 2026-08-02: 35 pending approval | sent earlier: 0
+[report] Approve 35 contacts — roofer / Colorado Springs, CO
+Daily lead-gen — 2026-08-02
+Status:  OK
+Target:  roofer in Colorado Springs, CO
+
+Stages
+  Scout           new leads:      138
+  Contact-scraper emails found:   43
+  Diagnoser       briefs written: 463
+  Checker         approved:       385
+  Sheet-log       rows synced:    385
+
+Email-ready leads now waiting to send: 35
+Rotation: 10/112 combinations worked, 102 remaining.
+Outscraper spend this run: $0.184
+
+Emails sent this morning (previously approved batch): 0
+
+─────────────────────────────────────────────
+AWAITING YOUR APPROVAL — 35 contacts scraped 2026-08-02
+─────────────────────────────────────────────
+  1. HOMEfix
+     office@homefixcos.com   ·   Colorado Springs, CO
+  2. Apache Electric & Maintenance, Inc.
+     office@apacheelec.com   ·   Colorado Springs, CO
+  3. BLU roofing
+     sales@bluroofing.com   ·   Colorado Springs, CO
+  4. Fixins Roofing and Restoration
+     getquote@fixinscontracting.com   ·   Colorado Springs, CO
+  5. 7th Generation Roofing
+     7thgenerationroofing@gmail.com   ·   Colorado Springs, CO
+  6. Denver Handyman & Painting Services
+     a.folkers@denverhps.com   ·   Denver, CO
+  7. hennessey roofing llc
+     tom@hennesseyroofing.com   ·   Colorado Springs, CO
+  8. FREEDOM Electric & Lighting, LLC
+     freedom.electric2023@gmail.com   ·   Colorado Springs, CO
+  9. 303 Roofer
+     info@303roofer.com   ·   Denver, CO
+ 10. Raptor Roofing of Colorado Springs
+     raptorroofllc@gmail.com   ·   Colorado Springs, CO
+ 11. Rock Solid Roofing
+     4rocksolid@gmail.com   ·   Colorado Springs, CO
+ 12. JOB Home Services
+     jobhomeservices@gmail.com   ·   Denver, CO
+ 13. The Speedy Electricians of Colorado Springs
+     coloradosprings@thespeedyelectricians.com   ·   Colorado Springs, CO
+ 14. True Craft Handyman
+     jake@truecrafthandymancolorado.com   ·   Colorado Springs, CO
+ 15. Fix Fellows
+     fixfellows@outlook.com   ·   Colorado Springs, CO
+ 16. Squeaks Services Plumbing, Heating, & Air
+     workorder@squeaksservices.com   ·   Colorado Springs, CO
+ 17. Guardian Roofing and Restoration
+     guardianrandrllc@gmail.com   ·   Colorado Springs, CO
+ 18. House Hack Colorado Springs
+     ryan@househackcoloradosprings.com   ·   Colorado Springs, CO
+ 19. Soto's Best Handyman Services
+     sotomoises@yahoo.com   ·   Colorado Springs, CO
+ 20. Super B Electric LLC
+     superbelectricllc@gmail.com   ·   Colorado Springs, CO
+ 21. BenTek Plumbing & Mechanical
+     support@bentekplumbing.com   ·   Colorado Springs, CO
+ 22. Pioneer Construction and Roofing
+     nclingan.pioneer@gmail.com   ·   Colorado Springs, CO
+ 23. North West Roofing
+     info@northwest-roofing.com   ·   Denver, CO
+ 24. JRD Electric
+     office@jrdelectrical.com   ·   Colorado Springs, CO
+ 25. Tectum Roofing
+     admin@weroof.com   ·   Colorado Springs, CO
+ 26. High Valley Roofing, LLC
+     info@highvalleyroofing.com   ·   Colorado Springs, CO
+ 27. Colorado Pro Roofing
+     info@coloradoproroofing.com   ·   Colorado Springs, CO
+ 28. MD Roofing and Solar
+     office@mdroofing.info   ·   Colorado Springs, CO
+ 29. Native Roofing & Solar
+     info@nativecoso.com   ·   Colorado Springs, CO
+ 30. 7 Summits Roofing
+     info@7summitsroofing.com   ·   Colorado Springs, CO
+ 31. Energy Resource Center
+     info@erc-co.org   ·   Colorado Springs, CO
+ 32. Rampart Roofing & Exteriors
+     info@rampartroofing.com   ·   Colorado Springs, CO
+ 33. Advanced Electric Group
+     info@advancedelectricgroup.com   ·   Colorado Springs, CO
+ 34. Iron Shield Roofing
+     info@callironshieldroofing.com   ·   Colorado Springs, CO
+ 35. Homestead Roofing - Colorado Springs
+     info@homesteadroofingcolorado.com   ·   Colorado Springs, CO
+
+Nothing above has been emailed. Approve to send on the next 6:30am run:
+  node scripts/approve-batch.js 2026-08-02
+
+Or reject the whole batch:
+  node scripts/approve-batch.js 2026-08-02 --reject
+
+Left un-approved, this batch never sends.
+
+This report is sent on every run. No report at all means the scheduled job did not fire.
+[report] emailed 13dmh33@gmail.com
+────────────────────────────────────────────────────
+
+Today's scrape is PENDING your approval. Review the emailed list, then:
+  node scripts/approve-batch.js 2026-08-02
+
+Approved batches send automatically on the next 6:30am run.
+╔══════════════════════════════════════════════════╗
+║  Daily lead-gen — 2026-08-03 
+╚══════════════════════════════════════════════════╝
+
+[0/7] Preflight…
+  ✓ Clear. Backed up state.json + cost-log.json → logs/state-backups/*-20260803T123000Z.json
+
+[1/7] Sending previously approved batch…
+  → nothing approved and waiting. Skipping send.
+
+[1b/7] Drip — sending due follow-ups…
+
+Drip starting
+──────────────────────────────────────────────────
+Due: 130 | Sending: 20 | Daily limit: 20
+Sent today: 0
+
+[1/20] Denver Plumbing & Drain Pro (d1 / sms) — ✓ sent
+[2/20] Drains Great - Metropolitan Drain Cleaning (d1 / email) — ✓ sent
+[3/20] McComb Plumbing (d1 / sms) — ✓ sent
+[4/20] Emergency Plumbers Denver LLC (d1 / email) — ✓ sent
+[5/20] First Choice Plumbing & Drain Englewood (d1 / sms) — ✓ sent
+[6/20] Jess' Plumbing & Heating, Inc. (d1 / email) — ✓ sent
+[7/20] D & J Enterprises (d1 / sms) — ✓ sent
+[8/20] R Buck (d1 / email) — ✓ sent
+[9/20] Quality Work Plumbing Englewood CO (d1 / sms) — ✓ sent
+[10/20] Rocky Mountain Plumbing Services (d1 / email) — ✓ sent
+[11/20] Englewood Plumbing Pros (d1 / sms) — ✓ sent
+[12/20] Dan's Drains and Digs (d1 / email) — ✓ sent
+[13/20] Emergency Plumbers Denver LLC (d1 / sms) — ✓ sent
+[14/20] Drain Doctors (d1 / email) — ✓ sent
+[15/20] Swift Plumbing Englewood Experts (d1 / sms) — ✓ sent
+[16/20] Drain Fix Team (d1 / email) — ✓ sent
+[17/20] Anytime Plumbing Englewood (d1 / sms) — ✓ sent
+[18/20] Drain Plumber Pro (d1 / email) — ✓ sent
+[19/20] Quality Plumbing (d1 / sms) — ✓ sent
+[20/20] Endurance Plumbing (d1 / email) — ✓ sent
+
+──────────────────────────────────────────────────
+Done.
+  Sent:         20
+  Errors:       0
+  Unresponsive: 0
+  Sent today:   20 / 20
+──────────────────────────────────────────────────
+
+[2/7] Choosing market from rotation…
+  → electrician in Aurora, CO   (10 worked, 102 remaining)
+
+[3/7] Scout — has-website electrician in Aurora, CO (cap $0.12)…
+
+Scout — electrician in Aurora, CO [mode: has-website]
+──────────────────────────────────────────────────
+  --budget $0.12 → max 120 raw results
+  Known leads:      684 (will skip re-scraping)
+  Budget:           $0.18 / $10.00 this month
+  Run cap:          $0.12 (--budget)
+  Queries:          1 × 120 = ~120 raw (~$0.120)
+  Min score:        3
+  Min reviews/rating: 10 / 4
+
+  Async task (id: a-07bcb974-4986-4585-8655-1e05bf3c77be) — polling...... done
+  Filter breakdown  (101 raw):
+    Kept (auditor-ready, has email): 0
+    Needs manual email lookup:       35
+    Already known:  11  (skipped — saved $$)
+    Reviews <10:    38
+    Rating <4.0:    7
+    No real site:   5
+    No phone:       2
+    Score <3:       3
+  Queued for contact-scraper: 17  (mirrored to leads/needs-email-aurora-co-electrician-2026-08-03-run1.json, state.json as 'scouted' — run contact-scraper --deep next)
+
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+─
+Done.
+  Auditor-ready leads: 0  (of 101 raw)
+  Needs manual email:  35
+  Cost this run:       $0.1010
+  Cost per lead:       $0.0029
+  Monthly spend:       $0.2850 / $10.00
+  Saved to:            leads-web/aurora-co-electrician-2026-08-03-run1.json
+  Needs-email CSV:     leads-web/needs-email-aurora-co-electrician-2026-08-03-run1.csv  (manual lookup)
+──────────────────────────────────────────────────
+
+[4/7] Contact-scraper --deep — harvesting emails (free)…
+
+Contact-Page Scraper  [DEEP crawl]
+────────────────────────────────────────────────────────────
+Queue: 942 leads
+  skipped (sent/closed):     226
+  already have email:        163
+  no website to scrape:      190
+  no lead record found:      168
+  → eligible to scrape:      195
+────────────────────────────────────────────────────────────
+[1/195] Desert Sun Plumbing … error (fetch failed)
+[3/195] ABC Home & Commercial - Plumbing Services Department … error (HTTP 404)
+[6/195] Abacus Plumbing, Air Conditioning & Electrical … error (HTTP 403)
+[5/195] Reliant Plumbing - Austin … error (HTTP 404)
+[9/195] Mr. Rooter Plumbing of Austin … error (HTTP 404)
+[7/195] Clarke Kent Plumbing … error (HTTP 404)
+[10/195] Economy Plumbing Services, LLC … error (HTTP 404)
+[8/195] AAA AUGER Plumbing Services … error (HTTP 404)
+[13/195] Fast Plumbing LLC … ☎ +1 512-548-8188  name: absolutely thrilled with  4 social
+[12/195] Rooterman Plumbing of Austin … ☎ +1 512-645-1441  name: never using another  1 social
+[4/195] Moore & More Plumbing, LLC. … ☎ +1 512-445-5212
+[15/195] 1st Home & Commercial Services … ☎ +1 512-588-5994  name: to adapt with  2 social
+[14/195] Austin Area Plumbing … ☎ +1 512-736-7113  name: current building  4 social
+[18/195] Strand Brothers Service Experts … error (HTTP 400)
+[19/195] Mr. Electric of Austin … error (HTTP 404)
+[11/195] Stan's Heating, Air, Plumbing & Electrical … ☎ +1 512-929-9393  name: plug it in  4 social
+[17/195] SALT Plumbing Air & Electric … error (HTTP 404)
+[2/195] Rooter-Man Plumbing Austin TX … ☎ +1 512-645-1441  name: never using another  4 social
+[22/195] Winsupply of Austin … no contact info found
+[24/195] Handyman Connection of Austin-Westlake … error (HTTP 404)
+[16/195] Fox Service Company … ☎ +1 512-488-1120  name: with modern conveniences  4 social
+[26/195] Done Plumbing, Heating, Cooling & Electric … error (HTTP 404)
+[25/195] Salzano Services … error (HTTP 404)
+[21/195] Aquaman Plumbing Austin … no contact info found
+[29/195] Positive Energy Electrical Corp. … error (HTTP 404)
+[23/195] ADK Plumbing … no contact info found
+[28/195] Allstar Electrical Services … ✉ estimating@allstarelectrical.com  ☎ +1 303-399-7420  name: construction deadlines and  3 social
+[27/195] JD Electrical Home Solutions … error (HTTP 404)
+[31/195] Stubblefield Electric … ✉ thomas@stubblefieldelectric.com  ☎ +1 303-376-4057  name: safety codes and  3 social
+[20/195] Accurate Leak and Line - Austin … ☎ +1 512-357-3826  name: Accurate Leak  3 social
+[35/195] Welcome Home Handyman … error (HTTP 403)
+[34/195] R&A Enterprises of Denver … error (fetch failed)
+[33/195] TAG Electrical Co … error (HTTP 429)
+[37/195] Red Diamond Roofing … error (HTTP 403)
+[38/195] New Roof Plus … error (HTTP 404)
+[30/195] Cu Solutions … ✉ info@thecusolution.com  ☎ +1 303-792-4999  name: so happy with  4 social
+[40/195] Cox Roofing … ☎ +1 303-505-5574  2 social
+[32/195] Ulster Electric … ☎ +1 720-794-0045
+[36/195] Peak To Peak Roofing & Exteriors, LLC … ☎ +1 720-740-4325  name: plans to stay  4 social
+[44/195] Parobek Plumbing & Air Conditioning … error (HTTP 404)
+[45/195] McCullough Heating, Air Conditioning & Plumbing … error (HTTP 404)
+[39/195] Interstate Roofing, Inc. … ☎ +1 303-763-9114  name: so pleased with  4 social
+[48/195] Olshan Foundation Solutions … error (HTTP 403)
+[47/195] Efficient AC, Electric & Plumbing … error (HTTP 404)
+[43/195] Cold Is On The Right Plumbing & Air … ☎ +1 512-271-2172  3 social
+[41/195] Denver Roofing Works … ☎ +1 720-674-9094  name: dapibus aliquam
+[46/195] Crows Plumbing Service … ☎ +1 512-256-4001  3 social
+[52/195] Plumber Anderson Mill … error (HTTP 404)
+[51/195] Benjamin Franklin Plumbing … error (HTTP 404)
+[53/195] Affordable Plumbing LLC … error (HTTP 403)
+[54/195] ARS / Rescue Rooter … error (HTTP 404)
+[55/195] Home Services at The Home Depot … error (HTTP 403)
+[42/195] A-Denver Roofing … ☎ +1 303-455-3185  4 social
+[56/195] Hercules Foundation Repair & Remodeling … error (HTTP 404)
+[49/195] Mavyn … name: you may have  5 social
+[50/195] Precision Heating & Air … ☎ +1 512-379-6385  name: random things which  4 social
+[61/195] Big Cat Plumbing, Heating & Cooling … error (HTTP 404)
+[59/195] Priority Plumbing and Heating … error (HTTP 404)
+[63/195] Nates Plumbing … error (fetch failed)
+[65/195] Peak Flow Plumbing … error (HTTP 404)
+[60/195] Wild Water Plumbing Heating Cooling … ☎ +1 719-789-6937  name: wanting to  3 social
+[58/195] Alphalete Plumbing Drain Sewer … ☎ +1 719-631-3866  name: of Plumb  9 social
+[67/195] Elite Rooter Plumbers … error (HTTP 404)
+[69/195] Parkey's Heating, Plumbing, & Air Conditioning … error (HTTP 404)
+[62/195] B&L Plumbing … ☎ +1 719-638-7341  name: Norissa L.  3 social
+[57/195] BullsEye Plumbing Heating & Air of Colorado Springs … error (HTTP 404)
+[66/195] A Plus Sewer, Drain and Plumbing … ☎ +1 719-359-3558  1 social
+[73/195] Roto-Rooter Plumbing & Water Cleanup … error (HTTP 404)
+[64/195] Pikes Peak Mechanical … ☎ +1 719-232-4720  name: not a robot  4 social
+[70/195] Apex Plumbing & Mechanical … error (HTTP 404)
+[68/195] Austin & Sons Plumbing … ☎ +1 719-417-8466
+  (SPA render fallback unavailable — run `npm i playwright` on the Mac to enable JS rendering)
+[77/195] Ace Handyman Services North Metro Denver … no contact info found
+[76/195] Jolly Plumbing & Heating, Inc. … error (HTTP 404)
+[78/195] Mr. Handyman of Englewood, Centennial and S Aurora … error (HTTP 404)
+[80/195] Professional Facility Solutions … error (fetch failed)
+[81/195] Core Roofing Systems … error (HTTP 403)
+[72/195] Water Heater Pros … ☎ +1 719-229-5555  2 social
+[74/195] Sveagle Plumbing, Heating, and Cooling … ☎ +1 303-795-7498  name: to please all  4 social
+[75/195] Colorado Best Plumbing … ☎ +1 719-417-8876
+[71/195] PlumbSmart Plumbing Heating and Air … ☎ +1 480-992-2225  name: can buy  5 social
+[86/195] Horn Brothers Roofing … error (HTTP 404)
+[83/195] Ethos Roofing & Restoration … ☎ +1 855-553-8467  name: every need  6 social
+[82/195] 1st Priority Roofing … ☎ +1 918-398-0407  5 social
+[84/195] Arvada Roofing & Home Improvement … ☎ +1 720-402-8039  1 social
+[79/195] Home Improvements of Colorado Inc. … ☎ +1 303-452-6467  name: work is added  1 social
+[90/195] Red Hawk Roofing - Denver … error (HTTP 404)
+[89/195] LEMT Roofing … error (HTTP 404)
+[92/195] Reclamation Roofing … ☎ +1 303-744-3064  4 social
+[85/195] Best Roof Roofing … ☎ +1 720-310-3419  name: he is there  4 social
+[87/195] McIntire Roofing … ☎ +1 303-962-7599  name: to cultivate lasting  5 social
+[94/195] Above All Roofing … ☎ +1 303-944-3047  name: process with diligence  3 social
+[88/195] Farha … ☎ +1 720-306-7949  name: of this website  5 social
+[91/195] Accurate America … ☎ +1 303-900-7663  name: but exceed expectations  6 social
+[95/195] Premier Roofing Company … error (HTTP 404)
+[96/195] Colorado Precision Roofing … ☎ +1 303-872-7750  name: support for homeowners
+[93/195] RTP ROOFING CO. … ☎ +1 303-791-2223  name: Scott Ponzio
+[99/195] Severe Weather Roofing and Restoration, LLC … error (HTTP 404)
+[102/195] Mountaintop Roofing, Inc. … error (HTTP 404)
+[101/195] Jesse Roofs Co. … ☎ +1 303-367-5683
+[100/195] Canopy Roof & Restoration … ☎ +1 704-350-5999  name: Resources Locations
+[98/195] Denver Pros Roofing Services … ☎ +1 303-565-2363
+[104/195] Frontier Metal Roofing … ☎ +1 720-615-2627  name: industry standards and
+[97/195] Bumble Roofing Denver South … error (The operation was aborted due to timeout)
+[109/195] Prestige Roofing Denver CO … error (fetch failed)
+[108/195] Shamrock Roofing & Construction … error (HTTP 404)
+[106/195] Colorado Superior Roofing & Exteriors … error (HTTP 404)
+[111/195] APC Roofing … ✉ info@apcroofing.com  ☎ +1 866-995-0704  name: Anonymous reviewer  7 social
+[113/195] Modern Pro Roofing … error (fetch failed)
+[107/195] Advanced Exteriors, Inc. … ☎ +1 303-756-7663  name: analysis and negotiation  3 social
+[105/195] Modern Roof Co … ☎ +1 720-507-8472  name: to this scam  5 social
+[115/195] Swartz Electric, LLC … error (HTTP 404)
+[103/195] Sky Ridge Exteriors … error (The operation was aborted due to timeout)
+[110/195] Next Wave Roofing … error (HTTP 404)
+[118/195] DR Electric … ☎ +1 719-232-3047  name: local building codes  4 social
+[117/195] The Electric Way … error (HTTP 404)
+[120/195] Awesome Home Services … error (HTTP 400)
+[121/195] One Source Home Service … error (HTTP 400)
+[123/195] The Electricians … error (HTTP 404)
+[112/195] Sunny Roofing LLC … ☎ +1 303-734-0956  name: S St  3 social
+[122/195] Peak Home Performance … error (HTTP 404)
+[119/195] Gaddie Electric … ☎ +1 719-268-9433  name: Kristeen Danburg  5 social
+[116/195] Front Range Electric … ☎ +1 719-321-4413  3 social
+[114/195] R3D Roofing, LLC … ☎ +1 303-419-3935  name: an engineer and
+[127/195] American Electrician … ☎ +1 719-520-9999  name: Should Know  7 social
+[126/195] Advantage Heating and Cooling … error (HTTP 404)
+[130/195] CUSI Electric … error (fetch failed)
+[131/195] WireNut Home Services … error (HTTP 404)
+[133/195] SoCo Heating and Cooling … error (HTTP 404)
+[128/195] A&E Electric … ☎ +1 719-203-1533  3 social
+[129/195] Electrical Pros of Colorado LLC … no contact info found
+[132/195] Weatherby Electric … ☎ +1 719-482-4756  name: to provide you
+[135/195] Mountain Pro Electric … error (HTTP 404)
+[124/195] Comfort By Design … ☎ +1 719-374-1776  8 social
+[134/195] Woods Contracting … ☎ +1 719-419-9477  name: very pleased with  3 social
+[125/195] Cornerstone Auto Repair … name: Bola Shonoiki
+[136/195] Reliant Electric … ☎ +1 719-244-0513
+[142/195] Ace Electric … 1 social
+[139/195] SunPower® … ☎ +1 877-299-4943  name: and Chairman of  6 social
+[144/195] Spectrum Lighting … error (fetch failed)
+[140/195] Bee Electric LLC … no contact info found
+[137/195] Blazer Electric Supply Company Colorado Springs … ☎ +1 719-596-1333  name: of that location  1 social
+[138/195] Elevated Electric … ☎ +1 719-354-3704  name: Dustin Dewitt  3 social
+[147/195] The Home Improvement Doctor … error (HTTP 400)
+[141/195] Sparkz Electrical … ☎ +1 719-888-0446  name: to put up
+[148/195] Integrity Roofing and Painting … error (HTTP 404)
+[145/195] KW Restoration … ☎ +1 719-867-4299  name: for excellence in
+[149/195] Founder's Renovations … no contact info found
+[150/195] Wickham's Workbench … ☎ +1 719-632-5117  4 social
+[143/195] Peak Lighting … ☎ +1 719-531-5200
+[146/195] House Doctors of Colorado Springs … ☎ +1 719-356-4845  name: and Molding Installation  4 social
+[156/195] Storm Guard Roofing … error (HTTP 403)
+[151/195] Cascade Drywall … ☎ +1 720-289-3854  name: from Nextdoor  1 social
+[154/195] Cheyenne Mountain Roofing - Colorado Springs Roof Repair & Replacement … error (HTTP 404)
+[152/195] Colorado Building Supply - Colorado Springs … name: or Contractor  2 social
+[155/195] Pierce Roofing … ☎ +1 719-630-1044  name: as Brian and  3 social
+[157/195] Divine Roofing, Inc. … ☎ +1 719-497-1005  name: Guidance Same  6 social
+[153/195] Petrali Roofing - Central … ☎ +1 719-375-8773  name: can be daunting  6 social
+[162/195] Liberty Construction … ☎ +1 719-465-2788  name: Support for Exterior  2 social
+[160/195] RIZE Roofing … ☎ +1 719-339-4004  name: management experts on  1 social
+[165/195] Diversified Roofing And Construction … ☎ +1 719-900-8647  1 social
+[161/195] Pristine Roofing & Gutters … ☎ +1 719-357-5609  name: and walking me  7 social
+[158/195] CO Roofing & Solar … ☎ +1 719-232-8747  name: Zack Stark  4 social
+[167/195] Hail Country Roofing & Gutters … ✉ jseale@hailcountry.com  ☎ +1 719-960-6842  name: Assistance Experts  5 social
+[163/195] Reliable Roofing Systems - Colorado Springs Roofing Contractor … ☎ +1 719-576-6300  name: to help as  3 social
+[169/195] Holladay Grace Roofing … ☎ +1 719-596-0733  name: to no  3 social
+[170/195] Total Roofing & Restoration … error (HTTP 404)
+[164/195] Golden Bee Roofing … ☎ +1 719-888-4467  name: forever groteful for
+[168/195] Roofcraft, LLC … ☎ +1 719-300-9329  name: was a standout  6 social
+[166/195] A & I Skyline … ☎ +1 719-464-1944  3 social
+[172/195] On Top Roofing & Restoration … ☎ +1 719-432-9886  5 social
+[173/195] High Point Roofing … ☎ +1 719-375-8850  name: from start to  1 social
+[159/195] Seamless Choice Siding LLC … ☎ +1 719-445-7888  name: and storm damage  5 social
+[178/195] D&E Roofing … no contact info found
+[177/195] Royalty Roofing … error (HTTP 404)
+[174/195] Restoration Colorado Roofing … ☎ +1 719-244-7668  2 social
+[179/195] Positively Charged Electric … error (HTTP 403)
+[171/195] Reynolds Roofing Systems … error (HTTP 404)
+[176/195] JRB Enterprises … ☎ +1 719-358-6484  3 social
+[180/195] Sundog Electric LLC … ✉ info@sundogelectric.com  ☎ +1 303-503-0081  1 social
+[181/195] Access Electrical … error (HTTP 404)
+[182/195] Flowers Electric … ✉ joseph@flowerselectricians.com  ☎ +1 720-390-2077  name: is to keep  3 social
+[175/195] Safe Plus Roofing Colorado Springs … ☎ +1 719-259-0909
+[188/195] Centerfield Electric … ✉ scott@centerfieldelectric.com  ☎ +1 720-427-3988  name: diverse charging needs  1 social
+[184/195] JJ Electric (Jeremiah James Electric LLC) … ✉ myelectrician@jjelectric.biz  ☎ +1 720-831-9544  2 social
+[190/195] Mr. Electric of Littleton, CO … ✉ web@mrelectriclittleton.com  ☎ +1 720-797-9982  name: dealing with  2 social
+[186/195] Pro Tech Automotive … ✉ auroraprotech@yahoo.com  ☎ +1 303-351-4286  3 social
+[191/195] Aurora Electricians Services … ✉ info@auroraelectriciansservices.com  ☎ +1 303-955-3707  name: Rosalind H.
+[192/195] Montclair Electric … ☎ +1 720-715-9492  name: or GC on
+[185/195] Upstanding electric LLC … ✉ upstandingelectric@gmail.com  ☎ +1 303-598-2651  2 social
+[183/195] F & F electric … ✉ saifer_1988@yahoo.com
+[189/195] Douglas-Electric LLC … ✉ info@douglas-electricllc.com  ☎ +1 720-884-7246  2 social
+[193/195] Danelectric LLC … ☎ +1 720-919-0494  3 social
+[187/195] Yanni Electric, LLC … ✉ yannielectric@gmail.com  ☎ +1 303-908-6195
+[194/195] Braga Outdoor Lighting … ☎ +1 888-891-4330  3 social
+[195/195] SunTalk Solar … ☎ +1 720-295-9180  name: jurisdictional requirements  3 social
+────────────────────────────────────────────────────────────
+Summary
+  sites visited:        195
+  emails found:         16
+  phones found:         0
+  names found:          11
+  socials found:        16
+  leads flipped→email:  16
+  no email / unchanged: 179
+  fetch errors:         78
+  hit rate:             56%  (109/195 sites yielded contact info)
+
+Flipped to email:
+  • Allstar Electrical Services → estimating@allstarelectrical.com
+  • Stubblefield Electric → thomas@stubblefieldelectric.com
+  • Cu Solutions → info@thecusolution.com
+  • APC Roofing → info@apcroofing.com
+  • Hail Country Roofing & Gutters → jseale@hailcountry.com
+  • Sundog Electric LLC → info@sundogelectric.com
+  • Flowers Electric → joseph@flowerselectricians.com
+  • Centerfield Electric → scott@centerfieldelectric.com
+  • JJ Electric (Jeremiah James Electric LLC) → myelectrician@jjelectric.biz
+  • Mr. Electric of Littleton, CO → web@mrelectriclittleton.com
+  • Pro Tech Automotive → auroraprotech@yahoo.com
+  • Aurora Electricians Services → info@auroraelectriciansservices.com
+  • Upstanding electric LLC → upstandingelectric@gmail.com
+  • F & F electric → saifer_1988@yahoo.com
+  • Douglas-Electric LLC → info@douglas-electricllc.com
+  • Yanni Electric, LLC → yannielectric@gmail.com
+
+Next: node scripts/diagnoser.js  →  node scripts/checker.js  →  node scripts/pitcher.js --channel email
+
+✓ Google Sheet "AllContacts" synced: 4 cell update(s), 17 row(s) appended.
+
+[5/7] Diagnoser…
+
+Diagnoser starting
+──────────────────────────────────────────────────
+Leads available: 131 | Processing: 30 | Daily limit: 30
+Budget: $0.0630 / $5.00 used this month
+
+[1/30] Positively Charged Electric (Aurora, CO)... done ($0.00094)
+[2/30] Sundog Electric LLC (Aurora, CO)... done ($0.00101)
+[3/30] Access Electrical (Aurora, CO)... done ($0.00094)
+[4/30] Flowers Electric (Aurora, CO)... done ($0.00101)
+[5/30] F & F electric (Aurora, CO)... done ($0.00097)
+[6/30] JJ Electric (Jeremiah James Electric LLC) (Aurora, CO)... done ($0.00096)
+[7/30] Upstanding electric LLC (Aurora, CO)... done ($0.00101)
+[8/30] Pro Tech Automotive (Aurora, CO)... done ($0.00105)
+[9/30] Yanni Electric, LLC (Aurora, CO)... done ($0.00097)
+[10/30] Centerfield Electric (Aurora, CO)... done ($0.00111)
+[11/30] Allstar Electrical Services (Aurora, CO)... done ($0.00103)
+[12/30] Douglas-Electric LLC (Aurora, CO)... done ($0.00101)
+[13/30] Cu Solutions (Aurora, CO)... done ($0.00106)
+[14/30] Stubblefield Electric (Aurora, CO)... done ($0.00105)
+[15/30] Mr. Electric of Littleton, CO (Aurora, CO)... done ($0.00098)
+[16/30] A & I Skyline (Colorado Springs, CO)... done ($0.00102)
+[17/30] Vector Roofing (Colorado Springs, CO)... done ($0.00103)
+[18/30] All Things New Roofing & Restoration (Colorado Springs, CO)... done ($0.00115)
+[19/30] 3G Construction & Roofing (Colorado Springs, CO)... done ($0.00103)
+[20/30] JR & CO (Colorado Springs, CO)... done ($0.00110)
+[21/30] Hail Country Roofing & Gutters (Colorado Springs, CO)... done ($0.00114)
+[22/30] Crestone Roofing (Colorado Springs, CO)... done ($0.00098)
+[23/30] Front Range Roofing & Siding (Colorado Springs, CO)... done ($0.00110)
+[24/30] Roofcraft, LLC (Colorado Springs, CO)... done ($0.00112)
+[25/30] Triton Roofing (Colorado Springs, CO)... done ($0.00110)
+[26/30] Wiseman Roofing (Colorado Springs, CO)... done ($0.00105)
+[27/30] Holladay Grace Roofing (Colorado Springs, CO)... done ($0.00102)
+[28/30] Upfront Restoration & Roofing (Colorado Springs, CO)... done ($0.00117)
+[29/30] Total Roofing & Restoration (Colorado Springs, CO)... done ($0.00119)
+[30/30] All Area Construction & Roofing, LLC (Colorado Springs, CO)... done ($0.00099)
+
+──────────────────────────────────────────────────
+Done.
+  Processed:      30 leads
+  Errors:         0
+  Priority (top5): ChIJKf-qfuqLbIcR-YUeJBs-dJI, ChIJm-Bsk35_a4cRDGtXPA-iaB8, ChIJ_84TP199bIcRqH7RS3W5C7s, ChIJv_yvswEzticReunSxyu47TE, ChIJQZx_anmJbIcRKLNx24IlxGc
+  Cost this run:  $0.03128
+  Monthly spend:  $0.0943 / $5.00
+  Briefs in /queue/: 30 new files
+──────────────────────────────────────────────────
+
+[6/7] Checker…
+
+Checker starting
+──────────────────────────────────────────────────
+Briefs to check: 30 | Processing: 30
+Budget: $0.0000 / $3.00
+
+[1/30] Positively Charged Electric — ✓ template approved (s3)
+[2/30] Sundog Electric LLC — ✓ template approved (e7 + s3)
+[3/30] F & F electric — ✓ template approved (e7 + s3)
+[4/30] Access Electrical — ✓ template approved (s3)
+[5/30] Flowers Electric — ✓ template approved (e7 + s3)
+[6/30] JJ Electric (Jeremiah James Electric LLC) — ✓ template approved (e7 + s3)
+[7/30] All Area Construction & Roofing, LLC — ✓ template approved (e7 + s3)
+[8/30] Upfront Restoration & Roofing — ✓ template approved (e7 + s3)
+[9/30] Upstanding electric LLC — ✓ template approved (e7 + s3)
+[10/30] All Things New Roofing & Restoration — ✓ template approved (e7 + s3)
+[11/30] A & I Skyline — ✓ template approved (s3)
+[12/30] 3G Construction & Roofing — ✓ template approved (e7 + s3)
+[13/30] Centerfield Electric — ✓ template approved (e7 + s3)
+[14/30] Front Range Roofing & Siding — ✓ template approved (e7 + s3)
+[15/30] Pro Tech Automotive — ✓ template approved (e7 + s3)
+[16/30] Total Roofing & Restoration — ✓ template approved (s3)
+[17/30] Wiseman Roofing — ✓ template approved (e7 + s3)
+[18/30] Mr. Electric of Littleton, CO — ✓ template approved (e7 + s3)
+[19/30] Stubblefield Electric — ✓ template approved (e7 + s3)
+[20/30] JR & CO — ✓ template approved (e7 + s3)
+[21/30] Hail Country Roofing & Gutters — ✓ template approved (e7 + s3)
+[22/30] Triton Roofing — ✓ template approved (e7 + s3)
+[23/30] Vector Roofing — ✓ template approved (e7 + s3)
+[24/30] Yanni Electric, LLC — ✓ template approved (e7 + s3)
+[25/30] Cu Solutions — ✓ template approved (e7 + s3)
+[26/30] Roofcraft, LLC — ✓ template approved (s3)
+[27/30] Holladay Grace Roofing — ✓ template approved (s3)
+[28/30] Douglas-Electric LLC — ✓ template approved (e7 + s3)
+[29/30] Allstar Electrical Services — ✓ template approved (e7 + s3)
+[30/30] Crestone Roofing — ✓ template approved (e7 + s3)
+
+──────────────────────────────────────────────────
+Done.
+  Approved:       30 (0 needed rewrite)
+  Flagged:        0 (need human review in /queue/)
+  Cost this run:  $0.00000
+  Monthly spend:  $0.0000 / $3.00
+──────────────────────────────────────────────────
+
+[7/7] Sheet-log — syncing Google Sheets CRM…
+
+Sheet-Log v3
+────────────────────────────────────────────────────────────
+email leads to sync:  79  (skipped: 863)
+AllContacts: wrote 493 leads (all channels).
+────────────────────────────────────────────────────────────
+Summary
+  SentLog new rows:      0
+  SentLog updates:       11
+  changelog entries:     11
+  AllContacts rows:      493
+  skipped (no email):    863
+
+Done. Edit columns F (status) and P (notes) in SentLog by hand.
+      AllContacts tab rebuilds from scratch each run.
+
+────────────────────────────────────────────────────
+New leads: 70 | emails: 14 | approved: 415 | batch 2026-08-03: 59 pending approval | sent earlier: 0
+[report] Approve 59 contacts — electrician / Aurora, CO
+Daily lead-gen — 2026-08-03
+Status:  OK
+Target:  electrician in Aurora, CO
+
+Stages
+  Scout           new leads:      70
+  Contact-scraper emails found:   14
+  Diagnoser       briefs written: 493
+  Checker         approved:       415
+  Sheet-log       rows synced:    415
+
+Email-ready leads now waiting to send: 59
+Rotation: 11/112 combinations worked, 101 remaining.
+Outscraper spend this run: $0.285
+
+Emails sent this morning (previously approved batch): 0
+
+─────────────────────────────────────────────
+AWAITING YOUR APPROVAL — 59 contacts scraped 2026-08-03
+─────────────────────────────────────────────
+  1. HOMEfix
+     office@homefixcos.com   ·   Colorado Springs, CO
+  2. JJ Electric (Jeremiah James Electric LLC)
+     myelectrician@jjelectric.biz   ·   Aurora, CO
+  3. Apache Electric & Maintenance, Inc.
+     office@apacheelec.com   ·   Colorado Springs, CO
+  4. BLU roofing
+     sales@bluroofing.com   ·   Colorado Springs, CO
+  5. Fixins Roofing and Restoration
+     getquote@fixinscontracting.com   ·   Colorado Springs, CO
+  6. All Area Construction & Roofing, LLC
+     allareaconst@gmail.com   ·   Colorado Springs, CO
+  7. 7th Generation Roofing
+     7thgenerationroofing@gmail.com   ·   Colorado Springs, CO
+  8. Upfront Restoration & Roofing
+     office@upfrontrnr.com   ·   Colorado Springs, CO
+  9. Wiseman Roofing
+     info@wisemanroofing.com   ·   Colorado Springs, CO
+ 10. Mr. Electric of Littleton, CO
+     web@mrelectriclittleton.com   ·   Aurora, CO
+ 11. Denver Handyman & Painting Services
+     a.folkers@denverhps.com   ·   Denver, CO
+ 12. Stubblefield Electric
+     thomas@stubblefieldelectric.com   ·   Aurora, CO
+ 13. Upstanding electric LLC
+     upstandingelectric@gmail.com   ·   Aurora, CO
+ 14. hennessey roofing llc
+     tom@hennesseyroofing.com   ·   Colorado Springs, CO
+ 15. FREEDOM Electric & Lighting, LLC
+     freedom.electric2023@gmail.com   ·   Colorado Springs, CO
+ 16. JR & CO
+     freeroofinspection2@jrcousa.com   ·   Colorado Springs, CO
+ 17. 303 Roofer
+     info@303roofer.com   ·   Denver, CO
+ 18. Raptor Roofing of Colorado Springs
+     raptorroofllc@gmail.com   ·   Colorado Springs, CO
+ 19. F & F electric
+     saifer_1988@yahoo.com   ·   Aurora, CO
+ 20. Rock Solid Roofing
+     4rocksolid@gmail.com   ·   Colorado Springs, CO
+ 21. Hail Country Roofing & Gutters
+     jseale@hailcountry.com   ·   Colorado Springs, CO
+ 22. JOB Home Services
+     jobhomeservices@gmail.com   ·   Denver, CO
+ 23. Triton Roofing
+     cos@tritonroofing.com   ·   Colorado Springs, CO
+ 24. The Speedy Electricians of Colorado Springs
+     coloradosprings@thespeedyelectricians.com   ·   Colorado Springs, CO
+ 25. True Craft Handyman
+     jake@truecrafthandymancolorado.com   ·   Colorado Springs, CO
+ 26. Fix Fellows
+     fixfellows@outlook.com   ·   Colorado Springs, CO
+ 27. All Things New Roofing & Restoration
+     sondra@allthingsnewroofing.com   ·   Colorado Springs, CO
+ 28. Vector Roofing
+     office@vectorroofing.com   ·   Colorado Springs, CO
+ 29. Squeaks Services Plumbing, Heating, & Air
+     workorder@squeaksservices.com   ·   Colorado Springs, CO
+ 30. Guardian Roofing and Restoration
+     guardianrandrllc@gmail.com   ·   Colorado Springs, CO
+ 31. House Hack Colorado Springs
+     ryan@househackcoloradosprings.com   ·   Colorado Springs, CO
+ 32. Yanni Electric, LLC
+     yannielectric@gmail.com   ·   Aurora, CO
+ 33. Soto's Best Handyman Services
+     sotomoises@yahoo.com   ·   Colorado Springs, CO
+ 34. Super B Electric LLC
+     superbelectricllc@gmail.com   ·   Colorado Springs, CO
+ 35. Cu Solutions
+     info@thecusolution.com   ·   Aurora, CO
+ 36. BenTek Plumbing & Mechanical
+     support@bentekplumbing.com   ·   Colorado Springs, CO
+ 37. Pioneer Construction and Roofing
+     nclingan.pioneer@gmail.com   ·   Colorado Springs, CO
+ 38. North West Roofing
+     info@northwest-roofing.com   ·   Denver, CO
+ 39. JRD Electric
+     office@jrdelectrical.com   ·   Colorado Springs, CO
+ 40. Sundog Electric LLC
+     info@sundogelectric.com   ·   Aurora, CO
+ 41. Tectum Roofing
+     admin@weroof.com   ·   Colorado Springs, CO
+ 42. High Valley Roofing, LLC
+     info@highvalleyroofing.com   ·   Colorado Springs, CO
+ 43. Colorado Pro Roofing
+     info@coloradoproroofing.com   ·   Colorado Springs, CO
+ 44. 3G Construction & Roofing
+     3gconstruction@gmail.com   ·   Colorado Springs, CO
+ 45. Centerfield Electric
+     scott@centerfieldelectric.com   ·   Aurora, CO
+ 46. MD Roofing and Solar
+     office@mdroofing.info   ·   Colorado Springs, CO
+ 47. Front Range Roofing & Siding
+     frontrangeroofing@yahoo.com   ·   Colorado Springs, CO
+ 48. Native Roofing & Solar
+     info@nativecoso.com   ·   Colorado Springs, CO
+ 49. 7 Summits Roofing
+     info@7summitsroofing.com   ·   Colorado Springs, CO
+ 50. Douglas-Electric LLC
+     info@douglas-electricllc.com   ·   Aurora, CO
+ 51. Energy Resource Center
+     info@erc-co.org   ·   Colorado Springs, CO
+ 52. Pro Tech Automotive
+     auroraprotech@yahoo.com   ·   Aurora, CO
+ 53. Allstar Electrical Services
+     estimating@allstarelectrical.com   ·   Aurora, CO
+ 54. Crestone Roofing
+     info@crestoneroofing.com   ·   Colorado Springs, CO
+ 55. Flowers Electric
+     joseph@flowerselectricians.com   ·   Aurora, CO
+ 56. Rampart Roofing & Exteriors
+     info@rampartroofing.com   ·   Colorado Springs, CO
+ 57. Advanced Electric Group
+     info@advancedelectricgroup.com   ·   Colorado Springs, CO
+ 58. Iron Shield Roofing
+     info@callironshieldroofing.com   ·   Colorado Springs, CO
+ 59. Homestead Roofing - Colorado Springs
+     info@homesteadroofingcolorado.com   ·   Colorado Springs, CO
+
+Nothing above has been emailed. Approve to send on the next 6:30am run:
+  node scripts/approve-batch.js 2026-08-03
+
+Or reject the whole batch:
+  node scripts/approve-batch.js 2026-08-03 --reject
+
+Left un-approved, this batch never sends.
+
+This report is sent on every run. No report at all means the scheduled job did not fire.
+[report] emailed 13dmh33@gmail.com
+────────────────────────────────────────────────────
+
+Today's scrape is PENDING your approval. Review the emailed list, then:
+  node scripts/approve-batch.js 2026-08-03
+
+Approved batches send automatically on the next 6:30am run.

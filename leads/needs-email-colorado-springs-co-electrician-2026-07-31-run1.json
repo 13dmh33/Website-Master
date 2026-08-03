@@ -388,7 +388,7 @@
     "trade": "electrician",
     "city": "Colorado Springs, CO",
     "site_url": "https://squeaksservices.com/service-area/colorado-springs-co/%3Futm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_campaign%3Dgmb",
-    "email": "",
+    "email": "workorder@squeaksservices.com",
     "phone": "+1 303-280-5765",
     "rating": 4.9,
     "review_count": 215,
@@ -401,7 +401,18 @@
     "longitude": -104.8273784,
     "fit_score": 6,
     "gap_score": 6,
-    "scraped_at": "2026-07-31T12:30:32.631Z"
+    "scraped_at": "2026-07-31T12:30:32.631Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "https://www.facebook.com/SqueaksServices",
+      "twitter": "https://x.com/squeaksservice1",
+      "instagram": "https://www.instagram.com/squeaksservices",
+      "yelp": "https://www.yelp.com/biz/squeaks-services-plumbing-heating-and-air-denver-2",
+      "linkedin": "https://www.linkedin.com/company/squeaks-services-inc",
+      "youtube": "https://www.youtube.com/channel/UCYWbv5ppoKyT1oCbrkInBAQ",
+      "google": "https://g.page/r/CWDisSSYdJT8EBE/review"
+    },
+    "deep_enriched_at": "2026-08-01T13:48:58.314Z"
   },
   {
     "lead_id": "ChIJE9X9FL5FE4cR2cfmatLPrqw",

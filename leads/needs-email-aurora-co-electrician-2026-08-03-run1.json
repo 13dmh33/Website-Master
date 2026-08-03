@@ -1,0 +1,841 @@
+[
+  {
+    "lead_id": "ChIJr-W3fRhjbIcRWKPsgtaYYD8",
+    "business_name": "JM Electric Inc.",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "https://jmelectricinc.com/%3Futm_campaign%3Dgmb%26utm_source%3Dgmb",
+    "email": "",
+    "phone": "+1 303-500-1362",
+    "rating": 4.9,
+    "review_count": 746,
+    "address": "700 Billings St Ste R, Aurora, CO 80011",
+    "place_id": "ChIJr-W3fRhjbIcRWKPsgtaYYD8",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 39.727184,
+    "longitude": -104.821657,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-03T13:09:31.904Z"
+  },
+  {
+    "lead_id": "ChIJKf-qfuqLbIcR-YUeJBs-dJI",
+    "business_name": "Positively Charged Electric",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "https://www.positivelychargedelectric.com/%3Futm_source%3DGoogle%26utm_medium%3DOrganic",
+    "email": "",
+    "phone": "+1 720-327-4525",
+    "rating": 5,
+    "review_count": 554,
+    "address": "6105 S Main St #200, Aurora, CO 80016",
+    "place_id": "ChIJKf-qfuqLbIcR-YUeJBs-dJI",
+    "subtypes": [
+      "Electrician, Electrical equipment supplier, Electrical repair shop, Electrical supply store"
+    ],
+    "latitude": 39.6057674,
+    "longitude": -104.7095544,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-03T13:09:31.904Z"
+  },
+  {
+    "lead_id": "ChIJpykRU_RzbIcR24iynIvN_WU",
+    "business_name": "Absolute Plumbing, Electrical, Heating & Air",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "https://absolutefix.com/service-area/denver/%3Futm_source%3Dgoogle-gbp%26utm_medium%3Dorganic%26utm_campaign%3D*4*absolute-electrical-commerce-city",
+    "email": "",
+    "phone": "+1 720-954-2939",
+    "rating": 4.8,
+    "review_count": 3897,
+    "address": "5590 Havana St Unit A, Denver, CO 80239",
+    "place_id": "ChIJpykRU_RzbIcR24iynIvN_WU",
+    "subtypes": [
+      "Electrician, Air conditioning contractor, Air conditioning repair service, Drainage service, HVAC contractor, Furnace repair service, Electric generator shop, Heating contractor, Plumber"
+    ],
+    "latitude": 39.797844,
+    "longitude": -104.8651943,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-03T13:09:31.905Z"
+  },
+  {
+    "lead_id": "ChIJJ80hNJ-Fa4cRhLYDRYLyHQo",
+    "business_name": "Salzano Services",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "https://salzanoelectric.com/denver-electrician/%3Futm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_campaign%3Dgmb",
+    "email": "",
+    "phone": "+1 720-743-2726",
+    "rating": 5,
+    "review_count": 382,
+    "address": "1600 Stout St Unit 462, Denver, CO 80202",
+    "place_id": "ChIJJ80hNJ-Fa4cRhLYDRYLyHQo",
+    "subtypes": [
+      "Electrician, Air conditioning contractor, Air conditioning repair service, Electric vehicle charging station contractor, Electrical installation service, Furnace repair service, Heating contractor, HVAC contractor, Lighting contractor, Plumber"
+    ],
+    "latitude": 39.7457093,
+    "longitude": -104.99251,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-03T13:09:31.905Z"
+  },
+  {
+    "lead_id": "ChIJkWUJx22Ha4cRVVLq4AJk7Ng",
+    "business_name": "Applewood Plumbing Heating & Electric",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "https://www.applewoodfixit.com/",
+    "email": "",
+    "phone": "+1 303-444-1633",
+    "rating": 4.8,
+    "review_count": 17661,
+    "address": "5000 W 29th Ave, Denver, CO 80212",
+    "place_id": "ChIJkWUJx22Ha4cRVVLq4AJk7Ng",
+    "subtypes": [
+      "Electrician, Air conditioning contractor, Air conditioning repair service, Electrical installation service, Plumber, Furnace repair service, Heating contractor, HVAC contractor"
+    ],
+    "latitude": 39.758300399999996,
+    "longitude": -105.0512657,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-03T13:09:31.905Z"
+  },
+  {
+    "lead_id": "ChIJO7qJOYpzbIcRjy-0lD8QN3w",
+    "business_name": "Mighty Plumbing Heating Air and Electric LLC.",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "https://www.mightyph.com/%3Futm_source%3DGBP%26utm_medium%3Dorganic",
+    "email": "",
+    "phone": "+1 720-782-0679",
+    "rating": 4.8,
+    "review_count": 4614,
+    "address": "4730 Paris St #100, Denver, CO 80239",
+    "place_id": "ChIJO7qJOYpzbIcRjy-0lD8QN3w",
+    "subtypes": [
+      "Electrician, Air conditioning contractor, Air conditioning repair service, Drainage service, Plumber, Heating contractor, HVAC contractor"
+    ],
+    "latitude": 39.7838782,
+    "longitude": -104.8484537,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-03T13:09:31.905Z"
+  },
+  {
+    "lead_id": "ChIJwZX2jBiBa4cRVOTcScxv4Rw",
+    "business_name": "Table Mountain Electric Inc | Denver Electrician",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "https://tablemountainelectric.com/%3Futm_campaign%3Dgmb",
+    "email": "",
+    "phone": "+1 720-742-4233",
+    "rating": 4.9,
+    "review_count": 462,
+    "address": "5160 Parfet St Unit B5, Wheat Ridge, CO 80033",
+    "place_id": "ChIJwZX2jBiBa4cRVOTcScxv4Rw",
+    "subtypes": [
+      "Electrician, Electric vehicle charging station, Electrical installation service"
+    ],
+    "latitude": 39.7897865,
+    "longitude": -105.1201396,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-03T13:09:31.905Z"
+  },
+  {
+    "lead_id": "ChIJm-Bsk35_a4cRDGtXPA-iaB8",
+    "business_name": "Sundog Electric LLC",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "http://sundogelectric.com/",
+    "email": "info@sundogelectric.com",
+    "phone": "+1 303-503-0081",
+    "rating": 5,
+    "review_count": 590,
+    "address": "1501 W Campus Dr, Littleton, CO 80120",
+    "place_id": "ChIJm-Bsk35_a4cRDGtXPA-iaB8",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 39.570836199999995,
+    "longitude": -105.0061908,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-03T13:09:31.905Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "yelp": "https://www.yelp.com/biz/sundog-electric-littleton-6"
+    },
+    "deep_enriched_at": "2026-08-03T13:11:31.522Z"
+  },
+  {
+    "lead_id": "ChIJQ9yftiVE9gkRsYMsm0yKSe8",
+    "business_name": "JD Electrical Home Solutions",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "https://jdehs.com/%3Futm_source%3DGoogleBusinessProfile%26utm_medium%3Dorganic",
+    "email": "",
+    "phone": "+1 720-465-6451",
+    "rating": 5,
+    "review_count": 317,
+    "address": "6145 Broadway Ste 67, Denver, CO 80216",
+    "place_id": "ChIJQ9yftiVE9gkRsYMsm0yKSe8",
+    "subtypes": [
+      "Electrical installation service, Electrician"
+    ],
+    "latitude": 39.8078924,
+    "longitude": -104.98831059999999,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-03T13:09:31.905Z"
+  },
+  {
+    "lead_id": "ChIJAeGy-L53bIcRVCD6yZOiGVU",
+    "business_name": "A Better Plumber (an Absolute Plumbing Company)",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "https://abetterplumberco.com/%3Futm_source%3Dgoogle-gbp%26utm_medium%3Dorganic%26utm_campaign%3D*2*a-better-plumber-denver",
+    "email": "",
+    "phone": "+1 720-579-8133",
+    "rating": 4.8,
+    "review_count": 3292,
+    "address": "3980 Quebec St #140, Denver, CO 80207",
+    "place_id": "ChIJAeGy-L53bIcRVCD6yZOiGVU",
+    "subtypes": [
+      "Electrician, Plumber, Electric generator shop, HVAC contractor"
+    ],
+    "latitude": 39.772523799999995,
+    "longitude": -104.8999427,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-03T13:09:31.905Z"
+  },
+  {
+    "lead_id": "ChIJ_84TP199bIcRqH7RS3W5C7s",
+    "business_name": "Access Electrical",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "https://accesselectrician.com/%3Futm_source%3DGoogle%26utm_medium%3DOrganic%26utm_campaign%3DGMB",
+    "email": "",
+    "phone": "+1 720-477-0487",
+    "rating": 4.9,
+    "review_count": 190,
+    "address": "2000 S Kingston Ct, Aurora, CO 80014",
+    "place_id": "ChIJ_84TP199bIcRqH7RS3W5C7s",
+    "subtypes": [
+      "Electrician, Electric vehicle charging station contractor, Electrical installation service"
+    ],
+    "latitude": 39.6800292,
+    "longitude": -104.8580635,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-03T13:09:31.904Z"
+  },
+  {
+    "lead_id": "ChIJv_yvswEzticReunSxyu47TE",
+    "business_name": "Flowers Electric",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "https://flowerselectricians.com/",
+    "email": "joseph@flowerselectricians.com",
+    "phone": "+1 720-390-2077",
+    "rating": 4.9,
+    "review_count": 179,
+    "address": "12093 E Ohio Ave, Aurora, CO 80012",
+    "place_id": "ChIJv_yvswEzticReunSxyu47TE",
+    "subtypes": [
+      "Electrician, Electrical installation service"
+    ],
+    "latitude": 39.7027906,
+    "longitude": -104.8474913,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-03T13:09:31.904Z",
+    "email_source": "contact-scraper",
+    "contact_name": "is to keep",
+    "socials": {
+      "facebook": "http://www.facebook.com/flowerselectric",
+      "yelp": "https://www.yelp.com/biz/flowers-electric-aurora",
+      "youtube": "https://www.youtube.com/@FlowersElectric"
+    },
+    "deep_enriched_at": "2026-08-03T13:11:31.915Z"
+  },
+  {
+    "lead_id": "ChIJQZx_anmJbIcRKLNx24IlxGc",
+    "business_name": "F & F electric",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "http://ffelectricdenver.com/",
+    "email": "saifer_1988@yahoo.com",
+    "phone": "+1 720-276-6045",
+    "rating": 5,
+    "review_count": 173,
+    "address": "8099 S Blackstone Pkwy, Aurora, CO 80016",
+    "place_id": "ChIJQZx_anmJbIcRKLNx24IlxGc",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 39.570101,
+    "longitude": -104.6711035,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-03T13:09:31.904Z",
+    "email_source": "contact-scraper",
+    "deep_enriched_at": "2026-08-03T13:11:36.984Z"
+  },
+  {
+    "lead_id": "ChIJCU8ifOyIbIcRhBzjkJSGA5s",
+    "business_name": "AMP Electric",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "http://ampelectric.info/",
+    "email": "",
+    "phone": "+1 303-963-6711",
+    "rating": 4.9,
+    "review_count": 81,
+    "address": "14802 E Grand Pl, Aurora, CO 80015",
+    "place_id": "ChIJCU8ifOyIbIcRhBzjkJSGA5s",
+    "subtypes": [
+      "Electrician, Electrical installation service"
+    ],
+    "latitude": 39.6261198,
+    "longitude": -104.82372289999999,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-03T13:09:31.904Z"
+  },
+  {
+    "lead_id": "ChIJ-XcFxsJKAyoR5UIAla0hMvs",
+    "business_name": "JJ Electric (Jeremiah James Electric LLC)",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "http://www.jjelectric.biz/",
+    "email": "myelectrician@jjelectric.biz",
+    "phone": "+1 720-831-9544",
+    "rating": 5,
+    "review_count": 119,
+    "address": "2084 S Oswego Way Unit 102, Aurora, CO 80014",
+    "place_id": "ChIJ-XcFxsJKAyoR5UIAla0hMvs",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 39.6788647,
+    "longitude": -104.8492996,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-03T13:09:31.904Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "instagram": "https://www.instagram.com/wix",
+      "youtube": "https://www.youtube.com/user/Wix"
+    },
+    "deep_enriched_at": "2026-08-03T13:11:34.274Z"
+  },
+  {
+    "lead_id": "ChIJHzJzjc-JbIcRSLML-uTYsnA",
+    "business_name": "Upstanding electric LLC",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "https://upstandingelectric.com/",
+    "email": "upstandingelectric@gmail.com",
+    "phone": "+1 303-598-2651",
+    "rating": 5,
+    "review_count": 185,
+    "address": "5001 S Parker Rd, Aurora, CO 80015",
+    "place_id": "ChIJHzJzjc-JbIcRSLML-uTYsnA",
+    "subtypes": [
+      "Electrician, Electric vehicle charging station contractor, Electrical installation service"
+    ],
+    "latitude": 39.6252004,
+    "longitude": -104.82279869999999,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-03T13:09:31.905Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "nextdoor": "https://nextdoor.com/page/upstanding-electric-aurora-co",
+      "bbb": "https://www.bbb.org"
+    },
+    "deep_enriched_at": "2026-08-03T13:11:36.981Z"
+  },
+  {
+    "lead_id": "ChIJF6aiee59bIcRm9COKA9BzEk",
+    "business_name": "CT Electrical Services",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "https://ctelectricalco.com/%3Futm_source%3Dgooglebusinessprofile%26utm_medium%3Dorganic",
+    "email": "",
+    "phone": "+1 720-298-5891",
+    "rating": 4.9,
+    "review_count": 104,
+    "address": "12445 E 39th Ave #211, Denver, CO 80239",
+    "place_id": "ChIJF6aiee59bIcRm9COKA9BzEk",
+    "subtypes": [
+      "Electrician, Electrical installation service, Lighting contractor"
+    ],
+    "latitude": 39.771882999999995,
+    "longitude": -104.84429899999999,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-03T13:09:31.905Z"
+  },
+  {
+    "lead_id": "ChIJBeI7N3NjbIcRkK7I30zT9z8",
+    "business_name": "Done Plumbing, Heating, Cooling & Electric",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "https://itsdone.com/%3Futm_source%3Dgoogle%26utm_medium%3Dbusinesslisting%26utm_campaign%3Ddne-brand_gmb_1023%26utm_content%3Ddne-brand",
+    "email": "",
+    "phone": "+1 303-218-9401",
+    "rating": 4.7,
+    "review_count": 4624,
+    "address": "541 Norfolk St, Aurora, CO 80011",
+    "place_id": "ChIJBeI7N3NjbIcRkK7I30zT9z8",
+    "subtypes": [
+      "Electrician, Air conditioning contractor, Electrical installation service, Plumber, Heating contractor, Heating equipment supplier, HVAC contractor"
+    ],
+    "latitude": 39.723807699999995,
+    "longitude": -104.79709129999999,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-03T13:09:31.905Z"
+  },
+  {
+    "lead_id": "ChIJuXFS63NjbIcRcS4Z3AMtTvI",
+    "business_name": "Pro Tech Automotive",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "https://www.protechaurora.com/",
+    "email": "auroraprotech@yahoo.com",
+    "phone": "+1 303-351-4286",
+    "rating": 4.8,
+    "review_count": 86,
+    "address": "343 Airport Blvd Unit 100 Suite 100, Aurora, CO 80011",
+    "place_id": "ChIJuXFS63NjbIcRcS4Z3AMtTvI",
+    "subtypes": [
+      "Auto repair shop, Brake shop, Car repair and maintenance service, Engine rebuilding service, Tire shop"
+    ],
+    "latitude": 39.7206146,
+    "longitude": -104.7930267,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-03T13:09:31.905Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "https://facebook.com/802884189797262",
+      "instagram": "https://instagram.com/protech_aurora",
+      "google": "https://maps.google.com/maps"
+    },
+    "deep_enriched_at": "2026-08-03T13:11:36.059Z"
+  },
+  {
+    "lead_id": "ChIJf7-ye22MbIcRxguz1Y3mmrM",
+    "business_name": "Yanni Electric, LLC",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "http://www.yannielectric.com/",
+    "email": "yannielectric@gmail.com",
+    "phone": "+1 303-908-6195",
+    "rating": 4.9,
+    "review_count": 60,
+    "address": "22433 E Weaver Dr, Aurora, CO 80016",
+    "place_id": "ChIJf7-ye22MbIcRxguz1Y3mmrM",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 39.6001171,
+    "longitude": -104.7262818,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-03T13:09:31.904Z",
+    "email_source": "contact-scraper",
+    "deep_enriched_at": "2026-08-03T13:11:42.206Z"
+  },
+  {
+    "lead_id": "ChIJq2CAdudhbIcRnXY_c8xq3TA",
+    "business_name": "Centerfield Electric",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "https://centerfieldelectric.com/%3Futm_source%3Dgoogle-gmb-maps%26utm_medium%3Dgmb-website-button%26utm_campaign%3Dlocl.io%26utm_content%3De69eca31-0cc9-40ec-8e76-a501477a2d9a",
+    "email": "scott@centerfieldelectric.com",
+    "phone": "+1 720-427-3988",
+    "rating": 5,
+    "review_count": 43,
+    "address": "25223 E 2nd Ave, Aurora, CO 80018",
+    "place_id": "ChIJq2CAdudhbIcRnXY_c8xq3TA",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 39.7203157,
+    "longitude": -104.6930876,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-03T13:09:31.905Z",
+    "email_source": "contact-scraper",
+    "contact_name": "diverse charging needs",
+    "socials": {
+      "facebook": "https://www.facebook.com/p/Centerfield-Electric-100064180445635"
+    },
+    "deep_enriched_at": "2026-08-03T13:11:33.413Z"
+  },
+  {
+    "lead_id": "ChIJuZzI-np5bIcRBPphubd3ECc",
+    "business_name": "Allstar Electrical Services",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "http://www.allstarelectrical.com/",
+    "email": "estimating@allstarelectrical.com",
+    "phone": "+1 303-399-7420",
+    "rating": 4.5,
+    "review_count": 154,
+    "address": "3311 E 42nd Ave, Denver, CO 80216",
+    "place_id": "ChIJuZzI-np5bIcRBPphubd3ECc",
+    "subtypes": [
+      "Electrical installation service, Contractor, Electrician"
+    ],
+    "latitude": 39.7752933,
+    "longitude": -104.9483233,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-03T13:09:31.905Z",
+    "email_source": "contact-scraper",
+    "contact_name": "construction deadlines and",
+    "socials": {
+      "facebook": "https://www.facebook.com/AllstarElectricalService",
+      "twitter": "https://twitter.com/allstarelectric",
+      "linkedin": "https://www.linkedin.com/company/allstar-electrical-service"
+    },
+    "deep_enriched_at": "2026-08-03T13:09:44.922Z"
+  },
+  {
+    "lead_id": "ChIJrfLT5X_BbIcRWqwcv6ErRtc",
+    "business_name": "Douglas-Electric LLC",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "https://www.douglas-electricllc.com/",
+    "email": "info@douglas-electricllc.com",
+    "phone": "+1 720-884-7246",
+    "rating": 5,
+    "review_count": 31,
+    "address": "655 Willow Run Cir, Elizabeth, CO 80107",
+    "place_id": "ChIJrfLT5X_BbIcRWqwcv6ErRtc",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 39.3408172,
+    "longitude": -104.6510471,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-03T13:09:31.905Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "https://www.facebook.com/profile.php?id=61566533033000",
+      "angi": "https://www.homeadvisor.com/rated.DouglasElectricLLC.29929202.html"
+    },
+    "deep_enriched_at": "2026-08-03T13:11:37.121Z"
+  },
+  {
+    "lead_id": "ChIJh3Jbk8KPbIcRxAmkybiv2mo",
+    "business_name": "Cu Solutions",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "https://thecusolution.com/",
+    "email": "info@thecusolution.com",
+    "phone": "+1 303-792-4999",
+    "rating": 4.8,
+    "review_count": 66,
+    "address": "7770 E Iliff Ave Ste E, Denver, CO 80231",
+    "place_id": "ChIJh3Jbk8KPbIcRxAmkybiv2mo",
+    "subtypes": [
+      "Electrician, Electric vehicle charging station, Electric vehicle charging station contractor, Electrical installation service, Furnace repair service, Heating contractor, HVAC contractor, Lighting contractor, Remodeler, Solar panel maintenance service"
+    ],
+    "latitude": 39.6741968,
+    "longitude": -104.897869,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-03T13:09:31.905Z",
+    "email_source": "contact-scraper",
+    "contact_name": "so happy with",
+    "socials": {
+      "facebook": "https://www.facebook.com/cusolution",
+      "instagram": "https://www.instagram.com/thecusolution",
+      "linkedin": "https://www.linkedin.com/company/thecusolution",
+      "tiktok": "https://www.tiktok.com/@cusolutions"
+    },
+    "deep_enriched_at": "2026-08-03T13:09:47.503Z"
+  },
+  {
+    "lead_id": "ChIJrfcdiCGZQysR1apYlMgoElk",
+    "business_name": "TAG Electrical Co",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "http://tagelectricco.com/",
+    "email": "",
+    "phone": "+1 720-737-9679",
+    "rating": 5,
+    "review_count": 50,
+    "address": "6300 E Hampden Ave Ste 3, Unit 374, Denver, CO 80222",
+    "place_id": "ChIJrfcdiCGZQysR1apYlMgoElk",
+    "subtypes": [
+      "Electrician, Electrical installation service"
+    ],
+    "latitude": 39.652240299999995,
+    "longitude": -104.9155601,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-03T13:09:31.905Z"
+  },
+  {
+    "lead_id": "ChIJHbIe1zmPbIcRBk9L6M3tRzs",
+    "business_name": "Stubblefield Electric",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "https://www.stubblefieldelectric.com/",
+    "email": "thomas@stubblefieldelectric.com",
+    "phone": "+1 303-376-4057",
+    "rating": 4.9,
+    "review_count": 47,
+    "address": "4155 E Jewell Ave Ste 1110, Denver, CO 80222",
+    "place_id": "ChIJHbIe1zmPbIcRBk9L6M3tRzs",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 39.683395,
+    "longitude": -104.9383397,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-03T13:09:31.905Z",
+    "email_source": "contact-scraper",
+    "contact_name": "safety codes and",
+    "socials": {
+      "twitter": "https://twitter.com/SE_ServingCorp",
+      "facebook": "https://facebook.com/112677901757746",
+      "instagram": "https://instagram.com/stubblefieldelectric"
+    },
+    "deep_enriched_at": "2026-08-03T13:09:45.204Z"
+  },
+  {
+    "lead_id": "ChIJAdKdhxiBbIcRXTAN5F5Mtxs",
+    "business_name": "Mr. Electric of Littleton, CO",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "https://www.mrelectriclittleton.com/",
+    "email": "web@mrelectriclittleton.com",
+    "phone": "+1 720-797-9982",
+    "rating": 5,
+    "review_count": 68,
+    "address": "5575 S Sycamore St Ste 312, Littleton, CO 80120",
+    "place_id": "ChIJAdKdhxiBbIcRXTAN5F5Mtxs",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 39.6157384,
+    "longitude": -105.01535919999999,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-03T13:09:31.905Z",
+    "email_source": "contact-scraper",
+    "contact_name": "dealing with",
+    "socials": {
+      "facebook": "https://www.facebook.com/mrelectricoflittleton",
+      "twitter": "https://twitter.com/mrelectricco"
+    },
+    "deep_enriched_at": "2026-08-03T13:11:35.867Z"
+  },
+  {
+    "lead_id": "ChIJWUVPsAV7bIcRPsXkN_M3XcQ",
+    "business_name": "Positive Energy Electrical Corp.",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "https://www.positiveenergycolorado.com/",
+    "email": "",
+    "phone": "+1 303-913-2343",
+    "rating": 4.8,
+    "review_count": 26,
+    "address": "2875 Niagara St, Denver, CO 80207",
+    "place_id": "ChIJWUVPsAV7bIcRPsXkN_M3XcQ",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 39.7579072,
+    "longitude": -104.910848,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-03T13:09:31.905Z"
+  },
+  {
+    "lead_id": "ChIJl8KQayljbIcRbTYQbQErqE4",
+    "business_name": "Aurora Electricians Services",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "https://auroraelectriciansservices.com/",
+    "email": "info@auroraelectriciansservices.com",
+    "phone": "+1 303-955-3707",
+    "rating": 5,
+    "review_count": 20,
+    "address": "16302 E 2nd Ave #160, Aurora, CO 80011",
+    "place_id": "ChIJl8KQayljbIcRbTYQbQErqE4",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 39.7191723,
+    "longitude": -104.7970342,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-03T13:09:31.716Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Rosalind H.",
+    "deep_enriched_at": "2026-08-03T13:11:36.557Z"
+  },
+  {
+    "lead_id": "ChIJV9CUyU1jbIcR0LT2dPhqRLU",
+    "business_name": "Montclair Electric",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "https://montclair-electric.com/",
+    "email": "",
+    "phone": "+1 720-715-9492",
+    "rating": 5,
+    "review_count": 15,
+    "address": "695 Billings St #6, Aurora, CO 80011",
+    "place_id": "ChIJV9CUyU1jbIcR0LT2dPhqRLU",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 39.7269553,
+    "longitude": -104.8225499,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-03T13:09:31.904Z",
+    "contact_name": "or GC on",
+    "deep_enriched_at": "2026-08-03T13:11:36.895Z"
+  },
+  {
+    "lead_id": "ChIJSdpNw8p85C4RYS_flDl9uS8",
+    "business_name": "Danelectric LLC",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "https://danelectric.co/",
+    "email": "",
+    "phone": "+1 720-919-0494",
+    "rating": 5,
+    "review_count": 20,
+    "address": "20476 E Grand Ln, Aurora, CO 80015",
+    "place_id": "ChIJSdpNw8p85C4RYS_flDl9uS8",
+    "subtypes": [
+      "Electrical installation service, Electrical equipment supplier, Electrical repair shop, Electrician, Handyman/Handywoman/Handyperson, Lighting contractor, Repair service"
+    ],
+    "latitude": 39.6248572,
+    "longitude": -104.7492087,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-03T13:09:31.905Z",
+    "socials": {
+      "facebook": "https://www.facebook.com/169683699558016",
+      "linkedin": "https://www.linkedin.com/company/danelectric-llc/about",
+      "youtube": "https://www.youtube.com/@DanelectricLLC"
+    },
+    "deep_enriched_at": "2026-08-03T13:11:41.389Z"
+  },
+  {
+    "lead_id": "ChIJi2vuPT-AbIcRz7zTgQK0MPQ",
+    "business_name": "R&A Enterprises of Denver",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "http://www.radenverelectric.com/",
+    "email": "",
+    "phone": "+1 303-653-7232",
+    "rating": 5,
+    "review_count": 22,
+    "address": "4720 S Santa Fe Cir #8, Englewood, CO 80110",
+    "place_id": "ChIJi2vuPT-AbIcRz7zTgQK0MPQ",
+    "subtypes": [
+      "Electrician, Contractor, Electrical installation service"
+    ],
+    "latitude": 39.630334,
+    "longitude": -105.01087899999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-03T13:09:31.905Z"
+  },
+  {
+    "lead_id": "ChIJIcwzG_59bIcRcpqdLqyJ-SE",
+    "business_name": "Ulster Electric",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "https://www.ulster-electric.com/",
+    "email": "",
+    "phone": "+1 720-794-0045",
+    "rating": 5,
+    "review_count": 24,
+    "address": "1414 Ulster St, Denver, CO 80220",
+    "place_id": "ChIJIcwzG_59bIcRcpqdLqyJ-SE",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 39.7389321,
+    "longitude": -104.8937258,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-03T13:09:31.905Z"
+  },
+  {
+    "lead_id": "ChIJX6H4UYkKmg4RW2YDO7ym4ns",
+    "business_name": "Braga Outdoor Lighting",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "https://bragaoutdoorlighting.com/",
+    "email": "",
+    "phone": "+1 888-638-8937",
+    "rating": 5,
+    "review_count": 16,
+    "address": "18172 E Arizona Ave Unit B, Aurora, CO 80017",
+    "place_id": "ChIJX6H4UYkKmg4RW2YDO7ym4ns",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 39.693886899999995,
+    "longitude": -104.7763239,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-03T13:09:31.905Z",
+    "socials": {
+      "instagram": "https://www.instagram.com/bragaoutdoorlighting/profilecard",
+      "linkedin": "https://www.linkedin.com/in/braga-outdoor-lighting-06696b334",
+      "youtube": "https://www.youtube.com/@BragaOutdoorLighting"
+    },
+    "deep_enriched_at": "2026-08-03T13:11:44.031Z"
+  },
+  {
+    "lead_id": "ChIJoy0-mB57bIcRsTVyOKWnV9U",
+    "business_name": "SunTalk Solar",
+    "trade": "electrician",
+    "city": "Aurora, CO",
+    "site_url": "http://www.suntalksolar.com/",
+    "email": "",
+    "phone": "+1 303-904-2268",
+    "rating": 4.3,
+    "review_count": 106,
+    "address": "9900 51st Ave, Denver, CO 80238",
+    "place_id": "ChIJoy0-mB57bIcRsTVyOKWnV9U",
+    "subtypes": [
+      "Electrician, Solar energy company, Solar energy system service, Solar energy equipment supplier"
+    ],
+    "latitude": 39.7896552,
+    "longitude": -104.8742553,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-03T13:09:31.905Z",
+    "contact_name": "jurisdictional requirements",
+    "socials": {
+      "facebook": "https://www.facebook.com/SunTalkSolar",
+      "twitter": "https://twitter.com/SunTalkSolar",
+      "linkedin": "https://www.linkedin.com/company/suntalk-solar"
+    },
+    "deep_enriched_at": "2026-08-03T13:11:44.456Z"
+  }
+]

@@ -1,0 +1,373 @@
+[
+  {
+    "lead_id": "ChIJD6Vj4PxFE4cRliyRM5TFtgE",
+    "business_name": "House Doctors of Colorado Springs",
+    "trade": "handyman",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://housedoctors.com/colorado-springs/",
+    "email": "",
+    "phone": "+1 719-356-4845",
+    "rating": 4.8,
+    "review_count": 179,
+    "address": "3645 Jeannine Dr Ste 221, Colorado Springs, CO 80917",
+    "place_id": "ChIJD6Vj4PxFE4cRliyRM5TFtgE",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson"
+    ],
+    "latitude": 38.884862399999996,
+    "longitude": -104.7599623,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-01T13:47:47.718Z",
+    "contact_name": "and Molding Installation",
+    "socials": {
+      "linkedin": "https://www.linkedin.com/company/house-doctors-handyman-service",
+      "youtube": "https://www.youtube.com/user/HouseDoctorsUSA",
+      "facebook": "https://www.facebook.com/housedoctorshandymancoloradosprings",
+      "bbb": "https://www.bbb.org/us/co/colorado-springs/profile/handyman/house-doctors-of-colorado-springs-0785-87369020"
+    },
+    "deep_enriched_at": "2026-08-01T13:49:12.180Z"
+  },
+  {
+    "lead_id": "ChIJ-3nAw09JE4cRkYyLm3-oiOQ",
+    "business_name": "HOMEfix",
+    "trade": "handyman",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://homefixcos.com/",
+    "email": "office@homefixcos.com",
+    "phone": "+1 719-749-1788",
+    "rating": 4.7,
+    "review_count": 402,
+    "address": "5975 N Academy Blvd Ste 208, Colorado Springs, CO 80918",
+    "place_id": "ChIJ-3nAw09JE4cRkYyLm3-oiOQ",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson, Bathroom remodeler, Carpenter, Remodeler, Kitchen remodeler, Painter, Roofing contractor"
+    ],
+    "latitude": 38.917864099999996,
+    "longitude": -104.78547669999999,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-01T13:47:47.718Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "instagram": "https://www.instagram.com/homefix_cos",
+      "facebook": "https://www.facebook.com/homefixcos",
+      "linkedin": "https://www.linkedin.com/company/1947929",
+      "youtube": "https://www.youtube.com/@homefixcos"
+    },
+    "deep_enriched_at": "2026-08-01T13:49:10.516Z"
+  },
+  {
+    "lead_id": "ChIJc-u9UfVFE4cRoksYrUIIo3c",
+    "business_name": "The Home Improvement Doctor",
+    "trade": "handyman",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.home-improvement-doctor.com/%3Futm_source%3Dgoogle%26utm_medium%3Dwix_google_business_profile%26utm_campaign%3D16148987338678438801",
+    "email": "",
+    "phone": "+1 719-418-1848",
+    "rating": 4.9,
+    "review_count": 82,
+    "address": "2214 Afton Way, Colorado Springs, CO 80909",
+    "place_id": "ChIJc-u9UfVFE4cRoksYrUIIo3c",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson, Bathroom remodeler, Deck builder, Kitchen remodeler, Window installation service"
+    ],
+    "latitude": 38.863549899999995,
+    "longitude": -104.78306599999999,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-01T13:47:47.718Z"
+  },
+  {
+    "lead_id": "ChIJ95PzfMKtbIcRaH8J_PDQck4",
+    "business_name": "Integrity Roofing and Painting",
+    "trade": "handyman",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://integrityroofingandpainting.com/%3Futm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_campaign%3Dgmb",
+    "email": "",
+    "phone": "+1 719-735-5971",
+    "rating": 4.7,
+    "review_count": 593,
+    "address": "115 N Union Blvd, Colorado Springs, CO 80909",
+    "place_id": "ChIJ95PzfMKtbIcRaH8J_PDQck4",
+    "subtypes": [
+      "Roofing contractor, Gutter service"
+    ],
+    "latitude": 38.8351657,
+    "longitude": -104.7942427,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-01T13:47:47.718Z"
+  },
+  {
+    "lead_id": "ChIJ_7yxfokz2GYRa-ybRSxTOrU",
+    "business_name": "Fix Fellows",
+    "trade": "handyman",
+    "city": "Colorado Springs, CO",
+    "site_url": "http://fixfellows.com/",
+    "email": "fixfellows@outlook.com",
+    "phone": "+1 719-319-3174",
+    "rating": 5,
+    "review_count": 47,
+    "address": "2955 N New Center Point #1202, Colorado Springs, CO 80922",
+    "place_id": "ChIJ_7yxfokz2GYRa-ybRSxTOrU",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson, Dry wall contractor, Repair service"
+    ],
+    "latitude": 38.8749912,
+    "longitude": -104.7175068,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-01T13:47:47.718Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Greenspan profile picture",
+    "socials": {
+      "tiktok": "https://www.tiktok.com/@fix.fellows",
+      "yelp": "https://yelp.com/biz/fix-fellows-no-title"
+    },
+    "deep_enriched_at": "2026-08-01T13:49:10.614Z"
+  },
+  {
+    "lead_id": "ChIJgZ3Gfp1JE4cRvyH5PsRhrjo",
+    "business_name": "Soto's Best Handyman Services",
+    "trade": "handyman",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.sotosbesthandymanservices.com/",
+    "email": "sotomoises@yahoo.com",
+    "phone": "+1 562-448-4283",
+    "rating": 4.8,
+    "review_count": 31,
+    "address": "8142 Misty Moon Dr, Colorado Springs, CO 80924",
+    "place_id": "ChIJgZ3Gfp1JE4cRvyH5PsRhrjo",
+    "subtypes": [
+      "Contractor"
+    ],
+    "latitude": 38.9504266,
+    "longitude": -104.7050647,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-01T13:47:47.718Z",
+    "email_source": "contact-scraper",
+    "contact_name": "again if",
+    "socials": {
+      "youtube": "https://www.youtube.com/channel/UC1zzHhut6hMa9yfuja-We7w"
+    },
+    "deep_enriched_at": "2026-08-01T13:49:12.164Z"
+  },
+  {
+    "lead_id": "ChIJZyNLOTWHbIcR3dYQgNTbYxE",
+    "business_name": "True Craft Handyman",
+    "trade": "handyman",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://truecrafthandymancolorado.com/",
+    "email": "jake@truecrafthandymancolorado.com",
+    "phone": "+1 719-726-2589",
+    "rating": 5,
+    "review_count": 43,
+    "address": "17470 Shiloh Pines Dr, Monument, CO 80132",
+    "place_id": "ChIJZyNLOTWHbIcR3dYQgNTbYxE",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson"
+    ],
+    "latitude": 39.0941368,
+    "longitude": -104.88904199999999,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-01T13:47:47.718Z",
+    "email_source": "contact-scraper",
+    "contact_name": "ship and hard",
+    "socials": {
+      "facebook": "https://www.facebook.com/103018024936742"
+    },
+    "deep_enriched_at": "2026-08-01T13:49:12.019Z"
+  },
+  {
+    "lead_id": "ChIJf22slSRLnCURpIA2iMxj6rY",
+    "business_name": "House Hack Colorado Springs",
+    "trade": "handyman",
+    "city": "Colorado Springs, CO",
+    "site_url": "http://househackcoloradosprings.com/",
+    "email": "ryan@househackcoloradosprings.com",
+    "phone": "+1 719-624-3472",
+    "rating": 5,
+    "review_count": 42,
+    "address": "518 W Brookside St A, Colorado Springs, CO 80905",
+    "place_id": "ChIJf22slSRLnCURpIA2iMxj6rY",
+    "subtypes": [
+      "Real estate agent"
+    ],
+    "latitude": 38.812964699999995,
+    "longitude": -104.83713949999999,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-01T13:47:47.718Z",
+    "email_source": "contact-scraper",
+    "contact_name": "WITH RYAN",
+    "socials": {
+      "facebook": "https://www.facebook.com/ryan.thomson.92102",
+      "instagram": "https://www.instagram.com/the.assumable.guy",
+      "linkedin": "https://www.linkedin.com/in/ryanthomson111",
+      "youtube": "https://www.youtube.com/channel/UCladfO9eSN5z3EtehLWVEOg",
+      "tiktok": "https://www.tiktok.com/@the.assumable.guy"
+    },
+    "deep_enriched_at": "2026-08-01T13:49:13.685Z"
+  },
+  {
+    "lead_id": "ChIJyZOdmW5GE4cRN-DXfLz72sk",
+    "business_name": "Colorado Springs Handyman",
+    "trade": "handyman",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://www.coloradospringshandyman.net/",
+    "email": "info@handymancoloradospringsco.com",
+    "phone": "+1 719-626-4222",
+    "rating": 4.6,
+    "review_count": 63,
+    "address": "1315 Sanderson Ave, Colorado Springs, CO 80915",
+    "place_id": "ChIJyZOdmW5GE4cRN-DXfLz72sk",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson, Bathroom remodeler, Carpenter, Deck builder, Electrician, Fence contractor, Flooring contractor, Kitchen remodeler, Tile contractor"
+    ],
+    "latitude": 38.8511642,
+    "longitude": -104.73635739999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-01T13:47:47.717Z",
+    "email_source": "contact-scraper",
+    "contact_name": "so happy that",
+    "socials": {
+      "facebook": "https://www.facebook.com/ColoradoSpringsHandyman"
+    },
+    "deep_enriched_at": "2026-08-01T13:49:11.000Z"
+  },
+  {
+    "lead_id": "ChIJoZk1-bhFE4cR7J9MduFAjk0",
+    "business_name": "Lionheart Construction",
+    "trade": "handyman",
+    "city": "Colorado Springs, CO",
+    "site_url": "http://startwithlionheart.com/",
+    "email": "codygetchell.lionheart@gmail.com",
+    "phone": "+1 719-213-1270",
+    "rating": 4.8,
+    "review_count": 24,
+    "address": "637 Gillette St, Colorado Springs, CO 80903",
+    "place_id": "ChIJoZk1-bhFE4cR7J9MduFAjk0",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson, Landscaper, Painter"
+    ],
+    "latitude": 38.8156578,
+    "longitude": -104.81356579999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-01T13:47:47.718Z",
+    "email_source": "contact-scraper",
+    "contact_name": "work to add",
+    "socials": {
+      "facebook": "https://facebook.com/719Lionheart",
+      "instagram": "https://instagram.com/719Lionheart",
+      "linkedin": "https://linkedin.com/in/719Lionheart"
+    },
+    "deep_enriched_at": "2026-08-01T13:49:14.635Z"
+  },
+  {
+    "lead_id": "ChIJw55xuRJFE4cRtenc9qwEuwE",
+    "business_name": "Founder's Renovations",
+    "trade": "handyman",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://foundersrenovations.base44.app/",
+    "email": "",
+    "phone": "+1 719-774-2247",
+    "rating": 4.9,
+    "review_count": 11,
+    "address": "1131 Florence Ave, Colorado Springs, CO 80905",
+    "place_id": "ChIJw55xuRJFE4cRtenc9qwEuwE",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson, Contractor"
+    ],
+    "latitude": 38.7987191,
+    "longitude": -104.8077605,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-01T13:47:47.718Z"
+  },
+  {
+    "lead_id": "ChIJMd0PbttFE4cRSx-eA5kNkD4",
+    "business_name": "Wickham's Workbench",
+    "trade": "handyman",
+    "city": "Colorado Springs, CO",
+    "site_url": "http://wickhamsworkbench.com/",
+    "email": "",
+    "phone": "+1 719-632-5117",
+    "rating": 4.6,
+    "review_count": 35,
+    "address": "3604 Galley Rd, Colorado Springs, CO 80909",
+    "place_id": "ChIJMd0PbttFE4cRSx-eA5kNkD4",
+    "subtypes": [
+      "Construction company"
+    ],
+    "latitude": 38.8475092,
+    "longitude": -104.7616539,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-01T13:47:47.718Z",
+    "socials": {
+      "google": "https://maps.google.com/maps",
+      "facebook": "https://www.facebook.com/WickhamsWorkbench",
+      "youtube": "https://www.youtube.com/@wickhamsworkbench-yourgene5369",
+      "instagram": "https://www.instagram.com/wickhamsworkbench"
+    },
+    "deep_enriched_at": "2026-08-01T13:49:16.751Z"
+  },
+  {
+    "lead_id": "ChIJj4wN0Me4OasR5eoaOW7GOQI",
+    "business_name": "Cascade Drywall",
+    "trade": "handyman",
+    "city": "Colorado Springs, CO",
+    "site_url": "https://cascadedrywallinc.net/",
+    "email": "",
+    "phone": "+1 720-289-3854",
+    "rating": 4.7,
+    "review_count": 28,
+    "address": "942 Tampico Ct, Colorado Springs, CO 80910",
+    "place_id": "ChIJj4wN0Me4OasR5eoaOW7GOQI",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson, Carpenter, Dry wall contractor, Insulation contractor, Painting, Remodeler, Water damage restoration service"
+    ],
+    "latitude": 38.8178754,
+    "longitude": -104.7614411,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-01T13:47:47.718Z",
+    "contact_name": "from Nextdoor",
+    "socials": {
+      "google": "https://maps.google.com/maps"
+    },
+    "deep_enriched_at": "2026-08-01T13:49:20.166Z"
+  },
+  {
+    "lead_id": "ChIJT-1rbY5PE4cRS_k9oAbuZlc",
+    "business_name": "Colorado Building Supply - Colorado Springs",
+    "trade": "handyman",
+    "city": "Colorado Springs, CO",
+    "site_url": "http://coloradobuildingsupply.com/",
+    "email": "",
+    "phone": "+1 719-632-4675",
+    "rating": 4.3,
+    "review_count": 79,
+    "address": "3131 N Nevada Ave, Colorado Springs, CO 80907",
+    "place_id": "ChIJT-1rbY5PE4cRS_k9oAbuZlc",
+    "subtypes": [
+      "Lumber store, Building materials supplier, Door supplier, Dry wall supply store, Hardware store, Truss manufacturer, Window supplier"
+    ],
+    "latitude": 38.878236,
+    "longitude": -104.817448,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-01T13:47:47.718Z",
+    "contact_name": "or Contractor",
+    "socials": {
+      "facebook": "https://www.facebook.com/ColoradoBuildingSupply",
+      "instagram": "https://www.instagram.com/ColoradoBuildingSupply"
+    },
+    "deep_enriched_at": "2026-08-01T13:49:19.422Z"
+  }
+]

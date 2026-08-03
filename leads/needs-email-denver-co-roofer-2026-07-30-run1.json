@@ -2080,7 +2080,7 @@
     "trade": "roofer",
     "city": "Denver, CO",
     "site_url": "https://www.apcroofing.com/denver-colorado",
-    "email": "",
+    "email": "info@apcroofing.com",
     "phone": "+1 720-807-6871",
     "rating": 4.9,
     "review_count": 17,
@@ -2093,7 +2093,19 @@
     "longitude": -104.923324,
     "fit_score": 3,
     "gap_score": 3,
-    "scraped_at": "2026-07-30T14:12:24.161Z"
+    "scraped_at": "2026-07-30T14:12:24.161Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Anonymous reviewer",
+    "socials": {
+      "facebook": "https://www.facebook.com/APCRoofingLLC",
+      "bbb": "https://www.bbb.org",
+      "instagram": "https://www.instagram.com/apcroofingllc",
+      "youtube": "https://www.youtube.com/channel/UC3MPyXz4NCL2pq_EOjS4U0w",
+      "linkedin": "https://www.linkedin.com/company/apc-roofing",
+      "google": "https://maps.google.com/maps",
+      "twitter": "https://twitter.com/apc_roofing"
+    },
+    "deep_enriched_at": "2026-08-03T13:10:32.631Z"
   },
   {
     "lead_id": "ChIJMdy7FMiHa4cRD8gtVzeQvfc",

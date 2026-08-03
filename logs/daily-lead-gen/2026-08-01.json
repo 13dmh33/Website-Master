@@ -1,0 +1,167 @@
+{
+  "date": "2026-08-01",
+  "city": "Colorado Springs, CO",
+  "trade": "handyman",
+  "stages": {
+    "scout": {
+      "newLeads": 28,
+      "exitCode": 0
+    },
+    "scrape": {
+      "emailsFound": 7
+    },
+    "diagnoser": {
+      "briefs": 433
+    },
+    "checker": {
+      "approved": 355
+    },
+    "sheetLog": {
+      "rows": 355,
+      "exitCode": 0
+    }
+  },
+  "readyToSend": 18,
+  "sentToday": 23,
+  "batch": {
+    "date": "2026-08-01",
+    "status": "pending",
+    "count": 18,
+    "created": true
+  },
+  "batchLeads": [
+    {
+      "lead_id": "ChIJ-3nAw09JE4cRkYyLm3-oiOQ",
+      "business_name": "HOMEfix",
+      "email": "office@homefixcos.com",
+      "city": "Colorado Springs, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJ0ZViAWtFE4cROBPk-j4P8Hk",
+      "business_name": "Apache Electric & Maintenance, Inc.",
+      "email": "office@apacheelec.com",
+      "city": "Colorado Springs, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJDwrcHoNnsAURK0Sn93aiCSs",
+      "business_name": "Denver Handyman & Painting Services",
+      "email": "a.folkers@denverhps.com",
+      "city": "Denver, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJJ2iN593VWKMRNoZ1TTAfqjw",
+      "business_name": "FREEDOM Electric & Lighting, LLC",
+      "email": "freedom.electric2023@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJKx6SJVOBbIcRfbvUhcp6VZs",
+      "business_name": "303 Roofer",
+      "email": "info@303roofer.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJTXjMNVtbv4cR8xfJa9CTOLU",
+      "business_name": "JOB Home Services",
+      "email": "jobhomeservices@gmail.com",
+      "city": "Denver, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJWxuE2NtNE4cR9t9aimqFU80",
+      "business_name": "The Speedy Electricians of Colorado Springs",
+      "email": "coloradosprings@thespeedyelectricians.com",
+      "city": "Colorado Springs, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJZyNLOTWHbIcR3dYQgNTbYxE",
+      "business_name": "True Craft Handyman",
+      "email": "jake@truecrafthandymancolorado.com",
+      "city": "Colorado Springs, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJ_7yxfokz2GYRa-ybRSxTOrU",
+      "business_name": "Fix Fellows",
+      "email": "fixfellows@outlook.com",
+      "city": "Colorado Springs, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJc9RKoPlPE4cRqkl4sJ_jBeQ",
+      "business_name": "Squeaks Services Plumbing, Heating, & Air",
+      "email": "workorder@squeaksservices.com",
+      "city": "Colorado Springs, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJf22slSRLnCURpIA2iMxj6rY",
+      "business_name": "House Hack Colorado Springs",
+      "email": "ryan@househackcoloradosprings.com",
+      "city": "Colorado Springs, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJgZ3Gfp1JE4cRvyH5PsRhrjo",
+      "business_name": "Soto's Best Handyman Services",
+      "email": "sotomoises@yahoo.com",
+      "city": "Colorado Springs, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJh293zJkkNS8R6nzktNttpik",
+      "business_name": "Super B Electric LLC",
+      "email": "superbelectricllc@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJhVs98x1PE4cRHVcde8aPhj8",
+      "business_name": "BenTek Plumbing & Mechanical",
+      "email": "support@bentekplumbing.com",
+      "city": "Colorado Springs, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJke4pX7--QIYRZZISLKnLP_o",
+      "business_name": "North West Roofing",
+      "email": "info@northwest-roofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJlaPfOBamSAIRscq35f3YiJ8",
+      "business_name": "JRD Electric",
+      "email": "office@jrdelectrical.com",
+      "city": "Colorado Springs, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJs0tUdkVGE4cRXjMq2Ah8YXs",
+      "business_name": "Energy Resource Center",
+      "email": "info@erc-co.org",
+      "city": "Colorado Springs, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJy0lujvxFE4cRTtxg7FcZagA",
+      "business_name": "Advanced Electric Group",
+      "email": "info@advancedelectricgroup.com",
+      "city": "Colorado Springs, CO",
+      "trade": "electrician"
+    }
+  ],
+  "spend": 0.064,
+  "rotation": {
+    "done": 9,
+    "remaining": 103,
+    "reportedDone": 8,
+    "reportedLeft": 104
+  }
+}

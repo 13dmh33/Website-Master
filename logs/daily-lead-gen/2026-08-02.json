@@ -1,0 +1,286 @@
+{
+  "date": "2026-08-02",
+  "city": "Colorado Springs, CO",
+  "trade": "roofer",
+  "stages": {
+    "scout": {
+      "newLeads": 138,
+      "exitCode": 0
+    },
+    "scrape": {
+      "emailsFound": 43
+    },
+    "diagnoser": {
+      "briefs": 463
+    },
+    "checker": {
+      "approved": 385
+    },
+    "sheetLog": {
+      "rows": 385,
+      "exitCode": 0
+    }
+  },
+  "readyToSend": 35,
+  "sentToday": 0,
+  "batch": {
+    "date": "2026-08-02",
+    "status": "pending",
+    "count": 35,
+    "created": true
+  },
+  "batchLeads": [
+    {
+      "lead_id": "ChIJ-3nAw09JE4cRkYyLm3-oiOQ",
+      "business_name": "HOMEfix",
+      "email": "office@homefixcos.com",
+      "city": "Colorado Springs, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJ0ZViAWtFE4cROBPk-j4P8Hk",
+      "business_name": "Apache Electric & Maintenance, Inc.",
+      "email": "office@apacheelec.com",
+      "city": "Colorado Springs, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJ3VF2UKCJa4cRKEnHUxSu1Mc",
+      "business_name": "BLU roofing",
+      "email": "sales@bluroofing.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJ3Zjfs5pPE4cRS6HJjhsOHzc",
+      "business_name": "Fixins Roofing and Restoration",
+      "email": "getquote@fixinscontracting.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJ7aLgwl5rE4cRIdDSPIJjE-4",
+      "business_name": "7th Generation Roofing",
+      "email": "7thgenerationroofing@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJDwrcHoNnsAURK0Sn93aiCSs",
+      "business_name": "Denver Handyman & Painting Services",
+      "email": "a.folkers@denverhps.com",
+      "city": "Denver, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJIaZ8VcxJE4cRUUKb_Jl74xk",
+      "business_name": "hennessey roofing llc",
+      "email": "tom@hennesseyroofing.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJJ2iN593VWKMRNoZ1TTAfqjw",
+      "business_name": "FREEDOM Electric & Lighting, LLC",
+      "email": "freedom.electric2023@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJKx6SJVOBbIcRfbvUhcp6VZs",
+      "business_name": "303 Roofer",
+      "email": "info@303roofer.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJLwLQ0G2yb2wRpMRWdIRh-1k",
+      "business_name": "Raptor Roofing of Colorado Springs",
+      "email": "raptorroofllc@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJRW3gAbpEE4cRsBIO5NQkbBs",
+      "business_name": "Rock Solid Roofing",
+      "email": "4rocksolid@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJTXjMNVtbv4cR8xfJa9CTOLU",
+      "business_name": "JOB Home Services",
+      "email": "jobhomeservices@gmail.com",
+      "city": "Denver, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJWxuE2NtNE4cR9t9aimqFU80",
+      "business_name": "The Speedy Electricians of Colorado Springs",
+      "email": "coloradosprings@thespeedyelectricians.com",
+      "city": "Colorado Springs, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJZyNLOTWHbIcR3dYQgNTbYxE",
+      "business_name": "True Craft Handyman",
+      "email": "jake@truecrafthandymancolorado.com",
+      "city": "Colorado Springs, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJ_7yxfokz2GYRa-ybRSxTOrU",
+      "business_name": "Fix Fellows",
+      "email": "fixfellows@outlook.com",
+      "city": "Colorado Springs, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJc9RKoPlPE4cRqkl4sJ_jBeQ",
+      "business_name": "Squeaks Services Plumbing, Heating, & Air",
+      "email": "workorder@squeaksservices.com",
+      "city": "Colorado Springs, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJd3E2YVFVa4cRfzmp76v8a98",
+      "business_name": "Guardian Roofing and Restoration",
+      "email": "guardianrandrllc@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJf22slSRLnCURpIA2iMxj6rY",
+      "business_name": "House Hack Colorado Springs",
+      "email": "ryan@househackcoloradosprings.com",
+      "city": "Colorado Springs, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJgZ3Gfp1JE4cRvyH5PsRhrjo",
+      "business_name": "Soto's Best Handyman Services",
+      "email": "sotomoises@yahoo.com",
+      "city": "Colorado Springs, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJh293zJkkNS8R6nzktNttpik",
+      "business_name": "Super B Electric LLC",
+      "email": "superbelectricllc@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJhVs98x1PE4cRHVcde8aPhj8",
+      "business_name": "BenTek Plumbing & Mechanical",
+      "email": "support@bentekplumbing.com",
+      "city": "Colorado Springs, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJk3tAorBFE4cRK9RiYw6gwNA",
+      "business_name": "Pioneer Construction and Roofing",
+      "email": "nclingan.pioneer@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJke4pX7--QIYRZZISLKnLP_o",
+      "business_name": "North West Roofing",
+      "email": "info@northwest-roofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJlaPfOBamSAIRscq35f3YiJ8",
+      "business_name": "JRD Electric",
+      "email": "office@jrdelectrical.com",
+      "city": "Colorado Springs, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJmSiNx7tHE4cRrHJShNE8LIU",
+      "business_name": "Tectum Roofing",
+      "email": "admin@weroof.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJmw7dYlkzYKsRXLTWVKOcxlo",
+      "business_name": "High Valley Roofing, LLC",
+      "email": "info@highvalleyroofing.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJn5VZItlEE4cRBzhDX5vwsas",
+      "business_name": "Colorado Pro Roofing",
+      "email": "info@coloradoproroofing.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJq6oGEPc2E4cRGCJXSK_88rg",
+      "business_name": "MD Roofing and Solar",
+      "email": "office@mdroofing.info",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJr6hM1AzWgQoRS_hyYm2OH38",
+      "business_name": "Native Roofing & Solar",
+      "email": "info@nativecoso.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJr_U6ucpRE4cRBsY2NLOQ4nU",
+      "business_name": "7 Summits Roofing",
+      "email": "info@7summitsroofing.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJs0tUdkVGE4cRXjMq2Ah8YXs",
+      "business_name": "Energy Resource Center",
+      "email": "info@erc-co.org",
+      "city": "Colorado Springs, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJxw-_KsBEE4cR-BVZtaVUr2E",
+      "business_name": "Rampart Roofing & Exteriors",
+      "email": "info@rampartroofing.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJy0lujvxFE4cRTtxg7FcZagA",
+      "business_name": "Advanced Electric Group",
+      "email": "info@advancedelectricgroup.com",
+      "city": "Colorado Springs, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJz5i5p2tFE4cRZAdnvkMg2QM",
+      "business_name": "Iron Shield Roofing",
+      "email": "info@callironshieldroofing.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJz68LNNlPE4cRpoEFrhWExYY",
+      "business_name": "Homestead Roofing - Colorado Springs",
+      "email": "info@homesteadroofingcolorado.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    }
+  ],
+  "spend": 0.184,
+  "rotation": {
+    "done": 10,
+    "remaining": 102,
+    "reportedDone": 9,
+    "reportedLeft": 103
+  }
+}

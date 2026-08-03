@@ -144,3 +144,58 @@ test('buildRanking — cross-references a surviving drop-off against an explaini
   assert.ok(dropoff.caveats && dropoff.caveats.length > 0, 'the drop-off candidate must carry a cross-reference caveat');
   assert.ok(dropoff.why.includes('backlog-is-arithmetic'));
 });
+
+test('dropoffIsExplained — a mostly-blocked stage is arithmetic, not a leak to investigate', () => {
+  const { dropoffIsExplained } = require('../lib/ranking');
+  // Real 2026-08-03 shape: 566 at 'checked', only 59 able to send.
+  const explained = dropoffIsExplained({
+    funnel: { biggestDropoff: { from: 'checked', to: 'sent', lost: 566 } },
+    actionableBacklog: { stage: 'checked', total: 566, sendable: 59, awaitingApproval: 30, noBrief: 205, blocked: 272 },
+  });
+  assert.equal(explained, true);
+});
+
+test('dropoffIsExplained — a genuinely converting stage is NOT explained away', () => {
+  const { dropoffIsExplained } = require('../lib/ranking');
+  // Same drop-off, but almost everything is sendable — leads are being lost
+  // for a reason the blockers do not account for, which is worth investigating.
+  const explained = dropoffIsExplained({
+    funnel: { biggestDropoff: { from: 'checked', to: 'sent', lost: 400 } },
+    actionableBacklog: { stage: 'checked', total: 500, sendable: 450, awaitingApproval: 20, noBrief: 15, blocked: 15 },
+  });
+  assert.equal(explained, false, 'the candidate must return once the structural blockers clear');
+});
+
+test('dropoffIsExplained — only explains the transition into the measured stage', () => {
+  const { dropoffIsExplained } = require('../lib/ranking');
+  const elsewhere = dropoffIsExplained({
+    funnel: { biggestDropoff: { from: 'sent', to: 'replied', lost: 200 } },
+    actionableBacklog: { stage: 'checked', total: 566, sendable: 59, noBrief: 205, blocked: 272 },
+  });
+  assert.equal(elsewhere, false, 'a drop-off at a different step is a different question');
+});
+
+test('dropoffIsExplained — missing or empty data never explains anything away', () => {
+  const { dropoffIsExplained } = require('../lib/ranking');
+  assert.equal(dropoffIsExplained({}), false);
+  assert.equal(dropoffIsExplained({ funnel: { biggestDropoff: { to: 'sent' } }, actionableBacklog: null }), false);
+  assert.equal(dropoffIsExplained({
+    funnel: { biggestDropoff: { to: 'sent' } },
+    actionableBacklog: { stage: 'checked', total: 0 },
+  }), false, 'an empty stage is not evidence');
+});
+
+test('dynamicCandidates — omits the dropoff candidate when it is already explained', () => {
+  const { dynamicCandidates } = require('../lib/ranking');
+  const snapshot = {
+    funnel: { biggestDropoff: { from: 'checked', to: 'sent', lost: 566, conversionPct: 30.3 }, stalledStages: [] },
+    actionableBacklog: { stage: 'checked', total: 566, sendable: 59, awaitingApproval: 30, noBrief: 205, blocked: 272 },
+  };
+  const ids = dynamicCandidates({ pipelineSnapshot: snapshot }).map(c => c.id);
+  assert.equal(ids.includes('investigate_biggest_dropoff'), false);
+
+  // and it comes back when the blockers clear
+  snapshot.actionableBacklog = { stage: 'checked', total: 566, sendable: 500, awaitingApproval: 30, noBrief: 20, blocked: 16 };
+  const idsAfter = dynamicCandidates({ pipelineSnapshot: snapshot }).map(c => c.id);
+  assert.ok(idsAfter.includes('investigate_biggest_dropoff'), 'not suppressed permanently');
+});

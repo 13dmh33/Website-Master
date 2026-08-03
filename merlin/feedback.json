@@ -14,6 +14,13 @@
       "note": "Real finding — led to computeActionableBacklog; 510 raw vs 24 actionable.",
       "reportDate": null,
       "recordedAt": "2026-08-01T00:11:13.106Z"
+    },
+    {
+      "id": "nora_remediation",
+      "verdict": "wrong-premise",
+      "note": "No Nora adversarial audit exists — no audit doc in nora/, no 'adversarial' file anywhere. There are no 9 findings to remediate; the audit itself has never been run, so remediation is premature.",
+      "reportDate": null,
+      "recordedAt": "2026-08-03T18:11:20.085Z"
     }
   ]
 }

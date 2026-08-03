@@ -114,9 +114,40 @@ function staticCandidates() {
  * generated after a real Merlin run, since they depend on current numbers
  * (backlog depth, elevated limits actually being elevated right now, etc).
  */
+/**
+ * Is the biggest drop-off already accounted for by known structural blockers?
+ *
+ * The drop-off candidate is regenerated from the funnel on every run, so it
+ * recurs forever — there is always a biggest drop-off. On 2026-08-03 it led
+ * the report ("checked -> sent, 566 leads lost") for the second time in three
+ * days, and generated a session to investigate a question the very same report
+ * answers four lines later: 59 of those 566 can actually send, the other 507
+ * have no brief file or sit on a channel that has never delivered.
+ *
+ * Feedback cannot solve this. Marking it 'good' does not suppress (correctly —
+ * the finding was real and led to computeActionableBacklog), and marking it
+ * 'already-done' would suppress a genuinely new drop-off later.
+ *
+ * So the test is structural rather than historical: when most of a stage is
+ * blocked for reasons already measured and reported, the gap is arithmetic,
+ * not a conversion leak, and there is nothing to investigate. If the blocked
+ * share ever falls — SMS goes live, orphaned records get re-diagnosed — the
+ * candidate returns on its own.
+ */
+function dropoffIsExplained({ funnel, actionableBacklog }) {
+  if (!funnel || !funnel.biggestDropoff || !actionableBacklog) return false;
+  const d = funnel.biggestDropoff;
+  // Only the transition INTO the measured stage is explained by that stage's
+  // composition. A drop-off anywhere else is a different question.
+  if (d.to !== 'sent' || actionableBacklog.stage !== 'checked') return false;
+  if (!actionableBacklog.total) return false;
+  const structurallyBlocked = (actionableBacklog.noBrief || 0) + (actionableBacklog.blocked || 0);
+  return structurallyBlocked / actionableBacklog.total >= 0.5;
+}
+
 function dynamicCandidates({ pipelineSnapshot }) {
   const candidates = [];
-  const { sendActivity, funnel } = pipelineSnapshot;
+  const { sendActivity, funnel, actionableBacklog } = pipelineSnapshot;
 
   if (sendActivity && sendActivity.backlogAtChecked > 0) {
     const highBacklog = sendActivity.backlogAtChecked >= 100;
@@ -132,7 +163,8 @@ function dynamicCandidates({ pipelineSnapshot }) {
     });
   }
 
-  if (funnel && funnel.biggestDropoff && funnel.biggestDropoff.lost > 0) {
+  if (funnel && funnel.biggestDropoff && funnel.biggestDropoff.lost > 0
+      && !dropoffIsExplained({ funnel, actionableBacklog })) {
     const d = funnel.biggestDropoff;
     candidates.push({
       id: 'investigate_biggest_dropoff',
@@ -278,4 +310,4 @@ function buildRanking({ pipelineSnapshot, decisions = NO_DECISIONS, repoFacts = 
   };
 }
 
-module.exports = { scoreCandidate, staticCandidates, dynamicCandidates, reeveDynamicCandidates, rankCandidates, buildRanking, REVENUE_WEIGHT, BUILD_PENALTY_WEIGHT };
+module.exports = { scoreCandidate, staticCandidates, dynamicCandidates, dropoffIsExplained, reeveDynamicCandidates, rankCandidates, buildRanking, REVENUE_WEIGHT, BUILD_PENALTY_WEIGHT };

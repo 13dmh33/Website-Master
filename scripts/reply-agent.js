@@ -145,18 +145,67 @@ function encodeHeaderWord(s) {
 
 // ── LEAD LOOKUP (by sender email → lead) ────────────────────────────────────
 
+/**
+ * Index every address we have actually emailed, so a reply from any of them is
+ * recognised as a known lead.
+ *
+ * Two sources, because neither alone is complete:
+ *
+ *   queue/*-brief.json    richer (trade, city, diagnosis) and what the Haiku
+ *                         draft prefers, but briefs go missing — 205 leads at
+ *                         'checked' currently have no brief file at all.
+ *   messages/*-sent.json  the authoritative record of who we actually sent to.
+ *
+ * Indexing briefs alone missed 112 addresses that had really been emailed
+ * (162 indexed against 228 in sent records, measured 2026-08-03). A reply from
+ * any of those was silently counted as "not a known lead" and skipped — which
+ * is indistinguishable, in the run summary, from nobody having replied at all.
+ * That matters most for the oldest contacts, exactly the ones whose briefs are
+ * likeliest to be gone.
+ *
+ * The brief wins when both exist, so draft quality is unchanged for leads that
+ * still have one.
+ */
 function buildEmailIndex() {
   const index = new Map(); // normalizedEmail → { brief, leadId, sentPath }
-  if (!fs.existsSync(QUEUE_DIR)) return index;
-  for (const file of fs.readdirSync(QUEUE_DIR).filter(f => f.endsWith('-brief.json'))) {
-    try {
-      const brief = JSON.parse(fs.readFileSync(path.join(QUEUE_DIR, file), 'utf8'));
-      const email = normalizeEmail(brief.email);
-      if (!email) continue;
-      const leadId = file.replace('-brief.json', '');
-      index.set(email, { brief, leadId, sentPath: path.join(MESSAGES_DIR, `${leadId}-sent.json`) });
-    } catch { /* skip */ }
+
+  // Sent records first, so a brief can overwrite with the richer record.
+  if (fs.existsSync(MESSAGES_DIR)) {
+    for (const file of fs.readdirSync(MESSAGES_DIR).filter(f => f.endsWith('-sent.json'))) {
+      try {
+        const sent = JSON.parse(fs.readFileSync(path.join(MESSAGES_DIR, file), 'utf8'));
+        const email = normalizeEmail(sent.email);
+        if (!email) continue;
+        const leadId = file.replace('-sent.json', '');
+        index.set(email, {
+          // Minimal brief-shaped record from what the sent log preserved.
+          brief: {
+            lead_id: leadId,
+            business_name: sent.business_name,
+            email: sent.email,
+            phone: sent.phone,
+            city: sent.city,
+            trade: sent.trade,
+          },
+          leadId,
+          sentPath: path.join(MESSAGES_DIR, file),
+        });
+      } catch { /* skip */ }
+    }
   }
+
+  if (fs.existsSync(QUEUE_DIR)) {
+    for (const file of fs.readdirSync(QUEUE_DIR).filter(f => f.endsWith('-brief.json'))) {
+      try {
+        const brief = JSON.parse(fs.readFileSync(path.join(QUEUE_DIR, file), 'utf8'));
+        const email = normalizeEmail(brief.email);
+        if (!email) continue;
+        const leadId = file.replace('-brief.json', '');
+        index.set(email, { brief, leadId, sentPath: path.join(MESSAGES_DIR, `${leadId}-sent.json`) });
+      } catch { /* skip */ }
+    }
+  }
+
   return index;
 }
 

@@ -6,7 +6,7 @@
   "d1c_delay_days": 12,
   "d2_delay_days": 19,
   "dead_after_days": 26,
-  "daily_limit": 20,
+  "daily_limit": 60,
   "email_stagger_min_s": 120,
   "email_stagger_max_s": 300,
   "sms_stagger_min_s": 20,

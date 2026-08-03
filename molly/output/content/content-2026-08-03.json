@@ -1,0 +1,82 @@
+{
+  "weekOf": "2026-08-03",
+  "generatedAt": "2026-08-03T15:41:39.502Z",
+  "researchMode": "evergreen",
+  "niches": {
+    "caption": "education",
+    "reel": "journey"
+  },
+  "posts": {
+    "carousel": {
+      "slides": [
+        {
+          "headline": "Slide 1",
+          "body": "What a good contractor website actually does"
+        },
+        {
+          "headline": "Slide 2",
+          "body": "Gets a call started immediately. Tap-to-call above the fold, not buried at the bottom."
+        },
+        {
+          "headline": "Slide 3",
+          "body": "Shows real trust signals. License and insurance status, visible without digging."
+        },
+        {
+          "headline": "Slide 4",
+          "body": "Surfaces your reviews automatically. Nobody should have to leave your site to see if you're any good."
+        },
+        {
+          "headline": "Slide 5",
+          "body": "Loads clean on a phone. Most of this traffic is a phone, standing in a driveway, deciding fast."
+        },
+        {
+          "headline": "Slide 6",
+          "body": "None of this is complicated. It's just usually missing. We build it in from the start."
+        }
+      ],
+      "caption": "What a good contractor website actually does\n\nLink in bio to see what yours could look like.\n\n#contractorwebsite #websitedesign #contractormarketing #homeservices #trevoadvisors"
+    },
+    "caption1": {
+      "variantA": "The difference a real website makes isn't dramatic. It's just steady.\n\nMore of the calls that used to go to whoever showed up first in a search. Fewer jobs that quietly went to someone else without you ever hearing about it.\n\nNothing about the work changes. You're still the same contractor, doing the same trade, at the same standard.\n\nWhat changes is whether the people searching for that trade can actually find you before they find someone else.\n\nThat's the whole bet a website makes, and it's a quiet one — no dramatic before-and-after, just fewer jobs slipping past unseen.\n\nLink in bio to see what yours could look like.\n\n— Trevo",
+      "variantB": "The difference a real website makes isn't dramatic. It's just steady.\n\nMore of the calls that used to go to whoever showed up first in a search. Fewer jobs that quietly went to someone else without you ever hearing about it.\n\nNothing about the work changes. You're still the same contractor, doing the same trade, at the same standard.\n\nWhat changes is whether the people searching for that trade can actually find you before they find someone else.\n\nThat's the whole bet a website makes, and it's a quiet one — no dramatic before-and-after, just fewer jobs slipping past unseen.\n\nLink in bio to see what yours could look like.\n\n— Trevo",
+      "body": "The difference a real website makes isn't dramatic. It's just steady.\n\nMore of the calls that used to go to whoever showed up first in a search. Fewer jobs that quietly went to someone else without you ever hearing about it.\n\nNothing about the work changes. You're still the same contractor, doing the same trade, at the same standard.\n\nWhat changes is whether the people searching for that trade can actually find you before they find someone else.\n\nThat's the whole bet a website makes, and it's a quiet one — no dramatic before-and-after, just fewer jobs slipping past unseen.\n\nLink in bio to see what yours could look like.\n\n— Trevo"
+    },
+    "trevo_found": {
+      "body": "Meet Nora. She answers the calls you can't.\n\nAn AI agent that texts back the calls you miss while you're on a job, so the lead doesn't just go to voicemail and quietly disappear.\nFollows up without you having to remember to.\nHands you the full context once someone's ready — you pick up the conversation, not start it cold.\nWorks in the background while you're doing the actual work.\n\nThat's Nora. — Trevo\n\nLink in bio to see what yours could look like.",
+      "hookLine": "Meet Nora. She answers the calls you can't."
+    },
+    "reel": {
+      "script": "Hook (0-2s): Nothing about the work changed. Just whether people could find it.\n[B-roll: contractor working, then phone screen]\n\nBody (2-14s): Same skill. Same standard. The only difference is a site that actually shows up when someone searches — tap-to-call, reviews visible, built for a phone.\n[B-roll: site on phone, tap-to-call highlighted]\n\nCta (14-20s): That's what we build. Link in bio to see yours.\n[B-roll: Trevo logo]\n— Trevo",
+      "hookLine": "Nothing about the work changed. Just whether people could find it.",
+      "caption": "Nothing about the work changed. Just whether people could find it.\n\nLink in bio to see yours."
+    }
+  },
+  "glossaryTerms": [
+    "gap score",
+    "ghost listing",
+    "intake form"
+  ],
+  "imagePaths": {
+    "carousel": [
+      "/home/runner/work/Website-Master/Website-Master/molly/output/images/2026-08-03/carousel-slide-01.png",
+      "/home/runner/work/Website-Master/Website-Master/molly/output/images/2026-08-03/carousel-slide-02.png",
+      "/home/runner/work/Website-Master/Website-Master/molly/output/images/2026-08-03/carousel-slide-03.png",
+      "/home/runner/work/Website-Master/Website-Master/molly/output/images/2026-08-03/carousel-slide-04.png",
+      "/home/runner/work/Website-Master/Website-Master/molly/output/images/2026-08-03/carousel-slide-05.png",
+      "/home/runner/work/Website-Master/Website-Master/molly/output/images/2026-08-03/carousel-slide-06.png"
+    ],
+    "caption1": [
+      "/home/runner/work/Website-Master/Website-Master/molly/output/images/2026-08-03/caption-1.png"
+    ],
+    "trevo_found": [
+      "/home/runner/work/Website-Master/Website-Master/molly/output/images/2026-08-03/trevo-found.png"
+    ],
+    "reel": [
+      "/home/runner/work/Website-Master/Website-Master/molly/output/images/2026-08-03/reel-hook.png"
+    ]
+  },
+  "abTracking": {
+    "lastVariant": "A",
+    "week_2026-08-03": "A"
+  }
+}

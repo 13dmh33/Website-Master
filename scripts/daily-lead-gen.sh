@@ -72,36 +72,72 @@ echo "  ✓ Clear. Backed up state.json + cost-log.json → $BK/*-$TS.json"
 # lead-batches.json and that allowlist is empty unless status is 'approved'.
 # An un-reviewed batch therefore sends nothing rather than defaulting to send.
 echo ""
-echo "[1/7] Sending previously approved batch…"
-SEND_BATCH="$(node -e '
-  const { nextSendableBatch } = require("./scripts/lib/lead-batches");
-  const b = nextSendableBatch();
-  console.log(b ? b.date + "|" + b.leads.length : "|0");
-')"
-SEND_DATE="$(echo "$SEND_BATCH" | cut -d'|' -f1)"
-SEND_N="$(echo "$SEND_BATCH" | cut -d'|' -f2)"
-
+echo "[1/7] Sending previously approved batches…"
+# Sends approved batches oldest-first until the day's capacity is used up,
+# rather than exactly one batch per morning.
+#
+# The old one-per-morning rule meant throughput was governed by how the
+# scrapes happened to be grouped, not by the send cap. With four batches
+# approved on 2026-08-03 (14, 18, 35, 59) every one was already under the cap,
+# so raising daily_limit changed nothing and the queue still needed four
+# mornings to drain. Pitcher enforces daily_limit itself and refuses to exceed
+# it, so this loop cannot outrun the cap — it just stops leaving capacity
+# unused when more approved work is waiting.
 SENT_COUNT=0
-if [ -z "$SEND_DATE" ]; then
-  echo "  → nothing approved and waiting. Skipping send."
-else
+while :; do
+  SEND_BATCH="$(node -e '
+    const { nextSendableBatch } = require("./scripts/lib/lead-batches");
+    const b = nextSendableBatch();
+    console.log(b ? b.date + "|" + b.leads.length : "|0");
+  ')"
+  SEND_DATE="$(echo "$SEND_BATCH" | cut -d'|' -f1)"
+  SEND_N="$(echo "$SEND_BATCH" | cut -d'|' -f2)"
+
+  if [ -z "$SEND_DATE" ]; then
+    [ "$SENT_COUNT" -eq 0 ] && echo "  → nothing approved and waiting. Skipping send."
+    break
+  fi
+
+  # Only start a batch that fits in what is left of today's cap.
+  #
+  # Pitcher TRIMS rather than refusing — briefs.slice(0, effectiveLimit) — and
+  # still exits 0, so a batch bigger than the remaining capacity would send
+  # part of itself, get marked 'sent', and silently strand the rest forever.
+  # With the old 30/day cap the 59-contact batch of 2026-08-03 would have lost
+  # 29 contacts exactly this way. Whole batches only; a batch that does not fit
+  # waits for tomorrow with its status untouched.
+  REMAINING="$(node -e '
+    const c = require("./config/pitcher-config.json");
+    const today = new Date().toISOString().slice(0, 10);
+    const sent = c.today === today ? (c.sent_today || 0) : 0;
+    console.log(Math.max(0, (c.daily_limit || 0) - sent));
+  ')"
+  if [ "$SEND_N" -gt "$REMAINING" ]; then
+    echo "  → batch $SEND_DATE ($SEND_N contacts) exceeds today's remaining capacity ($REMAINING). Leaving it approved for tomorrow."
+    break
+  fi
+
   echo "  → batch $SEND_DATE ($SEND_N contacts, approved)"
   if [ -n "$DRY_RUN" ]; then
     node scripts/pitcher.js --dry-run --force --channel email --batch "$SEND_DATE"
-  else
-    node scripts/pitcher.js --force --channel email --batch "$SEND_DATE"
-    if [ $? -eq 0 ]; then
-      node -e '
-        const { markSent } = require("./scripts/lib/lead-batches");
-        const r = markSent(process.argv[1]);
-        console.log(r.ok ? "  ✓ batch " + process.argv[1] + " marked sent" : "  ! " + r.reason);
-      ' "$SEND_DATE"
-      SENT_COUNT="$SEND_N"
-    else
-      echo "  ! Pitcher exited non-zero — batch left approved so it retries tomorrow."
-    fi
+    break   # dry run never marks sent, so looping would repeat the same batch forever
   fi
-fi
+
+  node scripts/pitcher.js --force --channel email --batch "$SEND_DATE"
+  if [ $? -ne 0 ]; then
+    # Most often the daily cap: pitcher exits non-zero rather than trimming.
+    # The batch stays approved and resumes tomorrow.
+    echo "  ! Pitcher exited non-zero — batch $SEND_DATE left approved, resumes tomorrow."
+    break
+  fi
+
+  node -e '
+    const { markSent } = require("./scripts/lib/lead-batches");
+    const r = markSent(process.argv[1]);
+    console.log(r.ok ? "  ✓ batch " + process.argv[1] + " marked sent" : "  ! " + r.reason);
+  ' "$SEND_DATE"
+  SENT_COUNT=$((SENT_COUNT + SEND_N))
+done
 
 # ── STEP 1b: drip follow-ups ─────────────────────────────────────────────────
 # Drip was previously scheduled nowhere — not cron, not launchd, not here — so

@@ -181,12 +181,49 @@ function isLightColor(hex) {
   return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255 > 0.6;
 }
 
+// mean relative luminance (0..1) of what's already drawn in a region. Samples
+// every 4th pixel — enough to classify a background, cheap enough per frame.
+// Returns null if the canvas can't be read, so callers keep their fallback.
+function regionLuminance(ctx, x, y, w, h) {
+  try {
+    const { data } = ctx.getImageData(x, y, w, h);
+    let sum = 0, n = 0;
+    for (let i = 0; i < data.length; i += 16) {
+      sum += (0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2]) / 255;
+      n++;
+    }
+    return n ? sum / n : null;
+  } catch { return null; }
+}
+
+// below this, the area behind the mark counts as a dark background → white logo
+const LOGO_DARK_BG_MAX = 0.55;
+
+// Which logo file to draw. The variant has to follow the BACKGROUND behind the
+// mark, not the text color: logo.png draws "Techs" and the heart outline in
+// navy, so on a dark card those strokes vanish and only "4 Tatas" survives.
+// Headline lightness used to stand in for this and broke wherever a mid-tone
+// headline sat on a dark card (the motivational palette — hot pink on
+// near-black — is exactly that case, which is why reels shipped with half a
+// logo). textColor stays the fallback for when the canvas can't be sampled.
+function pickLogoVariant(bgLuminance, textColor) {
+  if (bgLuminance === null || bgLuminance === undefined) {
+    return isLightColor(textColor) ? 'white' : 'pink';
+  }
+  return bgLuminance < LOGO_DARK_BG_MAX ? 'white' : 'pink';
+}
+
 async function renderBrand(ctx, width, palette, color) {
-  const variant = isLightColor(color) ? 'white' : 'pink';
+  const boxX = Math.max(0, Math.round(width - DESIGN.padding - LOGO_W));
+  const boxY = Math.max(0, Math.round(LOGO_Y));
+
+  // sampling the pixels also covers photo backgrounds, where the palette says nothing
+  const variant = pickLogoVariant(regionLuminance(ctx, boxX, boxY, LOGO_W, LOGO_H), color);
+
   const logo = await loadLogo(variant);
   if (logo) {
     const h = LOGO_W * (logo.height / logo.width);
-    ctx.drawImage(logo, width - DESIGN.padding - LOGO_W, LOGO_Y, LOGO_W, h);
+    ctx.drawImage(logo, boxX, LOGO_Y, LOGO_W, h);
     return;
   }
   ctx.font         = `bold ${DESIGN.brandSize}px ${HEADLINE_FONT}`;
@@ -664,6 +701,7 @@ module.exports = {
   tokenizeEmphasis,
   selectTemplate,
   renderFallback,
+  pickLogoVariant,
   getPalette,
   productImagePath,
   wrapText,

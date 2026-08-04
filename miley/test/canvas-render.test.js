@@ -73,3 +73,51 @@ test('selectTemplate respects weighting and photo eligibility when active', () =
     delete process.env.TEMPLATES_ACTIVE;
   }
 });
+
+// ── logo visibility ─────────────────────────────────────────────────────────
+// logo.png renders "Techs" + the heart outline in navy; logo-white.png renders
+// them in white. Picking the wrong file on a dark card leaves only "4 Tatas"
+// visible — which is what shipped on the motivational reels (hot-pink headline
+// on a near-black gradient, so the old headline-lightness heuristic said "not
+// light" and chose the navy mark).
+
+test('pickLogoVariant follows the background, not the text color', () => {
+  // the regression: mid-tone pink headline on a near-black card
+  assert.equal(render.pickLogoVariant(0.08, '#FF2E88'), 'white');
+  // hot-pink mission card — white mark reads over it
+  assert.equal(render.pickLogoVariant(0.38, '#F7F4F0'), 'white');
+  // light card (cleanCard / off-white product) keeps the navy+pink mark
+  assert.equal(render.pickLogoVariant(0.96, '#0A1228'), 'pink');
+  // unreadable canvas → fall back to the text-color heuristic
+  assert.equal(render.pickLogoVariant(null, '#FFFFFF'), 'white');
+  assert.equal(render.pickLogoVariant(null, '#0A1228'), 'pink');
+});
+
+test('motivational reel frame renders the wordmark visibly over the dark gradient', async () => {
+  const { Canvas: C, loadImage } = require('skia-canvas');
+  const buf = await render.renderReelFrame({
+    text: 'Be the woman the next girl points to.',
+    beatNum: 1, total: 4, paletteKey: 'motivational',
+  });
+
+  // read back the top-right logo box and look for light wordmark pixels
+  const img = await loadImage(buf);
+  const canvas = new C(img.width, img.height);
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(img, 0, 0);
+
+  const LOGO_W = 170, LOGO_H = 111;
+  const x = img.width - render.DESIGN.padding - LOGO_W;
+  const y = render.DESIGN.padding - 20;
+  const { data } = ctx.getImageData(x, y, LOGO_W, LOGO_H);
+
+  let light = 0, n = 0;
+  for (let i = 0; i < data.length; i += 4) {
+    const lum = (0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2]) / 255;
+    if (lum > 0.75) light++;
+    n++;
+  }
+  // the white "Techs" + heart strokes cover a few percent of the box; the navy
+  // variant on this background scores ~0
+  assert.ok(light / n > 0.02, `wordmark not visible on dark reel frame: ${(light / n * 100).toFixed(2)}% light pixels`);
+});

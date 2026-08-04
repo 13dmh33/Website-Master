@@ -12,6 +12,7 @@
 //
 // This never calls a paid API — it is pure parsing and scaffolding.
 
+import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { config, has } from './lib/config.js';
@@ -58,6 +59,52 @@ const SECTION_HEADINGS = [
   'volunteer',
 ];
 
+// Inline "Label: value" lines that carry skills but are not section headings.
+// Resumes often list competencies this way instead of under a SKILLS heading —
+// the canonical resume has "Core strengths:" in the header block and "Tools:"
+// under education. Before this, both fell into whichever section happened to be
+// open and no skills section existed at all.
+const INLINE_SKILL_LABELS = ['core strengths', 'core competencies', 'tools', 'skills', 'technical skills'];
+
+// Normalize a line for heading comparison: lowercase, drop anything that is not
+// a letter or space, then collapse the whitespace runs that leaves behind.
+//
+// The collapse matters. "EDUCATION & PROFESSIONAL DEVELOPMENT" loses its "&"
+// and becomes "education  professional development" with a double space, which
+// failed exact matching against "education" and would defeat a naive prefix
+// test too if the spacing were not repaired first.
+function normalizeHeading(line) {
+  return line.toLowerCase().replace(/[^a-z ]/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+// Does this line open a section? Matches by PREFIX rather than exact string, so
+// "EDUCATION & PROFESSIONAL DEVELOPMENT" opens education.
+//
+// Guarded against false positives: a body line such as "Skills in negotiation
+// were developed…" also begins with a heading word, and a bare prefix test
+// would silently split the resume mid-sentence. Real headings are short and
+// unbulleted, which separates them well enough here.
+function matchSectionHeading(line) {
+  const raw = (line || '').trim();
+  if (!raw || raw.length > 60) return null;
+  if (/^[•\-*]/.test(raw)) return null;
+  const bare = normalizeHeading(raw);
+  if (!bare) return null;
+  // Longest heading first so "professional experience" wins over "experience".
+  for (const heading of [...SECTION_HEADINGS].sort((a, b) => b.length - a.length)) {
+    if (bare === heading || bare.startsWith(`${heading} `)) return heading;
+  }
+  return null;
+}
+
+// An inline skills label like "Tools: Salesforce • HubSpot". Returns the value.
+function matchInlineSkillLabel(line) {
+  const m = (line || '').match(/^\s*([A-Za-z][A-Za-z /&-]{2,30}?)\s*:\s*(.*)$/);
+  if (!m) return null;
+  if (!INLINE_SKILL_LABELS.includes(normalizeHeading(m[1]))) return null;
+  return { label: m[1].trim(), value: m[2].trim() };
+}
+
 // Light structuring. We keep raw_text as the truthful source; this layer is
 // just to make the printed confirmation readable and to give the scorer hints.
 function structure(text) {
@@ -92,14 +139,35 @@ function structure(text) {
   const sections = {};
   let current = 'header';
   sections[current] = [];
+  // Inline skill labels wrap across several physical lines in extracted PDF
+  // text, so once one opens we keep absorbing until a blank line, the next
+  // section heading, or another label — otherwise only the first line of
+  // "Core strengths: …" would be captured.
+  let absorbingSkills = false;
   for (const line of lines) {
-    const bare = line.toLowerCase().replace(/[^a-z ]/g, '').trim();
-    if (bare && SECTION_HEADINGS.includes(bare)) {
-      current = bare;
-      sections[current] = [];
-    } else {
-      (sections[current] = sections[current] || []).push(line);
+    const heading = matchSectionHeading(line);
+    if (heading) {
+      current = heading;
+      sections[current] = sections[current] || [];
+      absorbingSkills = false;
+      continue;
     }
+
+    const inline = matchInlineSkillLabel(line);
+    if (inline) {
+      sections.skills = sections.skills || [];
+      if (inline.value) sections.skills.push(inline.value);
+      absorbingSkills = true;
+      continue;
+    }
+
+    if (absorbingSkills) {
+      if (!line.trim()) { absorbingSkills = false; continue; }
+      sections.skills.push(line);
+      continue;
+    }
+
+    (sections[current] = sections[current] || []).push(line);
   }
   const sectionText = {};
   for (const [k, v] of Object.entries(sections)) {
@@ -109,11 +177,25 @@ function structure(text) {
   return { name, email, phone, links: [...new Set(links)], location, headline, sections: sectionText };
 }
 
+// Content hash of the source file. sourceFile records only a basename, so
+// "which resume produced this profile" was unanswerable — master-resume.pdf can
+// be replaced in place and the recorded name never changes. Every tailored
+// document inherits whatever timeline the parsed file contained, which makes
+// that an integrity question, not a convenience one.
+function hashFile(file) {
+  try {
+    return `sha256:${crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex').slice(0, 16)}`;
+  } catch {
+    return null;
+  }
+}
+
 function buildProfile(file, text) {
   const s = structure(text);
   return {
     generatedAt: new Date().toISOString(),
     sourceFile: path.basename(file),
+    sourceHash: hashFile(file),
     name: s.name,
     headline: s.headline,
     location: s.location,

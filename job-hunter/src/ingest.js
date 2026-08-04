@@ -190,8 +190,36 @@ function hashFile(file) {
   }
 }
 
+// Hand-maintained corrections that outrank the parsed resume.
+//
+// This profile is regenerated on every ingest, so anything written directly
+// into it is destroyed by the next run — which makes hand-patching the wrong
+// tool for a durable fact. data/vetted-claims.json is maintained by hand and
+// merged here instead, so a correction survives re-parsing.
+//
+// It exists because the resume can be stale in ways re-parsing cannot fix: the
+// current PDF says the personal book reached ~$4M, and the verified figure is
+// ~$6M. Both the scorer and the tailor receive the whole profile object, so
+// they see these blocks next to the resume text, and the file states plainly
+// which wins.
+function loadVettedClaims() {
+  try {
+    const raw = fs.readFileSync(path.join(config.paths.data, 'vetted-claims.json'), 'utf8');
+    const parsed = JSON.parse(raw);
+    return {
+      claims_precedence_note: parsed.instruction_to_model || null,
+      vetted_claims: parsed.vetted_claims || [],
+      excluded_claims: parsed.excluded_claims || [],
+      flagged_inconsistencies: parsed.flagged_inconsistencies || [],
+    };
+  } catch {
+    return null; // absent or unreadable — the profile is simply built without it
+  }
+}
+
 function buildProfile(file, text) {
   const s = structure(text);
+  const vetted = loadVettedClaims();
   return {
     generatedAt: new Date().toISOString(),
     sourceFile: path.basename(file),
@@ -200,6 +228,7 @@ function buildProfile(file, text) {
     headline: s.headline,
     location: s.location,
     contact: { email: s.email, phone: s.phone, links: s.links },
+    ...(vetted || {}),
     sections: s.sections,
     raw_text: text.trim(),
   };

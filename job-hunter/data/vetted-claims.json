@@ -1,0 +1,45 @@
+{
+  "_comment": "Hand-maintained facts that outrank the parsed resume. master-profile.json is REGENERATED on every `npm run ingest`, so anything written directly into it is destroyed on the next run — this file is merged in by ingest.js instead and therefore survives. Edit this, never the generated profile.",
+
+  "_precedence": "Where this file and the resume's raw_text disagree, THIS FILE WINS. The scorer and tailor both receive the whole profile object, so both see this block alongside the resume text; the note below is addressed to them.",
+
+  "instruction_to_model": "The claims in vetted_claims are verified and may be used. Where a figure here contradicts a number in raw_text or in a section, use the figure here and ignore the resume's version. Never use anything listed under excluded_claims, in any form or paraphrase.",
+
+  "vetted_claims": [
+    {
+      "claim": "Personal book grew to approximately $6M in annual sales at peak",
+      "context": "Multifamily / national accounts, as Motili's first national account manager",
+      "status": "vetted",
+      "supersedes": "The resume's raw_text states '~$4M in annual sales' in two places (the summary and the Multifamily role). That figure is stale. Use $6M.",
+      "confirmed": "2026-08-04"
+    },
+    {
+      "claim": "The multifamily segment peaked at approximately $10-12M annually",
+      "context": "Segment total, distinct from the personal book above — these are different numbers and can both be true",
+      "status": "vetted",
+      "confirmed": "2026-08-04"
+    }
+  ],
+
+  "excluded_claims": [
+    {
+      "claim": "$300K to $33M multifamily growth",
+      "reason": "Unverified legacy figure from an older resume version. Retired and must never be used, in any phrasing.",
+      "status": "excluded"
+    }
+  ],
+
+  "flagged_inconsistencies": [
+    {
+      "id": "contractor-network-manager-end-date",
+      "detail": "Contractor Network Manager end date reads 2015 in the current resume and 2016 in another source.",
+      "resolution": "UNRESOLVED. The resume's 2015 is left in place. Do not silently pick a side and do not present either date as certain."
+    },
+    {
+      "id": "timeline-framing-conflict",
+      "detail": "A canonical timeline supplied on 2026-08-03 differs from the resume for four of six roles. The resume presents Manager of Finance and Manager of Sales Planning as ONE continuous role from Feb 2025, noting the April 2026 retitle in prose; the canonical list splits them into two roles (Manager of Finance Apr 2026-Present, Manager of Sales Planning Feb 2025-Mar 2026). The canonical list also gives Manager of National Accounts as 2021-2025 against the resume's 2022-Feb 2025, and National Account Manager - Retail & Multifamily as 2016-2021 against the resume's Sr. National Account Manager - Multifamily 2015-2022.",
+      "resolution": "UNRESOLVED, deliberately. The resume is the document actually sent to employers, so it remains the operative version and the parsed timeline is left untouched. Do not reconcile these by inventing dates or a merged title. If a posting requires precise tenure per title, say what the resume says.",
+      "raised": "2026-08-04"
+    }
+  ]
+}

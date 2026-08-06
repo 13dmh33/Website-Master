@@ -1,5 +1,5 @@
 {
-  "current_week": 10,
+  "current_week": 11,
   "review_workflow": {
     "enabled": true,
     "mode": "queue_first",

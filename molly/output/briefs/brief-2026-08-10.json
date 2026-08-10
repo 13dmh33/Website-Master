@@ -1,0 +1,68 @@
+{
+  "weekOf": "2026-08-10",
+  "generatedAt": "2026-08-10T14:18:33.819Z",
+  "researchMode": "evergreen",
+  "weekTrade": "electrical",
+  "angles": [
+    {
+      "id": "angle-1",
+      "niche": "education",
+      "angle": "Before the website, get this part right",
+      "hook": "Before the website, get this part right",
+      "painPoint": "losing jobs to competitors with better websites",
+      "dataPoint": null,
+      "suggestedFormat": "carousel",
+      "evergreenId": "ev-carousel-05",
+      "prewrittenContent": {
+        "hook": "Before the website, get this part right",
+        "body": "Slide 1: Before the website, get this part right\nSlide 2: Know exactly what you do best. Every trade has a specialty inside the specialty — say what yours is.\nSlide 3: Know who you're actually for. Emergency calls, planned installs, repeat maintenance — the pitch changes depending on which.\nSlide 4: Know what makes a customer trust you on day one, before any history exists between you.\nSlide 5: A website can't invent any of this. It can only show it clearly once you know what it is.\nSlide 6: Get that part right first. The site is easy after. — Trevo",
+        "hashtags": "#contractortips #tradespeople #smallbusiness #homeservices #trevoadvisors"
+      }
+    },
+    {
+      "id": "angle-2",
+      "niche": "journey",
+      "angle": "The trade doesn't get enough credit for how much judgment it takes.",
+      "hook": "The trade doesn't get enough credit for how much judgment it takes.",
+      "painPoint": "losing jobs to competitors with better websites",
+      "dataPoint": null,
+      "suggestedFormat": "caption",
+      "evergreenId": "ev-caption-05",
+      "prewrittenContent": {
+        "hook": "The trade doesn't get enough credit for how much judgment it takes.",
+        "body": "The trade doesn't get enough credit for how much judgment it takes.\n\nEvery job is a little different. Every house has its own quirks. Knowing what you're looking at before you open a wall or a panel is its own kind of expertise, built over years, not taught in an afternoon.\n\nThat's the part marketing tends to skip past — the actual skill, in favor of generic claims that could apply to anyone.\n\nWe'd rather point at the work itself. That's the part worth being proud of.\n\n— Trevo",
+        "hashtags": "#tradespeople #contractortips #smallbusiness #homeservices #trevoadvisors"
+      }
+    },
+    {
+      "id": "angle-3",
+      "niche": "product",
+      "angle": "Meet Argus. Your reviews, answered.",
+      "hook": "Meet Argus. Your reviews, answered.",
+      "painPoint": "losing jobs to competitors with better websites",
+      "dataPoint": null,
+      "suggestedFormat": "trevo_found",
+      "evergreenId": "ev-trevo-found-05",
+      "prewrittenContent": {
+        "hook": "Meet Argus. Your reviews, answered.",
+        "body": "Meet Argus. Your reviews, answered.\n\nAn AI agent that responds to every Google review automatically, so your profile stays active instead of going quiet for months.\nFlags anything negative for you to handle personally — nothing sensitive goes out on its own.\nSounds like you, not automated boilerplate.\nWorks on any Google Business Profile, with or without a Trevo site.\n\nThat's Argus. — Trevo\n\nLink in bio to see what yours could look like.",
+        "hashtags": "#googlereviews #contractormarketing #trevoadvisors #homeservices"
+      }
+    },
+    {
+      "id": "angle-4",
+      "niche": "journey",
+      "angle": "The trade takes years to get good at. Respect that first.",
+      "hook": "The trade takes years to get good at. Respect that first.",
+      "painPoint": "losing jobs to competitors with better websites",
+      "dataPoint": null,
+      "suggestedFormat": "reel",
+      "evergreenId": "ev-reel-05",
+      "prewrittenContent": {
+        "hook": "The trade takes years to get good at. Respect that first.",
+        "body": "Hook (0-2s): The trade takes years to get good at. Respect that first.\n[B-roll: hands working, close on tools]\n\nBody (2-14s): Every job's a little different. Reading a wall or a panel before you open it — that's judgment, not luck. Marketing should point at that, not talk over it.\n[B-roll: finished work, clean site pulling it together]\n\nCta (14-20s): That's what we try to show. Link in bio to see yours.\n[B-roll: Trevo logo]\n— Trevo",
+        "hashtags": "#tradespeople #contractortips #trevoadvisors #reels"
+      }
+    }
+  ]
+}

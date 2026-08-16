@@ -94,10 +94,21 @@ function diffMarkdownToHtml(md, esc) {
     .join('<br>');
 }
 
-function textDigest(matches, now, duplicateFitWarning) {
+// One line, stated rather than implied. A missing "tailored docs:" line is not
+// a message — it reads the same whether the stage is off or every call failed.
+function tailoringLine() {
+  return config.tailorEnabled
+    ? null
+    : 'Tailoring is OFF (TAILOR_ENABLED=false) — no resumes or cover letters were generated. Scores, rationales and the career-coach review below are unaffected.';
+}
+
+function textDigest(matches, now, duplicateFitWarning, bandMismatchWarning) {
   const lines = [];
   lines.push(`Missy job digest — ${now.toISOString().slice(0, 10)}`);
   lines.push(`${matches.length} match${matches.length === 1 ? '' : 'es'} to review. Nothing has been applied to — this is for your manual review.`);
+  const tailorNote = tailoringLine();
+  if (tailorNote) lines.push(tailorNote);
+  if (bandMismatchWarning) lines.push(`NOTE: ${bandMismatchWarning}`);
   if (duplicateFitWarning) lines.push(`NOTE: ${duplicateFitWarning}`);
   lines.push('');
   matches.forEach((job, i) => {
@@ -129,7 +140,7 @@ function applyHtml(job, esc) {
   return `<div><a href="${esc(job.url)}">apply link</a></div>`;
 }
 
-function htmlDigest(matches, now, duplicateFitWarning) {
+function htmlDigest(matches, now, duplicateFitWarning, bandMismatchWarning) {
   const esc = (s) => String(s || '').replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
   const rows = matches
     .map((job, i) => {
@@ -170,16 +181,37 @@ function htmlDigest(matches, now, duplicateFitWarning) {
       </td></tr>`;
     })
     .join('');
-  const warningHtml = duplicateFitWarning
-    ? `<p style="color:#a00;background:#fff3e0;padding:8px;border-radius:4px">${esc(duplicateFitWarning)}</p>`
+  const warn = (s) => `<p style="color:#a00;background:#fff3e0;padding:8px;border-radius:4px">${esc(s)}</p>`;
+  const warningHtml =
+    (bandMismatchWarning ? warn(bandMismatchWarning) : '') + (duplicateFitWarning ? warn(duplicateFitWarning) : '');
+  const tailorNote = tailoringLine();
+  const tailorHtml = tailorNote
+    ? `<p style="color:#555;background:#f0f0f0;padding:8px;border-radius:4px;margin-top:0">${esc(tailorNote)}</p>`
     : '';
   return `<div style="font-family:Arial,Helvetica,sans-serif;max-width:640px">
     <h2 style="margin-bottom:4px">Missy job digest — ${now.toISOString().slice(0, 10)}</h2>
     <p style="color:#555;margin-top:0">${matches.length} match${matches.length === 1 ? '' : 'es'} to review. Nothing has been applied to — this is for your manual review.</p>
+    ${tailorHtml}
     ${warningHtml}
     <table style="width:100%;border-collapse:collapse">${rows}</table>
     <p style="color:#777">— ${esc(config.email.signature)}</p>
   </div>`;
+}
+
+// Zero-match status note. A silent day and a broken cron look identical from
+// the inbox, and the failure mode is the expensive one: you assume the market
+// is quiet for a week when the run has actually been crashing. This says the
+// pipeline ran, how far each stage got, and that nothing cleared the bar — so
+// zero reads as a result rather than an absence.
+function statusNote(now, pipeline) {
+  const p = pipeline || {};
+  const n = (v) => (Number.isFinite(v) ? v : '?');
+  return (
+    `Missy ran ${now.toISOString().slice(0, 10)} and found 0 matches. ` +
+    `Pulled ${n(p.pulled)} postings, ${n(p.fresh)} not already sent, ${n(p.filtered)} past the rules filter, ` +
+    `${n(p.scored)} scored — none reached the blended threshold of ${n(p.threshold)}. ` +
+    `The pipeline is healthy; today just had nothing worth your time.`
+  );
 }
 
 function sheetRows(matches, now) {
@@ -219,10 +251,20 @@ async function maybeInstantAlert(matches, state, now, dryRun) {
   }
 }
 
-export async function runReporter(matches, { state, now = new Date(), dryRun = false, duplicateFitWarning = null } = {}) {
-  const text = textDigest(matches, now, duplicateFitWarning);
-  const html = htmlDigest(matches, now, duplicateFitWarning);
-  const subject = `Missy job digest — ${matches.length} match${matches.length === 1 ? '' : 'es'} — ${now.toISOString().slice(0, 10)}`;
+export async function runReporter(
+  matches,
+  { state, now = new Date(), dryRun = false, duplicateFitWarning = null, bandMismatchWarning = null, pipeline = null } = {},
+) {
+  const zeroMatch = !matches.length;
+  const note = zeroMatch ? statusNote(now, pipeline) : null;
+
+  const text = zeroMatch ? `${note}\n\n— ${config.email.signature}` : textDigest(matches, now, duplicateFitWarning, bandMismatchWarning);
+  const html = zeroMatch
+    ? `<div style="font-family:Arial,Helvetica,sans-serif;max-width:640px"><p>${note}</p><p style="color:#777">— ${config.email.signature}</p></div>`
+    : htmlDigest(matches, now, duplicateFitWarning, bandMismatchWarning);
+  const subject = zeroMatch
+    ? `Missy — 0 matches ${now.toISOString().slice(0, 10)} (pipeline healthy)`
+    : `Missy job digest — ${matches.length} match${matches.length === 1 ? '' : 'es'} — ${now.toISOString().slice(0, 10)}`;
 
   // Always print the digest preview to the terminal.
   log.info('--- digest preview ---');
@@ -237,12 +279,7 @@ export async function runReporter(matches, { state, now = new Date(), dryRun = f
     return { emailed: false, sheetAppended: 0 };
   }
 
-  if (!matches.length) {
-    log.info('no matches today — nothing to email or log.');
-    return { emailed: false, sheetAppended: 0 };
-  }
-
-  // Email the digest.
+  // Email the digest (or, on a zero-match day, the status note above).
   let emailed = false;
   try {
     const res = await sendDigest({ subject, text, html });
@@ -254,6 +291,14 @@ export async function runReporter(matches, { state, now = new Date(), dryRun = f
     }
   } catch (e) {
     log.warn(`sending digest failed: ${e.message}`);
+  }
+
+  // Nothing matched, so there are no rows to track and no ids to mark as
+  // delivered. The status note has been sent; stop here rather than writing an
+  // empty row set and an empty digest record.
+  if (zeroMatch) {
+    log.info('0 matches — status note sent; no sheet write, no delivered ids recorded.');
+    return { emailed, sheetAppended: 0 };
   }
 
   // Append to the Google Sheet tracker.

@@ -97,7 +97,7 @@ export async function runDaily(argv = process.argv.slice(2)) {
   // state lets the scorer reuse a cached score for a job it already scored
   // under the same profile/preferences instead of paying for another Haiku
   // call (see scorer.js). `prefs` feeds lib/location.js#classifyLocation.
-  const { matches, duplicateFitWarning } = await runScorer(kept, {
+  const { matches, duplicateFitWarning, bandMismatchWarning, scoredCount } = await runScorer(kept, {
     profile,
     preferencesText,
     prefs,
@@ -135,7 +135,22 @@ export async function runDaily(argv = process.argv.slice(2)) {
   }
 
   // Stage 5: digest (email + sheet + state).
-  await runReporter(tailored, { state, now, dryRun: args.dryRun, duplicateFitWarning });
+  await runReporter(tailored, {
+    state,
+    now,
+    dryRun: args.dryRun,
+    duplicateFitWarning,
+    bandMismatchWarning,
+    // Stage counts, so a zero-match day can report where the funnel emptied
+    // instead of just saying nothing came through.
+    pipeline: {
+      pulled: jobs.length,
+      fresh: fresh.length,
+      filtered: kept.length,
+      scored: scoredCount,
+      threshold: args.minScore ?? config.minScore,
+    },
+  });
 
   // Persist the append-only state once, unless this was a dry run.
   if (!args.dryRun) {

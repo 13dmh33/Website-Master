@@ -44,16 +44,27 @@ function scoringFingerprint(profile, preferencesText) {
 // value instead of a genuinely differentiated one. Purely informational: never
 // changes ranking or filtering, just surfaces a data-quality signal to spot-check.
 function findDuplicateFitWarning(scored) {
+  if (!scored.length) return null;
   const counts = new Map();
   for (const j of scored) counts.set(j.fit, (counts.get(j.fit) || 0) + 1);
-  const dupes = [...counts.entries()].filter(([, count]) => count >= 2);
-  if (!dupes.length) return null;
-  return dupes
-    .map(
-      ([fit, count]) =>
-        `${count} jobs share an identical fit score of ${fit} — may indicate the model returned a default/lazy value rather than a differentiated score; spot-check these.`,
-    )
-    .join(' ');
+
+  // Fires only when one value swallows more than half the batch.
+  //
+  // The old test was "2+ jobs share a score", which sounds like a lazy-output
+  // check and is really a birthday-paradox check: with ~178 jobs landing on 22
+  // possible values, collisions are arithmetic, not evidence. It fired on every
+  // run — the last one produced fifteen near-identical sentences, all pasted
+  // into the digest, burying the single line that mattered. A guard that always
+  // fires only teaches you to ignore the guard. Band/fit disagreement is now
+  // the real signal; this stays as a blunt backstop for total collapse.
+  const [topFit, topCount] = [...counts.entries()].sort((a, b) => b[1] - a[1])[0];
+  if (topCount <= scored.length / 2) return null;
+  const pct = Math.round((topCount / scored.length) * 100);
+  return (
+    `${topCount} of ${scored.length} scores (${pct}%) came back as exactly ${topFit} — more than ` +
+    `half the batch on one value, which usually means the model stopped differentiating. ` +
+    `Spot-check before trusting this run.`
+  );
 }
 
 export async function runScorer(jobs, { profile, preferencesText, prefs, minScore, now = new Date(), state } = {}) {
@@ -84,13 +95,15 @@ export async function runScorer(jobs, { profile, preferencesText, prefs, minScor
         result = await scoreJob({ job, profile, preferencesText, feedbackExamples: feedback });
         if (state) cacheScore(state, job.id, fingerprint, result);
       }
-      const { fit, rationale, keywords } = result;
+      const { fit, band, bandMismatch, rationale, keywords } = result;
       const bonus = freshnessBonus(job, now);
       const location = classifyLocation(job, prefs || {});
       const blended = Math.min(100, Math.round(fit + bonus + location.delta));
       scored.push({
         ...job,
         fit,
+        band: band || null,
+        bandMismatch: bandMismatch || null,
         rationale,
         keywords,
         freshnessBonus: bonus,
@@ -111,11 +124,27 @@ export async function runScorer(jobs, { profile, preferencesText, prefs, minScor
 
   const duplicateFitWarning = findDuplicateFitWarning(scored);
 
+  // Band/fit disagreement — the replacement quality signal. Counted rather than
+  // enumerated: one number is readable, 178 sentences are not.
+  const mismatches = scored.filter((j) => j.bandMismatch);
+  const bandMismatchWarning = mismatches.length
+    ? `${mismatches.length} of ${scored.length} scores disagreed with their own band ` +
+      `(e.g. ${mismatches[0].bandMismatch}) — spot-check these.`
+    : null;
+
   log.info(
     `scored ${scored.length} (${cacheHits} from cache, ${scored.length - cacheHits} new Haiku calls), ` +
       `${matches.length} at/above blended ${threshold}.`,
   );
+  if (bandMismatchWarning) log.warn(bandMismatchWarning);
   if (duplicateFitWarning) log.warn(duplicateFitWarning);
 
-  return { matches, scoredCount: scored.length, duplicateFitWarning };
+  return {
+    matches,
+    scoredCount: scored.length,
+    duplicateFitWarning,
+    bandMismatchWarning,
+    bandMismatchCount: mismatches.length,
+    scored,
+  };
 }

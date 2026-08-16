@@ -29,6 +29,15 @@ function dateDir(now) {
 }
 
 export async function runTailor(matches, { profile, preferencesText, limit, dryRun = false, now = new Date() } = {}) {
+  // Short-circuit before any work, rather than by way of a zero-length slice.
+  // The matches themselves pass straight through untouched, so every later
+  // stage — the career coach, the digest, the Sheet write — sees exactly what
+  // it saw before, minus the two generated documents.
+  if (!config.tailorEnabled) {
+    log.info(`tailoring disabled (TAILOR_ENABLED=false) — ${matches.length} match(es) pass through unmodified.`);
+    return matches.map((job) => ({ ...job }));
+  }
+
   const cap = limit ?? config.dailyLimit;
   const selected = matches.slice(0, cap);
   const out = [];

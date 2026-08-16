@@ -122,15 +122,36 @@ export async function scoreJob({ job, profile, preferencesText, feedbackExamples
         .join('\n')
     : 'No feedback history yet — score on the profile and preferences alone.';
 
+  // The band ladder below replaced an unanchored "0-100, how well does this
+  // match" ask. Across 2,443 scores that produced only 22 distinct values, and
+  // nothing at all between 63 and 71 — the single widest gap in the
+  // distribution, sitting exactly on the filter threshold. The cause was that
+  // the only number the prompt ever named was that threshold, in an instruction
+  // to "cap it well below 70", so the model rounded away from the one boundary
+  // it had been told about: 62 when it meant no, 72 when it meant yes.
+  //
+  // The seniority rule survives in substance — a title a tier below target must
+  // move the number, not just the prose — but it now points at a NAMED BAND
+  // rather than a bare figure, so no filtering value is quoted at the model.
   const system =
     'You are a careful job-fit rater for a single candidate. You compare one job posting to the ' +
     "candidate's real background and stated preferences and return a strict JSON object. Be honest: " +
-    'do not inflate scores. Never invent qualifications the candidate lacks. Title/seniority-level ' +
-    "mismatches are a scoring factor, not just a footnote: if the posting's title is clearly a tier " +
-    "below the candidate's stated target level (e.g. a plain \"Manager\" posting when the candidate " +
-    'targets Director/VP), reflect that in the numeric fit score itself — cap it well below 70 even ' +
-    'if functional skills otherwise align well. Do not let strong functional overlap alone justify a ' +
-    'high score when the seniority level does not match what the candidate is targeting.';
+    'do not inflate scores. Never invent qualifications the candidate lacks.\n\n' +
+    'Score against these bands. Choose the band FIRST, then pick a number inside it — the number ' +
+    'should use the width of the band to express how strong a case it is, not sit at a round value.\n' +
+    '  strong       85-100  Apply this week. Target function AND target seniority AND compensation ' +
+    'plausibly at or above the stated floor. Favoured industry, or a named target company.\n' +
+    '  candidate    70-84   A real candidate. Function and seniority both match; title adjacent ' +
+    '(Senior Manager against Director). Industry neutral.\n' +
+    '  stretch      55-69   Stretch or step-down. Exactly one axis is off: right function one tier ' +
+    'low, or right level in an adjacent function.\n' +
+    '  transferable 35-54   Transferable only. The skills carry, but this is not the kind of role ' +
+    'the candidate is looking for.\n' +
+    '  no           0-34    Wrong function or wrong level entirely, or a deal-breaker is present.\n\n' +
+    'Title and seniority are scoring factors, not footnotes. If the posting sits a clear tier below ' +
+    "the candidate's stated target level, it cannot be placed above the `stretch` band however well " +
+    'the functional skills align. Strong functional overlap alone never justifies a higher band when ' +
+    'the seniority does not match what the candidate is targeting.';
 
   // Split into a stable prefix (byte-identical across every job scored in one
   // run — profile, preferences, and feedback are fixed for the whole batch)
@@ -166,8 +187,9 @@ export async function scoreJob({ job, profile, preferencesText, feedbackExamples
     '',
     'Return ONLY this JSON object, no prose:',
     '{',
-    '  "fit": <integer 0-100, how well this job matches the candidate>,',
-    '  "rationale": "<one sentence, plain language, why this score>",',
+    '  "band": "<one of: strong | candidate | stretch | transferable | no>",',
+    '  "fit": <integer, inside the numeric range of the band you chose>,',
+    '  "rationale": "<one sentence, plain language, why this band>",',
     '  "keywords": ["<up to 3 exact terms from the posting the resume should mirror>"]',
     '}',
   ].join('\n');
@@ -189,12 +211,46 @@ export async function scoreJob({ job, profile, preferencesText, feedbackExamples
 
   const parsed = extractJson(firstText(message));
   const fit = Math.max(0, Math.min(100, Math.round(Number(parsed.fit) || 0)));
+  const band = normalizeBand(parsed.band);
   return {
     fit,
+    band,
+    // Disagreement between the two — a "strong" label carrying a 42, say — is a
+    // far better signal of careless output than the old duplicate-score check,
+    // which fired on every run because 22 possible values across ~178 jobs
+    // guarantees collisions. This one only fires when the model contradicts
+    // itself in the same response. Recorded, never acted on: it does not change
+    // ranking or filtering.
+    bandMismatch: describeBandMismatch(band, fit),
     rationale: String(parsed.rationale || '').trim(),
     keywords: Array.isArray(parsed.keywords) ? parsed.keywords.slice(0, 3).map(String) : [],
     usage: message.usage,
   };
+}
+
+// The five bands, and the numeric range each one claims. Kept beside the prompt
+// that defines them so the two cannot drift apart unnoticed.
+export const SCORE_BANDS = {
+  strong: [85, 100],
+  candidate: [70, 84],
+  stretch: [55, 69],
+  transferable: [35, 54],
+  no: [0, 34],
+};
+
+function normalizeBand(raw) {
+  const b = String(raw || '').trim().toLowerCase();
+  return Object.prototype.hasOwnProperty.call(SCORE_BANDS, b) ? b : null;
+}
+
+// Returns null when the two agree, or a short human-readable string when they
+// do not. Absent bands are reported too — an older cached score, or a model
+// that ignored the schema, should not look like agreement.
+function describeBandMismatch(band, fit) {
+  if (!band) return `no band returned (fit ${fit})`;
+  const [lo, hi] = SCORE_BANDS[band];
+  if (fit >= lo && hi >= fit) return null;
+  return `band "${band}" implies ${lo}-${hi} but fit was ${fit}`;
 }
 
 // --- Tailoring (Claude Sonnet) ---

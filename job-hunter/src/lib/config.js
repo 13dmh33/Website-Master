@@ -24,6 +24,17 @@ const num = (v, fallback) => {
 
 const str = (v) => (v && String(v).trim() ? String(v).trim() : '');
 
+// Explicit both ways: an unset value takes the fallback, and only the listed
+// words flip it. Anything else is a typo, and a typo in a flag that governs
+// spending should not quietly read as "on".
+const bool = (v, fallback) => {
+  const s = String(v ?? '').trim().toLowerCase();
+  if (s === '') return fallback;
+  if (['1', 'true', 'yes', 'on'].includes(s)) return true;
+  if (['0', 'false', 'no', 'off'].includes(s)) return false;
+  return fallback;
+};
+
 export const config = {
   // Paths
   paths: {
@@ -77,6 +88,14 @@ export const config = {
   // Tunables
   minScore: num(process.env.MIN_SCORE, 70),
   dailyLimit: num(process.env.DAILY_LIMIT, 8),
+  // Stage 4 (Sonnet resume + cover letter) is off by default. It is the largest
+  // cost in the pipeline and its output has never been used; scores, rationales,
+  // the keywords to mirror and the career-coach review all come from elsewhere
+  // and are unaffected. Setting DAILY_LIMIT=0 would also stop it, but a zero is
+  // not legible — six months on, nobody knows whether it was a decision or a
+  // mistake. This flag says what it means, and leaves DAILY_LIMIT free to go on
+  // doing its real job of capping how many matches get tailored when it is on.
+  tailorEnabled: bool(process.env.TAILOR_ENABLED, false),
   maxAgeDays: num(process.env.MAX_AGE_DAYS, 21),
   // Off unless a numeric threshold is set.
   instantAlertMin:

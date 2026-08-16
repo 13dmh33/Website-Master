@@ -199,9 +199,11 @@ function hashFile(file) {
 //
 // It exists because the resume can be stale in ways re-parsing cannot fix: the
 // current PDF says the personal book reached ~$4M, and the verified figure is
-// ~$6M. Both the scorer and the tailor receive the whole profile object, so
-// they see these blocks next to the resume text, and the file states plainly
-// which wins.
+// $33M (confirmed 2026-08-16, superseding an earlier ~$6M). It also carries the
+// employment history, which the resume merges for presentation and the parser
+// therefore cannot recover. Both the scorer and the tailor receive the whole
+// profile object, so they see these blocks next to the resume text, and the
+// file states plainly which wins.
 function loadVettedClaims() {
   try {
     const raw = fs.readFileSync(path.join(config.paths.data, 'vetted-claims.json'), 'utf8');
@@ -211,6 +213,11 @@ function loadVettedClaims() {
       vetted_claims: parsed.vetted_claims || [],
       excluded_claims: parsed.excluded_claims || [],
       flagged_inconsistencies: parsed.flagged_inconsistencies || [],
+      // Employment history belongs here for the same reason the claims do: the
+      // resume merges roles for presentation and the parser then flattens them,
+      // so the structured timeline cannot be recovered by re-parsing. Without
+      // this line it would be silently dropped on the next ingest.
+      ...(parsed.employment ? { employment: parsed.employment } : {}),
     };
   } catch {
     return null; // absent or unreadable — the profile is simply built without it

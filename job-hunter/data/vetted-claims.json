@@ -1,17 +1,14 @@
 {
   "_comment": "Hand-maintained facts that outrank the parsed resume. master-profile.json is REGENERATED on every `npm run ingest`, so anything written directly into it is destroyed on the next run — this file is merged in by ingest.js instead and therefore survives. Edit this, never the generated profile.",
-
   "_precedence": "Where this file and the resume's raw_text disagree, THIS FILE WINS. The scorer and tailor both receive the whole profile object, so both see this block alongside the resume text; the note below is addressed to them.",
-
   "instruction_to_model": "The claims in vetted_claims are verified and may be used. Where a figure here contradicts a number in raw_text or in a section, use the figure here and ignore the resume's version. Never use anything listed under excluded_claims, in any form or paraphrase.",
-
   "vetted_claims": [
     {
-      "claim": "Personal book grew to approximately $6M in annual sales at peak",
+      "claim": "Peak personal book approximately $33M in annual sales",
       "context": "Multifamily / national accounts, as Motili's first national account manager",
       "status": "vetted",
-      "supersedes": "The resume's raw_text states '~$4M in annual sales' in two places (the summary and the Multifamily role). That figure is stale. Use $6M.",
-      "confirmed": "2026-08-04"
+      "supersedes": "Two figures now retired: the resume's raw_text states '~$4M in annual sales' in two places (the summary and the Multifamily role), and a prior vetted claim of '~$6M' dated 2026-08-04. Use $33M.",
+      "confirmed": "2026-08-16, by Dave, in direct answer to which figure was correct"
     },
     {
       "claim": "The multifamily segment peaked at approximately $10-12M annually",
@@ -20,15 +17,13 @@
       "confirmed": "2026-08-04"
     }
   ],
-
   "excluded_claims": [
     {
       "claim": "$300K to $33M multifamily growth",
-      "reason": "Unverified legacy figure from an older resume version. Retired and must never be used, in any phrasing.",
+      "reason": "The GROWTH NARRATIVE is unverified — specifically the $300K starting point, from an older resume version. Still retired: never use the 'grew from X to Y' framing, in any phrasing. This is NOT the same claim as the peak figure — '$33M peak personal book' is separately vetted as of 2026-08-16 and may be used as a point-in-time number.",
       "status": "excluded"
     }
   ],
-
   "flagged_inconsistencies": [
     {
       "id": "contractor-network-manager-end-date",
@@ -38,8 +33,54 @@
     {
       "id": "timeline-framing-conflict",
       "detail": "A canonical timeline supplied on 2026-08-03 differs from the resume for four of six roles. The resume presents Manager of Finance and Manager of Sales Planning as ONE continuous role from Feb 2025, noting the April 2026 retitle in prose; the canonical list splits them into two roles (Manager of Finance Apr 2026-Present, Manager of Sales Planning Feb 2025-Mar 2026). The canonical list also gives Manager of National Accounts as 2021-2025 against the resume's 2022-Feb 2025, and National Account Manager - Retail & Multifamily as 2016-2021 against the resume's Sr. National Account Manager - Multifamily 2015-2022.",
-      "resolution": "UNRESOLVED, deliberately. The resume is the document actually sent to employers, so it remains the operative version and the parsed timeline is left untouched. Do not reconcile these by inventing dates or a merged title. If a posting requires precise tenure per title, say what the resume says.",
-      "raised": "2026-08-04"
+      "resolution": "RESOLVED 2026-08-16 by Dave: the canonical timeline supersedes the resume for role dates and titles, and is now recorded in the `employment` block below. The parsed sections and raw_text are deliberately left untouched so the resume actually sent to employers stays visible and the conflict stays auditable. Note the resume still says '~$4M' where the vetted figure is $33M — the PDF itself may need updating.",
+      "raised": "2026-08-04",
+      "resolved": "2026-08-16"
     }
-  ]
+  ],
+  "employment": {
+    "note": "One continuous organisation whose identity changed underneath the roles, not five separate employers. Recorded here because the resume merged roles for presentation and the parser then flattened them — which meant every fit score was computed against a wrong history.",
+    "employer": {
+      "current_name": "Motili — a Daikin Comfort Technologies business unit",
+      "lineage": "Formerly OneHVAC / Modern Marketing Concepts. Acquired by Daikin in 2017. The earliest role supported Carrier national accounts.",
+      "entities_worked_for": [
+        "Motili",
+        "Daikin Comfort Technologies"
+      ],
+      "tenure": "2006–present"
+    },
+    "title_history": [
+      {
+        "from": "2006",
+        "to": "2010",
+        "title": "Customer Service Representative — Carrier National Accounts"
+      },
+      {
+        "from": "2010",
+        "to": "2015",
+        "title": "Contractor Network Manager",
+        "uncertainty": "End date disputed: 2015 in the resume, 2016 in another source. Unresolved — do not present either date as certain."
+      },
+      {
+        "from": "2015",
+        "to": "2021",
+        "title": "Senior National Accounts Manager",
+        "note": "Peak personal book approximately $33M. Motili's first national account manager."
+      },
+      {
+        "from": "2021",
+        "to": "2024",
+        "title": "Manager of National Accounts",
+        "note": "Managed the National Accounts Manager team. This is the step from carrying a book to managing the people who carry one — the transition the parser lost, and the reason a 'National Accounts Manager' posting is a step DOWN, not a lateral."
+      },
+      {
+        "from": "2024",
+        "to": "present",
+        "title": "Manager of Sales Planning and Finance",
+        "location": "Denver, CO",
+        "note": "Work spans both entities — Motili and Daikin Comfort Technologies."
+      }
+    ],
+    "source": "Canonical timeline confirmed by Dave on 2026-08-16. Supersedes the dates parsed from master-resume.pdf. See flagged_inconsistencies.timeline-framing-conflict."
+  }
 }

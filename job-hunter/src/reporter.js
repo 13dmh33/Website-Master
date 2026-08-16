@@ -102,10 +102,19 @@ function tailoringLine() {
     : 'Tailoring is OFF (TAILOR_ENABLED=false) — no resumes or cover letters were generated. Scores, rationales and the career-coach review below are unaffected.';
 }
 
-function textDigest(matches, now, duplicateFitWarning, bandMismatchWarning) {
+// Same rule as the tailoring line: say it, don't imply it. A list that stops at
+// 15 looks identical to a day that produced exactly 15.
+function heldBackLine(heldBack) {
+  if (!heldBack) return null;
+  return `${heldBack} more match${heldBack === 1 ? '' : 'es'} cleared the bar but are held back to keep this readable — they have not been marked delivered and will appear in a later digest.`;
+}
+
+function textDigest(matches, now, duplicateFitWarning, bandMismatchWarning, heldBack) {
   const lines = [];
   lines.push(`Missy job digest — ${now.toISOString().slice(0, 10)}`);
   lines.push(`${matches.length} match${matches.length === 1 ? '' : 'es'} to review. Nothing has been applied to — this is for your manual review.`);
+  const held = heldBackLine(heldBack);
+  if (held) lines.push(held);
   const tailorNote = tailoringLine();
   if (tailorNote) lines.push(tailorNote);
   if (bandMismatchWarning) lines.push(`NOTE: ${bandMismatchWarning}`);
@@ -140,7 +149,7 @@ function applyHtml(job, esc) {
   return `<div><a href="${esc(job.url)}">apply link</a></div>`;
 }
 
-function htmlDigest(matches, now, duplicateFitWarning, bandMismatchWarning) {
+function htmlDigest(matches, now, duplicateFitWarning, bandMismatchWarning, heldBack) {
   const esc = (s) => String(s || '').replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
   const rows = matches
     .map((job, i) => {
@@ -184,10 +193,10 @@ function htmlDigest(matches, now, duplicateFitWarning, bandMismatchWarning) {
   const warn = (s) => `<p style="color:#a00;background:#fff3e0;padding:8px;border-radius:4px">${esc(s)}</p>`;
   const warningHtml =
     (bandMismatchWarning ? warn(bandMismatchWarning) : '') + (duplicateFitWarning ? warn(duplicateFitWarning) : '');
+  const grey = (s) => `<p style="color:#555;background:#f0f0f0;padding:8px;border-radius:4px;margin-top:0">${esc(s)}</p>`;
   const tailorNote = tailoringLine();
-  const tailorHtml = tailorNote
-    ? `<p style="color:#555;background:#f0f0f0;padding:8px;border-radius:4px;margin-top:0">${esc(tailorNote)}</p>`
-    : '';
+  const held = heldBackLine(heldBack);
+  const tailorHtml = (held ? grey(held) : '') + (tailorNote ? grey(tailorNote) : '');
   return `<div style="font-family:Arial,Helvetica,sans-serif;max-width:640px">
     <h2 style="margin-bottom:4px">Missy job digest — ${now.toISOString().slice(0, 10)}</h2>
     <p style="color:#555;margin-top:0">${matches.length} match${matches.length === 1 ? '' : 'es'} to review. Nothing has been applied to — this is for your manual review.</p>
@@ -253,15 +262,25 @@ async function maybeInstantAlert(matches, state, now, dryRun) {
 
 export async function runReporter(
   matches,
-  { state, now = new Date(), dryRun = false, duplicateFitWarning = null, bandMismatchWarning = null, pipeline = null } = {},
+  {
+    state,
+    now = new Date(),
+    dryRun = false,
+    duplicateFitWarning = null,
+    bandMismatchWarning = null,
+    pipeline = null,
+    heldBack = 0,
+  } = {},
 ) {
   const zeroMatch = !matches.length;
   const note = zeroMatch ? statusNote(now, pipeline) : null;
 
-  const text = zeroMatch ? `${note}\n\n— ${config.email.signature}` : textDigest(matches, now, duplicateFitWarning, bandMismatchWarning);
+  const text = zeroMatch
+    ? `${note}\n\n— ${config.email.signature}`
+    : textDigest(matches, now, duplicateFitWarning, bandMismatchWarning, heldBack);
   const html = zeroMatch
     ? `<div style="font-family:Arial,Helvetica,sans-serif;max-width:640px"><p>${note}</p><p style="color:#777">— ${config.email.signature}</p></div>`
-    : htmlDigest(matches, now, duplicateFitWarning, bandMismatchWarning);
+    : htmlDigest(matches, now, duplicateFitWarning, bandMismatchWarning, heldBack);
   const subject = zeroMatch
     ? `Missy — 0 matches ${now.toISOString().slice(0, 10)} (pipeline healthy)`
     : `Missy job digest — ${matches.length} match${matches.length === 1 ? '' : 'es'} — ${now.toISOString().slice(0, 10)}`;

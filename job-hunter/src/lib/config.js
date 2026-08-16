@@ -96,6 +96,14 @@ export const config = {
   // mistake. This flag says what it means, and leaves DAILY_LIMIT free to go on
   // doing its real job of capping how many matches get tailored when it is on.
   tailorEnabled: bool(process.env.TAILOR_ENABLED, false),
+  // How many matches the digest email lists. Separate from DAILY_LIMIT on
+  // purpose: DAILY_LIMIT caps how many jobs get *tailored*, and it only ever
+  // capped the email as a side effect of the digest seeing nothing but
+  // tailoring's output. With tailoring off that coupling breaks and a heavy day
+  // would mail every match above threshold. Two different questions — how much
+  // Sonnet to buy, and how long an email you will actually read — now have two
+  // different knobs. Set DIGEST_LIMIT=0 for no cap.
+  digestLimit: num(process.env.DIGEST_LIMIT, 15),
   maxAgeDays: num(process.env.MAX_AGE_DAYS, 21),
   // Off unless a numeric threshold is set.
   instantAlertMin:

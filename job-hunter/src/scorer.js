@@ -22,7 +22,7 @@
 import crypto from 'node:crypto';
 import { config, has } from './lib/config.js';
 import { makeLogger } from './lib/log.js';
-import { scoreJob } from './lib/claude.js';
+import { scoreJob, RUBRIC_VERSION } from './lib/claude.js';
 import { readFeedbackExamples } from './lib/sheets.js';
 import { freshnessBonus } from './lib/recency.js';
 import { classifyLocation } from './lib/location.js';
@@ -30,13 +30,22 @@ import { getCachedScore, cacheScore } from './lib/state.js';
 
 const log = makeLogger('scorer');
 
-// Fingerprints the profile + preferences that drive scoring. Unchanged between
-// runs unless the resume or preferences.md changes — used to key the score
-// cache so a job already scored under the same profile/preferences is never
-// re-sent to Haiku, while a genuine change (new resume, edited preferences)
-// correctly invalidates every cached score at once.
+// Fingerprints everything that determines a score: the profile, the
+// preferences, and the rubric itself. Unchanged between runs unless one of the
+// three changes — used to key the score cache so a job already scored under
+// identical conditions is never re-sent to Haiku, while a genuine change (new
+// resume, edited preferences, new rubric) correctly invalidates every cached
+// score at once.
+//
+// RUBRIC_VERSION is in here deliberately. Without it the cache treats the
+// prompt as a constant, so editing the rubric changes what Missy *would* say
+// while the digest keeps reporting what she said last month — a silent
+// regression with no symptom. Bump it in claude.js and the whole cache clears.
 function scoringFingerprint(profile, preferencesText) {
-  return crypto.createHash('sha1').update(JSON.stringify(profile) + '|' + (preferencesText || '')).digest('hex');
+  return crypto
+    .createHash('sha1')
+    .update(JSON.stringify(profile) + '|' + (preferencesText || '') + '|' + RUBRIC_VERSION)
+    .digest('hex');
 }
 
 // Duplicate-fit-score check (Change 3) — if 2+ jobs in one run share the exact

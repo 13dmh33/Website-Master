@@ -106,6 +106,18 @@ export function parseModelJson(message, label) {
 
 // --- Scoring (Claude Haiku) ---
 //
+// Bump this whenever the scoring prompt, the bands, or the response schema
+// change in a way that would make a new score differ from an old one.
+//
+// It feeds the score-cache key (see scorer.js#scoringFingerprint), and it
+// exists because the cache used to key on the profile and preferences alone —
+// which silently assumed the rubric never moves. It moved. The band rewrite
+// only re-scored everything because Phase 1 happened to edit the profile in
+// the same breath; on its own it would have served old-rubric scores from
+// cache and shown a distribution that no longer reflected the prompt. A stale
+// score is worse than an expensive one: it is wrong and it looks fine.
+export const RUBRIC_VERSION = 'bands-v1';
+
 // `feedbackExamples` are recent rows Dave marked applied/passed/interview in the
 // tracker sheet, passed in so scoring tracks his real taste over time. May be
 // empty on a fresh sheet.

@@ -134,13 +134,35 @@ export async function runDaily(argv = process.argv.slice(2)) {
     }
   }
 
+  // Cap what the digest lists. Career-coach picks are kept regardless of where
+  // they landed on blended score — the coach is explicitly allowed to promote a
+  // job the scorer ranked low, and cutting it by score would discard the one
+  // judgment the second opinion exists to produce. Remaining slots fill by
+  // blended, in order. Trimmed jobs are NOT recorded as delivered (recordDigest
+  // only sees what it is passed), so they stay eligible for tomorrow rather
+  // than vanishing unseen.
+  const digestCap = config.digestLimit > 0 ? config.digestLimit : Infinity;
+  let forDigest = tailored;
+  if (tailored.length > digestCap) {
+    const coachPicks = tailored.filter((j) => j.careerCoach);
+    const rest = tailored.filter((j) => !j.careerCoach).sort((a, b) => b.blended - a.blended);
+    forDigest = [...coachPicks, ...rest.slice(0, Math.max(0, digestCap - coachPicks.length))].sort(
+      (a, b) => b.blended - a.blended,
+    );
+    log.info(
+      `digest capped at ${forDigest.length} of ${tailored.length} matches (DIGEST_LIMIT=${config.digestLimit}); ` +
+        `${tailored.length - forDigest.length} held back for a later run, not marked delivered.`,
+    );
+  }
+
   // Stage 5: digest (email + sheet + state).
-  await runReporter(tailored, {
+  await runReporter(forDigest, {
     state,
     now,
     dryRun: args.dryRun,
     duplicateFitWarning,
     bandMismatchWarning,
+    heldBack: tailored.length - forDigest.length,
     // Stage counts, so a zero-match day can report where the funnel emptied
     // instead of just saying nothing came through.
     pipeline: {

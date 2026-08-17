@@ -80,6 +80,20 @@ export function getCachedScore(state, jobId, fingerprint) {
   return entry;
 }
 
-export function cacheScore(state, jobId, fingerprint, { fit, rationale, keywords }) {
-  state.scores[jobId] = { fingerprint, fit, rationale, keywords, scoredAt: new Date().toISOString() };
+// `band` and `bandMismatch` are persisted alongside the fit. They were dropped
+// here at first, which made the band/fit consistency check quietly worthless:
+// the band was computed, used once, and thrown away, so every cache hit came
+// back bandless and counted as "no disagreement". The day after a full re-score
+// that is *every* job, and the digest would have reported zero mismatches
+// because it had nothing left to compare, not because the scores agreed.
+export function cacheScore(state, jobId, fingerprint, { fit, band, bandMismatch, rationale, keywords }) {
+  state.scores[jobId] = {
+    fingerprint,
+    fit,
+    band: band ?? null,
+    bandMismatch: bandMismatch ?? null,
+    rationale,
+    keywords,
+    scoredAt: new Date().toISOString(),
+  };
 }

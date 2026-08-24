@@ -308,12 +308,56 @@ function isLightColor(hex) {
   return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255 > 0.6;
 }
 
+// mean relative luminance of what's already been drawn in a region — used to
+// pick the logo variant from the ACTUAL background rather than from the
+// headline color, which is only a proxy for it and gets it wrong on the pink
+// palettes (mission / product_feature / awareness).
+function sampleLuminance(ctx, x, y, w, h) {
+  try {
+    const data = ctx.getImageData(Math.max(0, x), Math.max(0, y), Math.max(1, w), Math.max(1, h)).data;
+    let sum = 0, n = 0;
+    for (let i = 0; i < data.length; i += 4 * 7) { // every 7th pixel is plenty
+      sum += (0.2126 * data[i] + 0.7152 * data[i + 1] + 0.0722 * data[i + 2]) / 255;
+      n++;
+    }
+    return n ? sum / n : 0;
+  } catch { return 0; }
+}
+
+// The two logo files aren't a light/dark pair of the same mark — each is a
+// two-tone lockup, and BOTH contain the brand pink:
+//   logo.png       navy "Techs" + pink "Tatas"   (for light backgrounds)
+//   logo-white.png white "Techs" + pink "Tatas"  (for dark backgrounds)
+// So on a pink card no variant reads on its own: the pink half always sinks
+// into the background. Pick the better variant by measured background
+// luminance, then, when either half is still low-contrast, separate the whole
+// mark with a soft shadow instead of leaving it to wash out.
+const LOGO_INK = { white: ['#FFFFFF', '#FF2E88'], pink: ['#1A1A1D', '#FF2E88'] };
+
+function luminanceToHex(l) {
+  const v = Math.round(Math.max(0, Math.min(1, l)) * 255);
+  return '#' + [v, v, v].map(c => c.toString(16).padStart(2, '0')).join('');
+}
+
 async function renderBrand(ctx, width, palette, color) {
-  const variant = isLightColor(color) ? 'white' : 'pink';
+  const box = wordmarkRegion(width);
+  const bgLum = sampleLuminance(ctx, box.x, box.y, box.w, box.h);
+  const variant = bgLum < 0.55 ? 'white' : 'pink';
   const logo = await loadLogo(variant);
   if (logo) {
     const h = LOGO_W * (logo.height / logo.width);
-    ctx.drawImage(logo, width - DESIGN.padding - LOGO_W, LOGO_Y, LOGO_W, h);
+    // weakest half of the lockup against the background it actually lands on
+    const bgHex = luminanceToHex(bgLum);
+    const worst = Math.min(...LOGO_INK[variant].map(ink => contrastRatio(ink, bgHex)));
+
+    ctx.save();
+    if (worst < 3.0) {
+      ctx.shadowColor   = bgLum < 0.55 ? 'rgba(0,0,0,0.55)' : 'rgba(0,0,0,0.35)';
+      ctx.shadowBlur    = 14;
+      ctx.shadowOffsetY = 2;
+    }
+    ctx.drawImage(logo, box.x, LOGO_Y, LOGO_W, h);
+    ctx.restore();
     return;
   }
   ctx.font         = `bold ${DESIGN.brandSize}px ${HEADLINE_FONT}`;

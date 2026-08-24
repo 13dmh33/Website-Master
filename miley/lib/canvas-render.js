@@ -28,7 +28,6 @@ const DESIGN = {
   height:       1080,
   reelWidth:    1080, // vertical 9:16 reel frame
   reelHeight:   1920,
-  overlay:      'rgba(8, 15, 30, 0.62)', // over product/lifestyle photos
   headlineSize: 64,
   reelSize:     92, // on-screen reel text — big, phone-legible in motion
   bodySize:     34,
@@ -128,23 +127,151 @@ function drawGradient(ctx, width, height, palette) {
   ctx.fillRect(0, 0, width, height);
 }
 
-// returns { headlineColor, bodyColor } actually used (photo bg forces light text)
+// ── readable reel accent ────────────────────────────────────────────────────
+// Reel frames highlight the punch word (*word* in the script) in the palette
+// accent. On palettes whose gradient IS the accent color — product_feature and
+// awareness are both pink-on-pink — that word vanishes mid-scroll, so the
+// accent is re-picked from the brand colors per frame.
+const ACCENT_CANDIDATES = ['#FFC400', '#1A1A1D', '#F7F4F0'];
+
+function relLuminance(hex) {
+  const m = /^#?([0-9a-f]{6})$/i.exec(String(hex || ''));
+  if (!m) return 0;
+  const n = parseInt(m[1], 16);
+  const ch = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(v => {
+    const c = v / 255;
+    return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+  });
+  return 0.2126 * ch[0] + 0.7152 * ch[1] + 0.0722 * ch[2];
+}
+
+function contrastRatio(a, b) {
+  const la = relLuminance(a), lb = relLuminance(b);
+  return (Math.max(la, lb) + 0.05) / (Math.min(la, lb) + 0.05);
+}
+
+// A punch word has to clear TWO things to register in motion: the background it
+// sits on, and the base text color of the words around it. Score every brand
+// candidate by its weaker of those two contrasts and take the best — that keeps
+// the palette accent wherever it already works and only swaps it where it
+// doesn't (product_feature's accent IS its gradient; mission's accent is close
+// enough to its base text to read as a smudge).
+function readableAccent(palette, headlineColor) {
+  const stops = palette.gradient && palette.gradient.length >= 2
+    ? palette.gradient : [palette.bg, palette.bg];
+  const bg = stops[Math.floor(stops.length / 2)] || palette.bg || '#1A1A1D';
+  const base = headlineColor || palette.headline || '#FFFFFF';
+
+  const candidates = [palette.accent || '#FF2E88', ...ACCENT_CANDIDATES];
+  return candidates
+    .map(c => ({ c, score: Math.min(contrastRatio(c, bg), contrastRatio(c, base)) }))
+    .sort((a, b) => b.score - a.score)[0].c;
+}
+
+// ── product photo compositing ───────────────────────────────────────────────
+// The Printify mockups in assets/products/ are flat 1200x1200 studio shots on a
+// white sweep, not lifestyle photography. Cover-cropping one to fill the frame
+// and washing it out under a 62% overlay reads as a mistake: on a square card
+// the product ends up as a muddy ghost behind the headline, and on a 9:16 reel
+// frame the crop (scale 1.6) throws the product's edges off-canvas entirely.
+//
+// So a product photo is composited in two layers instead:
+//   1. BACKDROP — the photo cover-cropped and heavily blurred, then covered by
+//      the palette gradient at high alpha. Gives the card a product-tinted
+//      ground with real texture while the brand color stays dominant.
+//   2. HERO — the same photo contain-fit (never cropped) into a box sized and
+//      placed per aspect ratio, with a soft contact shadow, so the product is
+//      actually recognizable. The box is kept clear of each format's text band.
+//
+// Text colors keep coming from the palette (the gradient, not the photo, sets
+// the effective background), which also keeps the visual gate's contrast check
+// honest — the old photo path forced white text but still handed the gate
+// `palette.bg`, so light palettes like product_feature always failed and got
+// bounced to the plain fallback.
+
+// hero box as fractions of the frame: { w, h, top } — w/h are max extents, the
+// photo is contain-fit inside and centered horizontally on `top`.
+function heroBox(width, height) {
+  const portrait = height > width * 1.2; // 9:16 reel frame
+  return portrait
+    ? { w: 0.60, h: 0.30, top: 0.62 }  // below the centered reel text band
+    : { w: 0.62, h: 0.44, top: 0.50 }; // below the square card's headline
+}
+
+function drawProductBackdrop(ctx, width, height, palette, photo) {
+  const scale = Math.max(width / photo.width, height / photo.height);
+  const dw = photo.width * scale, dh = photo.height * scale;
+
+  ctx.save();
+  try { ctx.filter = 'blur(90px)'; } catch { /* older skia-canvas: unblurred */ }
+  ctx.drawImage(photo, (width - dw) / 2, (height - dh) / 2, dw, dh);
+  ctx.restore();
+
+  // palette gradient over the top so brand color, not the studio white, leads.
+  // High alpha on purpose: the blurred photo is there for depth, not shape —
+  // any less and the product's silhouette shows through as a smudge.
+  ctx.save();
+  ctx.globalAlpha = 0.9;
+  drawGradient(ctx, width, height, palette);
+  ctx.restore();
+}
+
+// rounded-rect path (skia-canvas has roundRect, but keep it explicit)
+function roundRectPath(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y,     x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x,     y + h, r);
+  ctx.arcTo(x,     y + h, x,     y,     r);
+  ctx.arcTo(x,     y,     x + w, y,     r);
+  ctx.closePath();
+}
+
+// The mockups carry a wide white margin around the product. Trim it so the
+// product actually fills its tile instead of floating in a field of white.
+const SOURCE_INSET = 0.09;
+
+function drawProductHero(ctx, width, height, photo) {
+  const box = heroBox(width, height);
+  const side = Math.min(width * box.w, height * box.h);
+  const x = (width - side) / 2;
+  const y = height * box.top + (height * box.h - side) / 2;
+  const radius = Math.round(side * 0.06);
+
+  // contact shadow so the tile sits on the card rather than being pasted on
+  ctx.save();
+  ctx.globalAlpha = 0.3;
+  ctx.fillStyle = '#000000';
+  try { ctx.filter = 'blur(28px)'; } catch { /* no-op */ }
+  roundRectPath(ctx, x, y + side * 0.03, side, side, radius);
+  ctx.fill();
+  ctx.restore();
+
+  // the product tile: source-inset crop of the mockup, clipped to a rounded square
+  const inset = photo.width * SOURCE_INSET;
+  ctx.save();
+  roundRectPath(ctx, x, y, side, side, radius);
+  ctx.clip();
+  ctx.drawImage(
+    photo,
+    inset, inset, photo.width - inset * 2, photo.height - inset * 2,
+    x, y, side, side
+  );
+  ctx.restore();
+}
+
+// returns { headlineColor, bodyColor } actually used
 async function drawBackground(ctx, width, height, palette, productKey) {
   const imgPath = productImagePath(productKey);
   if (imgPath) {
     try {
       const photo = await loadImage(imgPath);
-      const scale = Math.max(width / photo.width, height / photo.height);
-      const dw = photo.width * scale, dh = photo.height * scale;
-      ctx.drawImage(photo, (width - dw) / 2, (height - dh) / 2, dw, dh);
-      ctx.fillStyle = DESIGN.overlay;
-      ctx.fillRect(0, 0, width, height);
-      const grad = ctx.createLinearGradient(0, height * 0.6, 0, height);
-      grad.addColorStop(0, 'rgba(0,0,0,0)');
-      grad.addColorStop(1, 'rgba(8,15,30,0.78)');
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, width, height);
-      return { headlineColor: '#FFFFFF', bodyColor: '#F7F4F0' };
+      drawProductBackdrop(ctx, width, height, palette, photo);
+      drawProductHero(ctx, width, height, photo);
+      return {
+        headlineColor: palette.headline || '#FFFFFF',
+        bodyColor:     palette.body || '#E2E8F0',
+      };
     } catch { /* fall through to gradient */ }
   }
   drawGradient(ctx, width, height, palette);
@@ -495,11 +622,11 @@ function drawProgressBar(ctx, w, beatNum, total, accent, padding) {
 async function renderReelFrame({ text, beatNum, total, paletteKey, productKey, isCta }) {
   const width = DESIGN.reelWidth, height = DESIGN.reelHeight, padding = DESIGN.padding;
   const palette = getPalette(paletteKey);
-  const accent  = palette.accent || '#FF2E88';
   const canvas  = new Canvas(width, height);
   const ctx     = canvas.getContext('2d');
 
   const { headlineColor } = await drawBackground(ctx, width, height, palette, productKey);
+  const accent = readableAccent(palette, headlineColor);
   drawVignette(ctx, width, height);
   await renderBrand(ctx, width, palette, headlineColor);
   if (total > 1) drawProgressBar(ctx, width, beatNum, total, accent, padding);
@@ -569,11 +696,11 @@ async function renderReelWordFrame({ text, revealCount, activeIndex, mode = 'kar
                                      beatNum, total, paletteKey, productKey, isCta }) {
   const width = DESIGN.reelWidth, height = DESIGN.reelHeight, padding = DESIGN.padding;
   const palette = getPalette(paletteKey);
-  const accent  = palette.accent || '#FF2E88';
   const canvas  = new Canvas(width, height);
   const ctx     = canvas.getContext('2d');
 
   const { headlineColor } = await drawBackground(ctx, width, height, palette, productKey);
+  const accent = readableAccent(palette, headlineColor);
   drawVignette(ctx, width, height);
   await renderBrand(ctx, width, palette, headlineColor);
   if (total > 1) drawProgressBar(ctx, width, beatNum, total, accent, padding);

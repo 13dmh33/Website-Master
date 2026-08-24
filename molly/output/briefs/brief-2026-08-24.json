@@ -1,0 +1,68 @@
+{
+  "weekOf": "2026-08-24",
+  "generatedAt": "2026-08-24T13:48:29.203Z",
+  "researchMode": "evergreen",
+  "weekTrade": "plumbing",
+  "angles": [
+    {
+      "id": "angle-1",
+      "niche": "education",
+      "angle": "How homeowners actually choose who to call",
+      "hook": "How homeowners actually choose who to call",
+      "painPoint": "losing jobs to competitors with better websites",
+      "dataPoint": null,
+      "suggestedFormat": "carousel",
+      "evergreenId": "ev-carousel-02",
+      "prewrittenContent": {
+        "hook": "How homeowners actually choose who to call",
+        "body": "Slide 1: How homeowners actually choose who to call\nSlide 2: They search first. Not from a truck sticker, not from a flyer — from their phone, when the problem happens.\nSlide 3: They look for a website before they look for a phone number. No site reads as no business.\nSlide 4: They check reviews next. A site with reviews built in does that work automatically.\nSlide 5: Only after that do they call — and usually just the first name that looked legitimate, not the best one.\nSlide 6: Being good at the trade was never the filter. Being findable was. We build the site that gets found.",
+        "hashtags": "#contractormarketing #homeservices #localbusiness #contractortips #trevoadvisors"
+      }
+    },
+    {
+      "id": "angle-2",
+      "niche": "education",
+      "angle": "Nobody picks a contractor the way they used to.",
+      "hook": "Nobody picks a contractor the way they used to.",
+      "painPoint": "losing jobs to competitors with better websites",
+      "dataPoint": null,
+      "suggestedFormat": "caption",
+      "evergreenId": "ev-caption-02",
+      "prewrittenContent": {
+        "hook": "Nobody picks a contractor the way they used to.",
+        "body": "Nobody picks a contractor the way they used to.\n\nWord of mouth still matters, but it isn't where the search starts anymore. It starts on a phone, usually right when the problem happens.\n\nA homeowner searches, sees a few names, and narrows it down by whoever looks most legitimate in about ten seconds of scrolling.\n\nThat narrowing happens before anyone dials a number. It happens on whatever shows up when they search your name, or your trade, in your area.\n\nIf that's a real website with reviews and a clear way to call, you're in the running. If it's nothing, you're not.\n\nSave this if it sounds familiar.\n\n— Trevo",
+        "hashtags": "#contractormarketing #homeservices #localbusiness #contractortips #trevoadvisors"
+      }
+    },
+    {
+      "id": "angle-3",
+      "niche": "product",
+      "angle": "Here's what's inside a Trevo electrical site.",
+      "hook": "Here's what's inside a Trevo electrical site.",
+      "painPoint": "losing jobs to competitors with better websites",
+      "dataPoint": null,
+      "suggestedFormat": "trevo_found",
+      "evergreenId": "ev-trevo-found-02",
+      "prewrittenContent": {
+        "hook": "Here's what's inside a Trevo electrical site.",
+        "body": "Here's what's inside a Trevo electrical site.\n\nTap-to-call button above the fold, every page.\nPanel upgrade and service pages built around what electricians actually get called for.\nGoogle reviews pulled in automatically — no separate page to dig through.\nLicensed and insured badge, visible without scrolling.\nA layout that loads clean and fast on a phone.\n\nThat's the build. — Trevo\n\nLink in bio to see what yours could look like.",
+        "hashtags": "#electrician #contractorwebsite #trevoadvisors #websitedesign"
+      }
+    },
+    {
+      "id": "angle-4",
+      "niche": "results",
+      "angle": "Same contractor. Same trade. One thing changed.",
+      "hook": "Same contractor. Same trade. One thing changed.",
+      "painPoint": "losing jobs to competitors with better websites",
+      "dataPoint": null,
+      "suggestedFormat": "reel",
+      "evergreenId": "ev-reel-02",
+      "prewrittenContent": {
+        "hook": "Same contractor. Same trade. One thing changed.",
+        "body": "Hook (0-2s): Same contractor. Same trade. One thing changed.\n[B-roll: phone screen showing a search results page]\n\nBody (2-14s): He was running on referrals — solid, but with a ceiling. We built him a real website. Tap-to-call, reviews live, mobile-first.\n[B-roll: website loading on a phone]\nNow the calls that used to skip past him find him instead.\n[B-roll: phone ringing]\n\nCta (14-20s): That's the difference. Link in bio to see yours.\n[B-roll: Trevo logo]\n— Trevo",
+        "hashtags": "#contractormarketing #homeservices #trevoadvisors #reels"
+      }
+    }
+  ]
+}

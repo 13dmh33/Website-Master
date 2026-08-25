@@ -1,0 +1,82 @@
+{
+  "weekOf": "2026-08-24",
+  "generatedAt": "2026-08-24T13:48:29.301Z",
+  "researchMode": "evergreen",
+  "niches": {
+    "caption": "education",
+    "reel": "journey"
+  },
+  "posts": {
+    "carousel": {
+      "slides": [
+        {
+          "headline": "Slide 1",
+          "body": "How homeowners actually choose who to call"
+        },
+        {
+          "headline": "Slide 2",
+          "body": "They search first. Not from a truck sticker, not from a flyer — from their phone, when the problem happens."
+        },
+        {
+          "headline": "Slide 3",
+          "body": "They look for a website before they look for a phone number. No site reads as no business."
+        },
+        {
+          "headline": "Slide 4",
+          "body": "They check reviews next. A site with reviews built in does that work automatically."
+        },
+        {
+          "headline": "Slide 5",
+          "body": "Only after that do they call — and usually just the first name that looked legitimate, not the best one."
+        },
+        {
+          "headline": "Slide 6",
+          "body": "Being good at the trade was never the filter. Being findable was. We build the site that gets found."
+        }
+      ],
+      "caption": "How homeowners actually choose who to call\n\nLink in bio to see what yours could look like.\n\n#contractormarketing #homeservices #localbusiness #contractortips #trevoadvisors"
+    },
+    "caption1": {
+      "variantA": "Nobody picks a contractor the way they used to.\n\nWord of mouth still matters, but it isn't where the search starts anymore. It starts on a phone, usually right when the problem happens.\n\nA homeowner searches, sees a few names, and narrows it down by whoever looks most legitimate in about ten seconds of scrolling.\n\nThat narrowing happens before anyone dials a number. It happens on whatever shows up when they search your name, or your trade, in your area.\n\nIf that's a real website with reviews and a clear way to call, you're in the running. If it's nothing, you're not.\n\nSave this if it sounds familiar.\n\n— Trevo",
+      "variantB": "Nobody picks a contractor the way they used to.\n\nWord of mouth still matters, but it isn't where the search starts anymore. It starts on a phone, usually right when the problem happens.\n\nA homeowner searches, sees a few names, and narrows it down by whoever looks most legitimate in about ten seconds of scrolling.\n\nThat narrowing happens before anyone dials a number. It happens on whatever shows up when they search your name, or your trade, in your area.\n\nIf that's a real website with reviews and a clear way to call, you're in the running. If it's nothing, you're not.\n\nSave this if it sounds familiar.\n\n— Trevo",
+      "body": "Nobody picks a contractor the way they used to.\n\nWord of mouth still matters, but it isn't where the search starts anymore. It starts on a phone, usually right when the problem happens.\n\nA homeowner searches, sees a few names, and narrows it down by whoever looks most legitimate in about ten seconds of scrolling.\n\nThat narrowing happens before anyone dials a number. It happens on whatever shows up when they search your name, or your trade, in your area.\n\nIf that's a real website with reviews and a clear way to call, you're in the running. If it's nothing, you're not.\n\nSave this if it sounds familiar.\n\n— Trevo"
+    },
+    "trevo_found": {
+      "body": "Here's what's inside a Trevo electrical site.\n\nTap-to-call button above the fold, every page.\nPanel upgrade and service pages built around what electricians actually get called for.\nGoogle reviews pulled in automatically — no separate page to dig through.\nLicensed and insured badge, visible without scrolling.\nA layout that loads clean and fast on a phone.\n\nThat's the build. — Trevo\n\nLink in bio to see what yours could look like.",
+      "hookLine": "Here's what's inside a Trevo electrical site."
+    },
+    "reel": {
+      "script": "Hook (0-2s): Same contractor. Same trade. One thing changed.\n[B-roll: phone screen showing a search results page]\n\nBody (2-14s): He was running on referrals — solid, but with a ceiling. We built him a real website. Tap-to-call, reviews live, mobile-first.\n[B-roll: website loading on a phone]\nNow the calls that used to skip past him find him instead.\n[B-roll: phone ringing]\n\nCta (14-20s): That's the difference. Link in bio to see yours.\n[B-roll: Trevo logo]\n— Trevo",
+      "hookLine": "Same contractor. Same trade. One thing changed.",
+      "caption": "Same contractor. Same trade. One thing changed.\n\nLink in bio to see yours."
+    }
+  },
+  "glossaryTerms": [
+    "call tracking",
+    "word-of-mouth ceiling",
+    "seasonal push"
+  ],
+  "imagePaths": {
+    "carousel": [
+      "/home/runner/work/Website-Master/Website-Master/molly/output/images/2026-08-24/carousel-slide-01.png",
+      "/home/runner/work/Website-Master/Website-Master/molly/output/images/2026-08-24/carousel-slide-02.png",
+      "/home/runner/work/Website-Master/Website-Master/molly/output/images/2026-08-24/carousel-slide-03.png",
+      "/home/runner/work/Website-Master/Website-Master/molly/output/images/2026-08-24/carousel-slide-04.png",
+      "/home/runner/work/Website-Master/Website-Master/molly/output/images/2026-08-24/carousel-slide-05.png",
+      "/home/runner/work/Website-Master/Website-Master/molly/output/images/2026-08-24/carousel-slide-06.png"
+    ],
+    "caption1": [
+      "/home/runner/work/Website-Master/Website-Master/molly/output/images/2026-08-24/caption-1.png"
+    ],
+    "trevo_found": [
+      "/home/runner/work/Website-Master/Website-Master/molly/output/images/2026-08-24/trevo-found.png"
+    ],
+    "reel": [
+      "/home/runner/work/Website-Master/Website-Master/molly/output/images/2026-08-24/reel-hook.png"
+    ]
+  },
+  "abTracking": {
+    "lastVariant": "A",
+    "week_2026-08-24": "A"
+  }
+}

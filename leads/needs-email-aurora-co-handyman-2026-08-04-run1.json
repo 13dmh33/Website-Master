@@ -1,0 +1,209 @@
+[
+  {
+    "lead_id": "ChIJXQ28rAl9bIcReTfZSkp4Xig",
+    "business_name": "Honey-Dew Siding Repair",
+    "trade": "handyman",
+    "city": "Aurora, CO",
+    "site_url": "http://www.denversidingrepair.com/",
+    "email": "honeydewsidingrepair@gmail.com",
+    "phone": "+1 720-706-8607",
+    "rating": 5,
+    "review_count": 123,
+    "address": "1410 Chester St, Aurora, CO 80010",
+    "place_id": "ChIJXQ28rAl9bIcReTfZSkp4Xig",
+    "subtypes": [
+      "Siding contractor"
+    ],
+    "latitude": 39.7385963,
+    "longitude": -104.87846859999999,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-04T16:38:06.814Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Vinyl Siding and",
+    "socials": {
+      "facebook": "http://www.facebook.com/2008/fbml",
+      "instagram": "https://www.instagram.com/squarespace",
+      "youtube": "https://www.youtube.com/user/squarespace"
+    },
+    "deep_enriched_at": "2026-08-04T16:40:06.536Z"
+  },
+  {
+    "lead_id": "ChIJ1agHuPhjbIcROBw19F21xAU",
+    "business_name": "Hire a Handyman",
+    "trade": "handyman",
+    "city": "Aurora, CO",
+    "site_url": "https://hireahandymanco.com/",
+    "email": "hireahandyman303@gmail.com",
+    "phone": "+1 303-848-9377",
+    "rating": 4.9,
+    "review_count": 34,
+    "address": "565 Nucla Way, Aurora, CO 80011",
+    "place_id": "ChIJ1agHuPhjbIcROBw19F21xAU",
+    "subtypes": [
+      "Bathroom remodeler"
+    ],
+    "latitude": 39.724435299999996,
+    "longitude": -104.7948211,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-04T16:38:06.814Z",
+    "email_source": "contact-scraper",
+    "contact_name": "on Nextdoor with",
+    "socials": {
+      "nextdoor": "https://nextdoor.com/pages/hire-a-handyman-llc-commerce-city-co",
+      "google": "https://maps.google.com/maps"
+    },
+    "deep_enriched_at": "2026-08-04T16:40:09.086Z"
+  },
+  {
+    "lead_id": "ChIJn7WSv7SNbIcRomg5Y_qGR-E",
+    "business_name": "M&M Handyman Services LLC",
+    "trade": "handyman",
+    "city": "Aurora, CO",
+    "site_url": "https://mmhandymanservicellc.com/",
+    "email": "info@mmhandymanservicellc.com",
+    "phone": "+1 720-448-0519",
+    "rating": 4.7,
+    "review_count": 51,
+    "address": "6140 S Gun Club Rd Unit K6391, Aurora, CO 80016",
+    "place_id": "ChIJn7WSv7SNbIcRomg5Y_qGR-E",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson"
+    ],
+    "latitude": 39.6038946,
+    "longitude": -104.7149089,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-04T16:38:06.814Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "bbb": "https://www.bbb.org/us/co/aurora/profile/handyman/m-m-handyman-services-llc-1296-90246495",
+      "facebook": "https://www.facebook.com/profile.php?id=100063565993738",
+      "angi": "https://www.homeadvisor.com/rated.MandMHandymanServices.38438225.html"
+    },
+    "deep_enriched_at": "2026-08-04T16:40:13.427Z"
+  },
+  {
+    "lead_id": "ChIJ7c1-1vEqzqURVAKiJjYPuhA",
+    "business_name": "Seven Hills Home Maintenance",
+    "trade": "handyman",
+    "city": "Aurora, CO",
+    "site_url": "http://sevenhillshandyman.com/",
+    "email": "sevenhillshm@gmail.com",
+    "phone": "+1 303-956-2051",
+    "rating": 5,
+    "review_count": 19,
+    "address": "195 S Sable Blvd, Aurora, CO 80012",
+    "place_id": "ChIJ7c1-1vEqzqURVAKiJjYPuhA",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson, General contractor"
+    ],
+    "latitude": 39.7131259,
+    "longitude": -104.82017689999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-04T16:38:06.814Z",
+    "email_source": "contact-scraper",
+    "contact_name": "and sole operator",
+    "socials": {
+      "instagram": "https://www.instagram.com/sevenhillshomemaintenance",
+      "facebook": "https://www.facebook.com/sevenhillshm"
+    },
+    "deep_enriched_at": "2026-08-04T16:40:10.662Z"
+  },
+  {
+    "lead_id": "ChIJjcc3AY-JbIcRBf_6tKZ2zqc",
+    "business_name": "AK Remodeling",
+    "trade": "handyman",
+    "city": "Aurora, CO",
+    "site_url": "http://akremodeling.us/",
+    "email": "",
+    "phone": "+1 720-480-7143",
+    "rating": 5,
+    "review_count": 22,
+    "address": "3135 S Idalia St, Aurora, CO 80013",
+    "place_id": "ChIJjcc3AY-JbIcRBf_6tKZ2zqc",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson"
+    ],
+    "latitude": 39.6595219,
+    "longitude": -104.80759809999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-04T16:38:06.814Z"
+  },
+  {
+    "lead_id": "ChIJ59SvT5l9bIcRIbcH7KluoR0",
+    "business_name": "Mr. Fixer Handyman L.L.C",
+    "trade": "handyman",
+    "city": "Aurora, CO",
+    "site_url": "http://www.localhandy1980.com/",
+    "email": "",
+    "phone": "+1 720-550-0968",
+    "rating": 4.9,
+    "review_count": 21,
+    "address": "16898 E Napa Dr, Aurora, CO 80013",
+    "place_id": "ChIJ59SvT5l9bIcRIbcH7KluoR0",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson, Bathroom remodeler, Dry wall contractor, Flooring contractor, General contractor, Interior construction contractor, Painting, Remodeler"
+    ],
+    "latitude": 39.6428163,
+    "longitude": -104.7924118,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-04T16:38:06.814Z"
+  },
+  {
+    "lead_id": "ChIJv6C-5vR7bIcR12hWtkZ0Tog",
+    "business_name": "Neater Nest",
+    "trade": "handyman",
+    "city": "Aurora, CO",
+    "site_url": "https://neaternest.com/",
+    "email": "support@neaternest.com",
+    "phone": "+1 720-772-1709",
+    "rating": 5,
+    "review_count": 15,
+    "address": "Kearney St, Denver, CO 80207",
+    "place_id": "ChIJv6C-5vR7bIcR12hWtkZ0Tog",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson"
+    ],
+    "latitude": 39.7507792,
+    "longitude": -104.91736929999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-04T16:38:06.814Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Eric and",
+    "socials": {
+      "facebook": "https://www.facebook.com/neaternest",
+      "instagram": "https://instagram.com/neaternest",
+      "youtube": "https://www.youtube.com/channel/UCGxV2VCWI8hbj-JqWpqYYZg"
+    },
+    "deep_enriched_at": "2026-08-04T16:40:11.592Z"
+  },
+  {
+    "lead_id": "ChIJwURv4J-EgY0RpFRCZZEzfvA",
+    "business_name": "Rocky Mountain Snow and Painting",
+    "trade": "handyman",
+    "city": "Aurora, CO",
+    "site_url": "http://www.rockymountainsnownpainting.com/",
+    "email": "info@rockymountainsnownpainting.com",
+    "phone": "+1 303-501-0971",
+    "rating": 4.7,
+    "review_count": 30,
+    "address": "595 Nucla Way Ste D, Aurora, CO 80011",
+    "place_id": "ChIJwURv4J-EgY0RpFRCZZEzfvA",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson, Concrete contractor, Flooring contractor, Painting, Landscaper, Roofing contractor, Siding contractor, Snow removal service"
+    ],
+    "latitude": 39.7249877,
+    "longitude": -104.7951399,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-04T16:38:06.814Z",
+    "email_source": "contact-scraper",
+    "deep_enriched_at": "2026-08-04T16:40:17.053Z"
+  }
+]

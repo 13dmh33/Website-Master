@@ -1,0 +1,1141 @@
+[
+  {
+    "lead_id": "ChIJ-3sflFRLaYcRygnDXHFiWHs",
+    "business_name": "Rex's Plumbing & Heating",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://www.rexsplumbing.com/",
+    "email": "",
+    "phone": "+1 970-225-1122",
+    "rating": 4.9,
+    "review_count": 1060,
+    "address": "1829 E Mulberry St, Fort Collins, CO 80524",
+    "place_id": "ChIJ-3sflFRLaYcRygnDXHFiWHs",
+    "subtypes": [
+      "Plumber"
+    ],
+    "latitude": 40.580175,
+    "longitude": -105.04426289999999,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-06T14:29:16.743Z"
+  },
+  {
+    "lead_id": "ChIJq0RBUsFKaYcRlUretVAxlyU",
+    "business_name": "Allen Service",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://www.allenservice.com/fort-collins/%3Futm_source%3Dgbp%26utm_medium%3Dorganic%26utm_campaign%3DGBP-Allen-Link",
+    "email": "",
+    "phone": "+1 970-484-4841",
+    "rating": 4.8,
+    "review_count": 6764,
+    "address": "101 S Link Ln, Fort Collins, CO 80524",
+    "place_id": "ChIJq0RBUsFKaYcRlUretVAxlyU",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Air conditioning repair service, Drainage service, Electrical installation service, Electrician, Furnace repair service, Heating contractor, HVAC contractor"
+    ],
+    "latitude": 40.586297599999995,
+    "longitude": -105.0507774,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-06T14:29:16.743Z"
+  },
+  {
+    "lead_id": "ChIJ8Vhr1CZNaYcRV3GIEjbx3Po",
+    "business_name": "JT Plumbing Heating & Air",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "http://www.jtplumbingservicesllc.com/%3Futm_source%3DJT%2BPlumbing%2BFt%2BCollins%2BGBP%26utm_medium%3DJT%2BPlumbing%2BFt%2BCollins%2BGBP%26utm_campaign%3DJT%2BPlumbing%2BFt%2BCollins%2BGBP%26utm_id%3DJT%2BPlumbing%2BFt%2BCollins%2BGBP",
+    "email": "",
+    "phone": "+1 970-281-7613",
+    "rating": 4.8,
+    "review_count": 385,
+    "address": "1833 E Harmony Rd, Fort Collins, CO 80528",
+    "place_id": "ChIJ8Vhr1CZNaYcRV3GIEjbx3Po",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Air conditioning repair service, Drainage service, Furnace repair service, Heating contractor, HVAC contractor"
+    ],
+    "latitude": 40.520202999999995,
+    "longitude": -105.04386939999999,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-06T14:29:16.743Z"
+  },
+  {
+    "lead_id": "ChIJE7DSAXK1bocRn9mRcXEvEuQ",
+    "business_name": "AAA Service Plumbing, Heating & Electric",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://www.aaatoday.com/%3Futm_source%3Dgoogle%26utm_medium%3Dgbp-ftcollins%26se_campaign%3DGBP%2520-%2520Ft%252E%2520Collins",
+    "email": "",
+    "phone": "+1 970-636-3401",
+    "rating": 4.9,
+    "review_count": 797,
+    "address": "825 SW Frontage Rd #1B, Fort Collins, CO 80524",
+    "place_id": "ChIJE7DSAXK1bocRn9mRcXEvEuQ",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Electrician, Furnace repair service, Heating contractor, HVAC contractor, Air conditioning repair service, Septic system service"
+    ],
+    "latitude": 40.5772894,
+    "longitude": -105.00241589999999,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-06T14:29:16.743Z"
+  },
+  {
+    "lead_id": "ChIJR-UFBsZKaYcRKvRPiFJPWm8",
+    "business_name": "Fort Collins Heating & Air Conditioning",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://fortcollinsheating.com/%3Futm_source%3Dgmb%26utm_medium%3Dorganic%26utm_campaign%3Dgmb-listing",
+    "email": "",
+    "phone": "+1 970-279-3750",
+    "rating": 4.9,
+    "review_count": 3949,
+    "address": "208 Commerce Dr #4, Fort Collins, CO 80524",
+    "place_id": "ChIJR-UFBsZKaYcRKvRPiFJPWm8",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Air conditioning repair service, Drainage service, Furnace repair service, Heating contractor, HVAC contractor"
+    ],
+    "latitude": 40.5875292,
+    "longitude": -105.0461656,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-06T14:29:16.743Z"
+  },
+  {
+    "lead_id": "ChIJ49-sDV5LaYcRGyZBa45s0no",
+    "business_name": "Welzig Heating, Cooling, Plumbing & Electric",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://welzig-heating-and-air.com/our-service-area/fort-collins-co/%3Futm_source%3Dgoogle-gbp%26utm_medium%3Dorganic%26utm_campaign%3D*390*welzig-heating-air-fort-collins",
+    "email": "",
+    "phone": "+1 720-336-3777",
+    "rating": 4.9,
+    "review_count": 353,
+    "address": "1925 S Timberline Rd N15, Fort Collins, CO 80525",
+    "place_id": "ChIJ49-sDV5LaYcRGyZBa45s0no",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Air conditioning repair service, Electrician, Furnace repair service, Electric generator shop, Heating contractor, HVAC contractor"
+    ],
+    "latitude": 40.5624052,
+    "longitude": -105.0407153,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-06T14:29:16.743Z",
+    "socials": {
+      "facebook": "https://www.facebook.com/WelzigHVAC",
+      "instagram": "https://www.instagram.com/welzighvac",
+      "yelp": "https://www.yelp.com/biz/welzig-heating-and-air-longmont-6",
+      "angi": "https://www.angieslist.com/companylist/us/co/longmont/welzig-heating-and-air-reviews-222934.htm",
+      "bbb": "https://www.bbb.org/us/co/longmont/profile/heating-contractors/welzig-heating-air-1296-21033689"
+    },
+    "deep_enriched_at": "2026-08-06T14:29:28.750Z"
+  },
+  {
+    "lead_id": "ChIJbxjcbCGzbocRSUi_RXtOzmM",
+    "business_name": "Horsetooth Heating, Air & Plumbing",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://horsetoothheatingandair.com/%3Futm_source%3Dprimary%26utm_medium%3Dorganic-traffic%26utm_campaign%3Dfort-collins-gmb",
+    "email": "",
+    "phone": "+1 970-660-3360",
+    "rating": 4.9,
+    "review_count": 636,
+    "address": "1420 Riverside Ave #102, Fort Collins, CO 80524",
+    "place_id": "ChIJbxjcbCGzbocRSUi_RXtOzmM",
+    "subtypes": [
+      "Plumber, Air conditioning repair service, Heating contractor, HVAC contractor, Air conditioning contractor"
+    ],
+    "latitude": 40.5738858,
+    "longitude": -105.04990819999999,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-06T14:29:16.743Z"
+  },
+  {
+    "lead_id": "ChIJFy-7mQhTaYcR0RPTO-8Y2A4",
+    "business_name": "Alder Plumbing, Heating and Air",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://alderplumbingco.com/",
+    "email": "",
+    "phone": "+1 970-889-3553",
+    "rating": 5,
+    "review_count": 542,
+    "address": "2438 E 13th St, Loveland, CO 80537",
+    "place_id": "ChIJFy-7mQhTaYcR0RPTO-8Y2A4",
+    "subtypes": [
+      "Plumber, Construction company, Gas installation service, Heating contractor"
+    ],
+    "latitude": 40.4048407,
+    "longitude": -105.04322479999999,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-06T14:29:16.743Z",
+    "contact_name": "Tyler Alderson",
+    "socials": {
+      "bbb": "https://www.bbb.org/us/co/loveland/profile/plumber/alder-plumbing-heating-and-air-0805-46092926",
+      "facebook": "https://facebook.com/Alderplumbingco",
+      "instagram": "https://instagram.com/Alderplumbingco"
+    },
+    "deep_enriched_at": "2026-08-06T14:31:39.580Z"
+  },
+  {
+    "lead_id": "ChIJaT4Fl9hoBm0RmY5vtbV61-E",
+    "business_name": "Limelight Services",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://www.lime911.com/",
+    "email": "",
+    "phone": "+1 970-218-9539",
+    "rating": 5,
+    "review_count": 1666,
+    "address": "4540 Venture Dr #100, Johnstown, CO 80534",
+    "place_id": "ChIJaT4Fl9hoBm0RmY5vtbV61-E",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Air conditioning repair service, Drainage service, Electrician, Furnace repair service, Heating contractor, Lighting contractor, HVAC contractor"
+    ],
+    "latitude": 40.4011243,
+    "longitude": -104.9743706,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-06T14:29:16.743Z",
+    "contact_name": "rigorous safety requirements",
+    "socials": {
+      "facebook": "https://www.facebook.com/limelightelectric",
+      "instagram": "https://www.instagram.com/limelight_services",
+      "twitter": "https://x.com/limelight911",
+      "linkedin": "https://www.linkedin.com/company/limelight-services-llc",
+      "google": "http://maps.google.com/maps"
+    },
+    "deep_enriched_at": "2026-08-06T14:31:41.329Z"
+  },
+  {
+    "lead_id": "ChIJ7-dL7HsEGmMRNA3W4joCEYA",
+    "business_name": "Polar Bear Plumbing Heating & Air",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://www.polarbearpha.com/",
+    "email": "",
+    "phone": "+1 970-617-9699",
+    "rating": 4.9,
+    "review_count": 677,
+    "address": "687 Gyrfalcon Ct Unit C, Windsor, CO 80550",
+    "place_id": "ChIJ7-dL7HsEGmMRNA3W4joCEYA",
+    "subtypes": [
+      "Plumber, HVAC contractor"
+    ],
+    "latitude": 40.4761562,
+    "longitude": -104.8801766,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-06T14:29:16.743Z",
+    "socials": {
+      "facebook": "https://www.facebook.com/PolarBearPlumbingHeatingAir",
+      "instagram": "https://www.instagram.com/polarbearpha"
+    },
+    "deep_enriched_at": "2026-08-06T14:31:45.115Z"
+  },
+  {
+    "lead_id": "ChIJS8F4MuFNaYcRdzNNRR87ecM",
+    "business_name": "Plumbline Services",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://plumblineservices.com/fort-collins%3Futm_campaign%3DGoogle_GMB_North%26utm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_content%3DWebsite",
+    "email": "",
+    "phone": "+1 970-235-2606",
+    "rating": 4.8,
+    "review_count": 1317,
+    "address": "395 W 67th St, Loveland, CO 80538",
+    "place_id": "ChIJS8F4MuFNaYcRdzNNRR87ecM",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Air conditioning repair service, Air duct cleaning service, Electrician, Furnace repair service, Heating contractor, HVAC contractor"
+    ],
+    "latitude": 40.461615699999996,
+    "longitude": -105.0819343,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-06T14:29:16.744Z"
+  },
+  {
+    "lead_id": "ChIJv7kaxGk1aYcRXdoK7O4FVUQ",
+    "business_name": "1st Action Plumbing Heating And Air, INC.",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://www.1stactionpha.com/%3Futm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_campaign%3Dgbp_loveland",
+    "email": "",
+    "phone": "+1 970-775-7321",
+    "rating": 4.9,
+    "review_count": 749,
+    "address": "2424 N Lincoln Ave, Loveland, CO 80538",
+    "place_id": "ChIJv7kaxGk1aYcRXdoK7O4FVUQ",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Furnace repair service, Heating contractor, HVAC contractor"
+    ],
+    "latitude": 40.4177417,
+    "longitude": -105.072437,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-06T14:29:16.744Z"
+  },
+  {
+    "lead_id": "ChIJbXGhndqhbocRSgiLdrXt5gI",
+    "business_name": "Cool Ducts Heating and Cooling",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "http://www.coolductshvac.com/%3Futm_source%3Dlocal%26utm_medium%3Dorganic%26utm_campaign%3Dgmb",
+    "email": "",
+    "phone": "+1 970-405-5333",
+    "rating": 4.9,
+    "review_count": 477,
+    "address": "2580 E Harmony Rd Ste 301-06, Fort Collins, CO 80528",
+    "place_id": "ChIJbXGhndqhbocRSgiLdrXt5gI",
+    "subtypes": [
+      "HVAC contractor, Air conditioning contractor, Air conditioning repair service, Air conditioning system supplier, Furnace repair service"
+    ],
+    "latitude": 40.5237128,
+    "longitude": -105.03013779999999,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-06T14:29:16.744Z",
+    "contact_name": "Raffi Ohanian",
+    "socials": {
+      "facebook": "https://www.facebook.com/Coolductshvac",
+      "angi": "https://www.homeadvisor.com/rated.coolductshvaccomcontact.108767900.html"
+    },
+    "deep_enriched_at": "2026-08-06T14:31:43.065Z"
+  },
+  {
+    "lead_id": "ChIJWSxaxStLaYcRjIg76ODRbZs",
+    "business_name": "Swan Plumbing Heating & Air of Fort Collins",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://swanheating.com/loveland/%3Futm_source%3DGBP%26utm_medium%3Dorganic%26utm_campaign%3DSWF_ORG_EVER_A_GBP_FortC",
+    "email": "",
+    "phone": "+1 970-762-2331",
+    "rating": 4.8,
+    "review_count": 94,
+    "address": "116 E Oak St, Fort Collins, CO 80524",
+    "place_id": "ChIJWSxaxStLaYcRjIg76ODRbZs",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Air conditioning repair service, Heating contractor, HVAC contractor"
+    ],
+    "latitude": 40.5858053,
+    "longitude": -105.0764817,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-06T14:29:16.743Z"
+  },
+  {
+    "lead_id": "ChIJDUGU_vdNaYcR0xAG4WApTTg",
+    "business_name": "Lion Home Service",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://lionhomeservice.com/%3Futm_source%3DGBP%26utm_medium%3Dorganic%26utm_campaign%3Dfort_collins",
+    "email": "",
+    "phone": "+1 970-829-8222",
+    "rating": 4.7,
+    "review_count": 6212,
+    "address": "2850 McClelland Dr, Fort Collins, CO 80525",
+    "place_id": "ChIJDUGU_vdNaYcR0xAG4WApTTg",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Air conditioning repair service, Drainage service, Electrician, Furnace repair service, Heating contractor, HVAC contractor, Septic system service, Sewage disposal service"
+    ],
+    "latitude": 40.547354299999995,
+    "longitude": -105.0793619,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-06T14:29:16.743Z"
+  },
+  {
+    "lead_id": "ChIJn4DNat02aYcRjD_tv9cxg7w",
+    "business_name": "NOCO Energy Solutions",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://nocoenergysolutions.com/%3Futm_source%3Dgmb%26utm_medium%3Dorganic%26utm_campaign%3Dgmb-listing",
+    "email": "",
+    "phone": "+1 970-310-6240",
+    "rating": 5,
+    "review_count": 175,
+    "address": "394 Delozier Dr, Fort Collins, CO 80524",
+    "place_id": "ChIJn4DNat02aYcRjD_tv9cxg7w",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Air conditioning repair service, Air duct cleaning service, Furnace repair service, Furnace store, Heating contractor, HVAC contractor"
+    ],
+    "latitude": 40.5832773,
+    "longitude": -105.0202681,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-06T14:29:16.744Z"
+  },
+  {
+    "lead_id": "ChIJR9IZ095TaYcRLBoqYNz81PY",
+    "business_name": "Robbins Water Line Restoration, LLC",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://robbinswater.com/%3Futm_source%3Dprimary%26utm_medium%3Dorganic-traffic%26utm_campaign%3Dgmb",
+    "email": "",
+    "phone": "+1 970-347-7110",
+    "rating": 4.9,
+    "review_count": 116,
+    "address": "7668 Big Valley Dr, Loveland, CO 80537",
+    "place_id": "ChIJR9IZ095TaYcRLBoqYNz81PY",
+    "subtypes": [
+      "Plumber, Excavating contractor, Lawn sprinkler system contractor"
+    ],
+    "latitude": 40.3972763,
+    "longitude": -105.18714729999999,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-06T14:29:16.744Z"
+  },
+  {
+    "lead_id": "ChIJGVUPUtBLaYcRBOIZEdpIc0U",
+    "business_name": "Josephs' Hardware & Home Center",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "http://josephs-hardware.com/",
+    "email": "",
+    "phone": "+1 970-493-8000",
+    "rating": 4.7,
+    "review_count": 229,
+    "address": "2160 W Drake Rd Unit A-5, Fort Collins, CO 80526",
+    "place_id": "ChIJGVUPUtBLaYcRBOIZEdpIc0U",
+    "subtypes": [
+      "Hardware store, Lawn equipment rental service, Lumber store, Party equipment rental service, Saw sharpening service, Screen repair service, Tool rental service"
+    ],
+    "latitude": 40.554114999999996,
+    "longitude": -105.11719219999999,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-06T14:29:16.744Z",
+    "contact_name": "and Transitions",
+    "socials": {
+      "facebook": "https://www.facebook.com/JosephsHardware",
+      "instagram": "https://www.instagram.com/josephshardware"
+    },
+    "deep_enriched_at": "2026-08-06T14:31:41.385Z"
+  },
+  {
+    "lead_id": "ChIJXVXXWXNTaYcRJPZOZaaAWPA",
+    "business_name": "Workman Plumbing Services",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://workmanplumbingservices.com/",
+    "email": "",
+    "phone": "+1 970-308-9796",
+    "rating": 5,
+    "review_count": 108,
+    "address": "406 S Lincoln Ave Unit 8, Loveland, CO 80537",
+    "place_id": "ChIJXVXXWXNTaYcRJPZOZaaAWPA",
+    "subtypes": [
+      "Plumber"
+    ],
+    "latitude": 40.387916499999996,
+    "longitude": -105.073026,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-06T14:29:16.744Z",
+    "socials": {
+      "yelp": "https://www.yelp.com/biz/workman-plumbing-services-loveland",
+      "facebook": "https://www.facebook.com/WorkmanPlumbingServices"
+    },
+    "deep_enriched_at": "2026-08-06T14:31:47.052Z"
+  },
+  {
+    "lead_id": "ChIJ-Tw84lpTaYcRU7NoxcZj7Rk",
+    "business_name": "Finish Plumbing, LLC",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://finishplumbingllc.com/",
+    "email": "finishplumbing@gmail.com",
+    "phone": "+1 970-581-0643",
+    "rating": 5,
+    "review_count": 132,
+    "address": "554 18th St SW, Loveland, CO 80537",
+    "place_id": "ChIJ-Tw84lpTaYcRU7NoxcZj7Rk",
+    "subtypes": [
+      "Plumber, Heating contractor, Mechanical contractor"
+    ],
+    "latitude": 40.3748466,
+    "longitude": -105.0840379,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-06T14:29:16.744Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "https://www.facebook.com/FinishPlumbingLLC",
+      "instagram": "https://www.instagram.com/finishplumbing",
+      "yelp": "https://www.yelp.com/biz/finish-plumbing-loveland-4"
+    },
+    "deep_enriched_at": "2026-08-06T14:31:46.701Z"
+  },
+  {
+    "lead_id": "ChIJcZVrpvhRaYcRe44yUR_Nvpw",
+    "business_name": "KP Plumbing",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://www.mykpplumbing.com/",
+    "email": "",
+    "phone": "+1 970-290-9930",
+    "rating": 4.8,
+    "review_count": 117,
+    "address": "4270 Stringtown Dr, Loveland, CO 80538",
+    "place_id": "ChIJcZVrpvhRaYcRe44yUR_Nvpw",
+    "subtypes": [
+      "Plumber, Contractor, Heating contractor"
+    ],
+    "latitude": 40.4355745,
+    "longitude": -105.12617809999999,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-06T14:29:16.744Z",
+    "contact_name": "Yvonne Palone",
+    "socials": {
+      "twitter": "https://twitter.com/kp",
+      "facebook": "https://www.facebook.com/mykpplumbing",
+      "linkedin": "https://www.linkedin.com/in/kirk-palone-063491ba"
+    },
+    "deep_enriched_at": "2026-08-09T18:28:20.588Z"
+  },
+  {
+    "lead_id": "ChIJFXfgGAlTaYcRoj_O0IcKAYU",
+    "business_name": "Ace Hi Plumbing & Heating",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "http://www.acehiplumbing.com/",
+    "email": "contact@acehiplumbing.com",
+    "phone": "+1 970-667-0300",
+    "rating": 4.6,
+    "review_count": 243,
+    "address": "4916 W Eisenhower Blvd, Loveland, CO 80537",
+    "place_id": "ChIJFXfgGAlTaYcRoj_O0IcKAYU",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Heating contractor"
+    ],
+    "latitude": 40.4068203,
+    "longitude": -105.1468512,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-06T14:29:16.744Z",
+    "email_source": "contact-scraper",
+    "contact_name": "an edge in",
+    "socials": {
+      "angi": "http://www.angieslist.com/companylist/us/co/loveland/ace-hi-plumbing-htg-and-air-inc-reviews-2341224.htm",
+      "facebook": "https://www.facebook.com/profile.php?id=100058561544168"
+    },
+    "deep_enriched_at": "2026-08-06T14:31:49.330Z"
+  },
+  {
+    "lead_id": "ChIJ8f02yupLaYcR2z6qtc8TLRU",
+    "business_name": "RJ Plumbing & Heating",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://rjplumbingandheating.net/",
+    "email": "rjplumbingnoco@gmail.com",
+    "phone": "+1 970-420-6528",
+    "rating": 4.8,
+    "review_count": 41,
+    "address": "2401 Valley Forge Ave, Fort Collins, CO 80526",
+    "place_id": "ChIJ8f02yupLaYcR2z6qtc8TLRU",
+    "subtypes": [
+      "Plumber"
+    ],
+    "latitude": 40.5547204,
+    "longitude": -105.12038849999999,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-06T14:29:16.743Z",
+    "email_source": "contact-scraper",
+    "contact_name": "had done on",
+    "socials": {
+      "facebook": "https://www.facebook.com/rjplumbingandheating",
+      "instagram": "https://www.instagram.com/rjplumbingnoco"
+    },
+    "deep_enriched_at": "2026-08-06T14:29:26.367Z"
+  },
+  {
+    "lead_id": "ChIJI5EP585LaYcRsfjtmfqhDIw",
+    "business_name": "Independent Plumbing Solutions Inc.",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "http://iplumbingsolutions.com/",
+    "email": "",
+    "phone": "+1 970-566-1377",
+    "rating": 4.7,
+    "review_count": 93,
+    "address": "1611 E Lincoln Ave Unit A, Fort Collins, CO 80524",
+    "place_id": "ChIJI5EP585LaYcRsfjtmfqhDIw",
+    "subtypes": [
+      "Plumber, Bathroom remodeler, Kitchen remodeler"
+    ],
+    "latitude": 40.585173999999995,
+    "longitude": -105.04785899999999,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-06T14:29:16.743Z",
+    "contact_name": "and his work",
+    "socials": {
+      "facebook": "https://www.facebook.com/iplumbingsolutions",
+      "bbb": "http://www.bbb.org/wyoming-and-northern-colorado/business-reviews/plumbers/independent-plumbing-solutions-inc-in-fort-collins-co-46014375",
+      "yelp": "https://www.yelp.com/biz/independent-plumbing-solutions-fort-collins",
+      "linkedin": "https://www.linkedin.com/company/independent-plumbing-solutions-inc"
+    },
+    "deep_enriched_at": "2026-08-06T14:29:30.226Z"
+  },
+  {
+    "lead_id": "ChIJt-FLOVN0bC4RykMT1zGYB_o",
+    "business_name": "Choice City Plumbing LLC",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "http://www.choicecityplumbingco.com/",
+    "email": "",
+    "phone": "+1 970-829-9377",
+    "rating": 5,
+    "review_count": 46,
+    "address": "140 W Oak St #290B, Fort Collins, CO 80524",
+    "place_id": "ChIJt-FLOVN0bC4RykMT1zGYB_o",
+    "subtypes": [
+      "Plumber, Drainage service"
+    ],
+    "latitude": 40.585922,
+    "longitude": -105.0781452,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-06T14:29:16.743Z"
+  },
+  {
+    "lead_id": "ChIJr4dMCX1LaYcRrlezh6_XMwk",
+    "business_name": "Drain Doctors Sewer & Drain",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://www.draindoctorsnoco.com/",
+    "email": "draindoctors@gmail.com",
+    "phone": "+1 970-282-9596",
+    "rating": 4.5,
+    "review_count": 170,
+    "address": "301 Boardwalk Dr, Fort Collins, CO 80525",
+    "place_id": "ChIJr4dMCX1LaYcRrlezh6_XMwk",
+    "subtypes": [
+      "Plumber"
+    ],
+    "latitude": 40.5308351,
+    "longitude": -105.07319679999999,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-06T14:29:16.743Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "https://www.facebook.com/Drain-Doctors-1746201995658291"
+    },
+    "deep_enriched_at": "2026-08-06T14:29:29.341Z"
+  },
+  {
+    "lead_id": "ChIJ3cKpV-_EDkoRhb77ngge2SU",
+    "business_name": "All Around Rooter",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://www.allaroundrooter.com/",
+    "email": "",
+    "phone": "+1 970-889-4298",
+    "rating": 5,
+    "review_count": 40,
+    "address": "3307 S College Ave, Fort Collins, CO 80525",
+    "place_id": "ChIJ3cKpV-_EDkoRhb77ngge2SU",
+    "subtypes": [
+      "Plumber"
+    ],
+    "latitude": 40.5419856,
+    "longitude": -105.07907379999999,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-06T14:29:16.743Z",
+    "contact_name": "an Offer",
+    "deep_enriched_at": "2026-08-06T14:29:32.507Z"
+  },
+  {
+    "lead_id": "ChIJ73PygqNLaYcRXkn1w55LeOk",
+    "business_name": "Drain Solvers the pros, inc.",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "http://www.drainsolvers.com/",
+    "email": "cheryl@drainsolvers.com",
+    "phone": "+1 970-289-0971",
+    "rating": 4.8,
+    "review_count": 49,
+    "address": "3443 Colony Dr, Fort Collins, CO 80526",
+    "place_id": "ChIJ73PygqNLaYcRXkn1w55LeOk",
+    "subtypes": [
+      "Plumber, Drainage service"
+    ],
+    "latitude": 40.539836699999995,
+    "longitude": -105.0889753,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-06T14:29:16.743Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "https://www.facebook.com/profile.php?id=100068777485151",
+      "twitter": "https://x.com/DrainSolver"
+    },
+    "deep_enriched_at": "2026-08-06T14:31:45.637Z"
+  },
+  {
+    "lead_id": "ChIJWy2gX-lNaYcR__IAX27Iu4Y",
+    "business_name": "Platinum Home Service",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://platinumhomeservice.pro/",
+    "email": "greg@platinumhomeservice.pro",
+    "phone": "+1 970-657-9324",
+    "rating": 5,
+    "review_count": 46,
+    "address": "5601 Hummel Ln, Fort Collins, CO 80525",
+    "place_id": "ChIJWy2gX-lNaYcR__IAX27Iu4Y",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson"
+    ],
+    "latitude": 40.5095375,
+    "longitude": -105.05320719999999,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-06T14:29:16.743Z",
+    "email_source": "contact-scraper",
+    "contact_name": "and plan to",
+    "socials": {
+      "tiktok": "https://www.tiktok.com/@platinumhomeservice.pro",
+      "facebook": "https://www.facebook.com/profile.php?id=61557572593155",
+      "twitter": "https://twitter.com/Pthomeservice",
+      "bbb": "https://www.bbb.org/us/co/fort-collins/profile/remodeling/platinum-home-service-0805-46145743"
+    },
+    "deep_enriched_at": "2026-08-06T14:31:46.316Z"
+  },
+  {
+    "lead_id": "ChIJ-zMhq55NaYcRpTjvsO1O7fA",
+    "business_name": "Kahar Plumbing & Heating Inc",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "http://www.kaharph.com/",
+    "email": "office@kaharph.com",
+    "phone": "+1 970-461-2412",
+    "rating": 4.7,
+    "review_count": 96,
+    "address": "6772 N Franklin Ave, Loveland, CO 80538",
+    "place_id": "ChIJ-zMhq55NaYcRpTjvsO1O7fA",
+    "subtypes": [
+      "Plumber"
+    ],
+    "latitude": 40.4616477,
+    "longitude": -105.0849734,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-06T14:29:16.744Z",
+    "email_source": "contact-scraper",
+    "deep_enriched_at": "2026-08-06T14:31:50.721Z"
+  },
+  {
+    "lead_id": "ChIJ2y3sFcFLaYcRZTV5P5mLEjY",
+    "business_name": "Water Extraction Experts",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://waterextractionexperts.com/",
+    "email": "pros@waterextractionexperts.com",
+    "phone": "+1 970-581-4498",
+    "rating": 4.8,
+    "review_count": 61,
+    "address": "228 Lincoln Ct Unit b, Fort Collins, CO 80524",
+    "place_id": "ChIJ2y3sFcFLaYcRZTV5P5mLEjY",
+    "subtypes": [
+      "Water damage restoration service, Air duct cleaning service, Building restoration service, Environmental health service, Fire damage restoration service, Insulation contractor, Waterproofing service"
+    ],
+    "latitude": 40.5840621,
+    "longitude": -105.045946,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-06T14:29:16.744Z",
+    "email_source": "contact-scraper",
+    "contact_name": "so impressed with",
+    "socials": {
+      "facebook": "https://www.facebook.com/waterextractionexperts",
+      "bbb": "https://www.bbb.org/us/nm/albuquerque/profile/fire-and-water-damage-restoration/water-extraction-experts-0806-99143257",
+      "angi": "https://www.homeadvisor.com/rated.WaterExtractionExperts.59591346.html",
+      "yelp": "https://www.yelp.com/biz/water-extraction-experts-fort-collins-2",
+      "youtube": "https://www.youtube.com/channel/UCDHBgWhJKXEoQvkd52mUuFw"
+    },
+    "deep_enriched_at": "2026-08-06T14:31:47.148Z"
+  },
+  {
+    "lead_id": "ChIJ__-vvMRKaYcR-tDiuP5XjPE",
+    "business_name": "Plummer Insurance",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://www.plummerinsurance.com/who-we-are/locations/fort-collins-co/",
+    "email": "",
+    "phone": "+1 970-484-1401",
+    "rating": 5,
+    "review_count": 38,
+    "address": "1520 E Mulberry St, Fort Collins, CO 80524",
+    "place_id": "ChIJ__-vvMRKaYcR-tDiuP5XjPE",
+    "subtypes": [
+      "Insurance agency, Insurance broker, Life insurance agency, Renter's insurance agency"
+    ],
+    "latitude": 40.5817669,
+    "longitude": -105.0492917,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-06T14:29:16.744Z",
+    "contact_name": "and vehicle insurance",
+    "socials": {
+      "google": "https://g.page/plummer-insurance-fort-collins",
+      "facebook": "https://www.facebook.com/plummerinsured",
+      "instagram": "https://instagram.com/plummerinsurance",
+      "twitter": "https://twitter.com/plummerinsured"
+    },
+    "deep_enriched_at": "2026-08-07T14:32:23.317Z"
+  },
+  {
+    "lead_id": "ChIJh6ExS8FKaYcR5KHNH3TFcPY",
+    "business_name": "SERVPRO of Fort Collins",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://www.servpro.com/locations/co/servpro-of-fort-collins%3Futm_medium%3Dorganic%26utm_source%3Dgbp",
+    "email": "office@servprofortcollins.com",
+    "phone": "+1 970-792-4008",
+    "rating": 4.5,
+    "review_count": 193,
+    "address": "308 N Link Ln, Fort Collins, CO 80524",
+    "place_id": "ChIJh6ExS8FKaYcR5KHNH3TFcPY",
+    "subtypes": [
+      "Water damage restoration service, Air duct cleaning service, Building restoration service, Carpet cleaning service, Cleaners, Crime victim service, Debris removal service, Fire damage restoration service, Waste management service"
+    ],
+    "latitude": 40.5893362,
+    "longitude": -105.0481887,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-06T14:29:16.744Z",
+    "email_source": "contact-scraper",
+    "contact_name": "in need of",
+    "socials": {
+      "linkedin": "https://linkedin.com/company/servpro-of-fort-collins",
+      "instagram": "https://instagram.com/servprofortcollins",
+      "facebook": "https://facebook.com/servprofortcollins"
+    },
+    "deep_enriched_at": "2026-08-06T14:31:48.400Z"
+  },
+  {
+    "lead_id": "ChIJd5pL1vBTaYcRQpswB-4jHmc",
+    "business_name": "Home Pro Water Heaters & Plumbing",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://homeproph.com/",
+    "email": "",
+    "phone": "+1 970-308-2829",
+    "rating": 5,
+    "review_count": 33,
+    "address": "1016 Jennifer Dr, Loveland, CO 80537",
+    "place_id": "ChIJd5pL1vBTaYcRQpswB-4jHmc",
+    "subtypes": [
+      "Plumber, Bathroom remodeler, Drainage service, Kitchen remodeler, Remodeler"
+    ],
+    "latitude": 40.3809499,
+    "longitude": -105.10489989999999,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-06T14:29:16.744Z"
+  },
+  {
+    "lead_id": "ChIJZfIAB9tLaYcR2xUocXPuj90",
+    "business_name": "Fort Collins Plumbers Team",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://fortcollinsplumbersteam.com/",
+    "email": "",
+    "phone": "+1 970-251-9644",
+    "rating": 5,
+    "review_count": 14,
+    "address": "157 E Foothills Pkwy, Fort Collins, CO 80525",
+    "place_id": "ChIJZfIAB9tLaYcR2xUocXPuj90",
+    "subtypes": [
+      "Plumber"
+    ],
+    "latitude": 40.5430626,
+    "longitude": -105.0749408,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-06T14:29:16.743Z",
+    "contact_name": "to verify that",
+    "deep_enriched_at": "2026-08-06T14:31:55.310Z"
+  },
+  {
+    "lead_id": "ChIJE3AwrIxKaYcRCM07u8ne22Q",
+    "business_name": "Hahn Plumbing – Heating – A/C",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://hahnplumbing.com/%3Futm_source%3Dhahnplumbinggbp%26utm_medium%3Dgbp%26utm_campaign%3Dgbp",
+    "email": "",
+    "phone": "+1 970-484-7668",
+    "rating": 4.4,
+    "review_count": 155,
+    "address": "130 Chestnut St, Fort Collins, CO 80524",
+    "place_id": "ChIJE3AwrIxKaYcRCM07u8ne22Q",
+    "subtypes": [
+      "Plumber, Drainage service, Furnace repair service, Heating contractor, HVAC contractor"
+    ],
+    "latitude": 40.5878613,
+    "longitude": -105.07282749999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-06T14:29:16.743Z"
+  },
+  {
+    "lead_id": "ChIJOZi8qfZLaYcRiSGS4ow8gMU",
+    "business_name": "Aggie Plumbing & Service",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "http://www.aggieplumbing.com/",
+    "email": "info@aggieplumbing.com",
+    "phone": "+1 970-226-9979",
+    "rating": 4.7,
+    "review_count": 72,
+    "address": "309 S Summit View Dr UNIT 12, Fort Collins, CO 80524",
+    "place_id": "ChIJOZi8qfZLaYcRiSGS4ow8gMU",
+    "subtypes": [
+      "Plumber"
+    ],
+    "latitude": 40.584163,
+    "longitude": -105.03116849999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-06T14:29:16.743Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Sarah Zawadzki",
+    "socials": {
+      "facebook": "https://www.facebook.com/people/Aggie-Plumbing-and-Service/61579339064287",
+      "instagram": "https://www.instagram.com/aggie.plumbing",
+      "nextdoor": "https://nextdoor.com/pages/aggie-plumbing-service-inc"
+    },
+    "deep_enriched_at": "2026-08-06T14:29:30.835Z"
+  },
+  {
+    "lead_id": "ChIJxTPTllxKaYcRyxkkzYg7COA",
+    "business_name": "Alpha Plumbing",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "http://alphaplumbingfortcollins.com/",
+    "email": "alphaplumbinginc@yahoo.com",
+    "phone": "+1 970-308-5369",
+    "rating": 4.6,
+    "review_count": 35,
+    "address": "2217 Airway Ave Unit 1, Fort Collins, CO 80524",
+    "place_id": "ChIJxTPTllxKaYcRyxkkzYg7COA",
+    "subtypes": [
+      "Plumber, Heating contractor"
+    ],
+    "latitude": 40.582343,
+    "longitude": -105.03606169999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-06T14:29:16.743Z",
+    "email_source": "contact-scraper",
+    "contact_name": "who believes in",
+    "socials": {
+      "yelp": "https://www.yelp.com/biz/alpha-plumbing-fort-collins",
+      "angi": "http://www.angieslist.com/companylist/us/co/fort-collins/alpha-plumbing-reviews-6178539.htm",
+      "facebook": "https://www.facebook.com/1AlphaPlumbing"
+    },
+    "deep_enriched_at": "2026-08-06T14:29:30.458Z"
+  },
+  {
+    "lead_id": "ChIJTwxg_zhLaYcR0-gljTjsTjI",
+    "business_name": "Discount Water Heaters",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "http://www.discountwaterheatersinc.com/",
+    "email": "",
+    "phone": "+1 970-420-7721",
+    "rating": 5,
+    "review_count": 22,
+    "address": "305 W Magnolia St #184, Fort Collins, CO 80521",
+    "place_id": "ChIJTwxg_zhLaYcR0-gljTjsTjI",
+    "subtypes": [
+      "Plumber"
+    ],
+    "latitude": 40.582634299999995,
+    "longitude": -105.08133819999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-06T14:29:16.743Z"
+  },
+  {
+    "lead_id": "ChIJO-kClJHNo2ER27XwpPOctWE",
+    "business_name": "Harvest Water Heaters",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://harvestwaterheaters.com/",
+    "email": "",
+    "phone": "+1 970-548-0704",
+    "rating": 5,
+    "review_count": 13,
+    "address": "1471 Curtis Lake Ln, Fort Collins, CO 80524",
+    "place_id": "ChIJO-kClJHNo2ER27XwpPOctWE",
+    "subtypes": [
+      "Plumber, Boiler supplier, Drainage service"
+    ],
+    "latitude": 40.6779675,
+    "longitude": -105.1298928,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-06T14:29:16.743Z",
+    "socials": {
+      "facebook": "https://www.facebook.com/profile.php?id=61587343075045"
+    },
+    "deep_enriched_at": "2026-08-06T14:31:54.284Z"
+  },
+  {
+    "lead_id": "ChIJVXmUHi1NaYcRygFfG0hhko8",
+    "business_name": "Superior Plumbing Fort Collins Solutions",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "http://superiorplumbingfortcollinssolutions.com/",
+    "email": "",
+    "phone": "+1 970-341-9364",
+    "rating": 5,
+    "review_count": 14,
+    "address": "7620 US-287, Fort Collins, CO 80525",
+    "place_id": "ChIJVXmUHi1NaYcRygFfG0hhko8",
+    "subtypes": [
+      "Plumber"
+    ],
+    "latitude": 40.4791567,
+    "longitude": -105.07661189999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-06T14:29:16.743Z",
+    "contact_name": "to arrive within",
+    "deep_enriched_at": "2026-08-06T14:31:57.676Z"
+  },
+  {
+    "lead_id": "ChIJ82BgXpg1aYcR6WiqESZtT3w",
+    "business_name": "Roto Rooter",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://www.rotorooternoco.com/",
+    "email": "rotorooterweldco@gmail.com",
+    "phone": "+1 970-356-7686",
+    "rating": 4,
+    "review_count": 125,
+    "address": "3005 W 29th St, Greeley, CO 80631",
+    "place_id": "ChIJ82BgXpg1aYcR6WiqESZtT3w",
+    "subtypes": [
+      "Plumber, Contractor, Septic system service"
+    ],
+    "latitude": 40.389506399999995,
+    "longitude": -104.72799479999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-06T14:29:16.743Z",
+    "email_source": "contact-scraper",
+    "contact_name": "who came out",
+    "socials": {
+      "facebook": "https://www.facebook.com/Roto-Rooter-Ft-Collins-1969210256632343"
+    },
+    "deep_enriched_at": "2026-08-06T14:31:51.780Z"
+  },
+  {
+    "lead_id": "ChIJs4gXTJxLaYcRbOKHqGw2Bp0",
+    "business_name": "The Toilet Guy",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "http://thetoiletguy.com/",
+    "email": "",
+    "phone": "+1 970-672-0000",
+    "rating": 4.9,
+    "review_count": 19,
+    "address": "223 S Link Ln Unit C, Fort Collins, CO 80524",
+    "place_id": "ChIJs4gXTJxLaYcRbOKHqGw2Bp0",
+    "subtypes": [
+      "Plumber, Bathroom remodeler, Contractor"
+    ],
+    "latitude": 40.5849684,
+    "longitude": -105.0505841,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-06T14:29:16.743Z"
+  },
+  {
+    "lead_id": "ChIJjfzTHTA_00wRKh6relWd84k",
+    "business_name": "OnGrade Plumbing & Excavating",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://ongradepe.com/",
+    "email": "office@ongradepe.com",
+    "phone": "+1 720-371-2698",
+    "rating": 5,
+    "review_count": 19,
+    "address": "1305 Duff Dr, Fort Collins, CO 80524",
+    "place_id": "ChIJjfzTHTA_00wRKh6relWd84k",
+    "subtypes": [
+      "Plumber, Boiler supplier, Drainage service, Septic system service, Water filter supplier, Water softening equipment supplier"
+    ],
+    "latitude": 40.589829699999996,
+    "longitude": -105.0526855,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-06T14:29:16.743Z",
+    "email_source": "contact-scraper",
+    "contact_name": "to be on",
+    "deep_enriched_at": "2026-08-06T14:31:52.840Z"
+  },
+  {
+    "lead_id": "ChIJfShK1oBMaYcRU8yvt76bdyU",
+    "business_name": "Good Guys Home Services",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://goodguyshs.com/",
+    "email": "info@goodguyshs.com",
+    "phone": "+1 970-818-8008",
+    "rating": 4.4,
+    "review_count": 78,
+    "address": "1021 S Lincoln Ave, Loveland, CO 80537",
+    "place_id": "ChIJfShK1oBMaYcRU8yvt76bdyU",
+    "subtypes": [
+      "Plumber, Air conditioning repair service, HVAC contractor"
+    ],
+    "latitude": 40.3796785,
+    "longitude": -105.07375669999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-06T14:29:16.744Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Rizky Pratama",
+    "socials": {
+      "facebook": "https://www.facebook.com/WAKTOGEL",
+      "twitter": "https://x.com/WAKTOGEL",
+      "instagram": "https://www.instagram.com/WAKTOGEL"
+    },
+    "deep_enriched_at": "2026-08-06T14:31:59.338Z"
+  },
+  {
+    "lead_id": "ChIJj7-mZDMjGqERGEPb4L3QBRM",
+    "business_name": "Beaver Pans - Shower Pan Installation",
+    "trade": "plumber",
+    "city": "Fort Collins, CO",
+    "site_url": "https://beaverpans.com/",
+    "email": "",
+    "phone": "+1 970-443-3254",
+    "rating": 5,
+    "review_count": 12,
+    "address": "3200 Azalea Dr, Fort Collins, CO 80526",
+    "place_id": "ChIJj7-mZDMjGqERGEPb4L3QBRM",
+    "subtypes": [
+      "Plumber, Architectural designer, General contractor, Home builder, Interior designer, Bathroom remodeler, Remodeler, Shower door shop, Tile contractor"
+    ],
+    "latitude": 40.56538,
+    "longitude": -105.13697529999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-06T14:29:16.744Z"
+  }
+]

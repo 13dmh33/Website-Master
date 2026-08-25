@@ -1,0 +1,408 @@
+[
+  {
+    "lead_id": "ChIJUXTioLS0bocRcoGQAJ455iQ",
+    "business_name": "Foothills Painting LLC",
+    "trade": "handyman",
+    "city": "Fort Collins, CO",
+    "site_url": "https://foothillspainting.co/",
+    "email": "",
+    "phone": "+1 970-847-6991",
+    "rating": 5,
+    "review_count": 702,
+    "address": "1730 S College Ave #305, Fort Collins, CO 80525",
+    "place_id": "ChIJUXTioLS0bocRcoGQAJ455iQ",
+    "subtypes": [
+      "Painter"
+    ],
+    "latitude": 40.5642077,
+    "longitude": -105.07642609999999,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-08T12:30:20.443Z",
+    "contact_name": "Foothills Painting",
+    "socials": {
+      "nextdoor": "https://ads.nextdoor.com",
+      "facebook": "https://www.facebook.com/FoothillsPaintingCO",
+      "instagram": "https://www.instagram.com/foothillspainting",
+      "tiktok": "https://www.tiktok.com/@foothillspainting",
+      "youtube": "https://www.youtube.com/@foothillspainting",
+      "linkedin": "https://www.linkedin.com/company/7954522"
+    },
+    "deep_enriched_at": "2026-08-08T12:33:03.881Z"
+  },
+  {
+    "lead_id": "ChIJCW5EzX9LaYcRjn6dLKSN62I",
+    "business_name": "Honey Helper",
+    "trade": "handyman",
+    "city": "Fort Collins, CO",
+    "site_url": "https://honeyhelper.com/",
+    "email": "",
+    "phone": "+1 970-213-5001",
+    "rating": 4.9,
+    "review_count": 132,
+    "address": "1305 Duff Dr Ste 1, Fort Collins, CO 80524",
+    "place_id": "ChIJCW5EzX9LaYcRjn6dLKSN62I",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson"
+    ],
+    "latitude": 40.590055899999996,
+    "longitude": -105.0525419,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-08T12:30:20.437Z"
+  },
+  {
+    "lead_id": "ChIJxaLN1qh77ocR5C0buu0USg8",
+    "business_name": "Columbus Tree & Handyman",
+    "trade": "handyman",
+    "city": "Fort Collins, CO",
+    "site_url": "https://sites.google.com/view/columbustreeandhandyman/home",
+    "email": "",
+    "phone": "+1 612-715-1097",
+    "rating": 5,
+    "review_count": 116,
+    "address": "2609 Milton Ln, Fort Collins, CO 80524",
+    "place_id": "ChIJxaLN1qh77ocR5C0buu0USg8",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson, Arborist service, Dry wall contractor, Junk removal service, Metal fabricator, Painter, Tile contractor, Tree service, Window installation service"
+    ],
+    "latitude": 40.6229054,
+    "longitude": -105.0332538,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-08T12:30:20.442Z",
+    "contact_name": "and will definitely",
+    "deep_enriched_at": "2026-08-08T12:32:59.443Z"
+  },
+  {
+    "lead_id": "ChIJSchM579zw2ERS77kXUQpygU",
+    "business_name": "Wee R Handy General Contractors",
+    "trade": "handyman",
+    "city": "Fort Collins, CO",
+    "site_url": "https://weerhandy.com/",
+    "email": "",
+    "phone": "+1 970-373-0130",
+    "rating": 4.9,
+    "review_count": 111,
+    "address": "2629 Redwing Rd #275, Fort Collins, CO 80526",
+    "place_id": "ChIJSchM579zw2ERS77kXUQpygU",
+    "subtypes": [
+      "General contractor, Deck builder"
+    ],
+    "latitude": 40.5511178,
+    "longitude": -105.0825093,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-08T12:30:20.442Z",
+    "contact_name": "reviews and repeat",
+    "socials": {
+      "bbb": "https://www.bbb.org/us/co/fort-collins/profile/handyman/wee-r-handy-llc-0805-46149339",
+      "facebook": "https://www.facebook.com/100925052923379",
+      "yelp": "https://www.yelp.com/biz/j04v_D_9lPndETGmmxmDGA"
+    },
+    "deep_enriched_at": "2026-08-08T12:33:03.474Z"
+  },
+  {
+    "lead_id": "ChIJ83S6y0C1bocRlx_h_R5DJfs",
+    "business_name": "Bison Home Service",
+    "trade": "handyman",
+    "city": "Fort Collins, CO",
+    "site_url": "https://bisonhomeservice.com/",
+    "email": "info@bisonhomeservice.com",
+    "phone": "+1 970-430-4070",
+    "rating": 4.8,
+    "review_count": 88,
+    "address": "2926 E Mulberry St Unit B, Fort Collins, CO 80524",
+    "place_id": "ChIJ83S6y0C1bocRlx_h_R5DJfs",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson, Air conditioning contractor, Air conditioning repair service, Custom home builder, Furnace repair service, General contractor, HVAC contractor, Heating contractor, Home builder"
+    ],
+    "latitude": 40.582264599999995,
+    "longitude": -105.0224884,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-08T12:30:20.442Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "https://www.facebook.com/bisonhomeservice",
+      "instagram": "https://www.instagram.com/bisonhomeservice",
+      "google": "https://maps.google.com/maps"
+    },
+    "deep_enriched_at": "2026-08-08T12:33:06.238Z"
+  },
+  {
+    "lead_id": "ChIJXeZq2dUdQS0RjE4Mp2qetJg",
+    "business_name": "In & Out Handyman of Northern Colorado",
+    "trade": "handyman",
+    "city": "Fort Collins, CO",
+    "site_url": "https://www.handymanrepaircolorado.com/",
+    "email": "toby@inandouthandymannoco.onmicrosoft.com",
+    "phone": "+1 970-449-0080",
+    "rating": 4.9,
+    "review_count": 57,
+    "address": "4821 14th St SW, Loveland, CO 80537",
+    "place_id": "ChIJXeZq2dUdQS0RjE4Mp2qetJg",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson"
+    ],
+    "latitude": 40.3788821,
+    "longitude": -105.1467606,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-08T12:30:20.443Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "instagram": "https://www.instagram.com/inandouthandyman",
+      "facebook": "https://m.facebook.com/inandouthandymaneastmichigan"
+    },
+    "deep_enriched_at": "2026-08-08T12:33:08.602Z"
+  },
+  {
+    "lead_id": "ChIJcVd1JpZNaYcRBOCEejhhT0k",
+    "business_name": "Oz Upgrades LLC",
+    "trade": "handyman",
+    "city": "Fort Collins, CO",
+    "site_url": "http://www.ozupgrades.com/",
+    "email": "ozupgradesllc@gmail.com",
+    "phone": "+1 970-690-8255",
+    "rating": 5,
+    "review_count": 31,
+    "address": "4224 Warbler Dr, Fort Collins, CO 80526",
+    "place_id": "ChIJcVd1JpZNaYcRBOCEejhhT0k",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson, Contractor"
+    ],
+    "latitude": 40.528531099999995,
+    "longitude": -105.0831403,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-08T12:30:20.443Z",
+    "email_source": "contact-scraper",
+    "contact_name": "to match my",
+    "socials": {
+      "facebook": "https://www.facebook.com/ozupgrades",
+      "instagram": "https://www.instagram.com/ozupgrades"
+    },
+    "deep_enriched_at": "2026-08-08T12:33:08.868Z"
+  },
+  {
+    "lead_id": "ChIJwenJEMyJa4cR6UIircytaro",
+    "business_name": "Handyman Hub",
+    "trade": "handyman",
+    "city": "Fort Collins, CO",
+    "site_url": "https://handymanhub.com/",
+    "email": "info@handymanhub.com",
+    "phone": "+1 303-427-2955",
+    "rating": 4.5,
+    "review_count": 187,
+    "address": "6343 W 120th Ave, Broomfield, CO 80020",
+    "place_id": "ChIJwenJEMyJa4cR6UIircytaro",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson, Bathroom remodeler, Carpenter, Dry wall contractor, Flooring contractor, General contractor, Kitchen remodeler, Painter, Remodeler, Woodworker"
+    ],
+    "latitude": 39.9145402,
+    "longitude": -105.0651027,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-08T12:30:20.443Z",
+    "email_source": "contact-scraper",
+    "contact_name": "and will be",
+    "socials": {
+      "facebook": "https://www.facebook.com/HandymanHub",
+      "bbb": "https://www.bbb.org/us/co/broomfield/profile/bathroom-remodel/handyman-hub-1296-90154092",
+      "instagram": "https://www.instagram.com/handyman_hub"
+    },
+    "deep_enriched_at": "2026-08-08T12:33:07.403Z"
+  },
+  {
+    "lead_id": "ChIJvSumr-hLaYcRumKYV3l01CM",
+    "business_name": "Boff Construction",
+    "trade": "handyman",
+    "city": "Fort Collins, CO",
+    "site_url": "http://lancewolfconstruction.com/",
+    "email": "",
+    "phone": "+1 760-207-4300",
+    "rating": 4.9,
+    "review_count": 13,
+    "address": "1612 W Mountain Ave, Fort Collins, CO 80521",
+    "place_id": "ChIJvSumr-hLaYcRumKYV3l01CM",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson"
+    ],
+    "latitude": 40.5874745,
+    "longitude": -105.10623029999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-08T12:30:20.442Z"
+  },
+  {
+    "lead_id": "ChIJbzgWYWtLaYcRReazX0YeehQ",
+    "business_name": "Detailed Building Solutions",
+    "trade": "handyman",
+    "city": "Fort Collins, CO",
+    "site_url": "https://detailedbuildingsolutions.com/",
+    "email": "mattd@detailedbuildingsolutions.com",
+    "phone": "+1 970-231-8348",
+    "rating": 5,
+    "review_count": 23,
+    "address": "2909 Oxford Ct, Fort Collins, CO 80525",
+    "place_id": "ChIJbzgWYWtLaYcRReazX0YeehQ",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson, Custom home builder, General contractor, Remodeler"
+    ],
+    "latitude": 40.5479883,
+    "longitude": -105.06128149999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-08T12:30:20.443Z",
+    "email_source": "contact-scraper",
+    "contact_name": "square footage that",
+    "socials": {
+      "facebook": "https://www.facebook.com/DetailedBuildingSolution",
+      "instagram": "https://www.instagram.com/detailed_building_solutions",
+      "youtube": "https://www.youtube.com/@detailedbuildingsolutions783",
+      "linkedin": "https://www.linkedin.com/in/matt-dworak-ab139112"
+    },
+    "deep_enriched_at": "2026-08-08T12:33:04.393Z"
+  },
+  {
+    "lead_id": "ChIJv1oKKmM1aYcRep_mUo3MAvQ",
+    "business_name": "NoCo Home Services",
+    "trade": "handyman",
+    "city": "Fort Collins, CO",
+    "site_url": "http://nocohomeservices.com/",
+    "email": "nocohomeservices@gmail.com",
+    "phone": "+1 970-689-1738",
+    "rating": 5,
+    "review_count": 24,
+    "address": "4021 Cork Dr, Laporte, CO 80535",
+    "place_id": "ChIJv1oKKmM1aYcRep_mUo3MAvQ",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson, Remodeler"
+    ],
+    "latitude": 40.631223399999996,
+    "longitude": -105.15223499999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-08T12:30:20.443Z",
+    "email_source": "contact-scraper",
+    "contact_name": "look beautiful and",
+    "socials": {
+      "facebook": "http://www.facebook.com/2008/fbml",
+      "instagram": "http://instagram.com/nocohomeservices"
+    },
+    "deep_enriched_at": "2026-08-08T12:33:05.404Z"
+  },
+  {
+    "lead_id": "ChIJx07vFZGh2mwRLRXQLk39KPU",
+    "business_name": "OCD 4 U",
+    "trade": "handyman",
+    "city": "Fort Collins, CO",
+    "site_url": "http://ocd4u.com/",
+    "email": "hello@ocd4u.com",
+    "phone": "+1 303-834-7266",
+    "rating": 5,
+    "review_count": 21,
+    "address": "1281 E Magnolia St D331, Fort Collins, CO 80524",
+    "place_id": "ChIJx07vFZGh2mwRLRXQLk39KPU",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson"
+    ],
+    "latitude": 40.582392399999996,
+    "longitude": -105.0561524,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-08T12:30:20.443Z",
+    "email_source": "contact-scraper",
+    "contact_name": "attentive to physical",
+    "socials": {
+      "facebook": "https://www.facebook.com/OCD4U",
+      "instagram": "https://www.instagram.com/ocd4u",
+      "youtube": "https://www.youtube.com/@OCD4URealEstateServices",
+      "tiktok": "https://www.tiktok.com/@ocd4u"
+    },
+    "deep_enriched_at": "2026-08-08T12:33:14.366Z"
+  },
+  {
+    "lead_id": "ChIJufCpPZnNbocRijU-HiyKHfE",
+    "business_name": "Ayrans Home Improvement LLC",
+    "trade": "handyman",
+    "city": "Fort Collins, CO",
+    "site_url": "https://ayrans-home-improvement.com/home",
+    "email": "ahi303@icloud.com",
+    "phone": "+1 970-412-3245",
+    "rating": 5,
+    "review_count": 21,
+    "address": "2216 S College Ave, Fort Collins, CO 80525",
+    "place_id": "ChIJufCpPZnNbocRijU-HiyKHfE",
+    "subtypes": [
+      "Kitchen remodeler"
+    ],
+    "latitude": 40.5582601,
+    "longitude": -105.0765881,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-08T12:30:20.443Z",
+    "email_source": "contact-scraper",
+    "contact_name": "very happy with",
+    "deep_enriched_at": "2026-08-08T12:33:09.618Z"
+  },
+  {
+    "lead_id": "ChIJu-V0vfQ8iCYRugTKCTnNPwc",
+    "business_name": "Tools & Time Home Services",
+    "trade": "handyman",
+    "city": "Fort Collins, CO",
+    "site_url": "https://toolsandtimehomeservices.com/",
+    "email": "info@toolsandtimehomeservices.com",
+    "phone": "+1 970-833-9025",
+    "rating": 5,
+    "review_count": 20,
+    "address": "5006 Notley Dr, Windsor, CO 80550",
+    "place_id": "ChIJu-V0vfQ8iCYRugTKCTnNPwc",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson"
+    ],
+    "latitude": 40.5298027,
+    "longitude": -104.93217779999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-08T12:30:20.443Z",
+    "email_source": "contact-scraper",
+    "contact_name": "their expectations",
+    "socials": {
+      "facebook": "https://www.facebook.com/117772114610257"
+    },
+    "deep_enriched_at": "2026-08-08T12:33:10.152Z"
+  },
+  {
+    "lead_id": "ChIJ02cU1CW1bocR8qgsJdl9qeg",
+    "business_name": "Action Restoration & Property Services",
+    "trade": "handyman",
+    "city": "Fort Collins, CO",
+    "site_url": "http://www.actionofnoco.com/",
+    "email": "anelson@actionofnoco.com",
+    "phone": "+1 970-402-7980",
+    "rating": 4.7,
+    "review_count": 26,
+    "address": "3201 E Mulberry St Unit E, Fort Collins, CO 80524",
+    "place_id": "ChIJ02cU1CW1bocR8qgsJdl9qeg",
+    "subtypes": [
+      "Water damage restoration service, Building restoration service, Carpet cleaning service, Fire damage restoration service, Gutter cleaning service, Upholstery cleaning service"
+    ],
+    "latitude": 40.580073899999995,
+    "longitude": -105.018097,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-08T12:30:20.443Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Rex A. Bell",
+    "socials": {
+      "facebook": "https://www.facebook.com/actionofnoco",
+      "instagram": "https://www.instagram.com/actionrestorationnoco",
+      "linkedin": "https://www.linkedin.com/company/action-restoration-&",
+      "bbb": "https://www.bbb.org/us/co/fort-collins/profile/water-damage-restoration/action-restoration-and-property-services-0805-46092362",
+      "google": "https://maps.google.com/maps"
+    },
+    "deep_enriched_at": "2026-08-08T12:33:15.752Z"
+  }
+]

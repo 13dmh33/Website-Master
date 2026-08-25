@@ -5,7 +5,7 @@
     "trade": "electrician",
     "city": "Colorado Springs, CO",
     "site_url": "https://swartzelectric.biz/electrician-colorado-springs/%3Futm_source%3Dgoogle-gbp%26utm_medium%3Dorganic%26utm_campaign%3D*523*swartz-colorado-springs",
-    "email": "",
+    "email": "service@swartzelectric.biz",
     "phone": "+1 719-230-0372",
     "rating": 4.9,
     "review_count": 674,
@@ -18,7 +18,18 @@
     "longitude": -104.7551792,
     "fit_score": 6,
     "gap_score": 6,
-    "scraped_at": "2026-07-31T12:30:32.629Z"
+    "scraped_at": "2026-07-31T12:30:32.629Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Darmini Kara",
+    "socials": {
+      "facebook": "https://www.facebook.com/SwartzElectric",
+      "twitter": "https://twitter.com/SwartzElectric",
+      "linkedin": "https://www.linkedin.com/company/swartz-electric-llc",
+      "youtube": "https://www.youtube.com/channel/UCnw-ze0cACZz_1AMeYA30iw",
+      "instagram": "https://www.instagram.com/swartzelectric",
+      "google": "https://maps.google.com/maps"
+    },
+    "deep_enriched_at": "2026-08-23T19:15:37.855Z"
   },
   {
     "lead_id": "ChIJm7asIbJPE4cRZalYgph5Cfo",
@@ -894,7 +905,9 @@
     "longitude": -104.6948888,
     "fit_score": 4,
     "gap_score": 4,
-    "scraped_at": "2026-07-31T12:30:32.630Z"
+    "scraped_at": "2026-07-31T12:30:32.630Z",
+    "contact_name": "Emre K.",
+    "deep_enriched_at": "2026-08-16T12:31:50.455Z"
   },
   {
     "lead_id": "ChIJJ2iN593VWKMRNoZ1TTAfqjw",

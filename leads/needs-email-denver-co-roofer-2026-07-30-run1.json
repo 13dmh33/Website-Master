@@ -377,9 +377,10 @@
       "bbb": "https://seal-denver.bbb.org",
       "facebook": "https://www.facebook.com/Best-Roof-Roofing-Company-100681811665797",
       "instagram": "https://www.instagram.com/bestroofroofing",
-      "linkedin": "https://www.linkedin.com/in/dennis-miller-30244018"
+      "linkedin": "https://www.linkedin.com/in/dennis-miller-30244018",
+      "google": "https://maps.google.com/maps"
     },
-    "deep_enriched_at": "2026-07-30T14:13:06.802Z"
+    "deep_enriched_at": "2026-08-16T12:31:24.211Z"
   },
   {
     "lead_id": "ChIJ06TbSrd9bIcRktv4WehCflA",
@@ -606,7 +607,7 @@
     "trade": "roofer",
     "city": "Denver, CO",
     "site_url": "https://www.mcintireroofing.com/",
-    "email": "",
+    "email": "kasha@mcintireroofing.com",
     "phone": "+1 303-962-7599",
     "rating": 5,
     "review_count": 188,
@@ -628,7 +629,8 @@
       "google": "https://maps.google.com/maps",
       "linkedin": "https://www.linkedin.com/company/teamdavelogan.com"
     },
-    "deep_enriched_at": "2026-07-30T14:13:09.980Z"
+    "deep_enriched_at": "2026-08-13T14:30:39.676Z",
+    "email_source": "contact-scraper"
   },
   {
     "lead_id": "ChIJwYJg3h5_bIcRkrG0y07-aMg",

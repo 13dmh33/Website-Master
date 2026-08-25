@@ -1,0 +1,1168 @@
+{
+  "date": "2026-08-13",
+  "city": "Lakewood, CO",
+  "trade": "roofer",
+  "stages": {
+    "scout": {
+      "newLeads": 70,
+      "exitCode": 0
+    },
+    "scrape": {
+      "emailsFound": 18
+    },
+    "diagnoser": {
+      "briefs": 792
+    },
+    "checker": {
+      "approved": 714
+    },
+    "sheetLog": {
+      "rows": 714,
+      "exitCode": 0
+    }
+  },
+  "readyToSend": 161,
+  "sentToday": 0,
+  "batch": {
+    "date": "2026-08-13",
+    "status": "pending",
+    "count": 161,
+    "created": true
+  },
+  "batchLeads": [
+    {
+      "lead_id": "ChIJ--u4cLmJbIcRL1ETQwvwKKA",
+      "business_name": "True Plumbing and Drain Cleaning",
+      "email": "hello@southsideplumbing.com",
+      "city": "Lakewood, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJ-Tw84lpTaYcRU7NoxcZj7Rk",
+      "business_name": "Finish Plumbing, LLC",
+      "email": "finishplumbing@gmail.com",
+      "city": "Fort Collins, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJ-VutP5BFE4cRMGvfRWwjalQ",
+      "business_name": "Trinity Electric LLC",
+      "email": "trinityelectric719@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJ-WiqeAGkbocRdMpPBII81wo",
+      "business_name": "Tornado Roofing & Gutters",
+      "email": "tornadoroofingllc@gmail.com",
+      "city": "Fort Collins, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJ-aje5NZ_bIcRZxsggxNh6ck",
+      "business_name": "GoodBoy Roofing",
+      "email": "zach@goodboy-roofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJ-covWDaAbIcR8kOP2NW32GA",
+      "business_name": "Armour Roofing & Exteriors",
+      "email": "info@armourexteriors.com",
+      "city": "Lakewood, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJ-zMhq55NaYcRpTjvsO1O7fA",
+      "business_name": "Kahar Plumbing & Heating Inc",
+      "email": "office@kaharph.com",
+      "city": "Fort Collins, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJ0T_B-r6tbocRUy4ZWE25nEw",
+      "business_name": "Conduct All Electric",
+      "email": "info@conductall.com",
+      "city": "Fort Collins, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJ0xO7Tru-bocRqUU_ztDe0Tk",
+      "business_name": "Delaney's Electric, Inc.",
+      "email": "info@delaney-electric.com",
+      "city": "Fort Collins, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJ11GAxrJPE4cR6syI0RBCYgA",
+      "business_name": "K&D Roofing and Construction",
+      "email": "homerestorationsco@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJ11tEo87xa4cRWzo7Gz6Uxp8",
+      "business_name": "Precision Plumbing Heating Cooling Electric",
+      "email": "info@precisionplumbing.com",
+      "city": "Lakewood, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJ1S2ViOyBa4cRDtVrBGFZOa0",
+      "business_name": "Copperhead Electric",
+      "email": "coppheadelectric@gmail.com",
+      "city": "Lakewood, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJ1_eaQ0qJbIcRWvTPkgakDts",
+      "business_name": "The Handy Dads, LLC - Denver Handyman",
+      "email": "service@thehandydadsco.com",
+      "city": "Denver, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJ1agHuPhjbIcROBw19F21xAU",
+      "business_name": "Hire a Handyman",
+      "email": "hireahandyman303@gmail.com",
+      "city": "Aurora, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJ26qSJTeEa4cRbxlSpd4JbM4",
+      "business_name": "SINGLETRACK HOME SERVICES",
+      "email": "office@singletrackelectric.com",
+      "city": "Lakewood, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJ2TqbNu6JbIcRxubDQvjZGb8",
+      "business_name": "Triple J Inc Roofing",
+      "email": "office@triplejincroofing.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJ2YBKctyGa4cRDGU75M6Iqqg",
+      "business_name": "Blue Spruce Roofing and Exteriors",
+      "email": "info@bluespruceexteriors.com",
+      "city": "Lakewood, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJ2Y_irZNLaYcR9L_qhb-Zmyg",
+      "business_name": "NOCO Roofing",
+      "email": "info@nocoroofing.com",
+      "city": "Fort Collins, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJ2ZaqbhOAbIcR5Qy2Kx652GI",
+      "business_name": "A to Z Roofing & Exteriors",
+      "email": "info@denverroofers.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJ2y3sFcFLaYcRZTV5P5mLEjY",
+      "business_name": "Water Extraction Experts",
+      "email": "pros@waterextractionexperts.com",
+      "city": "Fort Collins, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJ4eXXu1p9a4cRXuJPEodZjmU",
+      "business_name": "Modern Roofing Group",
+      "email": "info@modroofgroup.com",
+      "city": "Lakewood, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJ5ytlBYlKaYcRK1oFF3psZYI",
+      "business_name": "Sandbox Solar",
+      "email": "sales@sandboxsolar.com",
+      "city": "Fort Collins, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJ6VsloOZIE4cRCZna55flQGM",
+      "business_name": "Allright Plumbing & Heating, Inc",
+      "email": "aallrightplumbing@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJ72x5JSSAbIcRQfpZTbJS_Yc",
+      "business_name": "A1 Contracting, Inc",
+      "email": "info@a1contracting.us",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJ73PygqNLaYcRXkn1w55LeOk",
+      "business_name": "Drain Solvers the pros, inc.",
+      "email": "cheryl@drainsolvers.com",
+      "city": "Fort Collins, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJ7WP34jaHa4cRhKduGAE0ydo",
+      "business_name": "Colorado Home Services",
+      "email": "info@cohomeservice.com",
+      "city": "Lakewood, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJ7YjonxFLaYcReNY_MdGWhi4",
+      "business_name": "Rocky Mountain Install - Audio, Video, Data & Security",
+      "email": "jeff@rockymtninstall.com",
+      "city": "Fort Collins, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJ7c1-1vEqzqURVAKiJjYPuhA",
+      "business_name": "Seven Hills Home Maintenance",
+      "email": "sevenhillshm@gmail.com",
+      "city": "Aurora, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJ7wzIljK1bocRQMTR1QUXIRo",
+      "business_name": "Avery Electric Inc",
+      "email": "averyelectricinc@gmail.com",
+      "city": "Fort Collins, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJ7y8oD1iHa4cR-GzW7JVg6Us",
+      "business_name": "Front Range Property Solutions",
+      "email": "admin@frpspro.com",
+      "city": "Lakewood, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJ8-2I8L1HE4cRU--9aQOR_IU",
+      "business_name": "Rocky Top Construction",
+      "email": "rockytoproofingco@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJ811IvHp_bIcRiW2TJ2cdQbI",
+      "business_name": "Ideal Siding Denver",
+      "email": "hello@idealsiding.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJ83S6y0C1bocRlx_h_R5DJfs",
+      "business_name": "Bison Home Service",
+      "email": "info@bisonhomeservice.com",
+      "city": "Fort Collins, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJ83dGSAJ5bIcRXMy5mPBG6_Q",
+      "business_name": "The Roofing Broker",
+      "email": "eli@theroofingbroker.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJ8UP5sAN3BKURAvaPmk2OUo8",
+      "business_name": "Electrician | LG Electrical",
+      "email": "service@lgelectricalllc.com",
+      "city": "Lakewood, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJ8f02yupLaYcR2z6qtc8TLRU",
+      "business_name": "RJ Plumbing & Heating",
+      "email": "rjplumbingnoco@gmail.com",
+      "city": "Fort Collins, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJ9R-cjm81aYcRZJwAQOOVTyM",
+      "business_name": "Lamb Electric",
+      "email": "clintlamb85@yahoo.com",
+      "city": "Fort Collins, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJAQC8bX9MaYcRreEv_YpGIbg",
+      "business_name": "Elite Roofing Services, LLC",
+      "email": "bob@roofsbyelite.com",
+      "city": "Fort Collins, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJAxaJchF_bIcRZpxoj7J4Th0",
+      "business_name": "Vertical Roofing Co",
+      "email": "customerservice@verticalroofingco.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJBa6LS0l5bIcRWTMaN7Csnx4",
+      "business_name": "Commercial Roofing Contractor",
+      "email": "inspections@crcinbox.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJDbSeCwdLaYcRaGWnLUAmiCs",
+      "business_name": "Mountain States Electronics",
+      "email": "steve@mountainstateselectronics.com",
+      "city": "Fort Collins, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJE5xrLPuGbIcRHscXn5EB284",
+      "business_name": "Assurance Contractors -",
+      "email": "info@assurancecontractors.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJEcpVxopKaYcRyKtLWOGXzPY",
+      "business_name": "Tri-State Concrete & Excavation",
+      "email": "info@tristateconcreteservices.com",
+      "city": "Fort Collins, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJFXfgGAlTaYcRoj_O0IcKAYU",
+      "business_name": "Ace Hi Plumbing & Heating",
+      "email": "contact@acehiplumbing.com",
+      "city": "Fort Collins, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJG5yfD5V-bIcRU00bCCX4Qvo",
+      "business_name": "Superoofs",
+      "email": "info@superoofs.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJH4Nd3EFNaYcRW8kmLX7WUeQ",
+      "business_name": "Westers Roofing, Inc.",
+      "email": "newroof@westersroofing.com",
+      "city": "Fort Collins, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJH_EsGEVaiSsRtCkTfs4cxyw",
+      "business_name": "L.E. Roofing",
+      "email": "leroofing@leroofing.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJJ9NnsulFE4cRrLcZGQrswyg",
+      "business_name": "Amber Peak Roofing",
+      "email": "contact@amberpeakroofing.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJL5GQ3rd3bIcRZvebYM-CvJc",
+      "business_name": "Gorilla Roof, Inc.",
+      "email": "ed@gorillaroof.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJLR9mQQ93bIcRG7rgq7OB_9s",
+      "business_name": "All Seasons Exteriors",
+      "email": "contactus@allseasonsexteriorsco.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJLabRjgqHbIcRtdCVUqC7q_4",
+      "business_name": "America's Best Contracting Inc.",
+      "email": "info@solutions5280.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJLexq5ejibasRIXe20CCPjH4",
+      "business_name": "Relief Handyman Services",
+      "email": "info@reliefhandyman.com",
+      "city": "Denver, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJM2FBy31LaYcRCibyTTp6lyw",
+      "business_name": "Green Top Roofing-- Northern Colorado",
+      "email": "luke@greentoproofing.com",
+      "city": "Fort Collins, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJMVBPowx4bIcRez5snK0Ifjo",
+      "business_name": "Tiley Roofing",
+      "email": "mail@tileyroofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJMdy7FMiHa4cRD8gtVzeQvfc",
+      "business_name": "Turner Morris Commercial Roofing - Denver Office",
+      "email": "info@turnermorris.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJN0eibDu9jKYResHXWp8Ocag",
+      "business_name": "Kirby’s Roofing and Exteriors",
+      "email": "kirbysroofingllc@yahoo.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJN2zPwfxFE4cRsIdPzPyGeSI",
+      "business_name": "Independent Electrical Contractors Assoc. - Southern Colorado Chapter",
+      "email": "teamiec@iecscc.org",
+      "city": "Colorado Springs, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJOQ7C-W2HbIcRV2CrG9JOq88",
+      "business_name": "Golden Spike Roofing Inc",
+      "email": "info@goldenspikeroofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJOUAJALR2a4cR3ykKFeiCRts",
+      "business_name": "Altitude Electric LLC",
+      "email": "info@altitudeelectric.com",
+      "city": "Lakewood, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJOXlJcmBPE4cRdlUZ_hzQvvo",
+      "business_name": "Cobalt Roofing",
+      "email": "info@cobaltroofing.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJP0Evy_KLfaMRz2sHyY82wi0",
+      "business_name": "Solstice Roofing",
+      "email": "justin@solsticeroofingco.com",
+      "city": "Fort Collins, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJP1eLRGRGiAARnTw1AXzQzVk",
+      "business_name": "Brad Co. Plumbing & Heating",
+      "email": "bradcoph@gmail.com",
+      "city": "Lakewood, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJPQSKDJzxDogR3eVnxTCkuG4",
+      "business_name": "Astra Roofing",
+      "email": "contact@astraroofs.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJQV2C4IV5bIcRnMV3cmebYR8",
+      "business_name": "APC Roofing",
+      "email": "info@apcroofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJQc5KtixNaYcRHERnPsGkuOw",
+      "business_name": "Rhino Exteriors",
+      "email": "info@rhinoexteriors.co",
+      "city": "Fort Collins, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJR3H_UtZLaYcR0MHijDNSnec",
+      "business_name": "All Circuits Electrical",
+      "email": "info@allcircuitselectrical.com",
+      "city": "Fort Collins, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJR5oc0FCObIcRqKpn2AgTRLQ",
+      "business_name": "Jack the Roofer",
+      "email": "info@jacktheroofer.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJRSUIMGevbocRvlxztgdqGFc",
+      "business_name": "Aspen Leaf Roofing - Northern Colorado",
+      "email": "bobby@aspenleafroofing.com",
+      "city": "Fort Collins, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJRwD2HAWAbIcRPjBv1Xed1YY",
+      "business_name": "Rhino Roofing LLC",
+      "email": "info@rhinoindustries.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJS1fpd3a1RIYRjeD1TJvvwNs",
+      "business_name": "VanRossun Contracting & Consulting LLC",
+      "email": "office@vanrossuncontracting.com",
+      "city": "Austin, TX",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJSW4dKhBTaYcRkGyox8QndXo",
+      "business_name": "Rocky Top Total Roofing",
+      "email": "sales@rockytoptotalroofing.com",
+      "city": "Fort Collins, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJT1S0ZrCHbIcRoYn4OtSOj9s",
+      "business_name": "T Bare Roofing",
+      "email": "info@tbareroofing.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJT7pIAol5bIcRtq-yZYlSoq4",
+      "business_name": "Advocate Roofing",
+      "email": "info@advocateconstruction.com",
+      "city": "Lakewood, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJTU9S6j_2uEURQ9Eg0VOO-V0",
+      "business_name": "Solar Pathways Energy & Electrical",
+      "email": "sales@solarpathways.com",
+      "city": "Fort Collins, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJTZB2xtwObIcRBjxxms1WcqM",
+      "business_name": "Home Improvement Express - Denver",
+      "email": "estimates@homeimprovementexpress.com",
+      "city": "Denver, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJTdOak_F5bIcRTWpyEry3kFA",
+      "business_name": "Denver Roof Coatings",
+      "email": "info@denverroofcoatings.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJTzo4Aqh_bIcRB76c1rByMRI",
+      "business_name": "Mile Hi Roofing",
+      "email": "info@milehiroofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJU_dJrfp-bIcRFtX3-GkzaGo",
+      "business_name": "Koala Exteriors",
+      "email": "hello@koalaexteriors.com",
+      "city": "Lakewood, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJVR97lz6Ba4cRK3nUagIvFv8",
+      "business_name": "Bonhardt Roof & Trades Co",
+      "email": "info@bonhardtroofs.com",
+      "city": "Lakewood, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJW8eTkDQMXGwRqvBOQ3jjJGA",
+      "business_name": "Falcon's Eye Roofing & Construction",
+      "email": "gc@falconseyeroofing.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJWQr0GXrqsAsRMoSnlGw_EI8",
+      "business_name": "A & J Roofing Corporation",
+      "email": "info@trustaandj.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJWWQ8PWxgaYcRs0SdJ_kg78Q",
+      "business_name": "Stonescape Steel Roofing & Exteriors",
+      "email": "info@stonescapesteelroofing.com",
+      "city": "Fort Collins, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJWZIx4atFE4cRgccul12rL-Q",
+      "business_name": "Excel Construction Group",
+      "email": "info@excelcg.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJWy2gX-lNaYcR__IAX27Iu4Y",
+      "business_name": "Platinum Home Service",
+      "email": "greg@platinumhomeservice.pro",
+      "city": "Fort Collins, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJX12_de5_bIcRransEVc5ebk",
+      "business_name": "Brown Truck Handyman",
+      "email": "mike@browntruckhandyman.com",
+      "city": "Denver, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJX47U1RCHa4cRn01T4gwbJkY",
+      "business_name": "Big Apple Plumbing LLC - Wheat Ridge, CO",
+      "email": "teambigappleplumbing@gmail.com",
+      "city": "Lakewood, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJXQ28rAl9bIcReTfZSkp4Xig",
+      "business_name": "Honey-Dew Siding Repair",
+      "email": "honeydewsidingrepair@gmail.com",
+      "city": "Aurora, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJX_i0eflFE4cRJTUi_60pqMM",
+      "business_name": "Mountain View Roofing And Construction LLC",
+      "email": "mountainviewroofingco@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJXeZq2dUdQS0RjE4Mp2qetJg",
+      "business_name": "In & Out Handyman of Northern Colorado",
+      "email": "toby@inandouthandymannoco.onmicrosoft.com",
+      "city": "Fort Collins, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJXx0dpH9tbIcRQDL3FGQx63Y",
+      "business_name": "Semper Fi Restoration Inc",
+      "email": "info@semperfirestoration.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJZ3RsGHB_bIcR5mz6nLJJ9Sk",
+      "business_name": "Murray Roofing",
+      "email": "none@gmail.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJZ42D4kN5bIcR1zfGxnYrybA",
+      "business_name": "Woodberg Roofing and Restoration",
+      "email": "info@woodbergroofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJZ9akg_CHa4cR2bCHRDXAbm8",
+      "business_name": "Plumingo Plumbing & Heating",
+      "email": "hello@plumingo.us",
+      "city": "Lakewood, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJ_06ygaOBa4cRYPkwKdXdT7I",
+      "business_name": "SKYYGUARD",
+      "email": "info@skyyguard.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJ_SKZ7zyxbocRWQIoYYVgy5g",
+      "business_name": "Black Belt Roofing",
+      "email": "dustin@blackbeltroof.com",
+      "city": "Fort Collins, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJa9cO88d5bIcRbm1-ll26bTA",
+      "business_name": "AVI Roofing, Inc.",
+      "email": "marketing@aviroofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJb11x7LhaE4cR322iA-Bml_k",
+      "business_name": "IBEW Local 113",
+      "email": "info@ibew113.com",
+      "city": "Colorado Springs, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJbTdRf4-Ea4cR2fM79UcmPZA",
+      "business_name": "McBride Lighting & Electrical Services",
+      "email": "info@mcbridelighting.com",
+      "city": "Lakewood, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJbZB9gHV_a4cRIj3s9WDuqQI",
+      "business_name": "Interstate Electric and Solar",
+      "email": "justin@ieands.com",
+      "city": "Lakewood, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJbdrs9z5TaYcRzlt5Rmt0Yec",
+      "business_name": "TJ's Electric Inc",
+      "email": "terryloiacano@gmail.com",
+      "city": "Fort Collins, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJbfcbPSaIbIcRtTnTbnX5n4U",
+      "business_name": "Roof Brokers, Inc.",
+      "email": "roofexperts@roofbrokersinc.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJbwbpuR1GE4cRn1jw-ttmhIQ",
+      "business_name": "Rocky Mountain Electric",
+      "email": "jason@rockymountainelectric.org",
+      "city": "Colorado Springs, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJbzML-F36DogRSuBdLkxf-D0",
+      "business_name": "Affordable Roofing, Inc",
+      "email": "service@affordableroofing.net",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJcQfB9LpPE4cRaKtU47IiQao",
+      "business_name": "Knight's Restoration LTD",
+      "email": "jonpinhorn.typedesign@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJcVd1JpZNaYcRBOCEejhhT0k",
+      "business_name": "Oz Upgrades LLC",
+      "email": "ozupgradesllc@gmail.com",
+      "city": "Fort Collins, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJcYwoBqyHa4cRysRBwB_jGxA",
+      "business_name": "D & A Heating and Air, LLC",
+      "email": "service@dnaheatingandair.com",
+      "city": "Lakewood, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJd-sCQCE3bAERE93MVBL9AWY",
+      "business_name": "Full Service Exteriors",
+      "email": "ryan@fullserviceexteriors.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJd2w5EzqNbIcRPPbDbi5c8s8",
+      "business_name": "Roof Solutions CO",
+      "email": "office@roofsolutionsco.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJdS67ueBLaYcRTND1LyahJ8I",
+      "business_name": "Three Crowns Electric | Fort Collins",
+      "email": "info@threecrownselectric.com",
+      "city": "Fort Collins, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJe6lujiWtbocRfZK4twCY6bA",
+      "business_name": "Colorado Native Roofing & Exteriors",
+      "email": "customerservice@coloradonativegc.com",
+      "city": "Fort Collins, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJeV0cKS21bocRFGC4cr9_Mmk",
+      "business_name": "Skylight Specialists, Inc",
+      "email": "skylights@skyspec.com",
+      "city": "Fort Collins, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJewY04Al_bIcR2Oop1TR3fYE",
+      "business_name": "Jenesis Roofing",
+      "email": "sales@jenesisroofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJfSbLJ_x_bIcRghqLopLLXLg",
+      "business_name": "McIntire Roofing",
+      "email": "kasha@mcintireroofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJfWjuoyp5a4cRNWQpccpeQaQ",
+      "business_name": "A Master's Hands",
+      "email": "info@amastershands.com",
+      "city": "Denver, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJfZyBDe9LaYcRYHoIcBInZ7s",
+      "business_name": "Trust Roofing & Restoration",
+      "email": "info@trust-roofs.com",
+      "city": "Fort Collins, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJgyGYSnVBG6kRoi_nzFvekYg",
+      "business_name": "Colorado Electric Corp",
+      "email": "office@coloradoelectriccorp.com",
+      "city": "Lakewood, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJh6ExS8FKaYcR5KHNH3TFcPY",
+      "business_name": "SERVPRO of Fort Collins",
+      "email": "office@servprofortcollins.com",
+      "city": "Fort Collins, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJhxQyUTZAE4cRe7_D8iEyqnA",
+      "business_name": "Valley Electric",
+      "email": "valleyelectrics@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJi9LPI0NjbIcRai1PcGDNvX0",
+      "business_name": "Rocky Exteriors",
+      "email": "info@rockyexteriors.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJiUgP7PSDa4cR0DzD95oKoWY",
+      "business_name": "Firefly Electrical Services",
+      "email": "contact@fireflyelectricalservices.com",
+      "city": "Lakewood, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJjcqiCiJFE4cRL3Jx55xYc20",
+      "business_name": "Grand Line Roofing",
+      "email": "grandlineroofing1@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJjecUdkfLbocRCiCQByHj6tQ",
+      "business_name": "Prestige Exteriors",
+      "email": "info@prestige-ext.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJl8KQayljbIcRbTYQbQErqE4",
+      "business_name": "Aurora Electricians Services",
+      "email": "info@auroraelectriciansservices.com",
+      "city": "Aurora, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJlUmNXOhEE4cRzS6jLPJf71A",
+      "business_name": "Trafton Roofing & Repair Service",
+      "email": "traftonroofing1946@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJlVm2Zj-Ha4cReKxQMRQJaO4",
+      "business_name": "Big Bear Roofing",
+      "email": "info@bigbearroofco.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJla1V-_KEa4cRq2FzVdxHn8A",
+      "business_name": "Mac-Vik Plumbing, Heating, and Electrical",
+      "email": "info@macvik.com",
+      "city": "Lakewood, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJlbHkfpN_bIcRB1FQ-QR-N7c",
+      "business_name": "Gates Enterprises LLC",
+      "email": "info@gatesroof.com",
+      "city": "Lakewood, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJleDdvpBXaYcRxRxwYcVShQs",
+      "business_name": "Blue Frog Roofing Limited",
+      "email": "info@bluefrogroofing.com",
+      "city": "Lakewood, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJlz02Kcd_bIcR0H0_L0np5fg",
+      "business_name": "Stronghouse",
+      "email": "pmaloney@stronghousebrands.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJm-uAV3xGE4cRCRiAgnXB8Y0",
+      "business_name": "Peak View Roofing",
+      "email": "peakview@peakviewroofing.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJmXo_xL1_bIcRhsPZaAuZjyM",
+      "business_name": "Ernie's Roofing",
+      "email": "ernie@erniesgutter.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJm_DeqbGGa4cRZWOjqqy6VAg",
+      "business_name": "Lakewood Garage Door",
+      "email": "lakewoodgd@gmail.com",
+      "city": "Lakewood, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJmfvFobZGE4cRT0T0_hayQhg",
+      "business_name": "Team Plumbing",
+      "email": "front@teamplumbinginc.com",
+      "city": "Colorado Springs, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJn-c01PVTaYcRE61qqh5OaA8",
+      "business_name": "White Castle Roofing - Northern Colorado",
+      "email": "info@whitecastleroofing.com",
+      "city": "Fort Collins, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJn7WSv7SNbIcRomg5Y_qGR-E",
+      "business_name": "M&M Handyman Services LLC",
+      "email": "info@mmhandymanservicellc.com",
+      "city": "Aurora, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJnTdxXatjbIcR0BCStffCFvI",
+      "business_name": "UB Code Roofing +",
+      "email": "info@ubcoderoofing.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJnWtG1NmBa4cRR2WdoEKZDNQ",
+      "business_name": "Electric Sun LLC",
+      "email": "tim.hessen@electricsunllc.com",
+      "city": "Lakewood, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJo1fVmv5PE4cRguSykxoxHnw",
+      "business_name": "719 Roofing & Exteriors",
+      "email": "robert@719roofing.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJoZk1-bhFE4cR7J9MduFAjk0",
+      "business_name": "Lionheart Construction",
+      "email": "codygetchell.lionheart@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJocMqdoJ3bIcR4dWTSSFNEFA",
+      "business_name": "Green Gable Roofing & Exteriors",
+      "email": "support@greengableroofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJp7FM7pdLaYcRKsZJ5AN-CNQ",
+      "business_name": "The Roofing Center LLC",
+      "email": "office@roofingcenter.com",
+      "city": "Fort Collins, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJpSpZKRZ_bIcRu8ODWuANnQU",
+      "business_name": "Tobin Heating and Air Conditioning",
+      "email": "info@tobinhvac.com",
+      "city": "Lakewood, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJq16_69ERjY4RLV9Ih6JtQgo",
+      "business_name": "The way: Electrical solutions",
+      "email": "dgeorge@thewayelectricalsolutions.com",
+      "city": "Colorado Springs, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJqZPvDENIE4cRLoJUIL713zQ",
+      "business_name": "Rocky mountain roofing and construction",
+      "email": "milenabbrandao@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJr1plDQJLaYcRHEejYAFzL5U",
+      "business_name": "Lockhart Electric LLC",
+      "email": "donlockhart@lockhartelec.com",
+      "city": "Fort Collins, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJr4dMCX1LaYcRrlezh6_XMwk",
+      "business_name": "Drain Doctors Sewer & Drain",
+      "email": "draindoctors@gmail.com",
+      "city": "Fort Collins, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJtV0UfmVPE4cRRiGRQX1D_Mc",
+      "business_name": "Campbell Roofing, Inc.",
+      "email": "info@campbellroofinginc.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJu36faGdGE4cRKQdrWdL2AXE",
+      "business_name": "Ross Electric",
+      "email": "info@rosselectric.com",
+      "city": "Colorado Springs, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJuaB-lUNME4cRrK2z4PURiyw",
+      "business_name": "Mountview Skylights and Roof Repair",
+      "email": "mtviewskylights@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJv3TnrmZHE4cRWZx4O6OYRfk",
+      "business_name": "Three Amigos Plumbing",
+      "email": "threeamigosplumbingco@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJv6C-5vR7bIcR12hWtkZ0Tog",
+      "business_name": "Neater Nest",
+      "email": "support@neaternest.com",
+      "city": "Aurora, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJw4kFhDl_a4cR2eRAPvtVnGE",
+      "business_name": "1st Colorado Roofing",
+      "email": "info@1stcoloradoroofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJw9yPKEWGa4cRHv6VZKX68fY",
+      "business_name": "High West Electric",
+      "email": "info@highwestelectric.com",
+      "city": "Lakewood, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJwURv4J-EgY0RpFRCZZEzfvA",
+      "business_name": "Rocky Mountain Snow and Painting",
+      "email": "info@rockymountainsnownpainting.com",
+      "city": "Aurora, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJwenJEMyJa4cR6UIircytaro",
+      "business_name": "Handyman Hub",
+      "email": "info@handymanhub.com",
+      "city": "Fort Collins, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJx7B8DGK1bocREZeNJtkDUpA",
+      "business_name": "Fort Collins Audio Video",
+      "email": "fortcollinsaudiovideo@gmail.com",
+      "city": "Fort Collins, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJxYgXqHSDa4cRe7aA_rt_Lv4",
+      "business_name": "Family Roofing",
+      "email": "roofinglady@gmail.com",
+      "city": "Lakewood, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJy1fm8jvo32MRcV2cviPjZ8Y",
+      "business_name": "Titanium Ridge Exteriors LLC",
+      "email": "info@titaniumridgeexteriors.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJyZOdmW5GE4cRN-DXfLz72sk",
+      "business_name": "Colorado Springs Handyman",
+      "email": "info@handymancoloradospringsco.com",
+      "city": "Colorado Springs, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJyavQ2I46A4cRLAZvDUYj50s",
+      "business_name": "Legacy Electrical Contractors",
+      "email": "info@legacyelectrical.com",
+      "city": "Lakewood, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJz9uNiUFNaYcR3gSdUOOhTTk",
+      "business_name": "Anchor Roofing LLC",
+      "email": "chad@anchorroofingllc.com",
+      "city": "Fort Collins, CO",
+      "trade": "roofer"
+    }
+  ],
+  "spend": 1.103,
+  "rotation": {
+    "done": 21,
+    "remaining": 91,
+    "reportedDone": 20,
+    "reportedLeft": 92
+  }
+}

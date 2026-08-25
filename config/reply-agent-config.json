@@ -1,22 +1,26 @@
 {
-  "monthly_cap": 1.00,
+  "monthly_cap": 1,
   "auto_run": false,
   "model": "claude-haiku-4-5-20251001",
   "drafts_mailbox": "Drafts",
   "max_thread_chars": 6000,
   "signature": "Dave — Trevo Advisors\ndave@trevoadvisors.com · trevoadvisors.com/start",
   "rates": {
-    "input_per_mtok": 1.00,
-    "output_per_mtok": 5.00,
+    "input_per_mtok": 1,
+    "output_per_mtok": 5,
     "cache_write_per_mtok": 1.25,
-    "cache_read_per_mtok": 0.10
+    "cache_read_per_mtok": 0.1
   },
-  "current_month": null,
-  "spent_this_month": 0,
-  "today": null,
+  "current_month": "2026-08",
+  "spent_this_month": 0.001813,
+  "today": "2026-08-25",
   "processed_today": 0,
-  "total_drafted": 0,
-  "processed_ids": [],
-  "last_uid": 0,
-  "last_run": null
+  "total_drafted": 1,
+  "processed_ids": [
+    "<CAFn4qgED0PTFD0C36jQvx8AQmhYzd+3UY59Jy2CU8+SzUqedFQ@mail.gmail.com>",
+    "<CABZsQuzobBdakyPc2azcPKW3Fb3JUorbwrhBH8nz_pDpU2i87Q@mail.gmail.com>",
+    "<Z60642XY991_6a7db8d82293a_a4fe87e3f6bbb1_sprut@zendesk.com>"
+  ],
+  "last_uid": 116,
+  "last_run": "2026-08-25T02:00:02.427Z"
 }

@@ -2,13 +2,13 @@
   "monthly_cap": 10,
   "cost_per_result": 0.001,
   "current_month": "2026-08",
-  "spent_this_month": 0.285,
-  "total_runs": 9,
+  "spent_this_month": 1.382,
+  "total_runs": 23,
   "total_raw": 30,
   "total_qualifying": 9,
-  "last_run": "2026-08-03T13:09:31.913Z",
+  "last_run": "2026-08-25T01:21:44.362Z",
   "auto_run": false,
   "default_limit": 30,
-  "total_raw_has_website": 719,
-  "total_qualifying_has_website": 394
+  "total_raw_has_website": 1816,
+  "total_qualifying_has_website": 779
 }

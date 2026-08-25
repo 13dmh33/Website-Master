@@ -1,0 +1,279 @@
+{
+  "date": "2026-08-05",
+  "city": "Aurora, CO",
+  "trade": "roofer",
+  "stages": {
+    "scout": {
+      "newLeads": 80,
+      "exitCode": 0
+    },
+    "scrape": {
+      "emailsFound": 18
+    },
+    "diagnoser": {
+      "briefs": 553
+    },
+    "checker": {
+      "approved": 475
+    },
+    "sheetLog": {
+      "rows": 475,
+      "exitCode": 0
+    }
+  },
+  "readyToSend": 34,
+  "sentToday": 59,
+  "batch": {
+    "date": "2026-08-05",
+    "status": "pending",
+    "count": 34,
+    "created": true
+  },
+  "batchLeads": [
+    {
+      "lead_id": "ChIJ1agHuPhjbIcROBw19F21xAU",
+      "business_name": "Hire a Handyman",
+      "email": "hireahandyman303@gmail.com",
+      "city": "Aurora, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJ2TqbNu6JbIcRxubDQvjZGb8",
+      "business_name": "Triple J Inc Roofing",
+      "email": "office@triplejincroofing.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJ83dGSAJ5bIcRXMy5mPBG6_Q",
+      "business_name": "The Roofing Broker",
+      "email": "eli@theroofingbroker.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJAxaJchF_bIcRZpxoj7J4Th0",
+      "business_name": "Vertical Roofing Co",
+      "email": "customerservice@verticalroofingco.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJBa6LS0l5bIcRWTMaN7Csnx4",
+      "business_name": "Commercial Roofing Contractor",
+      "email": "inspections@crcinbox.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJL5GQ3rd3bIcRZvebYM-CvJc",
+      "business_name": "Gorilla Roof, Inc.",
+      "email": "ed@gorillaroof.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJLR9mQQ93bIcRG7rgq7OB_9s",
+      "business_name": "All Seasons Exteriors",
+      "email": "contactus@allseasonsexteriorsco.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJMVBPowx4bIcRez5snK0Ifjo",
+      "business_name": "Tiley Roofing",
+      "email": "mail@tileyroofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJN0eibDu9jKYResHXWp8Ocag",
+      "business_name": "Kirby’s Roofing and Exteriors",
+      "email": "kirbysroofingllc@yahoo.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJOQ7C-W2HbIcRV2CrG9JOq88",
+      "business_name": "Golden Spike Roofing Inc",
+      "email": "info@goldenspikeroofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJPQSKDJzxDogR3eVnxTCkuG4",
+      "business_name": "Astra Roofing",
+      "email": "contact@astraroofs.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJR5oc0FCObIcRqKpn2AgTRLQ",
+      "business_name": "Jack the Roofer",
+      "email": "info@jacktheroofer.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJT1S0ZrCHbIcRoYn4OtSOj9s",
+      "business_name": "T Bare Roofing",
+      "email": "info@tbareroofing.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJTzo4Aqh_bIcRB76c1rByMRI",
+      "business_name": "Mile Hi Roofing",
+      "email": "info@milehiroofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJW8eTkDQMXGwRqvBOQ3jjJGA",
+      "business_name": "Falcon's Eye Roofing & Construction",
+      "email": "gc@falconseyeroofing.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJWQr0GXrqsAsRMoSnlGw_EI8",
+      "business_name": "A & J Roofing Corporation",
+      "email": "info@trustaandj.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJWZIx4atFE4cRgccul12rL-Q",
+      "business_name": "Excel Construction Group",
+      "email": "info@excelcg.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJXQ28rAl9bIcReTfZSkp4Xig",
+      "business_name": "Honey-Dew Siding Repair",
+      "email": "honeydewsidingrepair@gmail.com",
+      "city": "Aurora, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJXx0dpH9tbIcRQDL3FGQx63Y",
+      "business_name": "Semper Fi Restoration Inc",
+      "email": "info@semperfirestoration.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJZ42D4kN5bIcR1zfGxnYrybA",
+      "business_name": "Woodberg Roofing and Restoration",
+      "email": "info@woodbergroofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJbfcbPSaIbIcRtTnTbnX5n4U",
+      "business_name": "Roof Brokers, Inc.",
+      "email": "roofexperts@roofbrokersinc.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJbzML-F36DogRSuBdLkxf-D0",
+      "business_name": "Affordable Roofing, Inc",
+      "email": "service@affordableroofing.net",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJcQfB9LpPE4cRaKtU47IiQao",
+      "business_name": "Knight's Restoration LTD",
+      "email": "jonpinhorn.typedesign@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJd-sCQCE3bAERE93MVBL9AWY",
+      "business_name": "Full Service Exteriors",
+      "email": "ryan@fullserviceexteriors.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJd2w5EzqNbIcRPPbDbi5c8s8",
+      "business_name": "Roof Solutions CO",
+      "email": "office@roofsolutionsco.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJewY04Al_bIcR2Oop1TR3fYE",
+      "business_name": "Jenesis Roofing",
+      "email": "sales@jenesisroofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJi9LPI0NjbIcRai1PcGDNvX0",
+      "business_name": "Rocky Exteriors",
+      "email": "info@rockyexteriors.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJjcqiCiJFE4cRL3Jx55xYc20",
+      "business_name": "Grand Line Roofing",
+      "email": "grandlineroofing1@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJjecUdkfLbocRCiCQByHj6tQ",
+      "business_name": "Prestige Exteriors",
+      "email": "info@prestige-ext.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJlVm2Zj-Ha4cReKxQMRQJaO4",
+      "business_name": "Big Bear Roofing",
+      "email": "info@bigbearroofco.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJmXo_xL1_bIcRhsPZaAuZjyM",
+      "business_name": "Ernie's Roofing",
+      "email": "ernie@erniesgutter.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJnTdxXatjbIcR0BCStffCFvI",
+      "business_name": "UB Code Roofing +",
+      "email": "info@ubcoderoofing.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJuaB-lUNME4cRrK2z4PURiyw",
+      "business_name": "Mountview Skylights and Roof Repair",
+      "email": "mtviewskylights@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJy1fm8jvo32MRcV2cviPjZ8Y",
+      "business_name": "Titanium Ridge Exteriors LLC",
+      "email": "info@titaniumridgeexteriors.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    }
+  ],
+  "spend": 0.462,
+  "rotation": {
+    "done": 13,
+    "remaining": 99,
+    "reportedDone": 12,
+    "reportedLeft": 100
+  }
+}

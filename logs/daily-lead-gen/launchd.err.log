@@ -1,0 +1,22 @@
+  Skipping failed query "electrician": getaddrinfo ENOTFOUND api.app.outscraper.com
+All queries failed or returned no results.
+  Skipping failed query "roofer": getaddrinfo ENOTFOUND api.app.outscraper.com
+All queries failed or returned no results.
+
+✖ Google auth failed: fetch failed
+  Fix: confirm GOOGLE_SERVICE_ACCOUNT_JSON in .env.local points to a valid key file.
+[report] failed: getaddrinfo ENOTFOUND smtp.zoho.com
+  Skipping failed query "roofer": getaddrinfo ENOTFOUND api.app.outscraper.com
+All queries failed or returned no results.
+
+✖ Google auth failed: fetch failed
+  Fix: confirm GOOGLE_SERVICE_ACCOUNT_JSON in .env.local points to a valid key file.
+[report] failed: getaddrinfo ENOTFOUND smtp.zoho.com
+  Skipping failed query "roofer": getaddrinfo ENOTFOUND api.app.outscraper.com
+All queries failed or returned no results.
+
+✖ Google auth failed: fetch failed
+  Fix: confirm GOOGLE_SERVICE_ACCOUNT_JSON in .env.local points to a valid key file.
+[report] failed: getaddrinfo ENOTFOUND smtp.zoho.com
+  Skipping failed query "roofer": getaddrinfo ENOTFOUND api.app.outscraper.com
+All queries failed or returned no results.

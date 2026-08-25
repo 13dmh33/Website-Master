@@ -1,0 +1,770 @@
+[
+  {
+    "lead_id": "ChIJkWxkvuD1a4cRCz4nOUPQrME",
+    "business_name": "Homestead Plumbing and Heating",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "http://homesteadplumbingheating.com/",
+    "email": "",
+    "phone": "+1 720-576-8211",
+    "rating": 4.9,
+    "review_count": 283,
+    "address": "9799 1/2 W Wesley Ct, Lakewood, CO 80227",
+    "place_id": "ChIJkWxkvuD1a4cRCz4nOUPQrME",
+    "subtypes": [
+      "Plumber"
+    ],
+    "latitude": 39.674642399999996,
+    "longitude": -105.1066788,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-10T14:34:25.315Z"
+  },
+  {
+    "lead_id": "ChIJ0TJNH4V9a4cRM0qfNaaQFKY",
+    "business_name": "Hyper Flow Service",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "http://www.hyperflowservice.com/",
+    "email": "",
+    "phone": "+1 720-259-5816",
+    "rating": 4.9,
+    "review_count": 595,
+    "address": "1130 S Cherokee St, Denver, CO 80223",
+    "place_id": "ChIJ0TJNH4V9a4cRM0qfNaaQFKY",
+    "subtypes": [
+      "Plumber, Septic system service"
+    ],
+    "latitude": 39.6960038,
+    "longitude": -104.99109879999999,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-10T14:34:25.315Z",
+    "contact_name": "SO glad",
+    "socials": {
+      "facebook": "https://www.facebook.com/HyperFlowServiceCompany",
+      "yelp": "https://www.yelp.com/biz/hyper-flow-service-denver-4",
+      "youtube": "https://www.youtube.com/@hyperflowservice3981",
+      "angi": "https://www.homeadvisor.com/rated.HyperFlowService.81433389.html",
+      "bbb": "https://www.bbb.org/us/co/denver/profile/plumber/hyper-flow-service-company-1296-90259292"
+    },
+    "deep_enriched_at": "2026-08-10T14:34:49.757Z"
+  },
+  {
+    "lead_id": "ChIJgX_pKRWGa4cRXsBPEyMDFSo",
+    "business_name": "Blue Sky Plumbing, Heating, Cooling & Electric",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "https://www.blueskyplumbing.com/wheat-ridge/%3Futm_source%3DGoogle%26utm_medium%3DGMB%26utm_campaign%3DGBP-BlueSky-Wheat%2520Ridge",
+    "email": "",
+    "phone": "+1 303-238-5900",
+    "rating": 4.8,
+    "review_count": 4397,
+    "address": "9830 Interstate 70 Frontage Rd S, Wheat Ridge, CO 80033",
+    "place_id": "ChIJgX_pKRWGa4cRXsBPEyMDFSo",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Air conditioning repair service, Drainage service, Electrician, Furnace repair service, Heating contractor, HVAC contractor"
+    ],
+    "latitude": 39.783356,
+    "longitude": -105.106434,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-10T14:34:25.315Z"
+  },
+  {
+    "lead_id": "ChIJaf6bTTt3bIcRdArhuNv30Ck",
+    "business_name": "Spartan Plumbing",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "https://www.spartanplumber.com/%3Futm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_campaign%3Dgbp_arvada%26utm_content%3Dwebsite-button",
+    "email": "",
+    "phone": "+1 720-900-3192",
+    "rating": 4.9,
+    "review_count": 371,
+    "address": "5440 Marshall St, Arvada, CO 80002",
+    "place_id": "ChIJaf6bTTt3bIcRdArhuNv30Ck",
+    "subtypes": [
+      "Plumber, Drainage service"
+    ],
+    "latitude": 39.7952674,
+    "longitude": -105.0678427,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-10T14:34:25.315Z"
+  },
+  {
+    "lead_id": "ChIJm8COkhF_a4cR2-RqKC3OZow",
+    "business_name": "Drain Terrier",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "https://drainterrier.com/plumber-littleton-co/%3Futm_source%3Dgmb%26utm_medium%3Dorganic%26utm_campaign%3Dgmb-listing",
+    "email": "",
+    "phone": "+1 720-999-6120",
+    "rating": 4.8,
+    "review_count": 480,
+    "address": "6515 S Allison St, Littleton, CO 80123",
+    "place_id": "ChIJm8COkhF_a4cR2-RqKC3OZow",
+    "subtypes": [
+      "Plumber, Drainage service, Septic system service"
+    ],
+    "latitude": 39.5998099,
+    "longitude": -105.08686399999999,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-10T14:34:25.315Z"
+  },
+  {
+    "lead_id": "ChIJl6vLIcGBbIcR3nyblga1lm4",
+    "business_name": "Heart Heating, Cooling, Plumbing & Electric",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "https://servicebyheart.com/%3Futm_source%3Dgoogle%26utm_medium%3Dgbp-denver%26se_campaign%3DGBP%2520-%2520Denver",
+    "email": "",
+    "phone": "+1 720-712-0649",
+    "rating": 4.8,
+    "review_count": 3220,
+    "address": "646 Bryant St, Denver, CO 80204",
+    "place_id": "ChIJl6vLIcGBbIcR3nyblga1lm4",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Drainage service, Electric vehicle charging station contractor, Electrician, Furnace repair service, Heating contractor, Hot water system supplier, HVAC contractor, Air conditioning repair service"
+    ],
+    "latitude": 39.726715,
+    "longitude": -105.01838049999999,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-10T14:34:25.315Z"
+  },
+  {
+    "lead_id": "ChIJ11tEo87xa4cRWzo7Gz6Uxp8",
+    "business_name": "Precision Plumbing Heating Cooling Electric",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "https://www.precisionplumbing.com/",
+    "email": "info@precisionplumbing.com",
+    "phone": "+1 720-603-1309",
+    "rating": 4.8,
+    "review_count": 4357,
+    "address": "413 S Arthur Ave, Louisville, CO 80027",
+    "place_id": "ChIJ11tEo87xa4cRWzo7Gz6Uxp8",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Air conditioning repair service, Drainage service, Electrician, Heating contractor, Hot water system supplier, Insulation contractor, HVAC contractor, Water treatment supplier"
+    ],
+    "latitude": 39.9644457,
+    "longitude": -105.1251278,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-10T14:34:25.315Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Tom Robichaud",
+    "socials": {
+      "tiktok": "https://www.tiktok.com/@precision.phce",
+      "twitter": "https://x.com/precisionphce",
+      "facebook": "https://www.facebook.com/PrecisionPHCE",
+      "instagram": "https://www.instagram.com/precision.phce",
+      "linkedin": "https://www.linkedin.com/company/precision-plumbing-heating-cooling-electrical"
+    },
+    "deep_enriched_at": "2026-08-10T14:37:40.055Z"
+  },
+  {
+    "lead_id": "ChIJq5SxfCl_bIcRQ9giIbb3noU",
+    "business_name": "Garvin's Plumbing and Sewer",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "https://www.garvinssewerservice.com/locations/englewood-co/%3Futm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_campaign%3Dgbp",
+    "email": "",
+    "phone": "+1 720-408-3140",
+    "rating": 4.8,
+    "review_count": 864,
+    "address": "2900 S Shoshone St, Englewood, CO 80110",
+    "place_id": "ChIJq5SxfCl_bIcRQ9giIbb3noU",
+    "subtypes": [
+      "Plumber, Drainage service, Excavating contractor"
+    ],
+    "latitude": 39.6638356,
+    "longitude": -105.00905639999999,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-10T14:34:25.315Z"
+  },
+  {
+    "lead_id": "ChIJT1L0YmmGa4cRNuvk71u__D0",
+    "business_name": "Lakewood Plumbing",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "https://www.lakewoodplumbing.com/",
+    "email": "",
+    "phone": "+1 303-233-7007",
+    "rating": 4.7,
+    "review_count": 559,
+    "address": "9800 W 44th Ave, Wheat Ridge, CO 80033",
+    "place_id": "ChIJT1L0YmmGa4cRNuvk71u__D0",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Furnace repair service, Heating contractor"
+    ],
+    "latitude": 39.7777497,
+    "longitude": -105.10640989999999,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-10T14:34:25.315Z"
+  },
+  {
+    "lead_id": "ChIJG6PQVXaAa4cRGcjfhidLk08",
+    "business_name": "Doctor Fix-It Plumbing, Heating, Cooling & Electric",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "https://www.calldoctorfixit.com/%3Futm_source%3Dgmb%26utm_medium%3Dorganic%26utm_campaign%3Dlocal",
+    "email": "",
+    "phone": "+1 720-647-1805",
+    "rating": 4.7,
+    "review_count": 4000,
+    "address": "363 W Evans Ave, Denver, CO 80223",
+    "place_id": "ChIJG6PQVXaAa4cRGcjfhidLk08",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Air conditioning repair service, Air conditioning system supplier, Drainage service, Electrician, Furnace repair service, Heating contractor, Heating equipment supplier, HVAC contractor"
+    ],
+    "latitude": 39.6786623,
+    "longitude": -104.9918709,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-10T14:34:25.315Z"
+  },
+  {
+    "lead_id": "ChIJIZMnUsqGa4cRqeu_OPt5RL0",
+    "business_name": "Tipping Hat Plumbing, Heating & Electric",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "https://www.tippinghat.com/%3Futm_campaign%3Dgmb",
+    "email": "",
+    "phone": "+1 303-222-4289",
+    "rating": 4.6,
+    "review_count": 7165,
+    "address": "1395 S Platte River Dr, Denver, CO 80223",
+    "place_id": "ChIJIZMnUsqGa4cRqeu_OPt5RL0",
+    "subtypes": [
+      "Plumber, Air conditioning repair service, Drainage service, Electrician, Furnace repair service, Heating contractor, HVAC contractor, Air conditioning contractor"
+    ],
+    "latitude": 39.69215,
+    "longitude": -104.99629859999999,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-10T14:34:25.315Z"
+  },
+  {
+    "lead_id": "ChIJ5doTWlqBa4cRDZH9UBr14zw",
+    "business_name": "Hot Water Now!",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "https://www.hotwaternowco.com/%3Futm_source%3DGBP%26utm_medium%3DGBP",
+    "email": "",
+    "phone": "+1 720-598-1622",
+    "rating": 4.7,
+    "review_count": 311,
+    "address": "1677 Wadsworth Blvd, Lakewood, CO 80214",
+    "place_id": "ChIJ5doTWlqBa4cRDZH9UBr14zw",
+    "subtypes": [
+      "Plumber, Drainage service, Repair service, Water softening equipment supplier, Water tank cleaning service"
+    ],
+    "latitude": 39.7433756,
+    "longitude": -105.08172599999999,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-10T14:34:25.315Z"
+  },
+  {
+    "lead_id": "ChIJ7b6EgV2Ba4cR2jhySOEE8vY",
+    "business_name": "Mark Brothers Plumbing",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "http://markplumbings.homes/",
+    "email": "",
+    "phone": "+1 720-790-6527",
+    "rating": 4.9,
+    "review_count": 80,
+    "address": "1495 S Tennyson St, Denver, CO 80219",
+    "place_id": "ChIJ7b6EgV2Ba4cR2jhySOEE8vY",
+    "subtypes": [
+      "Plumber"
+    ],
+    "latitude": 39.6897173,
+    "longitude": -105.0445857,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-10T14:34:25.315Z"
+  },
+  {
+    "lead_id": "ChIJXQdbzlF5bIcRisJQL72gJFI",
+    "business_name": "Time Plumbing, Heating & Electric Denver",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "https://www.303plumber.com/",
+    "email": "",
+    "phone": "+1 303-758-6237",
+    "rating": 4.6,
+    "review_count": 790,
+    "address": "2525 W 6th Ave, Denver, CO 80204",
+    "place_id": "ChIJXQdbzlF5bIcRisJQL72gJFI",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Boiler supplier, Drainage service, Electrician, Furnace repair service, Heating contractor, HVAC contractor, Lawn sprinkler system contractor, Septic system service"
+    ],
+    "latitude": 39.7259254,
+    "longitude": -105.01829199999999,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-10T14:34:25.315Z"
+  },
+  {
+    "lead_id": "ChIJDw1cruaBa4cR7TfbLm9R2GU",
+    "business_name": "Brown Brothers Plumbing & HVAC",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "https://brownplumbinghvac.pro/denver",
+    "email": "",
+    "phone": "+1 720-790-6169",
+    "rating": 4.9,
+    "review_count": 139,
+    "address": "5142 W Dartmouth Ave, Denver, CO 80236",
+    "place_id": "ChIJDw1cruaBa4cR7TfbLm9R2GU",
+    "subtypes": [
+      "Plumber, HVAC contractor"
+    ],
+    "latitude": 39.656166299999995,
+    "longitude": -105.050157,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-10T14:34:25.315Z"
+  },
+  {
+    "lead_id": "ChIJAQCQ6DCHa4cRnTHH8OtP8ss",
+    "business_name": "Colorado Sewer Service, Inc.",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "https://coloradosewerservice.com/",
+    "email": "",
+    "phone": "+1 303-424-0448",
+    "rating": 4.7,
+    "review_count": 301,
+    "address": "6000 W 13th Ave, Lakewood, CO 80214",
+    "place_id": "ChIJAQCQ6DCHa4cRnTHH8OtP8ss",
+    "subtypes": [
+      "Drainage service, Sewage disposal service"
+    ],
+    "latitude": 39.736369599999996,
+    "longitude": -105.0632761,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-10T14:34:25.315Z",
+    "contact_name": "to specialize in",
+    "socials": {
+      "facebook": "https://www.facebook.com/Colorado-Sewer-Service-Inc-393346380719180",
+      "bbb": "https://www.bbb.org/denver/business-reviews/sewer-cleaning/colorado-sewer-service-inc-in-lakewood-co-4933"
+    },
+    "deep_enriched_at": "2026-08-10T14:34:54.041Z"
+  },
+  {
+    "lead_id": "ChIJrZpMPBh_bIcRjiGGzGi7yL8",
+    "business_name": "Flink Supply Co",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "http://flinksupply.com/",
+    "email": "",
+    "phone": "+1 303-744-7123",
+    "rating": 4.9,
+    "review_count": 163,
+    "address": "58 S Galapago St, Denver, CO 80223",
+    "place_id": "ChIJrZpMPBh_bIcRjiGGzGi7yL8",
+    "subtypes": [
+      "Plumbing supply store, Hardware store"
+    ],
+    "latitude": 39.715399399999995,
+    "longitude": -104.9959791,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-10T14:34:25.315Z",
+    "socials": {
+      "facebook": "http://www.facebook.com/2008/fbml",
+      "yelp": "https://www.yelp.com/biz/flink-supply-denver"
+    },
+    "deep_enriched_at": "2026-08-10T14:34:47.856Z"
+  },
+  {
+    "lead_id": "ChIJqw0UXiJ3bIcRL1Es1CMmtQ0",
+    "business_name": "King Rooter & Plumbing",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "https://kingrooterandplumbing.com/plumber-arvada-co/%3Futm_source%3Dgoogle%26utm_medium%3Dsearch_engine%26utm_campaign%3Dgmb",
+    "email": "",
+    "phone": "+1 720-310-6775",
+    "rating": 4.9,
+    "review_count": 195,
+    "address": "6275 Joyce Dr Ste 200, Arvada, CO 80403",
+    "place_id": "ChIJqw0UXiJ3bIcRL1Es1CMmtQ0",
+    "subtypes": [
+      "Plumber, Bathroom remodeler, Drainage service, Water softening equipment supplier"
+    ],
+    "latitude": 39.810563599999995,
+    "longitude": -105.166929,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-10T14:34:25.315Z"
+  },
+  {
+    "lead_id": "ChIJpSpZKRZ_bIcRu8ODWuANnQU",
+    "business_name": "Tobin Heating and Air Conditioning",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "https://www.tobinhvac.com/",
+    "email": "info@tobinhvac.com",
+    "phone": "+1 303-893-5675",
+    "rating": 4.9,
+    "review_count": 192,
+    "address": "8590 W 14th Ave, Lakewood, CO 80215",
+    "place_id": "ChIJpSpZKRZ_bIcRu8ODWuANnQU",
+    "subtypes": [
+      "HVAC contractor, Air conditioning contractor, Air conditioning repair service, Furnace repair service, Heating contractor"
+    ],
+    "latitude": 39.738131599999996,
+    "longitude": -105.0927787,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-10T14:34:25.315Z",
+    "email_source": "contact-scraper",
+    "contact_name": "can make",
+    "socials": {
+      "facebook": "https://www.facebook.com/TobinHVACDenver",
+      "bbb": "https://www.bbb.org/us/co/lakewood/profile/heating-contractors/tobin-heating-air-conditioning-1296-14809",
+      "instagram": "https://www.instagram.com/tobin_hvac",
+      "linkedin": "https://www.linkedin.com/company/tobinhvac"
+    },
+    "deep_enriched_at": "2026-08-10T14:37:40.490Z"
+  },
+  {
+    "lead_id": "ChIJcYwoBqyHa4cRysRBwB_jGxA",
+    "business_name": "D & A Heating and Air, LLC",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "https://dnaheatingandair.com/",
+    "email": "service@dnaheatingandair.com",
+    "phone": "+1 303-834-3393",
+    "rating": 4.9,
+    "review_count": 178,
+    "address": "1073 S Holland St, Lakewood, CO 80226",
+    "place_id": "ChIJcYwoBqyHa4cRysRBwB_jGxA",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Drainage service, Furnace repair service, Heating contractor, HVAC contractor, Air conditioning repair service"
+    ],
+    "latitude": 39.6970251,
+    "longitude": -105.1028272,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-10T14:34:25.315Z",
+    "email_source": "contact-scraper",
+    "contact_name": "is always very",
+    "socials": {
+      "facebook": "https://www.facebook.com/DandAHeatingandAirConditioning",
+      "linkedin": "https://www.linkedin.com/company/d-a-heating-and-air",
+      "youtube": "https://www.youtube.com/@dnaheatingandair",
+      "yelp": "https://www.yelp.com/biz/d-and-a-heating-and-air-lakewood",
+      "instagram": "https://www.instagram.com/dna_heatingandair",
+      "bbb": "https://seal-alaskaoregonwesternwashington.bbb.org/frame/blue-seal-150-110-whitetxt-bbb-90278846.png"
+    },
+    "deep_enriched_at": "2026-08-10T14:37:38.434Z"
+  },
+  {
+    "lead_id": "ChIJP1eLRGRGiAARnTw1AXzQzVk",
+    "business_name": "Brad Co. Plumbing & Heating",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "https://www.bradcompany.com/",
+    "email": "bradcoph@gmail.com",
+    "phone": "+1 303-353-0729",
+    "rating": 4.9,
+    "review_count": 100,
+    "address": "14143 Denver W Pkwy #100, Golden, CO 80401",
+    "place_id": "ChIJP1eLRGRGiAARnTw1AXzQzVk",
+    "subtypes": [
+      "Plumber, Heating contractor, HVAC contractor"
+    ],
+    "latitude": 39.742654,
+    "longitude": -105.15943929999999,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-10T14:34:25.315Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "https://facebook.com/375622436139233",
+      "google": "https://maps.google.com/maps"
+    },
+    "deep_enriched_at": "2026-08-10T14:37:42.789Z"
+  },
+  {
+    "lead_id": "ChIJcaRHvUKFa4cRAVJsInw5lds",
+    "business_name": "Z Plumberz of Southwest Denver",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "https://www.zplumberz.com/southwest-denver/%3Futm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_campaign%3Dgbp",
+    "email": "",
+    "phone": "+1 720-513-4850",
+    "rating": 5,
+    "review_count": 27,
+    "address": "12550 W Colfax Ave Unit 107, Lakewood, CO 80215",
+    "place_id": "ChIJcaRHvUKFa4cRAVJsInw5lds",
+    "subtypes": [
+      "Plumber, Bathroom remodeler, Drainage service, Hot water system supplier, Water filter supplier, Water pump supplier, Water purification company, Water softening equipment supplier, Water testing service, Water treatment supplier"
+    ],
+    "latitude": 39.7393899,
+    "longitude": -105.1390208,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-10T14:34:25.315Z"
+  },
+  {
+    "lead_id": "ChIJbXGV8b-Fa4cRtHRcBQMxzIU",
+    "business_name": "Midwest Plumbing Co. LLC",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "https://midwestplumbingco.com/lakewood-co/%3Futm_source%3Dgbp%26utm_medium%3Dorganic%26utm_campaign%3Dlakewood",
+    "email": "",
+    "phone": "+1 720-646-2857",
+    "rating": 4.9,
+    "review_count": 56,
+    "address": "225 Union Blvd #150, Lakewood, CO 80228",
+    "place_id": "ChIJbXGV8b-Fa4cRtHRcBQMxzIU",
+    "subtypes": [
+      "Plumber"
+    ],
+    "latitude": 39.7190843,
+    "longitude": -105.1331783,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-10T14:34:25.315Z"
+  },
+  {
+    "lead_id": "ChIJZ9akg_CHa4cR2bCHRDXAbm8",
+    "business_name": "Plumingo Plumbing & Heating",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "http://plumingo.us/",
+    "email": "hello@plumingo.us",
+    "phone": "+1 720-724-3265",
+    "rating": 5,
+    "review_count": 57,
+    "address": "14045 Denver W Cir Apt 1203, Lakewood, CO 80401",
+    "place_id": "ChIJZ9akg_CHa4cR2bCHRDXAbm8",
+    "subtypes": [
+      "Plumber, HVAC contractor"
+    ],
+    "latitude": 39.746209,
+    "longitude": -105.1569037,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-10T14:34:25.315Z",
+    "email_source": "contact-scraper",
+    "contact_name": "is to keep",
+    "socials": {
+      "facebook": "https://www.facebook.com/wix",
+      "instagram": "https://www.instagram.com/wix",
+      "youtube": "http://www.youtube.com/@Plumingo_us"
+    },
+    "deep_enriched_at": "2026-08-10T14:37:42.362Z"
+  },
+  {
+    "lead_id": "ChIJX47U1RCHa4cRn01T4gwbJkY",
+    "business_name": "Big Apple Plumbing LLC - Wheat Ridge, CO",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "https://bigappleplumbing.net/plumbing-services-in-wheat-ridge/",
+    "email": "teambigappleplumbing@gmail.com",
+    "phone": "+1 720-790-5426",
+    "rating": 4.9,
+    "review_count": 39,
+    "address": "3280 Wadsworth Blvd Ste 200, Wheat Ridge, CO 80033",
+    "place_id": "ChIJX47U1RCHa4cRn01T4gwbJkY",
+    "subtypes": [
+      "Plumber, Drainage service, Hot water system supplier, Water softening equipment supplier"
+    ],
+    "latitude": 39.762916,
+    "longitude": -105.0809953,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-10T14:34:25.315Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Jason came out",
+    "socials": {
+      "bbb": "https://seal-alaskaoregonwesternwashington.bbb.org",
+      "facebook": "https://www.facebook.com/bigappleplumbingllc",
+      "yelp": "https://yelp.com/biz/big-apple-plumbing-and-heating-westminster"
+    },
+    "deep_enriched_at": "2026-08-10T14:37:46.116Z"
+  },
+  {
+    "lead_id": "ChIJGULN3e2Ha4cRxoMGgm36IVQ",
+    "business_name": "Flow Rite Plumbing and Drain Cleaning",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "https://www.flowriteplumbingdenver.com/",
+    "email": "",
+    "phone": "+1 720-353-1079",
+    "rating": 4.9,
+    "review_count": 72,
+    "address": "5611 Kendall Ct, Arvada, CO 80002",
+    "place_id": "ChIJGULN3e2Ha4cRxoMGgm36IVQ",
+    "subtypes": [
+      "Plumber, Contractor, Drainage service, Repair service, Water filter supplier, Water testing service"
+    ],
+    "latitude": 39.7991312,
+    "longitude": -105.06672979999999,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-10T14:34:25.315Z",
+    "socials": {
+      "facebook": "https://www.facebook.com/flowriteplbng",
+      "instagram": "https://www.instagram.com/flowriteplumbingdenver",
+      "youtube": "https://www.youtube.com/@vectramechanicalHVAC",
+      "linkedin": "https://www.linkedin.com/company/vectra-mechanical"
+    },
+    "deep_enriched_at": "2026-08-10T14:37:51.530Z"
+  },
+  {
+    "lead_id": "ChIJ--u4cLmJbIcRL1ETQwvwKKA",
+    "business_name": "True Plumbing and Drain Cleaning",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "https://truepdc.com/",
+    "email": "hello@southsideplumbing.com",
+    "phone": "+1 303-325-6118",
+    "rating": 4.7,
+    "review_count": 143,
+    "address": "2741 W Oxford Ave Unit 7, Englewood, CO 80110",
+    "place_id": "ChIJ--u4cLmJbIcRL1ETQwvwKKA",
+    "subtypes": [
+      "Plumber, Construction company, Drainage service"
+    ],
+    "latitude": 39.642502799999995,
+    "longitude": -105.0212998,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-10T14:34:25.315Z",
+    "email_source": "contact-scraper",
+    "contact_name": "so glad",
+    "socials": {
+      "facebook": "https://www.facebook.com/SouthsidePlumbingInc",
+      "google": "https://maps.google.com",
+      "instagram": "https://www.instagram.com/southsideplumbinghr",
+      "youtube": "https://www.youtube.com/@southsideplumbing4021"
+    },
+    "deep_enriched_at": "2026-08-10T14:34:49.968Z"
+  },
+  {
+    "lead_id": "ChIJn8nni10knS0RzLNnjp5dtbg",
+    "business_name": "1-800-Plumber +Air",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "https://1800plumber.com/front-range/",
+    "email": "",
+    "phone": "+1 720-432-4988",
+    "rating": 4.9,
+    "review_count": 40,
+    "address": "475 W 115th Ave #4A, Northglenn, CO 80234",
+    "place_id": "ChIJn8nni10knS0RzLNnjp5dtbg",
+    "subtypes": [
+      "Plumber, Air conditioning contractor, Air conditioning repair service, Heating contractor, HVAC contractor"
+    ],
+    "latitude": 39.9062742,
+    "longitude": -104.99297179999999,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-10T14:34:25.315Z",
+    "socials": {
+      "facebook": "https://www.facebook.com/1800PlumberAirUSA",
+      "twitter": "https://twitter.com/1800Plumber_USA",
+      "instagram": "https://www.instagram.com/1800plumberair"
+    },
+    "deep_enriched_at": "2026-08-10T14:37:48.359Z"
+  },
+  {
+    "lead_id": "ChIJv6lTkTJ_bIcRJjEYwNDucAg",
+    "business_name": "Denver Sewer And Water",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "http://denversewerandwater.com/",
+    "email": "info@denversewerandwater.com",
+    "phone": "+1 720-935-6221",
+    "rating": 4.8,
+    "review_count": 19,
+    "address": "2491 W Iliff Ave, Denver, CO 80219",
+    "place_id": "ChIJv6lTkTJ_bIcRJjEYwNDucAg",
+    "subtypes": [
+      "Plumber, Drainage service, Excavating contractor, Septic system service"
+    ],
+    "latitude": 39.675255,
+    "longitude": -105.0169976,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-10T14:34:25.315Z",
+    "email_source": "contact-scraper",
+    "contact_name": "questions is whether",
+    "socials": {
+      "facebook": "https://www.facebook.com/denversewerwater",
+      "instagram": "https://www.instagram.com/denversewerwater",
+      "yelp": "https://yelp.com/biz/afford-a-rooter-westminster-2"
+    },
+    "deep_enriched_at": "2026-08-10T14:34:46.484Z"
+  },
+  {
+    "lead_id": "ChIJAQC0s1CHa4cRN8AGa4LCjIg",
+    "business_name": "A -1 Plumbing Co.",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "http://www.a1plumbingandbackflow.com/",
+    "email": "plumb_good@hotmail.com",
+    "phone": "+1 303-629-0722",
+    "rating": 4.6,
+    "review_count": 28,
+    "address": "1509 Osceola St, Denver, CO 80204",
+    "place_id": "ChIJAQC0s1CHa4cRN8AGa4LCjIg",
+    "subtypes": [
+      "Plumber"
+    ],
+    "latitude": 39.7406936,
+    "longitude": -105.0384588,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-10T14:34:25.315Z",
+    "email_source": "contact-scraper",
+    "contact_name": "la St",
+    "socials": {
+      "facebook": "https://facebook.com/A-1-Plumbing-Co-1862391420725098"
+    },
+    "deep_enriched_at": "2026-08-10T14:34:45.267Z"
+  },
+  {
+    "lead_id": "ChIJ6-wPXzaIa4cRkbjYbZeunsk",
+    "business_name": "Afford A Rooter Plumbing",
+    "trade": "plumber",
+    "city": "Lakewood, CO",
+    "site_url": "https://www.affordarooterplumbing.com/",
+    "email": "info@affordarooterplumbing.com",
+    "phone": "+1 720-296-7972",
+    "rating": 4.2,
+    "review_count": 174,
+    "address": "10860 N Dover St Ste 2300, Westminster, CO 80021",
+    "place_id": "ChIJ6-wPXzaIa4cRkbjYbZeunsk",
+    "subtypes": [
+      "Plumber"
+    ],
+    "latitude": 39.893966899999995,
+    "longitude": -105.091387,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-10T14:34:25.315Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Bill Stetka",
+    "socials": {
+      "yelp": "https://www.yelp.com/biz/afford-a-rooter-westminster-2",
+      "facebook": "https://www.facebook.com/AffordARooterco",
+      "instagram": "https://www.instagram.com/affordarooterco",
+      "linkedin": "https://www.linkedin.com/in/affordarooter"
+    },
+    "deep_enriched_at": "2026-08-10T14:37:44.147Z"
+  }
+]

@@ -1,0 +1,74 @@
+[
+  {
+    "lead_id": "ChIJHSSbUXt_bIcROJzXrwxgpNQ",
+    "business_name": "All Pro Remodel, LLC",
+    "trade": "handyman",
+    "city": "Thornton, CO",
+    "site_url": "http://allproremodel.net/",
+    "email": "nahum@allproremodel.net",
+    "phone": "+1 720-569-7973",
+    "rating": 4.7,
+    "review_count": 61,
+    "address": "5048 E 112th Ct, Thornton, CO 80233",
+    "place_id": "ChIJHSSbUXt_bIcROJzXrwxgpNQ",
+    "subtypes": [
+      "Bathroom remodeler, Dry wall contractor, Kitchen remodeler, Water damage restoration service, Wood floor installation service"
+    ],
+    "latitude": 39.900503,
+    "longitude": -104.92841849999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-17T15:40:20.757Z",
+    "email_source": "contact-scraper",
+    "contact_name": "aware that",
+    "deep_enriched_at": "2026-08-17T15:44:12.930Z"
+  },
+  {
+    "lead_id": "ChIJ60VrtHN3bIcR0iAt6X6FDmc",
+    "business_name": "Ramiguz Remodeling, LLC",
+    "trade": "handyman",
+    "city": "Thornton, CO",
+    "site_url": "https://ramiguzremodeling.com/",
+    "email": "info@ramiguzremodeling.com",
+    "phone": "+1 720-394-8464",
+    "rating": 5,
+    "review_count": 24,
+    "address": "11228 Cook St, Thornton, CO 80233",
+    "place_id": "ChIJ60VrtHN3bIcR0iAt6X6FDmc",
+    "subtypes": [
+      "Bathroom remodeler"
+    ],
+    "latitude": 39.9004067,
+    "longitude": -104.94561209999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-17T15:40:20.758Z",
+    "email_source": "contact-scraper",
+    "contact_name": "already using Ramiguz",
+    "socials": {
+      "facebook": "https://www.facebook.com/RamiguzRemodeling%20"
+    },
+    "deep_enriched_at": "2026-08-17T15:44:11.717Z"
+  },
+  {
+    "lead_id": "ChIJm0-Zh9BxbIcRqRtBEWdeh3I",
+    "business_name": "BFAM Handyman LLC",
+    "trade": "handyman",
+    "city": "Thornton, CO",
+    "site_url": "https://bfamhandymanllc.com/",
+    "email": "",
+    "phone": "+1 720-656-4420",
+    "rating": 5,
+    "review_count": 10,
+    "address": "8431 Brighton Rd, Commerce City, CO 80022",
+    "place_id": "ChIJm0-Zh9BxbIcRqRtBEWdeh3I",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson"
+    ],
+    "latitude": 39.8500222,
+    "longitude": -104.9179875,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-17T15:40:20.758Z"
+  }
+]

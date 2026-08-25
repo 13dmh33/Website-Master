@@ -1,0 +1,342 @@
+{
+  "date": "2026-08-04",
+  "city": "Aurora, CO",
+  "trade": "handyman",
+  "stages": {
+    "scout": {
+      "newLeads": 16,
+      "exitCode": 0
+    },
+    "scrape": {
+      "emailsFound": 6
+    },
+    "diagnoser": {
+      "briefs": 523
+    },
+    "checker": {
+      "approved": 445
+    },
+    "sheetLog": {
+      "rows": 445,
+      "exitCode": 0
+    }
+  },
+  "readyToSend": 43,
+  "sentToday": 67,
+  "batch": {
+    "date": "2026-08-04",
+    "status": "pending",
+    "count": 43,
+    "created": true
+  },
+  "batchLeads": [
+    {
+      "lead_id": "ChIJ-XcFxsJKAyoR5UIAla0hMvs",
+      "business_name": "JJ Electric (Jeremiah James Electric LLC)",
+      "email": "myelectrician@jjelectric.biz",
+      "city": "Aurora, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJ1agHuPhjbIcROBw19F21xAU",
+      "business_name": "Hire a Handyman",
+      "email": "hireahandyman303@gmail.com",
+      "city": "Aurora, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJ5dLBLxnM3owRTU56HHpMzpE",
+      "business_name": "All Area Construction & Roofing, LLC",
+      "email": "allareaconst@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJ83dGSAJ5bIcRXMy5mPBG6_Q",
+      "business_name": "The Roofing Broker",
+      "email": "eli@theroofingbroker.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJ9aEz4PxFE4cR-zdQPBzEOp8",
+      "business_name": "Upfront Restoration & Roofing",
+      "email": "office@upfrontrnr.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJ9dQ1Q8FHE4cRkS3FxN_fCoI",
+      "business_name": "Wiseman Roofing",
+      "email": "info@wisemanroofing.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJAdKdhxiBbIcRXTAN5F5Mtxs",
+      "business_name": "Mr. Electric of Littleton, CO",
+      "email": "web@mrelectriclittleton.com",
+      "city": "Aurora, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJAxaJchF_bIcRZpxoj7J4Th0",
+      "business_name": "Vertical Roofing Co",
+      "email": "customerservice@verticalroofingco.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJBa6LS0l5bIcRWTMaN7Csnx4",
+      "business_name": "Commercial Roofing Contractor",
+      "email": "inspections@crcinbox.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJHbIe1zmPbIcRBk9L6M3tRzs",
+      "business_name": "Stubblefield Electric",
+      "email": "thomas@stubblefieldelectric.com",
+      "city": "Aurora, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJHzJzjc-JbIcRSLML-uTYsnA",
+      "business_name": "Upstanding electric LLC",
+      "email": "upstandingelectric@gmail.com",
+      "city": "Aurora, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJJU3AoENHE4cRRmEjhWFIqwM",
+      "business_name": "JR & CO",
+      "email": "freeroofinspection2@jrcousa.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJL5GQ3rd3bIcRZvebYM-CvJc",
+      "business_name": "Gorilla Roof, Inc.",
+      "email": "ed@gorillaroof.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJMVBPowx4bIcRez5snK0Ifjo",
+      "business_name": "Tiley Roofing",
+      "email": "mail@tileyroofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJOQ7C-W2HbIcRV2CrG9JOq88",
+      "business_name": "Golden Spike Roofing Inc",
+      "email": "info@goldenspikeroofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJQZx_anmJbIcRKLNx24IlxGc",
+      "business_name": "F & F electric",
+      "email": "saifer_1988@yahoo.com",
+      "city": "Aurora, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJSdaHNopHE4cR3F5mYhhQHjM",
+      "business_name": "Hail Country Roofing & Gutters",
+      "email": "jseale@hailcountry.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJTzo4Aqh_bIcRB76c1rByMRI",
+      "business_name": "Mile Hi Roofing",
+      "email": "info@milehiroofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJW4dygRhPE4cRXkh2den4dWQ",
+      "business_name": "Triton Roofing",
+      "email": "cos@tritonroofing.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJWZIx4atFE4cRgccul12rL-Q",
+      "business_name": "Excel Construction Group",
+      "email": "info@excelcg.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJXQ28rAl9bIcReTfZSkp4Xig",
+      "business_name": "Honey-Dew Siding Repair",
+      "email": "honeydewsidingrepair@gmail.com",
+      "city": "Aurora, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJZ42D4kN5bIcR1zfGxnYrybA",
+      "business_name": "Woodberg Roofing and Restoration",
+      "email": "info@woodbergroofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJa27Xj0hPE4cRdSc6GASyVmQ",
+      "business_name": "All Things New Roofing & Restoration",
+      "email": "sondra@allthingsnewroofing.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJaaQz9IpPE4cR0JqtzsUGcik",
+      "business_name": "Vector Roofing",
+      "email": "office@vectorroofing.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJcQfB9LpPE4cRaKtU47IiQao",
+      "business_name": "Knight's Restoration LTD",
+      "email": "jonpinhorn.typedesign@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJd-sCQCE3bAERE93MVBL9AWY",
+      "business_name": "Full Service Exteriors",
+      "email": "ryan@fullserviceexteriors.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJewY04Al_bIcR2Oop1TR3fYE",
+      "business_name": "Jenesis Roofing",
+      "email": "sales@jenesisroofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJf7-ye22MbIcRxguz1Y3mmrM",
+      "business_name": "Yanni Electric, LLC",
+      "email": "yannielectric@gmail.com",
+      "city": "Aurora, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJh3Jbk8KPbIcRxAmkybiv2mo",
+      "business_name": "Cu Solutions",
+      "email": "info@thecusolution.com",
+      "city": "Aurora, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJjcqiCiJFE4cRL3Jx55xYc20",
+      "business_name": "Grand Line Roofing",
+      "email": "grandlineroofing1@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJlVm2Zj-Ha4cReKxQMRQJaO4",
+      "business_name": "Big Bear Roofing",
+      "email": "info@bigbearroofco.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJm-Bsk35_a4cRDGtXPA-iaB8",
+      "business_name": "Sundog Electric LLC",
+      "email": "info@sundogelectric.com",
+      "city": "Aurora, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJmXo_xL1_bIcRhsPZaAuZjyM",
+      "business_name": "Ernie's Roofing",
+      "email": "ernie@erniesgutter.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJp7ZM49BaE4cRUog7jbAD7Ys",
+      "business_name": "3G Construction & Roofing",
+      "email": "3gconstruction@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJq2CAdudhbIcRnXY_c8xq3TA",
+      "business_name": "Centerfield Electric",
+      "email": "scott@centerfieldelectric.com",
+      "city": "Aurora, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJqdkg1k5PE4cROfdlwopwViU",
+      "business_name": "Front Range Roofing & Siding",
+      "email": "frontrangeroofing@yahoo.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJrfLT5X_BbIcRWqwcv6ErRtc",
+      "business_name": "Douglas-Electric LLC",
+      "email": "info@douglas-electricllc.com",
+      "city": "Aurora, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJuXFS63NjbIcRcS4Z3AMtTvI",
+      "business_name": "Pro Tech Automotive",
+      "email": "auroraprotech@yahoo.com",
+      "city": "Aurora, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJuZzI-np5bIcRBPphubd3ECc",
+      "business_name": "Allstar Electrical Services",
+      "email": "estimating@allstarelectrical.com",
+      "city": "Aurora, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJuaB-lUNME4cRrK2z4PURiyw",
+      "business_name": "Mountview Skylights and Roof Repair",
+      "email": "mtviewskylights@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJv7PfPGtPE4cRNZJ4oNB4acI",
+      "business_name": "Crestone Roofing",
+      "email": "info@crestoneroofing.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJv_yvswEzticReunSxyu47TE",
+      "business_name": "Flowers Electric",
+      "email": "joseph@flowerselectricians.com",
+      "city": "Aurora, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJy1fm8jvo32MRcV2cviPjZ8Y",
+      "business_name": "Titanium Ridge Exteriors LLC",
+      "email": "info@titaniumridgeexteriors.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    }
+  ],
+  "spend": 0.342,
+  "rotation": {
+    "done": 12,
+    "remaining": 100,
+    "reportedDone": 11,
+    "reportedLeft": 101
+  }
+}

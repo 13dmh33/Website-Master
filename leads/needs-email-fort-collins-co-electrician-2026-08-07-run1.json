@@ -1,0 +1,717 @@
+[
+  {
+    "lead_id": "ChIJe468WlNduiIR_MwxurG24Q0",
+    "business_name": "Titus Electrical Services",
+    "trade": "electrician",
+    "city": "Fort Collins, CO",
+    "site_url": "https://www.tituselectricians.com/%3Futm_source%3Dgoogle%26utm_medium%3Dorganic%26utm_campaign%3Dfort-collins-gbp",
+    "email": "",
+    "phone": "+1 970-294-3111",
+    "rating": 4.8,
+    "review_count": 296,
+    "address": "2001 S Shields St Unit H104, Fort Collins, CO 80526",
+    "place_id": "ChIJe468WlNduiIR_MwxurG24Q0",
+    "subtypes": [
+      "Electrician, Electric vehicle charging station contractor, Electrical installation service, Electrical repair shop, Lighting contractor"
+    ],
+    "latitude": 40.5621223,
+    "longitude": -105.09657569999999,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-07T14:29:55.468Z"
+  },
+  {
+    "lead_id": "ChIJTQfCtJ5oM4sRbtiGy2zHXNs",
+    "business_name": "Luminous Electric, Heating, & Cooling",
+    "trade": "electrician",
+    "city": "Fort Collins, CO",
+    "site_url": "https://www.luminouselectricco.com/",
+    "email": "",
+    "phone": "+1 720-282-1790",
+    "rating": 4.9,
+    "review_count": 214,
+    "address": "242 Linden St, Fort Collins, CO 80524",
+    "place_id": "ChIJTQfCtJ5oM4sRbtiGy2zHXNs",
+    "subtypes": [
+      "Electrician, Electrical installation service, Heating contractor, HVAC contractor, Lighting contractor, Mechanical contractor"
+    ],
+    "latitude": 40.588519,
+    "longitude": -105.074226,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-07T14:29:55.468Z",
+    "contact_name": "to forge long",
+    "deep_enriched_at": "2026-08-07T14:32:26.634Z"
+  },
+  {
+    "lead_id": "ChIJV8FWtYBRaYcRND-hgzg7tkE",
+    "business_name": "Eggers Electric",
+    "trade": "electrician",
+    "city": "Fort Collins, CO",
+    "site_url": "https://www.eggerselectric.com/%3Futm_campaign%3Dgmb%26utm_medium%3Dorganic%26utm_source%3Dgmblisting",
+    "email": "",
+    "phone": "+1 970-669-1883",
+    "rating": 4.9,
+    "review_count": 333,
+    "address": "3520 W Eisenhower Blvd, Loveland, CO 80537",
+    "place_id": "ChIJV8FWtYBRaYcRND-hgzg7tkE",
+    "subtypes": [
+      "Electrician, Electric vehicle charging station contractor, Electrical installation service, Electrical repair shop, Lighting consultant, Lighting contractor"
+    ],
+    "latitude": 40.406962199999995,
+    "longitude": -105.12738019999999,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-07T14:29:55.468Z"
+  },
+  {
+    "lead_id": "ChIJ5ytlBYlKaYcRK1oFF3psZYI",
+    "business_name": "Sandbox Solar",
+    "trade": "electrician",
+    "city": "Fort Collins, CO",
+    "site_url": "http://www.sandboxsolar.com/",
+    "email": "sales@sandboxsolar.com",
+    "phone": "+1 970-673-7733",
+    "rating": 4.9,
+    "review_count": 276,
+    "address": "112 Racquette Dr Unit C, Fort Collins, CO 80524",
+    "place_id": "ChIJ5ytlBYlKaYcRK1oFF3psZYI",
+    "subtypes": [
+      "Electrician, Air conditioning repair service, Electric vehicle charging station, Solar energy system service, Furnace repair service, HVAC contractor, Solar energy company, Solar panel maintenance service, Solar photovoltaic power plant"
+    ],
+    "latitude": 40.590191999999995,
+    "longitude": -105.04656179999999,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-07T14:29:55.468Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Rose profile picture",
+    "socials": {
+      "nextdoor": "https://ads.nextdoor.com/public/pixel/ndp.js",
+      "facebook": "https://www.facebook.com/sandboxsolar",
+      "instagram": "https://www.instagram.com/sandboxsolar",
+      "youtube": "https://www.youtube.com/@sandboxsolar",
+      "linkedin": "https://www.linkedin.com/company/sandbox-solar-llc",
+      "twitter": "https://twitter.com/sandboxsolar"
+    },
+    "deep_enriched_at": "2026-08-07T14:32:28.045Z"
+  },
+  {
+    "lead_id": "ChIJx7B8DGK1bocREZeNJtkDUpA",
+    "business_name": "Fort Collins Audio Video",
+    "trade": "electrician",
+    "city": "Fort Collins, CO",
+    "site_url": "https://www.fortcollinsaudiovideo.com/",
+    "email": "fortcollinsaudiovideo@gmail.com",
+    "phone": "+1 970-682-5323",
+    "rating": 5,
+    "review_count": 234,
+    "address": "414 Bannock St, Fort Collins, CO 80524",
+    "place_id": "ChIJx7B8DGK1bocREZeNJtkDUpA",
+    "subtypes": [
+      "Home theater store, Audio visual consultant, Home automation company, Home cinema installation"
+    ],
+    "latitude": 40.5927165,
+    "longitude": -105.04306129999999,
+    "fit_score": 6,
+    "gap_score": 6,
+    "scraped_at": "2026-08-07T14:29:55.468Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "http://www.facebook.com/2008/fbml",
+      "instagram": "https://www.instagram.com/fortcollins_audiovideo"
+    },
+    "deep_enriched_at": "2026-08-07T14:32:27.758Z"
+  },
+  {
+    "lead_id": "ChIJu6HbTkizbocRmeuvvnwZa8E",
+    "business_name": "King Electric",
+    "trade": "electrician",
+    "city": "Fort Collins, CO",
+    "site_url": "https://kingelectricllc.com/%3Futm_source%3Dlocal%26utm_medium%3Dorganic%26utm_campaign%3Dgmb",
+    "email": "",
+    "phone": "+1 970-829-5464",
+    "rating": 4.8,
+    "review_count": 161,
+    "address": "2580 E Harmony Rd Ste 301-22, Fort Collins, CO 80528",
+    "place_id": "ChIJu6HbTkizbocRmeuvvnwZa8E",
+    "subtypes": [
+      "Electrician, Contractor, Electric vehicle charging station contractor, Electrical installation service, Electric generator shop, Home automation company, Lighting contractor"
+    ],
+    "latitude": 40.5237128,
+    "longitude": -105.03013779999999,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-07T14:29:55.467Z"
+  },
+  {
+    "lead_id": "ChIJq1fPrHNTl2sR-8IlEndEnEw",
+    "business_name": "PH Electric LLC",
+    "trade": "electrician",
+    "city": "Fort Collins, CO",
+    "site_url": "https://www.phelectricco.com/%3Futm_source%3Dgbp%26utm_medium%3Dorganic%26utm_campaign%3Dgbp-listing",
+    "email": "",
+    "phone": "+1 970-297-8010",
+    "rating": 5,
+    "review_count": 93,
+    "address": "5839 Venus Ave, Fort Collins, CO 80525",
+    "place_id": "ChIJq1fPrHNTl2sR-8IlEndEnEw",
+    "subtypes": [
+      "Electrician, Electrical equipment supplier, Electrical installation service, Electrical repair shop, Electrical supply store"
+    ],
+    "latitude": 40.5049449,
+    "longitude": -105.07974519999999,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-07T14:29:55.468Z"
+  },
+  {
+    "lead_id": "ChIJ0T_B-r6tbocRUy4ZWE25nEw",
+    "business_name": "Conduct All Electric",
+    "trade": "electrician",
+    "city": "Fort Collins, CO",
+    "site_url": "http://www.conductall.com/",
+    "email": "info@conductall.com",
+    "phone": "+1 970-631-4148",
+    "rating": 4.9,
+    "review_count": 181,
+    "address": "7352 Greenridge Rd Ste A4, Windsor, CO 80550",
+    "place_id": "ChIJ0T_B-r6tbocRUy4ZWE25nEw",
+    "subtypes": [
+      "Electrician, Electrical engineer"
+    ],
+    "latitude": 40.4394212,
+    "longitude": -104.9653531,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-07T14:29:55.468Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "http://www.facebook.com/2008/fbml",
+      "linkedin": "https://www.linkedin.com/company/conduct-all-electric",
+      "instagram": "https://www.instagram.com/conductallelectric",
+      "bbb": "https://www.bbb.org/us/co/windsor/profile/electrician/conduct-all-electric-0805-46101614"
+    },
+    "deep_enriched_at": "2026-08-07T14:32:29.208Z"
+  },
+  {
+    "lead_id": "ChIJIe_NiTdTaYcRwpAybj7_UzA",
+    "business_name": "Peterson Electric",
+    "trade": "electrician",
+    "city": "Fort Collins, CO",
+    "site_url": "https://petersonelectricllc.com/",
+    "email": "",
+    "phone": "+1 970-599-1872",
+    "rating": 4.9,
+    "review_count": 181,
+    "address": "2355 Calcite St, Loveland, CO 80537",
+    "place_id": "ChIJIe_NiTdTaYcRwpAybj7_UzA",
+    "subtypes": [
+      "Electrician, Electrical installation service, Lighting contractor"
+    ],
+    "latitude": 40.3946964,
+    "longitude": -105.0426126,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-07T14:29:55.468Z",
+    "contact_name": "Josh Peterson",
+    "socials": {
+      "facebook": "https://www.facebook.com/petersonelectricllc",
+      "instagram": "https://www.instagram.com/petersonelectric",
+      "youtube": "https://www.youtube.com/channel/UCVMLgV5EGZAhCIc2XMKiMkg",
+      "linkedin": "https://www.linkedin.com/company/peterson-electric-llc",
+      "bbb": "https://www.bbb.org/us/co/loveland/profile/electrician/peterson-electric-llc-1296-90137173",
+      "twitter": "https://twitter.com/coelectrician"
+    },
+    "deep_enriched_at": "2026-08-07T14:32:33.243Z"
+  },
+  {
+    "lead_id": "ChIJjXBdgjhSaYcRBi9-K-vs6KE",
+    "business_name": "Mac Electric Company Inc",
+    "trade": "electrician",
+    "city": "Fort Collins, CO",
+    "site_url": "https://macelectricco.com/%3Futm_source%3Dgbp%26utm_medium%3Dorganic",
+    "email": "",
+    "phone": "+1 970-669-2464",
+    "rating": 4.9,
+    "review_count": 109,
+    "address": "1208 Poplar St, Johnstown, CO 80534",
+    "place_id": "ChIJjXBdgjhSaYcRBi9-K-vs6KE",
+    "subtypes": [
+      "Electrician, Electric vehicle charging station contractor, Lighting consultant, Lighting contractor"
+    ],
+    "latitude": 40.4046425,
+    "longitude": -104.9502179,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-07T14:29:55.468Z"
+  },
+  {
+    "lead_id": "ChIJ0xO7Tru-bocRqUU_ztDe0Tk",
+    "business_name": "Delaney's Electric, Inc.",
+    "trade": "electrician",
+    "city": "Fort Collins, CO",
+    "site_url": "https://www.delaney-electric.com/",
+    "email": "info@delaney-electric.com",
+    "phone": "+1 970-834-1715",
+    "rating": 4.9,
+    "review_count": 113,
+    "address": "41495 Co Rd 37, Ault, CO 80610",
+    "place_id": "ChIJ0xO7Tru-bocRqUU_ztDe0Tk",
+    "subtypes": [
+      "Electrician, Electrical installation service"
+    ],
+    "latitude": 40.6036905,
+    "longitude": -104.71659369999999,
+    "fit_score": 5,
+    "gap_score": 5,
+    "scraped_at": "2026-08-07T14:29:55.468Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "google": "https://maps.google.com/maps"
+    },
+    "deep_enriched_at": "2026-08-07T14:32:38.870Z"
+  },
+  {
+    "lead_id": "ChIJ7wzIljK1bocRQMTR1QUXIRo",
+    "business_name": "Avery Electric Inc",
+    "trade": "electrician",
+    "city": "Fort Collins, CO",
+    "site_url": "http://www.averyelectricinc.com/",
+    "email": "averyelectricinc@gmail.com",
+    "phone": "+1 970-493-3027",
+    "rating": 4.9,
+    "review_count": 36,
+    "address": "2006 E Lincoln Ave, Fort Collins, CO 80524",
+    "place_id": "ChIJ7wzIljK1bocRQMTR1QUXIRo",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 40.5820343,
+    "longitude": -105.04014439999999,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-07T14:29:55.468Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Ernie is super",
+    "socials": {
+      "facebook": "http://www.facebook.com/2008/fbml",
+      "instagram": "https://www.instagram.com/averyelectric",
+      "bbb": "https://www.bbb.org/us/co/fort-collins/profile/electrician/avery-electric-inc-0805-46010071"
+    },
+    "deep_enriched_at": "2026-08-07T14:32:29.820Z"
+  },
+  {
+    "lead_id": "ChIJdS67ueBLaYcRTND1LyahJ8I",
+    "business_name": "Three Crowns Electric | Fort Collins",
+    "trade": "electrician",
+    "city": "Fort Collins, CO",
+    "site_url": "https://www.threecrownselectric.com/locations/fort-collins/",
+    "email": "info@threecrownselectric.com",
+    "phone": "+1 970-398-4709",
+    "rating": 5,
+    "review_count": 27,
+    "address": "242 Linden St 1st Floor, Fort Collins, CO 80524",
+    "place_id": "ChIJdS67ueBLaYcRTND1LyahJ8I",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 40.5885278,
+    "longitude": -105.0742362,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-07T14:29:55.468Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Jon Trujillo",
+    "socials": {
+      "bbb": "https://www.bbb.org/us/co/windsor/profile/electrician/three-crowns-electric-llc-0805-46119476",
+      "yelp": "https://www.yelp.com/biz/three-crowns-electric-windsor",
+      "nextdoor": "https://nextdoor.com/pages/three-crowns-electric-windsor-co",
+      "facebook": "https://www.facebook.com/Three.Crowns.Electric",
+      "instagram": "https://www.instagram.com/three.crowns.electric",
+      "linkedin": "https://www.linkedin.com/company/three-crowns-electric",
+      "google": "https://maps.google.com/maps"
+    },
+    "deep_enriched_at": "2026-08-07T14:32:29.885Z"
+  },
+  {
+    "lead_id": "ChIJR3H_UtZLaYcR0MHijDNSnec",
+    "business_name": "All Circuits Electrical",
+    "trade": "electrician",
+    "city": "Fort Collins, CO",
+    "site_url": "http://allcircuitselectrical.net/",
+    "email": "info@allcircuitselectrical.com",
+    "phone": "+1 970-632-5145",
+    "rating": 5,
+    "review_count": 38,
+    "address": "309 Lincoln Ct, Fort Collins, CO 80524",
+    "place_id": "ChIJR3H_UtZLaYcR0MHijDNSnec",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 40.5840083,
+    "longitude": -105.0473164,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-07T14:29:55.468Z",
+    "email_source": "contact-scraper",
+    "contact_name": "is early to",
+    "socials": {
+      "facebook": "https://www.facebook.com/All.Circuits.Electrical.LLC"
+    },
+    "deep_enriched_at": "2026-08-07T14:32:31.277Z"
+  },
+  {
+    "lead_id": "ChIJ9R-cjm81aYcRZJwAQOOVTyM",
+    "business_name": "Lamb Electric",
+    "trade": "electrician",
+    "city": "Fort Collins, CO",
+    "site_url": "https://lambelectricfortcollins.com/",
+    "email": "clintlamb85@yahoo.com",
+    "phone": "+1 970-581-4057",
+    "rating": 5,
+    "review_count": 25,
+    "address": "2220 Franklin Rd, Fort Collins, CO 80524",
+    "place_id": "ChIJ9R-cjm81aYcRZJwAQOOVTyM",
+    "subtypes": [
+      "Electrician, Electric vehicle charging station contractor, Electrical installation service, Lighting contractor"
+    ],
+    "latitude": 40.6188661,
+    "longitude": -105.0655659,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-07T14:29:55.468Z",
+    "email_source": "contact-scraper",
+    "contact_name": "Clint Lamb",
+    "socials": {
+      "facebook": "https://www.facebook.com/profile.php?id=100063723054013",
+      "bbb": "https://www.bbb.org/us/co/fort-collins/profile/electrical-contractors/lamb-electric-llc-0805-46089887",
+      "linkedin": "https://www.linkedin.com/in/clint-lamb-8a0172131"
+    },
+    "deep_enriched_at": "2026-08-07T14:32:30.834Z"
+  },
+  {
+    "lead_id": "ChIJAQBsaGRKaYcRqReF3QhJ1Wc",
+    "business_name": "Grason Electric",
+    "trade": "electrician",
+    "city": "Fort Collins, CO",
+    "site_url": "http://grasonelectric.com/",
+    "email": "",
+    "phone": "+1 970-852-4480",
+    "rating": 5,
+    "review_count": 34,
+    "address": "209 Commerce Dr Unit 1, Fort Collins, CO 80524",
+    "place_id": "ChIJAQBsaGRKaYcRqReF3QhJ1Wc",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 40.5875534,
+    "longitude": -105.0471113,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-07T14:29:55.468Z",
+    "socials": {
+      "google": "https://g.page/grason-electric"
+    },
+    "deep_enriched_at": "2026-08-07T14:32:35.982Z"
+  },
+  {
+    "lead_id": "ChIJr1plDQJLaYcRHEejYAFzL5U",
+    "business_name": "Lockhart Electric LLC",
+    "trade": "electrician",
+    "city": "Fort Collins, CO",
+    "site_url": "https://lockhartelec.com/",
+    "email": "donlockhart@lockhartelec.com",
+    "phone": "+1 970-966-5451",
+    "rating": 4.9,
+    "review_count": 50,
+    "address": "453a Industrial Dr, Fort Collins, CO 80524",
+    "place_id": "ChIJr1plDQJLaYcRHEejYAFzL5U",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 40.5822226,
+    "longitude": -105.0397821,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-07T14:29:55.468Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "google": "https://g.page/r/CRxHo2ABcy-VEBM/review"
+    },
+    "deep_enriched_at": "2026-08-07T14:32:38.580Z"
+  },
+  {
+    "lead_id": "ChIJs58efeG0bocRuo6jnUjrYo8",
+    "business_name": "Collins Control & Electrical Inc.",
+    "trade": "electrician",
+    "city": "Fort Collins, CO",
+    "site_url": "https://collins-control.com/",
+    "email": "",
+    "phone": "+1 970-484-8696",
+    "rating": 5,
+    "review_count": 38,
+    "address": "2649 E Mulberry St Ste 16, Fort Collins, CO 80524",
+    "place_id": "ChIJs58efeG0bocRuo6jnUjrYo8",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 40.5801357,
+    "longitude": -105.02915709999999,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-07T14:29:55.468Z",
+    "socials": {
+      "google": "https://g.page/r/CbqOo51I62KPEAI/review"
+    },
+    "deep_enriched_at": "2026-08-07T14:32:33.401Z"
+  },
+  {
+    "lead_id": "ChIJbdrs9z5TaYcRzlt5Rmt0Yec",
+    "business_name": "TJ's Electric Inc",
+    "trade": "electrician",
+    "city": "Fort Collins, CO",
+    "site_url": "http://tjselectricnoco.com/",
+    "email": "terryloiacano@gmail.com",
+    "phone": "+1 970-573-9169",
+    "rating": 4.7,
+    "review_count": 100,
+    "address": "6440 Kimmer Ln, Fort Collins, CO 80524",
+    "place_id": "ChIJbdrs9z5TaYcRzlt5Rmt0Yec",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 40.5682605,
+    "longitude": -104.9559609,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-07T14:29:55.468Z",
+    "email_source": "contact-scraper",
+    "contact_name": "or exceed all",
+    "socials": {
+      "facebook": "https://facebook.com/tjselectricnoco"
+    },
+    "deep_enriched_at": "2026-08-07T14:32:36.170Z"
+  },
+  {
+    "lead_id": "ChIJTU9S6j_2uEURQ9Eg0VOO-V0",
+    "business_name": "Solar Pathways Energy & Electrical",
+    "trade": "electrician",
+    "city": "Fort Collins, CO",
+    "site_url": "http://www.solarpathways.com/",
+    "email": "sales@solarpathways.com",
+    "phone": "+1 970-449-6270",
+    "rating": 5,
+    "review_count": 35,
+    "address": "155 Boardwalk Dr Unit 507, Fort Collins, CO 80525",
+    "place_id": "ChIJTU9S6j_2uEURQ9Eg0VOO-V0",
+    "subtypes": [
+      "Electrician, Electric vehicle charging station contractor, Contractor"
+    ],
+    "latitude": 40.532323,
+    "longitude": -105.0763922,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-07T14:29:55.468Z",
+    "email_source": "contact-scraper",
+    "contact_name": "to check out",
+    "socials": {
+      "facebook": "https://www.facebook.com/Solar-Pathways-109197861537112",
+      "instagram": "https://www.instagram.com/solarpathways",
+      "linkedin": "https://www.linkedin.com/company/solar-pathways/about",
+      "angi": "https://www.homeadvisor.com/rated.SolarPathways.116544875.html",
+      "google": "https://g.page/r/CUPRINFTjvldEAE"
+    },
+    "deep_enriched_at": "2026-08-07T14:32:34.520Z"
+  },
+  {
+    "lead_id": "ChIJ20YCfRrLbocRgQtctetdFIQ",
+    "business_name": "Daniels Electric",
+    "trade": "electrician",
+    "city": "Fort Collins, CO",
+    "site_url": "https://danielselectricco.com/%3Futm_source%3Dgmb%26utm_medium%3Dorganic%26utm_campaign%3Dgmb-listing",
+    "email": "",
+    "phone": "+1 970-465-9631",
+    "rating": 4.9,
+    "review_count": 74,
+    "address": "4514 Ketchum Dr, Wellington, CO 80549",
+    "place_id": "ChIJ20YCfRrLbocRgQtctetdFIQ",
+    "subtypes": [
+      "Electrician, Electric vehicle charging station, Electrical installation service, Lighting consultant, Lighting contractor"
+    ],
+    "latitude": 40.6946417,
+    "longitude": -104.9918709,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-07T14:29:55.468Z"
+  },
+  {
+    "lead_id": "ChIJDbSeCwdLaYcRaGWnLUAmiCs",
+    "business_name": "Mountain States Electronics",
+    "trade": "electrician",
+    "city": "Fort Collins, CO",
+    "site_url": "https://mountainstateselectronics.com/",
+    "email": "steve@mountainstateselectronics.com",
+    "phone": "+1 970-484-1044",
+    "rating": 4.8,
+    "review_count": 53,
+    "address": "101 N Link Ln, Fort Collins, CO 80524",
+    "place_id": "ChIJDbSeCwdLaYcRaGWnLUAmiCs",
+    "subtypes": [
+      "Electronic parts supplier"
+    ],
+    "latitude": 40.586963,
+    "longitude": -105.049875,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-07T14:29:55.468Z",
+    "email_source": "contact-scraper",
+    "deep_enriched_at": "2026-08-07T14:32:39.627Z"
+  },
+  {
+    "lead_id": "ChIJ3_JObNBLaYcRytT_Gp6upzQ",
+    "business_name": "Colorado's Reliable Electric",
+    "trade": "electrician",
+    "city": "Fort Collins, CO",
+    "site_url": "https://co-reliableelectric.com/",
+    "email": "",
+    "phone": "+1 970-658-5596",
+    "rating": 5,
+    "review_count": 32,
+    "address": "832 E Lincoln Ave #1A, Fort Collins, CO 80524",
+    "place_id": "ChIJ3_JObNBLaYcRytT_Gp6upzQ",
+    "subtypes": [
+      "Solar energy company, Solar energy system service, Solar panel maintenance service"
+    ],
+    "latitude": 40.5891795,
+    "longitude": -105.0618598,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-07T14:29:55.468Z",
+    "contact_name": "ready to do",
+    "socials": {
+      "facebook": "https://www.facebook.com/ReliableElectric",
+      "instagram": "https://www.instagram.com/co_reliableelectric"
+    },
+    "deep_enriched_at": "2026-08-07T14:32:38.813Z"
+  },
+  {
+    "lead_id": "ChIJ7YjonxFLaYcReNY_MdGWhi4",
+    "business_name": "Rocky Mountain Install - Audio, Video, Data & Security",
+    "trade": "electrician",
+    "city": "Fort Collins, CO",
+    "site_url": "http://rockymtninstall.com/",
+    "email": "jeff@rockymtninstall.com",
+    "phone": "+1 970-670-0255",
+    "rating": 5,
+    "review_count": 63,
+    "address": "742 Wagonwheel Dr, Fort Collins, CO 80526",
+    "place_id": "ChIJ7YjonxFLaYcReNY_MdGWhi4",
+    "subtypes": [
+      "Home theater store, Audio visual consultant, Audio visual equipment supplier, Computer networking service, Electronics store, Security system installation service"
+    ],
+    "latitude": 40.5522403,
+    "longitude": -105.089995,
+    "fit_score": 4,
+    "gap_score": 4,
+    "scraped_at": "2026-08-07T14:29:55.468Z",
+    "email_source": "contact-scraper",
+    "socials": {
+      "facebook": "https://www.facebook.com/RockyMtnInstall",
+      "instagram": "https://www.instagram.com/rockymtninstall",
+      "twitter": "https://twitter.com/rockymtninstall",
+      "linkedin": "https://www.linkedin.com/in/jeff-donahue-66964a10",
+      "yelp": "https://www.yelp.com/biz/rocky-mountain-install-fort-collins-3"
+    },
+    "deep_enriched_at": "2026-08-07T14:32:44.031Z"
+  },
+  {
+    "lead_id": "ChIJmYGsEEFKaYcRqh6f3WfW6pQ",
+    "business_name": "Kinetic Electric, LLC",
+    "trade": "electrician",
+    "city": "Fort Collins, CO",
+    "site_url": "https://www.kineticelectricnoco.com/",
+    "email": "",
+    "phone": "+1 970-817-3159",
+    "rating": 4.8,
+    "review_count": 23,
+    "address": "1307 N College Ave, Fort Collins, CO 80524",
+    "place_id": "ChIJmYGsEEFKaYcRqh6f3WfW6pQ",
+    "subtypes": [
+      "Electrician"
+    ],
+    "latitude": 40.605427,
+    "longitude": -105.0768374,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-07T14:29:55.468Z",
+    "contact_name": "Old Town Design",
+    "socials": {
+      "youtube": "https://www.youtube.com/user"
+    },
+    "deep_enriched_at": "2026-08-07T14:32:47.595Z"
+  },
+  {
+    "lead_id": "ChIJGdN0n2_LbocRScQnuT3ZqTg",
+    "business_name": "SEC Electrical Services, LLC",
+    "trade": "electrician",
+    "city": "Fort Collins, CO",
+    "site_url": "https://usmapiz.org/details/sec-electrical-services-llc-ChIJGdN",
+    "email": "",
+    "phone": "+1 970-219-3892",
+    "rating": 4.9,
+    "review_count": 12,
+    "address": "3362 White Buffalo Dr, Wellington, CO 80549",
+    "place_id": "ChIJGdN0n2_LbocRScQnuT3ZqTg",
+    "subtypes": [
+      "Electrician, Contractor, Electrical installation service, Lighting contractor"
+    ],
+    "latitude": 40.7147954,
+    "longitude": -105.01457979999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-07T14:29:55.468Z"
+  },
+  {
+    "lead_id": "ChIJlUiDvMNKaYcRddhfYSc-P8I",
+    "business_name": "Crescent Electric Supply Company",
+    "trade": "electrician",
+    "city": "Fort Collins, CO",
+    "site_url": "https://www.crescentelectric.com/%3Futm_source%3Dlocal-search%26utm_medium%3Dlink-click%26utm_campaign%3Dyext",
+    "email": "",
+    "phone": "+1 970-484-4333",
+    "rating": 4.8,
+    "review_count": 10,
+    "address": "1404 E Magnolia St, Fort Collins, CO 80524",
+    "place_id": "ChIJlUiDvMNKaYcRddhfYSc-P8I",
+    "subtypes": [
+      "Electrical supply store, Electrical repair shop, Electrical substation, Electrical products wholesaler"
+    ],
+    "latitude": 40.5837516,
+    "longitude": -105.05176829999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-07T14:29:55.468Z"
+  },
+  {
+    "lead_id": "ChIJo4IGMMy0bocRW6eXI4UfqDQ",
+    "business_name": "Consolidated Electrical Distributors",
+    "trade": "electrician",
+    "city": "Fort Collins, CO",
+    "site_url": "https://cedfortcollins.portalced.com/",
+    "email": "",
+    "phone": "+1 970-484-4377",
+    "rating": 4.7,
+    "review_count": 27,
+    "address": "2025 Sharp Point Dr, Fort Collins, CO 80525",
+    "place_id": "ChIJo4IGMMy0bocRW6eXI4UfqDQ",
+    "subtypes": [
+      "Electrical supply store"
+    ],
+    "latitude": 40.5607167,
+    "longitude": -105.0275673,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-07T14:29:55.468Z"
+  }
+]

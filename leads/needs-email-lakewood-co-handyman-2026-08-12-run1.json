@@ -1,0 +1,33 @@
+[
+  {
+    "lead_id": "ChIJk0L1NIGDwYkRWdhIGlVYI0E",
+    "business_name": "24/7 Handyman Services",
+    "trade": "handyman",
+    "city": "Lakewood, CO",
+    "site_url": "https://247handymanservicescorp.com/",
+    "email": "",
+    "phone": "+1 732-929-7272",
+    "rating": 5,
+    "review_count": 14,
+    "address": "5 Congress St, Lakewood, NJ 08701",
+    "place_id": "ChIJk0L1NIGDwYkRWdhIGlVYI0E",
+    "subtypes": [
+      "Handyman/Handywoman/Handyperson, Landscaper, Roofing contractor, Stucco contractor, Waterproofing service"
+    ],
+    "latitude": 40.090165299999995,
+    "longitude": -74.20593889999999,
+    "fit_score": 3,
+    "gap_score": 3,
+    "scraped_at": "2026-08-12T14:29:50.667Z",
+    "contact_name": "definitely keeping their",
+    "socials": {
+      "facebook": "https://www.facebook.com/247handymanservicescorp",
+      "instagram": "https://www.instagram.com/247handymanservicescorp",
+      "twitter": "https://twitter.com/handymanscorp",
+      "linkedin": "https://www.linkedin.com/company/247handymanservicescorp",
+      "tiktok": "https://www.tiktok.com/@247handymanservicescorp",
+      "youtube": "https://www.youtube.com/@247handymanservicescorp"
+    },
+    "deep_enriched_at": "2026-08-12T14:33:05.635Z"
+  }
+]

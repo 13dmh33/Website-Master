@@ -1,0 +1,482 @@
+{
+  "date": "2026-08-07",
+  "city": "Fort Collins, CO",
+  "trade": "electrician",
+  "stages": {
+    "scout": {
+      "newLeads": 56,
+      "exitCode": 0
+    },
+    "scrape": {
+      "emailsFound": 13
+    },
+    "diagnoser": {
+      "briefs": 613
+    },
+    "checker": {
+      "approved": 535
+    },
+    "sheetLog": {
+      "rows": 535,
+      "exitCode": 0
+    }
+  },
+  "readyToSend": 63,
+  "sentToday": 0,
+  "batch": {
+    "date": "2026-08-07",
+    "status": "pending",
+    "count": 63,
+    "created": true
+  },
+  "batchLeads": [
+    {
+      "lead_id": "ChIJ-Tw84lpTaYcRU7NoxcZj7Rk",
+      "business_name": "Finish Plumbing, LLC",
+      "email": "finishplumbing@gmail.com",
+      "city": "Fort Collins, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJ-zMhq55NaYcRpTjvsO1O7fA",
+      "business_name": "Kahar Plumbing & Heating Inc",
+      "email": "office@kaharph.com",
+      "city": "Fort Collins, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJ0T_B-r6tbocRUy4ZWE25nEw",
+      "business_name": "Conduct All Electric",
+      "email": "info@conductall.com",
+      "city": "Fort Collins, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJ0xO7Tru-bocRqUU_ztDe0Tk",
+      "business_name": "Delaney's Electric, Inc.",
+      "email": "info@delaney-electric.com",
+      "city": "Fort Collins, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJ1agHuPhjbIcROBw19F21xAU",
+      "business_name": "Hire a Handyman",
+      "email": "hireahandyman303@gmail.com",
+      "city": "Aurora, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJ2TqbNu6JbIcRxubDQvjZGb8",
+      "business_name": "Triple J Inc Roofing",
+      "email": "office@triplejincroofing.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJ2y3sFcFLaYcRZTV5P5mLEjY",
+      "business_name": "Water Extraction Experts",
+      "email": "pros@waterextractionexperts.com",
+      "city": "Fort Collins, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJ5ytlBYlKaYcRK1oFF3psZYI",
+      "business_name": "Sandbox Solar",
+      "email": "sales@sandboxsolar.com",
+      "city": "Fort Collins, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJ73PygqNLaYcRXkn1w55LeOk",
+      "business_name": "Drain Solvers the pros, inc.",
+      "email": "cheryl@drainsolvers.com",
+      "city": "Fort Collins, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJ7YjonxFLaYcReNY_MdGWhi4",
+      "business_name": "Rocky Mountain Install - Audio, Video, Data & Security",
+      "email": "jeff@rockymtninstall.com",
+      "city": "Fort Collins, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJ7c1-1vEqzqURVAKiJjYPuhA",
+      "business_name": "Seven Hills Home Maintenance",
+      "email": "sevenhillshm@gmail.com",
+      "city": "Aurora, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJ7wzIljK1bocRQMTR1QUXIRo",
+      "business_name": "Avery Electric Inc",
+      "email": "averyelectricinc@gmail.com",
+      "city": "Fort Collins, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJ83dGSAJ5bIcRXMy5mPBG6_Q",
+      "business_name": "The Roofing Broker",
+      "email": "eli@theroofingbroker.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJ8f02yupLaYcR2z6qtc8TLRU",
+      "business_name": "RJ Plumbing & Heating",
+      "email": "rjplumbingnoco@gmail.com",
+      "city": "Fort Collins, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJ9R-cjm81aYcRZJwAQOOVTyM",
+      "business_name": "Lamb Electric",
+      "email": "clintlamb85@yahoo.com",
+      "city": "Fort Collins, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJAxaJchF_bIcRZpxoj7J4Th0",
+      "business_name": "Vertical Roofing Co",
+      "email": "customerservice@verticalroofingco.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJBa6LS0l5bIcRWTMaN7Csnx4",
+      "business_name": "Commercial Roofing Contractor",
+      "email": "inspections@crcinbox.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJDbSeCwdLaYcRaGWnLUAmiCs",
+      "business_name": "Mountain States Electronics",
+      "email": "steve@mountainstateselectronics.com",
+      "city": "Fort Collins, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJE5xrLPuGbIcRHscXn5EB284",
+      "business_name": "Assurance Contractors -",
+      "email": "info@assurancecontractors.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJFXfgGAlTaYcRoj_O0IcKAYU",
+      "business_name": "Ace Hi Plumbing & Heating",
+      "email": "contact@acehiplumbing.com",
+      "city": "Fort Collins, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJG5yfD5V-bIcRU00bCCX4Qvo",
+      "business_name": "Superoofs",
+      "email": "info@superoofs.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJL5GQ3rd3bIcRZvebYM-CvJc",
+      "business_name": "Gorilla Roof, Inc.",
+      "email": "ed@gorillaroof.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJLR9mQQ93bIcRG7rgq7OB_9s",
+      "business_name": "All Seasons Exteriors",
+      "email": "contactus@allseasonsexteriorsco.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJMVBPowx4bIcRez5snK0Ifjo",
+      "business_name": "Tiley Roofing",
+      "email": "mail@tileyroofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJN0eibDu9jKYResHXWp8Ocag",
+      "business_name": "Kirby’s Roofing and Exteriors",
+      "email": "kirbysroofingllc@yahoo.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJOQ7C-W2HbIcRV2CrG9JOq88",
+      "business_name": "Golden Spike Roofing Inc",
+      "email": "info@goldenspikeroofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJPQSKDJzxDogR3eVnxTCkuG4",
+      "business_name": "Astra Roofing",
+      "email": "contact@astraroofs.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJR3H_UtZLaYcR0MHijDNSnec",
+      "business_name": "All Circuits Electrical",
+      "email": "info@allcircuitselectrical.com",
+      "city": "Fort Collins, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJR5oc0FCObIcRqKpn2AgTRLQ",
+      "business_name": "Jack the Roofer",
+      "email": "info@jacktheroofer.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJRwD2HAWAbIcRPjBv1Xed1YY",
+      "business_name": "Rhino Roofing LLC",
+      "email": "info@rhinoindustries.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJT1S0ZrCHbIcRoYn4OtSOj9s",
+      "business_name": "T Bare Roofing",
+      "email": "info@tbareroofing.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJTU9S6j_2uEURQ9Eg0VOO-V0",
+      "business_name": "Solar Pathways Energy & Electrical",
+      "email": "sales@solarpathways.com",
+      "city": "Fort Collins, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJTzo4Aqh_bIcRB76c1rByMRI",
+      "business_name": "Mile Hi Roofing",
+      "email": "info@milehiroofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJW8eTkDQMXGwRqvBOQ3jjJGA",
+      "business_name": "Falcon's Eye Roofing & Construction",
+      "email": "gc@falconseyeroofing.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJWQr0GXrqsAsRMoSnlGw_EI8",
+      "business_name": "A & J Roofing Corporation",
+      "email": "info@trustaandj.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJWZIx4atFE4cRgccul12rL-Q",
+      "business_name": "Excel Construction Group",
+      "email": "info@excelcg.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJWy2gX-lNaYcR__IAX27Iu4Y",
+      "business_name": "Platinum Home Service",
+      "email": "greg@platinumhomeservice.pro",
+      "city": "Fort Collins, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJXQ28rAl9bIcReTfZSkp4Xig",
+      "business_name": "Honey-Dew Siding Repair",
+      "email": "honeydewsidingrepair@gmail.com",
+      "city": "Aurora, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJXx0dpH9tbIcRQDL3FGQx63Y",
+      "business_name": "Semper Fi Restoration Inc",
+      "email": "info@semperfirestoration.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJZ42D4kN5bIcR1zfGxnYrybA",
+      "business_name": "Woodberg Roofing and Restoration",
+      "email": "info@woodbergroofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJbdrs9z5TaYcRzlt5Rmt0Yec",
+      "business_name": "TJ's Electric Inc",
+      "email": "terryloiacano@gmail.com",
+      "city": "Fort Collins, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJbfcbPSaIbIcRtTnTbnX5n4U",
+      "business_name": "Roof Brokers, Inc.",
+      "email": "roofexperts@roofbrokersinc.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJbzML-F36DogRSuBdLkxf-D0",
+      "business_name": "Affordable Roofing, Inc",
+      "email": "service@affordableroofing.net",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJcQfB9LpPE4cRaKtU47IiQao",
+      "business_name": "Knight's Restoration LTD",
+      "email": "jonpinhorn.typedesign@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJd-sCQCE3bAERE93MVBL9AWY",
+      "business_name": "Full Service Exteriors",
+      "email": "ryan@fullserviceexteriors.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJd2w5EzqNbIcRPPbDbi5c8s8",
+      "business_name": "Roof Solutions CO",
+      "email": "office@roofsolutionsco.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJdS67ueBLaYcRTND1LyahJ8I",
+      "business_name": "Three Crowns Electric | Fort Collins",
+      "email": "info@threecrownselectric.com",
+      "city": "Fort Collins, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJewY04Al_bIcR2Oop1TR3fYE",
+      "business_name": "Jenesis Roofing",
+      "email": "sales@jenesisroofing.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJh6ExS8FKaYcR5KHNH3TFcPY",
+      "business_name": "SERVPRO of Fort Collins",
+      "email": "office@servprofortcollins.com",
+      "city": "Fort Collins, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJi9LPI0NjbIcRai1PcGDNvX0",
+      "business_name": "Rocky Exteriors",
+      "email": "info@rockyexteriors.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJjcqiCiJFE4cRL3Jx55xYc20",
+      "business_name": "Grand Line Roofing",
+      "email": "grandlineroofing1@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJjecUdkfLbocRCiCQByHj6tQ",
+      "business_name": "Prestige Exteriors",
+      "email": "info@prestige-ext.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJl8KQayljbIcRbTYQbQErqE4",
+      "business_name": "Aurora Electricians Services",
+      "email": "info@auroraelectriciansservices.com",
+      "city": "Aurora, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJlVm2Zj-Ha4cReKxQMRQJaO4",
+      "business_name": "Big Bear Roofing",
+      "email": "info@bigbearroofco.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJlz02Kcd_bIcR0H0_L0np5fg",
+      "business_name": "Stronghouse",
+      "email": "pmaloney@stronghousebrands.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJmXo_xL1_bIcRhsPZaAuZjyM",
+      "business_name": "Ernie's Roofing",
+      "email": "ernie@erniesgutter.com",
+      "city": "Denver, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJn7WSv7SNbIcRomg5Y_qGR-E",
+      "business_name": "M&M Handyman Services LLC",
+      "email": "info@mmhandymanservicellc.com",
+      "city": "Aurora, CO",
+      "trade": "handyman"
+    },
+    {
+      "lead_id": "ChIJnTdxXatjbIcR0BCStffCFvI",
+      "business_name": "UB Code Roofing +",
+      "email": "info@ubcoderoofing.com",
+      "city": "Aurora, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJr1plDQJLaYcRHEejYAFzL5U",
+      "business_name": "Lockhart Electric LLC",
+      "email": "donlockhart@lockhartelec.com",
+      "city": "Fort Collins, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJr4dMCX1LaYcRrlezh6_XMwk",
+      "business_name": "Drain Doctors Sewer & Drain",
+      "email": "draindoctors@gmail.com",
+      "city": "Fort Collins, CO",
+      "trade": "plumber"
+    },
+    {
+      "lead_id": "ChIJuaB-lUNME4cRrK2z4PURiyw",
+      "business_name": "Mountview Skylights and Roof Repair",
+      "email": "mtviewskylights@gmail.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    },
+    {
+      "lead_id": "ChIJx7B8DGK1bocREZeNJtkDUpA",
+      "business_name": "Fort Collins Audio Video",
+      "email": "fortcollinsaudiovideo@gmail.com",
+      "city": "Fort Collins, CO",
+      "trade": "electrician"
+    },
+    {
+      "lead_id": "ChIJy1fm8jvo32MRcV2cviPjZ8Y",
+      "business_name": "Titanium Ridge Exteriors LLC",
+      "email": "info@titaniumridgeexteriors.com",
+      "city": "Colorado Springs, CO",
+      "trade": "roofer"
+    }
+  ],
+  "spend": 0.622,
+  "rotation": {
+    "done": 15,
+    "remaining": 97,
+    "reportedDone": 14,
+    "reportedLeft": 98
+  }
+}

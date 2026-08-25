@@ -21,6 +21,13 @@
       "note": "No Nora adversarial audit exists — no audit doc in nora/, no 'adversarial' file anywhere. There are no 9 findings to remediate; the audit itself has never been run, so remediation is premature.",
       "reportDate": null,
       "recordedAt": "2026-08-03T18:11:20.085Z"
+    },
+    {
+      "id": "miley_catalog_pull_audit",
+      "verdict": "wrong-premise",
+      "note": "Premise is wrong on three counts, verified 2026-08-13. (1) No 403: techs4tatas.printify.me returns HTTP 200 to both a browser UA and plain curl (111KB). (2) Not anti-bot: it is a client-rendered Next.js/turbopack app with no __NEXT_DATA__ and no JSON island, so products are simply absent from the server HTML — the scraper's parser finds nothing and says so. (3) Catalog is not partial-or-stale-because-blocked: sitemap.xml returns 200 and enumerates the FULL catalog of 8 products with ids+slugs, and the homepage HTML already carries exactly 8 matching api.printify.com/mockup/<id> URLs. Real fix is to parse sitemap.xml (one request, no puppeteer) — minutes, not the ~5h estimated. Also note the report cites scripts/scrape-catalog.js; actual path is miley/scripts/scrape-catalog.js.",
+      "reportDate": null,
+      "recordedAt": "2026-08-13T20:27:09.747Z"
     }
   ]
 }

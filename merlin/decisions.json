@@ -16,6 +16,14 @@
       "rationale": "Dave enabled IMAP in the Zoho Mail admin settings on 2026-07-27, and it was verified working the same day: a live ImapFlow connection to imap.zoho.com:993 authenticated and opened INBOX successfully, with imapflow and mailparser both installed. This is the class of change Merlin structurally cannot see — it reads repo state, and a vendor account setting leaves no trace in the repo, so repo-facts.js has no resolver that could ever detect it. Without this entry Merlin re-recommends it every night forever at score 18.0, crowding out real work in both the ranked backlog and Dave's own list. The same pattern applies to every other vendor-side unlock (Twilio A2P approval, Buffer tokens, Formspree): record a decision here rather than waiting for a resolver that cannot exist.",
       "supersedes": ["enable_zoho_imap"],
       "explains": []
+    },
+    {
+      "id": "dmarc-report-cycles-clean-2026-08",
+      "date": "2026-08-24",
+      "decision": "DMARC aggregate reports for trevoadvisors.com reviewed across several report cycles (Zoho inbox, dave@trevoadvisors.com) and all show dkim=pass/spf=pass with no failures. The 'wait for clean report cycles' trigger condition for tightening DMARC to p=quarantine is satisfied. The DNS record itself has NOT been changed yet — still p=none as of this date. This is a manual OpenSRS DNS panel edit (no API access from this repo) — change the _dmarc.trevoadvisors.com TXT record from 'v=DMARC1; p=none; rua=mailto:dave@trevoadvisors.com' to 'v=DMARC1; p=quarantine; rua=mailto:dave@trevoadvisors.com'.",
+      "rationale": "Report review is vendor-inbox state Merlin cannot see or verify itself (same class as zoho-imap-enabled) — recording it here so a future session doesn't re-ask 'has anyone checked the reports yet' and instead goes straight to making the DNS edit. Do not mark this candidate fully superseded/done until the actual TXT record change is confirmed live.",
+      "supersedes": [],
+      "explains": []
     }
   ]
 }

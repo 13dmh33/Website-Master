@@ -42,8 +42,20 @@ const REPORTS_DIR = path.join(__dirname, 'reports');
 const LAST_FUNNEL_PATH = path.join(__dirname, 'last-funnel.json');
 
 function loadPreviousFunnel() {
-  try { return JSON.parse(fs.readFileSync(LAST_FUNNEL_PATH, 'utf8')); }
-  catch { return null; } // first run ever — no previous snapshot to compare stalls against
+  try {
+    const prev = JSON.parse(fs.readFileSync(LAST_FUNNEL_PATH, 'utf8'));
+    // Stall detection asks "has anything moved since the last run". Comparing
+    // against a snapshot taken earlier the SAME day answers a different
+    // question — of course nothing advanced in twenty minutes — and on
+    // 2026-08-13 that promoted a false "frozen stage" alarm to the top
+    // recommendation, contradicting both the same morning's report ("Stalled
+    // stages: none") and the standing backlog-is-arithmetic decision. The date
+    // was already being persisted; it just was never read back.
+    if (prev && prev.date === today()) return null;
+    return prev;
+  } catch {
+    return null; // first run ever — no previous snapshot to compare stalls against
+  }
 }
 
 function persistFunnel(funnel) {

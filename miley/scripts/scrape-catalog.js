@@ -12,19 +12,24 @@
 //   • templates/post-formats.json → product_catalog_rotation (ordered keys)
 //
 // Usage:
-//   node scripts/scrape-catalog.js                 # fetch live store, DRY RUN (prints what it found)
-//   node scripts/scrape-catalog.js --write         # fetch live store, then update both files
-//   node scripts/scrape-catalog.js --render        # like above, but render JS first (needs puppeteer — see below)
-//   node scripts/scrape-catalog.js --html page.html        # parse a saved page instead of fetching
-//   node scripts/scrape-catalog.js --from "Unisex Tee, Snapback Hat"   # use a pasted comma list
-//   node scripts/scrape-catalog.js --from "..." --write
+//   node miley/scripts/scrape-catalog.js                 # fetch live store, DRY RUN (prints what it found)
+//   node miley/scripts/scrape-catalog.js --write         # fetch live store, then update both files
+//   node miley/scripts/scrape-catalog.js --sitemap       # skip the HTML entirely, read sitemap.xml
+//   node miley/scripts/scrape-catalog.js --render        # render JS first (needs puppeteer — see below)
+//   node miley/scripts/scrape-catalog.js --html page.html        # parse a saved page instead of fetching
+//   node miley/scripts/scrape-catalog.js --from "Unisex Tee, Snapback Hat"   # use a pasted comma list
 //
 // Printify pop-up stores render their product grid client-side, so a plain
-// fetch often returns an empty shell. --render launches a real headless
-// browser (Puppeteer) and reads the DOM after it loads — the most reliable
-// option, but it's a one-time ~300MB Chromium download:
+// fetch returns a shell with no product data in it — that is the normal case
+// here, not an error and not a block. The default run therefore falls back to
+// the store's own sitemap.xml, which is server-generated, lists every product
+// page, and costs one request. --sitemap forces that path directly.
+//
+// --render remains for a store whose sitemap is missing or incomplete. It
+// launches real headless Chrome and reads the DOM after hydration — reliable,
+// but a one-time ~300MB Chromium download:
 //   npm install --no-save puppeteer
-//   node scripts/scrape-catalog.js --render --write
+//   node miley/scripts/scrape-catalog.js --render --write
 //
 // Env: STOREFRONT_URL (defaults to techs4tatas.printify.me).
 
@@ -44,6 +49,9 @@ const WRITE = args.includes('--write');
 const flag  = (name) => { const i = args.indexOf(name); return i >= 0 ? args[i + 1] : null; };
 
 const STOREFRONT = normalizeUrl(process.env.STOREFRONT_URL || 'techs4tatas.printify.me');
+
+const UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 ' +
+           '(KHTML, like Gecko) Chrome/124.0 Safari/537.36';
 
 function normalizeUrl(u) {
   const t = String(u || '').trim().replace(/\/+$/, '');
@@ -130,6 +138,53 @@ function extractProductNames(html) {
   return { strategy: null, names: [] };
 }
 
+// ── sitemap strategy ────────────────────────────────────────────────────────
+// The storefront is a client-rendered Next.js app: the product grid is fetched
+// after hydration, so the served HTML genuinely contains no product data and
+// every strategy above correctly finds nothing. The sitemap is server-generated
+// and lists every product page, which makes it the reliable source here — one
+// request, no headless browser, no 300MB Chromium download.
+//
+// Verified 2026-08-13: techs4tatas.printify.me returns HTTP 200 to both a
+// browser UA and plain curl — there is no anti-bot block — and its sitemap
+// enumerates the full catalogue, matching the product mockup ids in the HTML.
+const SITEMAP_PRODUCT_RE = /\/product\/(\d+)\/([a-z0-9-]+)/gi;
+
+async function fetchSitemapNames(storefront) {
+  const url = `${storefront}/sitemap.xml`;
+  const res = await fetchFn(url, {
+    headers: { 'User-Agent': UA, Accept: 'application/xml,text/xml,*/*' },
+  });
+  if (!res.ok) throw new Error(`HTTP ${res.status} fetching ${url}`);
+  const xml = await res.text();
+
+  const names = [];
+  const seenIds = new Set();
+  let m;
+  SITEMAP_PRODUCT_RE.lastIndex = 0;
+  while ((m = SITEMAP_PRODUCT_RE.exec(xml))) {
+    const id = m[1];
+    if (seenIds.has(id)) continue; // a sitemap may list the same product twice
+    seenIds.add(id);
+    names.push(titleFromSlug(m[2]));
+  }
+  return names;
+}
+
+// "techs-4-tatas-pocket-and-amp-back-graphic-tee"
+//   → "Techs 4 Tatas Pocket & Back Graphic Tee"
+// The store slugifies "&" as "and-amp" (an HTML-escaped "&amp;" run through
+// the slugger), so that has to come back out before word-splitting.
+function titleFromSlug(slug) {
+  return String(slug)
+    .replace(/-and-amp-/g, ' & ')
+    .replace(/-/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/\b[a-z]/g, (c) => c.toUpperCase())
+    .replace(/\bT Shirt\b/g, 'T-Shirt');
+}
+
 function dedupePreserveOrder(arr) {
   const seen = new Set();
   const out = [];
@@ -140,6 +195,23 @@ function dedupePreserveOrder(arr) {
     out.push(x);
   }
   return out;
+}
+
+// Reads the PRODUCTS map already in lib/links.js, so a run can say what would
+// actually change rather than just what it found.
+function readExistingCatalog() {
+  try {
+    const src = fs.readFileSync(LINKS_FILE, 'utf8');
+    const block = /const PRODUCTS = \{([\s\S]*?)\n\};/.exec(src);
+    if (!block) return [];
+    const out = [];
+    const re = /^\s*([a-z0-9_]+)\s*:\s*(['"])([\s\S]*?)\2\s*,?\s*$/gm;
+    let m;
+    while ((m = re.exec(block[1]))) out.push({ key: m[1], name: m[3] });
+    return out;
+  } catch (_) {
+    return [];
+  }
 }
 
 // ── file rewrites ───────────────────────────────────────────────────────────
@@ -165,11 +237,7 @@ function rewriteFormats(catalog) {
 // ── main ────────────────────────────────────────────────────────────────────
 async function fetchHtml(url) {
   const res = await fetchFn(url, {
-    headers: {
-      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 ' +
-                    '(KHTML, like Gecko) Chrome/124.0 Safari/537.36',
-      Accept: 'text/html,application/xhtml+xml',
-    },
+    headers: { 'User-Agent': UA, Accept: 'text/html,application/xhtml+xml' },
   });
   if (!res.ok) throw new Error(`HTTP ${res.status} fetching ${url}`);
   return res.text();
@@ -207,6 +275,7 @@ async function main() {
   const fromList = flag('--from');
   const htmlFile = flag('--html');
   const RENDER   = args.includes('--render');
+  const SITEMAP  = args.includes('--sitemap');
 
   if (fromList) {
     names = fromList.split(/\s*[,\n]\s*/).filter(Boolean);
@@ -220,18 +289,30 @@ async function main() {
     const html = await fetchRenderedHtml(STOREFRONT);
     const r = extractProductNames(html);
     names = r.names; source = `rendered store via ${r.strategy || 'no match'}`;
+  } else if (SITEMAP) {
+    console.log(`Reading ${STOREFRONT}/sitemap.xml …`);
+    names = await fetchSitemapNames(STOREFRONT);
+    source = 'live store sitemap.xml';
   } else {
     console.log(`Fetching ${STOREFRONT} …`);
     const html = await fetchHtml(STOREFRONT);
     const r = extractProductNames(html);
     names = r.names; source = `live store via ${r.strategy || 'no match'}`;
+    if (!names.length) {
+      // Expected, not a failure: this storefront renders its grid client-side,
+      // so there is nothing in the served HTML to find. Fall through to the
+      // sitemap rather than sending anyone off to install a headless browser.
+      console.log('  Nothing in the served HTML (client-rendered) — reading sitemap.xml …');
+      names = await fetchSitemapNames(STOREFRONT);
+      source = 'live store sitemap.xml';
+    }
   }
 
   if (!names.length) {
     console.error('\n✗ No products found.');
-    console.error('  The store may render via JS the parser did not catch.');
+    console.error('  Neither the served HTML nor sitemap.xml listed any products.');
     console.error('  Workarounds:');
-    console.error('   • Render it in a real browser: npm install --no-save puppeteer && node scripts/scrape-catalog.js --render --write');
+    console.error('   • Render it in a real browser: npm install --no-save puppeteer && node miley/scripts/scrape-catalog.js --render --write');
     console.error('   • Save the page (or its source) and pass: --html page.html');
     console.error('   • Or paste the names:  --from "Unisex Tee, Snapback Hat, …"');
     process.exit(1);
@@ -242,11 +323,40 @@ async function main() {
   console.log(`\nFound ${catalog.length} products (${source}):\n`);
   for (const p of catalog) console.log(`  ${p.key.padEnd(28)} ${p.name}`);
 
+  // Say what would actually change, not just what was found — the useful
+  // question is drift, and the answer is usually "none".
+  const existing = readExistingCatalog();
+  if (existing.length) {
+    console.log(`\nCurrent catalog in lib/links.js: ${existing.length} products.`);
+    if (existing.length === catalog.length) {
+      console.log('Same count as the live store — no products added or removed.');
+    } else {
+      console.log(`Count differs: repo has ${existing.length}, store has ${catalog.length} — real drift, worth writing.`);
+    }
+  }
+
   if (!WRITE) {
     console.log('\nDRY RUN — nothing written. Re-run with --write to update:');
     console.log('  • lib/links.js  (PRODUCTS map)');
     console.log('  • templates/post-formats.json  (product_catalog_rotation)');
     return;
+  }
+
+  // Sitemap names are derived from URL slugs, so they are verbose
+  // ("Unisex Black T-Shirt Techs 4 Tatas") where a hand-written catalog is
+  // usually terser and better for captions ("Unisex Tee"). Overwriting an
+  // existing catalog that already has the right number of products would be a
+  // downgrade with no gain, so that case has to be asked for explicitly.
+  if (source.includes('sitemap') && existing.length === catalog.length && !args.includes('--force')) {
+    console.error('\n✗ Refusing to overwrite: the catalog already has the same number of products,');
+    console.error('  and sitemap names are slug-derived — this would replace curated display');
+    console.error('  names with longer ones for no gain.');
+    // Listed separately, not paired: the two lists are in different orders, so
+    // showing them as arrows would invent renames that aren't real.
+    console.error(`\n  Curated now:      ${existing.map((p) => p.name).join(', ')}`);
+    console.error(`  Would become:     ${catalog.map((p) => p.name).join(', ')}`);
+    console.error('\n  Pass --force if that is genuinely what you want.');
+    process.exit(1);
   }
 
   rewriteLinks(catalog);

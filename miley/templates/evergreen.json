@@ -102,7 +102,9 @@
       "cta": "Tag the woman who proved them wrong 👇",
       "caption": "They said the jobsite was no place for a woman.\n\nWeird, because she's the only one who read the blueprint right.\nFunny how that works.\n\n30% of profit funds breast cancer research — no fluff.\n\nTag the woman who proved them wrong 👇",
       "hashtag_set": "trades_humor",
-      "suggested_visual": "Blueprint-grid background."
+      "suggested_visual": "Blueprint-grid background.",
+      "used": true,
+      "lastUsed": "2026-09-03T17:00:35.208Z"
     },
     {
       "id": "prod-01",
@@ -116,7 +118,7 @@
       "hashtag_set": "product",
       "suggested_visual": "Product mockup of unisex tee, lifestyle preferred.",
       "used": true,
-      "lastUsed": "2026-08-13T14:25:05.470Z"
+      "lastUsed": "2026-09-03T17:00:35.208Z"
     },
     {
       "id": "prod-02",
@@ -144,7 +146,7 @@
       "hashtag_set": "product",
       "suggested_visual": "Snapback on a person, outdoor light.",
       "used": true,
-      "lastUsed": "2026-08-06T15:21:38.890Z"
+      "lastUsed": "2026-09-03T17:00:35.208Z"
     },
     {
       "id": "prod-04",
@@ -158,7 +160,7 @@
       "hashtag_set": "product",
       "suggested_visual": "Trucker cap lifestyle shot, jobsite background.",
       "used": true,
-      "lastUsed": "2026-08-06T15:21:38.890Z"
+      "lastUsed": "2026-09-03T17:00:35.208Z"
     },
     {
       "id": "prod-05",
@@ -292,7 +294,7 @@
       "hashtag_set": "mission",
       "suggested_visual": "Big bold statement card.",
       "used": true,
-      "lastUsed": "2026-08-06T15:21:38.890Z"
+      "lastUsed": "2026-09-03T17:00:35.208Z"
     },
     {
       "id": "eng-01",
@@ -381,7 +383,9 @@
       "cta": "Tell their story below 👇",
       "caption": "Who put you on to the trades?\n\nA parent? A teacher? Pure stubbornness?\nShout out the person who opened the door.\n\n30% of every profit funds breast cancer research.\n\nTell their story below 👇",
       "hashtag_set": "engagement",
-      "suggested_visual": "Warm question card."
+      "suggested_visual": "Warm question card.",
+      "used": true,
+      "lastUsed": "2026-09-03T17:00:35.208Z"
     },
     {
       "id": "mot-01",
@@ -472,7 +476,7 @@
       "hashtag_set": "motivational",
       "suggested_visual": "Open-road / horizon tone.",
       "used": true,
-      "lastUsed": "2026-07-24T20:32:54.888Z"
+      "lastUsed": "2026-09-03T17:00:35.208Z"
     }
   ],
   "_meta": {

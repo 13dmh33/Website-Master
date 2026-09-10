@@ -29,6 +29,7 @@ const PATHS = {
   visualConfig:  path.join(ROOT, 'templates', 'visual-config.json'),
   calendar:      path.join(ROOT, 'templates', 'calendar.json'),
   topPerformers: path.join(ROOT, 'templates', 'top-performers.json'),
+  authored:      path.join(ROOT, 'templates', 'authored'),
   comments:      path.join(ROOT, 'output', 'comments'),
   productWeights:path.join(ROOT, 'output', 'product-weights.json'),
 };
@@ -147,6 +148,15 @@ module.exports = {
   // ─── top performers (self-critique loop, #2) ───────────────────────────────
   // { byType: { <contentType>: [ {caption, engagementRate, weekOf}, ... up to 5 ] } }
   getTopPerformers() { return readJson(PATHS.topPerformers) || { byType: {} }; },
+
+  // hand-authored posts for a specific week, keyed by day abbreviation.
+  // Optional: returns null when templates/authored/authored-{weekOf}.json is
+  // absent, which is the normal case (generator then uses Claude/evergreen).
+  getAuthoredWeek(weekOf) {
+    const doc = readJson(path.join(PATHS.authored, `authored-${weekOf}.json`));
+    if (!doc || !doc.posts) return null;
+    return doc.posts;
+  },
   saveTopPerformers(data) { writeJson(PATHS.topPerformers, data); },
 
   // ─── comments / DM sentiment ingestion (#8) ────────────────────────────────

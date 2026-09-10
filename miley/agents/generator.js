@@ -31,15 +31,18 @@ const USE_API = !!process.env.ANTHROPIC_API_KEY && process.env.FORCE_EVERGREEN !
 const VARIANT_COUNT = Math.max(1, parseInt(process.env.VARIANT_COUNT || '3', 10));
 
 // assemble the hashtag block for a post (anchors + matching set [+ October]).
-// varies the set order by week so we don't post an identical block every time.
-function buildHashtags(hashtagSet, isOctober, master, week) {
+// varies the set order by week AND by slot so we don't post an identical block
+// every time — several slots in one week can share a hashtag_set (a September
+// week runs four "mission" posts), and identical back-to-back tag blocks read
+// as spam. `slotIdx` shifts each post's set a step further along.
+function buildHashtags(hashtagSet, isOctober, master, week, slotIdx = 0) {
   if (!master) return [];
   const anchors = master.anchor_tags || [];
   let set = [...((master.sets && master.sets[hashtagSet]) || [])];
 
   // rotate the set by week to vary 2-3 tags per post (usage_rules.rotation)
   if (set.length) {
-    const shift = week % set.length;
+    const shift = (week + slotIdx) % set.length;
     set = set.slice(shift).concat(set.slice(0, shift));
   }
 
@@ -115,6 +118,25 @@ function fromEvergreen(ev) {
     suggested_visual: ev.suggested_visual || '',
     extra:            ev.extra || '',
     product:          ev.product || null,
+  };
+}
+
+// normalize a hand-authored post (templates/authored/authored-{weekOf}.json)
+// into our post shape. Same field contract as evergreen/Claude posts, so
+// everything downstream (hashtags, links, designer, scheduler) is unchanged.
+function fromAuthored(a) {
+  return {
+    source:           'authored',
+    hook:             a.hook,
+    body:             a.body,
+    donation:         a.donation || '',
+    cta:              a.cta,
+    caption:          a.caption,
+    captionVariantB:  a.captionVariantB || a.caption,
+    hashtag_set:      a.hashtag_set,
+    suggested_visual: a.suggested_visual || '',
+    extra:            a.extra || '',
+    product:          a.product || null,
   };
 }
 
@@ -217,6 +239,13 @@ async function main() {
   console.log(`Generating content for week of ${brief.weekOf} — mode: ${plan.mode}, ${plan.posts.length} posts.`);
   console.log(USE_API ? 'Using Claude API for generation.' : 'No API key / FORCE_EVERGREEN — using evergreen content (zero spend).');
 
+  // hand-authored posts win over both Claude and evergreen for the slots they
+  // cover. Normal case is no file at all → this is null and nothing changes.
+  const authoredWeek = store.getAuthoredWeek(brief.weekOf);
+  if (authoredWeek) {
+    console.log(`Authored content found for ${brief.weekOf}: ${Object.keys(authoredWeek).join(', ')}.`);
+  }
+
   const usedEvergreenIds = [];
   const posts = [];
 
@@ -225,7 +254,17 @@ async function main() {
     const weeklyTerms = glossary.getWeeklyTerms(3);
     let content = null;
 
-    if (USE_API) {
+    const authored = authoredWeek && authoredWeek[planPost.day];
+    if (authored) {
+      if (prompts.passesQualityGate(authored)) {
+        content = fromAuthored(authored);
+        console.log(`  ${planPost.day} ${planPost.contentType} (${planPost.format}) — authored.`);
+      } else {
+        console.warn(`  ${planPost.day} — authored post failed the quality gate; falling back.`);
+      }
+    }
+
+    if (!content && USE_API) {
       try {
         content = await generateViaApi(planPost, brief, idx, weeklyTerms);
         console.log(`  ${planPost.day} ${planPost.contentType} (${planPost.format}) — generated via Claude.`);
@@ -245,7 +284,7 @@ async function main() {
       console.log(`  ${planPost.day} ${planPost.contentType} (${planPost.format}) — evergreen ${ev.id}.`);
     }
 
-    const hashtags = buildHashtags(content.hashtag_set, planPost.isOctober, master, week);
+    const hashtags = buildHashtags(content.hashtag_set, planPost.isOctober, master, week, idx);
 
     const product = content.product || planPost.product || null;
     const tracked = links.forPost({ contentType: planPost.contentType, product, campaignMode: plan.mode });

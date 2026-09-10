@@ -73,3 +73,30 @@ test('selectTemplate respects weighting and photo eligibility when active', () =
     delete process.env.TEMPLATES_ACTIVE;
   }
 });
+
+// Regression: a product post whose background is a real photo must not be
+// rejected by the visual gate. The gate used to be handed palette.bg (the
+// unused gradient fallback colour, near-white for `product_feature`) while the
+// card actually rendered white text over a dark, overlaid product photo — so
+// every such card failed on contrast + edge-ink and silently fell back to a
+// plain gradient, losing the product photo on the Saturday commerce slot.
+test('product photo card is not falsely rejected by the visual gate', async () => {
+  const warnings = [];
+  const origWarn = console.warn;
+  console.warn = (msg) => { warnings.push(String(msg)); };
+  try {
+    const buf = await render.renderSingle({
+      hook: 'The most underrated piece of PPE.',
+      paletteKey: 'product_feature',
+      productKey: 'boxer_briefs', // assets/products/boxer_briefs.png
+    });
+    assert.ok(Buffer.isBuffer(buf) && buf.length > 0);
+  } finally {
+    console.warn = origWarn;
+  }
+  assert.deepEqual(
+    warnings.filter(w => /failed the visual gate/.test(w)),
+    [],
+    'photo-backed product card should pass the gate, not fall back'
+  );
+});

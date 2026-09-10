@@ -1,0 +1,92 @@
+{
+  "weekOf": "2026-09-07",
+  "note": "Hand-authored week (no ANTHROPIC_API_KEY in the container). Written to the same contract as generator output; validated by generator-prompts.passesQualityGate. September ramp = awareness build-up toward October.",
+  "posts": {
+    "MON": {
+      "type": "motivational",
+      "hook": "Nobody hands you the toolbag.",
+      "body": "You earn it twice — once for the skill, once for the respect.\nBad cut. Long day. Back on it tomorrow.\nThen one morning the new apprentice asks you how.",
+      "donation": "30% of every profit funds breast cancer research.",
+      "cta": "Save this for the hard days.",
+      "hashtag_set": "motivational",
+      "suggested_visual": "A worn canvas tool bag on a concrete floor in low evening light, single work glove beside it.",
+      "extra": "Beat 1: Nobody *hands* you the toolbag || Open tight on a worn tool bag, hard cut in.\nBeat 2: You earn it *twice*. Skill, then respect. || Quick cuts of hands working, no faces.\nBeat 3: Bad cut. Long day. *Again* tomorrow. || Slow push on a dim jobsite at end of day.\nBeat 4: Then the new girl asks *you* how. || Warm turn, morning light.\nBeat 5: *Save* this for the hard days. || Hold on logo.",
+      "caption": "Nobody hands you the toolbag.\n\nYou earn it twice — once for the skill, once for the respect.\nBad cut. Long day. Back on it tomorrow.\nThen one morning the new apprentice asks you how.\n\n30% of every profit funds breast cancer research.\n\nSave this for the hard days.",
+      "captionVariantB": "Year one is supposed to feel like this.\n\nYou earn it twice — once for the skill, once for the respect.\nBad cut. Long day. Back on it tomorrow.\nThen one morning the new apprentice asks you how.\n\n30% of every profit funds breast cancer research.\n\nSave this for the hard days."
+    },
+    "TUE": {
+      "type": "mission",
+      "hook": "Pink hard hat. Same torque spec.",
+      "body": "Strength and softness were never opposites — ask anyone who's run conduit all day with a full set of nails.\nWe make gear for the women who build the world, and we back the ones fighting breast cancer. Same family.",
+      "donation": "30% of every profit funds breast cancer research.",
+      "cta": "Link in bio — wear it, fund it.",
+      "hashtag_set": "mission",
+      "suggested_visual": "A pink hard hat resting on a coil of orange conduit, shot on a real jobsite.",
+      "extra": "Slide 1: Pink hard hat. Same torque spec. / Slide 2: Strength and softness were never opposites. / Slide 3: We make gear for women who build the world. / Slide 4: And we back the ones fighting breast cancer. / Slide 5: Same family. Same fight. / Slide 6: 30% of profit funds the research. Link in bio.",
+      "caption": "Pink hard hat. Same torque spec.\n\nStrength and softness were never opposites — ask anyone who's run conduit all day with a full set of nails.\nWe make gear for the women who build the world, and we back the ones fighting breast cancer. Same family.\n\n30% of every profit funds breast cancer research.\n\nLink in bio — wear it, fund it.",
+      "captionVariantB": "Yes it's pink. It still pulls 300 ft-lbs.\n\nStrength and softness were never opposites — ask anyone who's run conduit all day with a full set of nails.\nWe make gear for the women who build the world, and we back the ones fighting breast cancer. Same family.\n\n30% of every profit funds breast cancer research.\n\nLink in bio — wear it, fund it."
+    },
+    "WED": {
+      "type": "awareness_stat",
+      "hook": "99%. That's the number worth knowing.",
+      "body": "Caught early, the five-year survival rate for breast cancer is over 99% — per the American Cancer Society.\nEarly is the whole ballgame. You never skip the annual inspection. Don't skip this one either.",
+      "donation": "30% of every profit funds breast cancer research.",
+      "cta": "Send this to the woman who keeps putting hers off.",
+      "hashtag_set": "mission",
+      "suggested_visual": "Bold typographic card, big 99% in brand pink on deep charcoal, clean and hopeful.",
+      "extra": "Slide 1: 99%. / Slide 2: Caught early, 5-year breast cancer survival is over 99%. / Slide 3: Per the American Cancer Society. / Slide 4: Early detection is the whole ballgame. / Slide 5: You book the annual inspection. Book this too. / Slide 6: Send this to someone who keeps putting it off.",
+      "caption": "99%. That's the number worth knowing.\n\nCaught early, the five-year survival rate for breast cancer is over 99% — per the American Cancer Society.\nEarly is the whole ballgame. You never skip the annual inspection. Don't skip this one either.\n\n30% of every profit funds breast cancer research.\n\nSend this to the woman who keeps putting hers off.",
+      "captionVariantB": "One appointment moves the odds this much.\n\nCaught early, the five-year survival rate for breast cancer is over 99% — per the American Cancer Society.\nEarly is the whole ballgame. You never skip the annual inspection. Don't skip this one either.\n\n30% of every profit funds breast cancer research.\n\nSend this to the woman who keeps putting hers off."
+    },
+    "THU": {
+      "type": "mission",
+      "hook": "\"A portion of proceeds\" means nothing.",
+      "body": "No number. No proof. No thanks.\nSo here's ours in plain numbers: 30% of profit. Not revenue games, not \"up to.\" The actual take-home, split with the research.",
+      "donation": "30% of every profit funds breast cancer research — every order, no asterisk.",
+      "cta": "DM PINK and I'll send you the link.",
+      "hashtag_set": "mission",
+      "suggested_visual": "Stark type-only card: the phrase 'a portion of proceeds' struck through, 30% stamped beneath it.",
+      "extra": "Beat 1: \"A portion of proceeds\" means *nothing* || Hard open on the phrase, struck through.\nBeat 2: No number. No proof. No *thanks*. || Fast cuts, tight type.\nBeat 3: Ours is *30%* of profit. || Big number slams in.\nBeat 4: Every order. No *asterisk*. || Hold, let it sit.\nBeat 5: DM *PINK* for the link. || Close on logo.",
+      "caption": "\"A portion of proceeds\" means nothing.\n\nNo number. No proof. No thanks.\nSo here's ours in plain numbers: 30% of profit. Not revenue games, not \"up to.\" The actual take-home, split with the research.\n\n30% of every profit funds breast cancer research — every order, no asterisk.\n\nDM PINK and I'll send you the link.",
+      "captionVariantB": "Every cause brand says it. Almost none show the math.\n\nNo number. No proof. No thanks.\nSo here's ours in plain numbers: 30% of profit. Not revenue games, not \"up to.\" The actual take-home, split with the research.\n\n30% of every profit funds breast cancer research — every order, no asterisk.\n\nDM PINK and I'll send you the link."
+    },
+    "FRI": {
+      "type": "trades_humor",
+      "hook": "\"Is your husband coming to do the work?\"",
+      "body": "No sir. But my P-trap game is undefeated and I brought my own snake.\nHe'll ask again next week. I'll fix that too.",
+      "donation": "30% of every profit funds breast cancer research.",
+      "cta": "Tag the tradeswoman who's heard this one.",
+      "hashtag_set": "trades_humor",
+      "suggested_visual": "Under-sink shot: gloved hands on a P-trap, drain snake coiled on the cabinet floor.",
+      "extra": "",
+      "caption": "\"Is your husband coming to do the work?\"\n\nNo sir. But my P-trap game is undefeated and I brought my own snake.\nHe'll ask again next week. I'll fix that too.\n\n30% of every profit funds breast cancer research.\n\nTag the tradeswoman who's heard this one.",
+      "captionVariantB": "Ma'am, I AM the guy you called.\n\nNo sir. But my P-trap game is undefeated and I brought my own snake.\nHe'll ask again next week. I'll fix that too.\n\n30% of every profit funds breast cancer research.\n\nTag the tradeswoman who's heard this one."
+    },
+    "SAT": {
+      "type": "product_feature_single",
+      "product": "boxer_briefs",
+      "hook": "The most underrated piece of PPE.",
+      "body": "Boxer briefs that don't ride up the eighth time you go up the ladder.\nNobody on site ever sees them. You feel them all day.",
+      "donation": "30% of profit backs breast cancer research.",
+      "cta": "They're in the bio.",
+      "hashtag_set": "product",
+      "suggested_visual": "Flat-lay of the boxer briefs folded on a clean workbench next to a tape measure.",
+      "extra": "",
+      "caption": "The most underrated piece of PPE.\n\nBoxer briefs that don't ride up the eighth time you go up the ladder.\nNobody on site ever sees them. You feel them all day.\n\n30% of profit backs breast cancer research.\n\nThey're in the bio.",
+      "captionVariantB": "Ten hours on a ladder will teach you this.\n\nBoxer briefs that don't ride up the eighth time you go up the ladder.\nNobody on site ever sees them. You feel them all day.\n\n30% of profit backs breast cancer research.\n\nThey're in the bio."
+    },
+    "SUN": {
+      "type": "mission_product_combo",
+      "product": "unisex_tee",
+      "hook": "One tee. Two jobs.",
+      "body": "Job one: be the shirt you grab first on every day off.\nJob two: help fund the research that's cut breast cancer death rates by about 44% since 1989. Progress like that isn't luck — it's funded.",
+      "donation": "30% of every profit goes straight to breast cancer research.",
+      "cta": "Grab yours — link in bio 🩷",
+      "hashtag_set": "mission",
+      "suggested_visual": "The unisex tee on a hanger against a garage door, warm Sunday evening light.",
+      "extra": "",
+      "caption": "One tee. Two jobs.\n\nJob one: be the shirt you grab first on every day off.\nJob two: help fund the research that's cut breast cancer death rates by about 44% since 1989. Progress like that isn't luck — it's funded.\n\n30% of every profit goes straight to breast cancer research.\n\nGrab yours — link in bio 🩷",
+      "captionVariantB": "The shirt you reach for, doing something while you wear it.\n\nJob one: be the shirt you grab first on every day off.\nJob two: help fund the research that's cut breast cancer death rates by about 44% since 1989. Progress like that isn't luck — it's funded.\n\n30% of every profit goes straight to breast cancer research.\n\nGrab yours — link in bio 🩷"
+    }
+  }
+}

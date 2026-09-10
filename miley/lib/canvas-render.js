@@ -109,6 +109,19 @@ function productImagePath(productKey) {
   return fs.existsSync(p) ? p : null;
 }
 
+// Build the gate options for a card, accounting for a photo background.
+// Over a photo the edge ring is arbitrary photography, so the edge-ink overflow
+// tripwire cannot work and is disabled (backgroundColor omitted); contrast is
+// measured against the overlay-darkened background instead of palette.bg.
+function gateOptsFor(bg, palette, textRegions) {
+  const opts = { textRegions: textRegions.map(r => ({ ...r, bg: bg.effectiveBg })) };
+  if (!bg.usedPhoto) {
+    opts.backgroundColor = palette.bg;
+    opts.allowedEdgeColors = [palette.accent || '#FF2E88', ...(palette.gradient || [])];
+  }
+  return opts;
+}
+
 // ── drawing helpers ──────────────────────────────────────────────────────────
 function drawGradient(ctx, width, height, palette) {
   const grad = ctx.createLinearGradient(0, 0, width, height);
@@ -128,7 +141,15 @@ function drawGradient(ctx, width, height, palette) {
   ctx.fillRect(0, 0, width, height);
 }
 
-// returns { headlineColor, bodyColor } actually used (photo bg forces light text)
+// Approximate background colour behind text once the product photo has the dark
+// overlay (DESIGN.overlay at 62%, deepening to 78% at the bottom) composited on
+// top. The overlay dominates, so the result is dark navy almost regardless of
+// the photo underneath — this is what the visual gate must measure contrast
+// against, NOT palette.bg (which is the unused gradient fallback colour).
+const PHOTO_EFFECTIVE_BG = '#65696F'; // conservative: overlay over a near-white photo
+
+// returns { headlineColor, bodyColor, usedPhoto, effectiveBg } actually used
+// (photo bg forces light text)
 async function drawBackground(ctx, width, height, palette, productKey) {
   const imgPath = productImagePath(productKey);
   if (imgPath) {
@@ -144,11 +165,11 @@ async function drawBackground(ctx, width, height, palette, productKey) {
       grad.addColorStop(1, 'rgba(8,15,30,0.78)');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, width, height);
-      return { headlineColor: '#FFFFFF', bodyColor: '#F7F4F0' };
+      return { headlineColor: '#FFFFFF', bodyColor: '#F7F4F0', usedPhoto: true, effectiveBg: PHOTO_EFFECTIVE_BG };
     } catch { /* fall through to gradient */ }
   }
   drawGradient(ctx, width, height, palette);
-  return { headlineColor: palette.headline || '#FFFFFF', bodyColor: palette.body || '#E2E8F0' };
+  return { headlineColor: palette.headline || '#FFFFFF', bodyColor: palette.body || '#E2E8F0', usedPhoto: false, effectiveBg: palette.bg };
 }
 
 function renderTopBar(ctx, width, palette) {
@@ -224,7 +245,8 @@ async function renderSingle({ hook, sub, paletteKey, productKey }) {
   const canvas  = new Canvas(width, height);
   const ctx     = canvas.getContext('2d');
 
-  const { headlineColor, bodyColor } = await drawBackground(ctx, width, height, palette, productKey);
+  const bg = await drawBackground(ctx, width, height, palette, productKey);
+  const { headlineColor, bodyColor } = bg;
   renderTopBar(ctx, width, palette);
   await renderBrand(ctx, width, palette, headlineColor);
 
@@ -248,11 +270,9 @@ async function renderSingle({ hook, sub, paletteKey, productKey }) {
   ctx.fillStyle = palette.accent || '#FF2E88';
   ctx.fillRect(padding, height - padding, 56, 5);
   const buffer = await canvas.toBuffer('png');
-  return gateOrFallback(buffer, 'v1Gradient/single', {
-    backgroundColor: palette.bg,
-    allowedEdgeColors: [palette.accent || '#FF2E88', ...(palette.gradient || [])],
-    textRegions: [{ name: 'headline', x: padding, y: Math.round(height * 0.4), w: width - padding * 2, h: DESIGN.headlineSize, fg: headlineColor, bg: palette.bg, large: true }],
-  }, hook, paletteKey);
+  return gateOrFallback(buffer, 'v1Gradient/single', gateOptsFor(bg, palette, [
+    { name: 'headline', x: padding, y: Math.round(height * 0.4), w: width - padding * 2, h: DESIGN.headlineSize, fg: headlineColor, large: true },
+  ]), hook, paletteKey);
 }
 
 // one carousel slide
@@ -262,7 +282,8 @@ async function renderCarouselSlide({ headline, body, slideNum, total, paletteKey
   const canvas  = new Canvas(width, height);
   const ctx     = canvas.getContext('2d');
 
-  const { headlineColor, bodyColor } = await drawBackground(ctx, width, height, palette, slideNum === 1 ? productKey : null);
+  const bg = await drawBackground(ctx, width, height, palette, slideNum === 1 ? productKey : null);
+  const { headlineColor, bodyColor } = bg;
   renderTopBar(ctx, width, palette);
   await renderBrand(ctx, width, palette, headlineColor);
 
@@ -290,11 +311,9 @@ async function renderCarouselSlide({ headline, body, slideNum, total, paletteKey
   ctx.fillStyle = palette.accent || '#FF2E88';
   ctx.fillRect(padding, height - padding, 56, 5);
   const buffer = await canvas.toBuffer('png');
-  return gateOrFallback(buffer, 'v1Gradient/carousel', {
-    backgroundColor: palette.bg,
-    allowedEdgeColors: [palette.accent || '#FF2E88', ...(palette.gradient || [])],
-    textRegions: [{ name: 'headline', x: padding, y: contentY, w: width - padding * 2, h: DESIGN.headlineSize, fg: headlineColor, bg: palette.bg, large: true }],
-  }, headline, paletteKey);
+  return gateOrFallback(buffer, 'v1Gradient/carousel', gateOptsFor(bg, palette, [
+    { name: 'headline', x: padding, y: contentY, w: width - padding * 2, h: DESIGN.headlineSize, fg: headlineColor, large: true },
+  ]), headline, paletteKey);
 }
 
 // last-resort plain render
